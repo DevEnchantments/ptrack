@@ -1,11 +1,17 @@
-import { Button } from "@/components/ui/button"
+import { Routes, Route, Navigate } from 'react-router-dom'
+import { ProtectedRoute } from '@/components/ProtectedRoute'
+import { LoginPage } from '@/pages/LoginPage'
+import { HomePage } from '@/pages/HomePage'
 
 function App() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-svh gap-4">
-      <h1 className="text-2xl font-bold">P-Track</h1>
-      <Button>It works</Button>
-    </div>
+    <Routes>
+      <Route path="/login" element={<LoginPage />} />
+      <Route element={<ProtectedRoute />}>
+        <Route path="/" element={<HomePage />} />
+      </Route>
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   )
 }
 
