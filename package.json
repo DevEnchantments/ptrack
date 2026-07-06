@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@nestjs/config": "^4.0.4",
+    "@supabase/supabase-js": "^2.110.0"
+  }
+}
