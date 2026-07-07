@@ -55,3 +55,23 @@ export const projectsApi = {
   create: (data: Record<string, unknown>) =>
     apiPost<Project>('/projects', data),
 }
+
+export interface UserSummary {
+  id: string
+  full_name: string | null
+  email: string | null
+}
+
+export const usersApi = {
+  search: (query: string) =>
+    apiGet<UserSummary[]>(`/users?search=${encodeURIComponent(query)}`),
+}
+
+export interface Lookup {
+  id: string
+  name: string
+}
+
+export const lookupsApi = {
+  list: (name: string) => apiGet<Lookup[]>(`/lookups/${name}`),
+}

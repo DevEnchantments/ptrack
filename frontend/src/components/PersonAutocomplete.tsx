@@ -1,0 +1,94 @@
+import { useEffect, useRef, useState } from 'react'
+import type { ProjectMemberInput } from '@/pages/CreateProjectWizard'
+import { usersApi, type UserSummary } from '@/lib/api'
+import { Input } from '@/components/ui/input'
+
+interface Props {
+  value: ProjectMemberInput
+  onChange: (patch: Partial<ProjectMemberInput>) => void
+}
+
+export function PersonAutocomplete({ value, onChange }: Props) {
+  const [results, setResults] = useState<UserSummary[]>([])
+  const [open, setOpen] = useState(false)
+  const boxRef = useRef<HTMLDivElement>(null)
+
+  // Debounced search while a name is typed and no existing user is linked yet.
+  useEffect(() => {
+    const term = value.display_name.trim()
+    if (!term || value.user_id) {
+      setResults([])
+      return
+    }
+    const t = setTimeout(() => {
+      usersApi
+        .search(term)
+        .then((r) => {
+          setResults(r)
+          setOpen(r.length > 0)
+        })
+        .catch(() => setResults([]))
+    }, 250)
+    return () => clearTimeout(t)
+  }, [value.display_name, value.user_id])
+
+  // Close the suggestion list on outside click.
+  useEffect(() => {
+    function onClick(e: MouseEvent) {
+      if (boxRef.current && !boxRef.current.contains(e.target as Node)) {
+        setOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', onClick)
+    return () => document.removeEventListener('mousedown', onClick)
+  }, [])
+
+  function pick(u: UserSummary) {
+    onChange({
+      user_id: u.id,
+      display_name: u.full_name || u.email || '',
+      email: u.email,
+    })
+    setOpen(false)
+    setResults([])
+  }
+
+  return (
+    <div className="relative" ref={boxRef}>
+      <Input
+        value={value.display_name}
+        placeholder="Type a name…"
+        onChange={(e) =>
+          // Typing clears any prior match — becomes "pending" until re-picked.
+          onChange({ display_name: e.target.value, user_id: null, email: null })
+        }
+        onFocus={() => {
+          if (results.length) setOpen(true)
+        }}
+      />
+      {open && results.length > 0 && (
+        <ul className="absolute z-50 mt-1 w-full overflow-hidden rounded-md border bg-popover shadow-md">
+          {results.map((u) => (
+            <li key={u.id}>
+              <button
+                type="button"
+                onClick={() => pick(u)}
+                className="flex w-full flex-col items-start px-3 py-2 text-left text-sm hover:bg-accent"
+              >
+                <span>{u.full_name || u.email}</span>
+                {u.email && (
+                  <span className="text-xs text-muted-foreground">{u.email}</span>
+                )}
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+      {value.user_id ? (
+        <p className="mt-1 text-xs text-muted-foreground">Existing user</p>
+      ) : value.display_name.trim() ? (
+        <p className="mt-1 text-xs text-amber-600">Will be added as pending</p>
+      ) : null}
+    </div>
+  )
+}
