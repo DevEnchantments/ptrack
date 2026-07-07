@@ -107,3 +107,13 @@ export const categoriesApi = {
   create: (name: string) =>
     apiPost<Lookup>('/lookups/project-categories', { name }),
 }
+
+export const rolesApi = {
+  create: (name: string, default_access_level: string) =>
+    apiPost<Lookup>('/lookups/project-roles', { name, default_access_level }),
+}
+
+export const peopleApi = {
+  add: (projectId: string, data: Record<string, unknown>) =>
+    apiPost<unknown>(`/projects/${projectId}/people`, data),
+}

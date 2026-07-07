@@ -6,6 +6,7 @@ import { SupabaseAuthGuard } from './common/guards/supabase-auth.guard';
 import { ProjectsModule } from './modules/projects/projects.module';
 import { UsersModule } from './modules/users/users.module';
 import { LookupsModule } from './modules/lookups/lookups.module';
+import { PeopleModule } from './modules/people/people.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 

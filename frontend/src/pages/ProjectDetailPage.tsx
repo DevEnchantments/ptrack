@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { projectsApi, type ProjectDetail, type ProjectMemberDetail } from '@/lib/api'
 import { Button } from '@/components/ui/button'
+import { AddPersonDialog } from '@/components/AddPersonDialog'
 
 const ACTIONS = [
   'Add Person', 'Add Issue', 'Add Resource', 'Add Milestone',
@@ -29,16 +30,20 @@ export function ProjectDetailPage() {
   const [project, setProject] = useState<ProjectDetail | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [addPersonOpen, setAddPersonOpen] = useState(false)
 
-  useEffect(() => {
+  const load = useCallback(() => {
     if (!id) return
-    setLoading(true)
     projectsApi
       .get(id)
       .then(setProject)
       .catch((e: Error) => setError(e.message))
       .finally(() => setLoading(false))
   }, [id])
+
+  useEffect(() => {
+    load()
+  }, [load])
 
   if (loading) {
     return <div className="p-6 text-muted-foreground">Loading…</div>
@@ -136,19 +141,35 @@ export function ProjectDetailPage() {
 
         <aside>
           <div className="rounded-md border p-2">
-            {ACTIONS.map((a) => (
-              <button
-                key={a}
-                disabled
-                title="Coming in a later step"
-                className="w-full rounded px-3 py-2 text-left text-sm text-muted-foreground disabled:cursor-not-allowed"
-              >
-                {a}
-              </button>
-            ))}
+            {ACTIONS.map((a) => {
+              const enabled = a === 'Add Person'
+              return (
+                <button
+                  key={a}
+                  disabled={!enabled}
+                  onClick={enabled ? () => setAddPersonOpen(true) : undefined}
+                  title={enabled ? '' : 'Coming in a later step'}
+                  className={
+                    'w-full rounded px-3 py-2 text-left text-sm ' +
+                    (enabled
+                      ? 'hover:bg-accent'
+                      : 'text-muted-foreground disabled:cursor-not-allowed')
+                  }
+                >
+                  {a}
+                </button>
+              )
+            })}
           </div>
         </aside>
       </div>
+
+      <AddPersonDialog
+        projectId={project.id}
+        open={addPersonOpen}
+        onOpenChange={setAddPersonOpen}
+        onAdded={load}
+      />
     </div>
   )
 }

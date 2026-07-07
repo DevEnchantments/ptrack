@@ -14,4 +14,12 @@ export class LookupsController {
   createCategory(@Body('name') name: string) {
     return this.lookups.createCategory(name);
   }
+
+  @Post('project-roles')
+  createRole(
+    @Body('name') name: string,
+    @Body('default_access_level') defaultAccessLevel: string,
+  ) {
+    return this.lookups.createRole(name, defaultAccessLevel);
+  }
 }
