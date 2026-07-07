@@ -1,14 +1,27 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { projectsApi, type ProjectDetail, type ProjectMemberDetail } from '@/lib/api'
+import {
+  projectsApi,
+  milestonesApi,
+  type ProjectDetail,
+  type ProjectMemberDetail,
+  type Milestone,
+} from '@/lib/api'
 import { Button } from '@/components/ui/button'
 import { AddPersonDialog } from '@/components/AddPersonDialog'
+import { AddMilestoneDialog } from '@/components/AddMilestoneDialog'
 
 const ACTIONS = [
   'Add Person', 'Add Issue', 'Add Resource', 'Add Milestone',
   'Add Action Item', 'Add Link', 'Attach File', 'Add Update',
   'Add Status Report',
 ]
+
+const STATUS_LABELS: Record<string, string> = {
+  open: 'Open',
+  closed_completed: 'Closed / Completed',
+  not_applicable: 'Not Applicable',
+}
 
 function Field({ label, value }: { label: string; value: React.ReactNode }) {
   if (value === null || value === undefined || value === '') return null
@@ -24,13 +37,19 @@ function memberName(m: ProjectMemberDetail) {
   return m.profile?.full_name || m.profile?.email || m.pending_name || 'Unknown'
 }
 
+function ownerName(m: Milestone) {
+  return m.owner?.full_name || m.owner?.email || null
+}
+
 export function ProjectDetailPage() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const [project, setProject] = useState<ProjectDetail | null>(null)
+  const [milestones, setMilestones] = useState<Milestone[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [addPersonOpen, setAddPersonOpen] = useState(false)
+  const [addMilestoneOpen, setAddMilestoneOpen] = useState(false)
 
   const load = useCallback(() => {
     if (!id) return
@@ -41,9 +60,18 @@ export function ProjectDetailPage() {
       .finally(() => setLoading(false))
   }, [id])
 
+  const loadMilestones = useCallback(() => {
+    if (!id) return
+    milestonesApi
+      .list(id)
+      .then(setMilestones)
+      .catch(() => {})
+  }, [id])
+
   useEffect(() => {
     load()
-  }, [load])
+    loadMilestones()
+  }, [load, loadMilestones])
 
   if (loading) {
     return <div className="p-6 text-muted-foreground">Loading…</div>
@@ -67,6 +95,13 @@ export function ProjectDetailPage() {
   const primaryUrlValue = project.primary_url ? (
     <a href={project.primary_url} target="_blank" rel="noreferrer" className="text-primary hover:underline">{project.primary_url}</a>
   ) : null
+
+  const enabledActions = new Set(['Add Person', 'Add Milestone'])
+
+  function onAction(a: string) {
+    if (a === 'Add Person') setAddPersonOpen(true)
+    else if (a === 'Add Milestone') setAddMilestoneOpen(true)
+  }
 
   return (
     <div className="min-h-svh">
@@ -137,17 +172,47 @@ export function ProjectDetailPage() {
               ))}
             </ul>
           )}
+
+          <h2 className="mb-3 mt-8 text-lg font-semibold">Milestones</h2>
+          {milestones.length === 0 ? (
+            <p className="text-sm text-muted-foreground">No milestones yet.</p>
+          ) : (
+            <ul className="divide-y rounded-md border">
+              {milestones.map((m) => (
+                <li key={m.id} className="px-4 py-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-medium">{m.name}</span>
+                      {m.is_major && (
+                        <span className="rounded bg-accent px-1.5 py-0.5 text-xs">
+                          Major
+                        </span>
+                      )}
+                    </div>
+                    <span className="text-sm text-muted-foreground">
+                      {STATUS_LABELS[m.status] ?? m.status}
+                    </span>
+                  </div>
+                  <div className="mt-1 flex flex-wrap gap-x-4 text-xs text-muted-foreground">
+                    {m.due_date && <span>Due {m.due_date}</span>}
+                    {ownerName(m) && <span>Owner: {ownerName(m)}</span>}
+                    {m.role?.name && <span>Role: {m.role.name}</span>}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
 
         <aside>
           <div className="rounded-md border p-2">
             {ACTIONS.map((a) => {
-              const enabled = a === 'Add Person'
+              const enabled = enabledActions.has(a)
               return (
                 <button
                   key={a}
                   disabled={!enabled}
-                  onClick={enabled ? () => setAddPersonOpen(true) : undefined}
+                  onClick={enabled ? () => onAction(a) : undefined}
                   title={enabled ? '' : 'Coming in a later step'}
                   className={
                     'w-full rounded px-3 py-2 text-left text-sm ' +
@@ -169,6 +234,13 @@ export function ProjectDetailPage() {
         open={addPersonOpen}
         onOpenChange={setAddPersonOpen}
         onAdded={load}
+      />
+
+      <AddMilestoneDialog
+        projectId={project.id}
+        open={addMilestoneOpen}
+        onOpenChange={setAddMilestoneOpen}
+        onAdded={loadMilestones}
       />
     </div>
   )

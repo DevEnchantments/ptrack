@@ -117,3 +117,28 @@ export const peopleApi = {
   add: (projectId: string, data: Record<string, unknown>) =>
     apiPost<unknown>(`/projects/${projectId}/people`, data),
 }
+
+export interface Milestone {
+  id: string
+  project_id: string
+  name: string
+  description: string | null
+  start_date: string | null
+  due_date: string | null
+  status: string
+  role_id: string | null
+  owner_id: string | null
+  is_major: boolean
+  tags: string[] | null
+  weightage: number | null
+  percent_complete: number | null
+  role: { name: string } | null
+  owner: { full_name: string | null; email: string | null } | null
+}
+
+export const milestonesApi = {
+  list: (projectId: string) =>
+    apiGet<Milestone[]>(`/projects/${projectId}/milestones`),
+  add: (projectId: string, data: Record<string, unknown>) =>
+    apiPost<Milestone>(`/projects/${projectId}/milestones`, data),
+}
