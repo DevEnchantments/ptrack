@@ -11,9 +11,15 @@ export interface Project {
   sponsor: string | null;
   status_id: string | null;
   size_id: string | null;
+  category_id: string | null;
   deal_type_id: string | null;
   region_id: string | null;
   country_id: string | null;
+  access_control: string;
+  goal: string | null;
+  customer: string | null;
+  tags: string[] | null;
+  primary_url: string | null;
   start_date: string | null;
   target_end_date: string | null;
   actual_end_date: string | null;
@@ -24,7 +30,7 @@ export interface Project {
 }
 
 const COLUMNS =
-  'id, name, description, parent_project_id, owner_id, sponsor, status_id, size_id, deal_type_id, region_id, country_id, start_date, target_end_date, actual_end_date, created_by, updated_by, created_at, updated_at';
+  'id, name, description, parent_project_id, owner_id, sponsor, status_id, size_id, category_id, deal_type_id, region_id, country_id, access_control, goal, customer, tags, primary_url, start_date, target_end_date, actual_end_date, created_by, updated_by, created_at, updated_at';
 
 @Injectable()
 export class ProjectsRepository {
@@ -58,5 +64,15 @@ export class ProjectsRepository {
       .maybeSingle();
     if (error) throw toHttpException(error, 'projects.findById');
     return (data as unknown as Project) ?? null;
+  }
+
+  async insertMembers(rows: Record<string, unknown>[]): Promise<void> {
+    const { error } = await this.db.client.from('project_members').insert(rows);
+    if (error) throw toHttpException(error, 'projectMembers.insert');
+  }
+
+  async delete(id: string): Promise<void> {
+    const { error } = await this.table.delete().eq('id', id);
+    if (error) throw toHttpException(error, 'projects.delete');
   }
 }

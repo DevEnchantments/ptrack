@@ -1,16 +1,29 @@
+import { Type } from 'class-transformer';
 import {
+  IsArray,
   IsDateString,
+  IsIn,
   IsNotEmpty,
   IsOptional,
   IsString,
   IsUUID,
   MaxLength,
+  ValidateNested,
 } from 'class-validator';
 
+export class ProjectMemberDto {
+  @IsOptional() @IsUUID()
+  user_id?: string | null;
+
+  @IsOptional() @IsString() @MaxLength(255)
+  pending_name?: string | null;
+
+  @IsUUID()
+  role_id!: string;
+}
+
 export class CreateProjectDto {
-  @IsString()
-  @IsNotEmpty()
-  @MaxLength(255)
+  @IsString() @IsNotEmpty() @MaxLength(255)
   name!: string;
 
   @IsOptional() @IsUUID()
@@ -19,33 +32,36 @@ export class CreateProjectDto {
   @IsOptional() @IsDateString()
   start_date?: string;
 
-  @IsOptional() @IsString()
-  description?: string;
-
-  @IsOptional() @IsUUID()
-  owner_id?: string;
-
-  @IsOptional() @IsString() @MaxLength(255)
-  sponsor?: string;
+  @IsOptional() @IsIn(['open', 'restricted'])
+  access_control?: 'open' | 'restricted';
 
   @IsOptional() @IsUUID()
   status_id?: string;
 
   @IsOptional() @IsUUID()
+  category_id?: string;
+
+  @IsOptional() @IsUUID()
   size_id?: string;
 
-  @IsOptional() @IsUUID()
-  deal_type_id?: string;
+  @IsOptional() @IsString()
+  description?: string;
 
-  @IsOptional() @IsUUID()
-  region_id?: string;
+  @IsOptional() @IsString()
+  goal?: string;
 
-  @IsOptional() @IsUUID()
-  country_id?: string;
+  @IsOptional() @IsString() @MaxLength(255)
+  customer?: string;
 
-  @IsOptional() @IsDateString()
-  target_end_date?: string;
+  @IsOptional() @IsArray() @IsString({ each: true })
+  tags?: string[];
 
-  @IsOptional() @IsDateString()
-  actual_end_date?: string;
+  @IsOptional() @IsString() @MaxLength(2048)
+  primary_url?: string;
+
+  @IsOptional()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => ProjectMemberDto)
+  members?: ProjectMemberDto[];
 }

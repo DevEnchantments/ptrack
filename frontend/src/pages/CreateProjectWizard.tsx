@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/lib/auth-context'
+import { projectsApi } from '@/lib/api'
 import { Button } from '@/components/ui/button'
 import { StepProject } from './create-project/StepProject'
 import { StepAccess } from './create-project/StepAccess'
 import { StepDetails } from './create-project/StepDetails'
+import { StepConfirmation } from './create-project/StepConfirmation'
 
 export interface ProjectMemberInput {
   user_id: string | null
@@ -19,7 +21,6 @@ export interface CreateProjectForm {
   start_date: string
   access_control: 'open' | 'restricted'
   members: ProjectMemberInput[]
-  // Details (page 3)
   status_id: string | null
   category_id: string | null
   size_id: string | null
@@ -69,6 +70,8 @@ export function CreateProjectWizard() {
     primary_url: '',
   }))
   const [errors, setErrors] = useState<Record<string, string>>({})
+  const [submitting, setSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
 
   function update(patch: Partial<CreateProjectForm>) {
     setForm((f) => ({ ...f, ...patch }))
@@ -120,6 +123,50 @@ export function CreateProjectWizard() {
     setStep((s) => Math.max(s - 1, 0))
   }
 
+  function buildPayload() {
+    const members = form.members
+      .filter((m) => m.display_name.trim() && m.role_id)
+      .map((m) => ({
+        user_id: m.user_id ?? null,
+        pending_name: m.user_id ? null : m.display_name.trim(),
+        role_id: m.role_id,
+      }))
+    const tags = form.tags
+      .split(',')
+      .map((t) => t.trim())
+      .filter(Boolean)
+    return {
+      name: form.name.trim(),
+      parent_project_id: form.parent_project_id ?? undefined,
+      start_date: form.start_date || undefined,
+      access_control: form.access_control,
+      status_id: form.status_id ?? undefined,
+      category_id: form.category_id ?? undefined,
+      size_id: form.size_id ?? undefined,
+      description: form.description.trim() || undefined,
+      goal: form.goal.trim() || undefined,
+      customer: form.customer.trim() || undefined,
+      tags: tags.length ? tags : undefined,
+      primary_url: form.primary_url.trim() || undefined,
+      members,
+    }
+  }
+
+  async function submit() {
+    setSubmitError(null)
+    setSubmitting(true)
+    try {
+      await projectsApi.create(buildPayload())
+      navigate('/')
+    } catch (e) {
+      setSubmitError((e as Error).message)
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  const isLast = step === STEP_LABELS.length - 1
+
   return (
     <div className="mx-auto max-w-2xl p-6">
       <h1 className="mb-6 text-2xl font-semibold">Create a Project</h1>
@@ -152,10 +199,10 @@ export function CreateProjectWizard() {
       {step === 0 && <StepProject form={form} errors={errors} update={update} />}
       {step === 1 && <StepAccess form={form} errors={errors} update={update} />}
       {step === 2 && <StepDetails form={form} errors={errors} update={update} />}
-      {step === 3 && (
-        <div className="rounded-md border border-dashed p-8 text-center text-muted-foreground">
-          "Confirmation" step — we'll build this next.
-        </div>
+      {step === 3 && <StepConfirmation form={form} />}
+
+      {submitError && (
+        <p className="mt-4 text-sm text-destructive">{submitError}</p>
       )}
 
       <div className="mt-8 flex items-center justify-between">
@@ -164,13 +211,17 @@ export function CreateProjectWizard() {
         </Button>
         <div className="flex gap-2">
           {step > 0 && (
-            <Button variant="outline" onClick={back}>
+            <Button variant="outline" onClick={back} disabled={submitting}>
               Back
             </Button>
           )}
-          <Button onClick={next} disabled={step === STEP_LABELS.length - 1}>
-            Next
-          </Button>
+          {isLast ? (
+            <Button onClick={submit} disabled={submitting}>
+              {submitting ? 'Creating…' : 'Create Project'}
+            </Button>
+          ) : (
+            <Button onClick={next}>Next</Button>
+          )}
         </div>
       </div>
     </div>
