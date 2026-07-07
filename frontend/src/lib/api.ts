@@ -44,14 +44,41 @@ export async function apiPost<T>(path: string, body: unknown): Promise<T> {
 export interface Project {
   id: string
   name: string
+  description: string | null
   parent_project_id: string | null
+  status_id: string | null
+  access_control: string
   start_date: string | null
   created_by: string | null
   created_at: string
 }
 
+export interface ProjectMemberDetail {
+  id: string
+  user_id: string | null
+  pending_name: string | null
+  status: string
+  role: { name: string } | null
+  profile: { full_name: string | null; email: string | null } | null
+}
+
+export interface ProjectDetail extends Project {
+  size_id: string | null
+  category_id: string | null
+  goal: string | null
+  customer: string | null
+  tags: string[] | null
+  primary_url: string | null
+  updated_at: string
+  status: { name: string } | null
+  size: { name: string } | null
+  category: { name: string } | null
+  members: ProjectMemberDetail[]
+}
+
 export const projectsApi = {
   list: () => apiGet<Project[]>('/projects'),
+  get: (id: string) => apiGet<ProjectDetail>(`/projects/${id}`),
   create: (data: Record<string, unknown>) =>
     apiPost<Project>('/projects', data),
 }

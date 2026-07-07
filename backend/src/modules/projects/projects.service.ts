@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { ProjectsRepository, Project } from './projects.repository';
+import { ProjectsRepository, Project, ProjectDetail } from './projects.repository';
 import { CreateProjectDto } from './dto/create-project.dto';
 
 @Injectable()
@@ -30,7 +30,6 @@ export class ProjectsService {
       try {
         await this.repo.insertMembers(rows);
       } catch (err) {
-        // Compensate: no orphan project if members fail to insert.
         await this.repo.delete(project.id);
         throw err;
       }
@@ -43,8 +42,8 @@ export class ProjectsService {
     return this.repo.findAll();
   }
 
-  async findOne(id: string): Promise<Project> {
-    const project = await this.repo.findById(id);
+  async getDetail(id: string): Promise<ProjectDetail> {
+    const project = await this.repo.findDetail(id);
     if (!project) throw new NotFoundException(`Project ${id} not found`);
     return project;
   }

@@ -29,6 +29,6 @@ export class ProjectsController {
 
   @Get(':id')
   findOne(@Param('id', ParseUUIDPipe) id: string) {
-    return this.projects.findOne(id);
+    return this.projects.getDetail(id);
   }
 }

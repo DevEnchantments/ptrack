@@ -29,6 +29,21 @@ export interface Project {
   updated_at: string;
 }
 
+export interface ProjectDetail extends Project {
+  status: { name: string } | null;
+  size: { name: string } | null;
+  category: { name: string } | null;
+  members: Array<{
+    id: string;
+    user_id: string | null;
+    pending_name: string | null;
+    role_id: string | null;
+    status: string;
+    role: { name: string } | null;
+    profile: { full_name: string | null; email: string | null } | null;
+  }>;
+}
+
 const COLUMNS =
   'id, name, description, parent_project_id, owner_id, sponsor, status_id, size_id, category_id, deal_type_id, region_id, country_id, access_control, goal, customer, tags, primary_url, start_date, target_end_date, actual_end_date, created_by, updated_by, created_at, updated_at';
 
@@ -57,13 +72,25 @@ export class ProjectsRepository {
     return (data ?? []) as unknown as Project[];
   }
 
-  async findById(id: string): Promise<Project | null> {
+  async findDetail(id: string): Promise<ProjectDetail | null> {
     const { data, error } = await this.table
-      .select(COLUMNS)
+      .select(
+        `
+        ${COLUMNS},
+        status:project_statuses ( name ),
+        size:project_sizes ( name ),
+        category:project_categories ( name ),
+        members:project_members (
+          id, user_id, pending_name, role_id, status,
+          role:project_roles ( name ),
+          profile:profiles!user_id ( full_name, email )
+        )
+      `,
+      )
       .eq('id', id)
       .maybeSingle();
-    if (error) throw toHttpException(error, 'projects.findById');
-    return (data as unknown as Project) ?? null;
+    if (error) throw toHttpException(error, 'projects.findDetail');
+    return (data as unknown as ProjectDetail) ?? null;
   }
 
   async insertMembers(rows: Record<string, unknown>[]): Promise<void> {
