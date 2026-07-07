@@ -1,8 +1,10 @@
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/lib/auth-context'
 import { Button } from '@/components/ui/button'
 
 export function HomePage() {
   const { user, signOut } = useAuth()
+  const navigate = useNavigate()
 
   return (
     <div className="min-h-svh">
@@ -16,9 +18,7 @@ export function HomePage() {
         </div>
       </header>
       <main className="p-6">
-        <p className="text-muted-foreground">
-          You're signed in. Project features will appear here.
-        </p>
+        <Button onClick={() => navigate('/projects/new')}>New Project</Button>
       </main>
     </div>
   )

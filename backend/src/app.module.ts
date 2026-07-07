@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { DatabaseModule } from './database/database.module';
 import { SupabaseAuthGuard } from './common/guards/supabase-auth.guard';
+import { ProjectsModule } from './modules/projects/projects.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
@@ -10,6 +11,7 @@ import { AppService } from './app.service';
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     DatabaseModule,
+    ProjectsModule,
   ],
   controllers: [AppController],
   providers: [
