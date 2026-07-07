@@ -17,6 +17,7 @@ import { AppService } from './app.service';
     ProjectsModule,
     UsersModule,
     LookupsModule,
+    PeopleModule,
   ],
   controllers: [AppController],
   providers: [

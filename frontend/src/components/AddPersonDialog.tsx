@@ -137,8 +137,8 @@ export function AddPersonDialog({ projectId, open, onOpenChange, onAdded }: Prop
                   ...roles.map((r) => ({ label: r.name, value: r.id })),
                   { label: '- New Role -', value: NEW_ROLE },
                 ]}
-                value={roleId ?? undefined}
-                onValueChange={setRoleId}
+                value={roleId ?? ''}
+                onValueChange={(v) => setRoleId(v ?? null)}
               >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="- Select Role -" />
@@ -161,7 +161,7 @@ export function AddPersonDialog({ projectId, open, onOpenChange, onAdded }: Prop
               <Select
                 items={ACCESS_LEVELS}
                 value={accessLevel}
-                onValueChange={setAccessLevel}
+                onValueChange={(v) => setAccessLevel(v ?? 'read_only')}
               >
                 <SelectTrigger className="w-full">
                   <SelectValue />
@@ -180,8 +180,8 @@ export function AddPersonDialog({ projectId, open, onOpenChange, onAdded }: Prop
               <Label>Involvement Level</Label>
               <Select
                 items={levels.map((l) => ({ label: l.name, value: l.id }))}
-                value={involvementId ?? undefined}
-                onValueChange={setInvolvementId}
+                value={involvementId ?? ''}
+                onValueChange={(v) => setInvolvementId(v ?? null)}
               >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="- Select Level -" />
@@ -212,7 +212,7 @@ export function AddPersonDialog({ projectId, open, onOpenChange, onAdded }: Prop
                 <Select
                   items={ACCESS_LEVELS}
                   value={newRoleLevel}
-                  onValueChange={setNewRoleLevel}
+                  onValueChange={(v) => setNewRoleLevel(v ?? 'read_only')}
                 >
                   <SelectTrigger className="w-full">
                     <SelectValue />
