@@ -75,3 +75,8 @@ export interface Lookup {
 export const lookupsApi = {
   list: (name: string) => apiGet<Lookup[]>(`/lookups/${name}`),
 }
+
+export const categoriesApi = {
+  create: (name: string) =>
+    apiPost<Lookup>('/lookups/project-categories', { name }),
+}

@@ -4,9 +4,10 @@ import { useAuth } from '@/lib/auth-context'
 import { Button } from '@/components/ui/button'
 import { StepProject } from './create-project/StepProject'
 import { StepAccess } from './create-project/StepAccess'
+import { StepDetails } from './create-project/StepDetails'
 
 export interface ProjectMemberInput {
-  user_id: string | null // set when linked to an existing user; null = pending
+  user_id: string | null
   display_name: string
   email: string | null
   role_id: string | null
@@ -18,6 +19,15 @@ export interface CreateProjectForm {
   start_date: string
   access_control: 'open' | 'restricted'
   members: ProjectMemberInput[]
+  // Details (page 3)
+  status_id: string | null
+  category_id: string | null
+  size_id: string | null
+  description: string
+  goal: string
+  customer: string
+  tags: string
+  primary_url: string
 }
 
 const STEP_LABELS = ['Project', 'Access', 'Details', 'Confirmation']
@@ -44,11 +54,19 @@ export function CreateProjectWizard() {
         user_id: user?.id ?? null,
         display_name: user?.email ?? '',
         email: user?.email ?? null,
-        role_id: null, // set to Project Manager once roles load
+        role_id: null,
       },
       emptyMember(),
       emptyMember(),
     ],
+    status_id: null,
+    category_id: null,
+    size_id: null,
+    description: '',
+    goal: '',
+    customer: '',
+    tags: '',
+    primary_url: '',
   }))
   const [errors, setErrors] = useState<Record<string, string>>({})
 
@@ -82,9 +100,17 @@ export function CreateProjectWizard() {
     return Object.keys(e).length === 0
   }
 
+  function validateStep3() {
+    const e: Record<string, string> = {}
+    if (!form.status_id) e.status_id = 'Status is required.'
+    setErrors(e)
+    return Object.keys(e).length === 0
+  }
+
   function next() {
     if (step === 0 && !validateStep1()) return
     if (step === 1 && !validateStep2()) return
+    if (step === 2 && !validateStep3()) return
     setErrors({})
     setStep((s) => Math.min(s + 1, STEP_LABELS.length - 1))
   }
@@ -125,9 +151,10 @@ export function CreateProjectWizard() {
 
       {step === 0 && <StepProject form={form} errors={errors} update={update} />}
       {step === 1 && <StepAccess form={form} errors={errors} update={update} />}
-      {step >= 2 && (
+      {step === 2 && <StepDetails form={form} errors={errors} update={update} />}
+      {step === 3 && (
         <div className="rounded-md border border-dashed p-8 text-center text-muted-foreground">
-          "{STEP_LABELS[step]}" step — we'll build this next.
+          "Confirmation" step — we'll build this next.
         </div>
       )}
 
