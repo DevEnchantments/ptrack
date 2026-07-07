@@ -40,12 +40,32 @@ export function StepAccess({ form, errors, update }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // Auto-grow: keep exactly one trailing empty row. When the last row gets a
-  // person or a role, append a fresh blank one.
+  // Keep exactly one trailing empty row: grow when the last row is used,
+  // shrink when trailing rows pile up empty. Never drop below MIN_ROWS.
   useEffect(() => {
-    const last = form.members[form.members.length - 1]
-    if (last && (last.display_name.trim() || last.role_id)) {
-      update({ members: [...form.members, emptyMember()] })
+    const MIN_ROWS = 3
+    const isEmpty = (m: ProjectMemberInput) =>
+      !m.display_name.trim() && !m.role_id
+
+    const members = form.members
+    const last = members[members.length - 1]
+
+    // Grow: last row has content → append a blank.
+    if (last && !isEmpty(last)) {
+      update({ members: [...members, emptyMember()] })
+      return
+    }
+
+    // Shrink: count trailing empties, keep just one (respecting the minimum).
+    let trailing = 0
+    for (let i = members.length - 1; i >= 0 && isEmpty(members[i]); i--) {
+      trailing++
+    }
+    if (trailing > 1) {
+      const target = Math.max(MIN_ROWS, members.length - (trailing - 1))
+      if (target < members.length) {
+        update({ members: members.slice(0, target) })
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form.members])
@@ -63,6 +83,13 @@ export function StepAccess({ form, errors, update }: Props) {
           Access Control <span className="text-destructive">*</span>
         </Label>
         <Select
+          items={[
+            { label: 'Open', value: 'open' },
+            {
+              label: 'Restricted – Only Accessible by Associated People',
+              value: 'restricted',
+            },
+          ]}
           value={form.access_control}
           onValueChange={(v) =>
             update({ access_control: v as 'open' | 'restricted' })
@@ -97,6 +124,7 @@ export function StepAccess({ form, errors, update }: Props) {
               onChange={(patch) => updateMember(i, patch)}
             />
             <Select
+              items={roles.map((r) => ({ label: r.name, value: r.id }))}
               value={m.role_id ?? undefined}
               onValueChange={(v) => updateMember(i, { role_id: v })}
             >

@@ -48,6 +48,10 @@ export function StepProject({ form, errors, update }: Props) {
       <div className="flex flex-col gap-2">
         <Label htmlFor="parent">Parent Project</Label>
         <Select
+          items={[
+            { label: 'No Parent', value: NO_PARENT },
+            ...projects.map((p) => ({ label: p.name, value: p.id })),
+          ]}
           value={form.parent_project_id ?? NO_PARENT}
           onValueChange={(v) =>
             update({ parent_project_id: v === NO_PARENT ? null : v })
