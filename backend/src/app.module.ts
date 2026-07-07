@@ -7,6 +7,7 @@ import { ProjectsModule } from './modules/projects/projects.module';
 import { UsersModule } from './modules/users/users.module';
 import { LookupsModule } from './modules/lookups/lookups.module';
 import { PeopleModule } from './modules/people/people.module';
+import { MilestonesModule } from './modules/milestones/milestones.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
@@ -18,6 +19,7 @@ import { AppService } from './app.service';
     UsersModule,
     LookupsModule,
     PeopleModule,
+    MilestonesModule,
   ],
   controllers: [AppController],
   providers: [
