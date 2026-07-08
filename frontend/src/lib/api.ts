@@ -253,3 +253,23 @@ export const actionItemsApi = {
       { body },
     ),
 }
+
+export interface Link {
+  id: string
+  project_id: string
+  label: string | null
+  url: string
+  description: string | null
+  is_gold: boolean
+  tags: string[] | null
+  created_at: string
+  updated_at: string
+  created_by_profile?: { full_name: string | null; email: string | null } | null
+}
+
+export const linksApi = {
+  list: (projectId: string) =>
+    apiGet<Link[]>(`/projects/${projectId}/links`),
+  add: (projectId: string, data: Record<string, unknown>) =>
+    apiPost<Link>(`/projects/${projectId}/links`, data),
+}

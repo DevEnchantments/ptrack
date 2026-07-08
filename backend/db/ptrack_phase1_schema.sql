@@ -337,14 +337,17 @@ create trigger trg_resources_updated
 -- 9. Links
 -- ------------------------------------------------------------
 create table links (
-  id         uuid primary key default gen_random_uuid(),
-  project_id uuid not null references projects (id) on delete cascade,
-  label      text,
-  url        text not null,
-  created_by uuid references profiles (id) on delete set null,
-  updated_by uuid references profiles (id) on delete set null,
-  created_at timestamptz not null default now(),
-  updated_at timestamptz not null default now()
+  id          uuid primary key default gen_random_uuid(),
+  project_id  uuid not null references projects (id) on delete cascade,
+  label       text,
+  url         text not null,
+  description text,
+  is_gold     boolean not null default false,
+  tags        text[],
+  created_by  uuid references profiles (id) on delete set null,
+  updated_by  uuid references profiles (id) on delete set null,
+  created_at  timestamptz not null default now(),
+  updated_at  timestamptz not null default now()
 );
 create trigger trg_links_updated
   before update on links

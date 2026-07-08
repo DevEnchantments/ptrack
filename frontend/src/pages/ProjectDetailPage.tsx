@@ -4,15 +4,18 @@ import {
   projectsApi,
   milestonesApi,
   actionItemsApi,
+  linksApi,
   type ProjectDetail,
   type ProjectMemberDetail,
   type Milestone,
   type ActionItem,
+  type Link,
 } from '@/lib/api'
 import { Button } from '@/components/ui/button'
 import { AddPersonDialog } from '@/components/AddPersonDialog'
 import { AddMilestoneDialog } from '@/components/AddMilestoneDialog'
 import { AddActionItemDialog } from '@/components/AddActionItemDialog'
+import { AddLinkDialog } from '@/components/AddLinkDialog'
 
 const ACTIONS = [
   'Add Person', 'Add Issue', 'Add Resource', 'Add Milestone',
@@ -44,6 +47,26 @@ function ownerName(m: Milestone) {
   return m.owner?.full_name || m.owner?.email || null
 }
 
+function linkAuthor(l: Link) {
+  return l.created_by_profile?.full_name || l.created_by_profile?.email || 'Unknown'
+}
+
+function relativeTime(iso: string): string {
+  const diffMs = Date.now() - new Date(iso).getTime()
+  const sec = Math.round(diffMs / 1000)
+  if (sec < 60) return `${sec} second${sec === 1 ? '' : 's'} ago`
+  const min = Math.round(sec / 60)
+  if (min < 60) return `${min} minute${min === 1 ? '' : 's'} ago`
+  const hr = Math.round(min / 60)
+  if (hr < 24) return `${hr} hour${hr === 1 ? '' : 's'} ago`
+  const day = Math.round(hr / 24)
+  if (day < 30) return `${day} day${day === 1 ? '' : 's'} ago`
+  const mo = Math.round(day / 30)
+  if (mo < 12) return `${mo} month${mo === 1 ? '' : 's'} ago`
+  const yr = Math.round(mo / 12)
+  return `${yr} year${yr === 1 ? '' : 's'} ago`
+}
+
 export function ProjectDetailPage() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
@@ -55,6 +78,8 @@ export function ProjectDetailPage() {
   const [addPersonOpen, setAddPersonOpen] = useState(false)
   const [addMilestoneOpen, setAddMilestoneOpen] = useState(false)
   const [addActionItemOpen, setAddActionItemOpen] = useState(false)
+  const [links, setLinks] = useState<Link[]>([])
+  const [addLinkOpen, setAddLinkOpen] = useState(false)
 
   const load = useCallback(() => {
     if (!id) return
@@ -81,11 +106,20 @@ export function ProjectDetailPage() {
       .catch(() => {})
   }, [id])
 
+  const loadLinks = useCallback(() => {
+    if (!id) return
+    linksApi
+      .list(id)
+      .then(setLinks)
+      .catch(() => {})
+  }, [id])
+
   useEffect(() => {
     load()
     loadMilestones()
     loadActionItems()
-  }, [load, loadMilestones, loadActionItems])
+    loadLinks()
+  }, [load, loadMilestones, loadActionItems, loadLinks])
 
   if (loading) {
     return <div className="p-6 text-muted-foreground">Loading…</div>
@@ -110,12 +144,18 @@ export function ProjectDetailPage() {
     <a href={project.primary_url} target="_blank" rel="noreferrer" className="text-primary hover:underline">{project.primary_url}</a>
   ) : null
 
-  const enabledActions = new Set(['Add Person', 'Add Milestone', 'Add Action Item'])
+  const enabledActions = new Set([
+    'Add Person',
+    'Add Milestone',
+    'Add Action Item',
+    'Add Link',
+  ])
 
   function onAction(a: string) {
     if (a === 'Add Person') setAddPersonOpen(true)
     else if (a === 'Add Milestone') setAddMilestoneOpen(true)
     else if (a === 'Add Action Item') setAddActionItemOpen(true)
+    else if (a === 'Add Link') setAddLinkOpen(true)
   }
 
   return (
@@ -265,6 +305,48 @@ export function ProjectDetailPage() {
               ))}
             </ul>
           )}
+
+          <h2 className="mb-3 mt-8 text-lg font-semibold">Links</h2>
+          {links.length === 0 ? (
+            <p className="text-sm text-muted-foreground">No links yet.</p>
+          ) : (
+            <ul className="divide-y rounded-md border">
+              {links.map((l) => (
+                <li key={l.id}>
+                  <a
+                    href={l.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="group block px-4 py-3 hover:bg-accent"
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm font-medium text-primary group-hover:underline">
+                            {l.label || l.url}
+                          </span>
+                          {l.is_gold && (
+                            <span className="inline-flex items-center gap-1 text-xs text-amber-600">
+                              <span className="h-2 w-2 rounded-full bg-amber-500" />
+                              Gold
+                            </span>
+                          )}
+                        </div>
+                        {l.description && (
+                          <p className="mt-0.5 text-xs text-muted-foreground">
+                            {l.description}
+                          </p>
+                        )}
+                      </div>
+                      <span className="whitespace-nowrap text-xs text-muted-foreground">
+                        Added {relativeTime(l.created_at)} by {linkAuthor(l)}
+                      </span>
+                    </div>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
 
         <aside>
@@ -311,6 +393,13 @@ export function ProjectDetailPage() {
         open={addActionItemOpen}
         onOpenChange={setAddActionItemOpen}
         onSaved={loadActionItems}
+      />
+
+      <AddLinkDialog
+        projectId={project.id}
+        open={addLinkOpen}
+        onOpenChange={setAddLinkOpen}
+        onAdded={loadLinks}
       />
     </div>
   )

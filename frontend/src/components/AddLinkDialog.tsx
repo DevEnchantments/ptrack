@@ -1,0 +1,187 @@
+import { useEffect, useState } from 'react'
+import { linksApi } from '@/lib/api'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
+
+const GOLD_HELP =
+  'Marking a link as a "Gold" link ensures that it appears at the top of the ' +
+  'links section on the project details page and is always included in project ' +
+  'details emails. If a link is not marked as "Gold" it might be omitted from ' +
+  'project details emails (depending on the number of links in the project and ' +
+  'the date that it was created).'
+
+const URL_PATTERN = /^https?:\/\//
+
+interface Props {
+  projectId: string
+  open: boolean
+  onOpenChange: (open: boolean) => void
+  onAdded: () => void
+}
+
+export function AddLinkDialog({
+  projectId,
+  open,
+  onOpenChange,
+  onAdded,
+}: Props) {
+  const [url, setUrl] = useState('')
+  const [label, setLabel] = useState('')
+  const [description, setDescription] = useState('')
+  const [isGold, setIsGold] = useState(false)
+  const [tags, setTags] = useState('')
+  const [error, setError] = useState<string | null>(null)
+  const [saving, setSaving] = useState(false)
+
+  useEffect(() => {
+    if (!open) return
+    reset()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open])
+
+  function reset() {
+    setUrl('')
+    setLabel('')
+    setDescription('')
+    setIsGold(false)
+    setTags('')
+    setError(null)
+  }
+
+  const urlError =
+    url.trim() && !URL_PATTERN.test(url.trim())
+      ? 'URL must start with http:// or https://'
+      : null
+
+  async function submit() {
+    setError(null)
+    const trimmedUrl = url.trim()
+    if (!trimmedUrl) return setError('A URL is required.')
+    if (!URL_PATTERN.test(trimmedUrl))
+      return setError('URL must start with http:// or https://')
+
+    setSaving(true)
+    try {
+      const tagList = tags
+        .split(',')
+        .map((t) => t.trim())
+        .filter(Boolean)
+
+      await linksApi.add(projectId, {
+        url: trimmedUrl,
+        label: label.trim() || undefined,
+        description: description.trim() || undefined,
+        is_gold: isGold,
+        tags: tagList.length ? tagList : undefined,
+      })
+      reset()
+      onOpenChange(false)
+      onAdded()
+    } catch (e) {
+      setError((e as Error).message)
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  return (
+    <Dialog
+      open={open}
+      onOpenChange={(o) => {
+        if (!o) reset()
+        onOpenChange(o)
+      }}
+    >
+      <DialogContent className="max-h-[85vh] overflow-y-auto sm:max-w-2xl">
+        <DialogHeader>
+          <DialogTitle>Link</DialogTitle>
+        </DialogHeader>
+
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-2">
+            <Label>
+              URL <span className="text-destructive">*</span>
+            </Label>
+            <Input
+              value={url}
+              placeholder="https://example.com"
+              onChange={(e) => setUrl(e.target.value)}
+            />
+            {urlError && <p className="text-sm text-destructive">{urlError}</p>}
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <Label>Title</Label>
+            <Input value={label} onChange={(e) => setLabel(e.target.value)} />
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <Label>Description</Label>
+            <Textarea
+              rows={3}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center gap-1.5">
+              <Label>Gold</Label>
+              <span
+                title={GOLD_HELP}
+                className="inline-flex h-4 w-4 cursor-help items-center justify-center rounded-full border text-[10px] text-muted-foreground"
+              >
+                ?
+              </span>
+            </div>
+            <label className="flex cursor-pointer items-center gap-2">
+              <input
+                type="checkbox"
+                className="h-4 w-4 rounded border-input accent-primary"
+                checked={isGold}
+                onChange={(e) => setIsGold(e.target.checked)}
+              />
+              <span className="text-sm font-semibold">Mark as Gold</span>
+            </label>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <Label>Tags</Label>
+            <Input
+              value={tags}
+              placeholder="Enter tags separated by commas"
+              onChange={(e) => setTags(e.target.value)}
+            />
+          </div>
+
+          {error && <p className="text-sm text-destructive">{error}</p>}
+        </div>
+
+        <DialogFooter>
+          <Button
+            variant="outline"
+            onClick={() => {
+              reset()
+              onOpenChange(false)
+            }}
+            disabled={saving}
+          >
+            Cancel
+          </Button>
+          <Button onClick={submit} disabled={saving || Boolean(urlError)}>
+            {saving ? 'Adding…' : 'Add Link'}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  )
+}

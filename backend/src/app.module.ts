@@ -9,6 +9,7 @@ import { LookupsModule } from './modules/lookups/lookups.module';
 import { PeopleModule } from './modules/people/people.module';
 import { MilestonesModule } from './modules/milestones/milestones.module';
 import { ActionItemsModule } from './modules/action-items/action-items.module';
+import { LinksModule } from './modules/links/links.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
@@ -22,6 +23,7 @@ import { AppService } from './app.service';
     PeopleModule,
     MilestonesModule,
     ActionItemsModule,
+    LinksModule,
   ],
   controllers: [AppController],
 
