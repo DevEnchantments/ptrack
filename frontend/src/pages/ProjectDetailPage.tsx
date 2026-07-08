@@ -3,13 +3,16 @@ import { useParams, useNavigate } from 'react-router-dom'
 import {
   projectsApi,
   milestonesApi,
+  actionItemsApi,
   type ProjectDetail,
   type ProjectMemberDetail,
   type Milestone,
+  type ActionItem,
 } from '@/lib/api'
 import { Button } from '@/components/ui/button'
 import { AddPersonDialog } from '@/components/AddPersonDialog'
 import { AddMilestoneDialog } from '@/components/AddMilestoneDialog'
+import { AddActionItemDialog } from '@/components/AddActionItemDialog'
 
 const ACTIONS = [
   'Add Person', 'Add Issue', 'Add Resource', 'Add Milestone',
@@ -46,10 +49,12 @@ export function ProjectDetailPage() {
   const navigate = useNavigate()
   const [project, setProject] = useState<ProjectDetail | null>(null)
   const [milestones, setMilestones] = useState<Milestone[]>([])
+  const [actionItems, setActionItems] = useState<ActionItem[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [addPersonOpen, setAddPersonOpen] = useState(false)
   const [addMilestoneOpen, setAddMilestoneOpen] = useState(false)
+  const [addActionItemOpen, setAddActionItemOpen] = useState(false)
 
   const load = useCallback(() => {
     if (!id) return
@@ -68,10 +73,19 @@ export function ProjectDetailPage() {
       .catch(() => {})
   }, [id])
 
+  const loadActionItems = useCallback(() => {
+    if (!id) return
+    actionItemsApi
+      .list(id)
+      .then(setActionItems)
+      .catch(() => {})
+  }, [id])
+
   useEffect(() => {
     load()
     loadMilestones()
-  }, [load, loadMilestones])
+    loadActionItems()
+  }, [load, loadMilestones, loadActionItems])
 
   if (loading) {
     return <div className="p-6 text-muted-foreground">Loading…</div>
@@ -96,11 +110,12 @@ export function ProjectDetailPage() {
     <a href={project.primary_url} target="_blank" rel="noreferrer" className="text-primary hover:underline">{project.primary_url}</a>
   ) : null
 
-  const enabledActions = new Set(['Add Person', 'Add Milestone'])
+  const enabledActions = new Set(['Add Person', 'Add Milestone', 'Add Action Item'])
 
   function onAction(a: string) {
     if (a === 'Add Person') setAddPersonOpen(true)
     else if (a === 'Add Milestone') setAddMilestoneOpen(true)
+    else if (a === 'Add Action Item') setAddActionItemOpen(true)
   }
 
   return (
@@ -202,6 +217,42 @@ export function ProjectDetailPage() {
               ))}
             </ul>
           )}
+
+          <h2 className="mb-3 mt-8 text-lg font-semibold">Action Items</h2>
+          {actionItems.length === 0 ? (
+            <p className="text-sm text-muted-foreground">No action items yet.</p>
+          ) : (
+            <ul className="divide-y rounded-md border">
+              {actionItems.map((a) => (
+                <li key={a.id} className="px-4 py-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium">{a.title}</span>
+                    <span className="text-sm text-muted-foreground">
+                      {STATUS_LABELS[a.status] ?? a.status}
+                    </span>
+                  </div>
+                  <div className="mt-1 flex flex-wrap gap-x-4 text-xs text-muted-foreground">
+                    {a.due_date && <span>Due {a.due_date}</span>}
+                    {a.type?.name && <span>Type: {a.type.name}</span>}
+                    {a.milestone?.name && <span>Milestone: {a.milestone.name}</span>}
+                    {a.owners.length > 0 && (
+                      <span>
+                        Owners:{' '}
+                        {a.owners
+                          .slice()
+                          .sort((x, y) => x.slot - y.slot)
+                          .map(
+                            (o) =>
+                              o.profile?.full_name || o.profile?.email || '—',
+                          )
+                          .join(', ')}
+                      </span>
+                    )}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
 
         <aside>
@@ -241,6 +292,13 @@ export function ProjectDetailPage() {
         open={addMilestoneOpen}
         onOpenChange={setAddMilestoneOpen}
         onAdded={loadMilestones}
+      />
+
+      <AddActionItemDialog
+        projectId={project.id}
+        open={addActionItemOpen}
+        onOpenChange={setAddActionItemOpen}
+        onAdded={loadActionItems}
       />
     </div>
   )

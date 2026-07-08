@@ -142,3 +142,33 @@ export const milestonesApi = {
   add: (projectId: string, data: Record<string, unknown>) =>
     apiPost<Milestone>(`/projects/${projectId}/milestones`, data),
 }
+
+export interface ActionItemOwner {
+  slot: number
+  user_id: string
+  profile: { full_name: string | null; email: string | null } | null
+}
+
+export interface ActionItem {
+  id: string
+  project_id: string
+  milestone_id: string | null
+  title: string
+  description: string | null
+  type_id: string | null
+  role_id: string | null
+  due_date: string | null
+  status: string
+  tags: string[] | null
+  type: { name: string } | null
+  role: { name: string } | null
+  milestone: { name: string } | null
+  owners: ActionItemOwner[]
+}
+
+export const actionItemsApi = {
+  list: (projectId: string) =>
+    apiGet<ActionItem[]>(`/projects/${projectId}/action-items`),
+  add: (projectId: string, data: Record<string, unknown>) =>
+    apiPost<ActionItem>(`/projects/${projectId}/action-items`, data),
+}

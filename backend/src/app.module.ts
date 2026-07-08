@@ -8,6 +8,7 @@ import { UsersModule } from './modules/users/users.module';
 import { LookupsModule } from './modules/lookups/lookups.module';
 import { PeopleModule } from './modules/people/people.module';
 import { MilestonesModule } from './modules/milestones/milestones.module';
+import { ActionItemsModule } from './modules/action-items/action-items.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
@@ -20,8 +21,10 @@ import { AppService } from './app.service';
     LookupsModule,
     PeopleModule,
     MilestonesModule,
+    ActionItemsModule,
   ],
   controllers: [AppController],
+
   providers: [
     AppService,
     { provide: APP_GUARD, useClass: SupabaseAuthGuard },
