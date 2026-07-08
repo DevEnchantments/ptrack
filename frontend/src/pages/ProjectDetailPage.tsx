@@ -304,7 +304,7 @@ export function ProjectDetailPage() {
         projectId={project.id}
         open={addActionItemOpen}
         onOpenChange={setAddActionItemOpen}
-        onAdded={loadActionItems}
+        onSaved={loadActionItems}
       />
     </div>
   )

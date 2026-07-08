@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
 import type { ProjectMemberInput } from '@/pages/CreateProjectWizard'
+import { useNavigate } from 'react-router-dom'
 import {
   lookupsApi,
   milestonesApi,
   actionItemsApi,
   type Lookup,
   type Milestone,
+  type ActionItem,
 } from '@/lib/api'
 import { useAuth } from '@/lib/auth-context'
 import { PersonAutocomplete } from '@/components/PersonAutocomplete'
@@ -45,20 +47,49 @@ function emptyOwner(): ProjectMemberInput {
   return { user_id: null, display_name: '', email: null, role_id: null }
 }
 
+function ownerFromItem(o: ActionItem['owners'][number]): ProjectMemberInput {
+  return {
+    user_id: o.user_id,
+    display_name: o.profile?.full_name || o.profile?.email || '',
+    email: o.profile?.email ?? null,
+    role_id: null,
+  }
+}
+
+function ownersFromItem(item: ActionItem): ProjectMemberInput[] {
+  const sorted = item.owners.slice().sort((a, b) => a.slot - b.slot)
+  const slots = sorted.map(ownerFromItem)
+  while (slots.length < 4) slots.push(emptyOwner())
+  return slots.slice(0, 4)
+}
+
+function profileName(
+  p?: { full_name: string | null; email: string | null } | null,
+): string {
+  return p?.full_name || p?.email || 'Unknown'
+}
+
 interface Props {
   projectId: string
   open: boolean
   onOpenChange: (open: boolean) => void
-  onAdded: () => void
+  onSaved: () => void
+  existing?: ActionItem | null
+  onDeleted?: () => void
 }
 
 export function AddActionItemDialog({
   projectId,
   open,
   onOpenChange,
-  onAdded,
+  onSaved,
+  existing,
+  onDeleted,
 }: Props) {
   const { user } = useAuth()
+  const navigate = useNavigate()
+  const isEdit = Boolean(existing)
+
   const [roles, setRoles] = useState<Lookup[]>([])
   const [types, setTypes] = useState<Lookup[]>([])
   const [milestones, setMilestones] = useState<Milestone[]>([])
@@ -79,6 +110,8 @@ export function AddActionItemDialog({
   const [tags, setTags] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [saving, setSaving] = useState(false)
+  const [confirmDelete, setConfirmDelete] = useState(false)
+  const [deleting, setDeleting] = useState(false)
 
   useEffect(() => {
     if (!open) return
@@ -87,7 +120,27 @@ export function AddActionItemDialog({
     milestonesApi.list(projectId).then(setMilestones).catch(() => {})
   }, [open, projectId])
 
-  function reset() {
+  useEffect(() => {
+    if (!open) return
+    if (existing) {
+      setTitle(existing.title)
+      setMilestoneId(existing.milestone_id)
+      setDueDate(existing.due_date ?? today())
+      setStatus(existing.status)
+      setTypeId(existing.type_id)
+      setRoleId(existing.role_id)
+      setOwners(ownersFromItem(existing))
+      setDescription(existing.description ?? '')
+      setTags(existing.tags?.join(', ') ?? '')
+    } else {
+      resetFields()
+    }
+    setError(null)
+    setConfirmDelete(false)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, existing])
+
+  function resetFields() {
     setTitle('')
     setMilestoneId(null)
     setDueDate(today())
@@ -97,13 +150,16 @@ export function AddActionItemDialog({
     setOwners([emptyOwner(), emptyOwner(), emptyOwner(), emptyOwner()])
     setDescription('')
     setTags('')
+  }
+
+  function reset() {
+    resetFields()
     setError(null)
+    setConfirmDelete(false)
   }
 
   function setOwnerAt(index: number, patch: Partial<ProjectMemberInput>) {
-    setOwners((cur) =>
-      cur.map((o, i) => (i === index ? { ...o, ...patch } : o)),
-    )
+    setOwners((cur) => cur.map((o, i) => (i === index ? { ...o, ...patch } : o)))
   }
 
   function setMe() {
@@ -121,9 +177,7 @@ export function AddActionItemDialog({
 
     const ownerIds = [
       ...new Set(
-        owners
-          .map((o) => o.user_id)
-          .filter((id): id is string => Boolean(id)),
+        owners.map((o) => o.user_id).filter((id): id is string => Boolean(id)),
       ),
     ].slice(0, 4)
 
@@ -134,7 +188,7 @@ export function AddActionItemDialog({
         .map((t) => t.trim())
         .filter(Boolean)
 
-      await actionItemsApi.add(projectId, {
+      const payload = {
         title: title.trim(),
         milestone_id: milestoneId ?? undefined,
         due_date: dueDate,
@@ -143,17 +197,43 @@ export function AddActionItemDialog({
         role_id: roleId ?? undefined,
         description: description.trim() || undefined,
         tags: tagList.length ? tagList : undefined,
-        owner_ids: ownerIds.length ? ownerIds : undefined,
-      })
+        owner_ids: ownerIds,
+      }
+
+      if (isEdit && existing) {
+        await actionItemsApi.update(projectId, existing.id, payload)
+      } else {
+        await actionItemsApi.add(projectId, payload)
+      }
       reset()
       onOpenChange(false)
-      onAdded()
+      onSaved()
     } catch (e) {
       setError((e as Error).message)
     } finally {
       setSaving(false)
     }
   }
+
+  async function doDelete() {
+    if (!existing) return
+    setError(null)
+    setDeleting(true)
+    try {
+      await actionItemsApi.remove(projectId, existing.id)
+      reset()
+      onOpenChange(false)
+      if (onDeleted) onDeleted()
+      else onSaved()
+    } catch (e) {
+      setError((e as Error).message)
+      setConfirmDelete(false)
+    } finally {
+      setDeleting(false)
+    }
+  }
+
+  const busy = saving || deleting
 
   return (
     <Dialog
@@ -325,23 +405,98 @@ export function AddActionItemDialog({
             />
           </div>
 
+          {isEdit && existing && (
+            <div className="border-t pt-3 text-xs text-muted-foreground">
+              {existing.created_at && (
+                <div>
+                  Created {new Date(existing.created_at).toLocaleString()} by{' '}
+                  {profileName(existing.created_by_profile)}
+                </div>
+              )}
+              {existing.updated_at && (
+                <div>
+                  Last updated {new Date(existing.updated_at).toLocaleString()}{' '}
+                  by {profileName(existing.updated_by_profile)}
+                </div>
+              )}
+              <button
+                type="button"
+                onClick={() => {
+                  onOpenChange(false)
+                  navigate(`/projects/${projectId}`)
+                }}
+                className="mt-1 text-primary hover:underline"
+              >
+                View Project
+              </button>
+              {existing.due_date && (
+                <div className="mt-1 font-medium text-foreground">
+                  Due On: {existing.due_date}
+                </div>
+              )}
+            </div>
+          )}
+
           {error && <p className="text-sm text-destructive">{error}</p>}
         </div>
 
-        <DialogFooter>
-          <Button
-            variant="outline"
-            onClick={() => {
-              reset()
-              onOpenChange(false)
-            }}
-            disabled={saving}
-          >
-            Cancel
-          </Button>
-          <Button onClick={submit} disabled={saving}>
-            {saving ? 'Adding…' : 'Add Action Item'}
-          </Button>
+        <DialogFooter className="sm:justify-between">
+          <div>
+            {isEdit &&
+              (confirmDelete ? (
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-destructive">Delete?</span>
+                  <Button
+                    variant="destructive"
+                    size="sm"
+                    onClick={doDelete}
+                    disabled={busy}
+                  >
+                    {deleting ? 'Deleting…' : 'Confirm'}
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setConfirmDelete(false)}
+                    disabled={busy}
+                  >
+                    No
+                  </Button>
+                </div>
+              ) : (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="text-destructive"
+                  onClick={() => setConfirmDelete(true)}
+                  disabled={busy}
+                >
+                  Delete
+                </Button>
+              ))}
+          </div>
+
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              onClick={() => {
+                reset()
+                onOpenChange(false)
+              }}
+              disabled={busy}
+            >
+              Cancel
+            </Button>
+            <Button onClick={submit} disabled={busy}>
+              {saving
+                ? isEdit
+                  ? 'Saving…'
+                  : 'Adding…'
+                : isEdit
+                  ? 'Apply Changes'
+                  : 'Add Action Item'}
+            </Button>
+          </div>
         </DialogFooter>
       </DialogContent>
     </Dialog>

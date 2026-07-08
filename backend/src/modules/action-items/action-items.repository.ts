@@ -26,6 +26,14 @@ export interface ActionItemListItem extends ActionItem {
     user_id: string;
     profile: { full_name: string | null; email: string | null } | null;
   }>;
+  created_by_profile?: {
+    full_name: string | null;
+    email: string | null;
+  } | null;
+  updated_by_profile?: {
+    full_name: string | null;
+    email: string | null;
+  } | null;
 }
 
 export interface ActionItemComment {
@@ -56,6 +64,29 @@ export class ActionItemsRepository {
     return data as unknown as ActionItem;
   }
 
+  async update(
+    projectId: string,
+    actionItemId: string,
+    patch: Record<string, unknown>,
+  ): Promise<ActionItem> {
+    const { data, error } = await this.table
+      .update(patch)
+      .eq('project_id', projectId)
+      .eq('id', actionItemId)
+      .select(COLUMNS)
+      .single();
+    if (error) throw toHttpException(error, 'actionItems.update');
+    return data as unknown as ActionItem;
+  }
+
+  async remove(projectId: string, actionItemId: string): Promise<void> {
+    const { error } = await this.table
+      .delete()
+      .eq('project_id', projectId)
+      .eq('id', actionItemId);
+    if (error) throw toHttpException(error, 'actionItems.remove');
+  }
+
   async insertOwners(actionItemId: string, ownerIds: string[]): Promise<void> {
     if (!ownerIds.length) return;
     const rows = ownerIds.map((user_id, i) => ({
@@ -67,6 +98,14 @@ export class ActionItemsRepository {
       .from('action_item_owners')
       .insert(rows);
     if (error) throw toHttpException(error, 'actionItems.insertOwners');
+  }
+
+  async deleteOwners(actionItemId: string): Promise<void> {
+    const { error } = await this.db.client
+      .from('action_item_owners')
+      .delete()
+      .eq('action_item_id', actionItemId);
+    if (error) throw toHttpException(error, 'actionItems.deleteOwners');
   }
 
   async findByProject(projectId: string): Promise<ActionItemListItem[]> {
@@ -100,7 +139,9 @@ export class ActionItemsRepository {
          owners:action_item_owners (
            slot, user_id,
            profile:profiles!user_id ( full_name, email )
-         )`,
+         ),
+         created_by_profile:profiles!created_by ( full_name, email ),
+         updated_by_profile:profiles!updated_by ( full_name, email )`,
       )
       .eq('project_id', projectId)
       .eq('id', actionItemId)
@@ -109,7 +150,7 @@ export class ActionItemsRepository {
     return (data as unknown as ActionItemListItem) ?? null;
   }
 
-async listComments(actionItemId: string): Promise<ActionItemComment[]> {
+  async listComments(actionItemId: string): Promise<ActionItemComment[]> {
     const { data, error } = await this.db.client
       .from('action_item_comments')
       .select(
@@ -137,5 +178,5 @@ async listComments(actionItemId: string): Promise<ActionItemComment[]> {
       .single();
     if (error) throw toHttpException(error, 'actionItems.insertComment');
     return data as unknown as ActionItemComment;
-  }  
+  }
 }

@@ -7,6 +7,7 @@ import {
 } from '@/lib/api'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
+import { AddActionItemDialog } from '@/components/AddActionItemDialog'
 
 const STATUS_LABELS: Record<string, string> = {
   open: 'Open',
@@ -50,6 +51,7 @@ export function ActionItemDetailPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [tab, setTab] = useState<Tab>('Show All')
+  const [editOpen, setEditOpen] = useState(false)
 
   const [comments, setComments] = useState<ActionItemComment[]>([])
   const [newComment, setNewComment] = useState('')
@@ -139,7 +141,11 @@ export function ActionItemDetailPage() {
       <div className="mx-auto max-w-5xl p-6">
         <div className="mb-6 flex items-center justify-between">
           <h1 className="text-2xl font-semibold">Action Item</h1>
-          <Button variant="outline" size="sm" disabled>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setEditOpen(true)}
+          >
             Edit Action Item
           </Button>
         </div>
@@ -234,6 +240,15 @@ export function ActionItemDetailPage() {
           </section>
         )}
       </div>
+
+      <AddActionItemDialog
+        projectId={projectId!}
+        open={editOpen}
+        onOpenChange={setEditOpen}
+        existing={item}
+        onSaved={load}
+        onDeleted={() => navigate(`/projects/${projectId}`)}
+      />
     </div>
   )
 }

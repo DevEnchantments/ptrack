@@ -41,6 +41,24 @@ export async function apiPost<T>(path: string, body: unknown): Promise<T> {
   )
 }
 
+export async function apiPatch<T>(path: string, body: unknown): Promise<T> {
+  const headers = await authHeader()
+  return handle<T>(
+    await fetch(`${API_URL}${path}`, {
+      method: 'PATCH',
+      headers: { ...headers, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    }),
+  )
+}
+
+export async function apiDelete<T>(path: string): Promise<T> {
+  const headers = await authHeader()
+  return handle<T>(
+    await fetch(`${API_URL}${path}`, { method: 'DELETE', headers }),
+  )
+}
+
 export interface Project {
   id: string
   name: string
@@ -164,6 +182,18 @@ export interface ActionItem {
   role: { name: string } | null
   milestone: { name: string } | null
   owners: ActionItemOwner[]
+  created_at?: string
+  updated_at?: string
+  created_by_profile?: { full_name: string | null; email: string | null } | null
+  updated_by_profile?: { full_name: string | null; email: string | null } | null
+}
+
+export interface ActionItemComment {
+  id: string
+  action_item_id: string
+  body: string
+  created_at: string
+  author: { full_name: string | null; email: string | null } | null
 }
 
 export const actionItemsApi = {
@@ -173,6 +203,19 @@ export const actionItemsApi = {
     apiGet<ActionItem>(`/projects/${projectId}/action-items/${actionItemId}`),
   add: (projectId: string, data: Record<string, unknown>) =>
     apiPost<ActionItem>(`/projects/${projectId}/action-items`, data),
+  update: (
+    projectId: string,
+    actionItemId: string,
+    data: Record<string, unknown>,
+  ) =>
+    apiPatch<ActionItem>(
+      `/projects/${projectId}/action-items/${actionItemId}`,
+      data,
+    ),
+  remove: (projectId: string, actionItemId: string) =>
+    apiDelete<{ deleted: boolean }>(
+      `/projects/${projectId}/action-items/${actionItemId}`,
+    ),
   listComments: (projectId: string, actionItemId: string) =>
     apiGet<ActionItemComment[]>(
       `/projects/${projectId}/action-items/${actionItemId}/comments`,
@@ -182,12 +225,4 @@ export const actionItemsApi = {
       `/projects/${projectId}/action-items/${actionItemId}/comments`,
       { body },
     ),
-}
-
-export interface ActionItemComment {
-  id: string
-  action_item_id: string
-  body: string
-  created_at: string
-  author: { full_name: string | null; email: string | null } | null
 }

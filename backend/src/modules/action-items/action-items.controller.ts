@@ -1,8 +1,16 @@
 import {
-  Body, Controller, Get, Param, ParseUUIDPipe, Post,
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseUUIDPipe,
+  Patch,
+  Post,
 } from '@nestjs/common';
 import { ActionItemsService } from './action-items.service';
 import { CreateActionItemDto } from './dto/create-action-item.dto';
+import { UpdateActionItemDto } from './dto/update-action-item.dto';
 import {
   CurrentUser,
   type AuthUser,
@@ -56,5 +64,23 @@ export class ActionItemsController {
     @CurrentUser() user: AuthUser,
   ) {
     return this.actionItems.add(projectId, dto, user.id);
+  }
+
+  @Patch(':actionItemId')
+  update(
+    @Param('projectId', ParseUUIDPipe) projectId: string,
+    @Param('actionItemId', ParseUUIDPipe) actionItemId: string,
+    @Body() dto: UpdateActionItemDto,
+    @CurrentUser() user: AuthUser,
+  ) {
+    return this.actionItems.update(projectId, actionItemId, dto, user.id);
+  }
+
+  @Delete(':actionItemId')
+  remove(
+    @Param('projectId', ParseUUIDPipe) projectId: string,
+    @Param('actionItemId', ParseUUIDPipe) actionItemId: string,
+  ) {
+    return this.actionItems.remove(projectId, actionItemId);
   }
 }
