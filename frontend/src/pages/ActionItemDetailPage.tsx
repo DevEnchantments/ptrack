@@ -8,6 +8,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { AddActionItemDialog } from '@/components/AddActionItemDialog'
+import { MiniCalendar } from '@/components/MiniCalendar'
 
 const STATUS_LABELS: Record<string, string> = {
   open: 'Open',
@@ -138,7 +139,8 @@ export function ActionItemDetailPage() {
         <span className="text-sm">Action Item</span>
       </header>
 
-      <div className="mx-auto max-w-5xl p-6">
+      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-8 p-6 lg:grid-cols-[1fr_240px]">
+        <div>
         <div className="mb-6 flex items-center justify-between">
           <h1 className="text-2xl font-semibold">Action Item</h1>
           <Button
@@ -239,6 +241,11 @@ export function ActionItemDetailPage() {
             </div>
           </section>
         )}
+        </div>
+
+        <aside className="flex flex-col gap-4">
+          <MiniCalendar label="Due Date" date={item.due_date} />
+        </aside>
       </div>
 
       <AddActionItemDialog
