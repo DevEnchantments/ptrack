@@ -201,19 +201,25 @@ create trigger trg_project_members_updated
 -- 5. Milestones
 -- ------------------------------------------------------------
 create table milestones (
-  id             uuid primary key default gen_random_uuid(),
-  project_id     uuid not null references projects (id) on delete cascade,
-  name           text not null,
-  description    text,
-  due_date       date,
-  owner_id       uuid references profiles (id) on delete set null,
-  status         text not null default 'not_started'
-                   check (status in ('not_started','in_progress','complete')),
-  completed_date date,
-  created_by     uuid references profiles (id) on delete set null,
-  updated_by     uuid references profiles (id) on delete set null,
-  created_at     timestamptz not null default now(),
-  updated_at     timestamptz not null default now()
+  id               uuid primary key default gen_random_uuid(),
+  project_id       uuid not null references projects (id) on delete cascade,
+  name             text not null,
+  description      text,
+  start_date       date,
+  due_date         date,
+  status           text not null default 'open'
+                     check (status in ('open','closed_completed','not_applicable')),
+  role_id          uuid references project_roles (id) on delete set null,
+  owner_id         uuid references profiles (id) on delete set null,
+  is_major         boolean not null default false,
+  tags             text[],
+  weightage        numeric,
+  percent_complete numeric,
+  completed_date   date,
+  created_by       uuid references profiles (id) on delete set null,
+  updated_by       uuid references profiles (id) on delete set null,
+  created_at       timestamptz not null default now(),
+  updated_at       timestamptz not null default now()
 );
 create trigger trg_milestones_updated
   before update on milestones
