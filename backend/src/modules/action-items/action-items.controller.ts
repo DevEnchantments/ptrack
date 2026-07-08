@@ -17,6 +17,14 @@ export class ActionItemsController {
     return this.actionItems.list(projectId);
   }
 
+  @Get(':actionItemId')
+  get(
+    @Param('projectId', ParseUUIDPipe) projectId: string,
+    @Param('actionItemId', ParseUUIDPipe) actionItemId: string,
+  ) {
+    return this.actionItems.get(projectId, actionItemId);
+  }
+
   @Post()
   add(
     @Param('projectId', ParseUUIDPipe) projectId: string,

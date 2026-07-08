@@ -1,9 +1,10 @@
+import { HomePage } from '@/pages/HomePage'
+import { LoginPage } from '@/pages/LoginPage'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { ProtectedRoute } from '@/components/ProtectedRoute'
-import { LoginPage } from '@/pages/LoginPage'
-import { HomePage } from '@/pages/HomePage'
-import { CreateProjectWizard } from '@/pages/CreateProjectWizard'
 import { ProjectDetailPage } from '@/pages/ProjectDetailPage'
+import { CreateProjectWizard } from '@/pages/CreateProjectWizard'
+import { ActionItemDetailPage } from '@/pages/ActionItemDetailPage'
 
 function App() {
   return (
@@ -13,6 +14,10 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/projects/new" element={<CreateProjectWizard />} />
         <Route path="/projects/:id" element={<ProjectDetailPage />} />
+        <Route
+          path="/projects/:projectId/action-items/:actionItemId"
+          element={<ActionItemDetailPage />}
+        />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

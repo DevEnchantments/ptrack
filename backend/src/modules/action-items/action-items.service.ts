@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { ActionItemsRepository } from './action-items.repository';
 import { CreateActionItemDto } from './dto/create-action-item.dto';
+
 
 @Injectable()
 export class ActionItemsService {
@@ -28,6 +29,12 @@ export class ActionItemsService {
     const ownerIds = [...new Set(dto.owner_ids ?? [])].slice(0, 4);
     await this.repo.insertOwners(item.id, ownerIds);
 
+    return item;
+  }
+
+  async get(projectId: string, actionItemId: string) {
+    const item = await this.repo.findOne(projectId, actionItemId);
+    if (!item) throw new NotFoundException('Action item not found.');
     return item;
   }
 }

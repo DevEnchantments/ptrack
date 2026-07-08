@@ -169,6 +169,8 @@ export interface ActionItem {
 export const actionItemsApi = {
   list: (projectId: string) =>
     apiGet<ActionItem[]>(`/projects/${projectId}/action-items`),
+  get: (projectId: string, actionItemId: string) =>
+    apiGet<ActionItem>(`/projects/${projectId}/action-items/${actionItemId}`),
   add: (projectId: string, data: Record<string, unknown>) =>
     apiPost<ActionItem>(`/projects/${projectId}/action-items`, data),
 }

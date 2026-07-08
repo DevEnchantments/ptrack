@@ -78,4 +78,26 @@ export class ActionItemsRepository {
     if (error) throw toHttpException(error, 'actionItems.findByProject');
     return (data ?? []) as unknown as ActionItemListItem[];
   }
+
+  async findOne(
+    projectId: string,
+    actionItemId: string,
+  ): Promise<ActionItemListItem | null> {
+    const { data, error } = await this.table
+      .select(
+        `${COLUMNS},
+         type:action_item_types ( name ),
+         role:project_roles ( name ),
+         milestone:milestones ( name ),
+         owners:action_item_owners (
+           slot, user_id,
+           profile:profiles!user_id ( full_name, email )
+         )`,
+      )
+      .eq('project_id', projectId)
+      .eq('id', actionItemId)
+      .maybeSingle();
+    if (error) throw toHttpException(error, 'actionItems.findOne');
+    return (data as unknown as ActionItemListItem) ?? null;
+  }
 }
