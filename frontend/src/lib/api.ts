@@ -158,6 +158,7 @@ export interface MilestoneDetail extends Milestone {
   completed_date: string | null
   created_at: string
   updated_at: string
+  project?: { name: string } | null
   created_by_profile?: { full_name: string | null; email: string | null } | null
   updated_by_profile?: { full_name: string | null; email: string | null } | null
 }

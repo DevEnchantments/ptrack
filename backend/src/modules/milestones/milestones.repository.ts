@@ -24,6 +24,7 @@ export interface Milestone {
 export interface MilestoneListItem extends Milestone {
   role: { name: string } | null;
   owner: { full_name: string | null; email: string | null } | null;
+  project?: { name: string } | null;
   created_by_profile?: {
     full_name: string | null;
     email: string | null;
@@ -99,6 +100,7 @@ export class MilestonesRepository {
         `${COLUMNS},
          role:project_roles ( name ),
          owner:profiles!owner_id ( full_name, email ),
+         project:projects ( name ),
          created_by_profile:profiles!created_by ( full_name, email ),
          updated_by_profile:profiles!updated_by ( full_name, email )`,
       )

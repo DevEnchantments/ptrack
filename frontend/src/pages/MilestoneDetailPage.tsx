@@ -2,10 +2,8 @@ import { useCallback, useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import {
   milestonesApi,
-  projectsApi,
   actionItemsApi,
   type MilestoneDetail,
-  type ProjectDetail,
   type ActionItem,
 } from '@/lib/api'
 import { Button } from '@/components/ui/button'
@@ -99,7 +97,6 @@ export function MilestoneDetailPage() {
   }>()
   const navigate = useNavigate()
   const [milestone, setMilestone] = useState<MilestoneDetail | null>(null)
-  const [project, setProject] = useState<ProjectDetail | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [tab, setTab] = useState<Tab>('Show All')
@@ -129,13 +126,7 @@ export function MilestoneDetailPage() {
   useEffect(() => {
     load()
     loadActionItems()
-    if (projectId) {
-      projectsApi
-        .get(projectId)
-        .then(setProject)
-        .catch(() => {})
-    }
-  }, [load, loadActionItems, projectId])
+  }, [load, loadActionItems])
 
   if (loading) {
     return <div className="p-6 text-muted-foreground">Loading…</div>
@@ -155,7 +146,7 @@ export function MilestoneDetailPage() {
     )
   }
 
-  const projectName = project?.name ?? 'Project'
+  const projectName = milestone.project?.name ?? 'Project'
   const showDescription = tab === 'Show All' || tab === 'Description'
   const showActionItems = tab === 'Show All' || tab === 'Milestone Action Items'
   const showHistory = tab === 'Show All' || tab === 'History'
@@ -203,7 +194,7 @@ export function MilestoneDetailPage() {
         </div>
 
         <dl className="rounded-md border px-4">
-          <Field label="Project" value={project?.name ?? null} />
+          <Field label="Project" value={milestone.project?.name ?? null} />
           <Field label="Milestone" value={milestone.name} />
           <Field label="Start Date" value={formatLongDate(milestone.start_date)} />
           <Field label="Due Date" value={formatLongDate(milestone.due_date)} />
