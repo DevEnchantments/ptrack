@@ -11,6 +11,7 @@ import { MilestonesModule } from './modules/milestones/milestones.module';
 import { ActionItemsModule } from './modules/action-items/action-items.module';
 import { LinksModule } from './modules/links/links.module';
 import { ResourcesModule } from './modules/resources/resources.module';
+import { IssuesModule } from './modules/issues/issues.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
@@ -26,6 +27,7 @@ import { AppService } from './app.service';
     ActionItemsModule,
     LinksModule,
     ResourcesModule,
+    IssuesModule,
   ],
   controllers: [AppController],
 

@@ -6,6 +6,7 @@ import {
   actionItemsApi,
   linksApi,
   resourcesApi,
+  issuesApi,
   type ProjectDetail,
   type ProjectMemberDetail,
   type Milestone,
@@ -13,6 +14,7 @@ import {
   type ActionItem,
   type Link,
   type Resource,
+  type Issue,
 } from '@/lib/api'
 import { Pencil } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -21,6 +23,7 @@ import { AddMilestoneDialog } from '@/components/AddMilestoneDialog'
 import { AddActionItemDialog } from '@/components/AddActionItemDialog'
 import { AddLinkDialog } from '@/components/AddLinkDialog'
 import { AddResourceDialog } from '@/components/AddResourceDialog'
+import { AddIssueDialog } from '@/components/AddIssueDialog'
 
 const ACTIONS = [
   'Add Person', 'Add Issue', 'Add Resource', 'Add Milestone',
@@ -32,6 +35,13 @@ const STATUS_LABELS: Record<string, string> = {
   open: 'Open',
   closed_completed: 'Closed / Completed',
   not_applicable: 'Not Applicable',
+}
+
+const ISSUE_STATUS_LABELS: Record<string, string> = {
+  open: 'Open',
+  in_progress: 'In Progress',
+  resolved: 'Resolved',
+  closed: 'Closed',
 }
 
 function Field({ label, value }: { label: string; value: React.ReactNode }) {
@@ -58,6 +68,13 @@ function linkAuthor(l: Link) {
 
 function resourceUpdatedBy(r: Resource) {
   return r.updated_by_profile?.full_name || r.updated_by_profile?.email || 'Unknown'
+}
+
+function issueOwnerDisplay(i: Issue): string | null {
+  const owner = i.owner?.full_name || i.owner?.email || null
+  const role = i.role?.name || null
+  if (role && owner) return `${role}: ${owner}`
+  return owner || role || null
 }
 
 function relativeTime(iso: string): string {
@@ -111,6 +128,10 @@ export function ProjectDetailPage() {
   const [editingLink, setEditingLink] = useState<Link | null>(null)
   const [resourceOpen, setResourceOpen] = useState(false)
   const [editingResource, setEditingResource] = useState<Resource | null>(null)
+  const [issues, setIssues] = useState<Issue[]>([])
+  const [issueOpen, setIssueOpen] = useState(false)
+  const [editingIssue, setEditingIssue] = useState<Issue | null>(null)
+  const [showAllIssues, setShowAllIssues] = useState(true)
 
   const load = useCallback(() => {
     if (!id) return
@@ -141,13 +162,19 @@ export function ProjectDetailPage() {
     resourcesApi.list(id).then(setResources).catch(() => {})
   }, [id])
 
+  const loadIssues = useCallback(() => {
+    if (!id) return
+    issuesApi.list(id).then(setIssues).catch(() => {})
+  }, [id])
+
   useEffect(() => {
     load()
     loadMilestones()
     loadActionItems()
     loadLinks()
     loadResources()
-  }, [load, loadMilestones, loadActionItems, loadLinks, loadResources])
+    loadIssues()
+  }, [load, loadMilestones, loadActionItems, loadLinks, loadResources, loadIssues])
 
   if (loading) {
     return <div className="p-6 text-muted-foreground">Loading…</div>
@@ -178,6 +205,7 @@ export function ProjectDetailPage() {
     'Add Action Item',
     'Add Link',
     'Add Resource',
+    'Add Issue',
   ])
 
   function onAction(a: string) {
@@ -196,6 +224,9 @@ export function ProjectDetailPage() {
     } else if (a === 'Add Resource') {
       setEditingResource(null)
       setResourceOpen(true)
+    } else if (a === 'Add Issue') {
+      setEditingIssue(null)
+      setIssueOpen(true)
     }
   }
 
@@ -473,6 +504,72 @@ export function ProjectDetailPage() {
               ))}
             </ul>
           )}
+
+          <h2 className="mb-3 mt-8 text-lg font-semibold">Issues</h2>
+          {issues.length === 0 ? (
+            <p className="text-sm text-muted-foreground">No issues yet.</p>
+          ) : (
+            <>
+              <label className="mb-3 flex items-center gap-2 text-sm">
+                <input
+                  type="checkbox"
+                  className="h-4 w-4 accent-primary"
+                  checked={showAllIssues}
+                  onChange={(e) => setShowAllIssues(e.target.checked)}
+                />
+                Show All Issues (Open and Closed)
+              </label>
+              {(() => {
+                const visible = showAllIssues
+                  ? issues
+                  : issues.filter((i) => i.status === 'open')
+                if (visible.length === 0)
+                  return (
+                    <p className="text-sm text-muted-foreground">
+                      No open issues.
+                    </p>
+                  )
+                return (
+                  <ul className="divide-y rounded-md border">
+                    {visible.map((i) => (
+                      <li
+                        key={i.id}
+                        className="flex items-start gap-3 px-4 py-3 hover:bg-accent"
+                      >
+                        <EditButton
+                          label="Edit issue"
+                          onClick={() => {
+                            setEditingIssue(i)
+                            setIssueOpen(true)
+                          }}
+                        />
+                        <div className="flex-1">
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm font-medium">
+                              {i.title}
+                            </span>
+                            <span className="text-sm text-muted-foreground">
+                              {ISSUE_STATUS_LABELS[i.status] ?? i.status}
+                            </span>
+                          </div>
+                          <div className="mt-1 flex flex-wrap gap-x-4 text-xs text-muted-foreground">
+                            {i.category?.name && (
+                              <span>Category: {i.category.name}</span>
+                            )}
+                            {i.level?.name && <span>Level: {i.level.name}</span>}
+                            {issueOwnerDisplay(i) && (
+                              <span>Owner: {issueOwnerDisplay(i)}</span>
+                            )}
+                            <span>Updated {relativeTime(i.updated_at)}</span>
+                          </div>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                )
+              })()}
+            </>
+          )}
         </div>
 
         <aside>
@@ -556,6 +653,17 @@ export function ProjectDetailPage() {
         }}
         existing={editingResource}
         onAdded={loadResources}
+      />
+
+      <AddIssueDialog
+        projectId={project.id}
+        open={issueOpen}
+        onOpenChange={(o) => {
+          setIssueOpen(o)
+          if (!o) setEditingIssue(null)
+        }}
+        existing={editingIssue}
+        onAdded={loadIssues}
       />
     </div>
   )

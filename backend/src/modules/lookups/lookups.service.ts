@@ -14,6 +14,8 @@ const ALLOWED: Record<string, string> = {
   'involvement-levels': 'involvement_levels',
   'action-item-types': 'action_item_types',
   'resource-types': 'resource_types',
+  'issue-categories': 'issue_categories',
+  'issue-levels': 'issue_levels',
 };
 
 const ACCESS_LEVELS = ['read_only', 'read_write', 'read_write_admin'];

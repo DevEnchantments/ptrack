@@ -307,3 +307,34 @@ export const resourcesApi = {
   ) =>
     apiPatch<Resource>(`/projects/${projectId}/resources/${resourceId}`, data),
 }
+
+export interface Issue {
+  id: string
+  project_id: string
+  title: string
+  description: string | null
+  category_id: string | null
+  level_id: string | null
+  role_id: string | null
+  owner_id: string | null
+  status: string
+  url: string | null
+  tags: string[] | null
+  resolution: string | null
+  created_at: string
+  updated_at: string
+  category: { name: string } | null
+  level: { name: string } | null
+  role: { name: string } | null
+  owner: { full_name: string | null; email: string | null } | null
+  updated_by_profile?: { full_name: string | null; email: string | null } | null
+}
+
+export const issuesApi = {
+  list: (projectId: string) =>
+    apiGet<Issue[]>(`/projects/${projectId}/issues`),
+  add: (projectId: string, data: Record<string, unknown>) =>
+    apiPost<Issue>(`/projects/${projectId}/issues`, data),
+  update: (projectId: string, issueId: string, data: Record<string, unknown>) =>
+    apiPatch<Issue>(`/projects/${projectId}/issues/${issueId}`, data),
+}
