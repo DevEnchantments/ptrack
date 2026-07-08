@@ -6,6 +6,7 @@ import { ProjectDetailPage } from '@/pages/ProjectDetailPage'
 import { CreateProjectWizard } from '@/pages/CreateProjectWizard'
 import { ActionItemDetailPage } from '@/pages/ActionItemDetailPage'
 import { MilestoneDetailPage } from '@/pages/MilestoneDetailPage'
+import { StatusReportDetailPage } from '@/pages/StatusReportDetailPage'
 
 function App() {
   return (
@@ -22,6 +23,10 @@ function App() {
         <Route
           path="/projects/:projectId/milestones/:milestoneId"
           element={<MilestoneDetailPage />}
+        />
+        <Route
+          path="/projects/:projectId/status-reports/:statusReportId"
+          element={<StatusReportDetailPage />}
         />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />

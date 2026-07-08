@@ -377,9 +377,17 @@ export interface StatusReport {
   author: { full_name: string | null; email: string | null } | null
 }
 
+export interface StatusReportDetail extends StatusReport {
+  project: { name: string } | null
+}
+
 export const statusReportsApi = {
   list: (projectId: string) =>
     apiGet<StatusReport[]>(`/projects/${projectId}/status-reports`),
+  get: (projectId: string, statusReportId: string) =>
+    apiGet<StatusReportDetail>(
+      `/projects/${projectId}/status-reports/${statusReportId}`,
+    ),
   add: (projectId: string, data: Record<string, unknown>) =>
     apiPost<StatusReport>(`/projects/${projectId}/status-reports`, data),
 }

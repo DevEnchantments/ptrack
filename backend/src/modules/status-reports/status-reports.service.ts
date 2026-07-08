@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { StatusReportsRepository } from './status-reports.repository';
 import { CreateStatusReportDto } from './dto/create-status-report.dto';
 
@@ -8,6 +8,12 @@ export class StatusReportsService {
 
   list(projectId: string) {
     return this.repo.findByProject(projectId);
+  }
+
+  async get(projectId: string, statusReportId: string) {
+    const report = await this.repo.findOne(projectId, statusReportId);
+    if (!report) throw new NotFoundException('Status report not found.');
+    return report;
   }
 
   add(projectId: string, dto: CreateStatusReportDto, userId: string) {

@@ -19,6 +19,10 @@ export interface StatusReportListItem extends StatusReport {
   author: { full_name: string | null; email: string | null } | null;
 }
 
+export interface StatusReportDetail extends StatusReportListItem {
+  project: { name: string } | null;
+}
+
 const COLUMNS =
   'id, project_id, title, summary, report_date, viewable_by, editable_by, author_id, created_at, updated_at';
 
@@ -40,6 +44,19 @@ export class StatusReportsRepository {
       .single();
     if (error) throw toHttpException(error, 'statusReports.insert');
     return data as unknown as StatusReportListItem;
+  }
+
+  async findOne(
+    projectId: string,
+    statusReportId: string,
+  ): Promise<StatusReportDetail | null> {
+    const { data, error } = await this.table
+      .select(`${JOINS}, project:projects ( name )`)
+      .eq('project_id', projectId)
+      .eq('id', statusReportId)
+      .maybeSingle();
+    if (error) throw toHttpException(error, 'statusReports.findOne');
+    return (data as unknown as StatusReportDetail) ?? null;
   }
 
   async findByProject(projectId: string): Promise<StatusReportListItem[]> {

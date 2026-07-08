@@ -17,6 +17,14 @@ export class StatusReportsController {
     return this.reports.list(projectId);
   }
 
+  @Get(':statusReportId')
+  get(
+    @Param('projectId', ParseUUIDPipe) projectId: string,
+    @Param('statusReportId', ParseUUIDPipe) statusReportId: string,
+  ) {
+    return this.reports.get(projectId, statusReportId);
+  }
+
   @Post()
   add(
     @Param('projectId', ParseUUIDPipe) projectId: string,
