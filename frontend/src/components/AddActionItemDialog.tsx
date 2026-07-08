@@ -91,6 +91,7 @@ export function AddActionItemDialog({
   const { user } = useAuth()
   const navigate = useNavigate()
   const isEdit = Boolean(existing)
+  const lockMilestone = Boolean(defaultMilestoneId) && !isEdit
 
   const [roles, setRoles] = useState<Lookup[]>([])
   const [types, setTypes] = useState<Lookup[]>([])
@@ -262,6 +263,7 @@ export function AddActionItemDialog({
           <div className="flex flex-col gap-2">
             <Label>Milestone</Label>
             <Select
+              disabled={lockMilestone}
               items={[
                 { label: '- No Milestone -', value: NO_MILESTONE },
                 ...milestones.map((m) => ({ label: m.name, value: m.id })),
@@ -283,6 +285,11 @@ export function AddActionItemDialog({
                 ))}
               </SelectContent>
             </Select>
+            {lockMilestone && (
+              <p className="text-xs text-muted-foreground">
+                Linked to this milestone.
+              </p>
+            )}
           </div>
 
           <div className="flex flex-col gap-2">
