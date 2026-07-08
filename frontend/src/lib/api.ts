@@ -75,6 +75,10 @@ export interface ProjectMemberDetail {
   id: string
   user_id: string | null
   pending_name: string | null
+  role_id: string | null
+  access_level: string
+  involvement_level_id: string | null
+  notes: string | null
   status: string
   role: { name: string } | null
   profile: { full_name: string | null; email: string | null } | null
@@ -134,6 +138,10 @@ export const rolesApi = {
 export const peopleApi = {
   add: (projectId: string, data: Record<string, unknown>) =>
     apiPost<unknown>(`/projects/${projectId}/people`, data),
+  update: (projectId: string, memberId: string, data: Record<string, unknown>) =>
+    apiPatch<unknown>(`/projects/${projectId}/people/${memberId}`, data),
+  remove: (projectId: string, memberId: string) =>
+    apiDelete<{ deleted: boolean }>(`/projects/${projectId}/people/${memberId}`),
 }
 
 export interface Milestone {

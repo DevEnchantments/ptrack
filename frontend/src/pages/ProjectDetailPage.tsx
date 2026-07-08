@@ -103,6 +103,8 @@ export function ProjectDetailPage() {
   const [links, setLinks] = useState<Link[]>([])
   const [linkDialogOpen, setLinkDialogOpen] = useState(false)
   const [editingLink, setEditingLink] = useState<Link | null>(null)
+  const [editingMember, setEditingMember] = useState<ProjectMemberDetail | null>(null)
+  const [editingActionItem, setEditingActionItem] = useState<ActionItem | null>(null)
 
   const load = useCallback(() => {
     if (!id) return
@@ -256,17 +258,29 @@ export function ProjectDetailPage() {
               {project.members.map((m) => (
                 <li
                   key={m.id}
-                  className="flex items-center justify-between px-4 py-3"
+                  className="flex items-center gap-3 px-4 py-3 hover:bg-accent"
                 >
-                  <div>
-                    <span className="text-sm font-medium">{memberName(m)}</span>
-                    {m.status === 'pending' && (
-                      <span className="ml-2 text-xs text-amber-600">(pending)</span>
-                    )}
+                  <button
+                    type="button"
+                    onClick={() => setEditingMember(m)}
+                    aria-label="Edit person"
+                    className="text-muted-foreground hover:text-foreground"
+                  >
+                    <Pencil className="h-4 w-4" />
+                  </button>
+                  <div className="flex flex-1 items-center justify-between">
+                    <div>
+                      <span className="text-sm font-medium">{memberName(m)}</span>
+                      {m.status === 'pending' && (
+                        <span className="ml-2 text-xs text-amber-600">
+                          (pending)
+                        </span>
+                      )}
+                    </div>
+                    <span className="text-sm text-muted-foreground">
+                      {m.role?.name ?? '—'}
+                    </span>
                   </div>
-                  <span className="text-sm text-muted-foreground">
-                    {m.role?.name ?? '—'}
-                  </span>
                 </li>
               ))}
             </ul>
@@ -326,34 +340,48 @@ export function ProjectDetailPage() {
               {actionItems.map((a) => (
                 <li
                   key={a.id}
-                  onClick={() =>
-                    navigate(`/projects/${project.id}/action-items/${a.id}`)
-                  }
-                  className="cursor-pointer px-4 py-3 hover:bg-accent"
+                  className="flex items-start gap-3 px-4 py-3 hover:bg-accent"
                 >
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium">{a.title}</span>
-                    <span className="text-sm text-muted-foreground">
-                      {STATUS_LABELS[a.status] ?? a.status}
-                    </span>
-                  </div>
-                  <div className="mt-1 flex flex-wrap gap-x-4 text-xs text-muted-foreground">
-                    {a.due_date && <span>Due {a.due_date}</span>}
-                    {a.type?.name && <span>Type: {a.type.name}</span>}
-                    {a.milestone?.name && <span>Milestone: {a.milestone.name}</span>}
-                    {a.owners.length > 0 && (
-                      <span>
-                        Owners:{' '}
-                        {a.owners
-                          .slice()
-                          .sort((x, y) => x.slot - y.slot)
-                          .map(
-                            (o) =>
-                              o.profile?.full_name || o.profile?.email || '—',
-                          )
-                          .join(', ')}
+                  <button
+                    type="button"
+                    onClick={() => setEditingActionItem(a)}
+                    aria-label="Edit action item"
+                    className="mt-0.5 text-muted-foreground hover:text-foreground"
+                  >
+                    <Pencil className="h-4 w-4" />
+                  </button>
+                  <div
+                    onClick={() =>
+                      navigate(`/projects/${project.id}/action-items/${a.id}`)
+                    }
+                    className="flex-1 cursor-pointer"
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium">{a.title}</span>
+                      <span className="text-sm text-muted-foreground">
+                        {STATUS_LABELS[a.status] ?? a.status}
                       </span>
-                    )}
+                    </div>
+                    <div className="mt-1 flex flex-wrap gap-x-4 text-xs text-muted-foreground">
+                      {a.due_date && <span>Due {a.due_date}</span>}
+                      {a.type?.name && <span>Type: {a.type.name}</span>}
+                      {a.milestone?.name && (
+                        <span>Milestone: {a.milestone.name}</span>
+                      )}
+                      {a.owners.length > 0 && (
+                        <span>
+                          Owners:{' '}
+                          {a.owners
+                            .slice()
+                            .sort((x, y) => x.slot - y.slot)
+                            .map(
+                              (o) =>
+                                o.profile?.full_name || o.profile?.email || '—',
+                            )
+                            .join(', ')}
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </li>
               ))}

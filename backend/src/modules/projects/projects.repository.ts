@@ -38,6 +38,9 @@ export interface ProjectDetail extends Project {
     user_id: string | null;
     pending_name: string | null;
     role_id: string | null;
+    access_level: string;
+    involvement_level_id: string | null;
+    notes: string | null;
     status: string;
     role: { name: string } | null;
     profile: { full_name: string | null; email: string | null } | null;
@@ -81,7 +84,8 @@ export class ProjectsRepository {
         size:project_sizes ( name ),
         category:project_categories ( name ),
         members:project_members (
-          id, user_id, pending_name, role_id, status,
+          id, user_id, pending_name, role_id, access_level,
+          involvement_level_id, notes, status,
           role:project_roles ( name ),
           profile:profiles!user_id ( full_name, email )
         )
