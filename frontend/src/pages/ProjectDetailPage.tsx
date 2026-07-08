@@ -76,22 +76,16 @@ function relativeTime(iso: string): string {
   return `${yr} year${yr === 1 ? '' : 's'} ago`
 }
 
-function PencilIcon() {
+function EditButton({ onClick, label }: { onClick: () => void; label: string }) {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="14"
-      height="14"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={label}
+      className="mt-0.5 text-muted-foreground hover:text-foreground"
     >
-      <path d="M12 20h9" />
-      <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z" />
-    </svg>
+      <Pencil className="h-4 w-4" />
+    </button>
   )
 }
 
@@ -101,19 +95,21 @@ export function ProjectDetailPage() {
   const [project, setProject] = useState<ProjectDetail | null>(null)
   const [milestones, setMilestones] = useState<Milestone[]>([])
   const [actionItems, setActionItems] = useState<ActionItem[]>([])
+  const [links, setLinks] = useState<Link[]>([])
+  const [resources, setResources] = useState<Resource[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [addPersonOpen, setAddPersonOpen] = useState(false)
-  const [milestoneDialogOpen, setMilestoneDialogOpen] = useState(false)
-  const [editingMilestone, setEditingMilestone] = useState<MilestoneDetail | null>(null)
-  const [addActionItemOpen, setAddActionItemOpen] = useState(false)
-  const [links, setLinks] = useState<Link[]>([])
-  const [linkDialogOpen, setLinkDialogOpen] = useState(false)
-  const [editingLink, setEditingLink] = useState<Link | null>(null)
+
+  // One dialog per record type; `editing*` = null means "create".
+  const [personOpen, setPersonOpen] = useState(false)
   const [editingMember, setEditingMember] = useState<ProjectMemberDetail | null>(null)
+  const [milestoneOpen, setMilestoneOpen] = useState(false)
+  const [editingMilestone, setEditingMilestone] = useState<MilestoneDetail | null>(null)
+  const [actionItemOpen, setActionItemOpen] = useState(false)
   const [editingActionItem, setEditingActionItem] = useState<ActionItem | null>(null)
-  const [resources, setResources] = useState<Resource[]>([])
-  const [addResourceOpen, setAddResourceOpen] = useState(false)
+  const [linkOpen, setLinkOpen] = useState(false)
+  const [editingLink, setEditingLink] = useState<Link | null>(null)
+  const [resourceOpen, setResourceOpen] = useState(false)
   const [editingResource, setEditingResource] = useState<Resource | null>(null)
 
   const load = useCallback(() => {
@@ -127,34 +123,22 @@ export function ProjectDetailPage() {
 
   const loadMilestones = useCallback(() => {
     if (!id) return
-    milestonesApi
-      .list(id)
-      .then(setMilestones)
-      .catch(() => {})
+    milestonesApi.list(id).then(setMilestones).catch(() => {})
   }, [id])
 
   const loadActionItems = useCallback(() => {
     if (!id) return
-    actionItemsApi
-      .list(id)
-      .then(setActionItems)
-      .catch(() => {})
+    actionItemsApi.list(id).then(setActionItems).catch(() => {})
   }, [id])
 
   const loadLinks = useCallback(() => {
     if (!id) return
-    linksApi
-      .list(id)
-      .then(setLinks)
-      .catch(() => {})
+    linksApi.list(id).then(setLinks).catch(() => {})
   }, [id])
 
   const loadResources = useCallback(() => {
     if (!id) return
-    resourcesApi
-      .list(id)
-      .then(setResources)
-      .catch(() => {})
+    resourcesApi.list(id).then(setResources).catch(() => {})
   }, [id])
 
   useEffect(() => {
@@ -197,31 +181,33 @@ export function ProjectDetailPage() {
   ])
 
   function onAction(a: string) {
-    if (a === 'Add Person') setAddPersonOpen(true)
-    else if (a === 'Add Milestone') {
+    if (a === 'Add Person') {
+      setEditingMember(null)
+      setPersonOpen(true)
+    } else if (a === 'Add Milestone') {
       setEditingMilestone(null)
-      setMilestoneDialogOpen(true)
-    } else if (a === 'Add Action Item') setAddActionItemOpen(true)
-    else if (a === 'Add Link') {
+      setMilestoneOpen(true)
+    } else if (a === 'Add Action Item') {
+      setEditingActionItem(null)
+      setActionItemOpen(true)
+    } else if (a === 'Add Link') {
       setEditingLink(null)
-      setLinkDialogOpen(true)
+      setLinkOpen(true)
+    } else if (a === 'Add Resource') {
+      setEditingResource(null)
+      setResourceOpen(true)
     }
   }
 
   function openEditMilestone(milestoneId: string) {
-    if (!id) return
+    if (!project) return
     milestonesApi
-      .get(id, milestoneId)
+      .get(project.id, milestoneId)
       .then((md) => {
         setEditingMilestone(md)
-        setMilestoneDialogOpen(true)
+        setMilestoneOpen(true)
       })
       .catch(() => {})
-  }
-
-  function openEditLink(l: Link) {
-    setEditingLink(l)
-    setLinkDialogOpen(true)
   }
 
   return (
@@ -280,14 +266,13 @@ export function ProjectDetailPage() {
                   key={m.id}
                   className="flex items-center gap-3 px-4 py-3 hover:bg-accent"
                 >
-                  <button
-                    type="button"
-                    onClick={() => setEditingMember(m)}
-                    aria-label="Edit person"
-                    className="text-muted-foreground hover:text-foreground"
-                  >
-                    <Pencil className="h-4 w-4" />
-                  </button>
+                  <EditButton
+                    label="Edit person"
+                    onClick={() => {
+                      setEditingMember(m)
+                      setPersonOpen(true)
+                    }}
+                  />
                   <div className="flex flex-1 items-center justify-between">
                     <div>
                       <span className="text-sm font-medium">{memberName(m)}</span>
@@ -314,38 +299,36 @@ export function ProjectDetailPage() {
               {milestones.map((m) => (
                 <li
                   key={m.id}
-                  onClick={() =>
-                    navigate(`/projects/${project.id}/milestones/${m.id}`)
-                  }
-                  className="cursor-pointer px-4 py-3 hover:bg-accent"
+                  className="flex items-start gap-3 px-4 py-3 hover:bg-accent"
                 >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          openEditMilestone(m.id)
-                        }}
-                        title="Edit milestone"
-                        className="text-muted-foreground hover:text-foreground"
-                      >
-                        <PencilIcon />
-                      </button>
-                      <span className="text-sm font-medium">{m.name}</span>
-                      {m.is_major && (
-                        <span className="rounded bg-accent px-1.5 py-0.5 text-xs">
-                          Major
-                        </span>
-                      )}
+                  <EditButton
+                    label="Edit milestone"
+                    onClick={() => openEditMilestone(m.id)}
+                  />
+                  <div
+                    onClick={() =>
+                      navigate(`/projects/${project.id}/milestones/${m.id}`)
+                    }
+                    className="flex-1 cursor-pointer"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-medium">{m.name}</span>
+                        {m.is_major && (
+                          <span className="rounded bg-accent px-1.5 py-0.5 text-xs">
+                            Major
+                          </span>
+                        )}
+                      </div>
+                      <span className="text-sm text-muted-foreground">
+                        {STATUS_LABELS[m.status] ?? m.status}
+                      </span>
                     </div>
-                    <span className="text-sm text-muted-foreground">
-                      {STATUS_LABELS[m.status] ?? m.status}
-                    </span>
-                  </div>
-                  <div className="mt-1 flex flex-wrap gap-x-4 text-xs text-muted-foreground">
-                    {m.due_date && <span>Due {m.due_date}</span>}
-                    {ownerName(m) && <span>Owner: {ownerName(m)}</span>}
-                    {m.role?.name && <span>Role: {m.role.name}</span>}
+                    <div className="mt-1 flex flex-wrap gap-x-4 text-xs text-muted-foreground">
+                      {m.due_date && <span>Due {m.due_date}</span>}
+                      {ownerName(m) && <span>Owner: {ownerName(m)}</span>}
+                      {m.role?.name && <span>Role: {m.role.name}</span>}
+                    </div>
                   </div>
                 </li>
               ))}
@@ -362,14 +345,13 @@ export function ProjectDetailPage() {
                   key={a.id}
                   className="flex items-start gap-3 px-4 py-3 hover:bg-accent"
                 >
-                  <button
-                    type="button"
-                    onClick={() => setEditingActionItem(a)}
-                    aria-label="Edit action item"
-                    className="mt-0.5 text-muted-foreground hover:text-foreground"
-                  >
-                    <Pencil className="h-4 w-4" />
-                  </button>
+                  <EditButton
+                    label="Edit action item"
+                    onClick={() => {
+                      setEditingActionItem(a)
+                      setActionItemOpen(true)
+                    }}
+                  />
                   <div
                     onClick={() =>
                       navigate(`/projects/${project.id}/action-items/${a.id}`)
@@ -418,13 +400,13 @@ export function ProjectDetailPage() {
                   key={l.id}
                   className="flex items-start gap-3 px-4 py-3 hover:bg-accent"
                 >
-                  <button
-                    onClick={() => openEditLink(l)}
-                    title="Edit link"
-                    className="mt-0.5 text-muted-foreground hover:text-foreground"
-                  >
-                    <PencilIcon />
-                  </button>
+                  <EditButton
+                    label="Edit link"
+                    onClick={() => {
+                      setEditingLink(l)
+                      setLinkOpen(true)
+                    }}
+                  />
                   <a
                     href={l.url}
                     target="_blank"
@@ -468,14 +450,13 @@ export function ProjectDetailPage() {
                   key={r.id}
                   className="flex items-start gap-3 px-4 py-3 hover:bg-accent"
                 >
-                  <button
-                    type="button"
-                    onClick={() => setEditingResource(r)}
-                    aria-label="Edit resource"
-                    className="mt-0.5 text-muted-foreground hover:text-foreground"
-                  >
-                    <Pencil className="h-4 w-4" />
-                  </button>
+                  <EditButton
+                    label="Edit resource"
+                    onClick={() => {
+                      setEditingResource(r)
+                      setResourceOpen(true)
+                    }}
+                  />
                   <div className="flex flex-1 items-start justify-between gap-4">
                     <div>
                       <span className="text-sm font-medium">{r.name}</span>
@@ -485,8 +466,7 @@ export function ProjectDetailPage() {
                       </div>
                     </div>
                     <span className="whitespace-nowrap text-xs text-muted-foreground">
-                      Updated {relativeTime(r.updated_at)} by{' '}
-                      {resourceUpdatedBy(r)}
+                      Updated {relativeTime(r.updated_at)} by {resourceUpdatedBy(r)}
                     </span>
                   </div>
                 </li>
@@ -522,15 +502,23 @@ export function ProjectDetailPage() {
 
       <AddPersonDialog
         projectId={project.id}
-        open={addPersonOpen}
-        onOpenChange={setAddPersonOpen}
+        open={personOpen}
+        onOpenChange={(o) => {
+          setPersonOpen(o)
+          if (!o) setEditingMember(null)
+        }}
+        existing={editingMember}
         onAdded={load}
+        onRemoved={load}
       />
 
       <AddMilestoneDialog
         projectId={project.id}
-        open={milestoneDialogOpen}
-        onOpenChange={setMilestoneDialogOpen}
+        open={milestoneOpen}
+        onOpenChange={(o) => {
+          setMilestoneOpen(o)
+          if (!o) setEditingMilestone(null)
+        }}
         existing={editingMilestone}
         onAdded={loadMilestones}
         onDeleted={loadMilestones}
@@ -538,17 +526,36 @@ export function ProjectDetailPage() {
 
       <AddActionItemDialog
         projectId={project.id}
-        open={addActionItemOpen}
-        onOpenChange={setAddActionItemOpen}
+        open={actionItemOpen}
+        onOpenChange={(o) => {
+          setActionItemOpen(o)
+          if (!o) setEditingActionItem(null)
+        }}
+        existing={editingActionItem}
         onSaved={loadActionItems}
+        onDeleted={loadActionItems}
       />
 
       <AddLinkDialog
         projectId={project.id}
-        open={linkDialogOpen}
-        onOpenChange={setLinkDialogOpen}
+        open={linkOpen}
+        onOpenChange={(o) => {
+          setLinkOpen(o)
+          if (!o) setEditingLink(null)
+        }}
         existing={editingLink}
         onAdded={loadLinks}
+      />
+
+      <AddResourceDialog
+        projectId={project.id}
+        open={resourceOpen}
+        onOpenChange={(o) => {
+          setResourceOpen(o)
+          if (!o) setEditingResource(null)
+        }}
+        existing={editingResource}
+        onAdded={loadResources}
       />
     </div>
   )
