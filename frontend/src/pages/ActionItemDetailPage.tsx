@@ -133,7 +133,7 @@ export function ActionItemDetailPage() {
           onClick={() => navigate(`/projects/${projectId}`)}
           className="text-sm text-muted-foreground hover:underline"
         >
-          Project
+          {item.project?.name ?? 'Project'}
         </button>
         <span className="mx-2 text-muted-foreground">/</span>
         <span className="text-sm">Action Item</span>

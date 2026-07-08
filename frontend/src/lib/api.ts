@@ -206,6 +206,7 @@ export interface ActionItem {
   type: { name: string } | null
   role: { name: string } | null
   milestone: { name: string } | null
+  project?: { name: string } | null
   owners: ActionItemOwner[]
   created_at?: string
   updated_at?: string

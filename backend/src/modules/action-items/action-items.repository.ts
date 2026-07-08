@@ -21,6 +21,7 @@ export interface ActionItemListItem extends ActionItem {
   type: { name: string } | null;
   role: { name: string } | null;
   milestone: { name: string } | null;
+  project?: { name: string } | null;
   owners: Array<{
     slot: number;
     user_id: string;
@@ -136,6 +137,7 @@ export class ActionItemsRepository {
          type:action_item_types ( name ),
          role:project_roles ( name ),
          milestone:milestones ( name ),
+         project:projects ( name ),
          owners:action_item_owners (
            slot, user_id,
            profile:profiles!user_id ( full_name, email )
