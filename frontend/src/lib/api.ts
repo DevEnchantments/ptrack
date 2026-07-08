@@ -338,3 +338,27 @@ export const issuesApi = {
   update: (projectId: string, issueId: string, data: Record<string, unknown>) =>
     apiPatch<Issue>(`/projects/${projectId}/issues/${issueId}`, data),
 }
+
+export interface Update {
+  id: string
+  project_id: string
+  headline: string | null
+  body: string | null
+  type_id: string | null
+  is_gold: boolean
+  tags: string[] | null
+  author_id: string | null
+  created_at: string
+  updated_at: string
+  type: { name: string } | null
+  author: { full_name: string | null; email: string | null } | null
+}
+
+export const updatesApi = {
+  list: (projectId: string) =>
+    apiGet<Update[]>(`/projects/${projectId}/updates`),
+  add: (projectId: string, data: Record<string, unknown>) =>
+    apiPost<Update>(`/projects/${projectId}/updates`, data),
+  update: (projectId: string, updateId: string, data: Record<string, unknown>) =>
+    apiPatch<Update>(`/projects/${projectId}/updates/${updateId}`, data),
+}

@@ -7,6 +7,7 @@ import {
   linksApi,
   resourcesApi,
   issuesApi,
+  updatesApi,
   type ProjectDetail,
   type ProjectMemberDetail,
   type Milestone,
@@ -15,6 +16,7 @@ import {
   type Link,
   type Resource,
   type Issue,
+  type Update,
 } from '@/lib/api'
 import { Pencil } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -24,6 +26,7 @@ import { AddActionItemDialog } from '@/components/AddActionItemDialog'
 import { AddLinkDialog } from '@/components/AddLinkDialog'
 import { AddResourceDialog } from '@/components/AddResourceDialog'
 import { AddIssueDialog } from '@/components/AddIssueDialog'
+import { AddUpdateDialog } from '@/components/AddUpdateDialog'
 
 const ACTIONS = [
   'Add Person', 'Add Issue', 'Add Resource', 'Add Milestone',
@@ -75,6 +78,17 @@ function issueOwnerDisplay(i: Issue): string | null {
   const role = i.role?.name || null
   if (role && owner) return `${role}: ${owner}`
   return owner || role || null
+}
+
+function updateAuthorName(u: Update) {
+  return u.author?.full_name || u.author?.email || 'Unknown'
+}
+
+function initials(name: string): string {
+  const parts = name.trim().split(/\s+/).filter(Boolean)
+  if (parts.length === 0) return '?'
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase()
+  return (parts[0][0] + parts[1][0]).toUpperCase()
 }
 
 function relativeTime(iso: string): string {
@@ -132,6 +146,9 @@ export function ProjectDetailPage() {
   const [issueOpen, setIssueOpen] = useState(false)
   const [editingIssue, setEditingIssue] = useState<Issue | null>(null)
   const [showAllIssues, setShowAllIssues] = useState(true)
+  const [updates, setUpdates] = useState<Update[]>([])
+  const [updateOpen, setUpdateOpen] = useState(false)
+  const [editingUpdate, setEditingUpdate] = useState<Update | null>(null)
 
   const load = useCallback(() => {
     if (!id) return
@@ -167,6 +184,11 @@ export function ProjectDetailPage() {
     issuesApi.list(id).then(setIssues).catch(() => {})
   }, [id])
 
+  const loadUpdates = useCallback(() => {
+    if (!id) return
+    updatesApi.list(id).then(setUpdates).catch(() => {})
+  }, [id])
+
   useEffect(() => {
     load()
     loadMilestones()
@@ -174,7 +196,16 @@ export function ProjectDetailPage() {
     loadLinks()
     loadResources()
     loadIssues()
-  }, [load, loadMilestones, loadActionItems, loadLinks, loadResources, loadIssues])
+    loadUpdates()
+  }, [
+    load,
+    loadMilestones,
+    loadActionItems,
+    loadLinks,
+    loadResources,
+    loadIssues,
+    loadUpdates,
+  ])
 
   if (loading) {
     return <div className="p-6 text-muted-foreground">Loading…</div>
@@ -206,6 +237,7 @@ export function ProjectDetailPage() {
     'Add Link',
     'Add Resource',
     'Add Issue',
+    'Add Update',
   ])
 
   function onAction(a: string) {
@@ -227,6 +259,9 @@ export function ProjectDetailPage() {
     } else if (a === 'Add Issue') {
       setEditingIssue(null)
       setIssueOpen(true)
+    } else if (a === 'Add Update') {
+      setEditingUpdate(null)
+      setUpdateOpen(true)
     }
   }
 
@@ -570,6 +605,49 @@ export function ProjectDetailPage() {
               })()}
             </>
           )}
+
+          <h2 className="mb-3 mt-8 text-lg font-semibold">Updates</h2>
+          {updates.length === 0 ? (
+            <p className="text-sm text-muted-foreground">No updates yet.</p>
+          ) : (
+            <ul className="flex flex-col gap-4">
+              {updates.map((u) => (
+                <li key={u.id} className="flex gap-3">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-teal-400 text-xs font-semibold text-white">
+                    {initials(updateAuthorName(u))}
+                  </div>
+                  <div className="flex-1">
+                    <div className="inline-block whitespace-pre-wrap rounded-md bg-muted px-3 py-2 text-sm">
+                      {u.body}
+                    </div>
+                    <div className="mt-1 flex flex-wrap items-center gap-x-2 text-xs text-muted-foreground">
+                      <span className="font-medium text-foreground">
+                        {updateAuthorName(u)}
+                      </span>
+                      <span>· {relativeTime(u.created_at)}</span>
+                      {u.is_gold && (
+                        <span className="inline-flex items-center gap-1 text-amber-600">
+                          <span className="h-2 w-2 rounded-full bg-amber-500" />
+                          Gold
+                        </span>
+                      )}
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setEditingUpdate(u)
+                          setUpdateOpen(true)
+                        }}
+                        aria-label="Edit update"
+                        className="text-muted-foreground hover:text-foreground"
+                      >
+                        <Pencil className="h-3.5 w-3.5" />
+                      </button>
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
 
         <aside>
@@ -664,6 +742,17 @@ export function ProjectDetailPage() {
         }}
         existing={editingIssue}
         onAdded={loadIssues}
+      />
+
+      <AddUpdateDialog
+        projectId={project.id}
+        open={updateOpen}
+        onOpenChange={(o) => {
+          setUpdateOpen(o)
+          if (!o) setEditingUpdate(null)
+        }}
+        existing={editingUpdate}
+        onAdded={loadUpdates}
       />
     </div>
   )
