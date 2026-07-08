@@ -8,9 +8,11 @@ import {
   type ProjectDetail,
   type ProjectMemberDetail,
   type Milestone,
+  type MilestoneDetail,
   type ActionItem,
   type Link,
 } from '@/lib/api'
+import { Pencil } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { AddPersonDialog } from '@/components/AddPersonDialog'
 import { AddMilestoneDialog } from '@/components/AddMilestoneDialog'
@@ -67,6 +69,25 @@ function relativeTime(iso: string): string {
   return `${yr} year${yr === 1 ? '' : 's'} ago`
 }
 
+function PencilIcon() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M12 20h9" />
+      <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z" />
+    </svg>
+  )
+}
+
 export function ProjectDetailPage() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
@@ -76,10 +97,12 @@ export function ProjectDetailPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [addPersonOpen, setAddPersonOpen] = useState(false)
-  const [addMilestoneOpen, setAddMilestoneOpen] = useState(false)
+  const [milestoneDialogOpen, setMilestoneDialogOpen] = useState(false)
+  const [editingMilestone, setEditingMilestone] = useState<MilestoneDetail | null>(null)
   const [addActionItemOpen, setAddActionItemOpen] = useState(false)
   const [links, setLinks] = useState<Link[]>([])
-  const [addLinkOpen, setAddLinkOpen] = useState(false)
+  const [linkDialogOpen, setLinkDialogOpen] = useState(false)
+  const [editingLink, setEditingLink] = useState<Link | null>(null)
 
   const load = useCallback(() => {
     if (!id) return
@@ -153,9 +176,30 @@ export function ProjectDetailPage() {
 
   function onAction(a: string) {
     if (a === 'Add Person') setAddPersonOpen(true)
-    else if (a === 'Add Milestone') setAddMilestoneOpen(true)
-    else if (a === 'Add Action Item') setAddActionItemOpen(true)
-    else if (a === 'Add Link') setAddLinkOpen(true)
+    else if (a === 'Add Milestone') {
+      setEditingMilestone(null)
+      setMilestoneDialogOpen(true)
+    } else if (a === 'Add Action Item') setAddActionItemOpen(true)
+    else if (a === 'Add Link') {
+      setEditingLink(null)
+      setLinkDialogOpen(true)
+    }
+  }
+
+  function openEditMilestone(milestoneId: string) {
+    if (!id) return
+    milestonesApi
+      .get(id, milestoneId)
+      .then((md) => {
+        setEditingMilestone(md)
+        setMilestoneDialogOpen(true)
+      })
+      .catch(() => {})
+  }
+
+  function openEditLink(l: Link) {
+    setEditingLink(l)
+    setLinkDialogOpen(true)
   }
 
   return (
@@ -243,6 +287,16 @@ export function ProjectDetailPage() {
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          openEditMilestone(m.id)
+                        }}
+                        title="Edit milestone"
+                        className="text-muted-foreground hover:text-foreground"
+                      >
+                        <PencilIcon />
+                      </button>
                       <span className="text-sm font-medium">{m.name}</span>
                       {m.is_major && (
                         <span className="rounded bg-accent px-1.5 py-0.5 text-xs">
@@ -312,36 +366,44 @@ export function ProjectDetailPage() {
           ) : (
             <ul className="divide-y rounded-md border">
               {links.map((l) => (
-                <li key={l.id}>
+                <li
+                  key={l.id}
+                  className="flex items-start gap-3 px-4 py-3 hover:bg-accent"
+                >
+                  <button
+                    onClick={() => openEditLink(l)}
+                    title="Edit link"
+                    className="mt-0.5 text-muted-foreground hover:text-foreground"
+                  >
+                    <PencilIcon />
+                  </button>
                   <a
                     href={l.url}
                     target="_blank"
                     rel="noreferrer"
-                    className="group block px-4 py-3 hover:bg-accent"
+                    className="group flex flex-1 items-start justify-between gap-4"
                   >
-                    <div className="flex items-start justify-between gap-4">
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm font-medium text-primary group-hover:underline">
-                            {l.label || l.url}
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-medium text-primary group-hover:underline">
+                          {l.label || l.url}
+                        </span>
+                        {l.is_gold && (
+                          <span className="inline-flex items-center gap-1 text-xs text-amber-600">
+                            <span className="h-2 w-2 rounded-full bg-amber-500" />
+                            Gold
                           </span>
-                          {l.is_gold && (
-                            <span className="inline-flex items-center gap-1 text-xs text-amber-600">
-                              <span className="h-2 w-2 rounded-full bg-amber-500" />
-                              Gold
-                            </span>
-                          )}
-                        </div>
-                        {l.description && (
-                          <p className="mt-0.5 text-xs text-muted-foreground">
-                            {l.description}
-                          </p>
                         )}
                       </div>
-                      <span className="whitespace-nowrap text-xs text-muted-foreground">
-                        Added {relativeTime(l.created_at)} by {linkAuthor(l)}
-                      </span>
+                      {l.description && (
+                        <p className="mt-0.5 text-xs text-muted-foreground">
+                          {l.description}
+                        </p>
+                      )}
                     </div>
+                    <span className="whitespace-nowrap text-xs text-muted-foreground">
+                      Added {relativeTime(l.created_at)} by {linkAuthor(l)}
+                    </span>
                   </a>
                 </li>
               ))}
@@ -383,9 +445,11 @@ export function ProjectDetailPage() {
 
       <AddMilestoneDialog
         projectId={project.id}
-        open={addMilestoneOpen}
-        onOpenChange={setAddMilestoneOpen}
+        open={milestoneDialogOpen}
+        onOpenChange={setMilestoneDialogOpen}
+        existing={editingMilestone}
         onAdded={loadMilestones}
+        onDeleted={loadMilestones}
       />
 
       <AddActionItemDialog
@@ -397,8 +461,9 @@ export function ProjectDetailPage() {
 
       <AddLinkDialog
         projectId={project.id}
-        open={addLinkOpen}
-        onOpenChange={setAddLinkOpen}
+        open={linkDialogOpen}
+        onOpenChange={setLinkDialogOpen}
+        existing={editingLink}
         onAdded={loadLinks}
       />
     </div>

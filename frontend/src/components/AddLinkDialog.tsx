@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { linksApi } from '@/lib/api'
+import { linksApi, type Link } from '@/lib/api'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -26,6 +26,7 @@ interface Props {
   open: boolean
   onOpenChange: (open: boolean) => void
   onAdded: () => void
+  existing?: Link | null
 }
 
 export function AddLinkDialog({
@@ -33,7 +34,10 @@ export function AddLinkDialog({
   open,
   onOpenChange,
   onAdded,
+  existing,
 }: Props) {
+  const isEdit = Boolean(existing)
+
   const [url, setUrl] = useState('')
   const [label, setLabel] = useState('')
   const [description, setDescription] = useState('')
@@ -44,9 +48,18 @@ export function AddLinkDialog({
 
   useEffect(() => {
     if (!open) return
-    reset()
+    if (existing) {
+      setUrl(existing.url)
+      setLabel(existing.label ?? '')
+      setDescription(existing.description ?? '')
+      setIsGold(existing.is_gold)
+      setTags(existing.tags?.join(', ') ?? '')
+      setError(null)
+    } else {
+      reset()
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open])
+  }, [open, existing])
 
   function reset() {
     setUrl('')
@@ -76,13 +89,19 @@ export function AddLinkDialog({
         .map((t) => t.trim())
         .filter(Boolean)
 
-      await linksApi.add(projectId, {
+      const payload = {
         url: trimmedUrl,
         label: label.trim() || undefined,
         description: description.trim() || undefined,
         is_gold: isGold,
         tags: tagList.length ? tagList : undefined,
-      })
+      }
+
+      if (isEdit && existing) {
+        await linksApi.update(projectId, existing.id, payload)
+      } else {
+        await linksApi.add(projectId, payload)
+      }
       reset()
       onOpenChange(false)
       onAdded()
@@ -178,7 +197,13 @@ export function AddLinkDialog({
             Cancel
           </Button>
           <Button onClick={submit} disabled={saving || Boolean(urlError)}>
-            {saving ? 'Adding…' : 'Add Link'}
+            {saving
+              ? isEdit
+                ? 'Saving…'
+                : 'Adding…'
+              : isEdit
+                ? 'Apply Changes'
+                : 'Add Link'}
           </Button>
         </DialogFooter>
       </DialogContent>

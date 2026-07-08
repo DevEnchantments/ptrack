@@ -253,7 +253,6 @@ export const actionItemsApi = {
       { body },
     ),
 }
-
 export interface Link {
   id: string
   project_id: string
@@ -272,4 +271,6 @@ export const linksApi = {
     apiGet<Link[]>(`/projects/${projectId}/links`),
   add: (projectId: string, data: Record<string, unknown>) =>
     apiPost<Link>(`/projects/${projectId}/links`, data),
+  update: (projectId: string, linkId: string, data: Record<string, unknown>) =>
+    apiPatch<Link>(`/projects/${projectId}/links/${linkId}`, data),
 }

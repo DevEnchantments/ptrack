@@ -41,6 +41,24 @@ export class LinksRepository {
     return data as unknown as Link;
   }
 
+  async update(
+    projectId: string,
+    linkId: string,
+    patch: Record<string, unknown>,
+  ): Promise<LinkListItem> {
+    const { data, error } = await this.table
+      .update(patch)
+      .eq('project_id', projectId)
+      .eq('id', linkId)
+      .select(
+        `${COLUMNS},
+         created_by_profile:profiles!created_by ( full_name, email )`,
+      )
+      .single();
+    if (error) throw toHttpException(error, 'links.update');
+    return data as unknown as LinkListItem;
+  }
+
   async findByProject(projectId: string): Promise<LinkListItem[]> {
     const { data, error } = await this.table
       .select(
