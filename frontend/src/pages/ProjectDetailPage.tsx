@@ -8,6 +8,7 @@ import {
   resourcesApi,
   issuesApi,
   updatesApi,
+  statusReportsApi,
   type ProjectDetail,
   type ProjectMemberDetail,
   type Milestone,
@@ -17,6 +18,7 @@ import {
   type Resource,
   type Issue,
   type Update,
+  type StatusReport,
 } from '@/lib/api'
 import { Pencil } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -27,6 +29,7 @@ import { AddLinkDialog } from '@/components/AddLinkDialog'
 import { AddResourceDialog } from '@/components/AddResourceDialog'
 import { AddIssueDialog } from '@/components/AddIssueDialog'
 import { AddUpdateDialog } from '@/components/AddUpdateDialog'
+import { AddStatusReportDialog } from '@/components/AddStatusReportDialog'
 
 const ACTIONS = [
   'Add Person', 'Add Issue', 'Add Resource', 'Add Milestone',
@@ -91,6 +94,18 @@ function initials(name: string): string {
   return (parts[0][0] + parts[1][0]).toUpperCase()
 }
 
+function reportAuthor(r: StatusReport) {
+  return r.author?.full_name || r.author?.email || 'Unknown'
+}
+
+function formatReportDate(iso: string): string {
+  const d = new Date(iso + 'T00:00:00')
+  if (isNaN(d.getTime())) return iso
+  const day = String(d.getDate()).padStart(2, '0')
+  const mon = d.toLocaleString('en-US', { month: 'short' }).toUpperCase()
+  return `${day}-${mon}-${d.getFullYear()}`
+}
+
 function relativeTime(iso: string): string {
   const diffMs = Date.now() - new Date(iso).getTime()
   const sec = Math.round(diffMs / 1000)
@@ -149,6 +164,8 @@ export function ProjectDetailPage() {
   const [updates, setUpdates] = useState<Update[]>([])
   const [updateOpen, setUpdateOpen] = useState(false)
   const [editingUpdate, setEditingUpdate] = useState<Update | null>(null)
+  const [statusReports, setStatusReports] = useState<StatusReport[]>([])
+  const [statusReportOpen, setStatusReportOpen] = useState(false)
 
   const load = useCallback(() => {
     if (!id) return
@@ -189,6 +206,11 @@ export function ProjectDetailPage() {
     updatesApi.list(id).then(setUpdates).catch(() => {})
   }, [id])
 
+  const loadStatusReports = useCallback(() => {
+    if (!id) return
+    statusReportsApi.list(id).then(setStatusReports).catch(() => {})
+  }, [id])
+
   useEffect(() => {
     load()
     loadMilestones()
@@ -197,6 +219,7 @@ export function ProjectDetailPage() {
     loadResources()
     loadIssues()
     loadUpdates()
+    loadStatusReports()
   }, [
     load,
     loadMilestones,
@@ -205,6 +228,7 @@ export function ProjectDetailPage() {
     loadResources,
     loadIssues,
     loadUpdates,
+    loadStatusReports,
   ])
 
   if (loading) {
@@ -238,6 +262,7 @@ export function ProjectDetailPage() {
     'Add Resource',
     'Add Issue',
     'Add Update',
+    'Add Status Report',
   ])
 
   function onAction(a: string) {
@@ -262,6 +287,8 @@ export function ProjectDetailPage() {
     } else if (a === 'Add Update') {
       setEditingUpdate(null)
       setUpdateOpen(true)
+    } else if (a === 'Add Status Report') {
+      setStatusReportOpen(true)
     }
   }
 
@@ -648,6 +675,33 @@ export function ProjectDetailPage() {
               ))}
             </ul>
           )}
+          <h2 className="mb-3 mt-8 text-lg font-semibold">Status Reports</h2>
+          {statusReports.length === 0 ? (
+            <p className="text-sm text-muted-foreground">
+              No status reports yet.
+            </p>
+          ) : (
+            <ul className="divide-y rounded-md border">
+              {statusReports.map((r) => (
+                <li key={r.id} className="px-4 py-3">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="min-w-0">
+                      <span className="text-sm font-medium">{r.title}</span>
+                      {r.summary && (
+                        <p className="mt-0.5 line-clamp-2 text-xs text-muted-foreground">
+                          {r.summary}
+                        </p>
+                      )}
+                    </div>
+                    <div className="whitespace-nowrap text-right text-xs text-muted-foreground">
+                      <div>{reportAuthor(r)}</div>
+                      <div>{formatReportDate(r.report_date)}</div>
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
 
         <aside>
@@ -753,6 +807,14 @@ export function ProjectDetailPage() {
         }}
         existing={editingUpdate}
         onAdded={loadUpdates}
+      />
+
+      <AddStatusReportDialog
+        projectId={project.id}
+        projectName={project.name}
+        open={statusReportOpen}
+        onOpenChange={setStatusReportOpen}
+        onAdded={loadStatusReports}
       />
     </div>
   )

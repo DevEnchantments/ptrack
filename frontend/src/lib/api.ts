@@ -362,3 +362,24 @@ export const updatesApi = {
   update: (projectId: string, updateId: string, data: Record<string, unknown>) =>
     apiPatch<Update>(`/projects/${projectId}/updates/${updateId}`, data),
 }
+
+export interface StatusReport {
+  id: string
+  project_id: string
+  title: string | null
+  summary: string | null
+  report_date: string
+  viewable_by: string
+  editable_by: string
+  author_id: string | null
+  created_at: string
+  updated_at: string
+  author: { full_name: string | null; email: string | null } | null
+}
+
+export const statusReportsApi = {
+  list: (projectId: string) =>
+    apiGet<StatusReport[]>(`/projects/${projectId}/status-reports`),
+  add: (projectId: string, data: Record<string, unknown>) =>
+    apiPost<StatusReport>(`/projects/${projectId}/status-reports`, data),
+}

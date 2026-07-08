@@ -1,0 +1,54 @@
+import { Injectable } from '@nestjs/common';
+import { DatabaseService } from '../../database/database.service';
+import { toHttpException } from '../../common/supabase-error';
+
+export interface StatusReport {
+  id: string;
+  project_id: string;
+  title: string | null;
+  summary: string | null;
+  report_date: string;
+  viewable_by: string;
+  editable_by: string;
+  author_id: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface StatusReportListItem extends StatusReport {
+  author: { full_name: string | null; email: string | null } | null;
+}
+
+const COLUMNS =
+  'id, project_id, title, summary, report_date, viewable_by, editable_by, author_id, created_at, updated_at';
+
+const JOINS = `${COLUMNS},
+  author:profiles!author_id ( full_name, email )`;
+
+@Injectable()
+export class StatusReportsRepository {
+  constructor(private readonly db: DatabaseService) {}
+
+  private get table() {
+    return this.db.client.from('status_reports');
+  }
+
+  async insert(row: Record<string, unknown>): Promise<StatusReportListItem> {
+    const { data, error } = await this.table
+      .insert(row)
+      .select(JOINS)
+      .single();
+    if (error) throw toHttpException(error, 'statusReports.insert');
+    return data as unknown as StatusReportListItem;
+  }
+
+  async findByProject(projectId: string): Promise<StatusReportListItem[]> {
+    const { data, error } = await this.table
+      .select(JOINS)
+      .eq('project_id', projectId)
+      .order('report_date', { ascending: false })
+      .order('created_at', { ascending: false });
+    if (error) throw toHttpException(error, 'statusReports.findByProject');
+    return (data ?? []) as unknown as StatusReportListItem[];
+  }
+}
