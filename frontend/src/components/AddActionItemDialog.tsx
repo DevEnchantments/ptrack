@@ -76,6 +76,7 @@ interface Props {
   onSaved: () => void
   existing?: ActionItem | null
   onDeleted?: () => void
+  defaultMilestoneId?: string | null
 }
 
 export function AddActionItemDialog({
@@ -85,6 +86,7 @@ export function AddActionItemDialog({
   onSaved,
   existing,
   onDeleted,
+  defaultMilestoneId,
 }: Props) {
   const { user } = useAuth()
   const navigate = useNavigate()
@@ -134,11 +136,12 @@ export function AddActionItemDialog({
       setTags(existing.tags?.join(', ') ?? '')
     } else {
       resetFields()
+      if (defaultMilestoneId) setMilestoneId(defaultMilestoneId)
     }
     setError(null)
     setConfirmDelete(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, existing])
+  }, [open, existing, defaultMilestoneId])
 
   function resetFields() {
     setTitle('')

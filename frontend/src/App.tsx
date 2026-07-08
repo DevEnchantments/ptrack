@@ -5,6 +5,7 @@ import { ProtectedRoute } from '@/components/ProtectedRoute'
 import { ProjectDetailPage } from '@/pages/ProjectDetailPage'
 import { CreateProjectWizard } from '@/pages/CreateProjectWizard'
 import { ActionItemDetailPage } from '@/pages/ActionItemDetailPage'
+import { MilestoneDetailPage } from '@/pages/MilestoneDetailPage'
 
 function App() {
   return (
@@ -17,6 +18,10 @@ function App() {
         <Route
           path="/projects/:projectId/action-items/:actionItemId"
           element={<ActionItemDetailPage />}
+        />
+        <Route
+          path="/projects/:projectId/milestones/:milestoneId"
+          element={<MilestoneDetailPage />}
         />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />

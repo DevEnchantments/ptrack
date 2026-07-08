@@ -24,6 +24,14 @@ export interface Milestone {
 export interface MilestoneListItem extends Milestone {
   role: { name: string } | null;
   owner: { full_name: string | null; email: string | null } | null;
+  created_by_profile?: {
+    full_name: string | null;
+    email: string | null;
+  } | null;
+  updated_by_profile?: {
+    full_name: string | null;
+    email: string | null;
+  } | null;
 }
 
 const COLUMNS =
@@ -46,6 +54,29 @@ export class MilestonesRepository {
     return data as unknown as Milestone;
   }
 
+  async update(
+    projectId: string,
+    milestoneId: string,
+    patch: Record<string, unknown>,
+  ): Promise<Milestone> {
+    const { data, error } = await this.table
+      .update(patch)
+      .eq('project_id', projectId)
+      .eq('id', milestoneId)
+      .select(COLUMNS)
+      .single();
+    if (error) throw toHttpException(error, 'milestones.update');
+    return data as unknown as Milestone;
+  }
+
+  async remove(projectId: string, milestoneId: string): Promise<void> {
+    const { error } = await this.table
+      .delete()
+      .eq('project_id', projectId)
+      .eq('id', milestoneId);
+    if (error) throw toHttpException(error, 'milestones.remove');
+  }
+
   async findByProject(projectId: string): Promise<MilestoneListItem[]> {
     const { data, error } = await this.table
       .select(
@@ -57,5 +88,24 @@ export class MilestonesRepository {
       .order('due_date', { ascending: true });
     if (error) throw toHttpException(error, 'milestones.findByProject');
     return (data ?? []) as unknown as MilestoneListItem[];
+  }
+
+  async findOne(
+    projectId: string,
+    milestoneId: string,
+  ): Promise<MilestoneListItem | null> {
+    const { data, error } = await this.table
+      .select(
+        `${COLUMNS},
+         role:project_roles ( name ),
+         owner:profiles!owner_id ( full_name, email ),
+         created_by_profile:profiles!created_by ( full_name, email ),
+         updated_by_profile:profiles!updated_by ( full_name, email )`,
+      )
+      .eq('project_id', projectId)
+      .eq('id', milestoneId)
+      .maybeSingle();
+    if (error) throw toHttpException(error, 'milestones.findOne');
+    return (data as unknown as MilestoneListItem) ?? null;
   }
 }

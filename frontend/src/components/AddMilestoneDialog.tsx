@@ -1,6 +1,12 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import type { ProjectMemberInput } from '@/pages/CreateProjectWizard'
-import { lookupsApi, milestonesApi, type Lookup } from '@/lib/api'
+import {
+  lookupsApi,
+  milestonesApi,
+  type Lookup,
+  type MilestoneDetail,
+} from '@/lib/api'
 import { useAuth } from '@/lib/auth-context'
 import { PersonAutocomplete } from '@/components/PersonAutocomplete'
 import { Button } from '@/components/ui/button'
@@ -37,11 +43,28 @@ function emptyOwner(): ProjectMemberInput {
   return { user_id: null, display_name: '', email: null, role_id: null }
 }
 
+function ownerFromMilestone(m: MilestoneDetail): ProjectMemberInput {
+  return {
+    user_id: m.owner_id,
+    display_name: m.owner?.full_name || m.owner?.email || '',
+    email: m.owner?.email ?? null,
+    role_id: null,
+  }
+}
+
+function profileName(
+  p?: { full_name: string | null; email: string | null } | null,
+): string {
+  return p?.full_name || p?.email || 'Unknown'
+}
+
 interface Props {
   projectId: string
   open: boolean
   onOpenChange: (open: boolean) => void
   onAdded: () => void
+  existing?: MilestoneDetail | null
+  onDeleted?: () => void
 }
 
 export function AddMilestoneDialog({
@@ -49,8 +72,13 @@ export function AddMilestoneDialog({
   open,
   onOpenChange,
   onAdded,
+  existing,
+  onDeleted,
 }: Props) {
   const { user } = useAuth()
+  const navigate = useNavigate()
+  const isEdit = Boolean(existing)
+
   const [roles, setRoles] = useState<Lookup[]>([])
   const [name, setName] = useState('')
   const [startDate, setStartDate] = useState(today())
@@ -65,13 +93,46 @@ export function AddMilestoneDialog({
   const [percent, setPercent] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [saving, setSaving] = useState(false)
+  const [confirmDelete, setConfirmDelete] = useState(false)
+  const [deleting, setDeleting] = useState(false)
 
   useEffect(() => {
     if (!open) return
     lookupsApi.list('project-roles').then(setRoles).catch(() => {})
   }, [open])
 
-  function reset() {
+  useEffect(() => {
+    if (!open) return
+    if (existing) {
+      setName(existing.name)
+      setStartDate(existing.start_date ?? today())
+      setDueDate(existing.due_date ?? today())
+      setStatus(existing.status)
+      setRoleId(existing.role_id)
+      setOwner(ownerFromMilestone(existing))
+      setIsMajor(existing.is_major ? 'true' : 'false')
+      setDescription(existing.description ?? '')
+      setTags(existing.tags?.join(', ') ?? '')
+      setWeightage(
+        existing.weightage === null || existing.weightage === undefined
+          ? ''
+          : String(existing.weightage),
+      )
+      setPercent(
+        existing.percent_complete === null ||
+          existing.percent_complete === undefined
+          ? ''
+          : String(existing.percent_complete),
+      )
+    } else {
+      resetFields()
+    }
+    setError(null)
+    setConfirmDelete(false)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, existing])
+
+  function resetFields() {
     setName('')
     setStartDate(today())
     setDueDate(today())
@@ -83,7 +144,12 @@ export function AddMilestoneDialog({
     setTags('')
     setWeightage('')
     setPercent('')
+  }
+
+  function reset() {
+    resetFields()
     setError(null)
+    setConfirmDelete(false)
   }
 
   function setMe() {
@@ -108,7 +174,7 @@ export function AddMilestoneDialog({
         .map((t) => t.trim())
         .filter(Boolean)
 
-      await milestonesApi.add(projectId, {
+      const payload = {
         name: name.trim(),
         start_date: startDate,
         due_date: dueDate,
@@ -120,7 +186,13 @@ export function AddMilestoneDialog({
         tags: tagList.length ? tagList : undefined,
         weightage: weightage.trim() ? Number(weightage) : undefined,
         percent_complete: percent.trim() ? Number(percent) : undefined,
-      })
+      }
+
+      if (isEdit && existing) {
+        await milestonesApi.update(projectId, existing.id, payload)
+      } else {
+        await milestonesApi.add(projectId, payload)
+      }
       reset()
       onOpenChange(false)
       onAdded()
@@ -131,6 +203,26 @@ export function AddMilestoneDialog({
     }
   }
 
+  async function doDelete() {
+    if (!existing) return
+    setError(null)
+    setDeleting(true)
+    try {
+      await milestonesApi.remove(projectId, existing.id)
+      reset()
+      onOpenChange(false)
+      if (onDeleted) onDeleted()
+      else onAdded()
+    } catch (e) {
+      setError((e as Error).message)
+      setConfirmDelete(false)
+    } finally {
+      setDeleting(false)
+    }
+  }
+
+  const busy = saving || deleting
+
   return (
     <Dialog
       open={open}
@@ -139,7 +231,7 @@ export function AddMilestoneDialog({
         onOpenChange(o)
       }}
     >
-      <DialogContent className="sm:max-w-2xl">
+      <DialogContent className="max-h-[85vh] overflow-y-auto sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle>Milestone</DialogTitle>
         </DialogHeader>
@@ -300,23 +392,93 @@ export function AddMilestoneDialog({
             </div>
           </div>
 
+          {isEdit && existing && (
+            <div className="border-t pt-3 text-xs text-muted-foreground">
+              {existing.created_at && (
+                <div>
+                  Created {new Date(existing.created_at).toLocaleString()} by{' '}
+                  {profileName(existing.created_by_profile)}
+                </div>
+              )}
+              {existing.updated_at && (
+                <div>
+                  Last updated {new Date(existing.updated_at).toLocaleString()}{' '}
+                  by {profileName(existing.updated_by_profile)}
+                </div>
+              )}
+              <button
+                type="button"
+                onClick={() => {
+                  onOpenChange(false)
+                  navigate(`/projects/${projectId}`)
+                }}
+                className="mt-1 text-primary hover:underline"
+              >
+                View Project
+              </button>
+            </div>
+          )}
+
           {error && <p className="text-sm text-destructive">{error}</p>}
         </div>
 
-        <DialogFooter>
-          <Button
-            variant="outline"
-            onClick={() => {
-              reset()
-              onOpenChange(false)
-            }}
-            disabled={saving}
-          >
-            Cancel
-          </Button>
-          <Button onClick={submit} disabled={saving}>
-            {saving ? 'Adding…' : 'Add Milestone'}
-          </Button>
+        <DialogFooter className="sm:justify-between">
+          <div>
+            {isEdit &&
+              (confirmDelete ? (
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-destructive">Delete?</span>
+                  <Button
+                    variant="destructive"
+                    size="sm"
+                    onClick={doDelete}
+                    disabled={busy}
+                  >
+                    {deleting ? 'Deleting…' : 'Confirm'}
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setConfirmDelete(false)}
+                    disabled={busy}
+                  >
+                    No
+                  </Button>
+                </div>
+              ) : (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="text-destructive"
+                  onClick={() => setConfirmDelete(true)}
+                  disabled={busy}
+                >
+                  Delete
+                </Button>
+              ))}
+          </div>
+
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              onClick={() => {
+                reset()
+                onOpenChange(false)
+              }}
+              disabled={busy}
+            >
+              Cancel
+            </Button>
+            <Button onClick={submit} disabled={busy}>
+              {saving
+                ? isEdit
+                  ? 'Saving…'
+                  : 'Adding…'
+                : isEdit
+                  ? 'Apply Changes'
+                  : 'Add Milestone'}
+            </Button>
+          </div>
         </DialogFooter>
       </DialogContent>
     </Dialog>

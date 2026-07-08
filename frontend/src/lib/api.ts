@@ -154,11 +154,36 @@ export interface Milestone {
   owner: { full_name: string | null; email: string | null } | null
 }
 
+export interface MilestoneDetail extends Milestone {
+  completed_date: string | null
+  created_at: string
+  updated_at: string
+  created_by_profile?: { full_name: string | null; email: string | null } | null
+  updated_by_profile?: { full_name: string | null; email: string | null } | null
+}
+
 export const milestonesApi = {
   list: (projectId: string) =>
     apiGet<Milestone[]>(`/projects/${projectId}/milestones`),
+  get: (projectId: string, milestoneId: string) =>
+    apiGet<MilestoneDetail>(
+      `/projects/${projectId}/milestones/${milestoneId}`,
+    ),
   add: (projectId: string, data: Record<string, unknown>) =>
     apiPost<Milestone>(`/projects/${projectId}/milestones`, data),
+  update: (
+    projectId: string,
+    milestoneId: string,
+    data: Record<string, unknown>,
+  ) =>
+    apiPatch<MilestoneDetail>(
+      `/projects/${projectId}/milestones/${milestoneId}`,
+      data,
+    ),
+  remove: (projectId: string, milestoneId: string) =>
+    apiDelete<{ deleted: boolean }>(
+      `/projects/${projectId}/milestones/${milestoneId}`,
+    ),
 }
 
 export interface ActionItemOwner {

@@ -194,7 +194,13 @@ export function ProjectDetailPage() {
           ) : (
             <ul className="divide-y rounded-md border">
               {milestones.map((m) => (
-                <li key={m.id} className="px-4 py-3">
+                <li
+                  key={m.id}
+                  onClick={() =>
+                    navigate(`/projects/${project.id}/milestones/${m.id}`)
+                  }
+                  className="cursor-pointer px-4 py-3 hover:bg-accent"
+                >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <span className="text-sm font-medium">{m.name}</span>
