@@ -66,6 +66,15 @@ create table project_sizes (
   is_active  boolean not null default true
 );
 
+-- User-creatable project categories (sort_order optional here).
+create table project_categories (
+  id         uuid primary key default gen_random_uuid(),
+  name       text not null,
+  sort_order int,
+  is_active  boolean not null default true,
+  created_at timestamptz not null default now()
+);
+
 create table deal_types (
   id         uuid primary key default gen_random_uuid(),
   name       text not null unique,
@@ -90,10 +99,12 @@ create table countries (
 
 -- People lookups
 create table project_roles (
-  id         uuid primary key default gen_random_uuid(),
-  name       text not null unique,          -- e.g. Owner, Team Member, Sponsor
-  sort_order int  not null default 0,
-  is_active  boolean not null default true
+  id                   uuid primary key default gen_random_uuid(),
+  name                 text not null unique,   -- e.g. Owner, Team Member, Sponsor
+  sort_order           int  not null default 0,
+  is_active            boolean not null default true,
+  default_access_level text not null default 'read_only'
+                         check (default_access_level in ('read_only','read_write','read_write_admin'))
 );
 
 create table involvement_levels (
@@ -167,6 +178,14 @@ create table projects (
   start_date      date,
   target_end_date date,
   actual_end_date date,
+  parent_project_id uuid references projects (id)          on delete set null,
+  category_id     uuid references project_categories (id)  on delete set null,
+  goal            text,
+  customer        text,
+  tags            text[],
+  primary_url     text,
+  access_control  text not null default 'open'
+                    check (access_control in ('open','restricted')),
   created_by      uuid references profiles (id) on delete set null,
   updated_by      uuid references profiles (id) on delete set null,
   created_at      timestamptz not null default now(),
@@ -182,15 +201,22 @@ create trigger trg_projects_updated
 create table project_members (
   id                   uuid primary key default gen_random_uuid(),
   project_id           uuid not null references projects (id) on delete cascade,
-  user_id              uuid not null references profiles (id) on delete cascade,
+  user_id              uuid references profiles (id) on delete cascade,   -- null for pending (not-yet-registered) members
+  pending_name         text,                                              -- display name while user_id is null
   role_id              uuid references project_roles (id)       on delete set null,
   involvement_level_id uuid references involvement_levels (id)  on delete set null,
   access_type          text not null default 'assigned'
-                         check (access_type in ('assigned','viewer')), -- "is assigned" vs "can see"
+                         check (access_type in ('assigned','viewer')),    -- "is assigned" vs "can see"
+  access_level         text not null default 'read_only'
+                         check (access_level in ('read_only','read_write','read_write_admin')),
+  status               text not null default 'active'
+                         check (status in ('active','pending')),
+  notes                text,
   created_by           uuid references profiles (id) on delete set null,
   updated_by           uuid references profiles (id) on delete set null,
   created_at           timestamptz not null default now(),
   updated_at           timestamptz not null default now(),
+  check (user_id is not null or pending_name is not null),
   unique (project_id, user_id)
 );
 create trigger trg_project_members_updated
@@ -226,26 +252,38 @@ create trigger trg_milestones_updated
   for each row execute function set_updated_at();
 
 -- ------------------------------------------------------------
--- 6. Action Items (+ comments)
+-- 6. Action Items (+ owners + comments)
 -- ------------------------------------------------------------
 create table action_items (
-  id          uuid primary key default gen_random_uuid(),
-  project_id  uuid not null references projects (id) on delete cascade,
-  title       text not null,
-  description text,
-  type_id     uuid references action_item_types (id) on delete set null,
-  owner_id    uuid references profiles (id) on delete set null,
-  due_date    date,
-  status      text not null default 'open'
-                check (status in ('open','in_progress','done','cancelled')),
-  created_by  uuid references profiles (id) on delete set null,
-  updated_by  uuid references profiles (id) on delete set null,
-  created_at  timestamptz not null default now(),
-  updated_at  timestamptz not null default now()
+  id           uuid primary key default gen_random_uuid(),
+  project_id   uuid not null references projects (id) on delete cascade,
+  title        text not null,
+  description  text,
+  type_id      uuid references action_item_types (id) on delete set null,
+  milestone_id uuid references milestones (id)        on delete set null,
+  role_id      uuid references project_roles (id)     on delete set null,
+  owner_id     uuid references profiles (id)          on delete set null, -- legacy single owner; multi-owner via action_item_owners
+  due_date     date,
+  status       text not null default 'open'
+                 check (status in ('open','closed_completed','not_applicable')),
+  tags         text[],
+  created_by   uuid references profiles (id) on delete set null,
+  updated_by   uuid references profiles (id) on delete set null,
+  created_at   timestamptz not null default now(),
+  updated_at   timestamptz not null default now()
 );
 create trigger trg_action_items_updated
   before update on action_items
   for each row execute function set_updated_at();
+
+-- Up to four owners per action item (slot 1-4).
+create table action_item_owners (
+  id             uuid primary key default gen_random_uuid(),
+  action_item_id uuid not null references action_items (id) on delete cascade,
+  user_id        uuid not null references profiles (id)     on delete cascade,
+  slot           int  not null check (slot between 1 and 4),
+  created_at     timestamptz not null default now()
+);
 
 create table action_item_comments (
   id             uuid primary key default gen_random_uuid(),
@@ -382,6 +420,7 @@ create index idx_project_members_project on project_members (project_id);
 create index idx_milestones_project       on milestones (project_id);
 create index idx_action_items_project     on action_items (project_id);
 create index idx_ai_comments_item         on action_item_comments (action_item_id);
+create index idx_ai_owners_item            on action_item_owners (action_item_id);
 create index idx_issues_project           on issues (project_id);
 create index idx_resources_project        on resources (project_id);
 create index idx_links_project            on links (project_id);
