@@ -1,7 +1,12 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { actionItemsApi, type ActionItem } from '@/lib/api'
+import {
+  actionItemsApi,
+  type ActionItem,
+  type ActionItemComment,
+} from '@/lib/api'
 import { Button } from '@/components/ui/button'
+import { Textarea } from '@/components/ui/textarea'
 
 const STATUS_LABELS: Record<string, string> = {
   open: 'Open',
@@ -31,6 +36,10 @@ function ownersLabel(item: ActionItem): string | null {
     .join(', ')
 }
 
+function commentAuthor(c: ActionItemComment): string {
+  return c.author?.full_name || c.author?.email || 'Unknown'
+}
+
 export function ActionItemDetailPage() {
   const { projectId, actionItemId } = useParams<{
     projectId: string
@@ -42,6 +51,11 @@ export function ActionItemDetailPage() {
   const [error, setError] = useState<string | null>(null)
   const [tab, setTab] = useState<Tab>('Show All')
 
+  const [comments, setComments] = useState<ActionItemComment[]>([])
+  const [newComment, setNewComment] = useState('')
+  const [posting, setPosting] = useState(false)
+  const [commentError, setCommentError] = useState<string | null>(null)
+
   const load = useCallback(() => {
     if (!projectId || !actionItemId) return
     actionItemsApi
@@ -51,9 +65,35 @@ export function ActionItemDetailPage() {
       .finally(() => setLoading(false))
   }, [projectId, actionItemId])
 
+  const loadComments = useCallback(() => {
+    if (!projectId || !actionItemId) return
+    actionItemsApi
+      .listComments(projectId, actionItemId)
+      .then(setComments)
+      .catch(() => {})
+  }, [projectId, actionItemId])
+
   useEffect(() => {
     load()
-  }, [load])
+    loadComments()
+  }, [load, loadComments])
+
+  async function postComment() {
+    if (!projectId || !actionItemId) return
+    const body = newComment.trim()
+    if (!body) return
+    setCommentError(null)
+    setPosting(true)
+    try {
+      await actionItemsApi.addComment(projectId, actionItemId, body)
+      setNewComment('')
+      loadComments()
+    } catch (e) {
+      setCommentError((e as Error).message)
+    } finally {
+      setPosting(false)
+    }
+  }
 
   if (loading) {
     return <div className="p-6 text-muted-foreground">Loading…</div>
@@ -142,9 +182,46 @@ export function ActionItemDetailPage() {
         {showComments && (
           <section className="mt-6">
             <h2 className="mb-3 text-lg font-semibold">Comments</h2>
-            <div className="rounded-md border p-6 text-sm text-muted-foreground">
-              Comments coming in the next step.
+
+            <div className="mb-4 flex flex-col gap-2 rounded-md border p-4">
+              <Textarea
+                rows={3}
+                placeholder="Add a comment…"
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+              />
+              {commentError && (
+                <p className="text-sm text-destructive">{commentError}</p>
+              )}
+              <div className="flex justify-end">
+                <Button
+                  size="sm"
+                  onClick={postComment}
+                  disabled={posting || !newComment.trim()}
+                >
+                  {posting ? 'Adding…' : 'Add Comment'}
+                </Button>
+              </div>
             </div>
+
+            {comments.length === 0 ? (
+              <p className="text-sm text-muted-foreground">No comments found.</p>
+            ) : (
+              <ul className="divide-y rounded-md border">
+                {comments.map((c) => (
+                  <li key={c.id} className="px-4 py-3">
+                    <div className="mb-1 flex items-center gap-2 text-xs text-muted-foreground">
+                      <span className="font-medium text-foreground">
+                        {commentAuthor(c)}
+                      </span>
+                      <span>·</span>
+                      <span>{new Date(c.created_at).toLocaleString()}</span>
+                    </div>
+                    <p className="whitespace-pre-wrap text-sm">{c.body}</p>
+                  </li>
+                ))}
+              </ul>
+            )}
           </section>
         )}
 

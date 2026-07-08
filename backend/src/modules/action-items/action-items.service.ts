@@ -37,4 +37,19 @@ export class ActionItemsService {
     if (!item) throw new NotFoundException('Action item not found.');
     return item;
   }
+
+  async listComments(projectId: string, actionItemId: string) {
+    await this.get(projectId, actionItemId); // 404s if item not in this project
+    return this.repo.listComments(actionItemId);
+  }
+
+  async addComment(
+    projectId: string,
+    actionItemId: string,
+    body: string,
+    authorId: string,
+  ) {
+    await this.get(projectId, actionItemId);
+    return this.repo.insertComment(actionItemId, body.trim(), authorId);
+  }
 }

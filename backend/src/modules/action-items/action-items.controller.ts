@@ -7,6 +7,7 @@ import {
   CurrentUser,
   type AuthUser,
 } from '../../common/decorators/current-user.decorator';
+import { CreateCommentDto } from './dto/create-comment.dto';
 
 @Controller('projects/:projectId/action-items')
 export class ActionItemsController {
@@ -23,6 +24,29 @@ export class ActionItemsController {
     @Param('actionItemId', ParseUUIDPipe) actionItemId: string,
   ) {
     return this.actionItems.get(projectId, actionItemId);
+  }
+
+  @Get(':actionItemId/comments')
+  listComments(
+    @Param('projectId', ParseUUIDPipe) projectId: string,
+    @Param('actionItemId', ParseUUIDPipe) actionItemId: string,
+  ) {
+    return this.actionItems.listComments(projectId, actionItemId);
+  }
+
+  @Post(':actionItemId/comments')
+  addComment(
+    @Param('projectId', ParseUUIDPipe) projectId: string,
+    @Param('actionItemId', ParseUUIDPipe) actionItemId: string,
+    @Body() dto: CreateCommentDto,
+    @CurrentUser() user: AuthUser,
+  ) {
+    return this.actionItems.addComment(
+      projectId,
+      actionItemId,
+      dto.body,
+      user.id,
+    );
   }
 
   @Post()

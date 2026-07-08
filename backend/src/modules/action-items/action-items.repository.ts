@@ -28,6 +28,14 @@ export interface ActionItemListItem extends ActionItem {
   }>;
 }
 
+export interface ActionItemComment {
+  id: string;
+  action_item_id: string;
+  body: string;
+  created_at: string;
+  author: { full_name: string | null; email: string | null } | null;
+}
+
 const COLUMNS =
   'id, project_id, milestone_id, title, description, type_id, role_id, due_date, status, tags, created_at, updated_at';
 
@@ -100,4 +108,34 @@ export class ActionItemsRepository {
     if (error) throw toHttpException(error, 'actionItems.findOne');
     return (data as unknown as ActionItemListItem) ?? null;
   }
+
+async listComments(actionItemId: string): Promise<ActionItemComment[]> {
+    const { data, error } = await this.db.client
+      .from('action_item_comments')
+      .select(
+        `id, action_item_id, body, created_at,
+         author:profiles!author_id ( full_name, email )`,
+      )
+      .eq('action_item_id', actionItemId)
+      .order('created_at', { ascending: true });
+    if (error) throw toHttpException(error, 'actionItems.listComments');
+    return (data ?? []) as unknown as ActionItemComment[];
+  }
+
+  async insertComment(
+    actionItemId: string,
+    body: string,
+    authorId: string,
+  ): Promise<ActionItemComment> {
+    const { data, error } = await this.db.client
+      .from('action_item_comments')
+      .insert({ action_item_id: actionItemId, body, author_id: authorId })
+      .select(
+        `id, action_item_id, body, created_at,
+         author:profiles!author_id ( full_name, email )`,
+      )
+      .single();
+    if (error) throw toHttpException(error, 'actionItems.insertComment');
+    return data as unknown as ActionItemComment;
+  }  
 }

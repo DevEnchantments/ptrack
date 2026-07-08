@@ -173,4 +173,21 @@ export const actionItemsApi = {
     apiGet<ActionItem>(`/projects/${projectId}/action-items/${actionItemId}`),
   add: (projectId: string, data: Record<string, unknown>) =>
     apiPost<ActionItem>(`/projects/${projectId}/action-items`, data),
+  listComments: (projectId: string, actionItemId: string) =>
+    apiGet<ActionItemComment[]>(
+      `/projects/${projectId}/action-items/${actionItemId}/comments`,
+    ),
+  addComment: (projectId: string, actionItemId: string, body: string) =>
+    apiPost<ActionItemComment>(
+      `/projects/${projectId}/action-items/${actionItemId}/comments`,
+      { body },
+    ),
+}
+
+export interface ActionItemComment {
+  id: string
+  action_item_id: string
+  body: string
+  created_at: string
+  author: { full_name: string | null; email: string | null } | null
 }
