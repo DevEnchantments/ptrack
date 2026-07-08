@@ -10,6 +10,7 @@ import { PeopleModule } from './modules/people/people.module';
 import { MilestonesModule } from './modules/milestones/milestones.module';
 import { ActionItemsModule } from './modules/action-items/action-items.module';
 import { LinksModule } from './modules/links/links.module';
+import { ResourcesModule } from './modules/resources/resources.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
@@ -24,6 +25,7 @@ import { AppService } from './app.service';
     MilestonesModule,
     ActionItemsModule,
     LinksModule,
+    ResourcesModule,
   ],
   controllers: [AppController],
 

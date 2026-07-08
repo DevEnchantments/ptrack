@@ -5,12 +5,14 @@ import {
   milestonesApi,
   actionItemsApi,
   linksApi,
+  resourcesApi,
   type ProjectDetail,
   type ProjectMemberDetail,
   type Milestone,
   type MilestoneDetail,
   type ActionItem,
   type Link,
+  type Resource,
 } from '@/lib/api'
 import { Pencil } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -18,6 +20,7 @@ import { AddPersonDialog } from '@/components/AddPersonDialog'
 import { AddMilestoneDialog } from '@/components/AddMilestoneDialog'
 import { AddActionItemDialog } from '@/components/AddActionItemDialog'
 import { AddLinkDialog } from '@/components/AddLinkDialog'
+import { AddResourceDialog } from '@/components/AddResourceDialog'
 
 const ACTIONS = [
   'Add Person', 'Add Issue', 'Add Resource', 'Add Milestone',
@@ -51,6 +54,10 @@ function ownerName(m: Milestone) {
 
 function linkAuthor(l: Link) {
   return l.created_by_profile?.full_name || l.created_by_profile?.email || 'Unknown'
+}
+
+function resourceUpdatedBy(r: Resource) {
+  return r.updated_by_profile?.full_name || r.updated_by_profile?.email || 'Unknown'
 }
 
 function relativeTime(iso: string): string {
@@ -105,6 +112,9 @@ export function ProjectDetailPage() {
   const [editingLink, setEditingLink] = useState<Link | null>(null)
   const [editingMember, setEditingMember] = useState<ProjectMemberDetail | null>(null)
   const [editingActionItem, setEditingActionItem] = useState<ActionItem | null>(null)
+  const [resources, setResources] = useState<Resource[]>([])
+  const [addResourceOpen, setAddResourceOpen] = useState(false)
+  const [editingResource, setEditingResource] = useState<Resource | null>(null)
 
   const load = useCallback(() => {
     if (!id) return
@@ -139,12 +149,21 @@ export function ProjectDetailPage() {
       .catch(() => {})
   }, [id])
 
+  const loadResources = useCallback(() => {
+    if (!id) return
+    resourcesApi
+      .list(id)
+      .then(setResources)
+      .catch(() => {})
+  }, [id])
+
   useEffect(() => {
     load()
     loadMilestones()
     loadActionItems()
     loadLinks()
-  }, [load, loadMilestones, loadActionItems, loadLinks])
+    loadResources()
+  }, [load, loadMilestones, loadActionItems, loadLinks, loadResources])
 
   if (loading) {
     return <div className="p-6 text-muted-foreground">Loading…</div>
@@ -174,6 +193,7 @@ export function ProjectDetailPage() {
     'Add Milestone',
     'Add Action Item',
     'Add Link',
+    'Add Resource',
   ])
 
   function onAction(a: string) {
@@ -433,6 +453,42 @@ export function ProjectDetailPage() {
                       Added {relativeTime(l.created_at)} by {linkAuthor(l)}
                     </span>
                   </a>
+                </li>
+              ))}
+            </ul>
+          )}
+
+          <h2 className="mb-3 mt-8 text-lg font-semibold">Resources</h2>
+          {resources.length === 0 ? (
+            <p className="text-sm text-muted-foreground">No resources yet.</p>
+          ) : (
+            <ul className="divide-y rounded-md border">
+              {resources.map((r) => (
+                <li
+                  key={r.id}
+                  className="flex items-start gap-3 px-4 py-3 hover:bg-accent"
+                >
+                  <button
+                    type="button"
+                    onClick={() => setEditingResource(r)}
+                    aria-label="Edit resource"
+                    className="mt-0.5 text-muted-foreground hover:text-foreground"
+                  >
+                    <Pencil className="h-4 w-4" />
+                  </button>
+                  <div className="flex flex-1 items-start justify-between gap-4">
+                    <div>
+                      <span className="text-sm font-medium">{r.name}</span>
+                      <div className="mt-0.5 flex flex-wrap gap-x-4 text-xs text-muted-foreground">
+                        {r.type?.name && <span>Type: {r.type.name}</span>}
+                        {r.description && <span>{r.description}</span>}
+                      </div>
+                    </div>
+                    <span className="whitespace-nowrap text-xs text-muted-foreground">
+                      Updated {relativeTime(r.updated_at)} by{' '}
+                      {resourceUpdatedBy(r)}
+                    </span>
+                  </div>
                 </li>
               ))}
             </ul>

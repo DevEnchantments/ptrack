@@ -282,3 +282,28 @@ export const linksApi = {
   update: (projectId: string, linkId: string, data: Record<string, unknown>) =>
     apiPatch<Link>(`/projects/${projectId}/links/${linkId}`, data),
 }
+
+export interface Resource {
+  id: string
+  project_id: string
+  name: string
+  type_id: string | null
+  description: string | null
+  created_at: string
+  updated_at: string
+  type: { name: string } | null
+  updated_by_profile?: { full_name: string | null; email: string | null } | null
+}
+
+export const resourcesApi = {
+  list: (projectId: string) =>
+    apiGet<Resource[]>(`/projects/${projectId}/resources`),
+  add: (projectId: string, data: Record<string, unknown>) =>
+    apiPost<Resource>(`/projects/${projectId}/resources`, data),
+  update: (
+    projectId: string,
+    resourceId: string,
+    data: Record<string, unknown>,
+  ) =>
+    apiPatch<Resource>(`/projects/${projectId}/resources/${resourceId}`, data),
+}
