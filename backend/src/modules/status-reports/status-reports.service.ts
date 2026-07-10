@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { StatusReportsRepository } from './status-reports.repository';
 import { CreateStatusReportDto } from './dto/create-status-report.dto';
+import { UpdateStatusReportDto } from './dto/update-status-report.dto';
 
 @Injectable()
 export class StatusReportsService {
@@ -28,5 +29,20 @@ export class StatusReportsService {
       created_by: userId,
       updated_by: userId,
     });
+  }
+
+  update(
+    projectId: string,
+    statusReportId: string,
+    dto: UpdateStatusReportDto,
+    userId: string,
+  ) {
+    const patch: Record<string, unknown> = { updated_by: userId };
+    if (dto.title !== undefined) patch.title = dto.title.trim();
+    if (dto.summary !== undefined) patch.summary = dto.summary.trim();
+    if (dto.report_date !== undefined) patch.report_date = dto.report_date;
+    if (dto.viewable_by !== undefined) patch.viewable_by = dto.viewable_by;
+    if (dto.editable_by !== undefined) patch.editable_by = dto.editable_by;
+    return this.repo.update(projectId, statusReportId, patch);
   }
 }

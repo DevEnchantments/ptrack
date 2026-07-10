@@ -7,6 +7,7 @@ import {
 } from '@/lib/api'
 import { Button } from '@/components/ui/button'
 import { MiniCalendar } from '@/components/MiniCalendar'
+import { AddStatusReportDialog } from '@/components/AddStatusReportDialog'
 
 const ACCESS_LABELS: Record<string, string> = {
   submitter: 'Submitter',
@@ -40,6 +41,7 @@ export function StatusReportDetailPage() {
   const [others, setOthers] = useState<StatusReport[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [editOpen, setEditOpen] = useState(false)
 
   const load = useCallback(() => {
     if (!projectId || !statusReportId) return
@@ -105,7 +107,11 @@ export function StatusReportDetailPage() {
             <Button variant="outline" size="sm" disabled title="Coming in a later step">
               Email
             </Button>
-            <Button variant="outline" size="sm" disabled title="Coming in a later step">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setEditOpen(true)}
+            >
               Edit Status Report
             </Button>
             <Button
@@ -205,6 +211,15 @@ export function StatusReportDetailPage() {
           </aside>
         </div>
       </div>
+
+      <AddStatusReportDialog
+        projectId={projectId!}
+        projectName={projectName}
+        open={editOpen}
+        onOpenChange={setEditOpen}
+        existing={report}
+        onAdded={load}
+      />
     </div>
   )
 }

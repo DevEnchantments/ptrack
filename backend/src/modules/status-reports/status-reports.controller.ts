@@ -1,8 +1,9 @@
 import {
-  Body, Controller, Get, Param, ParseUUIDPipe, Post,
+  Body, Controller, Get, Param, ParseUUIDPipe, Patch, Post,
 } from '@nestjs/common';
 import { StatusReportsService } from './status-reports.service';
 import { CreateStatusReportDto } from './dto/create-status-report.dto';
+import { UpdateStatusReportDto } from './dto/update-status-report.dto';
 import {
   CurrentUser,
   type AuthUser,
@@ -32,5 +33,15 @@ export class StatusReportsController {
     @CurrentUser() user: AuthUser,
   ) {
     return this.reports.add(projectId, dto, user.id);
+  }
+
+  @Patch(':statusReportId')
+  update(
+    @Param('projectId', ParseUUIDPipe) projectId: string,
+    @Param('statusReportId', ParseUUIDPipe) statusReportId: string,
+    @Body() dto: UpdateStatusReportDto,
+    @CurrentUser() user: AuthUser,
+  ) {
+    return this.reports.update(projectId, statusReportId, dto, user.id);
   }
 }

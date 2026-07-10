@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { statusReportsApi } from '@/lib/api'
+import { statusReportsApi, type StatusReport } from '@/lib/api'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -34,6 +34,7 @@ interface Props {
   open: boolean
   onOpenChange: (open: boolean) => void
   onAdded: () => void
+  existing?: StatusReport | null
 }
 
 function RadioRow({
@@ -81,7 +82,9 @@ export function AddStatusReportDialog({
   open,
   onOpenChange,
   onAdded,
+  existing,
 }: Props) {
+  const isEdit = Boolean(existing)
   const [title, setTitle] = useState('')
   const [summary, setSummary] = useState('')
   const [viewableBy, setViewableBy] = useState('submitter_and_members')
@@ -92,9 +95,18 @@ export function AddStatusReportDialog({
 
   useEffect(() => {
     if (!open) return
-    reset()
+    if (existing) {
+      setTitle(existing.title ?? '')
+      setSummary(existing.summary ?? '')
+      setViewableBy(existing.viewable_by)
+      setEditableBy(existing.editable_by)
+      setReportDate(existing.report_date)
+      setError(null)
+    } else {
+      reset()
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open])
+  }, [open, existing])
 
   function reset() {
     setTitle('')
@@ -113,13 +125,18 @@ export function AddStatusReportDialog({
 
     setSaving(true)
     try {
-      await statusReportsApi.add(projectId, {
+      const payload = {
         title: title.trim(),
         summary: summary.trim(),
         viewable_by: viewableBy,
         editable_by: editableBy,
         report_date: reportDate,
-      })
+      }
+      if (isEdit && existing) {
+        await statusReportsApi.update(projectId, existing.id, payload)
+      } else {
+        await statusReportsApi.add(projectId, payload)
+      }
       reset()
       onOpenChange(false)
       onAdded()
@@ -140,7 +157,9 @@ export function AddStatusReportDialog({
     >
       <DialogContent className="max-h-[85vh] overflow-y-auto sm:max-w-2xl">
         <DialogHeader>
-          <DialogTitle>Add Status Report</DialogTitle>
+          <DialogTitle>
+            {isEdit ? 'Edit Status Report' : 'Add Status Report'}
+          </DialogTitle>
         </DialogHeader>
 
         <div className="flex flex-col gap-4">
@@ -211,7 +230,13 @@ export function AddStatusReportDialog({
             Cancel
           </Button>
           <Button onClick={submit} disabled={saving}>
-            {saving ? 'Adding…' : 'Add Status Report'}
+            {saving
+              ? isEdit
+                ? 'Saving…'
+                : 'Adding…'
+              : isEdit
+                ? 'Apply Changes'
+                : 'Add Status Report'}
           </Button>
         </DialogFooter>
       </DialogContent>

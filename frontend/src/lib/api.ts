@@ -390,4 +390,13 @@ export const statusReportsApi = {
     ),
   add: (projectId: string, data: Record<string, unknown>) =>
     apiPost<StatusReport>(`/projects/${projectId}/status-reports`, data),
+  update: (
+    projectId: string,
+    statusReportId: string,
+    data: Record<string, unknown>,
+  ) =>
+    apiPatch<StatusReport>(
+      `/projects/${projectId}/status-reports/${statusReportId}`,
+      data,
+    ),
 }
