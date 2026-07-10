@@ -9,6 +9,7 @@ import {
   issuesApi,
   updatesApi,
   statusReportsApi,
+  attachmentsApi,
   type ProjectDetail,
   type ProjectMemberDetail,
   type Milestone,
@@ -19,8 +20,9 @@ import {
   type Issue,
   type Update,
   type StatusReport,
+  type Attachment,
 } from '@/lib/api'
-import { Pencil } from 'lucide-react'
+import { Pencil, Download } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { AddPersonDialog } from '@/components/AddPersonDialog'
 import { AddMilestoneDialog } from '@/components/AddMilestoneDialog'
@@ -30,6 +32,7 @@ import { AddResourceDialog } from '@/components/AddResourceDialog'
 import { AddIssueDialog } from '@/components/AddIssueDialog'
 import { AddUpdateDialog } from '@/components/AddUpdateDialog'
 import { AddStatusReportDialog } from '@/components/AddStatusReportDialog'
+import { AddAttachmentDialog } from '@/components/AddAttachmentDialog'
 
 const ACTIONS = [
   'Add Person', 'Add Issue', 'Add Resource', 'Add Milestone',
@@ -106,6 +109,47 @@ function formatReportDate(iso: string): string {
   return `${day}-${mon}-${d.getFullYear()}`
 }
 
+const EXT_STYLES: Record<string, string> = {
+  pdf: 'bg-red-600',
+  doc: 'bg-blue-600',
+  docx: 'bg-blue-600',
+  xls: 'bg-green-600',
+  xlsx: 'bg-green-600',
+  csv: 'bg-green-600',
+  ppt: 'bg-orange-600',
+  pptx: 'bg-orange-600',
+  png: 'bg-amber-500',
+  jpg: 'bg-amber-500',
+  jpeg: 'bg-amber-500',
+  gif: 'bg-amber-500',
+  zip: 'bg-slate-500',
+  rar: 'bg-slate-500',
+}
+
+function fileExt(name: string): string {
+  const parts = name.split('.')
+  return parts.length > 1 ? (parts.pop() as string).toUpperCase() : ''
+}
+
+function formatSize(bytes: number | null): string {
+  if (bytes == null) return ''
+  if (bytes === 0) return '0'
+  if (bytes < 1024) return `${bytes}B`
+  const kb = bytes / 1024
+  if (kb < 1024) return `${Math.round(kb)}KB`
+  const mb = kb / 1024
+  if (mb < 1024) return `${Math.round(mb)}MB`
+  return `${(mb / 1024).toFixed(1)}GB`
+}
+
+function attachmentUploader(a: Attachment) {
+  return (
+    a.uploaded_by_profile?.full_name ||
+    a.uploaded_by_profile?.email ||
+    'Unknown'
+  )
+}
+
 function relativeTime(iso: string): string {
   const diffMs = Date.now() - new Date(iso).getTime()
   const sec = Math.round(diffMs / 1000)
@@ -166,6 +210,9 @@ export function ProjectDetailPage() {
   const [editingUpdate, setEditingUpdate] = useState<Update | null>(null)
   const [statusReports, setStatusReports] = useState<StatusReport[]>([])
   const [statusReportOpen, setStatusReportOpen] = useState(false)
+  const [attachments, setAttachments] = useState<Attachment[]>([])
+  const [attachmentOpen, setAttachmentOpen] = useState(false)
+  const [editingAttachment, setEditingAttachment] = useState<Attachment | null>(null)
 
   const load = useCallback(() => {
     if (!id) return
@@ -211,6 +258,11 @@ export function ProjectDetailPage() {
     statusReportsApi.list(id).then(setStatusReports).catch(() => {})
   }, [id])
 
+  const loadAttachments = useCallback(() => {
+    if (!id) return
+    attachmentsApi.list(id).then(setAttachments).catch(() => {})
+  }, [id])
+
   useEffect(() => {
     load()
     loadMilestones()
@@ -220,6 +272,7 @@ export function ProjectDetailPage() {
     loadIssues()
     loadUpdates()
     loadStatusReports()
+    loadAttachments()
   }, [
     load,
     loadMilestones,
@@ -229,6 +282,7 @@ export function ProjectDetailPage() {
     loadIssues,
     loadUpdates,
     loadStatusReports,
+    loadAttachments,
   ])
 
   if (loading) {
@@ -263,6 +317,7 @@ export function ProjectDetailPage() {
     'Add Issue',
     'Add Update',
     'Add Status Report',
+    'Attach File',
   ])
 
   function onAction(a: string) {
@@ -289,7 +344,18 @@ export function ProjectDetailPage() {
       setUpdateOpen(true)
     } else if (a === 'Add Status Report') {
       setStatusReportOpen(true)
+    } else if (a === 'Attach File') {
+      setEditingAttachment(null)
+      setAttachmentOpen(true)
     }
+  }
+
+  function downloadAttachment(attachmentId: string) {
+    if (!project) return
+    attachmentsApi
+      .downloadUrl(project.id, attachmentId)
+      .then(({ url }) => window.open(url, '_blank'))
+      .catch(() => {})
   }
 
   function openEditMilestone(milestoneId: string) {
@@ -710,6 +776,73 @@ export function ProjectDetailPage() {
               ))}
             </ul>
           )}
+          <h2 className="mb-3 mt-8 text-lg font-semibold">Attachments</h2>
+          {attachments.length === 0 ? (
+            <p className="text-sm text-muted-foreground">No attachments yet.</p>
+          ) : (
+            <ul className="divide-y rounded-md border">
+              {attachments.map((a) => {
+                const ext = fileExt(a.file_name)
+                const iconCls = EXT_STYLES[ext.toLowerCase()] ?? 'bg-slate-400'
+                return (
+                  <li
+                    key={a.id}
+                    className="flex items-center gap-3 px-4 py-3 hover:bg-accent"
+                  >
+                    <EditButton
+                      label="Edit attachment"
+                      onClick={() => {
+                        setEditingAttachment(a)
+                        setAttachmentOpen(true)
+                      }}
+                    />
+                    <div
+                      className={`flex h-9 w-9 shrink-0 items-center justify-center rounded ${iconCls} text-[9px] font-bold text-white`}
+                    >
+                      {ext.slice(0, 4) || 'FILE'}
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={() => downloadAttachment(a.id)}
+                          className="truncate text-left text-sm font-medium text-primary hover:underline"
+                        >
+                          {a.file_name}
+                        </button>
+                        {a.is_gold && (
+                          <span className="inline-flex shrink-0 items-center gap-1 text-xs text-amber-600">
+                            <span className="h-2 w-2 rounded-full bg-amber-500" />
+                            Gold
+                          </span>
+                        )}
+                      </div>
+                      {a.description && (
+                        <p className="truncate text-xs text-muted-foreground">
+                          {a.description}
+                        </p>
+                      )}
+                    </div>
+                    <span className="whitespace-nowrap text-sm text-muted-foreground">
+                      {formatSize(a.size_bytes)}
+                    </span>
+                    <div className="whitespace-nowrap text-right text-xs text-muted-foreground">
+                      <div>{relativeTime(a.created_at)}</div>
+                      <div>by {attachmentUploader(a)}</div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => downloadAttachment(a.id)}
+                      aria-label="Download"
+                      className="rounded border p-2 hover:bg-background"
+                    >
+                      <Download className="h-4 w-4" />
+                    </button>
+                  </li>
+                )
+              })}
+            </ul>
+          )}
         </div>
 
         <aside>
@@ -823,6 +956,17 @@ export function ProjectDetailPage() {
         open={statusReportOpen}
         onOpenChange={setStatusReportOpen}
         onAdded={loadStatusReports}
+      />
+
+      <AddAttachmentDialog
+        projectId={project.id}
+        open={attachmentOpen}
+        onOpenChange={(o) => {
+          setAttachmentOpen(o)
+          if (!o) setEditingAttachment(null)
+        }}
+        existing={editingAttachment}
+        onAdded={loadAttachments}
       />
     </div>
   )

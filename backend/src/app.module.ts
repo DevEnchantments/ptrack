@@ -14,6 +14,7 @@ import { ResourcesModule } from './modules/resources/resources.module';
 import { IssuesModule } from './modules/issues/issues.module';
 import { UpdatesModule } from './modules/updates/updates.module';
 import { StatusReportsModule } from './modules/status-reports/status-reports.module';
+import { AttachmentsModule } from './modules/attachments/attachments.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
@@ -32,6 +33,7 @@ import { AppService } from './app.service';
     IssuesModule,
     UpdatesModule,
     StatusReportsModule,
+    AttachmentsModule,
   ],
   controllers: [AppController],
 

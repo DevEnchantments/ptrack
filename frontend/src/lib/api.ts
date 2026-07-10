@@ -400,3 +400,56 @@ export const statusReportsApi = {
       data,
     ),
 }
+
+// Multipart upload (FormData). Do NOT set Content-Type — the browser adds the
+// multipart boundary itself. Only the Authorization header is attached.
+export async function apiUpload<T>(path: string, formData: FormData): Promise<T> {
+  const headers = await authHeader()
+  return handle<T>(
+    await fetch(`${API_URL}${path}`, {
+      method: 'POST',
+      headers,
+      body: formData,
+    }),
+  )
+}
+
+export interface Attachment {
+  id: string
+  project_id: string
+  file_name: string
+  bucket: string
+  storage_path: string
+  mime_type: string | null
+  size_bytes: number | null
+  is_gold: boolean
+  description: string | null
+  tags: string[] | null
+  uploaded_by: string | null
+  created_at: string
+  uploaded_by_profile?: { full_name: string | null; email: string | null } | null
+}
+
+export const attachmentsApi = {
+  list: (projectId: string) =>
+    apiGet<Attachment[]>(`/projects/${projectId}/attachments`),
+  upload: (projectId: string, formData: FormData) =>
+    apiUpload<Attachment>(`/projects/${projectId}/attachments`, formData),
+  downloadUrl: (projectId: string, attachmentId: string) =>
+    apiGet<{ url: string }>(
+      `/projects/${projectId}/attachments/${attachmentId}/download`,
+    ),
+  update: (
+    projectId: string,
+    attachmentId: string,
+    data: Record<string, unknown>,
+  ) =>
+    apiPatch<Attachment>(
+      `/projects/${projectId}/attachments/${attachmentId}`,
+      data,
+    ),
+  remove: (projectId: string, attachmentId: string) =>
+    apiDelete<{ deleted: boolean }>(
+      `/projects/${projectId}/attachments/${attachmentId}`,
+    ),
+}
