@@ -805,7 +805,11 @@ export function ProjectDetailPage() {
                       <div className="flex items-center gap-2">
                         <button
                           type="button"
-                          onClick={() => downloadAttachment(a.id)}
+                          onClick={() =>
+                            navigate(
+                              `/projects/${project.id}/attachments/${a.id}`,
+                            )
+                          }
                           className="truncate text-left text-sm font-medium text-primary hover:underline"
                         >
                           {a.file_name}

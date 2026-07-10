@@ -7,6 +7,7 @@ import { CreateProjectWizard } from '@/pages/CreateProjectWizard'
 import { ActionItemDetailPage } from '@/pages/ActionItemDetailPage'
 import { MilestoneDetailPage } from '@/pages/MilestoneDetailPage'
 import { StatusReportDetailPage } from '@/pages/StatusReportDetailPage'
+import { AttachmentDetailPage } from '@/pages/AttachmentDetailPage'
 
 function App() {
   return (
@@ -27,6 +28,10 @@ function App() {
         <Route
           path="/projects/:projectId/status-reports/:statusReportId"
           element={<StatusReportDetailPage />}
+        />
+        <Route
+          path="/projects/:projectId/attachments/:attachmentId"
+          element={<AttachmentDetailPage />}
         />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />

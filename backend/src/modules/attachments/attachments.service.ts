@@ -31,6 +31,12 @@ export class AttachmentsService {
     return this.repo.findByProject(projectId);
   }
 
+  async get(projectId: string, attachmentId: string) {
+    const att = await this.repo.findDetail(projectId, attachmentId);
+    if (!att) throw new NotFoundException('Attachment not found.');
+    return att;
+  }
+
   async create(
     projectId: string,
     file: UploadedFileLike | undefined,

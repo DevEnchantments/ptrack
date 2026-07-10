@@ -430,9 +430,17 @@ export interface Attachment {
   uploaded_by_profile?: { full_name: string | null; email: string | null } | null
 }
 
+export interface AttachmentDetail extends Attachment {
+  project: { name: string } | null
+}
+
 export const attachmentsApi = {
   list: (projectId: string) =>
     apiGet<Attachment[]>(`/projects/${projectId}/attachments`),
+  get: (projectId: string, attachmentId: string) =>
+    apiGet<AttachmentDetail>(
+      `/projects/${projectId}/attachments/${attachmentId}`,
+    ),
   upload: (projectId: string, formData: FormData) =>
     apiUpload<Attachment>(`/projects/${projectId}/attachments`, formData),
   downloadUrl: (projectId: string, attachmentId: string) =>

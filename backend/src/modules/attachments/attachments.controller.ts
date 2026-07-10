@@ -43,6 +43,14 @@ export class AttachmentsController {
     return this.attachments.create(projectId, file, body, user.id);
   }
 
+  @Get(':attachmentId')
+  get(
+    @Param('projectId', ParseUUIDPipe) projectId: string,
+    @Param('attachmentId', ParseUUIDPipe) attachmentId: string,
+  ) {
+    return this.attachments.get(projectId, attachmentId);
+  }
+
   @Get(':attachmentId/download')
   download(
     @Param('projectId', ParseUUIDPipe) projectId: string,

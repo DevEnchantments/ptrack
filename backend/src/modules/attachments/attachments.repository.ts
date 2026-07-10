@@ -26,6 +26,10 @@ export interface AttachmentListItem extends Attachment {
   } | null;
 }
 
+export interface AttachmentDetail extends AttachmentListItem {
+  project: { name: string } | null;
+}
+
 const COLUMNS =
   'id, project_id, file_name, bucket, storage_path, mime_type, size_bytes, is_gold, description, tags, uploaded_by, created_at';
 
@@ -62,6 +66,19 @@ export class AttachmentsRepository {
       .order('created_at', { ascending: false });
     if (error) throw toHttpException(error, 'attachments.findByProject');
     return (data ?? []) as unknown as AttachmentListItem[];
+  }
+
+  async findDetail(
+    projectId: string,
+    attachmentId: string,
+  ): Promise<AttachmentDetail | null> {
+    const { data, error } = await this.table
+      .select(`${JOINS}, project:projects ( name )`)
+      .eq('project_id', projectId)
+      .eq('id', attachmentId)
+      .maybeSingle();
+    if (error) throw toHttpException(error, 'attachments.findDetail');
+    return (data as unknown as AttachmentDetail) ?? null;
   }
 
   async findOne(
