@@ -29,7 +29,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "C:\\Users\\fares.alareefi\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -m graphify hook-guard search"
+            "command": "/c/Users/fares.alareefi/AppData/Local/Programs/Python/Python312/python.exe -m graphify hook-guard search"
           }
         ]
       },
@@ -38,7 +38,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "C:\\Users\\fares.alareefi\\AppData\\Local\\Programs\\Python\\Python312\\python.exe -m graphify hook-guard read"
+            "command": "/c/Users/fares.alareefi/AppData/Local/Programs/Python/Python312/python.exe -m graphify hook-guard read"
           }
         ]
       }

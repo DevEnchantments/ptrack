@@ -1,8 +1,8 @@
 {
   ".claude/settings.json": {
-    "mtime": 1783930343.785645,
-    "ast_hash": "5d3441fd030a7665f594d35337ce83dd",
-    "semantic_hash": "5d3441fd030a7665f594d35337ce83dd"
+    "mtime": 1783936097.6898174,
+    "ast_hash": "3ea5ff26a04049adeedce7b5059111d5",
+    "semantic_hash": ""
   },
   "backend/db/ptrack_phase1_schema.sql": {
     "mtime": 1783514430.3997838,
@@ -663,5 +663,55 @@
     "mtime": 1783347121.7021208,
     "ast_hash": "2e092757eaa8553feb3c7bb53e6a8a3b",
     "semantic_hash": "2e092757eaa8553feb3c7bb53e6a8a3b"
+  },
+  "CLAUDE.md": {
+    "mtime": 1783930082.6086757,
+    "ast_hash": "734897e07ec425ce4cc4e65969f48e3a",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1783324607.1122582,
+    "ast_hash": "227023a79b64bfc3f0b2c0d6fc99ddfb",
+    "semantic_hash": ""
+  },
+  "backend/README.md": {
+    "mtime": 1783334401.3463292,
+    "ast_hash": "ad12c0560e2e514d356da443998e8208",
+    "semantic_hash": ""
+  },
+  "frontend/README.md": {
+    "mtime": 1783344946.6699438,
+    "ast_hash": "9b29c5addc63360d0eee180ef76cc5d5",
+    "semantic_hash": ""
+  },
+  "frontend/index.html": {
+    "mtime": 1783344946.3246517,
+    "ast_hash": "33bd262affcefea92f1509cda449a19c",
+    "semantic_hash": ""
+  },
+  "frontend/public/favicon.svg": {
+    "mtime": 1783344637.8167722,
+    "ast_hash": "7e840862161341271697daa99a40d76b",
+    "semantic_hash": ""
+  },
+  "frontend/public/icons.svg": {
+    "mtime": 1783344637.9021025,
+    "ast_hash": "3b4fcfcf393eca4d264dca4a4663bc37",
+    "semantic_hash": ""
+  },
+  "frontend/src/assets/hero.png": {
+    "mtime": 1783344637.7015634,
+    "ast_hash": "aead493361b27e7510691c5d7072dfc1",
+    "semantic_hash": ""
+  },
+  "frontend/src/assets/react.svg": {
+    "mtime": 1783344637.9865627,
+    "ast_hash": "f0402b67b6ce880f65666bb49e841696",
+    "semantic_hash": ""
+  },
+  "frontend/src/assets/vite.svg": {
+    "mtime": 1783344638.0596406,
+    "ast_hash": "9960a24288958394ac50e57ff638b036",
+    "semantic_hash": ""
   }
 }
