@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseUUIDPipe,
@@ -70,5 +71,13 @@ export class LinksController {
     @CurrentUser() user: AuthUser,
   ) {
     return this.links.update(projectId, linkId, dto, user.id);
+  }
+
+  @Delete(':linkId')
+  remove(
+    @Param('projectId', ParseUUIDPipe) projectId: string,
+    @Param('linkId', ParseUUIDPipe) linkId: string,
+  ) {
+    return this.links.remove(projectId, linkId);
   }
 }

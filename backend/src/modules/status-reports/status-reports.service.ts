@@ -45,4 +45,10 @@ export class StatusReportsService {
     if (dto.editable_by !== undefined) patch.editable_by = dto.editable_by;
     return this.repo.update(projectId, statusReportId, patch);
   }
+
+  async remove(projectId: string, statusReportId: string) {
+    const deleted = await this.repo.remove(projectId, statusReportId);
+    if (!deleted) throw new NotFoundException('Status report not found.');
+    return { deleted: true };
+  }
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { IssuesRepository } from './issues.repository';
 import { CreateIssueDto } from './dto/create-issue.dto';
 import { UpdateIssueDto } from './dto/update-issue.dto';
@@ -50,5 +50,11 @@ export class IssuesService {
     if (dto.resolution !== undefined)
       patch.resolution = dto.resolution?.trim() || null;
     return this.repo.update(projectId, issueId, patch);
+  }
+
+  async remove(projectId: string, issueId: string) {
+    const deleted = await this.repo.remove(projectId, issueId);
+    if (!deleted) throw new NotFoundException('Issue not found.');
+    return { deleted: true };
   }
 }

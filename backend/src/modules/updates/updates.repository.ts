@@ -56,6 +56,18 @@ export class UpdatesRepository {
     return data as unknown as UpdateListItem;
   }
 
+  /** Returns the deleted id, or null when the update is not in this project. */
+  async remove(projectId: string, updateId: string): Promise<string | null> {
+    const { data, error } = await this.table
+      .delete()
+      .eq('project_id', projectId)
+      .eq('id', updateId)
+      .select('id')
+      .maybeSingle();
+    if (error) throw toHttpException(error, 'updates.remove');
+    return data?.id ?? null;
+  }
+
   async findByProject(projectId: string): Promise<UpdateListItem[]> {
     const { data, error } = await this.table
       .select(JOINS)

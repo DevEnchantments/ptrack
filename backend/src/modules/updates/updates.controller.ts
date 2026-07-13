@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseUUIDPipe,
@@ -70,5 +71,13 @@ export class UpdatesController {
     @CurrentUser() user: AuthUser,
   ) {
     return this.updates.update(projectId, updateId, dto, user.id);
+  }
+
+  @Delete(':updateId')
+  remove(
+    @Param('projectId', ParseUUIDPipe) projectId: string,
+    @Param('updateId', ParseUUIDPipe) updateId: string,
+  ) {
+    return this.updates.remove(projectId, updateId);
   }
 }

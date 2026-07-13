@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { LinksRepository } from './links.repository';
 import { CreateLinkDto } from './dto/create-link.dto';
 import { UpdateLinkDto } from './dto/update-link.dto';
@@ -38,5 +38,11 @@ export class LinksService {
     if (dto.is_gold !== undefined) patch.is_gold = dto.is_gold;
     if (dto.tags !== undefined) patch.tags = dto.tags?.length ? dto.tags : null;
     return this.repo.update(projectId, linkId, patch);
+  }
+
+  async remove(projectId: string, linkId: string) {
+    const deleted = await this.repo.remove(projectId, linkId);
+    if (!deleted) throw new NotFoundException('Link not found.');
+    return { deleted: true };
   }
 }

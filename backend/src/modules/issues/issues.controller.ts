@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseUUIDPipe,
@@ -80,5 +81,13 @@ export class IssuesController {
     @CurrentUser() user: AuthUser,
   ) {
     return this.issues.update(projectId, issueId, dto, user.id);
+  }
+
+  @Delete(':issueId')
+  remove(
+    @Param('projectId', ParseUUIDPipe) projectId: string,
+    @Param('issueId', ParseUUIDPipe) issueId: string,
+  ) {
+    return this.issues.remove(projectId, issueId);
   }
 }

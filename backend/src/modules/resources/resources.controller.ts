@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseUUIDPipe,
@@ -73,5 +74,13 @@ export class ResourcesController {
     @CurrentUser() user: AuthUser,
   ) {
     return this.resources.update(projectId, resourceId, dto, user.id);
+  }
+
+  @Delete(':resourceId')
+  remove(
+    @Param('projectId', ParseUUIDPipe) projectId: string,
+    @Param('resourceId', ParseUUIDPipe) resourceId: string,
+  ) {
+    return this.resources.remove(projectId, resourceId);
   }
 }

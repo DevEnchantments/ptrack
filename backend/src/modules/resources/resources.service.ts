@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { ResourcesRepository } from './resources.repository';
 import { CreateResourceDto } from './dto/create-resource.dto';
 import { UpdateResourceDto } from './dto/update-resource.dto';
@@ -34,5 +34,11 @@ export class ResourcesService {
     if (dto.description !== undefined)
       patch.description = dto.description?.trim() || null;
     return this.repo.update(projectId, resourceId, patch);
+  }
+
+  async remove(projectId: string, resourceId: string) {
+    const deleted = await this.repo.remove(projectId, resourceId);
+    if (!deleted) throw new NotFoundException('Resource not found.');
+    return { deleted: true };
   }
 }

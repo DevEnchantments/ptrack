@@ -285,6 +285,8 @@ export const linksApi = {
     apiPost<Link>(`/projects/${projectId}/links`, data),
   update: (projectId: string, linkId: string, data: Record<string, unknown>) =>
     apiPatch<Link>(`/projects/${projectId}/links/${linkId}`, data),
+  remove: (projectId: string, linkId: string) =>
+    apiDelete<{ deleted: boolean }>(`/projects/${projectId}/links/${linkId}`),
 }
 
 export interface Resource {
@@ -310,6 +312,10 @@ export const resourcesApi = {
     data: Record<string, unknown>,
   ) =>
     apiPatch<Resource>(`/projects/${projectId}/resources/${resourceId}`, data),
+  remove: (projectId: string, resourceId: string) =>
+    apiDelete<{ deleted: boolean }>(
+      `/projects/${projectId}/resources/${resourceId}`,
+    ),
 }
 
 export interface Issue {
@@ -341,6 +347,8 @@ export const issuesApi = {
     apiPost<Issue>(`/projects/${projectId}/issues`, data),
   update: (projectId: string, issueId: string, data: Record<string, unknown>) =>
     apiPatch<Issue>(`/projects/${projectId}/issues/${issueId}`, data),
+  remove: (projectId: string, issueId: string) =>
+    apiDelete<{ deleted: boolean }>(`/projects/${projectId}/issues/${issueId}`),
 }
 
 export interface Update {
@@ -365,6 +373,10 @@ export const updatesApi = {
     apiPost<Update>(`/projects/${projectId}/updates`, data),
   update: (projectId: string, updateId: string, data: Record<string, unknown>) =>
     apiPatch<Update>(`/projects/${projectId}/updates/${updateId}`, data),
+  remove: (projectId: string, updateId: string) =>
+    apiDelete<{ deleted: boolean }>(
+      `/projects/${projectId}/updates/${updateId}`,
+    ),
 }
 
 export interface StatusReport {
@@ -402,6 +414,10 @@ export const statusReportsApi = {
     apiPatch<StatusReport>(
       `/projects/${projectId}/status-reports/${statusReportId}`,
       data,
+    ),
+  remove: (projectId: string, statusReportId: string) =>
+    apiDelete<{ deleted: boolean }>(
+      `/projects/${projectId}/status-reports/${statusReportId}`,
     ),
 }
 

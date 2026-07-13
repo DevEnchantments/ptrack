@@ -50,6 +50,24 @@ export function AddUpdateDialog({
   const [tags, setTags] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [saving, setSaving] = useState(false)
+  const [deleting, setDeleting] = useState(false)
+  const busy = saving || deleting
+
+  async function remove() {
+    if (!existing) return
+    setError(null)
+    setDeleting(true)
+    try {
+      await updatesApi.remove(projectId, existing.id)
+      reset()
+      onOpenChange(false)
+      onAdded()
+    } catch (e) {
+      setError((e as Error).message)
+    } finally {
+      setDeleting(false)
+    }
+  }
 
   useEffect(() => {
     if (!open) return
@@ -203,17 +221,29 @@ export function AddUpdateDialog({
         </div>
 
         <DialogFooter>
-          <Button
-            variant="outline"
-            onClick={() => {
-              reset()
-              onOpenChange(false)
-            }}
-            disabled={saving}
-          >
-            Cancel
-          </Button>
-          <Button onClick={submit} disabled={saving}>
+          <div className="flex gap-2 sm:mr-auto">
+            <Button
+              variant="outline"
+              onClick={() => {
+                reset()
+                onOpenChange(false)
+              }}
+              disabled={busy}
+            >
+              Cancel
+            </Button>
+            {isEdit && (
+              <Button
+                variant="destructive"
+                className="border border-destructive/40 bg-transparent"
+                onClick={remove}
+                disabled={busy}
+              >
+                {deleting ? 'Deleting…' : 'Delete'}
+              </Button>
+            )}
+          </div>
+          <Button onClick={submit} disabled={busy}>
             {saving
               ? isEdit
                 ? 'Saving…'

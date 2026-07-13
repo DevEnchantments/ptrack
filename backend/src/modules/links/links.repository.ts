@@ -59,6 +59,18 @@ export class LinksRepository {
     return data as unknown as LinkListItem;
   }
 
+  /** Returns the deleted id, or null when the link is not in this project. */
+  async remove(projectId: string, linkId: string): Promise<string | null> {
+    const { data, error } = await this.table
+      .delete()
+      .eq('project_id', projectId)
+      .eq('id', linkId)
+      .select('id')
+      .maybeSingle();
+    if (error) throw toHttpException(error, 'links.remove');
+    return data?.id ?? null;
+  }
+
   async findByProject(projectId: string): Promise<LinkListItem[]> {
     const { data, error } = await this.table
       .select(

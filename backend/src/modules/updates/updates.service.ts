@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { UpdatesRepository } from './updates.repository';
 import { CreateUpdateDto } from './dto/create-update.dto';
 import { UpdateUpdateDto } from './dto/update-update.dto';
@@ -39,5 +43,11 @@ export class UpdatesService {
     if (dto.is_gold !== undefined) patch.is_gold = dto.is_gold;
     if (dto.tags !== undefined) patch.tags = dto.tags?.length ? dto.tags : null;
     return this.repo.update(projectId, updateId, patch);
+  }
+
+  async remove(projectId: string, updateId: string) {
+    const deleted = await this.repo.remove(projectId, updateId);
+    if (!deleted) throw new NotFoundException('Update not found.');
+    return { deleted: true };
   }
 }
