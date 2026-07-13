@@ -102,6 +102,11 @@ export class ProjectsRepository {
     if (error) throw toHttpException(error, 'projectMembers.insert');
   }
 
+  async update(id: string, patch: Record<string, unknown>): Promise<void> {
+    const { error } = await this.table.update(patch).eq('id', id);
+    if (error) throw toHttpException(error, 'projects.update');
+  }
+
   async delete(id: string): Promise<void> {
     const { error } = await this.table.delete().eq('id', id);
     if (error) throw toHttpException(error, 'projects.delete');

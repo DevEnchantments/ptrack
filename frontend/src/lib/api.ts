@@ -103,6 +103,10 @@ export const projectsApi = {
   get: (id: string) => apiGet<ProjectDetail>(`/projects/${id}`),
   create: (data: Record<string, unknown>) =>
     apiPost<Project>('/projects', data),
+  update: (id: string, data: Record<string, unknown>) =>
+    apiPatch<ProjectDetail>(`/projects/${id}`, data),
+  remove: (id: string) =>
+    apiDelete<{ deleted: boolean }>(`/projects/${id}`),
 }
 
 export interface UserSummary {

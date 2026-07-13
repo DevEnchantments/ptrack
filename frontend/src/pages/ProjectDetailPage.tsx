@@ -33,6 +33,7 @@ import { AddIssueDialog } from '@/components/AddIssueDialog'
 import { AddUpdateDialog } from '@/components/AddUpdateDialog'
 import { AddStatusReportDialog } from '@/components/AddStatusReportDialog'
 import { AddAttachmentDialog } from '@/components/AddAttachmentDialog'
+import { EditProjectDialog } from '@/components/EditProjectDialog'
 
 const ACTIONS = [
   'Add Person', 'Add Issue', 'Add Resource', 'Add Milestone',
@@ -213,6 +214,7 @@ export function ProjectDetailPage() {
   const [attachments, setAttachments] = useState<Attachment[]>([])
   const [attachmentOpen, setAttachmentOpen] = useState(false)
   const [editingAttachment, setEditingAttachment] = useState<Attachment | null>(null)
+  const [editProjectOpen, setEditProjectOpen] = useState(false)
 
   const load = useCallback(() => {
     if (!id) return
@@ -386,7 +388,11 @@ export function ProjectDetailPage() {
         <div>
           <div className="mb-6 flex items-center justify-between">
             <h1 className="text-2xl font-semibold">{project.name}</h1>
-            <Button variant="outline" size="sm" disabled>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setEditProjectOpen(true)}
+            >
               Edit Project
             </Button>
           </div>
@@ -971,6 +977,14 @@ export function ProjectDetailPage() {
         }}
         existing={editingAttachment}
         onAdded={loadAttachments}
+      />
+
+      <EditProjectDialog
+        project={project}
+        open={editProjectOpen}
+        onOpenChange={setEditProjectOpen}
+        onSaved={load}
+        onDeleted={() => navigate('/')}
       />
     </div>
   )
