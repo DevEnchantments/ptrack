@@ -11,6 +11,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiBody, ApiConsumes } from '@nestjs/swagger';
 import {
   AttachmentsService,
   type UploadedFileLike,
@@ -30,7 +31,34 @@ export class AttachmentsController {
     return this.attachments.list(projectId);
   }
 
+  // The Swagger plugin cannot infer a multipart body from FileInterceptor, so
+  // the upload contract is declared by hand. Fields arrive as form-data strings:
+  // the service coerces is_gold and splits tags on commas.
   @Post()
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      required: ['file'],
+      properties: {
+        file: {
+          type: 'string',
+          format: 'binary',
+          description: 'File to upload (max 100 MB).',
+        },
+        is_gold: {
+          type: 'string',
+          enum: ['true', 'false'],
+          description: 'Truthy when "true" or "1".',
+        },
+        tags: {
+          type: 'string',
+          description: 'Comma-separated list, e.g. "budget,q3".',
+        },
+        description: { type: 'string' },
+      },
+    },
+  })
   @UseInterceptors(
     FileInterceptor('file', { limits: { fileSize: 100 * 1024 * 1024 } }),
   )
