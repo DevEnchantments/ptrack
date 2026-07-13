@@ -80,6 +80,13 @@ export class ProjectsService {
   }
 
   async remove(id: string): Promise<{ deleted: boolean }> {
+    // Remove the project's files from Storage before the rows cascade away.
+    // Best-effort: a storage hiccup shouldn't block deleting the project.
+    try {
+      await this.repo.deleteAttachmentObjects(id);
+    } catch {
+      /* ignore storage cleanup failures */
+    }
     await this.repo.delete(id);
     return { deleted: true };
   }

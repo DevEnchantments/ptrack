@@ -22,7 +22,7 @@ import {
   type StatusReport,
   type Attachment,
 } from '@/lib/api'
-import { Pencil, Download } from 'lucide-react'
+import { Pencil, Download, Lock, Trash2, Check, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { AddPersonDialog } from '@/components/AddPersonDialog'
 import { AddMilestoneDialog } from '@/components/AddMilestoneDialog'
@@ -215,6 +215,9 @@ export function ProjectDetailPage() {
   const [attachmentOpen, setAttachmentOpen] = useState(false)
   const [editingAttachment, setEditingAttachment] = useState<Attachment | null>(null)
   const [editProjectOpen, setEditProjectOpen] = useState(false)
+  const [confirmDeleteAttachmentId, setConfirmDeleteAttachmentId] = useState<
+    string | null
+  >(null)
 
   const load = useCallback(() => {
     if (!id) return
@@ -360,6 +363,17 @@ export function ProjectDetailPage() {
       .catch(() => {})
   }
 
+  function doDeleteAttachment(attachmentId: string) {
+    if (!project) return
+    attachmentsApi
+      .remove(project.id, attachmentId)
+      .then(() => {
+        setConfirmDeleteAttachmentId(null)
+        loadAttachments()
+      })
+      .catch(() => {})
+  }
+
   function openEditMilestone(milestoneId: string) {
     if (!project) return
     milestonesApi
@@ -381,13 +395,23 @@ export function ProjectDetailPage() {
           Projects
         </button>
         <span className="mx-2 text-muted-foreground">/</span>
-        <span className="text-sm">{project.name}</span>
+        <span className="inline-flex items-center gap-1 text-sm">
+          {project.access_control === 'restricted' && (
+            <Lock className="h-3.5 w-3.5 text-muted-foreground" />
+          )}
+          {project.name}
+        </span>
       </header>
 
       <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 p-6 lg:grid-cols-[1fr_260px]">
         <div>
           <div className="mb-6 flex items-center justify-between">
-            <h1 className="text-2xl font-semibold">{project.name}</h1>
+            <h1 className="flex items-center gap-2 text-2xl font-semibold">
+              {project.access_control === 'restricted' && (
+                <Lock className="h-5 w-5 text-muted-foreground" />
+              )}
+              {project.name}
+            </h1>
             <Button
               variant="outline"
               size="sm"
@@ -848,6 +872,35 @@ export function ProjectDetailPage() {
                     >
                       <Download className="h-4 w-4" />
                     </button>
+                    {confirmDeleteAttachmentId === a.id ? (
+                      <div className="flex items-center gap-1">
+                        <button
+                          type="button"
+                          onClick={() => doDeleteAttachment(a.id)}
+                          aria-label="Confirm delete"
+                          className="rounded border border-destructive p-2 text-destructive hover:bg-destructive/10"
+                        >
+                          <Check className="h-4 w-4" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setConfirmDeleteAttachmentId(null)}
+                          aria-label="Cancel delete"
+                          className="rounded border p-2 hover:bg-background"
+                        >
+                          <X className="h-4 w-4" />
+                        </button>
+                      </div>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => setConfirmDeleteAttachmentId(a.id)}
+                        aria-label="Delete"
+                        className="rounded border p-2 text-muted-foreground hover:bg-background hover:text-destructive"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </button>
+                    )}
                   </li>
                 )
               })}

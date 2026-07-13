@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../../database/database.service';
 import { toHttpException } from '../../common/supabase-error';
+import { ATTACHMENTS_BUCKET } from '../attachments/attachments.repository';
 
 export interface Project {
   id: string;
@@ -105,6 +106,23 @@ export class ProjectsRepository {
   async update(id: string, patch: Record<string, unknown>): Promise<void> {
     const { error } = await this.table.update(patch).eq('id', id);
     if (error) throw toHttpException(error, 'projects.update');
+  }
+
+  /** Best-effort removal of this project's files from Storage (rows cascade in the DB). */
+  async deleteAttachmentObjects(projectId: string): Promise<void> {
+    const { data, error } = await this.db.client
+      .from('attachments')
+      .select('storage_path')
+      .eq('project_id', projectId);
+    if (error) throw toHttpException(error, 'projects.listAttachmentPaths');
+
+    const paths = (data ?? [])
+      .map((r: { storage_path: string | null }) => r.storage_path)
+      .filter((p): p is string => Boolean(p));
+
+    if (paths.length > 0) {
+      await this.db.client.storage.from(ATTACHMENTS_BUCKET).remove(paths);
+    }
   }
 
   async delete(id: string): Promise<void> {
