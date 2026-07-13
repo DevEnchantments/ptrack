@@ -455,18 +455,18 @@
     "semantic_hash": "de93ea320d5d2a6c9f44d78169d9fc8e"
   },
   "frontend/src/components/AddAttachmentDialog.tsx": {
-    "mtime": 1783716558.9214406,
-    "ast_hash": "8fc86b78cbedea914f6723cc6bbbf87f",
-    "semantic_hash": "8fc86b78cbedea914f6723cc6bbbf87f"
+    "mtime": 1783945928.7313106,
+    "ast_hash": "c006201349f47826076c94bdb5bf9d54",
+    "semantic_hash": ""
   },
   "frontend/src/components/AddIssueDialog.tsx": {
-    "mtime": 1783944983.8482454,
-    "ast_hash": "f15f7932a2b34c1a42e2c4f49a323fe2",
+    "mtime": 1783945912.7896366,
+    "ast_hash": "a32a37c8ee9b8435024231228c118356",
     "semantic_hash": ""
   },
   "frontend/src/components/AddLinkDialog.tsx": {
-    "mtime": 1783944940.4345012,
-    "ast_hash": "7a3a9d82e1cd0bca25675ec5c6d1cd4f",
+    "mtime": 1783945908.8459158,
+    "ast_hash": "083c971755b7d7f80cf1f43364d721a1",
     "semantic_hash": ""
   },
   "frontend/src/components/AddMilestoneDialog.tsx": {
@@ -480,18 +480,18 @@
     "semantic_hash": "72310e4f07bebeb9101327f37cb68bef"
   },
   "frontend/src/components/AddResourceDialog.tsx": {
-    "mtime": 1783944999.813068,
-    "ast_hash": "d9443d8eff61c394091d02147b3df183",
+    "mtime": 1783945920.9747553,
+    "ast_hash": "184d1e695f279d4d21e30376cdaa5fa1",
     "semantic_hash": ""
   },
   "frontend/src/components/AddStatusReportDialog.tsx": {
-    "mtime": 1783945007.3598983,
-    "ast_hash": "6593bf1b606eb557067d57a1b066517a",
+    "mtime": 1783945925.039644,
+    "ast_hash": "222e0dd2622f34c6eb178ab28b1889ea",
     "semantic_hash": ""
   },
   "frontend/src/components/AddUpdateDialog.tsx": {
-    "mtime": 1783944991.8866596,
-    "ast_hash": "df1e40d928c1da1cddebabb4f5329e6a",
+    "mtime": 1783945916.8088417,
+    "ast_hash": "f816a33690ad12e5746617e95de10894",
     "semantic_hash": ""
   },
   "frontend/src/components/CategorySelect.tsx": {
@@ -610,9 +610,9 @@
     "semantic_hash": "0a8771195dc696e9aa6e8f1c0abee85e"
   },
   "frontend/src/pages/ProjectDetailPage.tsx": {
-    "mtime": 1783924523.0632212,
-    "ast_hash": "d315cb8d556c602b8580ef862d8daa5b",
-    "semantic_hash": "d315cb8d556c602b8580ef862d8daa5b"
+    "mtime": 1783946183.9419403,
+    "ast_hash": "3bae310d9dacfa86b1c26f6f4e6bc8ea",
+    "semantic_hash": ""
   },
   "frontend/src/pages/StatusReportDetailPage.tsx": {
     "mtime": 1783528082.626948,
@@ -665,8 +665,8 @@
     "semantic_hash": "2e092757eaa8553feb3c7bb53e6a8a3b"
   },
   "CLAUDE.md": {
-    "mtime": 1783930082.6086757,
-    "ast_hash": "734897e07ec425ce4cc4e65969f48e3a",
+    "mtime": 1783946404.543044,
+    "ast_hash": "4f0d1fe25195ac9a5768e079a199da59",
     "semantic_hash": ""
   },
   "README.md": {
@@ -717,6 +717,11 @@
   "original-app-features.md": {
     "mtime": 1783927709.9215374,
     "ast_hash": "24d94403e646ae7be17c40c01374c16f",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/ConfirmDeleteButton.tsx": {
+    "mtime": 1783946066.3757365,
+    "ast_hash": "9ec88c8cfe0c2680b46719ba6a76f0ed",
     "semantic_hash": ""
   }
 }

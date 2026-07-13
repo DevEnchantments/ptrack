@@ -11,10 +11,11 @@ application. There is **no access to the original database** — only a demo ins
 so this is a clean rebuild, not a migration or an enhancement. The rebuild was mandated
 to include Supabase in the stack.
 
-The full feature breakdown of the original APEX app lives in
-`docs/original-app-features.md`. Treat it as the source-of-truth reference for what each
-module should eventually do. Read it (or `@`-mention it) when building any feature that
-maps to an original module — do **not** assume behaviour from the name alone.
+The full feature breakdown of the original APEX app lives in `original-app-features.md`
+(repo root). Treat it as a **reference for intended behaviour, not a spec** — it describes
+a mature APEX app, and 1:1 parity is not the goal. Read it (or `@`-mention it) when
+building any feature that maps to an original module — do **not** assume behaviour from
+the name alone.
 
 ## Tech stack
 
@@ -43,24 +44,41 @@ maps to an original module — do **not** assume behaviour from the name alone.
   - PATH / env changes sometimes need a full VS Code restart to take effect.
 - **Label every command** as `backend` / `frontend` / `Supabase dashboard`.
 
-## Current state — Phase 1 complete
+## Current state — Phase 1 complete (full CRUD)
 
-Full CRUD replication of the project record and all 9 attached record types:
+Every record type now has Create, Read, Update **and Delete**.
 
 - **Record types:** Person, Milestone, Action Item, Link, Resource, Issue, Update,
-  Status Report, Attachment (create/list, plus edit where the demo has it)
-- **Detail pages:** Milestone, Action Item, Status Report, Attachment
+  Status Report, Attachment
+- **Detail pages:** Milestone, Action Item, Status Report, Attachment. Issues, Links,
+  Updates and Resources are **dialog-only in the demo** — they need no detail page.
+- **Delete:** one convention everywhere — a red `Delete` in the edit-dialog footer
+  (`ConfirmDeleteButton`, two-step: click arms, second click confirms). Never shown when
+  creating. Project delete keeps its own confirm flow.
 - **Project-level:** 4-step Create Project wizard; Edit Project (PATCH, with Parent
-  Project picker and creatable Category); Delete Project with confirm flow
+  Project picker and creatable Category); Delete Project; restricted-project lock icon;
+  orphaned Storage cleanup on project delete
+- **API docs:** Swagger at `:3000/api/docs` (non-production only). Schemas are derived
+  automatically from `class-validator` decorators by the `@nestjs/swagger` CLI plugin —
+  DTOs carry `@ApiProperty` examples, and POST/PATCH routes carry runnable `@ApiBody`
+  examples.
 - **Schema:** `ptrack_phase1_schema.sql`, reconciled against the live Supabase DB (28 tables)
 
 ## Roadmap — deferred to Phase 2+
 
-Project Logo upload · Key/AAGP code column · Email buttons · Restricted-project lock icon ·
-Attachment row delete control · consistent delete policy across all record types ·
-orphaned Storage file cleanup on project delete · History/audit tabs (currently
-placeholders) · Status Report ↔ Updates junction + health status · Reference Identifier ·
-RLS enforcement.
+**Unfinished Phase 1 loose ends:** History/audit tabs (literal "coming in a later step"
+placeholders on the Milestone + Action Item detail pages) · Status Report ↔ Updates
+junction — the junction table does not exist, and the `status_id` "health" column on
+`status_reports` is dead (written nowhere) · Reference Identifier (visible on the demo's
+Issue dialog) · Project Logo upload · Key/AAGP code column · Email buttons · RLS enforcement.
+
+**Not yet started (whole modules from the original):** dashboards & reporting (no charting
+library is installed — Gantt, timeline, calendar, heatmap all have no foundation) · email
+& notification subsystem · Flex Columns (the no-code custom-field engine — decide on this
+early, it is the only one that would retro-shape the schema) · Code Table Administration
+(11 lookup tables exist with no admin UI) · Search + saved searches · bulk data-load wizard ·
+Project Templates / Merge / Validations / Tags / Tree view · preview-before-commit mass
+updates.
 
 ## How I like to work — follow precisely
 
@@ -87,6 +105,14 @@ RLS enforcement.
   `InternalServerErrorException` directly, not via `toHttpException`.
 - **esbuild validates syntax but not types** — always also run `npx tsc --noEmit` on
   backend files touching new APIs.
+- **Swagger `PartialType`** must be imported from `@nestjs/swagger`, NOT
+  `@nestjs/mapped-types`. The Swagger plugin cannot see through the mapped-types version,
+  so every `Update*Dto` silently documents as an empty `{}` — docs that look fine but
+  describe nothing.
+- **Swagger cannot infer multipart bodies** from `FileInterceptor` — file-upload routes
+  need a hand-written `@ApiConsumes` + `@ApiBody` schema.
+- **FK example values in Swagger are placeholders**, not real rows. Lookup-backed IDs must
+  be fetched from `GET /lookups/:name` before a request will succeed.
 - **Profiles FK disambiguation:** use the `profiles!user_id` FK hint when multiple FKs
   point to the same table.
 - **File/export sanity check:** every component's export name should match its filename.
@@ -96,7 +122,13 @@ RLS enforcement.
 This project has a knowledge graph at graphify-out/ with god nodes, community structure, and cross-file relationships.
 
 Rules:
-- For codebase questions, first run `graphify query "<question>"` when graphify-out/graph.json exists. Use `graphify path "<A>" "<B>"` for relationships and `graphify explain "<concept>"` for focused concepts. These return a scoped subgraph, usually much smaller than GRAPH_REPORT.md or raw grep output.
-- If graphify-out/wiki/index.md exists, use it for broad navigation instead of raw source browsing.
+- **Always invoke it as `python -m graphify ...`.** The bare `graphify` launcher on PATH is
+  broken on this machine (`Permission denied`).
+- For codebase questions, first run `python -m graphify query "<question>"` when graphify-out/graph.json exists. Use `path "<A>" "<B>"` for relationships and `explain "<concept>"` for focused concepts. These return a scoped subgraph, usually much smaller than GRAPH_REPORT.md or raw grep output.
 - Read graphify-out/GRAPH_REPORT.md only for broad architecture review or when query/path/explain do not surface enough context.
-- After modifying code, run `graphify update .` to keep the graph current (AST-only, no API cost).
+- After modifying code, run `python -m graphify update .` (add `--force` after refactors that
+  delete code, or it refuses to write a smaller graph). A git post-commit hook also rebuilds
+  automatically, but it skips commits that touch only `graphify-out/`.
+- The graph is AST-derived: it misses runtime coupling (e.g. `app.module.ts` registration).
+  Treat its answers as leads to confirm in source, and treat community *numbers* as
+  disposable — they are renumbered on every rebuild.

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { linksApi, type Link } from '@/lib/api'
 import { Button } from '@/components/ui/button'
+import { ConfirmDeleteButton } from '@/components/ConfirmDeleteButton'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
@@ -217,14 +218,12 @@ export function AddLinkDialog({
               Cancel
             </Button>
             {isEdit && (
-              <Button
-                variant="destructive"
-                className="border border-destructive/40 bg-transparent"
-                onClick={remove}
-                disabled={busy}
-              >
-                {deleting ? 'Deleting…' : 'Delete'}
-              </Button>
+              <ConfirmDeleteButton
+                onConfirm={remove}
+                deleting={deleting}
+                disabled={saving}
+                resetKey={open}
+              />
             )}
           </div>
           <Button onClick={submit} disabled={busy || Boolean(urlError)}>
