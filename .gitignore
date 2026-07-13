@@ -143,3 +143,6 @@ vite.config.ts.timestamp-*
 .vite/
 .claude/settings.local.json
 graphifyignore
+
+# Machine-local interpreter pin for the graphify post-commit hook (absolute path)
+graphify-out/.graphify_python
