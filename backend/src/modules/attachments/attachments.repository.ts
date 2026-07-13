@@ -50,10 +50,7 @@ export class AttachmentsRepository {
 
   // ---- table ops ----
   async insert(row: Record<string, unknown>): Promise<AttachmentListItem> {
-    const { data, error } = await this.table
-      .insert(row)
-      .select(JOINS)
-      .single();
+    const { data, error } = await this.table.insert(row).select(JOINS).single();
     if (error) throw toHttpException(error, 'attachments.insert');
     return data as unknown as AttachmentListItem;
   }
@@ -91,7 +88,7 @@ export class AttachmentsRepository {
       .eq('id', attachmentId)
       .maybeSingle();
     if (error) throw toHttpException(error, 'attachments.findOne');
-    return (data as unknown as Attachment) ?? null;
+    return data ?? null;
   }
 
   async update(

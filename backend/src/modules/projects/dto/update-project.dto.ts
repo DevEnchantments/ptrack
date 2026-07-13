@@ -1,41 +1,93 @@
+import { ApiPropertyOptional } from '@nestjs/swagger';
 import {
-  IsArray, IsDateString, IsIn, IsOptional, IsString, IsUUID, MaxLength,
+  IsArray,
+  IsDateString,
+  IsIn,
+  IsOptional,
+  IsString,
+  IsUUID,
+  MaxLength,
 } from 'class-validator';
 
 export class UpdateProjectDto {
-  @IsOptional() @IsString() @MaxLength(255)
+  @ApiPropertyOptional({ example: 'Apollo Data Migration' })
+  @IsOptional()
+  @IsString()
+  @MaxLength(255)
   name?: string;
 
-  @IsOptional() @IsUUID()
+  @ApiPropertyOptional({
+    format: 'uuid',
+    description:
+      'Parent project for hierarchy. Fetch from `GET /projects`. Send null to detach.',
+  })
+  @IsOptional()
+  @IsUUID()
   parent_project_id?: string | null;
 
-  @IsOptional() @IsUUID()
+  @ApiPropertyOptional({
+    format: 'uuid',
+    description: 'Fetch from `GET /lookups/project-statuses`.',
+  })
+  @IsOptional()
+  @IsUUID()
   status_id?: string | null;
 
-  @IsOptional() @IsUUID()
+  @ApiPropertyOptional({
+    format: 'uuid',
+    description: 'Fetch from `GET /lookups/project-sizes`.',
+  })
+  @IsOptional()
+  @IsUUID()
   size_id?: string | null;
 
-  @IsOptional() @IsUUID()
+  @ApiPropertyOptional({
+    format: 'uuid',
+    description: 'Fetch from `GET /lookups/project-categories`.',
+  })
+  @IsOptional()
+  @IsUUID()
   category_id?: string | null;
 
-  @IsOptional() @IsIn(['open', 'restricted'])
+  @ApiPropertyOptional({
+    enum: ['open', 'restricted'],
+    example: 'open',
+    description: '"restricted" limits visibility to assigned members.',
+  })
+  @IsOptional()
+  @IsIn(['open', 'restricted'])
   access_control?: 'open' | 'restricted';
 
-  @IsOptional() @IsString()
+  @ApiPropertyOptional({
+    example: 'Migrate the legacy Apollo dataset onto the new platform.',
+  })
+  @IsOptional()
+  @IsString()
   description?: string | null;
 
-  @IsOptional() @IsString()
+  @ApiPropertyOptional({ example: 'Zero-downtime cutover by end of Q3.' })
+  @IsOptional()
+  @IsString()
   goal?: string | null;
 
-  @IsOptional() @IsString()
+  @ApiPropertyOptional({ example: 'Finance Division' })
+  @IsOptional()
+  @IsString()
   customer?: string | null;
 
-  @IsOptional() @IsString()
+  @ApiPropertyOptional({ example: 'https://intranet.example.com/apollo' })
+  @IsOptional()
+  @IsString()
   primary_url?: string | null;
 
-  @IsOptional() @IsArray() @IsString({ each: true })
+  @ApiPropertyOptional({ type: [String], example: ['migration', 'q3'] })
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
   tags?: string[] | null;
 
-  @IsOptional() @IsDateString()
+  @ApiPropertyOptional({ format: 'date', example: '2026-07-13' })
+  @IsOptional()
+  @IsDateString()
   start_date?: string | null;
 }

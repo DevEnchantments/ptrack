@@ -20,8 +20,8 @@
     "semantic_hash": ""
   },
   "backend/package.json": {
-    "mtime": 1783940486.0620458,
-    "ast_hash": "88d228461086f935ac03be55dc015474",
+    "mtime": 1783941103.8207169,
+    "ast_hash": "4dffb5c911209bfbb57c873cf2bc56bb",
     "semantic_hash": ""
   },
   "backend/src/app.controller.spec.ts": {

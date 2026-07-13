@@ -62,7 +62,7 @@ export class ActionItemsRepository {
       .select(COLUMNS)
       .single();
     if (error) throw toHttpException(error, 'actionItems.insert');
-    return data as unknown as ActionItem;
+    return data;
   }
 
   async update(
@@ -77,7 +77,7 @@ export class ActionItemsRepository {
       .select(COLUMNS)
       .single();
     if (error) throw toHttpException(error, 'actionItems.update');
-    return data as unknown as ActionItem;
+    return data;
   }
 
   async remove(projectId: string, actionItemId: string): Promise<void> {

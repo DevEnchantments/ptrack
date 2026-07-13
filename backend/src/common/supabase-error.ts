@@ -19,7 +19,9 @@ export function toHttpException(
     case '23503': // foreign_key_violation
       return new BadRequestException('A referenced record does not exist.');
     case '23505': // unique_violation
-      return new ConflictException('A record with these values already exists.');
+      return new ConflictException(
+        'A record with these values already exists.',
+      );
     case '23502': // not_null_violation
       return new BadRequestException('A required field is missing.');
     case '23514': // check_violation

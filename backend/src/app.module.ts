@@ -37,9 +37,6 @@ import { AppService } from './app.service';
   ],
   controllers: [AppController],
 
-  providers: [
-    AppService,
-    { provide: APP_GUARD, useClass: SupabaseAuthGuard },
-  ],
+  providers: [AppService, { provide: APP_GUARD, useClass: SupabaseAuthGuard }],
 })
 export class AppModule {}

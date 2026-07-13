@@ -1,15 +1,33 @@
+import { ApiPropertyOptional } from '@nestjs/swagger';
 import { IsIn, IsOptional, IsString, IsUUID } from 'class-validator';
 
 export class UpdatePersonDto {
-  @IsOptional() @IsUUID()
+  @ApiPropertyOptional({
+    format: 'uuid',
+    description: 'Fetch from `GET /lookups/project-roles`.',
+  })
+  @IsOptional()
+  @IsUUID()
   role_id?: string;
 
-  @IsOptional() @IsIn(['read_only', 'read_write', 'read_write_admin'])
+  @ApiPropertyOptional({
+    enum: ['read_only', 'read_write', 'read_write_admin'],
+    example: 'read_write',
+  })
+  @IsOptional()
+  @IsIn(['read_only', 'read_write', 'read_write_admin'])
   access_level?: 'read_only' | 'read_write' | 'read_write_admin';
 
-  @IsOptional() @IsUUID()
+  @ApiPropertyOptional({
+    format: 'uuid',
+    description: 'Fetch from `GET /lookups/involvement-levels`.',
+  })
+  @IsOptional()
+  @IsUUID()
   involvement_level_id?: string | null;
 
-  @IsOptional() @IsString()
+  @ApiPropertyOptional({ example: 'Joining for the cutover phase only.' })
+  @IsOptional()
+  @IsString()
   notes?: string | null;
 }

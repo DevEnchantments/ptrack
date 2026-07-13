@@ -1,6 +1,13 @@
 import {
-  Body, Controller, Get, Param, ParseUUIDPipe, Patch, Post,
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseUUIDPipe,
+  Patch,
+  Post,
 } from '@nestjs/common';
+import { ApiBody } from '@nestjs/swagger';
 import { UpdatesService } from './updates.service';
 import { CreateUpdateDto } from './dto/create-update.dto';
 import { UpdateUpdateDto } from './dto/update-update.dto';
@@ -19,6 +26,25 @@ export class UpdatesController {
   }
 
   @Post()
+  @ApiBody({
+    type: CreateUpdateDto,
+    examples: {
+      minimal: {
+        summary: 'Minimal — runs as-is',
+        value: { body: 'Dry run completed against staging with no data loss.' },
+      },
+      full: {
+        summary: 'Full — replace type_id first',
+        description: 'type_id comes from GET /lookups/update-types.',
+        value: {
+          body: 'Dry run completed against staging with no data loss.',
+          type_id: '00000000-0000-0000-0000-000000000000',
+          is_gold: true,
+          tags: ['migration'],
+        },
+      },
+    },
+  })
   add(
     @Param('projectId', ParseUUIDPipe) projectId: string,
     @Body() dto: CreateUpdateDto,
@@ -28,6 +54,15 @@ export class UpdatesController {
   }
 
   @Patch(':updateId')
+  @ApiBody({
+    type: UpdateUpdateDto,
+    examples: {
+      partial: {
+        summary: 'Partial — send only what changes',
+        value: { is_gold: true },
+      },
+    },
+  })
   update(
     @Param('projectId', ParseUUIDPipe) projectId: string,
     @Param('updateId', ParseUUIDPipe) updateId: string,

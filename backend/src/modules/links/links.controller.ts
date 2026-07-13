@@ -1,6 +1,13 @@
 import {
-  Body, Controller, Get, Param, ParseUUIDPipe, Patch, Post,
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseUUIDPipe,
+  Patch,
+  Post,
 } from '@nestjs/common';
+import { ApiBody } from '@nestjs/swagger';
 import { LinksService } from './links.service';
 import { CreateLinkDto } from './dto/create-link.dto';
 import { UpdateLinkDto } from './dto/update-link.dto';
@@ -19,6 +26,25 @@ export class LinksController {
   }
 
   @Post()
+  @ApiBody({
+    type: CreateLinkDto,
+    examples: {
+      minimal: {
+        summary: 'Minimal — runs as-is',
+        value: { url: 'https://intranet.example.com/apollo/runbook' },
+      },
+      full: {
+        summary: 'Full — runs as-is (no UUIDs needed)',
+        value: {
+          url: 'https://intranet.example.com/apollo/runbook',
+          label: 'Cutover runbook',
+          description: 'Step-by-step cutover procedure.',
+          is_gold: true,
+          tags: ['runbook'],
+        },
+      },
+    },
+  })
   add(
     @Param('projectId', ParseUUIDPipe) projectId: string,
     @Body() dto: CreateLinkDto,
@@ -28,6 +54,15 @@ export class LinksController {
   }
 
   @Patch(':linkId')
+  @ApiBody({
+    type: UpdateLinkDto,
+    examples: {
+      partial: {
+        summary: 'Partial — send only what changes',
+        value: { label: 'Cutover runbook (v3)', is_gold: true },
+      },
+    },
+  })
   update(
     @Param('projectId', ParseUUIDPipe) projectId: string,
     @Param('linkId', ParseUUIDPipe) linkId: string,

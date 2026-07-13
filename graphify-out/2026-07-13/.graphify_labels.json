@@ -60,8 +60,16 @@
   "58": "toHttpException",
   "59": "ProjectsRepository",
   "60": "ActionItemDetailPage.tsx",
-  "61": "ActionItemsController",
+  "61": "ProjectsController",
   "62": "StatusReportDetailPage.tsx",
-  "63": "MiniCalendar.tsx",
-  "64": ".update"
+  "63": "CreateProjectDto",
+  "64": ".update",
+  "65": "UpdateProjectDto",
+  "66": "EditProjectDialog.tsx",
+  "67": "ActionItemDetailPage.tsx",
+  "68": "App.tsx",
+  "69": "SupabaseAuthGuard",
+  "70": "AttachmentDetailPage.tsx",
+  "71": "AddActionItemDialog",
+  "72": "MiniCalendar.tsx"
 }

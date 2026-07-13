@@ -65,7 +65,7 @@ export class ProjectsRepository {
       .select(COLUMNS)
       .single();
     if (error) throw toHttpException(error, 'projects.insert');
-    return data as unknown as Project;
+    return data;
   }
 
   async findAll(): Promise<Project[]> {
@@ -73,7 +73,7 @@ export class ProjectsRepository {
       .select(COLUMNS)
       .order('created_at', { ascending: false });
     if (error) throw toHttpException(error, 'projects.findAll');
-    return (data ?? []) as unknown as Project[];
+    return data ?? [];
   }
 
   async findDetail(id: string): Promise<ProjectDetail | null> {

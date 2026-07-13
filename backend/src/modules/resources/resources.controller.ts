@@ -1,6 +1,13 @@
 import {
-  Body, Controller, Get, Param, ParseUUIDPipe, Patch, Post,
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseUUIDPipe,
+  Patch,
+  Post,
 } from '@nestjs/common';
+import { ApiBody } from '@nestjs/swagger';
 import { ResourcesService } from './resources.service';
 import { CreateResourceDto } from './dto/create-resource.dto';
 import { UpdateResourceDto } from './dto/update-resource.dto';
@@ -19,6 +26,28 @@ export class ResourcesController {
   }
 
   @Post()
+  @ApiBody({
+    type: CreateResourceDto,
+    examples: {
+      minimal: {
+        summary: 'Minimal — replace type_id first',
+        description:
+          'type_id is required and must be a real ID from GET /lookups/resource-types.',
+        value: {
+          name: 'Staging database cluster',
+          type_id: '00000000-0000-0000-0000-000000000000',
+        },
+      },
+      full: {
+        summary: 'Full — replace type_id first',
+        value: {
+          name: 'Staging database cluster',
+          type_id: '00000000-0000-0000-0000-000000000000',
+          description: 'Reserved for the migration dry runs.',
+        },
+      },
+    },
+  })
   add(
     @Param('projectId', ParseUUIDPipe) projectId: string,
     @Body() dto: CreateResourceDto,
@@ -28,6 +57,15 @@ export class ResourcesController {
   }
 
   @Patch(':resourceId')
+  @ApiBody({
+    type: UpdateResourceDto,
+    examples: {
+      partial: {
+        summary: 'Partial — send only what changes',
+        value: { description: 'Released back to the shared pool.' },
+      },
+    },
+  })
   update(
     @Param('projectId', ParseUUIDPipe) projectId: string,
     @Param('resourceId', ParseUUIDPipe) resourceId: string,

@@ -1,39 +1,82 @@
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
-  IsArray, IsBoolean, IsDateString, IsIn, IsNumber,
-  IsOptional, IsString, IsUUID, MaxLength,
+  IsArray,
+  IsBoolean,
+  IsDateString,
+  IsIn,
+  IsNumber,
+  IsOptional,
+  IsString,
+  IsUUID,
+  MaxLength,
 } from 'class-validator';
 
 export class CreateMilestoneDto {
-  @IsString() @MaxLength(255)
+  @ApiProperty({ example: 'Schema cutover complete' })
+  @IsString()
+  @MaxLength(255)
   name!: string;
 
+  @ApiProperty({ format: 'date', example: '2026-07-13' })
   @IsDateString()
   start_date!: string;
 
+  @ApiProperty({ format: 'date', example: '2026-08-31' })
   @IsDateString()
   due_date!: string;
 
+  @ApiProperty({
+    enum: ['open', 'closed_completed', 'not_applicable'],
+    example: 'open',
+  })
   @IsIn(['open', 'closed_completed', 'not_applicable'])
   status!: 'open' | 'closed_completed' | 'not_applicable';
 
-  @IsOptional() @IsUUID()
+  @ApiPropertyOptional({
+    format: 'uuid',
+    description: 'Fetch from `GET /lookups/project-roles`.',
+  })
+  @IsOptional()
+  @IsUUID()
   role_id?: string | null;
 
-  @IsOptional() @IsUUID()
+  @ApiPropertyOptional({
+    format: 'uuid',
+    description: 'Owning user. Fetch from `GET /users`.',
+  })
+  @IsOptional()
+  @IsUUID()
   owner_id?: string | null;
 
-  @IsOptional() @IsBoolean()
+  @ApiPropertyOptional({
+    example: false,
+    description: 'Flags this as a major milestone.',
+  })
+  @IsOptional()
+  @IsBoolean()
   is_major?: boolean;
 
-  @IsOptional() @IsString()
+  @ApiPropertyOptional({ example: 'All tables migrated and verified.' })
+  @IsOptional()
+  @IsString()
   description?: string | null;
 
-  @IsOptional() @IsArray() @IsString({ each: true })
+  @ApiPropertyOptional({ type: [String], example: ['migration'] })
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
   tags?: string[] | null;
 
-  @IsOptional() @IsNumber()
+  @ApiPropertyOptional({
+    example: 20,
+    description: 'Relative weight of this milestone within the project.',
+  })
+  @IsOptional()
+  @IsNumber()
   weightage?: number | null;
 
-  @IsOptional() @IsNumber()
+  @ApiPropertyOptional({ example: 0, description: '0–100.' })
+  @IsOptional()
+  @IsNumber()
   percent_complete?: number | null;
 }

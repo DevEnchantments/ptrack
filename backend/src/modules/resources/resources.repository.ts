@@ -37,7 +37,7 @@ export class ResourcesRepository {
       .select(COLUMNS)
       .single();
     if (error) throw toHttpException(error, 'resources.insert');
-    return data as unknown as Resource;
+    return data;
   }
 
   async update(
@@ -52,7 +52,7 @@ export class ResourcesRepository {
       .select(COLUMNS)
       .single();
     if (error) throw toHttpException(error, 'resources.update');
-    return data as unknown as Resource;
+    return data;
   }
 
   async findByProject(projectId: string): Promise<ResourceListItem[]> {

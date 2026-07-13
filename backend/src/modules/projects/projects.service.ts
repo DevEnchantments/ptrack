@@ -1,5 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { ProjectsRepository, Project, ProjectDetail } from './projects.repository';
+import {
+  ProjectsRepository,
+  Project,
+  ProjectDetail,
+} from './projects.repository';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
 
@@ -72,8 +76,7 @@ export class ProjectsService {
     if (dto.primary_url !== undefined)
       patch.primary_url = dto.primary_url?.trim() || null;
     if (dto.tags !== undefined) patch.tags = dto.tags?.length ? dto.tags : null;
-    if (dto.start_date !== undefined)
-      patch.start_date = dto.start_date || null;
+    if (dto.start_date !== undefined) patch.start_date = dto.start_date || null;
 
     await this.repo.update(id, patch);
     return this.getDetail(id);

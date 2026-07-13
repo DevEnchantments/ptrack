@@ -86,17 +86,12 @@ export class AttachmentsService {
     return { url };
   }
 
-  update(
-    projectId: string,
-    attachmentId: string,
-    dto: UpdateAttachmentDto,
-  ) {
+  update(projectId: string, attachmentId: string, dto: UpdateAttachmentDto) {
     const patch: Record<string, unknown> = {};
     if (dto.is_gold !== undefined) patch.is_gold = dto.is_gold;
     if (dto.description !== undefined)
       patch.description = dto.description?.trim() || null;
-    if (dto.tags !== undefined)
-      patch.tags = dto.tags?.length ? dto.tags : null;
+    if (dto.tags !== undefined) patch.tags = dto.tags?.length ? dto.tags : null;
     return this.repo.update(projectId, attachmentId, patch);
   }
 

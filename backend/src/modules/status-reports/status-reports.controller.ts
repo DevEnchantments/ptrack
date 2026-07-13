@@ -1,6 +1,13 @@
 import {
-  Body, Controller, Get, Param, ParseUUIDPipe, Patch, Post,
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseUUIDPipe,
+  Patch,
+  Post,
 } from '@nestjs/common';
+import { ApiBody } from '@nestjs/swagger';
 import { StatusReportsService } from './status-reports.service';
 import { CreateStatusReportDto } from './dto/create-status-report.dto';
 import { UpdateStatusReportDto } from './dto/update-status-report.dto';
@@ -27,6 +34,21 @@ export class StatusReportsController {
   }
 
   @Post()
+  @ApiBody({
+    type: CreateStatusReportDto,
+    examples: {
+      minimal: {
+        summary: 'Minimal — runs as-is (all fields required, no UUIDs)',
+        value: {
+          title: 'Apollo — week 28 status',
+          summary: 'Schema migration on track. One open data-quality issue.',
+          viewable_by: 'all',
+          editable_by: 'submitter',
+          report_date: '2026-07-13',
+        },
+      },
+    },
+  })
   add(
     @Param('projectId', ParseUUIDPipe) projectId: string,
     @Body() dto: CreateStatusReportDto,
@@ -36,6 +58,15 @@ export class StatusReportsController {
   }
 
   @Patch(':statusReportId')
+  @ApiBody({
+    type: UpdateStatusReportDto,
+    examples: {
+      partial: {
+        summary: 'Partial — send only what changes',
+        value: { summary: 'Cutover complete. No open issues.' },
+      },
+    },
+  })
   update(
     @Param('projectId', ParseUUIDPipe) projectId: string,
     @Param('statusReportId', ParseUUIDPipe) statusReportId: string,

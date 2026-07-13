@@ -38,7 +38,7 @@ export class LinksRepository {
       .select(COLUMNS)
       .single();
     if (error) throw toHttpException(error, 'links.insert');
-    return data as unknown as Link;
+    return data;
   }
 
   async update(

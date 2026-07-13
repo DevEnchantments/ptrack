@@ -8,6 +8,7 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
+import { ApiBody } from '@nestjs/swagger';
 import { ActionItemsService } from './action-items.service';
 import { CreateActionItemDto } from './dto/create-action-item.dto';
 import { UpdateActionItemDto } from './dto/update-action-item.dto';
@@ -43,6 +44,15 @@ export class ActionItemsController {
   }
 
   @Post(':actionItemId/comments')
+  @ApiBody({
+    type: CreateCommentDto,
+    examples: {
+      minimal: {
+        summary: 'Minimal — runs as-is',
+        value: { body: 'Rollback plan drafted — awaiting review from Ops.' },
+      },
+    },
+  })
   addComment(
     @Param('projectId', ParseUUIDPipe) projectId: string,
     @Param('actionItemId', ParseUUIDPipe) actionItemId: string,
@@ -58,6 +68,35 @@ export class ActionItemsController {
   }
 
   @Post()
+  @ApiBody({
+    type: CreateActionItemDto,
+    examples: {
+      minimal: {
+        summary: 'Minimal — runs as-is',
+        value: {
+          title: 'Draft the rollback plan',
+          due_date: '2026-08-31',
+          status: 'open',
+        },
+      },
+      full: {
+        summary: 'Full — replace the UUIDs first',
+        description:
+          "type_id from GET /lookups/action-item-types; role_id from /lookups/project-roles; milestone_id from this project's milestones; owner_ids from GET /users.",
+        value: {
+          title: 'Draft the rollback plan',
+          due_date: '2026-08-31',
+          status: 'open',
+          milestone_id: '00000000-0000-0000-0000-000000000000',
+          type_id: '00000000-0000-0000-0000-000000000000',
+          role_id: '00000000-0000-0000-0000-000000000000',
+          description: 'Cover both the data and app tiers.',
+          tags: ['migration'],
+          owner_ids: ['00000000-0000-0000-0000-000000000000'],
+        },
+      },
+    },
+  })
   add(
     @Param('projectId', ParseUUIDPipe) projectId: string,
     @Body() dto: CreateActionItemDto,
@@ -67,6 +106,15 @@ export class ActionItemsController {
   }
 
   @Patch(':actionItemId')
+  @ApiBody({
+    type: UpdateActionItemDto,
+    examples: {
+      partial: {
+        summary: 'Partial — send only what changes',
+        value: { status: 'closed_completed' },
+      },
+    },
+  })
   update(
     @Param('projectId', ParseUUIDPipe) projectId: string,
     @Param('actionItemId', ParseUUIDPipe) actionItemId: string,

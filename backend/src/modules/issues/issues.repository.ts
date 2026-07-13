@@ -49,10 +49,7 @@ export class IssuesRepository {
   }
 
   async insert(row: Record<string, unknown>): Promise<IssueListItem> {
-    const { data, error } = await this.table
-      .insert(row)
-      .select(JOINS)
-      .single();
+    const { data, error } = await this.table.insert(row).select(JOINS).single();
     if (error) throw toHttpException(error, 'issues.insert');
     return data as unknown as IssueListItem;
   }

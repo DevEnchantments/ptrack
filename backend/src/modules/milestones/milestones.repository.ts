@@ -52,7 +52,7 @@ export class MilestonesRepository {
       .select(COLUMNS)
       .single();
     if (error) throw toHttpException(error, 'milestones.insert');
-    return data as unknown as Milestone;
+    return data;
   }
 
   async update(
@@ -67,7 +67,7 @@ export class MilestonesRepository {
       .select(COLUMNS)
       .single();
     if (error) throw toHttpException(error, 'milestones.update');
-    return data as unknown as Milestone;
+    return data;
   }
 
   async remove(projectId: string, milestoneId: string): Promise<void> {

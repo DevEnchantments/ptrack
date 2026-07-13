@@ -1,8 +1,18 @@
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
-  IsArray, IsBoolean, IsOptional, IsString, Matches, MaxLength,
+  IsArray,
+  IsBoolean,
+  IsOptional,
+  IsString,
+  Matches,
+  MaxLength,
 } from 'class-validator';
 
 export class CreateLinkDto {
+  @ApiProperty({
+    example: 'https://intranet.example.com/apollo/runbook',
+    description: 'Must start with http:// or https://.',
+  })
   @IsString()
   @MaxLength(2048)
   @Matches(/^https?:\/\//, {
@@ -10,15 +20,28 @@ export class CreateLinkDto {
   })
   url!: string;
 
-  @IsOptional() @IsString() @MaxLength(255)
+  @ApiPropertyOptional({ example: 'Cutover runbook' })
+  @IsOptional()
+  @IsString()
+  @MaxLength(255)
   label?: string | null;
 
-  @IsOptional() @IsString()
+  @ApiPropertyOptional({ example: 'Step-by-step cutover procedure.' })
+  @IsOptional()
+  @IsString()
   description?: string | null;
 
-  @IsOptional() @IsBoolean()
+  @ApiPropertyOptional({
+    example: false,
+    description: 'Pins this link as a key reference.',
+  })
+  @IsOptional()
+  @IsBoolean()
   is_gold?: boolean;
 
-  @IsOptional() @IsArray() @IsString({ each: true })
+  @ApiPropertyOptional({ type: [String], example: ['runbook'] })
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
   tags?: string[] | null;
 }
