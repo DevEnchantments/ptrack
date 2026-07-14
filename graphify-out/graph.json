@@ -220,7 +220,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "backend_nest_cli",
-      "community": 6,
+      "community": 33,
       "norm_label": "nest-cli.json"
     },
     {
@@ -230,7 +230,7 @@
       "source_location": "L2",
       "_origin": "ast",
       "id": "backend_nest_cli_schema",
-      "community": 6,
+      "community": 33,
       "norm_label": "$schema"
     },
     {
@@ -240,7 +240,7 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "backend_nest_cli_collection",
-      "community": 6,
+      "community": 33,
       "norm_label": "collection"
     },
     {
@@ -250,7 +250,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "backend_nest_cli_sourceroot",
-      "community": 6,
+      "community": 33,
       "norm_label": "sourceroot"
     },
     {
@@ -260,7 +260,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "backend_nest_cli_compileroptions",
-      "community": 6,
+      "community": 33,
       "norm_label": "compileroptions"
     },
     {
@@ -270,7 +270,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "backend_nest_cli_compileroptions_deleteoutdir",
-      "community": 6,
+      "community": 33,
       "norm_label": "deleteoutdir"
     },
     {
@@ -280,7 +280,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "backend_nest_cli_compileroptions_plugins",
-      "community": 6,
+      "community": 33,
       "norm_label": "plugins"
     },
     {
@@ -290,7 +290,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "ref_nestjs_swagger",
-      "community": 6,
+      "community": 32,
       "norm_label": "@nestjs/swagger"
     },
     {
@@ -1300,7 +1300,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "backend_src_app_controller_spec",
-      "community": 34,
+      "community": 62,
       "norm_label": "app.controller.spec.ts"
     },
     {
@@ -1310,7 +1310,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "backend_src_app_controller",
-      "community": 34,
+      "community": 62,
       "norm_label": "app.controller.ts"
     },
     {
@@ -1320,7 +1320,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "backend_src_app_controller_appcontroller",
-      "community": 34,
+      "community": 62,
       "norm_label": "appcontroller"
     },
     {
@@ -1330,7 +1330,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "backend_src_app_controller_ts_controller",
-      "community": 34,
+      "community": 62,
       "norm_label": "controller"
     },
     {
@@ -1340,7 +1340,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "apisecurity",
-      "community": 34,
+      "community": 62,
       "norm_label": "apisecurity"
     },
     {
@@ -1350,7 +1350,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "backend_src_app_controller_ts_get",
-      "community": 34,
+      "community": 62,
       "norm_label": "get"
     },
     {
@@ -1360,7 +1360,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "backend_src_app_controller_appcontroller_constructor",
-      "community": 34,
+      "community": 62,
       "norm_label": ".constructor()"
     },
     {
@@ -1370,7 +1370,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "backend_src_app_controller_appcontroller_gethello",
-      "community": 34,
+      "community": 62,
       "norm_label": ".gethello()"
     },
     {
@@ -1410,7 +1410,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "backend_src_app_service",
-      "community": 34,
+      "community": 62,
       "norm_label": "app.service.ts"
     },
     {
@@ -1420,7 +1420,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "backend_src_app_service_appservice",
-      "community": 34,
+      "community": 62,
       "norm_label": "appservice"
     },
     {
@@ -1430,7 +1430,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "backend_src_app_service_ts_injectable",
-      "community": 34,
+      "community": 62,
       "norm_label": "injectable"
     },
     {
@@ -1440,7 +1440,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "backend_src_app_service_appservice_gethello",
-      "community": 34,
+      "community": 62,
       "norm_label": ".gethello()"
     },
     {
@@ -1480,7 +1480,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "backend_src_common_decorators_public_decorator",
-      "community": 34,
+      "community": 62,
       "norm_label": "public.decorator.ts"
     },
     {
@@ -1490,7 +1490,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "backend_src_common_decorators_public_decorator_public",
-      "community": 34,
+      "community": 62,
       "norm_label": "public()"
     },
     {
@@ -1500,7 +1500,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "backend_src_common_guards_supabase_auth_guard",
-      "community": 27,
+      "community": 34,
       "norm_label": "supabase-auth.guard.ts"
     },
     {
@@ -1510,7 +1510,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "backend_src_common_guards_supabase_auth_guard_supabaseauthguard",
-      "community": 27,
+      "community": 34,
       "norm_label": "supabaseauthguard"
     },
     {
@@ -1520,7 +1520,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "backend_src_common_guards_supabase_auth_guard_ts_injectable",
-      "community": 27,
+      "community": 34,
       "norm_label": "injectable"
     },
     {
@@ -1530,7 +1530,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "backend_src_common_guards_supabase_auth_guard_supabaseauthguard_constructor",
-      "community": 27,
+      "community": 34,
       "norm_label": ".constructor()"
     },
     {
@@ -1540,7 +1540,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "backend_src_common_guards_supabase_auth_guard_supabaseauthguard_canactivate",
-      "community": 27,
+      "community": 34,
       "norm_label": ".canactivate()"
     },
     {
@@ -1550,8 +1550,28 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "backend_src_common_guards_supabase_auth_guard_supabaseauthguard_extracttoken",
-      "community": 27,
+      "community": 34,
       "norm_label": ".extracttoken()"
+    },
+    {
+      "label": "record-history.ts",
+      "file_type": "code",
+      "source_file": "backend/src/common/record-history.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "backend_src_common_record_history",
+      "community": 28,
+      "norm_label": "record-history.ts"
+    },
+    {
+      "label": "HistoryEntry",
+      "file_type": "code",
+      "source_file": "backend/src/common/record-history.ts",
+      "source_location": "L8",
+      "_origin": "ast",
+      "id": "backend_src_common_record_history_historyentry",
+      "community": 28,
+      "norm_label": "historyentry"
     },
     {
       "label": "supabase-error.ts",
@@ -1560,7 +1580,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "backend_src_common_supabase_error",
-      "community": 32,
+      "community": 27,
       "norm_label": "supabase-error.ts"
     },
     {
@@ -1570,7 +1590,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "backend_src_common_supabase_error_logger",
-      "community": 32,
+      "community": 27,
       "norm_label": "logger"
     },
     {
@@ -1580,7 +1600,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "backend_src_common_supabase_error_tohttpexception",
-      "community": 32,
+      "community": 27,
       "norm_label": "tohttpexception()"
     },
     {
@@ -1600,7 +1620,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "backend_src_database_database_module_databasemodule",
-      "community": 27,
+      "community": 62,
       "norm_label": "databasemodule"
     },
     {
@@ -1610,7 +1630,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "global",
-      "community": 27,
+      "community": 62,
       "norm_label": "global"
     },
     {
@@ -1620,7 +1640,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "backend_src_database_database_module_ts_module",
-      "community": 27,
+      "community": 62,
       "norm_label": "module"
     },
     {
@@ -1834,10 +1854,20 @@
       "norm_label": ".get()"
     },
     {
-      "label": ".listComments()",
+      "label": ".history()",
       "file_type": "code",
       "source_file": "backend/src/modules/action-items/action-items.controller.ts",
       "source_location": "L39",
+      "_origin": "ast",
+      "id": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_history",
+      "community": 32,
+      "norm_label": ".history()"
+    },
+    {
+      "label": ".listComments()",
+      "file_type": "code",
+      "source_file": "backend/src/modules/action-items/action-items.controller.ts",
+      "source_location": "L47",
       "_origin": "ast",
       "id": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_listcomments",
       "community": 32,
@@ -1847,7 +1877,7 @@
       "label": ".addComment()",
       "file_type": "code",
       "source_file": "backend/src/modules/action-items/action-items.controller.ts",
-      "source_location": "L56",
+      "source_location": "L64",
       "_origin": "ast",
       "id": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_addcomment",
       "community": 32,
@@ -1857,7 +1887,7 @@
       "label": ".add()",
       "file_type": "code",
       "source_file": "backend/src/modules/action-items/action-items.controller.ts",
-      "source_location": "L100",
+      "source_location": "L108",
       "_origin": "ast",
       "id": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_add",
       "community": 32,
@@ -1867,7 +1897,7 @@
       "label": ".update()",
       "file_type": "code",
       "source_file": "backend/src/modules/action-items/action-items.controller.ts",
-      "source_location": "L118",
+      "source_location": "L126",
       "_origin": "ast",
       "id": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_update",
       "community": 32,
@@ -1877,7 +1907,7 @@
       "label": ".remove()",
       "file_type": "code",
       "source_file": "backend/src/modules/action-items/action-items.controller.ts",
-      "source_location": "L128",
+      "source_location": "L136",
       "_origin": "ast",
       "id": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_remove",
       "community": 32,
@@ -1920,44 +1950,44 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "backend_src_modules_action_items_action_items_repository",
-      "community": 32,
+      "community": 28,
       "norm_label": "action-items.repository.ts"
     },
     {
       "label": "ActionItem",
       "file_type": "code",
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L5",
+      "source_location": "L9",
       "_origin": "ast",
       "id": "backend_src_modules_action_items_action_items_repository_actionitem",
-      "community": 32,
+      "community": 28,
       "norm_label": "actionitem"
     },
     {
       "label": "ActionItemListItem",
       "file_type": "code",
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L20",
+      "source_location": "L24",
       "_origin": "ast",
       "id": "backend_src_modules_action_items_action_items_repository_actionitemlistitem",
-      "community": 32,
+      "community": 28,
       "norm_label": "actionitemlistitem"
     },
     {
       "label": "ActionItemComment",
       "file_type": "code",
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L40",
+      "source_location": "L44",
       "_origin": "ast",
       "id": "backend_src_modules_action_items_action_items_repository_actionitemcomment",
-      "community": 32,
+      "community": 28,
       "norm_label": "actionitemcomment"
     },
     {
       "label": "ActionItemsRepository",
       "file_type": "code",
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L52",
+      "source_location": "L56",
       "_origin": "ast",
       "id": "backend_src_modules_action_items_action_items_repository_actionitemsrepository",
       "community": 32,
@@ -1977,17 +2007,17 @@
       "label": ".constructor()",
       "file_type": "code",
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L53",
+      "source_location": "L57",
       "_origin": "ast",
       "id": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_constructor",
-      "community": 27,
+      "community": 32,
       "norm_label": ".constructor()"
     },
     {
       "label": ".table()",
       "file_type": "code",
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L55",
+      "source_location": "L59",
       "_origin": "ast",
       "id": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_table",
       "community": 32,
@@ -1997,7 +2027,7 @@
       "label": ".insert()",
       "file_type": "code",
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L59",
+      "source_location": "L63",
       "_origin": "ast",
       "id": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_insert",
       "community": 32,
@@ -2007,17 +2037,27 @@
       "label": ".update()",
       "file_type": "code",
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L68",
+      "source_location": "L72",
       "_origin": "ast",
       "id": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_update",
       "community": 32,
       "norm_label": ".update()"
     },
     {
+      "label": ".findHistory()",
+      "file_type": "code",
+      "source_file": "backend/src/modules/action-items/action-items.repository.ts",
+      "source_location": "L87",
+      "_origin": "ast",
+      "id": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_findhistory",
+      "community": 28,
+      "norm_label": ".findhistory()"
+    },
+    {
       "label": ".remove()",
       "file_type": "code",
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L83",
+      "source_location": "L102",
       "_origin": "ast",
       "id": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_remove",
       "community": 32,
@@ -2027,7 +2067,7 @@
       "label": ".insertOwners()",
       "file_type": "code",
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L91",
+      "source_location": "L110",
       "_origin": "ast",
       "id": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_insertowners",
       "community": 32,
@@ -2037,7 +2077,7 @@
       "label": ".deleteOwners()",
       "file_type": "code",
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L104",
+      "source_location": "L123",
       "_origin": "ast",
       "id": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_deleteowners",
       "community": 32,
@@ -2047,7 +2087,7 @@
       "label": ".findByProject()",
       "file_type": "code",
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L112",
+      "source_location": "L131",
       "_origin": "ast",
       "id": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_findbyproject",
       "community": 32,
@@ -2057,7 +2097,7 @@
       "label": ".findOne()",
       "file_type": "code",
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L130",
+      "source_location": "L149",
       "_origin": "ast",
       "id": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_findone",
       "community": 32,
@@ -2067,7 +2107,7 @@
       "label": ".listComments()",
       "file_type": "code",
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L155",
+      "source_location": "L174",
       "_origin": "ast",
       "id": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_listcomments",
       "community": 32,
@@ -2077,7 +2117,7 @@
       "label": ".insertComment()",
       "file_type": "code",
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L168",
+      "source_location": "L187",
       "_origin": "ast",
       "id": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_insertcomment",
       "community": 32,
@@ -2164,10 +2204,20 @@
       "norm_label": ".update()"
     },
     {
-      "label": ".remove()",
+      "label": ".history()",
       "file_type": "code",
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
       "source_location": "L76",
+      "_origin": "ast",
+      "id": "backend_src_modules_action_items_action_items_service_actionitemsservice_history",
+      "community": 32,
+      "norm_label": ".history()"
+    },
+    {
+      "label": ".remove()",
+      "file_type": "code",
+      "source_file": "backend/src/modules/action-items/action-items.service.ts",
+      "source_location": "L81",
       "_origin": "ast",
       "id": "backend_src_modules_action_items_action_items_service_actionitemsservice_remove",
       "community": 32,
@@ -2177,7 +2227,7 @@
       "label": ".listComments()",
       "file_type": "code",
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
-      "source_location": "L82",
+      "source_location": "L87",
       "_origin": "ast",
       "id": "backend_src_modules_action_items_action_items_service_actionitemsservice_listcomments",
       "community": 32,
@@ -2187,7 +2237,7 @@
       "label": ".addComment()",
       "file_type": "code",
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
-      "source_location": "L87",
+      "source_location": "L92",
       "_origin": "ast",
       "id": "backend_src_modules_action_items_action_items_service_actionitemsservice_addcomment",
       "community": 32,
@@ -2600,7 +2650,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "backend_src_modules_attachments_attachments_module_attachmentsmodule",
-      "community": 62,
+      "community": 1,
       "norm_label": "attachmentsmodule"
     },
     {
@@ -2610,7 +2660,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "backend_src_modules_attachments_attachments_module_ts_module",
-      "community": 62,
+      "community": 1,
       "norm_label": "module"
     },
     {
@@ -2620,7 +2670,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "backend_src_modules_attachments_attachments_repository",
-      "community": 1,
+      "community": 27,
       "norm_label": "attachments.repository.ts"
     },
     {
@@ -2630,7 +2680,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "backend_src_modules_attachments_attachments_repository_attachment",
-      "community": 1,
+      "community": 27,
       "norm_label": "attachment"
     },
     {
@@ -2640,7 +2690,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "backend_src_modules_attachments_attachments_repository_attachmentlistitem",
-      "community": 1,
+      "community": 27,
       "norm_label": "attachmentlistitem"
     },
     {
@@ -2650,7 +2700,7 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "backend_src_modules_attachments_attachments_repository_attachmentdetail",
-      "community": 1,
+      "community": 27,
       "norm_label": "attachmentdetail"
     },
     {
@@ -3270,7 +3320,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "backend_src_modules_issues_issues_module_issuesmodule",
-      "community": 62,
+      "community": 7,
       "norm_label": "issuesmodule"
     },
     {
@@ -3280,7 +3330,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "backend_src_modules_issues_issues_module_ts_module",
-      "community": 62,
+      "community": 7,
       "norm_label": "module"
     },
     {
@@ -3290,7 +3340,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "backend_src_modules_issues_issues_repository",
-      "community": 7,
+      "community": 27,
       "norm_label": "issues.repository.ts"
     },
     {
@@ -3300,7 +3350,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "backend_src_modules_issues_issues_repository_issue",
-      "community": 7,
+      "community": 27,
       "norm_label": "issue"
     },
     {
@@ -3310,7 +3360,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "backend_src_modules_issues_issues_repository_issuelistitem",
-      "community": 7,
+      "community": 27,
       "norm_label": "issuelistitem"
     },
     {
@@ -3780,7 +3830,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "backend_src_modules_links_links_repository",
-      "community": 8,
+      "community": 27,
       "norm_label": "links.repository.ts"
     },
     {
@@ -3790,7 +3840,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "backend_src_modules_links_links_repository_link",
-      "community": 8,
+      "community": 27,
       "norm_label": "link"
     },
     {
@@ -3800,7 +3850,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "backend_src_modules_links_links_repository_linklistitem",
-      "community": 8,
+      "community": 27,
       "norm_label": "linklistitem"
     },
     {
@@ -4110,7 +4160,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "backend_src_modules_lookups_lookups_service",
-      "community": 2,
+      "community": 27,
       "norm_label": "lookups.service.ts"
     },
     {
@@ -4120,7 +4170,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "backend_src_modules_lookups_lookups_service_allowed",
-      "community": 2,
+      "community": 27,
       "norm_label": "allowed"
     },
     {
@@ -4130,7 +4180,7 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "backend_src_modules_lookups_lookups_service_access_levels",
-      "community": 2,
+      "community": 27,
       "norm_label": "access_levels"
     },
     {
@@ -4474,10 +4524,20 @@
       "norm_label": ".get()"
     },
     {
+      "label": ".history()",
+      "file_type": "code",
+      "source_file": "backend/src/modules/milestones/milestones.controller.ts",
+      "source_location": "L38",
+      "_origin": "ast",
+      "id": "backend_src_modules_milestones_milestones_controller_milestonescontroller_history",
+      "community": 3,
+      "norm_label": ".history()"
+    },
+    {
       "label": ".add()",
       "file_type": "code",
       "source_file": "backend/src/modules/milestones/milestones.controller.ts",
-      "source_location": "L70",
+      "source_location": "L78",
       "_origin": "ast",
       "id": "backend_src_modules_milestones_milestones_controller_milestonescontroller_add",
       "community": 3,
@@ -4487,7 +4547,7 @@
       "label": ".update()",
       "file_type": "code",
       "source_file": "backend/src/modules/milestones/milestones.controller.ts",
-      "source_location": "L88",
+      "source_location": "L96",
       "_origin": "ast",
       "id": "backend_src_modules_milestones_milestones_controller_milestonescontroller_update",
       "community": 3,
@@ -4497,7 +4557,7 @@
       "label": ".remove()",
       "file_type": "code",
       "source_file": "backend/src/modules/milestones/milestones.controller.ts",
-      "source_location": "L98",
+      "source_location": "L106",
       "_origin": "ast",
       "id": "backend_src_modules_milestones_milestones_controller_milestonescontroller_remove",
       "community": 3,
@@ -4540,34 +4600,34 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "backend_src_modules_milestones_milestones_repository",
-      "community": 3,
+      "community": 28,
       "norm_label": "milestones.repository.ts"
     },
     {
       "label": "Milestone",
       "file_type": "code",
       "source_file": "backend/src/modules/milestones/milestones.repository.ts",
-      "source_location": "L5",
+      "source_location": "L9",
       "_origin": "ast",
       "id": "backend_src_modules_milestones_milestones_repository_milestone",
-      "community": 3,
+      "community": 28,
       "norm_label": "milestone"
     },
     {
       "label": "MilestoneListItem",
       "file_type": "code",
       "source_file": "backend/src/modules/milestones/milestones.repository.ts",
-      "source_location": "L24",
+      "source_location": "L28",
       "_origin": "ast",
       "id": "backend_src_modules_milestones_milestones_repository_milestonelistitem",
-      "community": 3,
+      "community": 28,
       "norm_label": "milestonelistitem"
     },
     {
       "label": "MilestonesRepository",
       "file_type": "code",
       "source_file": "backend/src/modules/milestones/milestones.repository.ts",
-      "source_location": "L42",
+      "source_location": "L46",
       "_origin": "ast",
       "id": "backend_src_modules_milestones_milestones_repository_milestonesrepository",
       "community": 3,
@@ -4587,7 +4647,7 @@
       "label": ".constructor()",
       "file_type": "code",
       "source_file": "backend/src/modules/milestones/milestones.repository.ts",
-      "source_location": "L43",
+      "source_location": "L47",
       "_origin": "ast",
       "id": "backend_src_modules_milestones_milestones_repository_milestonesrepository_constructor",
       "community": 3,
@@ -4597,7 +4657,7 @@
       "label": ".table()",
       "file_type": "code",
       "source_file": "backend/src/modules/milestones/milestones.repository.ts",
-      "source_location": "L45",
+      "source_location": "L49",
       "_origin": "ast",
       "id": "backend_src_modules_milestones_milestones_repository_milestonesrepository_table",
       "community": 3,
@@ -4607,7 +4667,7 @@
       "label": ".insert()",
       "file_type": "code",
       "source_file": "backend/src/modules/milestones/milestones.repository.ts",
-      "source_location": "L49",
+      "source_location": "L53",
       "_origin": "ast",
       "id": "backend_src_modules_milestones_milestones_repository_milestonesrepository_insert",
       "community": 3,
@@ -4617,17 +4677,27 @@
       "label": ".update()",
       "file_type": "code",
       "source_file": "backend/src/modules/milestones/milestones.repository.ts",
-      "source_location": "L58",
+      "source_location": "L62",
       "_origin": "ast",
       "id": "backend_src_modules_milestones_milestones_repository_milestonesrepository_update",
       "community": 3,
       "norm_label": ".update()"
     },
     {
+      "label": ".findHistory()",
+      "file_type": "code",
+      "source_file": "backend/src/modules/milestones/milestones.repository.ts",
+      "source_location": "L77",
+      "_origin": "ast",
+      "id": "backend_src_modules_milestones_milestones_repository_milestonesrepository_findhistory",
+      "community": 28,
+      "norm_label": ".findhistory()"
+    },
+    {
       "label": ".remove()",
       "file_type": "code",
       "source_file": "backend/src/modules/milestones/milestones.repository.ts",
-      "source_location": "L73",
+      "source_location": "L92",
       "_origin": "ast",
       "id": "backend_src_modules_milestones_milestones_repository_milestonesrepository_remove",
       "community": 3,
@@ -4637,7 +4707,7 @@
       "label": ".findByProject()",
       "file_type": "code",
       "source_file": "backend/src/modules/milestones/milestones.repository.ts",
-      "source_location": "L81",
+      "source_location": "L100",
       "_origin": "ast",
       "id": "backend_src_modules_milestones_milestones_repository_milestonesrepository_findbyproject",
       "community": 3,
@@ -4647,7 +4717,7 @@
       "label": ".findOne()",
       "file_type": "code",
       "source_file": "backend/src/modules/milestones/milestones.repository.ts",
-      "source_location": "L94",
+      "source_location": "L113",
       "_origin": "ast",
       "id": "backend_src_modules_milestones_milestones_repository_milestonesrepository_findone",
       "community": 3,
@@ -4734,10 +4804,20 @@
       "norm_label": ".update()"
     },
     {
-      "label": ".remove()",
+      "label": ".history()",
       "file_type": "code",
       "source_file": "backend/src/modules/milestones/milestones.service.ts",
       "source_location": "L70",
+      "_origin": "ast",
+      "id": "backend_src_modules_milestones_milestones_service_milestonesservice_history",
+      "community": 3,
+      "norm_label": ".history()"
+    },
+    {
+      "label": ".remove()",
+      "file_type": "code",
+      "source_file": "backend/src/modules/milestones/milestones.service.ts",
+      "source_location": "L75",
       "_origin": "ast",
       "id": "backend_src_modules_milestones_milestones_service_milestonesservice_remove",
       "community": 3,
@@ -5070,7 +5150,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "backend_src_modules_people_people_repository",
-      "community": 6,
+      "community": 27,
       "norm_label": "people.repository.ts"
     },
     {
@@ -5220,7 +5300,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "backend_src_modules_projects_dto_create_project_dto",
-      "community": 59,
+      "community": 17,
       "norm_label": "create-project.dto.ts"
     },
     {
@@ -5230,7 +5310,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "backend_src_modules_projects_dto_create_project_dto_projectmemberdto",
-      "community": 59,
+      "community": 17,
       "norm_label": "projectmemberdto"
     },
     {
@@ -5240,7 +5320,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "backend_src_modules_projects_dto_create_project_dto_ts_apipropertyoptional",
-      "community": 59,
+      "community": 17,
       "norm_label": "apipropertyoptional"
     },
     {
@@ -5250,7 +5330,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "backend_src_modules_projects_dto_create_project_dto_ts_isoptional",
-      "community": 59,
+      "community": 17,
       "norm_label": "isoptional"
     },
     {
@@ -5260,7 +5340,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "backend_src_modules_projects_dto_create_project_dto_ts_isuuid",
-      "community": 59,
+      "community": 17,
       "norm_label": "isuuid"
     },
     {
@@ -5270,7 +5350,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "backend_src_modules_projects_dto_create_project_dto_ts_isstring",
-      "community": 59,
+      "community": 17,
       "norm_label": "isstring"
     },
     {
@@ -5280,7 +5360,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "backend_src_modules_projects_dto_create_project_dto_ts_maxlength",
-      "community": 59,
+      "community": 17,
       "norm_label": "maxlength"
     },
     {
@@ -5290,7 +5370,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "backend_src_modules_projects_dto_create_project_dto_ts_apiproperty",
-      "community": 59,
+      "community": 17,
       "norm_label": "apiproperty"
     },
     {
@@ -5300,7 +5380,7 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "backend_src_modules_projects_dto_create_project_dto_createprojectdto",
-      "community": 59,
+      "community": 17,
       "norm_label": "createprojectdto"
     },
     {
@@ -5310,7 +5390,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "isnotempty",
-      "community": 59,
+      "community": 17,
       "norm_label": "isnotempty"
     },
     {
@@ -5320,7 +5400,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "backend_src_modules_projects_dto_create_project_dto_ts_isdatestring",
-      "community": 59,
+      "community": 17,
       "norm_label": "isdatestring"
     },
     {
@@ -5330,7 +5410,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "backend_src_modules_projects_dto_create_project_dto_ts_isin",
-      "community": 59,
+      "community": 17,
       "norm_label": "isin"
     },
     {
@@ -5340,7 +5420,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "backend_src_modules_projects_dto_create_project_dto_ts_isarray",
-      "community": 59,
+      "community": 17,
       "norm_label": "isarray"
     },
     {
@@ -5350,7 +5430,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "validatenested",
-      "community": 59,
+      "community": 17,
       "norm_label": "validatenested"
     },
     {
@@ -5360,7 +5440,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "type",
-      "community": 59,
+      "community": 17,
       "norm_label": "type"
     },
     {
@@ -5370,7 +5450,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "backend_src_modules_projects_dto_update_project_dto",
-      "community": 59,
+      "community": 17,
       "norm_label": "update-project.dto.ts"
     },
     {
@@ -5470,7 +5550,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "backend_src_modules_projects_projects_controller",
-      "community": 59,
+      "community": 17,
       "norm_label": "projects.controller.ts"
     },
     {
@@ -5630,7 +5710,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "backend_src_modules_projects_projects_module",
-      "community": 59,
+      "community": 16,
       "norm_label": "projects.module.ts"
     },
     {
@@ -5660,7 +5740,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "backend_src_modules_projects_projects_repository",
-      "community": 59,
+      "community": 16,
       "norm_label": "projects.repository.ts"
     },
     {
@@ -5670,7 +5750,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "backend_src_modules_projects_projects_repository_project",
-      "community": 59,
+      "community": 16,
       "norm_label": "project"
     },
     {
@@ -5680,7 +5760,7 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "backend_src_modules_projects_projects_repository_projectdetail",
-      "community": 59,
+      "community": 16,
       "norm_label": "projectdetail"
     },
     {
@@ -5690,7 +5770,7 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "backend_src_modules_projects_projects_repository_projectsrepository",
-      "community": 59,
+      "community": 16,
       "norm_label": "projectsrepository"
     },
     {
@@ -5700,7 +5780,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "backend_src_modules_projects_projects_repository_ts_injectable",
-      "community": 59,
+      "community": 16,
       "norm_label": "injectable"
     },
     {
@@ -5710,7 +5790,7 @@
       "source_location": "L56",
       "_origin": "ast",
       "id": "backend_src_modules_projects_projects_repository_projectsrepository_constructor",
-      "community": 59,
+      "community": 16,
       "norm_label": ".constructor()"
     },
     {
@@ -5720,7 +5800,7 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "backend_src_modules_projects_projects_repository_projectsrepository_table",
-      "community": 59,
+      "community": 16,
       "norm_label": ".table()"
     },
     {
@@ -5730,7 +5810,7 @@
       "source_location": "L62",
       "_origin": "ast",
       "id": "backend_src_modules_projects_projects_repository_projectsrepository_insert",
-      "community": 59,
+      "community": 16,
       "norm_label": ".insert()"
     },
     {
@@ -5740,7 +5820,7 @@
       "source_location": "L71",
       "_origin": "ast",
       "id": "backend_src_modules_projects_projects_repository_projectsrepository_findall",
-      "community": 59,
+      "community": 16,
       "norm_label": ".findall()"
     },
     {
@@ -5750,7 +5830,7 @@
       "source_location": "L79",
       "_origin": "ast",
       "id": "backend_src_modules_projects_projects_repository_projectsrepository_finddetail",
-      "community": 59,
+      "community": 16,
       "norm_label": ".finddetail()"
     },
     {
@@ -5760,7 +5840,7 @@
       "source_location": "L101",
       "_origin": "ast",
       "id": "backend_src_modules_projects_projects_repository_projectsrepository_insertmembers",
-      "community": 59,
+      "community": 16,
       "norm_label": ".insertmembers()"
     },
     {
@@ -5770,7 +5850,7 @@
       "source_location": "L106",
       "_origin": "ast",
       "id": "backend_src_modules_projects_projects_repository_projectsrepository_update",
-      "community": 59,
+      "community": 16,
       "norm_label": ".update()"
     },
     {
@@ -5780,7 +5860,7 @@
       "source_location": "L112",
       "_origin": "ast",
       "id": "backend_src_modules_projects_projects_repository_projectsrepository_deleteattachmentobjects",
-      "community": 59,
+      "community": 16,
       "norm_label": ".deleteattachmentobjects()"
     },
     {
@@ -5790,7 +5870,7 @@
       "source_location": "L128",
       "_origin": "ast",
       "id": "backend_src_modules_projects_projects_repository_projectsrepository_delete",
-      "community": 59,
+      "community": 16,
       "norm_label": ".delete()"
     },
     {
@@ -5800,7 +5880,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "backend_src_modules_projects_projects_service",
-      "community": 59,
+      "community": 16,
       "norm_label": "projects.service.ts"
     },
     {
@@ -5810,7 +5890,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "backend_src_modules_projects_projects_service_projectsservice",
-      "community": 59,
+      "community": 16,
       "norm_label": "projectsservice"
     },
     {
@@ -5820,7 +5900,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "backend_src_modules_projects_projects_service_ts_injectable",
-      "community": 59,
+      "community": 16,
       "norm_label": "injectable"
     },
     {
@@ -5830,7 +5910,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "backend_src_modules_projects_projects_service_projectsservice_constructor",
-      "community": 59,
+      "community": 16,
       "norm_label": ".constructor()"
     },
     {
@@ -5840,7 +5920,7 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "backend_src_modules_projects_projects_service_projectsservice_create",
-      "community": 59,
+      "community": 16,
       "norm_label": ".create()"
     },
     {
@@ -5850,7 +5930,7 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "backend_src_modules_projects_projects_service_projectsservice_findall",
-      "community": 59,
+      "community": 16,
       "norm_label": ".findall()"
     },
     {
@@ -5860,7 +5940,7 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "backend_src_modules_projects_projects_service_projectsservice_getdetail",
-      "community": 59,
+      "community": 16,
       "norm_label": ".getdetail()"
     },
     {
@@ -5870,7 +5950,7 @@
       "source_location": "L56",
       "_origin": "ast",
       "id": "backend_src_modules_projects_projects_service_projectsservice_update",
-      "community": 59,
+      "community": 16,
       "norm_label": ".update()"
     },
     {
@@ -5880,7 +5960,7 @@
       "source_location": "L85",
       "_origin": "ast",
       "id": "backend_src_modules_projects_projects_service_projectsservice_remove",
-      "community": 59,
+      "community": 16,
       "norm_label": ".remove()"
     },
     {
@@ -6170,7 +6250,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "backend_src_modules_resources_resources_repository",
-      "community": 10,
+      "community": 27,
       "norm_label": "resources.repository.ts"
     },
     {
@@ -6180,7 +6260,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "backend_src_modules_resources_resources_repository_resource",
-      "community": 10,
+      "community": 27,
       "norm_label": "resource"
     },
     {
@@ -6190,7 +6270,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "backend_src_modules_resources_resources_repository_resourcelistitem",
-      "community": 10,
+      "community": 27,
       "norm_label": "resourcelistitem"
     },
     {
@@ -6640,7 +6720,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "backend_src_modules_status_reports_status_reports_repository",
-      "community": 5,
+      "community": 38,
       "norm_label": "status-reports.repository.ts"
     },
     {
@@ -6650,7 +6730,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "backend_src_modules_status_reports_status_reports_repository_statusreport",
-      "community": 5,
+      "community": 38,
       "norm_label": "statusreport"
     },
     {
@@ -6660,7 +6740,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "backend_src_modules_status_reports_status_reports_repository_statusreportlistitem",
-      "community": 5,
+      "community": 38,
       "norm_label": "statusreportlistitem"
     },
     {
@@ -6670,7 +6750,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "backend_src_modules_status_reports_status_reports_repository_statusreportdetail",
-      "community": 5,
+      "community": 38,
       "norm_label": "statusreportdetail"
     },
     {
@@ -7150,7 +7230,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "backend_src_modules_updates_updates_repository",
-      "community": 9,
+      "community": 27,
       "norm_label": "updates.repository.ts"
     },
     {
@@ -7160,7 +7240,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "backend_src_modules_updates_updates_repository_update",
-      "community": 9,
+      "community": 27,
       "norm_label": "update"
     },
     {
@@ -7170,7 +7250,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "backend_src_modules_updates_updates_repository_updatelistitem",
-      "community": 9,
+      "community": 27,
       "norm_label": "updatelistitem"
     },
     {
@@ -7340,7 +7420,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "backend_src_modules_users_users_controller",
-      "community": 28,
+      "community": 62,
       "norm_label": "users.controller.ts"
     },
     {
@@ -7350,7 +7430,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "backend_src_modules_users_users_controller_userscontroller",
-      "community": 28,
+      "community": 62,
       "norm_label": "userscontroller"
     },
     {
@@ -7360,7 +7440,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "backend_src_modules_users_users_controller_ts_controller",
-      "community": 28,
+      "community": 62,
       "norm_label": "controller"
     },
     {
@@ -7370,7 +7450,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "backend_src_modules_users_users_controller_ts_get",
-      "community": 28,
+      "community": 62,
       "norm_label": "get"
     },
     {
@@ -7380,7 +7460,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "query",
-      "community": 28,
+      "community": 62,
       "norm_label": "query"
     },
     {
@@ -7390,7 +7470,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "backend_src_modules_users_users_controller_userscontroller_constructor",
-      "community": 28,
+      "community": 62,
       "norm_label": ".constructor()"
     },
     {
@@ -7400,7 +7480,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "backend_src_modules_users_users_controller_userscontroller_search",
-      "community": 28,
+      "community": 62,
       "norm_label": ".search()"
     },
     {
@@ -7410,7 +7490,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "backend_src_modules_users_users_module",
-      "community": 28,
+      "community": 62,
       "norm_label": "users.module.ts"
     },
     {
@@ -7420,7 +7500,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "backend_src_modules_users_users_module_usersmodule",
-      "community": 28,
+      "community": 62,
       "norm_label": "usersmodule"
     },
     {
@@ -7430,7 +7510,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "backend_src_modules_users_users_module_ts_module",
-      "community": 28,
+      "community": 62,
       "norm_label": "module"
     },
     {
@@ -7440,7 +7520,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "backend_src_modules_users_users_service",
-      "community": 28,
+      "community": 27,
       "norm_label": "users.service.ts"
     },
     {
@@ -7450,7 +7530,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "backend_src_modules_users_users_service_usersservice",
-      "community": 28,
+      "community": 62,
       "norm_label": "usersservice"
     },
     {
@@ -7460,7 +7540,7 @@
       "source_location": "",
       "_origin": "ast",
       "id": "backend_src_modules_users_users_service_ts_injectable",
-      "community": 28,
+      "community": 62,
       "norm_label": "injectable"
     },
     {
@@ -7470,7 +7550,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "backend_src_modules_users_users_service_usersservice_constructor",
-      "community": 27,
+      "community": 62,
       "norm_label": ".constructor()"
     },
     {
@@ -7480,7 +7560,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "backend_src_modules_users_users_service_usersservice_search",
-      "community": 28,
+      "community": 62,
       "norm_label": ".search()"
     },
     {
@@ -8150,7 +8230,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "frontend_package_dependencies_base_ui_react",
-      "community": 24,
+      "community": 42,
       "norm_label": "@base-ui/react"
     },
     {
@@ -8160,7 +8240,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "base_ui_react",
-      "community": 24,
+      "community": 42,
       "norm_label": "@base-ui/react"
     },
     {
@@ -8310,7 +8390,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "frontend_package_dependencies_react_dom",
-      "community": 46,
+      "community": 24,
       "norm_label": "react-dom"
     },
     {
@@ -8320,7 +8400,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "react_dom",
-      "community": 46,
+      "community": 24,
       "norm_label": "react-dom"
     },
     {
@@ -8460,7 +8540,7 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "frontend_package_devdependencies_types_node",
-      "community": 42,
+      "community": 46,
       "norm_label": "@types/node"
     },
     {
@@ -8470,7 +8550,7 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "frontend_package_json_types_node",
-      "community": 42,
+      "community": 46,
       "norm_label": "@types/node"
     },
     {
@@ -8680,7 +8760,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_src_app",
-      "community": 33,
+      "community": 56,
       "norm_label": "app.tsx"
     },
     {
@@ -8700,7 +8780,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_src_components_addactionitemdialog",
-      "community": 13,
+      "community": 67,
       "norm_label": "addactionitemdialog.tsx"
     },
     {
@@ -8710,7 +8790,7 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "frontend_src_components_addactionitemdialog_statuses",
-      "community": 13,
+      "community": 67,
       "norm_label": "statuses"
     },
     {
@@ -8720,7 +8800,7 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "frontend_src_components_addactionitemdialog_today",
-      "community": 38,
+      "community": 67,
       "norm_label": "today()"
     },
     {
@@ -8730,7 +8810,7 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "frontend_src_components_addactionitemdialog_emptyowner",
-      "community": 38,
+      "community": 67,
       "norm_label": "emptyowner()"
     },
     {
@@ -8740,7 +8820,7 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "frontend_src_components_addactionitemdialog_ownerfromitem",
-      "community": 38,
+      "community": 67,
       "norm_label": "ownerfromitem()"
     },
     {
@@ -8750,7 +8830,7 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "frontend_src_components_addactionitemdialog_ownersfromitem",
-      "community": 38,
+      "community": 67,
       "norm_label": "ownersfromitem()"
     },
     {
@@ -8760,7 +8840,7 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "frontend_src_components_addactionitemdialog_profilename",
-      "community": 38,
+      "community": 67,
       "norm_label": "profilename()"
     },
     {
@@ -8770,7 +8850,7 @@
       "source_location": "L72",
       "_origin": "ast",
       "id": "frontend_src_components_addactionitemdialog_props",
-      "community": 14,
+      "community": 67,
       "norm_label": "props"
     },
     {
@@ -8780,7 +8860,7 @@
       "source_location": "L82",
       "_origin": "ast",
       "id": "frontend_src_components_addactionitemdialog_addactionitemdialog",
-      "community": 38,
+      "community": 67,
       "norm_label": "addactionitemdialog()"
     },
     {
@@ -8800,7 +8880,7 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "frontend_src_components_addattachmentdialog_props",
-      "community": 20,
+      "community": 13,
       "norm_label": "props"
     },
     {
@@ -8810,7 +8890,7 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "frontend_src_components_addattachmentdialog_addattachmentdialog",
-      "community": 14,
+      "community": 13,
       "norm_label": "addattachmentdialog()"
     },
     {
@@ -8820,7 +8900,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_src_components_addissuedialog",
-      "community": 13,
+      "community": 12,
       "norm_label": "addissuedialog.tsx"
     },
     {
@@ -8830,7 +8910,7 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "frontend_src_components_addissuedialog_emptyperson",
-      "community": 14,
+      "community": 12,
       "norm_label": "emptyperson()"
     },
     {
@@ -8840,7 +8920,7 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "frontend_src_components_addissuedialog_helpdot",
-      "community": 13,
+      "community": 12,
       "norm_label": "helpdot()"
     },
     {
@@ -8850,7 +8930,7 @@
       "source_location": "L49",
       "_origin": "ast",
       "id": "frontend_src_components_addissuedialog_props",
-      "community": 20,
+      "community": 12,
       "norm_label": "props"
     },
     {
@@ -8860,7 +8940,7 @@
       "source_location": "L57",
       "_origin": "ast",
       "id": "frontend_src_components_addissuedialog_addissuedialog",
-      "community": 14,
+      "community": 12,
       "norm_label": "addissuedialog()"
     },
     {
@@ -8870,7 +8950,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_src_components_addlinkdialog",
-      "community": 17,
+      "community": 13,
       "norm_label": "addlinkdialog.tsx"
     },
     {
@@ -8880,7 +8960,7 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "frontend_src_components_addlinkdialog_props",
-      "community": 17,
+      "community": 13,
       "norm_label": "props"
     },
     {
@@ -8890,7 +8970,7 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "frontend_src_components_addlinkdialog_addlinkdialog",
-      "community": 17,
+      "community": 13,
       "norm_label": "addlinkdialog()"
     },
     {
@@ -8900,7 +8980,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_src_components_addmilestonedialog",
-      "community": 49,
+      "community": 31,
       "norm_label": "addmilestonedialog.tsx"
     },
     {
@@ -8910,7 +8990,7 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "frontend_src_components_addmilestonedialog_statuses",
-      "community": 49,
+      "community": 31,
       "norm_label": "statuses"
     },
     {
@@ -8920,7 +9000,7 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "frontend_src_components_addmilestonedialog_today",
-      "community": 49,
+      "community": 31,
       "norm_label": "today()"
     },
     {
@@ -8930,7 +9010,7 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "frontend_src_components_addmilestonedialog_emptyowner",
-      "community": 49,
+      "community": 31,
       "norm_label": "emptyowner()"
     },
     {
@@ -8940,7 +9020,7 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "frontend_src_components_addmilestonedialog_ownerfrommilestone",
-      "community": 49,
+      "community": 31,
       "norm_label": "ownerfrommilestone()"
     },
     {
@@ -8950,7 +9030,7 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "frontend_src_components_addmilestonedialog_profilename",
-      "community": 49,
+      "community": 31,
       "norm_label": "profilename()"
     },
     {
@@ -8960,7 +9040,7 @@
       "source_location": "L61",
       "_origin": "ast",
       "id": "frontend_src_components_addmilestonedialog_props",
-      "community": 49,
+      "community": 31,
       "norm_label": "props"
     },
     {
@@ -8970,7 +9050,7 @@
       "source_location": "L70",
       "_origin": "ast",
       "id": "frontend_src_components_addmilestonedialog_addmilestonedialog",
-      "community": 49,
+      "community": 31,
       "norm_label": "addmilestonedialog()"
     },
     {
@@ -8980,7 +9060,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_src_components_addpersondialog",
-      "community": 13,
+      "community": 26,
       "norm_label": "addpersondialog.tsx"
     },
     {
@@ -8990,7 +9070,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "frontend_src_components_addpersondialog_access_levels",
-      "community": 13,
+      "community": 26,
       "norm_label": "access_levels"
     },
     {
@@ -9000,7 +9080,7 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "frontend_src_components_addpersondialog_props",
-      "community": 20,
+      "community": 14,
       "norm_label": "props"
     },
     {
@@ -9010,7 +9090,7 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "frontend_src_components_addpersondialog_emptyperson",
-      "community": 14,
+      "community": 26,
       "norm_label": "emptyperson()"
     },
     {
@@ -9020,7 +9100,7 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "frontend_src_components_addpersondialog_membername",
-      "community": 14,
+      "community": 26,
       "norm_label": "membername()"
     },
     {
@@ -9030,7 +9110,7 @@
       "source_location": "L54",
       "_origin": "ast",
       "id": "frontend_src_components_addpersondialog_addpersondialog",
-      "community": 14,
+      "community": 26,
       "norm_label": "addpersondialog()"
     },
     {
@@ -9040,7 +9120,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_src_components_addresourcedialog",
-      "community": 13,
+      "community": 26,
       "norm_label": "addresourcedialog.tsx"
     },
     {
@@ -9070,7 +9150,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_src_components_addstatusreportdialog",
-      "community": 31,
+      "community": 36,
       "norm_label": "addstatusreportdialog.tsx"
     },
     {
@@ -9080,7 +9160,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "frontend_src_components_addstatusreportdialog_viewable_options",
-      "community": 31,
+      "community": 36,
       "norm_label": "viewable_options"
     },
     {
@@ -9090,7 +9170,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "frontend_src_components_addstatusreportdialog_editable_options",
-      "community": 31,
+      "community": 36,
       "norm_label": "editable_options"
     },
     {
@@ -9100,7 +9180,7 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "frontend_src_components_addstatusreportdialog_today",
-      "community": 31,
+      "community": 36,
       "norm_label": "today()"
     },
     {
@@ -9110,7 +9190,7 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "frontend_src_components_addstatusreportdialog_props",
-      "community": 31,
+      "community": 36,
       "norm_label": "props"
     },
     {
@@ -9120,7 +9200,7 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "frontend_src_components_addstatusreportdialog_radiorow",
-      "community": 31,
+      "community": 36,
       "norm_label": "radiorow()"
     },
     {
@@ -9130,7 +9210,7 @@
       "source_location": "L80",
       "_origin": "ast",
       "id": "frontend_src_components_addstatusreportdialog_addstatusreportdialog",
-      "community": 31,
+      "community": 36,
       "norm_label": "addstatusreportdialog()"
     },
     {
@@ -9140,7 +9220,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_src_components_addupdatedialog",
-      "community": 13,
+      "community": 26,
       "norm_label": "addupdatedialog.tsx"
     },
     {
@@ -9150,7 +9230,7 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "frontend_src_components_addupdatedialog_props",
-      "community": 20,
+      "community": 14,
       "norm_label": "props"
     },
     {
@@ -9170,7 +9250,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_src_components_categoryselect",
-      "community": 13,
+      "community": 26,
       "norm_label": "categoryselect.tsx"
     },
     {
@@ -9180,7 +9260,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "frontend_src_components_categoryselect_props",
-      "community": 13,
+      "community": 26,
       "norm_label": "props"
     },
     {
@@ -9190,7 +9270,7 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "frontend_src_components_categoryselect_categoryselect",
-      "community": 13,
+      "community": 26,
       "norm_label": "categoryselect()"
     },
     {
@@ -9200,7 +9280,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_src_components_confirmdeletebutton",
-      "community": 17,
+      "community": 36,
       "norm_label": "confirmdeletebutton.tsx"
     },
     {
@@ -9210,7 +9290,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "frontend_src_components_confirmdeletebutton_props",
-      "community": 17,
+      "community": 36,
       "norm_label": "props"
     },
     {
@@ -9220,7 +9300,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "frontend_src_components_confirmdeletebutton_confirmdeletebutton",
-      "community": 13,
+      "community": 36,
       "norm_label": "confirmdeletebutton()"
     },
     {
@@ -9230,7 +9310,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_src_components_editprojectdialog",
-      "community": 13,
+      "community": 26,
       "norm_label": "editprojectdialog.tsx"
     },
     {
@@ -9260,7 +9340,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_src_components_minicalendar",
-      "community": 16,
+      "community": 11,
       "norm_label": "minicalendar.tsx"
     },
     {
@@ -9270,7 +9350,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_src_components_minicalendar_weekday_headers",
-      "community": 16,
+      "community": 11,
       "norm_label": "weekday_headers"
     },
     {
@@ -9280,7 +9360,7 @@
       "source_location": "L2",
       "_origin": "ast",
       "id": "frontend_src_components_minicalendar_months",
-      "community": 16,
+      "community": 11,
       "norm_label": "months"
     },
     {
@@ -9290,7 +9370,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "frontend_src_components_minicalendar_dateparts",
-      "community": 16,
+      "community": 11,
       "norm_label": "dateparts()"
     },
     {
@@ -9300,7 +9380,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "frontend_src_components_minicalendar_props",
-      "community": 16,
+      "community": 11,
       "norm_label": "props"
     },
     {
@@ -9310,7 +9390,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "frontend_src_components_minicalendar_minicalendar",
-      "community": 16,
+      "community": 11,
       "norm_label": "minicalendar()"
     },
     {
@@ -9350,7 +9430,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_src_components_protectedroute",
-      "community": 33,
+      "community": 56,
       "norm_label": "protectedroute.tsx"
     },
     {
@@ -9360,8 +9440,78 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "frontend_src_components_protectedroute_protectedroute",
-      "community": 33,
+      "community": 56,
       "norm_label": "protectedroute()"
+    },
+    {
+      "label": "RecordHistory.tsx",
+      "file_type": "code",
+      "source_file": "frontend/src/components/RecordHistory.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "frontend_src_components_recordhistory",
+      "community": 11,
+      "norm_label": "recordhistory.tsx"
+    },
+    {
+      "label": "Props",
+      "file_type": "code",
+      "source_file": "frontend/src/components/RecordHistory.tsx",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "frontend_src_components_recordhistory_props",
+      "community": 11,
+      "norm_label": "props"
+    },
+    {
+      "label": "relativeTime()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/RecordHistory.tsx",
+      "source_location": "L13",
+      "_origin": "ast",
+      "id": "frontend_src_components_recordhistory_relativetime",
+      "community": 11,
+      "norm_label": "relativetime()"
+    },
+    {
+      "label": "username()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/RecordHistory.tsx",
+      "source_location": "L29",
+      "_origin": "ast",
+      "id": "frontend_src_components_recordhistory_username",
+      "community": 11,
+      "norm_label": "username()"
+    },
+    {
+      "label": "initials()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/RecordHistory.tsx",
+      "source_location": "L35",
+      "_origin": "ast",
+      "id": "frontend_src_components_recordhistory_initials",
+      "community": 11,
+      "norm_label": "initials()"
+    },
+    {
+      "label": "RecordHistory()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/RecordHistory.tsx",
+      "source_location": "L46",
+      "_origin": "ast",
+      "id": "frontend_src_components_recordhistory_recordhistory",
+      "community": 11,
+      "norm_label": "recordhistory()"
+    },
+    {
+      "label": "Value()",
+      "file_type": "code",
+      "source_file": "frontend/src/components/RecordHistory.tsx",
+      "source_location": "L123",
+      "_origin": "ast",
+      "id": "frontend_src_components_recordhistory_value",
+      "community": 11,
+      "norm_label": "value()"
     },
     {
       "label": "button.tsx",
@@ -9370,7 +9520,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_src_components_ui_button",
-      "community": 17,
+      "community": 36,
       "norm_label": "button.tsx"
     },
     {
@@ -9380,7 +9530,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "frontend_src_components_ui_button_buttonvariants",
-      "community": 17,
+      "community": 36,
       "norm_label": "buttonvariants"
     },
     {
@@ -9390,7 +9540,7 @@
       "source_location": "L43",
       "_origin": "ast",
       "id": "frontend_src_components_ui_button_button",
-      "community": 17,
+      "community": 36,
       "norm_label": "button()"
     },
     {
@@ -9400,7 +9550,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_src_components_ui_card",
-      "community": 26,
+      "community": 13,
       "norm_label": "card.tsx"
     },
     {
@@ -9410,7 +9560,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "frontend_src_components_ui_card_card",
-      "community": 26,
+      "community": 13,
       "norm_label": "card()"
     },
     {
@@ -9420,7 +9570,7 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "frontend_src_components_ui_card_cardheader",
-      "community": 26,
+      "community": 13,
       "norm_label": "cardheader()"
     },
     {
@@ -9430,7 +9580,7 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "frontend_src_components_ui_card_cardtitle",
-      "community": 26,
+      "community": 13,
       "norm_label": "cardtitle()"
     },
     {
@@ -9440,7 +9590,7 @@
       "source_location": "L49",
       "_origin": "ast",
       "id": "frontend_src_components_ui_card_carddescription",
-      "community": 26,
+      "community": 13,
       "norm_label": "carddescription()"
     },
     {
@@ -9450,7 +9600,7 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "frontend_src_components_ui_card_cardaction",
-      "community": 26,
+      "community": 13,
       "norm_label": "cardaction()"
     },
     {
@@ -9460,7 +9610,7 @@
       "source_location": "L72",
       "_origin": "ast",
       "id": "frontend_src_components_ui_card_cardcontent",
-      "community": 26,
+      "community": 13,
       "norm_label": "cardcontent()"
     },
     {
@@ -9470,7 +9620,7 @@
       "source_location": "L82",
       "_origin": "ast",
       "id": "frontend_src_components_ui_card_cardfooter",
-      "community": 26,
+      "community": 13,
       "norm_label": "cardfooter()"
     },
     {
@@ -9480,7 +9630,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_src_components_ui_dialog",
-      "community": 26,
+      "community": 13,
       "norm_label": "dialog.tsx"
     },
     {
@@ -9490,7 +9640,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "frontend_src_components_ui_dialog_dialog",
-      "community": 13,
+      "community": 26,
       "norm_label": "dialog()"
     },
     {
@@ -9500,7 +9650,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "frontend_src_components_ui_dialog_dialogtrigger",
-      "community": 26,
+      "community": 13,
       "norm_label": "dialogtrigger()"
     },
     {
@@ -9510,7 +9660,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "frontend_src_components_ui_dialog_dialogportal",
-      "community": 26,
+      "community": 13,
       "norm_label": "dialogportal()"
     },
     {
@@ -9520,7 +9670,7 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "frontend_src_components_ui_dialog_dialogclose",
-      "community": 26,
+      "community": 13,
       "norm_label": "dialogclose()"
     },
     {
@@ -9530,7 +9680,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "frontend_src_components_ui_dialog_dialogoverlay",
-      "community": 26,
+      "community": 13,
       "norm_label": "dialogoverlay()"
     },
     {
@@ -9580,7 +9730,7 @@
       "source_location": "L128",
       "_origin": "ast",
       "id": "frontend_src_components_ui_dialog_dialogdescription",
-      "community": 26,
+      "community": 13,
       "norm_label": "dialogdescription()"
     },
     {
@@ -9590,7 +9740,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_src_components_ui_input",
-      "community": 13,
+      "community": 26,
       "norm_label": "input.tsx"
     },
     {
@@ -9600,7 +9750,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "frontend_src_components_ui_input_input",
-      "community": 13,
+      "community": 26,
       "norm_label": "input()"
     },
     {
@@ -9610,7 +9760,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_src_components_ui_label",
-      "community": 13,
+      "community": 26,
       "norm_label": "label.tsx"
     },
     {
@@ -9620,7 +9770,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "frontend_src_components_ui_label_label",
-      "community": 13,
+      "community": 26,
       "norm_label": "label()"
     },
     {
@@ -9640,7 +9790,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "frontend_src_components_ui_select_selectgroup",
-      "community": 26,
+      "community": 13,
       "norm_label": "selectgroup()"
     },
     {
@@ -9650,7 +9800,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "frontend_src_components_ui_select_selectvalue",
-      "community": 13,
+      "community": 26,
       "norm_label": "selectvalue()"
     },
     {
@@ -9660,7 +9810,7 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "frontend_src_components_ui_select_selecttrigger",
-      "community": 13,
+      "community": 26,
       "norm_label": "selecttrigger()"
     },
     {
@@ -9670,7 +9820,7 @@
       "source_location": "L57",
       "_origin": "ast",
       "id": "frontend_src_components_ui_select_selectcontent",
-      "community": 13,
+      "community": 26,
       "norm_label": "selectcontent()"
     },
     {
@@ -9680,7 +9830,7 @@
       "source_location": "L96",
       "_origin": "ast",
       "id": "frontend_src_components_ui_select_selectlabel",
-      "community": 26,
+      "community": 13,
       "norm_label": "selectlabel()"
     },
     {
@@ -9690,7 +9840,7 @@
       "source_location": "L109",
       "_origin": "ast",
       "id": "frontend_src_components_ui_select_selectitem",
-      "community": 13,
+      "community": 26,
       "norm_label": "selectitem()"
     },
     {
@@ -9700,7 +9850,7 @@
       "source_location": "L137",
       "_origin": "ast",
       "id": "frontend_src_components_ui_select_selectseparator",
-      "community": 26,
+      "community": 13,
       "norm_label": "selectseparator()"
     },
     {
@@ -9710,7 +9860,7 @@
       "source_location": "L150",
       "_origin": "ast",
       "id": "frontend_src_components_ui_select_selectscrollupbutton",
-      "community": 26,
+      "community": 13,
       "norm_label": "selectscrollupbutton()"
     },
     {
@@ -9720,7 +9870,7 @@
       "source_location": "L169",
       "_origin": "ast",
       "id": "frontend_src_components_ui_select_selectscrolldownbutton",
-      "community": 26,
+      "community": 13,
       "norm_label": "selectscrolldownbutton()"
     },
     {
@@ -9730,7 +9880,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_src_components_ui_textarea",
-      "community": 13,
+      "community": 26,
       "norm_label": "textarea.tsx"
     },
     {
@@ -9740,7 +9890,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "frontend_src_components_ui_textarea_textarea",
-      "community": 13,
+      "community": 26,
       "norm_label": "textarea()"
     },
     {
@@ -9830,7 +9980,7 @@
       "source_location": "L74",
       "_origin": "ast",
       "id": "frontend_src_lib_api_projectmemberdetail",
-      "community": 20,
+      "community": 14,
       "norm_label": "projectmemberdetail"
     },
     {
@@ -9850,7 +10000,7 @@
       "source_location": "L101",
       "_origin": "ast",
       "id": "frontend_src_lib_api_projectsapi",
-      "community": 12,
+      "community": 56,
       "norm_label": "projectsapi"
     },
     {
@@ -9880,7 +10030,7 @@
       "source_location": "L123",
       "_origin": "ast",
       "id": "frontend_src_lib_api_lookup",
-      "community": 13,
+      "community": 26,
       "norm_label": "lookup"
     },
     {
@@ -9890,7 +10040,7 @@
       "source_location": "L128",
       "_origin": "ast",
       "id": "frontend_src_lib_api_lookupsapi",
-      "community": 13,
+      "community": 26,
       "norm_label": "lookupsapi"
     },
     {
@@ -9900,7 +10050,7 @@
       "source_location": "L132",
       "_origin": "ast",
       "id": "frontend_src_lib_api_categoriesapi",
-      "community": 13,
+      "community": 26,
       "norm_label": "categoriesapi"
     },
     {
@@ -9930,7 +10080,7 @@
       "source_location": "L151",
       "_origin": "ast",
       "id": "frontend_src_lib_api_milestone",
-      "community": 49,
+      "community": 31,
       "norm_label": "milestone"
     },
     {
@@ -9940,24 +10090,34 @@
       "source_location": "L169",
       "_origin": "ast",
       "id": "frontend_src_lib_api_milestonedetail",
-      "community": 49,
+      "community": 31,
       "norm_label": "milestonedetail"
+    },
+    {
+      "label": "HistoryEntry",
+      "file_type": "code",
+      "source_file": "frontend/src/lib/api.ts",
+      "source_location": "L183",
+      "_origin": "ast",
+      "id": "frontend_src_lib_api_historyentry",
+      "community": 11,
+      "norm_label": "historyentry"
     },
     {
       "label": "milestonesApi",
       "file_type": "code",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L178",
+      "source_location": "L193",
       "_origin": "ast",
       "id": "frontend_src_lib_api_milestonesapi",
-      "community": 49,
+      "community": 31,
       "norm_label": "milestonesapi"
     },
     {
       "label": "ActionItemOwner",
       "file_type": "code",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L202",
+      "source_location": "L221",
       "_origin": "ast",
       "id": "frontend_src_lib_api_actionitemowner",
       "community": 20,
@@ -9967,57 +10127,57 @@
       "label": "ActionItem",
       "file_type": "code",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L208",
+      "source_location": "L227",
       "_origin": "ast",
       "id": "frontend_src_lib_api_actionitem",
-      "community": 14,
+      "community": 67,
       "norm_label": "actionitem"
     },
     {
       "label": "ActionItemComment",
       "file_type": "code",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L230",
+      "source_location": "L249",
       "_origin": "ast",
       "id": "frontend_src_lib_api_actionitemcomment",
-      "community": 67,
+      "community": 11,
       "norm_label": "actionitemcomment"
     },
     {
       "label": "actionItemsApi",
       "file_type": "code",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L238",
+      "source_location": "L257",
       "_origin": "ast",
       "id": "frontend_src_lib_api_actionitemsapi",
-      "community": 67,
+      "community": 11,
       "norm_label": "actionitemsapi"
     },
     {
       "label": "Link",
       "file_type": "code",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L268",
+      "source_location": "L291",
       "_origin": "ast",
       "id": "frontend_src_lib_api_link",
-      "community": 17,
+      "community": 13,
       "norm_label": "link"
     },
     {
       "label": "linksApi",
       "file_type": "code",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L281",
+      "source_location": "L304",
       "_origin": "ast",
       "id": "frontend_src_lib_api_linksapi",
-      "community": 17,
+      "community": 13,
       "norm_label": "linksapi"
     },
     {
       "label": "Resource",
       "file_type": "code",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L292",
+      "source_location": "L315",
       "_origin": "ast",
       "id": "frontend_src_lib_api_resource",
       "community": 14,
@@ -10027,7 +10187,7 @@
       "label": "resourcesApi",
       "file_type": "code",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L304",
+      "source_location": "L327",
       "_origin": "ast",
       "id": "frontend_src_lib_api_resourcesapi",
       "community": 20,
@@ -10037,37 +10197,37 @@
       "label": "Issue",
       "file_type": "code",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L321",
+      "source_location": "L344",
       "_origin": "ast",
       "id": "frontend_src_lib_api_issue",
-      "community": 20,
+      "community": 12,
       "norm_label": "issue"
     },
     {
       "label": "issuesApi",
       "file_type": "code",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L343",
+      "source_location": "L366",
       "_origin": "ast",
       "id": "frontend_src_lib_api_issuesapi",
-      "community": 20,
+      "community": 12,
       "norm_label": "issuesapi"
     },
     {
       "label": "Update",
       "file_type": "code",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L354",
+      "source_location": "L377",
       "_origin": "ast",
       "id": "frontend_src_lib_api_update",
-      "community": 20,
+      "community": 14,
       "norm_label": "update"
     },
     {
       "label": "updatesApi",
       "file_type": "code",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L369",
+      "source_location": "L392",
       "_origin": "ast",
       "id": "frontend_src_lib_api_updatesapi",
       "community": 20,
@@ -10077,37 +10237,37 @@
       "label": "StatusReport",
       "file_type": "code",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L382",
+      "source_location": "L405",
       "_origin": "ast",
       "id": "frontend_src_lib_api_statusreport",
-      "community": 31,
+      "community": 36,
       "norm_label": "statusreport"
     },
     {
       "label": "StatusReportDetail",
       "file_type": "code",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L396",
+      "source_location": "L419",
       "_origin": "ast",
       "id": "frontend_src_lib_api_statusreportdetail",
-      "community": 31,
+      "community": 36,
       "norm_label": "statusreportdetail"
     },
     {
       "label": "statusReportsApi",
       "file_type": "code",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L400",
+      "source_location": "L423",
       "_origin": "ast",
       "id": "frontend_src_lib_api_statusreportsapi",
-      "community": 31,
+      "community": 36,
       "norm_label": "statusreportsapi"
     },
     {
       "label": "apiUpload()",
       "file_type": "code",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L426",
+      "source_location": "L449",
       "_origin": "ast",
       "id": "frontend_src_lib_api_apiupload",
       "community": 20,
@@ -10117,17 +10277,17 @@
       "label": "Attachment",
       "file_type": "code",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L437",
+      "source_location": "L460",
       "_origin": "ast",
       "id": "frontend_src_lib_api_attachment",
-      "community": 20,
+      "community": 13,
       "norm_label": "attachment"
     },
     {
       "label": "AttachmentDetail",
       "file_type": "code",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L453",
+      "source_location": "L476",
       "_origin": "ast",
       "id": "frontend_src_lib_api_attachmentdetail",
       "community": 20,
@@ -10137,7 +10297,7 @@
       "label": "attachmentsApi",
       "file_type": "code",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L457",
+      "source_location": "L480",
       "_origin": "ast",
       "id": "frontend_src_lib_api_attachmentsapi",
       "community": 20,
@@ -10190,7 +10350,7 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "frontend_src_lib_auth_context_useauth",
-      "community": 33,
+      "community": 56,
       "norm_label": "useauth()"
     },
     {
@@ -10250,7 +10410,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "frontend_src_lib_utils_cn",
-      "community": 26,
+      "community": 13,
       "norm_label": "cn()"
     },
     {
@@ -10270,77 +10430,77 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_src_pages_actionitemdetailpage",
-      "community": 67,
+      "community": 11,
       "norm_label": "actionitemdetailpage.tsx"
     },
     {
       "label": "STATUS_LABELS",
       "file_type": "code",
       "source_file": "frontend/src/pages/ActionItemDetailPage.tsx",
-      "source_location": "L13",
+      "source_location": "L14",
       "_origin": "ast",
       "id": "frontend_src_pages_actionitemdetailpage_status_labels",
-      "community": 67,
+      "community": 11,
       "norm_label": "status_labels"
     },
     {
       "label": "TABS",
       "file_type": "code",
       "source_file": "frontend/src/pages/ActionItemDetailPage.tsx",
-      "source_location": "L19",
+      "source_location": "L20",
       "_origin": "ast",
       "id": "frontend_src_pages_actionitemdetailpage_tabs",
-      "community": 67,
+      "community": 11,
       "norm_label": "tabs"
     },
     {
       "label": "Tab",
       "file_type": "code",
       "source_file": "frontend/src/pages/ActionItemDetailPage.tsx",
-      "source_location": "L20",
+      "source_location": "L21",
       "_origin": "ast",
       "id": "frontend_src_pages_actionitemdetailpage_tab",
-      "community": 67,
+      "community": 11,
       "norm_label": "tab"
     },
     {
       "label": "Field()",
       "file_type": "code",
       "source_file": "frontend/src/pages/ActionItemDetailPage.tsx",
-      "source_location": "L22",
+      "source_location": "L23",
       "_origin": "ast",
       "id": "frontend_src_pages_actionitemdetailpage_field",
-      "community": 67,
+      "community": 11,
       "norm_label": "field()"
     },
     {
       "label": "ownersLabel()",
       "file_type": "code",
       "source_file": "frontend/src/pages/ActionItemDetailPage.tsx",
-      "source_location": "L32",
+      "source_location": "L33",
       "_origin": "ast",
       "id": "frontend_src_pages_actionitemdetailpage_ownerslabel",
-      "community": 67,
+      "community": 11,
       "norm_label": "ownerslabel()"
     },
     {
       "label": "commentAuthor()",
       "file_type": "code",
       "source_file": "frontend/src/pages/ActionItemDetailPage.tsx",
-      "source_location": "L41",
+      "source_location": "L42",
       "_origin": "ast",
       "id": "frontend_src_pages_actionitemdetailpage_commentauthor",
-      "community": 67,
+      "community": 11,
       "norm_label": "commentauthor()"
     },
     {
       "label": "ActionItemDetailPage()",
       "file_type": "code",
       "source_file": "frontend/src/pages/ActionItemDetailPage.tsx",
-      "source_location": "L45",
+      "source_location": "L46",
       "_origin": "ast",
       "id": "frontend_src_pages_actionitemdetailpage_actionitemdetailpage",
-      "community": 67,
+      "community": 11,
       "norm_label": "actionitemdetailpage()"
     },
     {
@@ -10350,7 +10510,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_src_pages_attachmentdetailpage",
-      "community": 36,
+      "community": 20,
       "norm_label": "attachmentdetailpage.tsx"
     },
     {
@@ -10360,7 +10520,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "frontend_src_pages_attachmentdetailpage_uploadername",
-      "community": 36,
+      "community": 20,
       "norm_label": "uploadername()"
     },
     {
@@ -10370,7 +10530,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "frontend_src_pages_attachmentdetailpage_formatsize",
-      "community": 36,
+      "community": 20,
       "norm_label": "formatsize()"
     },
     {
@@ -10380,7 +10540,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "frontend_src_pages_attachmentdetailpage_relativetime",
-      "community": 36,
+      "community": 20,
       "norm_label": "relativetime()"
     },
     {
@@ -10390,7 +10550,7 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "frontend_src_pages_attachmentdetailpage_longdate",
-      "community": 36,
+      "community": 20,
       "norm_label": "longdate()"
     },
     {
@@ -10400,7 +10560,7 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "frontend_src_pages_attachmentdetailpage_row",
-      "community": 36,
+      "community": 20,
       "norm_label": "row()"
     },
     {
@@ -10410,7 +10570,7 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "frontend_src_pages_attachmentdetailpage_attachmentdetailpage",
-      "community": 36,
+      "community": 20,
       "norm_label": "attachmentdetailpage()"
     },
     {
@@ -10420,7 +10580,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_src_pages_createprojectwizard",
-      "community": 12,
+      "community": 56,
       "norm_label": "createprojectwizard.tsx"
     },
     {
@@ -10440,7 +10600,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "frontend_src_pages_createprojectwizard_createprojectform",
-      "community": 12,
+      "community": 26,
       "norm_label": "createprojectform"
     },
     {
@@ -10450,7 +10610,7 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "frontend_src_pages_createprojectwizard_step_labels",
-      "community": 12,
+      "community": 56,
       "norm_label": "step_labels"
     },
     {
@@ -10460,7 +10620,7 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "frontend_src_pages_createprojectwizard_todayiso",
-      "community": 33,
+      "community": 56,
       "norm_label": "todayiso()"
     },
     {
@@ -10470,7 +10630,7 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "frontend_src_pages_createprojectwizard_emptymember",
-      "community": 12,
+      "community": 56,
       "norm_label": "emptymember()"
     },
     {
@@ -10480,7 +10640,7 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "frontend_src_pages_createprojectwizard_createprojectwizard",
-      "community": 33,
+      "community": 56,
       "norm_label": "createprojectwizard()"
     },
     {
@@ -10490,7 +10650,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_src_pages_homepage",
-      "community": 17,
+      "community": 56,
       "norm_label": "homepage.tsx"
     },
     {
@@ -10500,7 +10660,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "frontend_src_pages_homepage_initials",
-      "community": 33,
+      "community": 56,
       "norm_label": "initials()"
     },
     {
@@ -10510,7 +10670,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "frontend_src_pages_homepage_homepage",
-      "community": 33,
+      "community": 56,
       "norm_label": "homepage()"
     },
     {
@@ -10520,7 +10680,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_src_pages_loginpage",
-      "community": 26,
+      "community": 13,
       "norm_label": "loginpage.tsx"
     },
     {
@@ -10530,7 +10690,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "frontend_src_pages_loginpage_loginpage",
-      "community": 33,
+      "community": 56,
       "norm_label": "loginpage()"
     },
     {
@@ -10547,7 +10707,7 @@
       "label": "STATUS_LABELS",
       "file_type": "code",
       "source_file": "frontend/src/pages/MilestoneDetailPage.tsx",
-      "source_location": "L14",
+      "source_location": "L15",
       "_origin": "ast",
       "id": "frontend_src_pages_milestonedetailpage_status_labels",
       "community": 11,
@@ -10557,7 +10717,7 @@
       "label": "TABS",
       "file_type": "code",
       "source_file": "frontend/src/pages/MilestoneDetailPage.tsx",
-      "source_location": "L20",
+      "source_location": "L21",
       "_origin": "ast",
       "id": "frontend_src_pages_milestonedetailpage_tabs",
       "community": 11,
@@ -10567,7 +10727,7 @@
       "label": "Tab",
       "file_type": "code",
       "source_file": "frontend/src/pages/MilestoneDetailPage.tsx",
-      "source_location": "L26",
+      "source_location": "L27",
       "_origin": "ast",
       "id": "frontend_src_pages_milestonedetailpage_tab",
       "community": 11,
@@ -10577,7 +10737,7 @@
       "label": "WEEKDAYS",
       "file_type": "code",
       "source_file": "frontend/src/pages/MilestoneDetailPage.tsx",
-      "source_location": "L28",
+      "source_location": "L29",
       "_origin": "ast",
       "id": "frontend_src_pages_milestonedetailpage_weekdays",
       "community": 11,
@@ -10587,7 +10747,7 @@
       "label": "MONTHS",
       "file_type": "code",
       "source_file": "frontend/src/pages/MilestoneDetailPage.tsx",
-      "source_location": "L31",
+      "source_location": "L32",
       "_origin": "ast",
       "id": "frontend_src_pages_milestonedetailpage_months",
       "community": 11,
@@ -10597,7 +10757,7 @@
       "label": "formatLongDate()",
       "file_type": "code",
       "source_file": "frontend/src/pages/MilestoneDetailPage.tsx",
-      "source_location": "L36",
+      "source_location": "L37",
       "_origin": "ast",
       "id": "frontend_src_pages_milestonedetailpage_formatlongdate",
       "community": 11,
@@ -10607,7 +10767,7 @@
       "label": "relativeTime()",
       "file_type": "code",
       "source_file": "frontend/src/pages/MilestoneDetailPage.tsx",
-      "source_location": "L44",
+      "source_location": "L45",
       "_origin": "ast",
       "id": "frontend_src_pages_milestonedetailpage_relativetime",
       "community": 11,
@@ -10617,7 +10777,7 @@
       "label": "profileName()",
       "file_type": "code",
       "source_file": "frontend/src/pages/MilestoneDetailPage.tsx",
-      "source_location": "L60",
+      "source_location": "L61",
       "_origin": "ast",
       "id": "frontend_src_pages_milestonedetailpage_profilename",
       "community": 11,
@@ -10627,7 +10787,7 @@
       "label": "ownerLabel()",
       "file_type": "code",
       "source_file": "frontend/src/pages/MilestoneDetailPage.tsx",
-      "source_location": "L66",
+      "source_location": "L67",
       "_origin": "ast",
       "id": "frontend_src_pages_milestonedetailpage_ownerlabel",
       "community": 11,
@@ -10637,7 +10797,7 @@
       "label": "auditLine()",
       "file_type": "code",
       "source_file": "frontend/src/pages/MilestoneDetailPage.tsx",
-      "source_location": "L75",
+      "source_location": "L76",
       "_origin": "ast",
       "id": "frontend_src_pages_milestonedetailpage_auditline",
       "community": 11,
@@ -10647,7 +10807,7 @@
       "label": "Field()",
       "file_type": "code",
       "source_file": "frontend/src/pages/MilestoneDetailPage.tsx",
-      "source_location": "L83",
+      "source_location": "L84",
       "_origin": "ast",
       "id": "frontend_src_pages_milestonedetailpage_field",
       "community": 11,
@@ -10657,7 +10817,7 @@
       "label": "MilestoneDetailPage()",
       "file_type": "code",
       "source_file": "frontend/src/pages/MilestoneDetailPage.tsx",
-      "source_location": "L93",
+      "source_location": "L94",
       "_origin": "ast",
       "id": "frontend_src_pages_milestonedetailpage_milestonedetailpage",
       "community": 11,
@@ -10880,7 +11040,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_src_pages_statusreportdetailpage",
-      "community": 16,
+      "community": 36,
       "norm_label": "statusreportdetailpage.tsx"
     },
     {
@@ -10890,7 +11050,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "frontend_src_pages_statusreportdetailpage_access_labels",
-      "community": 16,
+      "community": 36,
       "norm_label": "access_labels"
     },
     {
@@ -10900,7 +11060,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "frontend_src_pages_statusreportdetailpage_authorname",
-      "community": 16,
+      "community": 36,
       "norm_label": "authorname()"
     },
     {
@@ -10910,7 +11070,7 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "frontend_src_pages_statusreportdetailpage_longdate",
-      "community": 16,
+      "community": 36,
       "norm_label": "longdate()"
     },
     {
@@ -10920,7 +11080,7 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "frontend_src_pages_statusreportdetailpage_statusreportdetailpage",
-      "community": 16,
+      "community": 36,
       "norm_label": "statusreportdetailpage()"
     },
     {
@@ -10930,7 +11090,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_src_pages_create_project_stepaccess",
-      "community": 12,
+      "community": 26,
       "norm_label": "stepaccess.tsx"
     },
     {
@@ -10940,7 +11100,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "frontend_src_pages_create_project_stepaccess_props",
-      "community": 12,
+      "community": 26,
       "norm_label": "props"
     },
     {
@@ -10950,7 +11110,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "frontend_src_pages_create_project_stepaccess_stepaccess",
-      "community": 12,
+      "community": 56,
       "norm_label": "stepaccess()"
     },
     {
@@ -10960,7 +11120,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_src_pages_create_project_stepconfirmation",
-      "community": 12,
+      "community": 56,
       "norm_label": "stepconfirmation.tsx"
     },
     {
@@ -10970,7 +11130,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "frontend_src_pages_create_project_stepconfirmation_row",
-      "community": 12,
+      "community": 56,
       "norm_label": "row()"
     },
     {
@@ -10980,7 +11140,7 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "frontend_src_pages_create_project_stepconfirmation_stepconfirmation",
-      "community": 12,
+      "community": 56,
       "norm_label": "stepconfirmation()"
     },
     {
@@ -10990,7 +11150,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_src_pages_create_project_stepdetails",
-      "community": 13,
+      "community": 26,
       "norm_label": "stepdetails.tsx"
     },
     {
@@ -11000,7 +11160,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "frontend_src_pages_create_project_stepdetails_props",
-      "community": 12,
+      "community": 26,
       "norm_label": "props"
     },
     {
@@ -11010,7 +11170,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "frontend_src_pages_create_project_stepdetails_stepdetails",
-      "community": 12,
+      "community": 56,
       "norm_label": "stepdetails()"
     },
     {
@@ -11020,7 +11180,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "frontend_src_pages_create_project_stepproject",
-      "community": 12,
+      "community": 26,
       "norm_label": "stepproject.tsx"
     },
     {
@@ -11030,7 +11190,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "frontend_src_pages_create_project_stepproject_props",
-      "community": 12,
+      "community": 26,
       "norm_label": "props"
     },
     {
@@ -11040,7 +11200,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "frontend_src_pages_create_project_stepproject_stepproject",
-      "community": 12,
+      "community": 56,
       "norm_label": "stepproject()"
     },
     {
@@ -14615,7 +14775,7 @@
       "context": "parameter_type",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.controller.ts",
-      "source_location": "L100",
+      "source_location": "L108",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_add",
       "target": "backend_src_common_decorators_current_user_decorator_authuser",
@@ -14626,7 +14786,7 @@
       "context": "parameter_type",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.controller.ts",
-      "source_location": "L56",
+      "source_location": "L64",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_addcomment",
       "target": "backend_src_common_decorators_current_user_decorator_authuser",
@@ -14637,7 +14797,7 @@
       "context": "parameter_type",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.controller.ts",
-      "source_location": "L118",
+      "source_location": "L126",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_update",
       "target": "backend_src_common_decorators_current_user_decorator_authuser",
@@ -14747,7 +14907,7 @@
       "context": "parameter_type",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/milestones/milestones.controller.ts",
-      "source_location": "L70",
+      "source_location": "L78",
       "weight": 1.0,
       "source": "backend_src_modules_milestones_milestones_controller_milestonescontroller_add",
       "target": "backend_src_common_decorators_current_user_decorator_authuser",
@@ -14758,7 +14918,7 @@
       "context": "parameter_type",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/milestones/milestones.controller.ts",
-      "source_location": "L88",
+      "source_location": "L96",
       "weight": 1.0,
       "source": "backend_src_modules_milestones_milestones_controller_milestonescontroller_update",
       "target": "backend_src_common_decorators_current_user_decorator_authuser",
@@ -14944,7 +15104,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.controller.ts",
-      "source_location": "L103",
+      "source_location": "L111",
       "weight": 1.0,
       "context": "decorator",
       "source": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_add",
@@ -14955,7 +15115,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.controller.ts",
-      "source_location": "L60",
+      "source_location": "L68",
       "weight": 1.0,
       "context": "decorator",
       "source": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_addcomment",
@@ -14966,7 +15126,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.controller.ts",
-      "source_location": "L122",
+      "source_location": "L130",
       "weight": 1.0,
       "context": "decorator",
       "source": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_update",
@@ -15076,7 +15236,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/milestones/milestones.controller.ts",
-      "source_location": "L73",
+      "source_location": "L81",
       "weight": 1.0,
       "context": "decorator",
       "source": "backend_src_modules_milestones_milestones_controller_milestonescontroller_add",
@@ -15087,7 +15247,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/milestones/milestones.controller.ts",
-      "source_location": "L92",
+      "source_location": "L100",
       "weight": 1.0,
       "context": "decorator",
       "source": "backend_src_modules_milestones_milestones_controller_milestonescontroller_update",
@@ -15378,6 +15538,82 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "backend/src/common/record-history.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "backend_src_common_record_history",
+      "target": "backend_src_common_record_history_historyentry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/modules/action-items/action-items.repository.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "backend_src_modules_action_items_action_items_repository",
+      "target": "backend_src_common_record_history",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/modules/milestones/milestones.repository.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "backend_src_modules_milestones_milestones_repository",
+      "target": "backend_src_common_record_history",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/modules/action-items/action-items.repository.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "backend_src_modules_action_items_action_items_repository",
+      "target": "backend_src_common_record_history_historyentry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "generic_arg",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/modules/action-items/action-items.repository.ts",
+      "source_location": "L87",
+      "weight": 1.0,
+      "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_findhistory",
+      "target": "backend_src_common_record_history_historyentry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/modules/milestones/milestones.repository.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "backend_src_modules_milestones_milestones_repository",
+      "target": "backend_src_common_record_history_historyentry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "generic_arg",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/modules/milestones/milestones.repository.ts",
+      "source_location": "L77",
+      "weight": 1.0,
+      "source": "backend_src_modules_milestones_milestones_repository_milestonesrepository_findhistory",
+      "target": "backend_src_common_record_history_historyentry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "backend/src/common/supabase-error.ts",
       "source_location": "L10",
       "weight": 1.0,
@@ -15555,7 +15791,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L109",
+      "source_location": "L128",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_deleteowners",
       "target": "backend_src_common_supabase_error_tohttpexception"
@@ -15566,7 +15802,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L126",
+      "source_location": "L145",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_findbyproject",
       "target": "backend_src_common_supabase_error_tohttpexception"
@@ -15577,7 +15813,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L151",
+      "source_location": "L98",
+      "weight": 1.0,
+      "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_findhistory",
+      "target": "backend_src_common_supabase_error_tohttpexception"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backend/src/modules/action-items/action-items.repository.ts",
+      "source_location": "L170",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_findone",
       "target": "backend_src_common_supabase_error_tohttpexception"
@@ -15588,7 +15835,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L64",
+      "source_location": "L68",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_insert",
       "target": "backend_src_common_supabase_error_tohttpexception"
@@ -15599,7 +15846,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L181",
+      "source_location": "L200",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_insertcomment",
       "target": "backend_src_common_supabase_error_tohttpexception"
@@ -15610,7 +15857,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L101",
+      "source_location": "L120",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_insertowners",
       "target": "backend_src_common_supabase_error_tohttpexception"
@@ -15621,7 +15868,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L164",
+      "source_location": "L183",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_listcomments",
       "target": "backend_src_common_supabase_error_tohttpexception"
@@ -15632,7 +15879,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L88",
+      "source_location": "L107",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_remove",
       "target": "backend_src_common_supabase_error_tohttpexception"
@@ -15643,7 +15890,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L79",
+      "source_location": "L83",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_update",
       "target": "backend_src_common_supabase_error_tohttpexception"
@@ -15896,7 +16143,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "backend/src/modules/milestones/milestones.repository.ts",
-      "source_location": "L90",
+      "source_location": "L109",
       "weight": 1.0,
       "source": "backend_src_modules_milestones_milestones_repository_milestonesrepository_findbyproject",
       "target": "backend_src_common_supabase_error_tohttpexception"
@@ -15907,7 +16154,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "backend/src/modules/milestones/milestones.repository.ts",
-      "source_location": "L110",
+      "source_location": "L88",
+      "weight": 1.0,
+      "source": "backend_src_modules_milestones_milestones_repository_milestonesrepository_findhistory",
+      "target": "backend_src_common_supabase_error_tohttpexception"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backend/src/modules/milestones/milestones.repository.ts",
+      "source_location": "L129",
       "weight": 1.0,
       "source": "backend_src_modules_milestones_milestones_repository_milestonesrepository_findone",
       "target": "backend_src_common_supabase_error_tohttpexception"
@@ -15918,7 +16176,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "backend/src/modules/milestones/milestones.repository.ts",
-      "source_location": "L54",
+      "source_location": "L58",
       "weight": 1.0,
       "source": "backend_src_modules_milestones_milestones_repository_milestonesrepository_insert",
       "target": "backend_src_common_supabase_error_tohttpexception"
@@ -15929,7 +16187,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "backend/src/modules/milestones/milestones.repository.ts",
-      "source_location": "L78",
+      "source_location": "L97",
       "weight": 1.0,
       "source": "backend_src_modules_milestones_milestones_repository_milestonesrepository_remove",
       "target": "backend_src_common_supabase_error_tohttpexception"
@@ -15940,7 +16198,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "backend/src/modules/milestones/milestones.repository.ts",
-      "source_location": "L69",
+      "source_location": "L73",
       "weight": 1.0,
       "source": "backend_src_modules_milestones_milestones_repository_milestonesrepository_update",
       "target": "backend_src_common_supabase_error_tohttpexception"
@@ -16528,7 +16786,7 @@
       "context": "parameter_type",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L53",
+      "source_location": "L57",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_constructor",
       "target": "backend_src_database_database_service_databaseservice",
@@ -16638,7 +16896,7 @@
       "context": "parameter_type",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/milestones/milestones.repository.ts",
-      "source_location": "L43",
+      "source_location": "L47",
       "weight": 1.0,
       "source": "backend_src_modules_milestones_milestones_repository_milestonesrepository_constructor",
       "target": "backend_src_database_database_service_databaseservice",
@@ -16899,7 +17157,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.controller.ts",
-      "source_location": "L100",
+      "source_location": "L108",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_controller_actionitemscontroller",
       "target": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_add",
@@ -16909,7 +17167,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.controller.ts",
-      "source_location": "L56",
+      "source_location": "L64",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_controller_actionitemscontroller",
       "target": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_addcomment",
@@ -16939,6 +17197,16 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.controller.ts",
+      "source_location": "L39",
+      "weight": 1.0,
+      "source": "backend_src_modules_action_items_action_items_controller_actionitemscontroller",
+      "target": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_history",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/modules/action-items/action-items.controller.ts",
       "source_location": "L26",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_controller_actionitemscontroller",
@@ -16949,7 +17217,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.controller.ts",
-      "source_location": "L39",
+      "source_location": "L47",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_controller_actionitemscontroller",
       "target": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_listcomments",
@@ -16959,7 +17227,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.controller.ts",
-      "source_location": "L128",
+      "source_location": "L136",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_controller_actionitemscontroller",
       "target": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_remove",
@@ -16969,7 +17237,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.controller.ts",
-      "source_location": "L118",
+      "source_location": "L126",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_controller_actionitemscontroller",
       "target": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_update",
@@ -17012,6 +17280,17 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.controller.ts",
+      "source_location": "L38",
+      "weight": 1.0,
+      "context": "decorator",
+      "source": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_history",
+      "target": "backend_src_modules_action_items_action_items_controller_ts_get",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/modules/action-items/action-items.controller.ts",
       "source_location": "L25",
       "weight": 1.0,
       "context": "decorator",
@@ -17023,7 +17302,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.controller.ts",
-      "source_location": "L38",
+      "source_location": "L46",
       "weight": 1.0,
       "context": "decorator",
       "source": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_listcomments",
@@ -17034,7 +17313,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.controller.ts",
-      "source_location": "L101",
+      "source_location": "L109",
       "weight": 1.0,
       "context": "decorator",
       "source": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_add",
@@ -17045,7 +17324,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.controller.ts",
-      "source_location": "L58",
+      "source_location": "L66",
       "weight": 1.0,
       "context": "decorator",
       "source": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_addcomment",
@@ -17067,6 +17346,17 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.controller.ts",
+      "source_location": "L41",
+      "weight": 1.0,
+      "context": "decorator",
+      "source": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_history",
+      "target": "backend_src_modules_action_items_action_items_controller_ts_param",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/modules/action-items/action-items.controller.ts",
       "source_location": "L26",
       "weight": 1.0,
       "context": "decorator",
@@ -17078,7 +17368,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.controller.ts",
-      "source_location": "L41",
+      "source_location": "L49",
       "weight": 1.0,
       "context": "decorator",
       "source": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_listcomments",
@@ -17089,7 +17379,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.controller.ts",
-      "source_location": "L130",
+      "source_location": "L138",
       "weight": 1.0,
       "context": "decorator",
       "source": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_remove",
@@ -17100,7 +17390,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.controller.ts",
-      "source_location": "L120",
+      "source_location": "L128",
       "weight": 1.0,
       "context": "decorator",
       "source": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_update",
@@ -17111,7 +17401,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.controller.ts",
-      "source_location": "L70",
+      "source_location": "L78",
       "weight": 1.0,
       "context": "decorator",
       "source": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_add",
@@ -17122,7 +17412,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.controller.ts",
-      "source_location": "L46",
+      "source_location": "L54",
       "weight": 1.0,
       "context": "decorator",
       "source": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_addcomment",
@@ -17133,7 +17423,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.controller.ts",
-      "source_location": "L71",
+      "source_location": "L79",
       "weight": 1.0,
       "context": "decorator",
       "source": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_add",
@@ -17144,7 +17434,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.controller.ts",
-      "source_location": "L47",
+      "source_location": "L55",
       "weight": 1.0,
       "context": "decorator",
       "source": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_addcomment",
@@ -17155,7 +17445,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.controller.ts",
-      "source_location": "L109",
+      "source_location": "L117",
       "weight": 1.0,
       "context": "decorator",
       "source": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_update",
@@ -17166,7 +17456,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.controller.ts",
-      "source_location": "L102",
+      "source_location": "L110",
       "weight": 1.0,
       "context": "decorator",
       "source": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_add",
@@ -17177,7 +17467,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.controller.ts",
-      "source_location": "L59",
+      "source_location": "L67",
       "weight": 1.0,
       "context": "decorator",
       "source": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_addcomment",
@@ -17188,7 +17478,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.controller.ts",
-      "source_location": "L121",
+      "source_location": "L129",
       "weight": 1.0,
       "context": "decorator",
       "source": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_update",
@@ -17199,7 +17489,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.controller.ts",
-      "source_location": "L108",
+      "source_location": "L116",
       "weight": 1.0,
       "context": "decorator",
       "source": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_update",
@@ -17210,7 +17500,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.controller.ts",
-      "source_location": "L127",
+      "source_location": "L135",
       "weight": 1.0,
       "context": "decorator",
       "source": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_remove",
@@ -17247,6 +17537,17 @@
       "source_file": "backend/src/modules/action-items/action-items.controller.ts",
       "source_location": "L43",
       "weight": 1.0,
+      "source": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_history",
+      "target": "backend_src_modules_action_items_action_items_service_actionitemsservice_history"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backend/src/modules/action-items/action-items.controller.ts",
+      "source_location": "L51",
+      "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_listcomments",
       "target": "backend_src_modules_action_items_action_items_service_actionitemsservice_listcomments"
     },
@@ -17256,7 +17557,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "backend/src/modules/action-items/action-items.controller.ts",
-      "source_location": "L62",
+      "source_location": "L70",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_addcomment",
       "target": "backend_src_modules_action_items_action_items_service_actionitemsservice_addcomment"
@@ -17266,7 +17567,7 @@
       "context": "parameter_type",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.controller.ts",
-      "source_location": "L56",
+      "source_location": "L64",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_addcomment",
       "target": "backend_src_modules_action_items_dto_create_comment_dto_createcommentdto",
@@ -17278,7 +17579,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "backend/src/modules/action-items/action-items.controller.ts",
-      "source_location": "L105",
+      "source_location": "L113",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_add",
       "target": "backend_src_modules_action_items_action_items_service_actionitemsservice_add"
@@ -17288,7 +17589,7 @@
       "context": "parameter_type",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.controller.ts",
-      "source_location": "L100",
+      "source_location": "L108",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_add",
       "target": "backend_src_modules_action_items_dto_create_action_item_dto_createactionitemdto",
@@ -17300,7 +17601,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "backend/src/modules/action-items/action-items.controller.ts",
-      "source_location": "L124",
+      "source_location": "L132",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_update",
       "target": "backend_src_modules_action_items_action_items_service_actionitemsservice_update"
@@ -17310,7 +17611,7 @@
       "context": "parameter_type",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.controller.ts",
-      "source_location": "L118",
+      "source_location": "L126",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_update",
       "target": "backend_src_modules_action_items_dto_update_action_item_dto_updateactionitemdto",
@@ -17322,7 +17623,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "backend/src/modules/action-items/action-items.controller.ts",
-      "source_location": "L132",
+      "source_location": "L140",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_controller_actionitemscontroller_remove",
       "target": "backend_src_modules_action_items_action_items_service_actionitemsservice_remove"
@@ -17396,7 +17697,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L5",
+      "source_location": "L9",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository",
       "target": "backend_src_modules_action_items_action_items_repository_actionitem",
@@ -17406,7 +17707,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L40",
+      "source_location": "L44",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository",
       "target": "backend_src_modules_action_items_action_items_repository_actionitemcomment",
@@ -17416,7 +17717,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L20",
+      "source_location": "L24",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository",
       "target": "backend_src_modules_action_items_action_items_repository_actionitemlistitem",
@@ -17426,7 +17727,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L52",
+      "source_location": "L56",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository",
       "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository",
@@ -17448,7 +17749,7 @@
       "context": "type",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L20",
+      "source_location": "L24",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemlistitem",
       "target": "backend_src_modules_action_items_action_items_repository_actionitem",
@@ -17458,7 +17759,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L53",
+      "source_location": "L57",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository",
       "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_constructor",
@@ -17468,7 +17769,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L104",
+      "source_location": "L123",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository",
       "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_deleteowners",
@@ -17478,7 +17779,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L112",
+      "source_location": "L131",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository",
       "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_findbyproject",
@@ -17488,7 +17789,17 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L130",
+      "source_location": "L87",
+      "weight": 1.0,
+      "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository",
+      "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_findhistory",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/modules/action-items/action-items.repository.ts",
+      "source_location": "L149",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository",
       "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_findone",
@@ -17498,7 +17809,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L59",
+      "source_location": "L63",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository",
       "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_insert",
@@ -17508,7 +17819,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L168",
+      "source_location": "L187",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository",
       "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_insertcomment",
@@ -17518,7 +17829,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L91",
+      "source_location": "L110",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository",
       "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_insertowners",
@@ -17528,7 +17839,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L155",
+      "source_location": "L174",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository",
       "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_listcomments",
@@ -17538,7 +17849,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L83",
+      "source_location": "L102",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository",
       "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_remove",
@@ -17548,7 +17859,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L55",
+      "source_location": "L59",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository",
       "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_table",
@@ -17558,7 +17869,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L68",
+      "source_location": "L72",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository",
       "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_update",
@@ -17568,7 +17879,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L51",
+      "source_location": "L55",
       "weight": 1.0,
       "context": "decorator",
       "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository",
@@ -17602,7 +17913,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L173",
+      "source_location": "L192",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_insertcomment",
       "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_insert",
@@ -17613,7 +17924,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
-      "source_location": "L98",
+      "source_location": "L117",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_insertowners",
       "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_insert",
@@ -17648,6 +17959,17 @@
       "confidence_score": 1.0,
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
       "source_location": "L78",
+      "weight": 1.0,
+      "source": "backend_src_modules_action_items_action_items_service_actionitemsservice_history",
+      "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_findhistory"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backend/src/modules/action-items/action-items.service.ts",
+      "source_location": "L83",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_service_actionitemsservice_remove",
       "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_remove"
@@ -17713,7 +18035,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
-      "source_location": "L84",
+      "source_location": "L89",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_service_actionitemsservice_listcomments",
       "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_listcomments"
@@ -17724,7 +18046,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
-      "source_location": "L94",
+      "source_location": "L99",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_service_actionitemsservice_addcomment",
       "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_insertcomment"
@@ -17797,7 +18119,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
-      "source_location": "L87",
+      "source_location": "L92",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_service_actionitemsservice",
       "target": "backend_src_modules_action_items_action_items_service_actionitemsservice_addcomment",
@@ -17827,6 +18149,16 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
+      "source_location": "L76",
+      "weight": 1.0,
+      "source": "backend_src_modules_action_items_action_items_service_actionitemsservice",
+      "target": "backend_src_modules_action_items_action_items_service_actionitemsservice_history",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/modules/action-items/action-items.service.ts",
       "source_location": "L10",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_service_actionitemsservice",
@@ -17837,7 +18169,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
-      "source_location": "L82",
+      "source_location": "L87",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_service_actionitemsservice",
       "target": "backend_src_modules_action_items_action_items_service_actionitemsservice_listcomments",
@@ -17847,7 +18179,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
-      "source_location": "L76",
+      "source_location": "L81",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_service_actionitemsservice",
       "target": "backend_src_modules_action_items_action_items_service_actionitemsservice_remove",
@@ -17890,7 +18222,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
-      "source_location": "L93",
+      "source_location": "L98",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_service_actionitemsservice_addcomment",
       "target": "backend_src_modules_action_items_action_items_service_actionitemsservice_get",
@@ -17901,7 +18233,18 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
-      "source_location": "L83",
+      "source_location": "L77",
+      "weight": 1.0,
+      "source": "backend_src_modules_action_items_action_items_service_actionitemsservice_history",
+      "target": "backend_src_modules_action_items_action_items_service_actionitemsservice_get",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/modules/action-items/action-items.service.ts",
+      "source_location": "L88",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_service_actionitemsservice_listcomments",
       "target": "backend_src_modules_action_items_action_items_service_actionitemsservice_get",
@@ -17912,7 +18255,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
-      "source_location": "L77",
+      "source_location": "L82",
       "weight": 1.0,
       "source": "backend_src_modules_action_items_action_items_service_actionitemsservice_remove",
       "target": "backend_src_modules_action_items_action_items_service_actionitemsservice_get",
@@ -21496,7 +21839,7 @@
       "context": "parameter_type",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/milestones/milestones.controller.ts",
-      "source_location": "L70",
+      "source_location": "L78",
       "weight": 1.0,
       "source": "backend_src_modules_milestones_milestones_controller_milestonescontroller_add",
       "target": "backend_src_modules_milestones_dto_create_milestone_dto_createmilestonedto",
@@ -21572,7 +21915,7 @@
       "context": "parameter_type",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/milestones/milestones.controller.ts",
-      "source_location": "L88",
+      "source_location": "L96",
       "weight": 1.0,
       "source": "backend_src_modules_milestones_milestones_controller_milestonescontroller_update",
       "target": "backend_src_modules_milestones_dto_update_milestone_dto_updatemilestonedto",
@@ -21647,7 +21990,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/milestones/milestones.controller.ts",
-      "source_location": "L70",
+      "source_location": "L78",
       "weight": 1.0,
       "source": "backend_src_modules_milestones_milestones_controller_milestonescontroller",
       "target": "backend_src_modules_milestones_milestones_controller_milestonescontroller_add",
@@ -21677,6 +22020,16 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/milestones/milestones.controller.ts",
+      "source_location": "L38",
+      "weight": 1.0,
+      "source": "backend_src_modules_milestones_milestones_controller_milestonescontroller",
+      "target": "backend_src_modules_milestones_milestones_controller_milestonescontroller_history",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/modules/milestones/milestones.controller.ts",
       "source_location": "L25",
       "weight": 1.0,
       "source": "backend_src_modules_milestones_milestones_controller_milestonescontroller",
@@ -21687,7 +22040,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/milestones/milestones.controller.ts",
-      "source_location": "L98",
+      "source_location": "L106",
       "weight": 1.0,
       "source": "backend_src_modules_milestones_milestones_controller_milestonescontroller",
       "target": "backend_src_modules_milestones_milestones_controller_milestonescontroller_remove",
@@ -21697,7 +22050,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/milestones/milestones.controller.ts",
-      "source_location": "L88",
+      "source_location": "L96",
       "weight": 1.0,
       "source": "backend_src_modules_milestones_milestones_controller_milestonescontroller",
       "target": "backend_src_modules_milestones_milestones_controller_milestonescontroller_update",
@@ -21740,6 +22093,17 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/milestones/milestones.controller.ts",
+      "source_location": "L37",
+      "weight": 1.0,
+      "context": "decorator",
+      "source": "backend_src_modules_milestones_milestones_controller_milestonescontroller_history",
+      "target": "backend_src_modules_milestones_milestones_controller_ts_get",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/modules/milestones/milestones.controller.ts",
       "source_location": "L24",
       "weight": 1.0,
       "context": "decorator",
@@ -21751,7 +22115,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/milestones/milestones.controller.ts",
-      "source_location": "L71",
+      "source_location": "L79",
       "weight": 1.0,
       "context": "decorator",
       "source": "backend_src_modules_milestones_milestones_controller_milestonescontroller_add",
@@ -21773,6 +22137,17 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/milestones/milestones.controller.ts",
+      "source_location": "L40",
+      "weight": 1.0,
+      "context": "decorator",
+      "source": "backend_src_modules_milestones_milestones_controller_milestonescontroller_history",
+      "target": "backend_src_modules_milestones_milestones_controller_ts_param",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/modules/milestones/milestones.controller.ts",
       "source_location": "L25",
       "weight": 1.0,
       "context": "decorator",
@@ -21784,7 +22159,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/milestones/milestones.controller.ts",
-      "source_location": "L100",
+      "source_location": "L108",
       "weight": 1.0,
       "context": "decorator",
       "source": "backend_src_modules_milestones_milestones_controller_milestonescontroller_remove",
@@ -21795,7 +22170,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/milestones/milestones.controller.ts",
-      "source_location": "L90",
+      "source_location": "L98",
       "weight": 1.0,
       "context": "decorator",
       "source": "backend_src_modules_milestones_milestones_controller_milestonescontroller_update",
@@ -21806,7 +22181,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/milestones/milestones.controller.ts",
-      "source_location": "L37",
+      "source_location": "L45",
       "weight": 1.0,
       "context": "decorator",
       "source": "backend_src_modules_milestones_milestones_controller_milestonescontroller_add",
@@ -21817,7 +22192,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/milestones/milestones.controller.ts",
-      "source_location": "L38",
+      "source_location": "L46",
       "weight": 1.0,
       "context": "decorator",
       "source": "backend_src_modules_milestones_milestones_controller_milestonescontroller_add",
@@ -21828,7 +22203,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/milestones/milestones.controller.ts",
-      "source_location": "L79",
+      "source_location": "L87",
       "weight": 1.0,
       "context": "decorator",
       "source": "backend_src_modules_milestones_milestones_controller_milestonescontroller_update",
@@ -21839,7 +22214,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/milestones/milestones.controller.ts",
-      "source_location": "L72",
+      "source_location": "L80",
       "weight": 1.0,
       "context": "decorator",
       "source": "backend_src_modules_milestones_milestones_controller_milestonescontroller_add",
@@ -21850,7 +22225,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/milestones/milestones.controller.ts",
-      "source_location": "L91",
+      "source_location": "L99",
       "weight": 1.0,
       "context": "decorator",
       "source": "backend_src_modules_milestones_milestones_controller_milestonescontroller_update",
@@ -21861,7 +22236,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/milestones/milestones.controller.ts",
-      "source_location": "L78",
+      "source_location": "L86",
       "weight": 1.0,
       "context": "decorator",
       "source": "backend_src_modules_milestones_milestones_controller_milestonescontroller_update",
@@ -21872,7 +22247,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/milestones/milestones.controller.ts",
-      "source_location": "L97",
+      "source_location": "L105",
       "weight": 1.0,
       "context": "decorator",
       "source": "backend_src_modules_milestones_milestones_controller_milestonescontroller_remove",
@@ -21907,7 +22282,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "backend/src/modules/milestones/milestones.controller.ts",
-      "source_location": "L75",
+      "source_location": "L42",
+      "weight": 1.0,
+      "source": "backend_src_modules_milestones_milestones_controller_milestonescontroller_history",
+      "target": "backend_src_modules_milestones_milestones_service_milestonesservice_history"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backend/src/modules/milestones/milestones.controller.ts",
+      "source_location": "L83",
       "weight": 1.0,
       "source": "backend_src_modules_milestones_milestones_controller_milestonescontroller_add",
       "target": "backend_src_modules_milestones_milestones_service_milestonesservice_add"
@@ -21918,7 +22304,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "backend/src/modules/milestones/milestones.controller.ts",
-      "source_location": "L94",
+      "source_location": "L102",
       "weight": 1.0,
       "source": "backend_src_modules_milestones_milestones_controller_milestonescontroller_update",
       "target": "backend_src_modules_milestones_milestones_service_milestonesservice_update"
@@ -21929,7 +22315,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "backend/src/modules/milestones/milestones.controller.ts",
-      "source_location": "L102",
+      "source_location": "L110",
       "weight": 1.0,
       "source": "backend_src_modules_milestones_milestones_controller_milestonescontroller_remove",
       "target": "backend_src_modules_milestones_milestones_service_milestonesservice_remove"
@@ -22003,7 +22389,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/milestones/milestones.repository.ts",
-      "source_location": "L5",
+      "source_location": "L9",
       "weight": 1.0,
       "source": "backend_src_modules_milestones_milestones_repository",
       "target": "backend_src_modules_milestones_milestones_repository_milestone",
@@ -22013,7 +22399,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/milestones/milestones.repository.ts",
-      "source_location": "L24",
+      "source_location": "L28",
       "weight": 1.0,
       "source": "backend_src_modules_milestones_milestones_repository",
       "target": "backend_src_modules_milestones_milestones_repository_milestonelistitem",
@@ -22023,7 +22409,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/milestones/milestones.repository.ts",
-      "source_location": "L42",
+      "source_location": "L46",
       "weight": 1.0,
       "source": "backend_src_modules_milestones_milestones_repository",
       "target": "backend_src_modules_milestones_milestones_repository_milestonesrepository",
@@ -22045,7 +22431,7 @@
       "context": "type",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/milestones/milestones.repository.ts",
-      "source_location": "L24",
+      "source_location": "L28",
       "weight": 1.0,
       "source": "backend_src_modules_milestones_milestones_repository_milestonelistitem",
       "target": "backend_src_modules_milestones_milestones_repository_milestone",
@@ -22055,7 +22441,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/milestones/milestones.repository.ts",
-      "source_location": "L43",
+      "source_location": "L47",
       "weight": 1.0,
       "source": "backend_src_modules_milestones_milestones_repository_milestonesrepository",
       "target": "backend_src_modules_milestones_milestones_repository_milestonesrepository_constructor",
@@ -22065,7 +22451,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/milestones/milestones.repository.ts",
-      "source_location": "L81",
+      "source_location": "L100",
       "weight": 1.0,
       "source": "backend_src_modules_milestones_milestones_repository_milestonesrepository",
       "target": "backend_src_modules_milestones_milestones_repository_milestonesrepository_findbyproject",
@@ -22075,7 +22461,17 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/milestones/milestones.repository.ts",
-      "source_location": "L94",
+      "source_location": "L77",
+      "weight": 1.0,
+      "source": "backend_src_modules_milestones_milestones_repository_milestonesrepository",
+      "target": "backend_src_modules_milestones_milestones_repository_milestonesrepository_findhistory",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/modules/milestones/milestones.repository.ts",
+      "source_location": "L113",
       "weight": 1.0,
       "source": "backend_src_modules_milestones_milestones_repository_milestonesrepository",
       "target": "backend_src_modules_milestones_milestones_repository_milestonesrepository_findone",
@@ -22085,7 +22481,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/milestones/milestones.repository.ts",
-      "source_location": "L49",
+      "source_location": "L53",
       "weight": 1.0,
       "source": "backend_src_modules_milestones_milestones_repository_milestonesrepository",
       "target": "backend_src_modules_milestones_milestones_repository_milestonesrepository_insert",
@@ -22095,7 +22491,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/milestones/milestones.repository.ts",
-      "source_location": "L73",
+      "source_location": "L92",
       "weight": 1.0,
       "source": "backend_src_modules_milestones_milestones_repository_milestonesrepository",
       "target": "backend_src_modules_milestones_milestones_repository_milestonesrepository_remove",
@@ -22105,7 +22501,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/milestones/milestones.repository.ts",
-      "source_location": "L45",
+      "source_location": "L49",
       "weight": 1.0,
       "source": "backend_src_modules_milestones_milestones_repository_milestonesrepository",
       "target": "backend_src_modules_milestones_milestones_repository_milestonesrepository_table",
@@ -22115,7 +22511,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/milestones/milestones.repository.ts",
-      "source_location": "L58",
+      "source_location": "L62",
       "weight": 1.0,
       "source": "backend_src_modules_milestones_milestones_repository_milestonesrepository",
       "target": "backend_src_modules_milestones_milestones_repository_milestonesrepository_update",
@@ -22125,7 +22521,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/milestones/milestones.repository.ts",
-      "source_location": "L41",
+      "source_location": "L45",
       "weight": 1.0,
       "context": "decorator",
       "source": "backend_src_modules_milestones_milestones_repository_milestonesrepository",
@@ -22183,6 +22579,17 @@
       "confidence_score": 1.0,
       "source_file": "backend/src/modules/milestones/milestones.service.ts",
       "source_location": "L72",
+      "weight": 1.0,
+      "source": "backend_src_modules_milestones_milestones_service_milestonesservice_history",
+      "target": "backend_src_modules_milestones_milestones_repository_milestonesrepository_findhistory"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "backend/src/modules/milestones/milestones.service.ts",
+      "source_location": "L77",
       "weight": 1.0,
       "source": "backend_src_modules_milestones_milestones_service_milestonesservice_remove",
       "target": "backend_src_modules_milestones_milestones_repository_milestonesrepository_remove"
@@ -22253,6 +22660,16 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/milestones/milestones.service.ts",
+      "source_location": "L70",
+      "weight": 1.0,
+      "source": "backend_src_modules_milestones_milestones_service_milestonesservice",
+      "target": "backend_src_modules_milestones_milestones_service_milestonesservice_history",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/modules/milestones/milestones.service.ts",
       "source_location": "L10",
       "weight": 1.0,
       "source": "backend_src_modules_milestones_milestones_service_milestonesservice",
@@ -22263,7 +22680,7 @@
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/milestones/milestones.service.ts",
-      "source_location": "L70",
+      "source_location": "L75",
       "weight": 1.0,
       "source": "backend_src_modules_milestones_milestones_service_milestonesservice",
       "target": "backend_src_modules_milestones_milestones_service_milestonesservice_remove",
@@ -22296,6 +22713,17 @@
       "confidence": "EXTRACTED",
       "source_file": "backend/src/modules/milestones/milestones.service.ts",
       "source_location": "L71",
+      "weight": 1.0,
+      "source": "backend_src_modules_milestones_milestones_service_milestonesservice_history",
+      "target": "backend_src_modules_milestones_milestones_service_milestonesservice_get",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/src/modules/milestones/milestones.service.ts",
+      "source_location": "L76",
       "weight": 1.0,
       "source": "backend_src_modules_milestones_milestones_service_milestonesservice_remove",
       "target": "backend_src_modules_milestones_milestones_service_milestonesservice_get",
@@ -33026,6 +33454,176 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/RecordHistory.tsx",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "frontend_src_components_recordhistory",
+      "target": "frontend_src_components_recordhistory_initials",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/RecordHistory.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "frontend_src_components_recordhistory",
+      "target": "frontend_src_components_recordhistory_props",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/RecordHistory.tsx",
+      "source_location": "L46",
+      "weight": 1.0,
+      "source": "frontend_src_components_recordhistory",
+      "target": "frontend_src_components_recordhistory_recordhistory",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/RecordHistory.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "frontend_src_components_recordhistory",
+      "target": "frontend_src_components_recordhistory_relativetime",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/RecordHistory.tsx",
+      "source_location": "L29",
+      "weight": 1.0,
+      "source": "frontend_src_components_recordhistory",
+      "target": "frontend_src_components_recordhistory_username",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/RecordHistory.tsx",
+      "source_location": "L123",
+      "weight": 1.0,
+      "source": "frontend_src_components_recordhistory",
+      "target": "frontend_src_components_recordhistory_value",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/RecordHistory.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "frontend_src_components_recordhistory",
+      "target": "frontend_src_lib_api",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/RecordHistory.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "frontend_src_components_recordhistory",
+      "target": "frontend_src_lib_api_historyentry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/ActionItemDetailPage.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "frontend_src_pages_actionitemdetailpage",
+      "target": "frontend_src_components_recordhistory",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/MilestoneDetailPage.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "frontend_src_pages_milestonedetailpage",
+      "target": "frontend_src_components_recordhistory",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "generic_arg",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/RecordHistory.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "frontend_src_components_recordhistory_props",
+      "target": "frontend_src_lib_api_historyentry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/RecordHistory.tsx",
+      "source_location": "L100",
+      "weight": 1.0,
+      "source": "frontend_src_components_recordhistory_recordhistory",
+      "target": "frontend_src_components_recordhistory_relativetime",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/RecordHistory.tsx",
+      "source_location": "L100",
+      "weight": 1.0,
+      "source": "frontend_src_components_recordhistory_recordhistory",
+      "target": "frontend_src_components_recordhistory_username",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/components/RecordHistory.tsx",
+      "source_location": "L96",
+      "weight": 1.0,
+      "source": "frontend_src_components_recordhistory_recordhistory",
+      "target": "frontend_src_components_recordhistory_initials",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/ActionItemDetailPage.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "frontend_src_pages_actionitemdetailpage",
+      "target": "frontend_src_components_recordhistory_recordhistory",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/pages/MilestoneDetailPage.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "frontend_src_pages_milestonedetailpage",
+      "target": "frontend_src_components_recordhistory_recordhistory",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "frontend/src/components/ui/button.tsx",
       "source_location": "L43",
       "weight": 1.0,
@@ -34415,7 +35013,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L208",
+      "source_location": "L227",
       "weight": 1.0,
       "source": "frontend_src_lib_api",
       "target": "frontend_src_lib_api_actionitem",
@@ -34425,7 +35023,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L230",
+      "source_location": "L249",
       "weight": 1.0,
       "source": "frontend_src_lib_api",
       "target": "frontend_src_lib_api_actionitemcomment",
@@ -34435,7 +35033,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L202",
+      "source_location": "L221",
       "weight": 1.0,
       "source": "frontend_src_lib_api",
       "target": "frontend_src_lib_api_actionitemowner",
@@ -34445,7 +35043,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L238",
+      "source_location": "L257",
       "weight": 1.0,
       "source": "frontend_src_lib_api",
       "target": "frontend_src_lib_api_actionitemsapi",
@@ -34495,7 +35093,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L426",
+      "source_location": "L449",
       "weight": 1.0,
       "source": "frontend_src_lib_api",
       "target": "frontend_src_lib_api_apiupload",
@@ -34505,7 +35103,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L437",
+      "source_location": "L460",
       "weight": 1.0,
       "source": "frontend_src_lib_api",
       "target": "frontend_src_lib_api_attachment",
@@ -34515,7 +35113,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L453",
+      "source_location": "L476",
       "weight": 1.0,
       "source": "frontend_src_lib_api",
       "target": "frontend_src_lib_api_attachmentdetail",
@@ -34525,7 +35123,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L457",
+      "source_location": "L480",
       "weight": 1.0,
       "source": "frontend_src_lib_api",
       "target": "frontend_src_lib_api_attachmentsapi",
@@ -34565,7 +35163,17 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L321",
+      "source_location": "L183",
+      "weight": 1.0,
+      "source": "frontend_src_lib_api",
+      "target": "frontend_src_lib_api_historyentry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "frontend/src/lib/api.ts",
+      "source_location": "L344",
       "weight": 1.0,
       "source": "frontend_src_lib_api",
       "target": "frontend_src_lib_api_issue",
@@ -34575,7 +35183,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L343",
+      "source_location": "L366",
       "weight": 1.0,
       "source": "frontend_src_lib_api",
       "target": "frontend_src_lib_api_issuesapi",
@@ -34585,7 +35193,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L268",
+      "source_location": "L291",
       "weight": 1.0,
       "source": "frontend_src_lib_api",
       "target": "frontend_src_lib_api_link",
@@ -34595,7 +35203,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L281",
+      "source_location": "L304",
       "weight": 1.0,
       "source": "frontend_src_lib_api",
       "target": "frontend_src_lib_api_linksapi",
@@ -34645,7 +35253,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L178",
+      "source_location": "L193",
       "weight": 1.0,
       "source": "frontend_src_lib_api",
       "target": "frontend_src_lib_api_milestonesapi",
@@ -34705,7 +35313,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L292",
+      "source_location": "L315",
       "weight": 1.0,
       "source": "frontend_src_lib_api",
       "target": "frontend_src_lib_api_resource",
@@ -34715,7 +35323,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L304",
+      "source_location": "L327",
       "weight": 1.0,
       "source": "frontend_src_lib_api",
       "target": "frontend_src_lib_api_resourcesapi",
@@ -34735,7 +35343,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L382",
+      "source_location": "L405",
       "weight": 1.0,
       "source": "frontend_src_lib_api",
       "target": "frontend_src_lib_api_statusreport",
@@ -34745,7 +35353,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L396",
+      "source_location": "L419",
       "weight": 1.0,
       "source": "frontend_src_lib_api",
       "target": "frontend_src_lib_api_statusreportdetail",
@@ -34755,7 +35363,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L400",
+      "source_location": "L423",
       "weight": 1.0,
       "source": "frontend_src_lib_api",
       "target": "frontend_src_lib_api_statusreportsapi",
@@ -34765,7 +35373,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L354",
+      "source_location": "L377",
       "weight": 1.0,
       "source": "frontend_src_lib_api",
       "target": "frontend_src_lib_api_update",
@@ -34775,7 +35383,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L369",
+      "source_location": "L392",
       "weight": 1.0,
       "source": "frontend_src_lib_api",
       "target": "frontend_src_lib_api_updatesapi",
@@ -34993,7 +35601,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L427",
+      "source_location": "L450",
       "weight": 1.0,
       "source": "frontend_src_lib_api_apiupload",
       "target": "frontend_src_lib_api_authheader",
@@ -35048,7 +35656,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L428",
+      "source_location": "L451",
       "weight": 1.0,
       "source": "frontend_src_lib_api_apiupload",
       "target": "frontend_src_lib_api_handle",
@@ -35477,7 +36085,7 @@
       "context": "type",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L396",
+      "source_location": "L419",
       "weight": 1.0,
       "source": "frontend_src_lib_api_statusreportdetail",
       "target": "frontend_src_lib_api_statusreport",
@@ -35543,7 +36151,7 @@
       "context": "type",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/lib/api.ts",
-      "source_location": "L453",
+      "source_location": "L476",
       "weight": 1.0,
       "source": "frontend_src_lib_api_attachmentdetail",
       "target": "frontend_src_lib_api_attachment",
@@ -35820,7 +36428,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/ActionItemDetailPage.tsx",
-      "source_location": "L45",
+      "source_location": "L46",
       "weight": 1.0,
       "source": "frontend_src_pages_actionitemdetailpage",
       "target": "frontend_src_pages_actionitemdetailpage_actionitemdetailpage",
@@ -35830,7 +36438,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/ActionItemDetailPage.tsx",
-      "source_location": "L41",
+      "source_location": "L42",
       "weight": 1.0,
       "source": "frontend_src_pages_actionitemdetailpage",
       "target": "frontend_src_pages_actionitemdetailpage_commentauthor",
@@ -35840,7 +36448,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/ActionItemDetailPage.tsx",
-      "source_location": "L22",
+      "source_location": "L23",
       "weight": 1.0,
       "source": "frontend_src_pages_actionitemdetailpage",
       "target": "frontend_src_pages_actionitemdetailpage_field",
@@ -35850,7 +36458,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/ActionItemDetailPage.tsx",
-      "source_location": "L32",
+      "source_location": "L33",
       "weight": 1.0,
       "source": "frontend_src_pages_actionitemdetailpage",
       "target": "frontend_src_pages_actionitemdetailpage_ownerslabel",
@@ -35860,7 +36468,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/ActionItemDetailPage.tsx",
-      "source_location": "L13",
+      "source_location": "L14",
       "weight": 1.0,
       "source": "frontend_src_pages_actionitemdetailpage",
       "target": "frontend_src_pages_actionitemdetailpage_status_labels",
@@ -35870,7 +36478,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/ActionItemDetailPage.tsx",
-      "source_location": "L20",
+      "source_location": "L21",
       "weight": 1.0,
       "source": "frontend_src_pages_actionitemdetailpage",
       "target": "frontend_src_pages_actionitemdetailpage_tab",
@@ -35880,7 +36488,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/ActionItemDetailPage.tsx",
-      "source_location": "L19",
+      "source_location": "L20",
       "weight": 1.0,
       "source": "frontend_src_pages_actionitemdetailpage",
       "target": "frontend_src_pages_actionitemdetailpage_tabs",
@@ -35891,7 +36499,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/ActionItemDetailPage.tsx",
-      "source_location": "L165",
+      "source_location": "L166",
       "weight": 1.0,
       "source": "frontend_src_pages_actionitemdetailpage_actionitemdetailpage",
       "target": "frontend_src_pages_actionitemdetailpage_ownerslabel",
@@ -35902,7 +36510,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/ActionItemDetailPage.tsx",
-      "source_location": "L223",
+      "source_location": "L224",
       "weight": 1.0,
       "source": "frontend_src_pages_actionitemdetailpage_actionitemdetailpage",
       "target": "frontend_src_pages_actionitemdetailpage_commentauthor",
@@ -36337,7 +36945,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/MilestoneDetailPage.tsx",
-      "source_location": "L75",
+      "source_location": "L76",
       "weight": 1.0,
       "source": "frontend_src_pages_milestonedetailpage",
       "target": "frontend_src_pages_milestonedetailpage_auditline",
@@ -36347,7 +36955,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/MilestoneDetailPage.tsx",
-      "source_location": "L83",
+      "source_location": "L84",
       "weight": 1.0,
       "source": "frontend_src_pages_milestonedetailpage",
       "target": "frontend_src_pages_milestonedetailpage_field",
@@ -36357,7 +36965,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/MilestoneDetailPage.tsx",
-      "source_location": "L36",
+      "source_location": "L37",
       "weight": 1.0,
       "source": "frontend_src_pages_milestonedetailpage",
       "target": "frontend_src_pages_milestonedetailpage_formatlongdate",
@@ -36367,7 +36975,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/MilestoneDetailPage.tsx",
-      "source_location": "L93",
+      "source_location": "L94",
       "weight": 1.0,
       "source": "frontend_src_pages_milestonedetailpage",
       "target": "frontend_src_pages_milestonedetailpage_milestonedetailpage",
@@ -36377,7 +36985,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/MilestoneDetailPage.tsx",
-      "source_location": "L31",
+      "source_location": "L32",
       "weight": 1.0,
       "source": "frontend_src_pages_milestonedetailpage",
       "target": "frontend_src_pages_milestonedetailpage_months",
@@ -36387,7 +36995,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/MilestoneDetailPage.tsx",
-      "source_location": "L66",
+      "source_location": "L67",
       "weight": 1.0,
       "source": "frontend_src_pages_milestonedetailpage",
       "target": "frontend_src_pages_milestonedetailpage_ownerlabel",
@@ -36397,7 +37005,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/MilestoneDetailPage.tsx",
-      "source_location": "L60",
+      "source_location": "L61",
       "weight": 1.0,
       "source": "frontend_src_pages_milestonedetailpage",
       "target": "frontend_src_pages_milestonedetailpage_profilename",
@@ -36407,7 +37015,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/MilestoneDetailPage.tsx",
-      "source_location": "L44",
+      "source_location": "L45",
       "weight": 1.0,
       "source": "frontend_src_pages_milestonedetailpage",
       "target": "frontend_src_pages_milestonedetailpage_relativetime",
@@ -36417,7 +37025,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/MilestoneDetailPage.tsx",
-      "source_location": "L14",
+      "source_location": "L15",
       "weight": 1.0,
       "source": "frontend_src_pages_milestonedetailpage",
       "target": "frontend_src_pages_milestonedetailpage_status_labels",
@@ -36427,7 +37035,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/MilestoneDetailPage.tsx",
-      "source_location": "L26",
+      "source_location": "L27",
       "weight": 1.0,
       "source": "frontend_src_pages_milestonedetailpage",
       "target": "frontend_src_pages_milestonedetailpage_tab",
@@ -36437,7 +37045,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/MilestoneDetailPage.tsx",
-      "source_location": "L20",
+      "source_location": "L21",
       "weight": 1.0,
       "source": "frontend_src_pages_milestonedetailpage",
       "target": "frontend_src_pages_milestonedetailpage_tabs",
@@ -36447,7 +37055,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/MilestoneDetailPage.tsx",
-      "source_location": "L28",
+      "source_location": "L29",
       "weight": 1.0,
       "source": "frontend_src_pages_milestonedetailpage",
       "target": "frontend_src_pages_milestonedetailpage_weekdays",
@@ -36458,7 +37066,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/MilestoneDetailPage.tsx",
-      "source_location": "L199",
+      "source_location": "L200",
       "weight": 1.0,
       "source": "frontend_src_pages_milestonedetailpage_milestonedetailpage",
       "target": "frontend_src_pages_milestonedetailpage_formatlongdate",
@@ -36469,7 +37077,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/MilestoneDetailPage.tsx",
-      "source_location": "L80",
+      "source_location": "L81",
       "weight": 1.0,
       "source": "frontend_src_pages_milestonedetailpage_auditline",
       "target": "frontend_src_pages_milestonedetailpage_relativetime",
@@ -36480,7 +37088,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/MilestoneDetailPage.tsx",
-      "source_location": "L80",
+      "source_location": "L81",
       "weight": 1.0,
       "source": "frontend_src_pages_milestonedetailpage_auditline",
       "target": "frontend_src_pages_milestonedetailpage_profilename",
@@ -36491,7 +37099,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/MilestoneDetailPage.tsx",
-      "source_location": "L209",
+      "source_location": "L210",
       "weight": 1.0,
       "source": "frontend_src_pages_milestonedetailpage_milestonedetailpage",
       "target": "frontend_src_pages_milestonedetailpage_ownerlabel",
@@ -36502,7 +37110,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/MilestoneDetailPage.tsx",
-      "source_location": "L215",
+      "source_location": "L216",
       "weight": 1.0,
       "source": "frontend_src_pages_milestonedetailpage_milestonedetailpage",
       "target": "frontend_src_pages_milestonedetailpage_auditline",
@@ -38047,5 +38655,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "53076402c6bd054e7177f18ec718210ccba5e780"
+  "built_at_commit": "269bc6262bbb1e6c776f8ae1aae7c3a2bce54715"
 }

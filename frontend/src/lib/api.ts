@@ -175,9 +175,28 @@ export interface MilestoneDetail extends Milestone {
   updated_by_profile?: { full_name: string | null; email: string | null } | null
 }
 
+/**
+ * One field-level change (or the record's creation). old_value / new_value are
+ * already display-ready text — the DB trigger resolves FKs to names and formats
+ * dates at write time, so an entry shows what the value WAS at the time.
+ */
+export interface HistoryEntry {
+  id: string
+  event: 'created' | 'changed'
+  field_label: string | null
+  old_value: string | null
+  new_value: string | null
+  changed_at: string
+  actor: { full_name: string | null; email: string | null } | null
+}
+
 export const milestonesApi = {
   list: (projectId: string) =>
     apiGet<Milestone[]>(`/projects/${projectId}/milestones`),
+  history: (projectId: string, milestoneId: string) =>
+    apiGet<HistoryEntry[]>(
+      `/projects/${projectId}/milestones/${milestoneId}/history`,
+    ),
   get: (projectId: string, milestoneId: string) =>
     apiGet<MilestoneDetail>(
       `/projects/${projectId}/milestones/${milestoneId}`,
@@ -250,6 +269,10 @@ export const actionItemsApi = {
     apiPatch<ActionItem>(
       `/projects/${projectId}/action-items/${actionItemId}`,
       data,
+    ),
+  history: (projectId: string, actionItemId: string) =>
+    apiGet<HistoryEntry[]>(
+      `/projects/${projectId}/action-items/${actionItemId}/history`,
     ),
   remove: (projectId: string, actionItemId: string) =>
     apiDelete<{ deleted: boolean }>(

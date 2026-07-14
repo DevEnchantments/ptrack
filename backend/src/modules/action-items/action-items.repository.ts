@@ -1,6 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../../database/database.service';
 import { toHttpException } from '../../common/supabase-error';
+import {
+  HISTORY_SELECT,
+  type HistoryEntry,
+} from '../../common/record-history';
 
 export interface ActionItem {
   id: string;
@@ -78,6 +82,21 @@ export class ActionItemsRepository {
       .single();
     if (error) throw toHttpException(error, 'actionItems.update');
     return data;
+  }
+
+  async findHistory(
+    projectId: string,
+    actionItemId: string,
+  ): Promise<HistoryEntry[]> {
+    const { data, error } = await this.db.client
+      .from('record_history')
+      .select(HISTORY_SELECT)
+      .eq('table_name', 'action_items')
+      .eq('project_id', projectId)
+      .eq('record_id', actionItemId)
+      .order('changed_at', { ascending: false });
+    if (error) throw toHttpException(error, 'actionItems.findHistory');
+    return (data ?? []) as unknown as HistoryEntry[];
   }
 
   async remove(projectId: string, actionItemId: string): Promise<void> {

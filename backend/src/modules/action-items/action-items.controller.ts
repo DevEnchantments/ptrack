@@ -35,6 +35,14 @@ export class ActionItemsController {
     return this.actionItems.get(projectId, actionItemId);
   }
 
+  @Get(':actionItemId/history')
+  history(
+    @Param('projectId', ParseUUIDPipe) projectId: string,
+    @Param('actionItemId', ParseUUIDPipe) actionItemId: string,
+  ) {
+    return this.actionItems.history(projectId, actionItemId);
+  }
+
   @Get(':actionItemId/comments')
   listComments(
     @Param('projectId', ParseUUIDPipe) projectId: string,

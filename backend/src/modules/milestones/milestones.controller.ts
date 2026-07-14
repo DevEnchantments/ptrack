@@ -34,6 +34,14 @@ export class MilestonesController {
     return this.milestones.get(projectId, milestoneId);
   }
 
+  @Get(':milestoneId/history')
+  history(
+    @Param('projectId', ParseUUIDPipe) projectId: string,
+    @Param('milestoneId', ParseUUIDPipe) milestoneId: string,
+  ) {
+    return this.milestones.history(projectId, milestoneId);
+  }
+
   @Post()
   @ApiBody({
     type: CreateMilestoneDto,

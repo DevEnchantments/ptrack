@@ -73,6 +73,11 @@ export class ActionItemsService {
     return this.get(projectId, actionItemId);
   }
 
+  async history(projectId: string, actionItemId: string) {
+    await this.get(projectId, actionItemId); // 404 if not in this project
+    return this.repo.findHistory(projectId, actionItemId);
+  }
+
   async remove(projectId: string, actionItemId: string) {
     await this.get(projectId, actionItemId); // 404 if not in this project
     await this.repo.remove(projectId, actionItemId);

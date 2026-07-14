@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { AddActionItemDialog } from '@/components/AddActionItemDialog'
 import { MiniCalendar } from '@/components/MiniCalendar'
+import { RecordHistory } from '@/components/RecordHistory'
 
 const STATUS_LABELS: Record<string, string> = {
   open: 'Open',
@@ -236,9 +237,11 @@ export function ActionItemDetailPage() {
         {showHistory && (
           <section className="mt-6">
             <h2 className="mb-3 text-lg font-semibold">History</h2>
-            <div className="rounded-md border p-6 text-sm text-muted-foreground">
-              History coming in a later step.
-            </div>
+            <RecordHistory
+              recordNoun="action item"
+              refreshKey={item.updated_at}
+              load={() => actionItemsApi.history(projectId!, actionItemId!)}
+            />
           </section>
         )}
         </div>

@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button'
 import { AddMilestoneDialog } from '@/components/AddMilestoneDialog'
 import { AddActionItemDialog } from '@/components/AddActionItemDialog'
 import { MiniCalendar } from '@/components/MiniCalendar'
+import { RecordHistory } from '@/components/RecordHistory'
 
 const STATUS_LABELS: Record<string, string> = {
   open: 'Open',
@@ -322,9 +323,11 @@ export function MilestoneDetailPage() {
         {showHistory && (
           <section className="mt-6">
             <h2 className="mb-3 text-lg font-semibold">History</h2>
-            <div className="rounded-md border p-6 text-sm text-muted-foreground">
-              No updates.
-            </div>
+            <RecordHistory
+              recordNoun="milestone"
+              refreshKey={milestone.updated_at}
+              load={() => milestonesApi.history(projectId!, milestoneId!)}
+            />
           </section>
         )}
         </div>

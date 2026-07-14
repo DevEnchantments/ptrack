@@ -67,6 +67,11 @@ export class MilestonesService {
     return this.get(projectId, milestoneId);
   }
 
+  async history(projectId: string, milestoneId: string) {
+    await this.get(projectId, milestoneId); // 404 if not in this project
+    return this.repo.findHistory(projectId, milestoneId);
+  }
+
   async remove(projectId: string, milestoneId: string) {
     await this.get(projectId, milestoneId); // 404 if not in this project
     await this.repo.remove(projectId, milestoneId);

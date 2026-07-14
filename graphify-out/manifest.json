@@ -80,8 +80,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/action-items/action-items.controller.ts": {
-    "mtime": 1783942248.549218,
-    "ast_hash": "5893638e13ec9deb2fcdefda6ec91207",
+    "mtime": 1784002651.740544,
+    "ast_hash": "ba76e7c57e61c4511bcbecf643b309f5",
     "semantic_hash": ""
   },
   "backend/src/modules/action-items/action-items.module.ts": {
@@ -90,13 +90,13 @@
     "semantic_hash": ""
   },
   "backend/src/modules/action-items/action-items.repository.ts": {
-    "mtime": 1783942248.549218,
-    "ast_hash": "6d8f5321a7f939e25c1f3b420a2cbb82",
+    "mtime": 1784002646.7915597,
+    "ast_hash": "88f3689e2275f7bbeae12895d46599d9",
     "semantic_hash": ""
   },
   "backend/src/modules/action-items/action-items.service.ts": {
-    "mtime": 1783942248.549218,
-    "ast_hash": "d82b23bb682ff15bf0d3ad980fc5ce7a",
+    "mtime": 1784002649.6986833,
+    "ast_hash": "60f0ac186ec2a9237c74b1a0c5ce5afc",
     "semantic_hash": ""
   },
   "backend/src/modules/action-items/dto/create-action-item.dto.ts": {
@@ -225,8 +225,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/milestones/milestones.controller.ts": {
-    "mtime": 1783942248.549218,
-    "ast_hash": "a3add555cd0844e1a7c3d28a6dd3077a",
+    "mtime": 1784002592.849687,
+    "ast_hash": "609ec1aa8400239689a45c8a96da4311",
     "semantic_hash": ""
   },
   "backend/src/modules/milestones/milestones.module.ts": {
@@ -235,13 +235,13 @@
     "semantic_hash": ""
   },
   "backend/src/modules/milestones/milestones.repository.ts": {
-    "mtime": 1783942248.549218,
-    "ast_hash": "54df8e6b802feb1cad2cac01cf88df7f",
+    "mtime": 1784002615.5782008,
+    "ast_hash": "b341ade5cf89058e61616ada6e9158d1",
     "semantic_hash": ""
   },
   "backend/src/modules/milestones/milestones.service.ts": {
-    "mtime": 1783942248.549218,
-    "ast_hash": "e61a7f99ad93d5adac858cec2c1bab0f",
+    "mtime": 1784002618.3931177,
+    "ast_hash": "5b5a6791b2c983867392f235d6cd5240",
     "semantic_hash": ""
   },
   "backend/src/modules/people/dto/create-person.dto.ts": {
@@ -555,8 +555,8 @@
     "semantic_hash": "69ec66b8dde852cc89c1217075253d87"
   },
   "frontend/src/lib/api.ts": {
-    "mtime": 1783944892.6451678,
-    "ast_hash": "c66b2ee7aed78adc0a0ff64937673ddd",
+    "mtime": 1784002888.8399765,
+    "ast_hash": "6ea9701a24628dd8b8dea3feb133cff6",
     "semantic_hash": ""
   },
   "frontend/src/lib/auth-context.tsx": {
@@ -580,9 +580,9 @@
     "semantic_hash": "d88c14dc26ec9edc991af54dfd7f375d"
   },
   "frontend/src/pages/ActionItemDetailPage.tsx": {
-    "mtime": 1783510013.7923155,
-    "ast_hash": "879223eb96842a619c7d42ef6bc36f22",
-    "semantic_hash": "879223eb96842a619c7d42ef6bc36f22"
+    "mtime": 1784002975.6917756,
+    "ast_hash": "45d62f39629356a3b2538769e497351e",
+    "semantic_hash": ""
   },
   "frontend/src/pages/AttachmentDetailPage.tsx": {
     "mtime": 1783717747.3513415,
@@ -605,9 +605,9 @@
     "semantic_hash": "78a8624718bac076a92a2145a6ee4393"
   },
   "frontend/src/pages/MilestoneDetailPage.tsx": {
-    "mtime": 1783510841.074719,
-    "ast_hash": "0a8771195dc696e9aa6e8f1c0abee85e",
-    "semantic_hash": "0a8771195dc696e9aa6e8f1c0abee85e"
+    "mtime": 1784002953.4642177,
+    "ast_hash": "d3cfad1220c35246b9965625ab6fbcd9",
+    "semantic_hash": ""
   },
   "frontend/src/pages/ProjectDetailPage.tsx": {
     "mtime": 1783946183.9419403,
@@ -722,6 +722,21 @@
   "frontend/src/components/ConfirmDeleteButton.tsx": {
     "mtime": 1783946066.3757365,
     "ast_hash": "9ec88c8cfe0c2680b46719ba6a76f0ed",
+    "semantic_hash": ""
+  },
+  "backend/db/record_history.sql": {
+    "mtime": 1784002551.4484909,
+    "ast_hash": "88a3436ea7dfccdbac7d18bbc7d9b429",
+    "semantic_hash": ""
+  },
+  "backend/src/common/record-history.ts": {
+    "mtime": 1784002577.4784698,
+    "ast_hash": "d862d787f3de348597e7053d9c995c06",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/RecordHistory.tsx": {
+    "mtime": 1784003217.4407647,
+    "ast_hash": "8d2e2585c7673c1f22072a728c5e53bf",
     "semantic_hash": ""
   }
 }
