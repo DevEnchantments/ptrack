@@ -19,8 +19,11 @@ describe('ActionItemsService owner-diff history', () => {
     profile: { full_name: name, email: `${name}@x.com` },
   });
 
+  // Mocks are kept as locals and asserted on directly — asserting on
+  // `repo.method` would be a method reference on the typed class, which trips
+  // @typescript-eslint/unbound-method.
   function build(beforeOwners: unknown[], afterOwners: unknown[]) {
-    const repo = {
+    const mocks = {
       findOne: jest
         .fn()
         .mockResolvedValueOnce({ id: ITEM, title: 'T', owners: beforeOwners })
@@ -29,22 +32,23 @@ describe('ActionItemsService owner-diff history', () => {
       deleteOwners: jest.fn().mockResolvedValue(undefined),
       insertOwners: jest.fn().mockResolvedValue(undefined),
       insertHistory: jest.fn().mockResolvedValue(undefined),
-    } as unknown as ActionItemsRepository;
+    };
+    const repo = mocks as unknown as ActionItemsRepository;
     const auditLog = {
       logDeleted: jest.fn().mockResolvedValue(undefined),
     } as unknown as RecordHistoryService;
-    return { service: new ActionItemsService(repo, auditLog), repo };
+    return { service: new ActionItemsService(repo, auditLog), mocks };
   }
 
   it('logs one Owners entry when the set changes', async () => {
-    const { service, repo } = build(
+    const { service, mocks } = build(
       [owner(1, 'Dana')],
       [owner(1, 'Dana'), owner(2, 'Sam')],
     );
     await service.update(PROJECT, ITEM, { owner_ids: ['x', 'y'] }, USER);
 
-    expect(repo.insertHistory).toHaveBeenCalledTimes(1);
-    expect(repo.insertHistory).toHaveBeenCalledWith(
+    expect(mocks.insertHistory).toHaveBeenCalledTimes(1);
+    expect(mocks.insertHistory).toHaveBeenCalledWith(
       expect.objectContaining({
         field_label: 'Owners',
         old_value: 'Dana',
@@ -55,31 +59,31 @@ describe('ActionItemsService owner-diff history', () => {
   });
 
   it('logs nothing when the same set is re-saved', async () => {
-    const { service, repo } = build([owner(1, 'Dana')], [owner(1, 'Dana')]);
+    const { service, mocks } = build([owner(1, 'Dana')], [owner(1, 'Dana')]);
     await service.update(PROJECT, ITEM, { owner_ids: ['x'] }, USER);
 
     // The join rows were still replaced (that is how saves work here)…
-    expect(repo.deleteOwners).toHaveBeenCalled();
+    expect(mocks.deleteOwners).toHaveBeenCalled();
     // …but no history was fabricated for an unchanged set.
-    expect(repo.insertHistory).not.toHaveBeenCalled();
+    expect(mocks.insertHistory).not.toHaveBeenCalled();
   });
 
   it('does not touch owners at all when owner_ids is not in the patch', async () => {
-    const { service, repo } = build([owner(1, 'Dana')], [owner(1, 'Dana')]);
+    const { service, mocks } = build([owner(1, 'Dana')], [owner(1, 'Dana')]);
     await service.update(PROJECT, ITEM, { title: 'New title' }, USER);
 
-    expect(repo.deleteOwners).not.toHaveBeenCalled();
-    expect(repo.insertOwners).not.toHaveBeenCalled();
-    expect(repo.insertHistory).not.toHaveBeenCalled();
+    expect(mocks.deleteOwners).not.toHaveBeenCalled();
+    expect(mocks.insertOwners).not.toHaveBeenCalled();
+    expect(mocks.insertHistory).not.toHaveBeenCalled();
   });
 
   it('compares owners in slot order, not array order', async () => {
-    const { service, repo } = build(
+    const { service, mocks } = build(
       [owner(2, 'Sam'), owner(1, 'Dana')],
       [owner(1, 'Dana'), owner(2, 'Sam')],
     );
     await service.update(PROJECT, ITEM, { owner_ids: ['x', 'y'] }, USER);
 
-    expect(repo.insertHistory).not.toHaveBeenCalled();
+    expect(mocks.insertHistory).not.toHaveBeenCalled();
   });
 });

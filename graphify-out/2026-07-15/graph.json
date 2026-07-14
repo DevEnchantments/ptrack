@@ -4,124 +4,14 @@
   "graph": {},
   "nodes": [
     {
-      "label": "CLAUDE.md",
-      "file_type": "document",
-      "source_file": "CLAUDE.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "claude",
-      "community": 57,
-      "norm_label": "claude.md"
-    },
-    {
-      "label": "CLAUDE.md \u2014 P-Track",
-      "file_type": "document",
-      "source_file": "CLAUDE.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "claude_claude_md_p_track",
-      "community": 57,
-      "norm_label": "claude.md \u2014 p-track"
-    },
-    {
-      "label": "What this project is",
-      "file_type": "document",
-      "source_file": "CLAUDE.md",
-      "source_location": "L6",
-      "_origin": "ast",
-      "id": "claude_what_this_project_is",
-      "community": 57,
-      "norm_label": "what this project is"
-    },
-    {
-      "label": "Tech stack",
-      "file_type": "document",
-      "source_file": "CLAUDE.md",
-      "source_location": "L20",
-      "_origin": "ast",
-      "id": "claude_tech_stack",
-      "community": 57,
-      "norm_label": "tech stack"
-    },
-    {
-      "label": "Hard architectural rules (do not violate)",
-      "file_type": "document",
-      "source_file": "CLAUDE.md",
-      "source_location": "L26",
-      "_origin": "ast",
-      "id": "claude_hard_architectural_rules_do_not_violate",
-      "community": 57,
-      "norm_label": "hard architectural rules (do not violate)"
-    },
-    {
-      "label": "Repo & environment",
-      "file_type": "document",
-      "source_file": "CLAUDE.md",
-      "source_location": "L36",
-      "_origin": "ast",
-      "id": "claude_repo_environment",
-      "community": 57,
-      "norm_label": "repo & environment"
-    },
-    {
-      "label": "Current state \u2014 Phase 1 complete (full CRUD)",
-      "file_type": "document",
-      "source_file": "CLAUDE.md",
-      "source_location": "L47",
-      "_origin": "ast",
-      "id": "claude_current_state_phase_1_complete_full_crud",
-      "community": 57,
-      "norm_label": "current state \u2014 phase 1 complete (full crud)"
-    },
-    {
-      "label": "Roadmap \u2014 deferred to Phase 2+",
-      "file_type": "document",
-      "source_file": "CLAUDE.md",
-      "source_location": "L94",
-      "_origin": "ast",
-      "id": "claude_roadmap_deferred_to_phase_2",
-      "community": 57,
-      "norm_label": "roadmap \u2014 deferred to phase 2+"
-    },
-    {
-      "label": "How I like to work \u2014 follow precisely",
-      "file_type": "document",
-      "source_file": "CLAUDE.md",
-      "source_location": "L116",
-      "_origin": "ast",
-      "id": "claude_how_i_like_to_work_follow_precisely",
-      "community": 57,
-      "norm_label": "how i like to work \u2014 follow precisely"
-    },
-    {
-      "label": "Known gotchas \u2014 carry these forward",
-      "file_type": "document",
-      "source_file": "CLAUDE.md",
-      "source_location": "L130",
-      "_origin": "ast",
-      "id": "claude_known_gotchas_carry_these_forward",
-      "community": 57,
-      "norm_label": "known gotchas \u2014 carry these forward"
-    },
-    {
-      "label": "graphify",
-      "file_type": "document",
-      "source_file": "CLAUDE.md",
-      "source_location": "L167",
-      "_origin": "ast",
-      "id": "claude_graphify",
-      "community": 57,
-      "norm_label": "graphify"
-    },
-    {
       "label": "package.json",
       "file_type": "code",
       "source_file": "backend/package.json",
       "source_location": "L1",
       "_origin": "ast",
+      "id": "backend_package",
       "community": 41,
-      "norm_label": "package.json",
-      "id": "backend_package"
+      "norm_label": "package.json"
     },
     {
       "label": "name",
@@ -129,9 +19,9 @@
       "source_file": "backend/package.json",
       "source_location": "L2",
       "_origin": "ast",
+      "id": "backend_package_name",
       "community": 41,
-      "norm_label": "name",
-      "id": "backend_package_name"
+      "norm_label": "name"
     },
     {
       "label": "version",
@@ -139,9 +29,9 @@
       "source_file": "backend/package.json",
       "source_location": "L3",
       "_origin": "ast",
+      "id": "backend_package_version",
       "community": 41,
-      "norm_label": "version",
-      "id": "backend_package_version"
+      "norm_label": "version"
     },
     {
       "label": "description",
@@ -149,9 +39,9 @@
       "source_file": "backend/package.json",
       "source_location": "L4",
       "_origin": "ast",
+      "id": "backend_package_description",
       "community": 41,
-      "norm_label": "description",
-      "id": "backend_package_description"
+      "norm_label": "description"
     },
     {
       "label": "author",
@@ -159,9 +49,9 @@
       "source_file": "backend/package.json",
       "source_location": "L5",
       "_origin": "ast",
+      "id": "backend_package_author",
       "community": 41,
-      "norm_label": "author",
-      "id": "backend_package_author"
+      "norm_label": "author"
     },
     {
       "label": "private",
@@ -169,9 +59,9 @@
       "source_file": "backend/package.json",
       "source_location": "L6",
       "_origin": "ast",
+      "id": "backend_package_private",
       "community": 41,
-      "norm_label": "private",
-      "id": "backend_package_private"
+      "norm_label": "private"
     },
     {
       "label": "license",
@@ -179,9 +69,9 @@
       "source_file": "backend/package.json",
       "source_location": "L7",
       "_origin": "ast",
+      "id": "backend_package_license",
       "community": 41,
-      "norm_label": "license",
-      "id": "backend_package_license"
+      "norm_label": "license"
     },
     {
       "label": "scripts",
@@ -189,9 +79,9 @@
       "source_file": "backend/package.json",
       "source_location": "L8",
       "_origin": "ast",
+      "id": "backend_package_scripts",
       "community": 30,
-      "norm_label": "scripts",
-      "id": "backend_package_scripts"
+      "norm_label": "scripts"
     },
     {
       "label": "dev",
@@ -199,9 +89,9 @@
       "source_file": "backend/package.json",
       "source_location": "L9",
       "_origin": "ast",
+      "id": "backend_package_scripts_dev",
       "community": 30,
-      "norm_label": "dev",
-      "id": "backend_package_scripts_dev"
+      "norm_label": "dev"
     },
     {
       "label": "build",
@@ -209,9 +99,9 @@
       "source_file": "backend/package.json",
       "source_location": "L10",
       "_origin": "ast",
+      "id": "backend_package_scripts_build",
       "community": 30,
-      "norm_label": "build",
-      "id": "backend_package_scripts_build"
+      "norm_label": "build"
     },
     {
       "label": "format",
@@ -219,9 +109,9 @@
       "source_file": "backend/package.json",
       "source_location": "L11",
       "_origin": "ast",
+      "id": "backend_package_scripts_format",
       "community": 30,
-      "norm_label": "format",
-      "id": "backend_package_scripts_format"
+      "norm_label": "format"
     },
     {
       "label": "start",
@@ -229,9 +119,9 @@
       "source_file": "backend/package.json",
       "source_location": "L12",
       "_origin": "ast",
+      "id": "backend_package_scripts_start",
       "community": 30,
-      "norm_label": "start",
-      "id": "backend_package_scripts_start"
+      "norm_label": "start"
     },
     {
       "label": "start:dev",
@@ -239,9 +129,9 @@
       "source_file": "backend/package.json",
       "source_location": "L13",
       "_origin": "ast",
+      "id": "backend_package_scripts_start_dev",
       "community": 30,
-      "norm_label": "start:dev",
-      "id": "backend_package_scripts_start_dev"
+      "norm_label": "start:dev"
     },
     {
       "label": "start:debug",
@@ -249,9 +139,9 @@
       "source_file": "backend/package.json",
       "source_location": "L14",
       "_origin": "ast",
+      "id": "backend_package_scripts_start_debug",
       "community": 30,
-      "norm_label": "start:debug",
-      "id": "backend_package_scripts_start_debug"
+      "norm_label": "start:debug"
     },
     {
       "label": "start:prod",
@@ -259,9 +149,9 @@
       "source_file": "backend/package.json",
       "source_location": "L15",
       "_origin": "ast",
+      "id": "backend_package_scripts_start_prod",
       "community": 30,
-      "norm_label": "start:prod",
-      "id": "backend_package_scripts_start_prod"
+      "norm_label": "start:prod"
     },
     {
       "label": "lint",
@@ -269,9 +159,9 @@
       "source_file": "backend/package.json",
       "source_location": "L16",
       "_origin": "ast",
+      "id": "backend_package_scripts_lint",
       "community": 30,
-      "norm_label": "lint",
-      "id": "backend_package_scripts_lint"
+      "norm_label": "lint"
     },
     {
       "label": "test",
@@ -279,9 +169,9 @@
       "source_file": "backend/package.json",
       "source_location": "L17",
       "_origin": "ast",
+      "id": "backend_package_scripts_test",
       "community": 30,
-      "norm_label": "test",
-      "id": "backend_package_scripts_test"
+      "norm_label": "test"
     },
     {
       "label": "test:watch",
@@ -289,9 +179,9 @@
       "source_file": "backend/package.json",
       "source_location": "L18",
       "_origin": "ast",
+      "id": "backend_package_scripts_test_watch",
       "community": 30,
-      "norm_label": "test:watch",
-      "id": "backend_package_scripts_test_watch"
+      "norm_label": "test:watch"
     },
     {
       "label": "test:cov",
@@ -299,9 +189,9 @@
       "source_file": "backend/package.json",
       "source_location": "L19",
       "_origin": "ast",
+      "id": "backend_package_scripts_test_cov",
       "community": 30,
-      "norm_label": "test:cov",
-      "id": "backend_package_scripts_test_cov"
+      "norm_label": "test:cov"
     },
     {
       "label": "test:debug",
@@ -309,9 +199,9 @@
       "source_file": "backend/package.json",
       "source_location": "L20",
       "_origin": "ast",
+      "id": "backend_package_scripts_test_debug",
       "community": 30,
-      "norm_label": "test:debug",
-      "id": "backend_package_scripts_test_debug"
+      "norm_label": "test:debug"
     },
     {
       "label": "test:e2e",
@@ -319,9 +209,9 @@
       "source_file": "backend/package.json",
       "source_location": "L21",
       "_origin": "ast",
+      "id": "backend_package_scripts_test_e2e",
       "community": 30,
-      "norm_label": "test:e2e",
-      "id": "backend_package_scripts_test_e2e"
+      "norm_label": "test:e2e"
     },
     {
       "label": "dependencies",
@@ -329,9 +219,9 @@
       "source_file": "backend/package.json",
       "source_location": "L23",
       "_origin": "ast",
+      "id": "backend_package_dependencies",
       "community": 25,
-      "norm_label": "dependencies",
-      "id": "backend_package_dependencies"
+      "norm_label": "dependencies"
     },
     {
       "label": "@nestjs/common",
@@ -339,9 +229,9 @@
       "source_file": "backend/package.json",
       "source_location": "L24",
       "_origin": "ast",
+      "id": "backend_package_dependencies_nestjs_common",
       "community": 25,
-      "norm_label": "@nestjs/common",
-      "id": "backend_package_dependencies_nestjs_common"
+      "norm_label": "@nestjs/common"
     },
     {
       "label": "@nestjs/common",
@@ -349,49 +239,49 @@
       "source_file": "backend/package.json",
       "source_location": "L24",
       "_origin": "ast",
+      "id": "nestjs_common",
       "community": 25,
-      "norm_label": "@nestjs/common",
-      "id": "nestjs_common"
+      "norm_label": "@nestjs/common"
+    },
+    {
+      "label": "@nestjs/config",
+      "file_type": "code",
+      "source_file": "backend/package.json",
+      "source_location": "L25",
+      "_origin": "ast",
+      "id": "backend_package_dependencies_nestjs_config",
+      "community": 40,
+      "norm_label": "@nestjs/config"
+    },
+    {
+      "label": "@nestjs/config",
+      "file_type": "concept",
+      "source_file": "backend/package.json",
+      "source_location": "L25",
+      "_origin": "ast",
+      "id": "nestjs_config",
+      "community": 40,
+      "norm_label": "@nestjs/config"
     },
     {
       "label": "@nestjs/core",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L25",
+      "source_location": "L26",
       "_origin": "ast",
+      "id": "backend_package_dependencies_nestjs_core",
       "community": 25,
-      "norm_label": "@nestjs/core",
-      "id": "backend_package_dependencies_nestjs_core"
+      "norm_label": "@nestjs/core"
     },
     {
       "label": "@nestjs/core",
       "file_type": "concept",
       "source_file": "backend/package.json",
-      "source_location": "L25",
-      "_origin": "ast",
-      "community": 25,
-      "norm_label": "@nestjs/core",
-      "id": "nestjs_core"
-    },
-    {
-      "label": "@nestjs/mapped-types",
-      "file_type": "code",
-      "source_file": "backend/package.json",
       "source_location": "L26",
       "_origin": "ast",
+      "id": "nestjs_core",
       "community": 25,
-      "norm_label": "@nestjs/mapped-types",
-      "id": "backend_package_dependencies_nestjs_mapped_types"
-    },
-    {
-      "label": "@nestjs/mapped-types",
-      "file_type": "concept",
-      "source_file": "backend/package.json",
-      "source_location": "L26",
-      "_origin": "ast",
-      "community": 25,
-      "norm_label": "@nestjs/mapped-types",
-      "id": "nestjs_mapped_types"
+      "norm_label": "@nestjs/core"
     },
     {
       "label": "@nestjs/platform-express",
@@ -399,9 +289,9 @@
       "source_file": "backend/package.json",
       "source_location": "L27",
       "_origin": "ast",
+      "id": "backend_package_dependencies_nestjs_platform_express",
       "community": 25,
-      "norm_label": "@nestjs/platform-express",
-      "id": "backend_package_dependencies_nestjs_platform_express"
+      "norm_label": "@nestjs/platform-express"
     },
     {
       "label": "@nestjs/platform-express",
@@ -409,9 +299,9 @@
       "source_file": "backend/package.json",
       "source_location": "L27",
       "_origin": "ast",
+      "id": "nestjs_platform_express",
       "community": 25,
-      "norm_label": "@nestjs/platform-express",
-      "id": "nestjs_platform_express"
+      "norm_label": "@nestjs/platform-express"
     },
     {
       "label": "@nestjs/swagger",
@@ -419,9 +309,9 @@
       "source_file": "backend/package.json",
       "source_location": "L28",
       "_origin": "ast",
+      "id": "backend_package_dependencies_nestjs_swagger",
       "community": 25,
-      "norm_label": "@nestjs/swagger",
-      "id": "backend_package_dependencies_nestjs_swagger"
+      "norm_label": "@nestjs/swagger"
     },
     {
       "label": "@nestjs/swagger",
@@ -429,739 +319,979 @@
       "source_file": "backend/package.json",
       "source_location": "L28",
       "_origin": "ast",
+      "id": "nestjs_swagger",
       "community": 25,
-      "norm_label": "@nestjs/swagger",
-      "id": "nestjs_swagger"
+      "norm_label": "@nestjs/swagger"
+    },
+    {
+      "label": "@supabase/supabase-js",
+      "file_type": "code",
+      "source_file": "backend/package.json",
+      "source_location": "L29",
+      "_origin": "ast",
+      "id": "backend_package_dependencies_supabase_supabase_js",
+      "community": 25,
+      "norm_label": "@supabase/supabase-js"
+    },
+    {
+      "label": "@supabase/supabase-js",
+      "file_type": "concept",
+      "source_file": "backend/package.json",
+      "source_location": "L29",
+      "_origin": "ast",
+      "id": "supabase_supabase_js",
+      "community": 25,
+      "norm_label": "@supabase/supabase-js"
     },
     {
       "label": "class-transformer",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L29",
+      "source_location": "L30",
       "_origin": "ast",
+      "id": "backend_package_dependencies_class_transformer",
       "community": 25,
-      "norm_label": "class-transformer",
-      "id": "backend_package_dependencies_class_transformer"
+      "norm_label": "class-transformer"
     },
     {
       "label": "class-transformer",
       "file_type": "concept",
       "source_file": "backend/package.json",
-      "source_location": "L29",
+      "source_location": "L30",
       "_origin": "ast",
+      "id": "class_transformer",
       "community": 25,
-      "norm_label": "class-transformer",
-      "id": "class_transformer"
+      "norm_label": "class-transformer"
     },
     {
       "label": "class-validator",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L30",
+      "source_location": "L31",
       "_origin": "ast",
+      "id": "backend_package_dependencies_class_validator",
       "community": 25,
-      "norm_label": "class-validator",
-      "id": "backend_package_dependencies_class_validator"
+      "norm_label": "class-validator"
     },
     {
       "label": "class-validator",
       "file_type": "concept",
       "source_file": "backend/package.json",
-      "source_location": "L30",
+      "source_location": "L31",
       "_origin": "ast",
+      "id": "class_validator",
       "community": 25,
-      "norm_label": "class-validator",
-      "id": "class_validator"
+      "norm_label": "class-validator"
     },
     {
       "label": "jose",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L31",
+      "source_location": "L32",
       "_origin": "ast",
+      "id": "backend_package_dependencies_jose",
       "community": 25,
-      "norm_label": "jose",
-      "id": "backend_package_dependencies_jose"
+      "norm_label": "jose"
     },
     {
       "label": "jose",
       "file_type": "concept",
       "source_file": "backend/package.json",
-      "source_location": "L31",
+      "source_location": "L32",
       "_origin": "ast",
+      "id": "jose",
       "community": 25,
-      "norm_label": "jose",
-      "id": "jose"
+      "norm_label": "jose"
     },
     {
       "label": "reflect-metadata",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L32",
+      "source_location": "L33",
       "_origin": "ast",
-      "community": 58,
-      "norm_label": "reflect-metadata",
-      "id": "backend_package_dependencies_reflect_metadata"
+      "id": "backend_package_dependencies_reflect_metadata",
+      "community": 25,
+      "norm_label": "reflect-metadata"
     },
     {
       "label": "reflect-metadata",
       "file_type": "concept",
       "source_file": "backend/package.json",
-      "source_location": "L32",
+      "source_location": "L33",
       "_origin": "ast",
-      "community": 58,
-      "norm_label": "reflect-metadata",
-      "id": "reflect_metadata"
+      "id": "reflect_metadata",
+      "community": 25,
+      "norm_label": "reflect-metadata"
     },
     {
       "label": "rxjs",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L33",
+      "source_location": "L34",
       "_origin": "ast",
+      "id": "backend_package_dependencies_rxjs",
       "community": 25,
-      "norm_label": "rxjs",
-      "id": "backend_package_dependencies_rxjs"
+      "norm_label": "rxjs"
     },
     {
       "label": "rxjs",
       "file_type": "concept",
       "source_file": "backend/package.json",
-      "source_location": "L33",
+      "source_location": "L34",
       "_origin": "ast",
+      "id": "rxjs",
       "community": 25,
-      "norm_label": "rxjs",
-      "id": "rxjs"
+      "norm_label": "rxjs"
     },
     {
       "label": "devDependencies",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L35",
+      "source_location": "L36",
       "_origin": "ast",
+      "id": "backend_package_devdependencies",
       "community": 4,
-      "norm_label": "devdependencies",
-      "id": "backend_package_devdependencies"
+      "norm_label": "devdependencies"
     },
     {
       "label": "@eslint/eslintrc",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L36",
+      "source_location": "L37",
       "_origin": "ast",
+      "id": "backend_package_devdependencies_eslint_eslintrc",
       "community": 4,
-      "norm_label": "@eslint/eslintrc",
-      "id": "backend_package_devdependencies_eslint_eslintrc"
+      "norm_label": "@eslint/eslintrc"
     },
     {
       "label": "@eslint/eslintrc",
       "file_type": "concept",
       "source_file": "backend/package.json",
-      "source_location": "L36",
+      "source_location": "L37",
       "_origin": "ast",
+      "id": "eslint_eslintrc",
       "community": 4,
-      "norm_label": "@eslint/eslintrc",
-      "id": "eslint_eslintrc"
+      "norm_label": "@eslint/eslintrc"
     },
     {
       "label": "@eslint/js",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L37",
+      "source_location": "L38",
       "_origin": "ast",
+      "id": "backend_package_devdependencies_eslint_js",
       "community": 4,
-      "norm_label": "@eslint/js",
-      "id": "backend_package_devdependencies_eslint_js"
+      "norm_label": "@eslint/js"
     },
     {
       "label": "@eslint/js",
       "file_type": "concept",
       "source_file": "backend/package.json",
-      "source_location": "L37",
+      "source_location": "L38",
       "_origin": "ast",
+      "id": "eslint_js",
       "community": 4,
-      "norm_label": "@eslint/js",
-      "id": "eslint_js"
+      "norm_label": "@eslint/js"
     },
     {
       "label": "@nestjs/cli",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L38",
+      "source_location": "L39",
       "_origin": "ast",
+      "id": "backend_package_devdependencies_nestjs_cli",
       "community": 4,
-      "norm_label": "@nestjs/cli",
-      "id": "backend_package_devdependencies_nestjs_cli"
+      "norm_label": "@nestjs/cli"
     },
     {
       "label": "@nestjs/cli",
       "file_type": "concept",
       "source_file": "backend/package.json",
-      "source_location": "L38",
+      "source_location": "L39",
       "_origin": "ast",
+      "id": "nestjs_cli",
       "community": 4,
-      "norm_label": "@nestjs/cli",
-      "id": "nestjs_cli"
+      "norm_label": "@nestjs/cli"
     },
     {
       "label": "@nestjs/schematics",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L39",
+      "source_location": "L40",
       "_origin": "ast",
+      "id": "backend_package_devdependencies_nestjs_schematics",
       "community": 4,
-      "norm_label": "@nestjs/schematics",
-      "id": "backend_package_devdependencies_nestjs_schematics"
+      "norm_label": "@nestjs/schematics"
     },
     {
       "label": "@nestjs/schematics",
       "file_type": "concept",
       "source_file": "backend/package.json",
-      "source_location": "L39",
+      "source_location": "L40",
       "_origin": "ast",
+      "id": "nestjs_schematics",
       "community": 4,
-      "norm_label": "@nestjs/schematics",
-      "id": "nestjs_schematics"
+      "norm_label": "@nestjs/schematics"
     },
     {
       "label": "@nestjs/testing",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L40",
+      "source_location": "L41",
       "_origin": "ast",
+      "id": "backend_package_devdependencies_nestjs_testing",
       "community": 4,
-      "norm_label": "@nestjs/testing",
-      "id": "backend_package_devdependencies_nestjs_testing"
+      "norm_label": "@nestjs/testing"
     },
     {
       "label": "@nestjs/testing",
       "file_type": "concept",
       "source_file": "backend/package.json",
-      "source_location": "L40",
+      "source_location": "L41",
       "_origin": "ast",
+      "id": "nestjs_testing",
       "community": 4,
-      "norm_label": "@nestjs/testing",
-      "id": "nestjs_testing"
+      "norm_label": "@nestjs/testing"
     },
     {
       "label": "@types/express",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L41",
+      "source_location": "L42",
       "_origin": "ast",
+      "id": "backend_package_devdependencies_types_express",
       "community": 4,
-      "norm_label": "@types/express",
-      "id": "backend_package_devdependencies_types_express"
+      "norm_label": "@types/express"
     },
     {
       "label": "@types/express",
       "file_type": "concept",
       "source_file": "backend/package.json",
-      "source_location": "L41",
+      "source_location": "L42",
       "_origin": "ast",
+      "id": "types_express",
       "community": 4,
-      "norm_label": "@types/express",
-      "id": "types_express"
+      "norm_label": "@types/express"
     },
     {
       "label": "@types/jest",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L42",
+      "source_location": "L43",
       "_origin": "ast",
+      "id": "backend_package_devdependencies_types_jest",
       "community": 4,
-      "norm_label": "@types/jest",
-      "id": "backend_package_devdependencies_types_jest"
+      "norm_label": "@types/jest"
     },
     {
       "label": "@types/jest",
       "file_type": "concept",
       "source_file": "backend/package.json",
-      "source_location": "L42",
+      "source_location": "L43",
       "_origin": "ast",
+      "id": "types_jest",
       "community": 4,
-      "norm_label": "@types/jest",
-      "id": "types_jest"
+      "norm_label": "@types/jest"
     },
     {
       "label": "@types/node",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L43",
+      "source_location": "L44",
       "_origin": "ast",
+      "id": "backend_package_devdependencies_types_node",
       "community": 4,
-      "norm_label": "@types/node",
-      "id": "backend_package_devdependencies_types_node"
+      "norm_label": "@types/node"
     },
     {
       "label": "@types/node",
       "file_type": "concept",
       "source_file": "backend/package.json",
-      "source_location": "L43",
+      "source_location": "L44",
       "_origin": "ast",
+      "id": "types_node",
       "community": 4,
-      "norm_label": "@types/node",
-      "id": "types_node"
+      "norm_label": "@types/node"
     },
     {
       "label": "@types/supertest",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L44",
+      "source_location": "L45",
       "_origin": "ast",
+      "id": "backend_package_devdependencies_types_supertest",
       "community": 4,
-      "norm_label": "@types/supertest",
-      "id": "backend_package_devdependencies_types_supertest"
+      "norm_label": "@types/supertest"
     },
     {
       "label": "@types/supertest",
       "file_type": "concept",
       "source_file": "backend/package.json",
-      "source_location": "L44",
+      "source_location": "L45",
       "_origin": "ast",
+      "id": "types_supertest",
       "community": 4,
-      "norm_label": "@types/supertest",
-      "id": "types_supertest"
+      "norm_label": "@types/supertest"
     },
     {
       "label": "eslint",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L45",
+      "source_location": "L46",
       "_origin": "ast",
+      "id": "backend_package_devdependencies_eslint",
       "community": 4,
-      "norm_label": "eslint",
-      "id": "backend_package_devdependencies_eslint"
+      "norm_label": "eslint"
     },
     {
       "label": "eslint",
       "file_type": "concept",
       "source_file": "backend/package.json",
-      "source_location": "L45",
+      "source_location": "L46",
       "_origin": "ast",
+      "id": "eslint",
       "community": 4,
-      "norm_label": "eslint",
-      "id": "eslint"
+      "norm_label": "eslint"
     },
     {
       "label": "eslint-config-prettier",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L46",
+      "source_location": "L47",
       "_origin": "ast",
+      "id": "backend_package_devdependencies_eslint_config_prettier",
       "community": 4,
-      "norm_label": "eslint-config-prettier",
-      "id": "backend_package_devdependencies_eslint_config_prettier"
+      "norm_label": "eslint-config-prettier"
     },
     {
       "label": "eslint-config-prettier",
       "file_type": "concept",
       "source_file": "backend/package.json",
-      "source_location": "L46",
+      "source_location": "L47",
       "_origin": "ast",
+      "id": "eslint_config_prettier",
       "community": 4,
-      "norm_label": "eslint-config-prettier",
-      "id": "eslint_config_prettier"
+      "norm_label": "eslint-config-prettier"
     },
     {
       "label": "eslint-plugin-prettier",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L47",
+      "source_location": "L48",
       "_origin": "ast",
+      "id": "backend_package_devdependencies_eslint_plugin_prettier",
       "community": 4,
-      "norm_label": "eslint-plugin-prettier",
-      "id": "backend_package_devdependencies_eslint_plugin_prettier"
+      "norm_label": "eslint-plugin-prettier"
     },
     {
       "label": "eslint-plugin-prettier",
       "file_type": "concept",
       "source_file": "backend/package.json",
-      "source_location": "L47",
+      "source_location": "L48",
       "_origin": "ast",
+      "id": "eslint_plugin_prettier",
       "community": 4,
-      "norm_label": "eslint-plugin-prettier",
-      "id": "eslint_plugin_prettier"
+      "norm_label": "eslint-plugin-prettier"
     },
     {
       "label": "globals",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L48",
+      "source_location": "L49",
       "_origin": "ast",
+      "id": "backend_package_devdependencies_globals",
       "community": 4,
-      "norm_label": "globals",
-      "id": "backend_package_devdependencies_globals"
+      "norm_label": "globals"
     },
     {
       "label": "globals",
       "file_type": "concept",
       "source_file": "backend/package.json",
-      "source_location": "L48",
+      "source_location": "L49",
       "_origin": "ast",
+      "id": "globals",
       "community": 4,
-      "norm_label": "globals",
-      "id": "globals"
+      "norm_label": "globals"
     },
     {
       "label": "jest",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L49",
+      "source_location": "L50",
       "_origin": "ast",
+      "id": "backend_package_devdependencies_jest",
       "community": 4,
-      "norm_label": "jest",
-      "id": "backend_package_devdependencies_jest"
+      "norm_label": "jest"
     },
     {
       "label": "jest",
       "file_type": "concept",
       "source_file": "backend/package.json",
-      "source_location": "L49",
+      "source_location": "L50",
       "_origin": "ast",
+      "id": "jest",
       "community": 4,
-      "norm_label": "jest",
-      "id": "jest"
+      "norm_label": "jest"
     },
     {
       "label": "prettier",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L50",
+      "source_location": "L51",
       "_origin": "ast",
+      "id": "backend_package_devdependencies_prettier",
       "community": 4,
-      "norm_label": "prettier",
-      "id": "backend_package_devdependencies_prettier"
+      "norm_label": "prettier"
     },
     {
       "label": "prettier",
       "file_type": "concept",
       "source_file": "backend/package.json",
-      "source_location": "L50",
+      "source_location": "L51",
       "_origin": "ast",
+      "id": "prettier",
       "community": 4,
-      "norm_label": "prettier",
-      "id": "prettier"
+      "norm_label": "prettier"
     },
     {
       "label": "source-map-support",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L51",
+      "source_location": "L52",
       "_origin": "ast",
+      "id": "backend_package_devdependencies_source_map_support",
       "community": 4,
-      "norm_label": "source-map-support",
-      "id": "backend_package_devdependencies_source_map_support"
+      "norm_label": "source-map-support"
     },
     {
       "label": "source-map-support",
       "file_type": "concept",
       "source_file": "backend/package.json",
-      "source_location": "L51",
+      "source_location": "L52",
       "_origin": "ast",
+      "id": "source_map_support",
       "community": 4,
-      "norm_label": "source-map-support",
-      "id": "source_map_support"
+      "norm_label": "source-map-support"
     },
     {
       "label": "supertest",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L52",
+      "source_location": "L53",
       "_origin": "ast",
+      "id": "backend_package_devdependencies_supertest",
       "community": 4,
-      "norm_label": "supertest",
-      "id": "backend_package_devdependencies_supertest"
+      "norm_label": "supertest"
     },
     {
       "label": "supertest",
       "file_type": "concept",
       "source_file": "backend/package.json",
-      "source_location": "L52",
+      "source_location": "L53",
       "_origin": "ast",
+      "id": "supertest",
       "community": 4,
-      "norm_label": "supertest",
-      "id": "supertest"
+      "norm_label": "supertest"
     },
     {
       "label": "ts-jest",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L53",
+      "source_location": "L54",
       "_origin": "ast",
+      "id": "backend_package_devdependencies_ts_jest",
       "community": 4,
-      "norm_label": "ts-jest",
-      "id": "backend_package_devdependencies_ts_jest"
+      "norm_label": "ts-jest"
     },
     {
       "label": "ts-jest",
       "file_type": "concept",
       "source_file": "backend/package.json",
-      "source_location": "L53",
+      "source_location": "L54",
       "_origin": "ast",
+      "id": "ts_jest",
       "community": 4,
-      "norm_label": "ts-jest",
-      "id": "ts_jest"
+      "norm_label": "ts-jest"
     },
     {
       "label": "ts-loader",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L54",
+      "source_location": "L55",
       "_origin": "ast",
+      "id": "backend_package_devdependencies_ts_loader",
       "community": 4,
-      "norm_label": "ts-loader",
-      "id": "backend_package_devdependencies_ts_loader"
+      "norm_label": "ts-loader"
     },
     {
       "label": "ts-loader",
       "file_type": "concept",
       "source_file": "backend/package.json",
-      "source_location": "L54",
+      "source_location": "L55",
       "_origin": "ast",
+      "id": "ts_loader",
       "community": 4,
-      "norm_label": "ts-loader",
-      "id": "ts_loader"
+      "norm_label": "ts-loader"
     },
     {
       "label": "ts-node",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L55",
+      "source_location": "L56",
       "_origin": "ast",
+      "id": "backend_package_devdependencies_ts_node",
       "community": 4,
-      "norm_label": "ts-node",
-      "id": "backend_package_devdependencies_ts_node"
+      "norm_label": "ts-node"
     },
     {
       "label": "ts-node",
       "file_type": "concept",
       "source_file": "backend/package.json",
-      "source_location": "L55",
+      "source_location": "L56",
       "_origin": "ast",
+      "id": "ts_node",
       "community": 4,
-      "norm_label": "ts-node",
-      "id": "ts_node"
+      "norm_label": "ts-node"
     },
     {
       "label": "tsconfig-paths",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L56",
+      "source_location": "L57",
       "_origin": "ast",
+      "id": "backend_package_devdependencies_tsconfig_paths",
       "community": 4,
-      "norm_label": "tsconfig-paths",
-      "id": "backend_package_devdependencies_tsconfig_paths"
+      "norm_label": "tsconfig-paths"
     },
     {
       "label": "tsconfig-paths",
       "file_type": "concept",
       "source_file": "backend/package.json",
-      "source_location": "L56",
+      "source_location": "L57",
       "_origin": "ast",
+      "id": "tsconfig_paths",
       "community": 4,
-      "norm_label": "tsconfig-paths",
-      "id": "tsconfig_paths"
+      "norm_label": "tsconfig-paths"
     },
     {
       "label": "typescript",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L57",
+      "source_location": "L58",
       "_origin": "ast",
+      "id": "backend_package_devdependencies_typescript",
       "community": 4,
-      "norm_label": "typescript",
-      "id": "backend_package_devdependencies_typescript"
+      "norm_label": "typescript"
     },
     {
       "label": "typescript",
       "file_type": "concept",
       "source_file": "backend/package.json",
-      "source_location": "L57",
+      "source_location": "L58",
       "_origin": "ast",
+      "id": "typescript",
       "community": 4,
-      "norm_label": "typescript",
-      "id": "typescript"
+      "norm_label": "typescript"
     },
     {
       "label": "typescript-eslint",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L58",
+      "source_location": "L59",
       "_origin": "ast",
+      "id": "backend_package_devdependencies_typescript_eslint",
       "community": 4,
-      "norm_label": "typescript-eslint",
-      "id": "backend_package_devdependencies_typescript_eslint"
+      "norm_label": "typescript-eslint"
     },
     {
       "label": "typescript-eslint",
       "file_type": "concept",
       "source_file": "backend/package.json",
-      "source_location": "L58",
+      "source_location": "L59",
       "_origin": "ast",
+      "id": "typescript_eslint",
       "community": 4,
-      "norm_label": "typescript-eslint",
-      "id": "typescript_eslint"
+      "norm_label": "typescript-eslint"
     },
     {
       "label": "jest",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L60",
+      "source_location": "L61",
       "_origin": "ast",
+      "id": "backend_package_jest",
       "community": 29,
-      "norm_label": "jest",
-      "id": "backend_package_jest"
+      "norm_label": "jest"
     },
     {
       "label": "moduleFileExtensions",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L61",
+      "source_location": "L62",
       "_origin": "ast",
+      "id": "backend_package_jest_modulefileextensions",
       "community": 29,
-      "norm_label": "modulefileextensions",
-      "id": "backend_package_jest_modulefileextensions"
+      "norm_label": "modulefileextensions"
     },
     {
       "label": "js",
       "file_type": "concept",
       "source_file": "backend/package.json",
-      "source_location": "L61",
+      "source_location": "L62",
       "_origin": "ast",
+      "id": "ref_js",
       "community": 29,
-      "norm_label": "js",
-      "id": "ref_js"
+      "norm_label": "js"
     },
     {
       "label": "json",
       "file_type": "concept",
       "source_file": "backend/package.json",
-      "source_location": "L61",
+      "source_location": "L62",
       "_origin": "ast",
+      "id": "ref_json",
       "community": 29,
-      "norm_label": "json",
-      "id": "ref_json"
+      "norm_label": "json"
     },
     {
       "label": "ts",
       "file_type": "concept",
       "source_file": "backend/package.json",
-      "source_location": "L61",
+      "source_location": "L62",
       "_origin": "ast",
+      "id": "ref_ts",
       "community": 29,
-      "norm_label": "ts",
-      "id": "ref_ts"
+      "norm_label": "ts"
     },
     {
       "label": "rootDir",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L66",
+      "source_location": "L67",
       "_origin": "ast",
+      "id": "backend_package_jest_rootdir",
       "community": 29,
-      "norm_label": "rootdir",
-      "id": "backend_package_jest_rootdir"
+      "norm_label": "rootdir"
     },
     {
       "label": "testRegex",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L67",
+      "source_location": "L68",
       "_origin": "ast",
+      "id": "backend_package_jest_testregex",
       "community": 29,
-      "norm_label": "testregex",
-      "id": "backend_package_jest_testregex"
+      "norm_label": "testregex"
     },
     {
       "label": "transform",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L68",
+      "source_location": "L69",
       "_origin": "ast",
-      "community": 55,
-      "norm_label": "transform",
-      "id": "backend_package_jest_transform"
+      "id": "backend_package_jest_transform",
+      "community": 29,
+      "norm_label": "transform"
     },
     {
       "label": "^.+\\\\.(t|j)s$",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L69",
+      "source_location": "L70",
       "_origin": "ast",
-      "community": 55,
-      "norm_label": "^.+\\\\.(t|j)s$",
-      "id": "backend_package_transform_t_j_s"
+      "id": "backend_package_transform_t_j_s",
+      "community": 29,
+      "norm_label": "^.+\\\\.(t|j)s$"
     },
     {
       "label": "ts-jest",
       "file_type": "concept",
       "source_file": "backend/package.json",
-      "source_location": "L69",
+      "source_location": "L70",
       "_origin": "ast",
-      "community": 55,
-      "norm_label": "ts-jest",
-      "id": "ref_ts_jest"
+      "id": "ref_ts_jest",
+      "community": 29,
+      "norm_label": "ts-jest"
     },
     {
       "label": "transformIgnorePatterns",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L78",
+      "source_location": "L79",
       "_origin": "ast",
+      "id": "backend_package_jest_transformignorepatterns",
       "community": 29,
-      "norm_label": "transformignorepatterns",
-      "id": "backend_package_jest_transformignorepatterns"
+      "norm_label": "transformignorepatterns"
     },
     {
       "label": "node_modules/(?!jose)",
       "file_type": "concept",
       "source_file": "backend/package.json",
-      "source_location": "L78",
+      "source_location": "L79",
       "_origin": "ast",
+      "id": "ref_node_modules_jose",
       "community": 29,
-      "norm_label": "node_modules/(?!jose)",
-      "id": "ref_node_modules_jose"
+      "norm_label": "node_modules/(?!jose)"
     },
     {
       "label": "collectCoverageFrom",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L81",
+      "source_location": "L82",
       "_origin": "ast",
+      "id": "backend_package_jest_collectcoveragefrom",
       "community": 29,
-      "norm_label": "collectcoveragefrom",
-      "id": "backend_package_jest_collectcoveragefrom"
+      "norm_label": "collectcoveragefrom"
     },
     {
       "label": "**/*.(t|j)s",
       "file_type": "concept",
       "source_file": "backend/package.json",
-      "source_location": "L81",
+      "source_location": "L82",
       "_origin": "ast",
+      "id": "ref_t_j_s",
       "community": 29,
-      "norm_label": "**/*.(t|j)s",
-      "id": "ref_t_j_s"
+      "norm_label": "**/*.(t|j)s"
     },
     {
       "label": "coverageDirectory",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L84",
+      "source_location": "L85",
       "_origin": "ast",
+      "id": "backend_package_jest_coveragedirectory",
       "community": 29,
-      "norm_label": "coveragedirectory",
-      "id": "backend_package_jest_coveragedirectory"
+      "norm_label": "coveragedirectory"
     },
     {
       "label": "testEnvironment",
       "file_type": "code",
       "source_file": "backend/package.json",
-      "source_location": "L85",
+      "source_location": "L86",
       "_origin": "ast",
+      "id": "backend_package_jest_testenvironment",
       "community": 29,
-      "norm_label": "testenvironment",
-      "id": "backend_package_jest_testenvironment"
+      "norm_label": "testenvironment"
+    },
+    {
+      "label": "README.md",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 64,
+      "norm_label": "readme.md",
+      "id": "readme"
+    },
+    {
+      "label": "\u2728 What's inside",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L22",
+      "_origin": "ast",
+      "community": 64,
+      "norm_label": "\u2728 what's inside",
+      "id": "readme_what_s_inside"
+    },
+    {
+      "label": "\ud83c\udfd7 Architecture",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L35",
+      "_origin": "ast",
+      "community": 64,
+      "norm_label": "\ud83c\udfd7 architecture",
+      "id": "readme_architecture"
+    },
+    {
+      "label": "\ud83d\ude80 Quick start",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L62",
+      "_origin": "ast",
+      "community": 64,
+      "norm_label": "\ud83d\ude80 quick start",
+      "id": "readme_quick_start"
+    },
+    {
+      "label": "1 \u00b7 Database \u2014 Supabase SQL editor",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L66",
+      "_origin": "ast",
+      "community": 64,
+      "norm_label": "1 \u00b7 database \u2014 supabase sql editor",
+      "id": "readme_1_database_supabase_sql_editor"
+    },
+    {
+      "label": "2 \u00b7 Backend \u2014 `:3000`",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L76",
+      "_origin": "ast",
+      "community": 64,
+      "norm_label": "2 \u00b7 backend \u2014 `:3000`",
+      "id": "readme_2_backend_3000"
+    },
+    {
+      "label": "3 \u00b7 Frontend \u2014 `:5173`",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L92",
+      "_origin": "ast",
+      "community": 64,
+      "norm_label": "3 \u00b7 frontend \u2014 `:5173`",
+      "id": "readme_3_frontend_5173"
+    },
+    {
+      "label": "4 \u00b7 Explore",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L110",
+      "_origin": "ast",
+      "community": 64,
+      "norm_label": "4 \u00b7 explore",
+      "id": "readme_4_explore"
+    },
+    {
+      "label": "\ud83e\uddea Quality",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L115",
+      "_origin": "ast",
+      "community": 64,
+      "norm_label": "\ud83e\uddea quality",
+      "id": "readme_quality"
+    },
+    {
+      "label": "\ud83d\uddfa Roadmap",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L125",
+      "_origin": "ast",
+      "community": 64,
+      "norm_label": "\ud83d\uddfa roadmap",
+      "id": "readme_roadmap"
+    },
+    {
+      "label": "\ud83d\udcda More docs",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L132",
+      "_origin": "ast",
+      "community": 64,
+      "norm_label": "\ud83d\udcda more docs",
+      "id": "readme_more_docs"
+    },
+    {
+      "label": "CLAUDE.md",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 57,
+      "norm_label": "claude.md",
+      "id": "claude"
+    },
+    {
+      "label": "CLAUDE.md \u2014 P-Track",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 57,
+      "norm_label": "claude.md \u2014 p-track",
+      "id": "claude_claude_md_p_track"
+    },
+    {
+      "label": "What this project is",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L6",
+      "_origin": "ast",
+      "community": 57,
+      "norm_label": "what this project is",
+      "id": "claude_what_this_project_is"
+    },
+    {
+      "label": "Tech stack",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L20",
+      "_origin": "ast",
+      "community": 57,
+      "norm_label": "tech stack",
+      "id": "claude_tech_stack"
+    },
+    {
+      "label": "Hard architectural rules (do not violate)",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L26",
+      "_origin": "ast",
+      "community": 57,
+      "norm_label": "hard architectural rules (do not violate)",
+      "id": "claude_hard_architectural_rules_do_not_violate"
+    },
+    {
+      "label": "Repo & environment",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L36",
+      "_origin": "ast",
+      "community": 57,
+      "norm_label": "repo & environment",
+      "id": "claude_repo_environment"
+    },
+    {
+      "label": "Current state \u2014 Phase 1 complete (full CRUD)",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L47",
+      "_origin": "ast",
+      "community": 57,
+      "norm_label": "current state \u2014 phase 1 complete (full crud)",
+      "id": "claude_current_state_phase_1_complete_full_crud"
+    },
+    {
+      "label": "Roadmap \u2014 deferred to Phase 2+",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L94",
+      "_origin": "ast",
+      "community": 57,
+      "norm_label": "roadmap \u2014 deferred to phase 2+",
+      "id": "claude_roadmap_deferred_to_phase_2"
+    },
+    {
+      "label": "How I like to work \u2014 follow precisely",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L116",
+      "_origin": "ast",
+      "community": 57,
+      "norm_label": "how i like to work \u2014 follow precisely",
+      "id": "claude_how_i_like_to_work_follow_precisely"
+    },
+    {
+      "label": "Known gotchas \u2014 carry these forward",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L130",
+      "_origin": "ast",
+      "community": 57,
+      "norm_label": "known gotchas \u2014 carry these forward",
+      "id": "claude_known_gotchas_carry_these_forward"
+    },
+    {
+      "label": "graphify",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L167",
+      "_origin": "ast",
+      "community": 57,
+      "norm_label": "graphify",
+      "id": "claude_graphify"
     },
     {
       "label": "current-user.decorator.ts",
@@ -1199,7 +1329,7 @@
       "source_file": "backend/src/common/dto/pagination-query.dto.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 77,
+      "community": 17,
       "norm_label": "pagination-query.dto.ts",
       "id": "backend_src_common_dto_pagination_query_dto"
     },
@@ -1319,7 +1449,7 @@
       "source_file": "backend/src/database/database.module.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 27,
+      "community": 72,
       "norm_label": "database.module.ts",
       "id": "backend_src_database_database_module"
     },
@@ -1329,7 +1459,7 @@
       "source_file": "backend/src/database/database.module.ts",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 12,
+      "community": 85,
       "norm_label": "databasemodule",
       "id": "backend_src_database_database_module_databasemodule"
     },
@@ -1339,7 +1469,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 12,
+      "community": 85,
       "norm_label": "global",
       "id": "global"
     },
@@ -1349,7 +1479,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 12,
+      "community": 85,
       "norm_label": "module",
       "id": "module"
     },
@@ -1419,7 +1549,7 @@
       "source_file": "backend/src/database/record-history.service.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 27,
+      "community": 72,
       "norm_label": "record-history.service.ts",
       "id": "backend_src_database_record_history_service"
     },
@@ -1429,7 +1559,7 @@
       "source_file": "backend/src/database/record-history.service.ts",
       "source_location": "L16",
       "_origin": "ast",
-      "community": 27,
+      "community": 72,
       "norm_label": "recordhistoryservice",
       "id": "backend_src_database_record_history_service_recordhistoryservice"
     },
@@ -1439,7 +1569,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 27,
+      "community": 72,
       "norm_label": "injectable",
       "id": "backend_src_database_record_history_service_ts_injectable"
     },
@@ -1449,7 +1579,7 @@
       "source_file": "backend/src/database/record-history.service.ts",
       "source_location": "L19",
       "_origin": "ast",
-      "community": 27,
+      "community": 72,
       "norm_label": ".constructor()",
       "id": "backend_src_database_record_history_service_recordhistoryservice_constructor"
     },
@@ -1459,7 +1589,7 @@
       "source_file": "backend/src/database/record-history.service.ts",
       "source_location": "L21",
       "_origin": "ast",
-      "community": 85,
+      "community": 7,
       "norm_label": ".logdeleted()",
       "id": "backend_src_database_record_history_service_recordhistoryservice_logdeleted"
     },
@@ -1679,7 +1809,7 @@
       "source_file": "backend/src/modules/action-items/action-items.service.spec.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 27,
+      "community": 72,
       "norm_label": "action-items.service.spec.ts",
       "id": "backend_src_modules_action_items_action_items_service_spec"
     },
@@ -1689,7 +1819,7 @@
       "source_file": "backend/src/modules/action-items/action-items.service.spec.ts",
       "source_location": "L22",
       "_origin": "ast",
-      "community": 27,
+      "community": 72,
       "norm_label": "build()",
       "id": "backend_src_modules_action_items_action_items_service_spec_build"
     },
@@ -1699,7 +1829,7 @@
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 27,
+      "community": 72,
       "norm_label": "action-items.service.ts",
       "id": "backend_src_modules_action_items_action_items_service"
     },
@@ -1709,7 +1839,7 @@
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 27,
+      "community": 72,
       "norm_label": "owners",
       "id": "backend_src_modules_action_items_action_items_service_owners"
     },
@@ -1719,7 +1849,7 @@
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
       "source_location": "L16",
       "_origin": "ast",
-      "community": 32,
+      "community": 72,
       "norm_label": "ownerslabel()",
       "id": "backend_src_modules_action_items_action_items_service_ownerslabel"
     },
@@ -1749,7 +1879,7 @@
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
       "source_location": "L26",
       "_origin": "ast",
-      "community": 32,
+      "community": 72,
       "norm_label": ".constructor()",
       "id": "backend_src_modules_action_items_action_items_service_actionitemsservice_constructor"
     },
@@ -1889,7 +2019,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 72,
+      "community": 1,
       "norm_label": "post",
       "id": "backend_src_modules_attachments_attachments_controller_ts_post"
     },
@@ -1899,7 +2029,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 72,
+      "community": 1,
       "norm_label": "apiconsumes",
       "id": "apiconsumes"
     },
@@ -1909,7 +2039,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 72,
+      "community": 1,
       "norm_label": "apibody",
       "id": "backend_src_modules_attachments_attachments_controller_ts_apibody"
     },
@@ -1919,7 +2049,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 72,
+      "community": 1,
       "norm_label": "useinterceptors",
       "id": "useinterceptors"
     },
@@ -1929,7 +2059,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 72,
+      "community": 1,
       "norm_label": "uploadedfile",
       "id": "uploadedfile"
     },
@@ -1959,7 +2089,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 17,
+      "community": 1,
       "norm_label": "delete",
       "id": "backend_src_modules_attachments_attachments_controller_ts_delete"
     },
@@ -1989,7 +2119,7 @@
       "source_file": "backend/src/modules/attachments/attachments.controller.ts",
       "source_location": "L65",
       "_origin": "ast",
-      "community": 72,
+      "community": 1,
       "norm_label": ".add()",
       "id": "backend_src_modules_attachments_attachments_controller_attachmentscontroller_add"
     },
@@ -2029,7 +2159,7 @@
       "source_file": "backend/src/modules/attachments/attachments.controller.ts",
       "source_location": "L100",
       "_origin": "ast",
-      "community": 17,
+      "community": 1,
       "norm_label": ".remove()",
       "id": "backend_src_modules_attachments_attachments_controller_attachmentscontroller_remove"
     },
@@ -2039,7 +2169,7 @@
       "source_file": "backend/src/modules/attachments/attachments.service.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 72,
+      "community": 1,
       "norm_label": "attachments.service.ts",
       "id": "backend_src_modules_attachments_attachments_service"
     },
@@ -2049,7 +2179,7 @@
       "source_file": "backend/src/modules/attachments/attachments.service.ts",
       "source_location": "L16",
       "_origin": "ast",
-      "community": 72,
+      "community": 1,
       "norm_label": "uploadedfilelike",
       "id": "backend_src_modules_attachments_attachments_service_uploadedfilelike"
     },
@@ -2059,7 +2189,7 @@
       "source_file": "backend/src/modules/attachments/attachments.service.ts",
       "source_location": "L23",
       "_origin": "ast",
-      "community": 72,
+      "community": 1,
       "norm_label": "safename()",
       "id": "backend_src_modules_attachments_attachments_service_safename"
     },
@@ -2119,7 +2249,7 @@
       "source_file": "backend/src/modules/attachments/attachments.service.ts",
       "source_location": "L44",
       "_origin": "ast",
-      "community": 72,
+      "community": 1,
       "norm_label": ".create()",
       "id": "backend_src_modules_attachments_attachments_service_attachmentsservice_create"
     },
@@ -2149,7 +2279,7 @@
       "source_file": "backend/src/modules/attachments/attachments.service.ts",
       "source_location": "L102",
       "_origin": "ast",
-      "community": 85,
+      "community": 1,
       "norm_label": ".remove()",
       "id": "backend_src_modules_attachments_attachments_service_attachmentsservice_remove"
     },
@@ -2169,7 +2299,7 @@
       "source_file": "backend/src/modules/issues/issues.controller.ts",
       "source_location": "L21",
       "_origin": "ast",
-      "community": 65,
+      "community": 7,
       "norm_label": "issuescontroller",
       "id": "backend_src_modules_issues_issues_controller_issuescontroller"
     },
@@ -2179,7 +2309,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 65,
+      "community": 7,
       "norm_label": "controller",
       "id": "backend_src_modules_issues_issues_controller_ts_controller"
     },
@@ -2189,7 +2319,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 65,
+      "community": 7,
       "norm_label": "get",
       "id": "backend_src_modules_issues_issues_controller_ts_get"
     },
@@ -2199,7 +2329,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 65,
+      "community": 7,
       "norm_label": "param",
       "id": "backend_src_modules_issues_issues_controller_ts_param"
     },
@@ -2209,7 +2339,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 65,
+      "community": 7,
       "norm_label": "post",
       "id": "backend_src_modules_issues_issues_controller_ts_post"
     },
@@ -2219,7 +2349,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 65,
+      "community": 7,
       "norm_label": "apibody",
       "id": "backend_src_modules_issues_issues_controller_ts_apibody"
     },
@@ -2229,7 +2359,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 65,
+      "community": 7,
       "norm_label": "body",
       "id": "backend_src_modules_issues_issues_controller_ts_body"
     },
@@ -2239,7 +2369,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 65,
+      "community": 7,
       "norm_label": "patch",
       "id": "backend_src_modules_issues_issues_controller_ts_patch"
     },
@@ -2249,7 +2379,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 65,
+      "community": 17,
       "norm_label": "delete",
       "id": "backend_src_modules_issues_issues_controller_ts_delete"
     },
@@ -2259,7 +2389,7 @@
       "source_file": "backend/src/modules/issues/issues.controller.ts",
       "source_location": "L22",
       "_origin": "ast",
-      "community": 65,
+      "community": 7,
       "norm_label": ".constructor()",
       "id": "backend_src_modules_issues_issues_controller_issuescontroller_constructor"
     },
@@ -2269,7 +2399,7 @@
       "source_file": "backend/src/modules/issues/issues.controller.ts",
       "source_location": "L25",
       "_origin": "ast",
-      "community": 65,
+      "community": 7,
       "norm_label": ".list()",
       "id": "backend_src_modules_issues_issues_controller_issuescontroller_list"
     },
@@ -2279,7 +2409,7 @@
       "source_file": "backend/src/modules/issues/issues.controller.ts",
       "source_location": "L56",
       "_origin": "ast",
-      "community": 65,
+      "community": 7,
       "norm_label": ".add()",
       "id": "backend_src_modules_issues_issues_controller_issuescontroller_add"
     },
@@ -2289,7 +2419,7 @@
       "source_file": "backend/src/modules/issues/issues.controller.ts",
       "source_location": "L77",
       "_origin": "ast",
-      "community": 65,
+      "community": 7,
       "norm_label": ".update()",
       "id": "backend_src_modules_issues_issues_controller_issuescontroller_update"
     },
@@ -2299,7 +2429,7 @@
       "source_file": "backend/src/modules/issues/issues.controller.ts",
       "source_location": "L87",
       "_origin": "ast",
-      "community": 65,
+      "community": 17,
       "norm_label": ".remove()",
       "id": "backend_src_modules_issues_issues_controller_issuescontroller_remove"
     },
@@ -2649,7 +2779,7 @@
       "source_file": "backend/src/modules/links/links.repository.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 8,
+      "community": 75,
       "norm_label": "links.repository.ts",
       "id": "backend_src_modules_links_links_repository"
     },
@@ -2659,7 +2789,7 @@
       "source_file": "backend/src/modules/links/links.repository.ts",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 8,
+      "community": 75,
       "norm_label": "link",
       "id": "backend_src_modules_links_links_repository_link"
     },
@@ -2669,7 +2799,7 @@
       "source_file": "backend/src/modules/links/links.repository.ts",
       "source_location": "L17",
       "_origin": "ast",
-      "community": 8,
+      "community": 75,
       "norm_label": "linklistitem",
       "id": "backend_src_modules_links_links_repository_linklistitem"
     },
@@ -2759,7 +2889,7 @@
       "source_file": "backend/src/modules/links/links.service.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 8,
+      "community": 72,
       "norm_label": "links.service.ts",
       "id": "backend_src_modules_links_links_service"
     },
@@ -3009,7 +3139,7 @@
       "source_file": "backend/src/modules/milestones/milestones.service.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 27,
+      "community": 3,
       "norm_label": "milestones.service.ts",
       "id": "backend_src_modules_milestones_milestones_service"
     },
@@ -3039,7 +3169,7 @@
       "source_file": "backend/src/modules/milestones/milestones.service.ts",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 3,
+      "community": 72,
       "norm_label": ".constructor()",
       "id": "backend_src_modules_milestones_milestones_service_milestonesservice_constructor"
     },
@@ -3519,7 +3649,7 @@
       "source_file": "backend/src/modules/resources/resources.controller.ts",
       "source_location": "L21",
       "_origin": "ast",
-      "community": 10,
+      "community": 62,
       "norm_label": "resourcescontroller",
       "id": "backend_src_modules_resources_resources_controller_resourcescontroller"
     },
@@ -3529,7 +3659,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 10,
+      "community": 62,
       "norm_label": "controller",
       "id": "backend_src_modules_resources_resources_controller_ts_controller"
     },
@@ -3539,7 +3669,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 10,
+      "community": 62,
       "norm_label": "get",
       "id": "backend_src_modules_resources_resources_controller_ts_get"
     },
@@ -3549,7 +3679,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 10,
+      "community": 62,
       "norm_label": "param",
       "id": "backend_src_modules_resources_resources_controller_ts_param"
     },
@@ -3559,7 +3689,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 10,
+      "community": 62,
       "norm_label": "post",
       "id": "backend_src_modules_resources_resources_controller_ts_post"
     },
@@ -3569,7 +3699,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 10,
+      "community": 62,
       "norm_label": "apibody",
       "id": "backend_src_modules_resources_resources_controller_ts_apibody"
     },
@@ -3579,7 +3709,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 10,
+      "community": 62,
       "norm_label": "body",
       "id": "backend_src_modules_resources_resources_controller_ts_body"
     },
@@ -3589,7 +3719,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 10,
+      "community": 62,
       "norm_label": "patch",
       "id": "backend_src_modules_resources_resources_controller_ts_patch"
     },
@@ -3599,7 +3729,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 17,
+      "community": 62,
       "norm_label": "delete",
       "id": "backend_src_modules_resources_resources_controller_ts_delete"
     },
@@ -3619,7 +3749,7 @@
       "source_file": "backend/src/modules/resources/resources.controller.ts",
       "source_location": "L25",
       "_origin": "ast",
-      "community": 10,
+      "community": 62,
       "norm_label": ".list()",
       "id": "backend_src_modules_resources_resources_controller_resourcescontroller_list"
     },
@@ -3629,7 +3759,7 @@
       "source_file": "backend/src/modules/resources/resources.controller.ts",
       "source_location": "L52",
       "_origin": "ast",
-      "community": 10,
+      "community": 62,
       "norm_label": ".add()",
       "id": "backend_src_modules_resources_resources_controller_resourcescontroller_add"
     },
@@ -3639,7 +3769,7 @@
       "source_file": "backend/src/modules/resources/resources.controller.ts",
       "source_location": "L70",
       "_origin": "ast",
-      "community": 10,
+      "community": 62,
       "norm_label": ".update()",
       "id": "backend_src_modules_resources_resources_controller_resourcescontroller_update"
     },
@@ -3649,7 +3779,7 @@
       "source_file": "backend/src/modules/resources/resources.controller.ts",
       "source_location": "L80",
       "_origin": "ast",
-      "community": 17,
+      "community": 62,
       "norm_label": ".remove()",
       "id": "backend_src_modules_resources_resources_controller_resourcescontroller_remove"
     },
@@ -3659,7 +3789,7 @@
       "source_file": "backend/src/modules/resources/resources.repository.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 10,
+      "community": 90,
       "norm_label": "resources.repository.ts",
       "id": "backend_src_modules_resources_resources_repository"
     },
@@ -3669,7 +3799,7 @@
       "source_file": "backend/src/modules/resources/resources.repository.ts",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 10,
+      "community": 90,
       "norm_label": "resource",
       "id": "backend_src_modules_resources_resources_repository_resource"
     },
@@ -3679,7 +3809,7 @@
       "source_file": "backend/src/modules/resources/resources.repository.ts",
       "source_location": "L15",
       "_origin": "ast",
-      "community": 10,
+      "community": 90,
       "norm_label": "resourcelistitem",
       "id": "backend_src_modules_resources_resources_repository_resourcelistitem"
     },
@@ -3769,7 +3899,7 @@
       "source_file": "backend/src/modules/resources/resources.service.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 10,
+      "community": 72,
       "norm_label": "resources.service.ts",
       "id": "backend_src_modules_resources_resources_service"
     },
@@ -3849,7 +3979,7 @@
       "source_file": "backend/src/modules/status-reports/status-reports.controller.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 17,
+      "community": 5,
       "norm_label": "status-reports.controller.ts",
       "id": "backend_src_modules_status_reports_status_reports_controller"
     },
@@ -4229,7 +4359,7 @@
       "source_file": "backend/src/modules/updates/updates.controller.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 9,
+      "community": 17,
       "norm_label": "updates.controller.ts",
       "id": "backend_src_modules_updates_updates_controller"
     },
@@ -6249,7 +6379,7 @@
       "source_file": "backend/src/app.controller.spec.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 12,
+      "community": 55,
       "norm_label": "app.controller.spec.ts",
       "id": "backend_src_app_controller_spec"
     },
@@ -6259,7 +6389,7 @@
       "source_file": "backend/src/app.controller.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 12,
+      "community": 55,
       "norm_label": "app.controller.ts",
       "id": "backend_src_app_controller"
     },
@@ -6269,7 +6399,7 @@
       "source_file": "backend/src/app.controller.ts",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 12,
+      "community": 55,
       "norm_label": "appcontroller",
       "id": "backend_src_app_controller_appcontroller"
     },
@@ -6279,7 +6409,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 12,
+      "community": 55,
       "norm_label": "controller",
       "id": "backend_src_app_controller_ts_controller"
     },
@@ -6289,7 +6419,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 12,
+      "community": 55,
       "norm_label": "apisecurity",
       "id": "apisecurity"
     },
@@ -6299,7 +6429,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 12,
+      "community": 55,
       "norm_label": "get",
       "id": "backend_src_app_controller_ts_get"
     },
@@ -6309,7 +6439,7 @@
       "source_file": "backend/src/app.controller.ts",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 12,
+      "community": 55,
       "norm_label": ".constructor()",
       "id": "backend_src_app_controller_appcontroller_constructor"
     },
@@ -6319,7 +6449,7 @@
       "source_file": "backend/src/app.controller.ts",
       "source_location": "L15",
       "_origin": "ast",
-      "community": 12,
+      "community": 55,
       "norm_label": ".gethello()",
       "id": "backend_src_app_controller_appcontroller_gethello"
     },
@@ -6329,7 +6459,7 @@
       "source_file": "backend/src/app.module.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 12,
+      "community": 58,
       "norm_label": "app.module.ts",
       "id": "backend_src_app_module"
     },
@@ -6339,7 +6469,7 @@
       "source_file": "backend/src/app.module.ts",
       "source_location": "L42",
       "_origin": "ast",
-      "community": 12,
+      "community": 58,
       "norm_label": "appmodule",
       "id": "backend_src_app_module_appmodule"
     },
@@ -6349,7 +6479,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 12,
+      "community": 58,
       "norm_label": "module",
       "id": "backend_src_app_module_ts_module"
     },
@@ -6359,7 +6489,7 @@
       "source_file": "backend/src/app.service.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 12,
+      "community": 55,
       "norm_label": "app.service.ts",
       "id": "backend_src_app_service"
     },
@@ -6369,7 +6499,7 @@
       "source_file": "backend/src/app.service.ts",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 12,
+      "community": 55,
       "norm_label": "appservice",
       "id": "backend_src_app_service_appservice"
     },
@@ -6379,7 +6509,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 12,
+      "community": 55,
       "norm_label": "injectable",
       "id": "backend_src_app_service_ts_injectable"
     },
@@ -6389,7 +6519,7 @@
       "source_file": "backend/src/app.service.ts",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 12,
+      "community": 55,
       "norm_label": ".gethello()",
       "id": "backend_src_app_service_appservice_gethello"
     },
@@ -6399,7 +6529,7 @@
       "source_file": "backend/src/common/decorators/public.decorator.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 12,
+      "community": 55,
       "norm_label": "public.decorator.ts",
       "id": "backend_src_common_decorators_public_decorator"
     },
@@ -6409,7 +6539,7 @@
       "source_file": "backend/src/common/decorators/public.decorator.ts",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 12,
+      "community": 55,
       "norm_label": "public()",
       "id": "backend_src_common_decorators_public_decorator_public"
     },
@@ -6449,7 +6579,7 @@
       "source_file": "backend/src/common/guards/supabase-auth.guard.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 12,
+      "community": 27,
       "norm_label": "supabase-auth.guard.ts",
       "id": "backend_src_common_guards_supabase_auth_guard"
     },
@@ -6459,7 +6589,7 @@
       "source_file": "backend/src/common/guards/supabase-auth.guard.ts",
       "source_location": "L19",
       "_origin": "ast",
-      "community": 12,
+      "community": 27,
       "norm_label": "authedrequest",
       "id": "backend_src_common_guards_supabase_auth_guard_authedrequest"
     },
@@ -6469,7 +6599,7 @@
       "source_file": "backend/src/common/guards/supabase-auth.guard.ts",
       "source_location": "L46",
       "_origin": "ast",
-      "community": 12,
+      "community": 65,
       "norm_label": "supabaseauthguard",
       "id": "backend_src_common_guards_supabase_auth_guard_supabaseauthguard"
     },
@@ -6479,7 +6609,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 12,
+      "community": 65,
       "norm_label": "injectable",
       "id": "backend_src_common_guards_supabase_auth_guard_ts_injectable"
     },
@@ -6489,7 +6619,7 @@
       "source_file": "backend/src/common/guards/supabase-auth.guard.ts",
       "source_location": "L53",
       "_origin": "ast",
-      "community": 12,
+      "community": 65,
       "norm_label": ".constructor()",
       "id": "backend_src_common_guards_supabase_auth_guard_supabaseauthguard_constructor"
     },
@@ -6499,7 +6629,7 @@
       "source_file": "backend/src/common/guards/supabase-auth.guard.ts",
       "source_location": "L70",
       "_origin": "ast",
-      "community": 12,
+      "community": 65,
       "norm_label": ".canactivate()",
       "id": "backend_src_common_guards_supabase_auth_guard_supabaseauthguard_canactivate"
     },
@@ -6509,7 +6639,7 @@
       "source_file": "backend/src/common/guards/supabase-auth.guard.ts",
       "source_location": "L87",
       "_origin": "ast",
-      "community": 12,
+      "community": 65,
       "norm_label": ".verify()",
       "id": "backend_src_common_guards_supabase_auth_guard_supabaseauthguard_verify"
     },
@@ -6519,7 +6649,7 @@
       "source_file": "backend/src/common/guards/supabase-auth.guard.ts",
       "source_location": "L138",
       "_origin": "ast",
-      "community": 12,
+      "community": 65,
       "norm_label": ".verifyremotely()",
       "id": "backend_src_common_guards_supabase_auth_guard_supabaseauthguard_verifyremotely"
     },
@@ -6529,7 +6659,7 @@
       "source_file": "backend/src/common/guards/supabase-auth.guard.ts",
       "source_location": "L148",
       "_origin": "ast",
-      "community": 12,
+      "community": 65,
       "norm_label": ".extracttoken()",
       "id": "backend_src_common_guards_supabase_auth_guard_supabaseauthguard_extracttoken"
     },
@@ -6609,7 +6739,7 @@
       "source_file": "backend/src/modules/action-items/action-items.module.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 12,
+      "community": 58,
       "norm_label": "action-items.module.ts",
       "id": "backend_src_modules_action_items_action_items_module"
     },
@@ -6619,7 +6749,7 @@
       "source_file": "backend/src/modules/action-items/action-items.module.ts",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 12,
+      "community": 58,
       "norm_label": "actionitemsmodule",
       "id": "backend_src_modules_action_items_action_items_module_actionitemsmodule"
     },
@@ -6629,7 +6759,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 12,
+      "community": 58,
       "norm_label": "module",
       "id": "backend_src_modules_action_items_action_items_module_ts_module"
     },
@@ -7019,7 +7149,7 @@
       "source_file": "backend/src/modules/attachments/attachments.module.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 62,
+      "community": 1,
       "norm_label": "attachments.module.ts",
       "id": "backend_src_modules_attachments_attachments_module"
     },
@@ -7029,7 +7159,7 @@
       "source_file": "backend/src/modules/attachments/attachments.module.ts",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 62,
+      "community": 1,
       "norm_label": "attachmentsmodule",
       "id": "backend_src_modules_attachments_attachments_module_attachmentsmodule"
     },
@@ -7039,7 +7169,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 62,
+      "community": 1,
       "norm_label": "module",
       "id": "backend_src_modules_attachments_attachments_module_ts_module"
     },
@@ -7049,7 +7179,7 @@
       "source_file": "backend/src/modules/attachments/attachments.repository.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 62,
+      "community": 27,
       "norm_label": "attachments.repository.ts",
       "id": "backend_src_modules_attachments_attachments_repository"
     },
@@ -7059,7 +7189,7 @@
       "source_file": "backend/src/modules/attachments/attachments.repository.ts",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 62,
+      "community": 27,
       "norm_label": "attachment",
       "id": "backend_src_modules_attachments_attachments_repository_attachment"
     },
@@ -7069,7 +7199,7 @@
       "source_file": "backend/src/modules/attachments/attachments.repository.ts",
       "source_location": "L22",
       "_origin": "ast",
-      "community": 62,
+      "community": 27,
       "norm_label": "attachmentlistitem",
       "id": "backend_src_modules_attachments_attachments_repository_attachmentlistitem"
     },
@@ -7079,7 +7209,7 @@
       "source_file": "backend/src/modules/attachments/attachments.repository.ts",
       "source_location": "L29",
       "_origin": "ast",
-      "community": 62,
+      "community": 27,
       "norm_label": "attachmentdetail",
       "id": "backend_src_modules_attachments_attachments_repository_attachmentdetail"
     },
@@ -7109,7 +7239,7 @@
       "source_file": "backend/src/modules/attachments/attachments.repository.ts",
       "source_location": "L41",
       "_origin": "ast",
-      "community": 63,
+      "community": 27,
       "norm_label": ".constructor()",
       "id": "backend_src_modules_attachments_attachments_repository_attachmentsrepository_constructor"
     },
@@ -7569,7 +7699,7 @@
       "source_file": "backend/src/modules/links/links.module.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 8,
+      "community": 75,
       "norm_label": "links.module.ts",
       "id": "backend_src_modules_links_links_module"
     },
@@ -7579,7 +7709,7 @@
       "source_file": "backend/src/modules/links/links.module.ts",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 8,
+      "community": 75,
       "norm_label": "linksmodule",
       "id": "backend_src_modules_links_links_module_linksmodule"
     },
@@ -7589,7 +7719,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 8,
+      "community": 75,
       "norm_label": "module",
       "id": "backend_src_modules_links_links_module_ts_module"
     },
@@ -8049,7 +8179,7 @@
       "source_file": "backend/src/modules/milestones/milestones.repository.ts",
       "source_location": "L43",
       "_origin": "ast",
-      "community": 75,
+      "community": 6,
       "norm_label": "milestonesrepository",
       "id": "backend_src_modules_milestones_milestones_repository_milestonesrepository"
     },
@@ -8059,7 +8189,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 75,
+      "community": 6,
       "norm_label": "injectable",
       "id": "backend_src_modules_milestones_milestones_repository_ts_injectable"
     },
@@ -8069,7 +8199,7 @@
       "source_file": "backend/src/modules/milestones/milestones.repository.ts",
       "source_location": "L44",
       "_origin": "ast",
-      "community": 75,
+      "community": 6,
       "norm_label": ".constructor()",
       "id": "backend_src_modules_milestones_milestones_repository_milestonesrepository_constructor"
     },
@@ -8079,7 +8209,7 @@
       "source_file": "backend/src/modules/milestones/milestones.repository.ts",
       "source_location": "L46",
       "_origin": "ast",
-      "community": 75,
+      "community": 6,
       "norm_label": ".table()",
       "id": "backend_src_modules_milestones_milestones_repository_milestonesrepository_table"
     },
@@ -8089,7 +8219,7 @@
       "source_file": "backend/src/modules/milestones/milestones.repository.ts",
       "source_location": "L50",
       "_origin": "ast",
-      "community": 75,
+      "community": 6,
       "norm_label": ".insert()",
       "id": "backend_src_modules_milestones_milestones_repository_milestonesrepository_insert"
     },
@@ -8099,7 +8229,7 @@
       "source_file": "backend/src/modules/milestones/milestones.repository.ts",
       "source_location": "L59",
       "_origin": "ast",
-      "community": 75,
+      "community": 6,
       "norm_label": ".update()",
       "id": "backend_src_modules_milestones_milestones_repository_milestonesrepository_update"
     },
@@ -8119,7 +8249,7 @@
       "source_file": "backend/src/modules/milestones/milestones.repository.ts",
       "source_location": "L89",
       "_origin": "ast",
-      "community": 75,
+      "community": 6,
       "norm_label": ".remove()",
       "id": "backend_src_modules_milestones_milestones_repository_milestonesrepository_remove"
     },
@@ -8129,7 +8259,7 @@
       "source_file": "backend/src/modules/milestones/milestones.repository.ts",
       "source_location": "L97",
       "_origin": "ast",
-      "community": 75,
+      "community": 6,
       "norm_label": ".findbyproject()",
       "id": "backend_src_modules_milestones_milestones_repository_milestonesrepository_findbyproject"
     },
@@ -8139,7 +8269,7 @@
       "source_file": "backend/src/modules/milestones/milestones.repository.ts",
       "source_location": "L110",
       "_origin": "ast",
-      "community": 75,
+      "community": 6,
       "norm_label": ".findone()",
       "id": "backend_src_modules_milestones_milestones_repository_milestonesrepository_findone"
     },
@@ -8449,7 +8579,7 @@
       "source_file": "backend/src/modules/people/people.module.ts",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 12,
+      "community": 58,
       "norm_label": "peoplemodule",
       "id": "backend_src_modules_people_people_module_peoplemodule"
     },
@@ -8459,7 +8589,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 12,
+      "community": 58,
       "norm_label": "module",
       "id": "backend_src_modules_people_people_module_ts_module"
     },
@@ -8999,7 +9129,7 @@
       "source_file": "backend/src/modules/resources/resources.module.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 10,
+      "community": 58,
       "norm_label": "resources.module.ts",
       "id": "backend_src_modules_resources_resources_module"
     },
@@ -9009,7 +9139,7 @@
       "source_file": "backend/src/modules/resources/resources.module.ts",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 10,
+      "community": 58,
       "norm_label": "resourcesmodule",
       "id": "backend_src_modules_resources_resources_module_resourcesmodule"
     },
@@ -9019,7 +9149,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 10,
+      "community": 58,
       "norm_label": "module",
       "id": "backend_src_modules_resources_resources_module_ts_module"
     },
@@ -9129,7 +9259,7 @@
       "source_file": "backend/src/modules/status-reports/status-reports.module.ts",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 5,
+      "community": 58,
       "norm_label": "statusreportsmodule",
       "id": "backend_src_modules_status_reports_status_reports_module_statusreportsmodule"
     },
@@ -9139,7 +9269,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 5,
+      "community": 58,
       "norm_label": "module",
       "id": "backend_src_modules_status_reports_status_reports_module_ts_module"
     },
@@ -9439,7 +9569,7 @@
       "source_file": "backend/test/app.e2e-spec.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 12,
+      "community": 58,
       "norm_label": "app.e2e-spec.ts",
       "id": "backend_test_app_e2e_spec"
     },
@@ -12354,16 +12484,6 @@
       "id": "package_dependencies_nestjs_config"
     },
     {
-      "label": "@nestjs/config",
-      "file_type": "concept",
-      "source_file": "package.json",
-      "source_location": "L3",
-      "_origin": "ast",
-      "community": 40,
-      "norm_label": "@nestjs/config",
-      "id": "nestjs_config"
-    },
-    {
       "label": "@supabase/supabase-js",
       "file_type": "code",
       "source_file": "package.json",
@@ -12402,26 +12522,6 @@
       "community": 40,
       "norm_label": "react-router-dom",
       "id": "package_json_react_router_dom"
-    },
-    {
-      "label": "README.md",
-      "file_type": "document",
-      "source_file": "README.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 64,
-      "norm_label": "readme.md",
-      "id": "readme"
-    },
-    {
-      "label": "ptrack",
-      "file_type": "document",
-      "source_file": "README.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 64,
-      "norm_label": "ptrack",
-      "id": "readme_ptrack"
     },
     {
       "label": "README.md",
@@ -12788,112 +12888,12 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "CLAUDE.md",
-      "source_location": "L1",
-      "weight": 1.0,
-      "source": "claude",
-      "target": "claude_claude_md_p_track",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "CLAUDE.md",
-      "source_location": "L47",
-      "weight": 1.0,
-      "source": "claude_claude_md_p_track",
-      "target": "claude_current_state_phase_1_complete_full_crud",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "CLAUDE.md",
-      "source_location": "L167",
-      "weight": 1.0,
-      "source": "claude_claude_md_p_track",
-      "target": "claude_graphify",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "CLAUDE.md",
-      "source_location": "L26",
-      "weight": 1.0,
-      "source": "claude_claude_md_p_track",
-      "target": "claude_hard_architectural_rules_do_not_violate",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "CLAUDE.md",
-      "source_location": "L116",
-      "weight": 1.0,
-      "source": "claude_claude_md_p_track",
-      "target": "claude_how_i_like_to_work_follow_precisely",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "CLAUDE.md",
-      "source_location": "L130",
-      "weight": 1.0,
-      "source": "claude_claude_md_p_track",
-      "target": "claude_known_gotchas_carry_these_forward",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "CLAUDE.md",
-      "source_location": "L36",
-      "weight": 1.0,
-      "source": "claude_claude_md_p_track",
-      "target": "claude_repo_environment",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "CLAUDE.md",
-      "source_location": "L94",
-      "weight": 1.0,
-      "source": "claude_claude_md_p_track",
-      "target": "claude_roadmap_deferred_to_phase_2",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "CLAUDE.md",
-      "source_location": "L20",
-      "weight": 1.0,
-      "source": "claude_claude_md_p_track",
-      "target": "claude_tech_stack",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "CLAUDE.md",
-      "source_location": "L6",
-      "weight": 1.0,
-      "source": "claude_claude_md_p_track",
-      "target": "claude_what_this_project_is",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "backend/package.json",
       "source_location": "L5",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package",
-      "target": "backend_package_author"
+      "target": "backend_package_author",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -12901,9 +12901,9 @@
       "source_file": "backend/package.json",
       "source_location": "L23",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package",
-      "target": "backend_package_dependencies"
+      "target": "backend_package_dependencies",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -12911,29 +12911,29 @@
       "source_file": "backend/package.json",
       "source_location": "L4",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package",
-      "target": "backend_package_description"
+      "target": "backend_package_description",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/package.json",
-      "source_location": "L35",
+      "source_location": "L36",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package",
-      "target": "backend_package_devdependencies"
+      "target": "backend_package_devdependencies",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/package.json",
-      "source_location": "L60",
+      "source_location": "L61",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package",
-      "target": "backend_package_jest"
+      "target": "backend_package_jest",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -12941,9 +12941,9 @@
       "source_file": "backend/package.json",
       "source_location": "L7",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package",
-      "target": "backend_package_license"
+      "target": "backend_package_license",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -12951,9 +12951,9 @@
       "source_file": "backend/package.json",
       "source_location": "L2",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package",
-      "target": "backend_package_name"
+      "target": "backend_package_name",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -12961,9 +12961,9 @@
       "source_file": "backend/package.json",
       "source_location": "L6",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package",
-      "target": "backend_package_private"
+      "target": "backend_package_private",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -12971,9 +12971,9 @@
       "source_file": "backend/package.json",
       "source_location": "L8",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package",
-      "target": "backend_package_scripts"
+      "target": "backend_package_scripts",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -12981,9 +12981,9 @@
       "source_file": "backend/package.json",
       "source_location": "L3",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package",
-      "target": "backend_package_version"
+      "target": "backend_package_version",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -12991,9 +12991,9 @@
       "source_file": "backend/package.json",
       "source_location": "L10",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package_scripts",
-      "target": "backend_package_scripts_build"
+      "target": "backend_package_scripts_build",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13001,9 +13001,9 @@
       "source_file": "backend/package.json",
       "source_location": "L9",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package_scripts",
-      "target": "backend_package_scripts_dev"
+      "target": "backend_package_scripts_dev",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13011,9 +13011,9 @@
       "source_file": "backend/package.json",
       "source_location": "L11",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package_scripts",
-      "target": "backend_package_scripts_format"
+      "target": "backend_package_scripts_format",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13021,9 +13021,9 @@
       "source_file": "backend/package.json",
       "source_location": "L16",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package_scripts",
-      "target": "backend_package_scripts_lint"
+      "target": "backend_package_scripts_lint",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13031,9 +13031,9 @@
       "source_file": "backend/package.json",
       "source_location": "L12",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package_scripts",
-      "target": "backend_package_scripts_start"
+      "target": "backend_package_scripts_start",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13041,9 +13041,9 @@
       "source_file": "backend/package.json",
       "source_location": "L14",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package_scripts",
-      "target": "backend_package_scripts_start_debug"
+      "target": "backend_package_scripts_start_debug",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13051,9 +13051,9 @@
       "source_file": "backend/package.json",
       "source_location": "L13",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package_scripts",
-      "target": "backend_package_scripts_start_dev"
+      "target": "backend_package_scripts_start_dev",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13061,9 +13061,9 @@
       "source_file": "backend/package.json",
       "source_location": "L15",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package_scripts",
-      "target": "backend_package_scripts_start_prod"
+      "target": "backend_package_scripts_start_prod",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13071,9 +13071,9 @@
       "source_file": "backend/package.json",
       "source_location": "L17",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package_scripts",
-      "target": "backend_package_scripts_test"
+      "target": "backend_package_scripts_test",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13081,9 +13081,9 @@
       "source_file": "backend/package.json",
       "source_location": "L19",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package_scripts",
-      "target": "backend_package_scripts_test_cov"
+      "target": "backend_package_scripts_test_cov",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13091,9 +13091,9 @@
       "source_file": "backend/package.json",
       "source_location": "L20",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package_scripts",
-      "target": "backend_package_scripts_test_debug"
+      "target": "backend_package_scripts_test_debug",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13101,9 +13101,9 @@
       "source_file": "backend/package.json",
       "source_location": "L21",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package_scripts",
-      "target": "backend_package_scripts_test_e2e"
+      "target": "backend_package_scripts_test_e2e",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13111,19 +13111,9 @@
       "source_file": "backend/package.json",
       "source_location": "L18",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package_scripts",
-      "target": "backend_package_scripts_test_watch"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "backend/package.json",
-      "source_location": "L29",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "backend_package_dependencies",
-      "target": "backend_package_dependencies_class_transformer"
+      "target": "backend_package_scripts_test_watch",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13131,9 +13121,9 @@
       "source_file": "backend/package.json",
       "source_location": "L30",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package_dependencies",
-      "target": "backend_package_dependencies_class_validator"
+      "target": "backend_package_dependencies_class_transformer",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13141,59 +13131,9 @@
       "source_file": "backend/package.json",
       "source_location": "L31",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package_dependencies",
-      "target": "backend_package_dependencies_jose"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "backend/package.json",
-      "source_location": "L24",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "backend_package_dependencies",
-      "target": "backend_package_dependencies_nestjs_common"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "backend/package.json",
-      "source_location": "L25",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "backend_package_dependencies",
-      "target": "backend_package_dependencies_nestjs_core"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "backend/package.json",
-      "source_location": "L26",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "backend_package_dependencies",
-      "target": "backend_package_dependencies_nestjs_mapped_types"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "backend/package.json",
-      "source_location": "L27",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "backend_package_dependencies",
-      "target": "backend_package_dependencies_nestjs_platform_express"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "backend/package.json",
-      "source_location": "L28",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "backend_package_dependencies",
-      "target": "backend_package_dependencies_nestjs_swagger"
+      "target": "backend_package_dependencies_class_validator",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13201,9 +13141,59 @@
       "source_file": "backend/package.json",
       "source_location": "L32",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package_dependencies",
-      "target": "backend_package_dependencies_reflect_metadata"
+      "target": "backend_package_dependencies_jose",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "backend_package_dependencies",
+      "target": "backend_package_dependencies_nestjs_common",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "backend_package_dependencies",
+      "target": "backend_package_dependencies_nestjs_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "backend_package_dependencies",
+      "target": "backend_package_dependencies_nestjs_core",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "backend_package_dependencies",
+      "target": "backend_package_dependencies_nestjs_platform_express",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L28",
+      "weight": 1.0,
+      "source": "backend_package_dependencies",
+      "target": "backend_package_dependencies_nestjs_swagger",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13211,9 +13201,29 @@
       "source_file": "backend/package.json",
       "source_location": "L33",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package_dependencies",
-      "target": "backend_package_dependencies_rxjs"
+      "target": "backend_package_dependencies_reflect_metadata",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L34",
+      "weight": 1.0,
+      "source": "backend_package_dependencies",
+      "target": "backend_package_dependencies_rxjs",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L29",
+      "weight": 1.0,
+      "source": "backend_package_dependencies",
+      "target": "backend_package_dependencies_supabase_supabase_js",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13222,9 +13232,9 @@
       "source_location": "L24",
       "weight": 1.0,
       "context": "import",
-      "confidence_score": 1.0,
       "source": "backend_package_dependencies_nestjs_common",
-      "target": "nestjs_common"
+      "target": "nestjs_common",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13233,9 +13243,20 @@
       "source_location": "L25",
       "weight": 1.0,
       "context": "import",
+      "source": "backend_package_dependencies_nestjs_config",
+      "target": "nestjs_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L3",
+      "weight": 1.0,
+      "context": "import",
       "confidence_score": 1.0,
-      "source": "backend_package_dependencies_nestjs_core",
-      "target": "nestjs_core"
+      "source": "package_dependencies_nestjs_config",
+      "target": "nestjs_config"
     },
     {
       "relation": "imports",
@@ -13244,9 +13265,9 @@
       "source_location": "L26",
       "weight": 1.0,
       "context": "import",
-      "confidence_score": 1.0,
-      "source": "backend_package_dependencies_nestjs_mapped_types",
-      "target": "nestjs_mapped_types"
+      "source": "backend_package_dependencies_nestjs_core",
+      "target": "nestjs_core",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13255,9 +13276,9 @@
       "source_location": "L27",
       "weight": 1.0,
       "context": "import",
-      "confidence_score": 1.0,
       "source": "backend_package_dependencies_nestjs_platform_express",
-      "target": "nestjs_platform_express"
+      "target": "nestjs_platform_express",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13266,9 +13287,9 @@
       "source_location": "L28",
       "weight": 1.0,
       "context": "import",
-      "confidence_score": 1.0,
       "source": "backend_package_dependencies_nestjs_swagger",
-      "target": "nestjs_swagger"
+      "target": "nestjs_swagger",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13277,9 +13298,9 @@
       "source_location": "L29",
       "weight": 1.0,
       "context": "import",
-      "confidence_score": 1.0,
-      "source": "backend_package_dependencies_class_transformer",
-      "target": "class_transformer"
+      "source": "backend_package_dependencies_supabase_supabase_js",
+      "target": "supabase_supabase_js",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13288,9 +13309,9 @@
       "source_location": "L30",
       "weight": 1.0,
       "context": "import",
-      "confidence_score": 1.0,
-      "source": "backend_package_dependencies_class_validator",
-      "target": "class_validator"
+      "source": "backend_package_dependencies_class_transformer",
+      "target": "class_transformer",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13299,9 +13320,9 @@
       "source_location": "L31",
       "weight": 1.0,
       "context": "import",
-      "confidence_score": 1.0,
-      "source": "backend_package_dependencies_jose",
-      "target": "jose"
+      "source": "backend_package_dependencies_class_validator",
+      "target": "class_validator",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13310,9 +13331,9 @@
       "source_location": "L32",
       "weight": 1.0,
       "context": "import",
-      "confidence_score": 1.0,
-      "source": "backend_package_dependencies_reflect_metadata",
-      "target": "reflect_metadata"
+      "source": "backend_package_dependencies_jose",
+      "target": "jose",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13321,19 +13342,20 @@
       "source_location": "L33",
       "weight": 1.0,
       "context": "import",
-      "confidence_score": 1.0,
+      "source": "backend_package_dependencies_reflect_metadata",
+      "target": "reflect_metadata",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L34",
+      "weight": 1.0,
+      "context": "import",
       "source": "backend_package_dependencies_rxjs",
-      "target": "rxjs"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "backend/package.json",
-      "source_location": "L45",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "backend_package_devdependencies",
-      "target": "backend_package_devdependencies_eslint"
+      "target": "rxjs",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13341,29 +13363,9 @@
       "source_file": "backend/package.json",
       "source_location": "L46",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package_devdependencies",
-      "target": "backend_package_devdependencies_eslint_config_prettier"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "backend/package.json",
-      "source_location": "L36",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "backend_package_devdependencies",
-      "target": "backend_package_devdependencies_eslint_eslintrc"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "backend/package.json",
-      "source_location": "L37",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "backend_package_devdependencies",
-      "target": "backend_package_devdependencies_eslint_js"
+      "target": "backend_package_devdependencies_eslint",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13371,29 +13373,19 @@
       "source_file": "backend/package.json",
       "source_location": "L47",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package_devdependencies",
-      "target": "backend_package_devdependencies_eslint_plugin_prettier"
+      "target": "backend_package_devdependencies_eslint_config_prettier",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/package.json",
-      "source_location": "L48",
+      "source_location": "L37",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package_devdependencies",
-      "target": "backend_package_devdependencies_globals"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "backend/package.json",
-      "source_location": "L49",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "backend_package_devdependencies",
-      "target": "backend_package_devdependencies_jest"
+      "target": "backend_package_devdependencies_eslint_eslintrc",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13401,29 +13393,29 @@
       "source_file": "backend/package.json",
       "source_location": "L38",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package_devdependencies",
-      "target": "backend_package_devdependencies_nestjs_cli"
+      "target": "backend_package_devdependencies_eslint_js",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/package.json",
-      "source_location": "L39",
+      "source_location": "L48",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package_devdependencies",
-      "target": "backend_package_devdependencies_nestjs_schematics"
+      "target": "backend_package_devdependencies_eslint_plugin_prettier",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/package.json",
-      "source_location": "L40",
+      "source_location": "L49",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package_devdependencies",
-      "target": "backend_package_devdependencies_nestjs_testing"
+      "target": "backend_package_devdependencies_globals",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13431,69 +13423,29 @@
       "source_file": "backend/package.json",
       "source_location": "L50",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package_devdependencies",
-      "target": "backend_package_devdependencies_prettier"
+      "target": "backend_package_devdependencies_jest",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/package.json",
-      "source_location": "L51",
+      "source_location": "L39",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package_devdependencies",
-      "target": "backend_package_devdependencies_source_map_support"
+      "target": "backend_package_devdependencies_nestjs_cli",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/package.json",
-      "source_location": "L52",
+      "source_location": "L40",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package_devdependencies",
-      "target": "backend_package_devdependencies_supertest"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "backend/package.json",
-      "source_location": "L53",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "backend_package_devdependencies",
-      "target": "backend_package_devdependencies_ts_jest"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "backend/package.json",
-      "source_location": "L54",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "backend_package_devdependencies",
-      "target": "backend_package_devdependencies_ts_loader"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "backend/package.json",
-      "source_location": "L55",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "backend_package_devdependencies",
-      "target": "backend_package_devdependencies_ts_node"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "backend/package.json",
-      "source_location": "L56",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "backend_package_devdependencies",
-      "target": "backend_package_devdependencies_tsconfig_paths"
+      "target": "backend_package_devdependencies_nestjs_schematics",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13501,39 +13453,69 @@
       "source_file": "backend/package.json",
       "source_location": "L41",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package_devdependencies",
-      "target": "backend_package_devdependencies_types_express"
+      "target": "backend_package_devdependencies_nestjs_testing",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/package.json",
-      "source_location": "L42",
+      "source_location": "L51",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package_devdependencies",
-      "target": "backend_package_devdependencies_types_jest"
+      "target": "backend_package_devdependencies_prettier",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/package.json",
-      "source_location": "L43",
+      "source_location": "L52",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package_devdependencies",
-      "target": "backend_package_devdependencies_types_node"
+      "target": "backend_package_devdependencies_source_map_support",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/package.json",
-      "source_location": "L44",
+      "source_location": "L53",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package_devdependencies",
-      "target": "backend_package_devdependencies_types_supertest"
+      "target": "backend_package_devdependencies_supertest",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L54",
+      "weight": 1.0,
+      "source": "backend_package_devdependencies",
+      "target": "backend_package_devdependencies_ts_jest",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L55",
+      "weight": 1.0,
+      "source": "backend_package_devdependencies",
+      "target": "backend_package_devdependencies_ts_loader",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L56",
+      "weight": 1.0,
+      "source": "backend_package_devdependencies",
+      "target": "backend_package_devdependencies_ts_node",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13541,9 +13523,49 @@
       "source_file": "backend/package.json",
       "source_location": "L57",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package_devdependencies",
-      "target": "backend_package_devdependencies_typescript"
+      "target": "backend_package_devdependencies_tsconfig_paths",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L42",
+      "weight": 1.0,
+      "source": "backend_package_devdependencies",
+      "target": "backend_package_devdependencies_types_express",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L43",
+      "weight": 1.0,
+      "source": "backend_package_devdependencies",
+      "target": "backend_package_devdependencies_types_jest",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L44",
+      "weight": 1.0,
+      "source": "backend_package_devdependencies",
+      "target": "backend_package_devdependencies_types_node",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L45",
+      "weight": 1.0,
+      "source": "backend_package_devdependencies",
+      "target": "backend_package_devdependencies_types_supertest",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13551,31 +13573,30 @@
       "source_file": "backend/package.json",
       "source_location": "L58",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package_devdependencies",
-      "target": "backend_package_devdependencies_typescript_eslint"
+      "target": "backend_package_devdependencies_typescript",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L59",
+      "weight": 1.0,
+      "source": "backend_package_devdependencies",
+      "target": "backend_package_devdependencies_typescript_eslint",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "backend/package.json",
-      "source_location": "L36",
+      "source_location": "L37",
       "weight": 1.0,
       "context": "import",
-      "confidence_score": 1.0,
       "source": "backend_package_devdependencies_eslint_eslintrc",
-      "target": "eslint_eslintrc"
-    },
-    {
-      "relation": "imports",
-      "confidence": "EXTRACTED",
-      "source_file": "backend/package.json",
-      "source_location": "L37",
-      "weight": 1.0,
-      "context": "import",
-      "confidence_score": 1.0,
-      "source": "backend_package_devdependencies_eslint_js",
-      "target": "eslint_js"
+      "target": "eslint_eslintrc",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13584,9 +13605,9 @@
       "source_location": "L38",
       "weight": 1.0,
       "context": "import",
-      "confidence_score": 1.0,
-      "source": "backend_package_devdependencies_nestjs_cli",
-      "target": "nestjs_cli"
+      "source": "backend_package_devdependencies_eslint_js",
+      "target": "eslint_js",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13595,9 +13616,9 @@
       "source_location": "L39",
       "weight": 1.0,
       "context": "import",
-      "confidence_score": 1.0,
-      "source": "backend_package_devdependencies_nestjs_schematics",
-      "target": "nestjs_schematics"
+      "source": "backend_package_devdependencies_nestjs_cli",
+      "target": "nestjs_cli",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13606,9 +13627,9 @@
       "source_location": "L40",
       "weight": 1.0,
       "context": "import",
-      "confidence_score": 1.0,
-      "source": "backend_package_devdependencies_nestjs_testing",
-      "target": "nestjs_testing"
+      "source": "backend_package_devdependencies_nestjs_schematics",
+      "target": "nestjs_schematics",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13617,9 +13638,9 @@
       "source_location": "L41",
       "weight": 1.0,
       "context": "import",
-      "confidence_score": 1.0,
-      "source": "backend_package_devdependencies_types_express",
-      "target": "types_express"
+      "source": "backend_package_devdependencies_nestjs_testing",
+      "target": "nestjs_testing",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13628,9 +13649,9 @@
       "source_location": "L42",
       "weight": 1.0,
       "context": "import",
-      "confidence_score": 1.0,
-      "source": "backend_package_devdependencies_types_jest",
-      "target": "types_jest"
+      "source": "backend_package_devdependencies_types_express",
+      "target": "types_express",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13639,9 +13660,9 @@
       "source_location": "L43",
       "weight": 1.0,
       "context": "import",
-      "confidence_score": 1.0,
-      "source": "backend_package_devdependencies_types_node",
-      "target": "types_node"
+      "source": "backend_package_devdependencies_types_jest",
+      "target": "types_jest",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13650,9 +13671,9 @@
       "source_location": "L44",
       "weight": 1.0,
       "context": "import",
-      "confidence_score": 1.0,
-      "source": "backend_package_devdependencies_types_supertest",
-      "target": "types_supertest"
+      "source": "backend_package_devdependencies_types_node",
+      "target": "types_node",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13661,9 +13682,9 @@
       "source_location": "L45",
       "weight": 1.0,
       "context": "import",
-      "confidence_score": 1.0,
-      "source": "backend_package_devdependencies_eslint",
-      "target": "eslint"
+      "source": "backend_package_devdependencies_types_supertest",
+      "target": "types_supertest",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13672,9 +13693,9 @@
       "source_location": "L46",
       "weight": 1.0,
       "context": "import",
-      "confidence_score": 1.0,
-      "source": "backend_package_devdependencies_eslint_config_prettier",
-      "target": "eslint_config_prettier"
+      "source": "backend_package_devdependencies_eslint",
+      "target": "eslint",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13683,9 +13704,9 @@
       "source_location": "L47",
       "weight": 1.0,
       "context": "import",
-      "confidence_score": 1.0,
-      "source": "backend_package_devdependencies_eslint_plugin_prettier",
-      "target": "eslint_plugin_prettier"
+      "source": "backend_package_devdependencies_eslint_config_prettier",
+      "target": "eslint_config_prettier",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13694,9 +13715,9 @@
       "source_location": "L48",
       "weight": 1.0,
       "context": "import",
-      "confidence_score": 1.0,
-      "source": "backend_package_devdependencies_globals",
-      "target": "globals"
+      "source": "backend_package_devdependencies_eslint_plugin_prettier",
+      "target": "eslint_plugin_prettier",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13705,9 +13726,9 @@
       "source_location": "L49",
       "weight": 1.0,
       "context": "import",
-      "confidence_score": 1.0,
-      "source": "backend_package_devdependencies_jest",
-      "target": "jest"
+      "source": "backend_package_devdependencies_globals",
+      "target": "globals",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13716,9 +13737,9 @@
       "source_location": "L50",
       "weight": 1.0,
       "context": "import",
-      "confidence_score": 1.0,
-      "source": "backend_package_devdependencies_prettier",
-      "target": "prettier"
+      "source": "backend_package_devdependencies_jest",
+      "target": "jest",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13727,9 +13748,9 @@
       "source_location": "L51",
       "weight": 1.0,
       "context": "import",
-      "confidence_score": 1.0,
-      "source": "backend_package_devdependencies_source_map_support",
-      "target": "source_map_support"
+      "source": "backend_package_devdependencies_prettier",
+      "target": "prettier",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13738,9 +13759,9 @@
       "source_location": "L52",
       "weight": 1.0,
       "context": "import",
-      "confidence_score": 1.0,
-      "source": "backend_package_devdependencies_supertest",
-      "target": "supertest"
+      "source": "backend_package_devdependencies_source_map_support",
+      "target": "source_map_support",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13749,9 +13770,9 @@
       "source_location": "L53",
       "weight": 1.0,
       "context": "import",
-      "confidence_score": 1.0,
-      "source": "backend_package_devdependencies_ts_jest",
-      "target": "ts_jest"
+      "source": "backend_package_devdependencies_supertest",
+      "target": "supertest",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13760,9 +13781,9 @@
       "source_location": "L54",
       "weight": 1.0,
       "context": "import",
-      "confidence_score": 1.0,
-      "source": "backend_package_devdependencies_ts_loader",
-      "target": "ts_loader"
+      "source": "backend_package_devdependencies_ts_jest",
+      "target": "ts_jest",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13771,9 +13792,9 @@
       "source_location": "L55",
       "weight": 1.0,
       "context": "import",
-      "confidence_score": 1.0,
-      "source": "backend_package_devdependencies_ts_node",
-      "target": "ts_node"
+      "source": "backend_package_devdependencies_ts_loader",
+      "target": "ts_loader",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13782,9 +13803,9 @@
       "source_location": "L56",
       "weight": 1.0,
       "context": "import",
-      "confidence_score": 1.0,
-      "source": "backend_package_devdependencies_tsconfig_paths",
-      "target": "tsconfig_paths"
+      "source": "backend_package_devdependencies_ts_node",
+      "target": "ts_node",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13793,9 +13814,9 @@
       "source_location": "L57",
       "weight": 1.0,
       "context": "import",
-      "confidence_score": 1.0,
-      "source": "backend_package_devdependencies_typescript",
-      "target": "typescript"
+      "source": "backend_package_devdependencies_tsconfig_paths",
+      "target": "tsconfig_paths",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13804,49 +13825,30 @@
       "source_location": "L58",
       "weight": 1.0,
       "context": "import",
-      "confidence_score": 1.0,
+      "source": "backend_package_devdependencies_typescript",
+      "target": "typescript",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L59",
+      "weight": 1.0,
+      "context": "import",
       "source": "backend_package_devdependencies_typescript_eslint",
-      "target": "typescript_eslint"
+      "target": "typescript_eslint",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "backend/package.json",
-      "source_location": "L81",
+      "source_location": "L82",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package_jest",
-      "target": "backend_package_jest_collectcoveragefrom"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "backend/package.json",
-      "source_location": "L84",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "backend_package_jest",
-      "target": "backend_package_jest_coveragedirectory"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "backend/package.json",
-      "source_location": "L61",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "backend_package_jest",
-      "target": "backend_package_jest_modulefileextensions"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "backend/package.json",
-      "source_location": "L66",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "backend_package_jest",
-      "target": "backend_package_jest_rootdir"
+      "target": "backend_package_jest_collectcoveragefrom",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13854,9 +13856,19 @@
       "source_file": "backend/package.json",
       "source_location": "L85",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package_jest",
-      "target": "backend_package_jest_testenvironment"
+      "target": "backend_package_jest_coveragedirectory",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L62",
+      "weight": 1.0,
+      "source": "backend_package_jest",
+      "target": "backend_package_jest_modulefileextensions",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13864,9 +13876,19 @@
       "source_file": "backend/package.json",
       "source_location": "L67",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package_jest",
-      "target": "backend_package_jest_testregex"
+      "target": "backend_package_jest_rootdir",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L86",
+      "weight": 1.0,
+      "source": "backend_package_jest",
+      "target": "backend_package_jest_testenvironment",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13874,52 +13896,9 @@
       "source_file": "backend/package.json",
       "source_location": "L68",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "backend_package_jest",
-      "target": "backend_package_jest_transform"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "backend/package.json",
-      "source_location": "L78",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "backend_package_jest",
-      "target": "backend_package_jest_transformignorepatterns"
-    },
-    {
-      "relation": "extends",
-      "confidence": "EXTRACTED",
-      "source_file": "backend/package.json",
-      "source_location": "L61",
-      "weight": 1.0,
-      "context": "import",
-      "confidence_score": 1.0,
-      "source": "backend_package_jest_modulefileextensions",
-      "target": "ref_js"
-    },
-    {
-      "relation": "extends",
-      "confidence": "EXTRACTED",
-      "source_file": "backend/package.json",
-      "source_location": "L61",
-      "weight": 1.0,
-      "context": "import",
-      "confidence_score": 1.0,
-      "source": "backend_package_jest_modulefileextensions",
-      "target": "ref_json"
-    },
-    {
-      "relation": "extends",
-      "confidence": "EXTRACTED",
-      "source_file": "backend/package.json",
-      "source_location": "L61",
-      "weight": 1.0,
-      "context": "import",
-      "confidence_score": 1.0,
-      "source": "backend_package_jest_modulefileextensions",
-      "target": "ref_ts"
+      "target": "backend_package_jest_testregex",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13927,42 +13906,295 @@
       "source_file": "backend/package.json",
       "source_location": "L69",
       "weight": 1.0,
-      "confidence_score": 1.0,
+      "source": "backend_package_jest",
+      "target": "backend_package_jest_transform",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L79",
+      "weight": 1.0,
+      "source": "backend_package_jest",
+      "target": "backend_package_jest_transformignorepatterns",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "extends",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L62",
+      "weight": 1.0,
+      "context": "import",
+      "source": "backend_package_jest_modulefileextensions",
+      "target": "ref_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "extends",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L62",
+      "weight": 1.0,
+      "context": "import",
+      "source": "backend_package_jest_modulefileextensions",
+      "target": "ref_json",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "extends",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L62",
+      "weight": 1.0,
+      "context": "import",
+      "source": "backend_package_jest_modulefileextensions",
+      "target": "ref_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "backend/package.json",
+      "source_location": "L70",
+      "weight": 1.0,
       "source": "backend_package_jest_transform",
-      "target": "backend_package_transform_t_j_s"
+      "target": "backend_package_transform_t_j_s",
+      "confidence_score": 1.0
     },
     {
       "relation": "extends",
       "confidence": "EXTRACTED",
       "source_file": "backend/package.json",
-      "source_location": "L69",
+      "source_location": "L70",
       "weight": 1.0,
       "context": "import",
-      "confidence_score": 1.0,
       "source": "backend_package_transform_t_j_s",
-      "target": "ref_ts_jest"
+      "target": "ref_ts_jest",
+      "confidence_score": 1.0
     },
     {
       "relation": "extends",
       "confidence": "EXTRACTED",
       "source_file": "backend/package.json",
-      "source_location": "L78",
+      "source_location": "L79",
       "weight": 1.0,
       "context": "import",
-      "confidence_score": 1.0,
       "source": "backend_package_jest_transformignorepatterns",
-      "target": "ref_node_modules_jose"
+      "target": "ref_node_modules_jose",
+      "confidence_score": 1.0
     },
     {
       "relation": "extends",
       "confidence": "EXTRACTED",
       "source_file": "backend/package.json",
-      "source_location": "L81",
+      "source_location": "L82",
       "weight": 1.0,
       "context": "import",
-      "confidence_score": 1.0,
       "source": "backend_package_jest_collectcoveragefrom",
-      "target": "ref_t_j_s"
+      "target": "ref_t_j_s",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L35",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "readme",
+      "target": "readme_architecture"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L132",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "readme",
+      "target": "readme_more_docs"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L115",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "readme",
+      "target": "readme_quality"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L62",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "readme",
+      "target": "readme_quick_start"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L125",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "readme",
+      "target": "readme_roadmap"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L22",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "readme",
+      "target": "readme_what_s_inside"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L66",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "readme_quick_start",
+      "target": "readme_1_database_supabase_sql_editor"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L76",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "readme_quick_start",
+      "target": "readme_2_backend_3000"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L92",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "readme_quick_start",
+      "target": "readme_3_frontend_5173"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L110",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "readme_quick_start",
+      "target": "readme_4_explore"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CLAUDE.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "claude",
+      "target": "claude_claude_md_p_track"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CLAUDE.md",
+      "source_location": "L47",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "claude_claude_md_p_track",
+      "target": "claude_current_state_phase_1_complete_full_crud"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CLAUDE.md",
+      "source_location": "L167",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "claude_claude_md_p_track",
+      "target": "claude_graphify"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CLAUDE.md",
+      "source_location": "L26",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "claude_claude_md_p_track",
+      "target": "claude_hard_architectural_rules_do_not_violate"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CLAUDE.md",
+      "source_location": "L116",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "claude_claude_md_p_track",
+      "target": "claude_how_i_like_to_work_follow_precisely"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CLAUDE.md",
+      "source_location": "L130",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "claude_claude_md_p_track",
+      "target": "claude_known_gotchas_carry_these_forward"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CLAUDE.md",
+      "source_location": "L36",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "claude_claude_md_p_track",
+      "target": "claude_repo_environment"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CLAUDE.md",
+      "source_location": "L94",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "claude_claude_md_p_track",
+      "target": "claude_roadmap_deferred_to_phase_2"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CLAUDE.md",
+      "source_location": "L20",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "claude_claude_md_p_track",
+      "target": "claude_tech_stack"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CLAUDE.md",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "claude_claude_md_p_track",
+      "target": "claude_what_this_project_is"
     },
     {
       "relation": "contains",
@@ -34542,17 +34774,6 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "package.json",
-      "source_location": "L3",
-      "weight": 1.0,
-      "context": "import",
-      "confidence_score": 1.0,
-      "source": "package_dependencies_nestjs_config",
-      "target": "nestjs_config"
-    },
-    {
-      "relation": "imports",
-      "confidence": "EXTRACTED",
-      "source_file": "package.json",
       "source_location": "L4",
       "weight": 1.0,
       "context": "import",
@@ -34570,16 +34791,6 @@
       "confidence_score": 1.0,
       "source": "package_dependencies_react_router_dom",
       "target": "package_json_react_router_dom"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "README.md",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "readme",
-      "target": "readme_ptrack"
     },
     {
       "relation": "contains",
@@ -34913,5 +35124,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "b4d0e9cdc71d0bde70a7f19e57ed97d9bdf057d3"
+  "built_at_commit": "d927b7dcee2da6cf2b9f20e287d16b89e7a7d3f7"
 }
