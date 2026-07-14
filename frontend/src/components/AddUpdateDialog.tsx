@@ -1,3 +1,4 @@
+import { toast } from '@/lib/toast'
 import { useEffect, useState } from 'react'
 import { lookupsApi, updatesApi, type Lookup, type Update } from '@/lib/api'
 import { Button } from '@/components/ui/button'
@@ -83,7 +84,7 @@ export function AddUpdateDialog({
           return general?.id ?? list[0]?.id ?? null
         })
       })
-      .catch(() => {})
+      .catch(() => toast.error('Could not load update types.'))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open])
 

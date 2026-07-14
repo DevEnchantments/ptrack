@@ -80,7 +80,8 @@ export class ResourcesController {
   remove(
     @Param('projectId', ParseUUIDPipe) projectId: string,
     @Param('resourceId', ParseUUIDPipe) resourceId: string,
+    @CurrentUser() user: AuthUser,
   ) {
-    return this.resources.remove(projectId, resourceId);
+    return this.resources.remove(projectId, resourceId, user.id);
   }
 }

@@ -18,7 +18,7 @@ create table if not exists record_history (
   record_id   uuid        not null,
   project_id  uuid        not null references projects (id) on delete cascade,
   event       text        not null default 'changed'
-                            check (event in ('created', 'changed')),
+                            check (event in ('created', 'changed', 'deleted')),
   field_label text,                               -- null for 'created'
   old_value   text,
   new_value   text,

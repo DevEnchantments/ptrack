@@ -1,3 +1,4 @@
+import { toast } from '@/lib/toast'
 import { useEffect, useState } from 'react'
 import type { CreateProjectForm } from '../CreateProjectWizard'
 import { lookupsApi, type Lookup } from '@/lib/api'
@@ -16,8 +17,8 @@ export function StepConfirmation({ form }: { form: CreateProjectForm }) {
   const [roles, setRoles] = useState<Lookup[]>([])
 
   useEffect(() => {
-    lookupsApi.list('project-statuses').then(setStatuses).catch(() => {})
-    lookupsApi.list('project-roles').then(setRoles).catch(() => {})
+    lookupsApi.list('project-statuses').then(setStatuses).catch(() => toast.error('Could not load project statuses.'))
+    lookupsApi.list('project-roles').then(setRoles).catch(() => toast.error('Could not load project roles.'))
   }, [])
 
   const statusName = statuses.find((s) => s.id === form.status_id)?.name ?? '—'

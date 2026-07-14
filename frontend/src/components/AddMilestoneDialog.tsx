@@ -1,3 +1,4 @@
+import { toast } from '@/lib/toast'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import type { ProjectMemberInput } from '@/pages/CreateProjectWizard'
@@ -98,7 +99,7 @@ export function AddMilestoneDialog({
 
   useEffect(() => {
     if (!open) return
-    lookupsApi.list('project-roles').then(setRoles).catch(() => {})
+    lookupsApi.list('project-roles').then(setRoles).catch(() => toast.error('Could not load project roles.'))
   }, [open])
 
   useEffect(() => {

@@ -1,3 +1,4 @@
+import { toast } from '@/lib/toast'
 import { useEffect, useState } from 'react'
 import type { ProjectMemberInput } from '@/pages/CreateProjectWizard'
 import {
@@ -77,8 +78,8 @@ export function AddPersonDialog({
 
   useEffect(() => {
     if (!open) return
-    lookupsApi.list('project-roles').then(setRoles).catch(() => {})
-    lookupsApi.list('involvement-levels').then(setLevels).catch(() => {})
+    lookupsApi.list('project-roles').then(setRoles).catch(() => toast.error('Could not load project roles.'))
+    lookupsApi.list('involvement-levels').then(setLevels).catch(() => toast.error('Could not load involvement levels.'))
   }, [open])
 
   useEffect(() => {

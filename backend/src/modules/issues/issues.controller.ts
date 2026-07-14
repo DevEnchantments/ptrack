@@ -87,7 +87,8 @@ export class IssuesController {
   remove(
     @Param('projectId', ParseUUIDPipe) projectId: string,
     @Param('issueId', ParseUUIDPipe) issueId: string,
+    @CurrentUser() user: AuthUser,
   ) {
-    return this.issues.remove(projectId, issueId);
+    return this.issues.remove(projectId, issueId, user.id);
   }
 }

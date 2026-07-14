@@ -1,0 +1,54 @@
+# P-Track CI — typecheck, lint, build and test both halves on every push/PR.
+#
+# Backend lint is BLOCKING (baseline is clean; keep it that way).
+# Frontend lint is non-blocking for now: 16 pre-existing errors (setState-in-
+# effect in the Add* dialogs + react-refresh export warnings) predate CI.
+# Flip continue-on-error off once those are paid down.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: backend/package-lock.json
+      - run: npm ci
+      - name: Typecheck
+        run: npx tsc --noEmit
+      - name: Lint (blocking)
+        run: npx eslint "src/**/*.ts" --max-warnings 0
+      - name: Build
+        run: npm run build
+      - name: Test
+        run: npm test
+
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci
+      - name: Typecheck + build
+        run: npm run build
+      - name: Lint (non-blocking — pre-existing errors, see header)
+        run: npx eslint src
+        continue-on-error: true

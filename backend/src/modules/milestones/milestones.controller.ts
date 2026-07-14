@@ -106,7 +106,8 @@ export class MilestonesController {
   remove(
     @Param('projectId', ParseUUIDPipe) projectId: string,
     @Param('milestoneId', ParseUUIDPipe) milestoneId: string,
+    @CurrentUser() user: AuthUser,
   ) {
-    return this.milestones.remove(projectId, milestoneId);
+    return this.milestones.remove(projectId, milestoneId, user.id);
   }
 }

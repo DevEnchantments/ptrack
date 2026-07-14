@@ -1,3 +1,4 @@
+import { toast } from '@/lib/toast'
 import { useEffect, useState } from 'react'
 import type { ProjectMemberInput } from '@/pages/CreateProjectWizard'
 import { useNavigate } from 'react-router-dom'
@@ -118,9 +119,9 @@ export function AddActionItemDialog({
 
   useEffect(() => {
     if (!open) return
-    lookupsApi.list('project-roles').then(setRoles).catch(() => {})
-    lookupsApi.list('action-item-types').then(setTypes).catch(() => {})
-    milestonesApi.list(projectId).then(setMilestones).catch(() => {})
+    lookupsApi.list('project-roles').then(setRoles).catch(() => toast.error('Could not load project roles.'))
+    lookupsApi.list('action-item-types').then(setTypes).catch(() => toast.error('Could not load action item types.'))
+    milestonesApi.list(projectId).then(setMilestones).catch(() => toast.error('Could not load milestones.'))
   }, [open, projectId])
 
   useEffect(() => {

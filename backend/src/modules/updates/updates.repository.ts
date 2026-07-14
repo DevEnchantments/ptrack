@@ -56,23 +56,40 @@ export class UpdatesRepository {
     return data as unknown as UpdateListItem;
   }
 
-  /** Returns the deleted id, or null when the update is not in this project. */
-  async remove(projectId: string, updateId: string): Promise<string | null> {
+  /** Returns the deleted row's id+label, or null when not in this project. */
+  async remove(
+    projectId: string,
+    updateId: string,
+  ): Promise<{ id: string; label: string | null } | null> {
     const { data, error } = await this.table
       .delete()
       .eq('project_id', projectId)
       .eq('id', updateId)
-      .select('id')
-      .maybeSingle<{ id: string }>();
+      .select('id, body')
+      .maybeSingle<{ id: string; body: string | null }>();
     if (error) throw toHttpException(error, 'updates.remove');
-    return data?.id ?? null;
+    // Updates have no title; use a snippet of the body as the audit label.
+    const snippet = data?.body
+      ? data.body.length > 80
+        ? `${data.body.slice(0, 77)}…`
+        : data.body
+      : null;
+    return data ? { id: data.id, label: snippet } : null;
   }
 
-  async findByProject(projectId: string): Promise<UpdateListItem[]> {
-    const { data, error } = await this.table
+  async findByProject(
+    projectId: string,
+    page?: { limit?: number; offset?: number },
+  ): Promise<UpdateListItem[]> {
+    let query = this.table
       .select(JOINS)
       .eq('project_id', projectId)
       .order('created_at', { ascending: false });
+    if (page?.limit) {
+      const from = page.offset ?? 0;
+      query = query.range(from, from + page.limit - 1);
+    }
+    const { data, error } = await query;
     if (error) throw toHttpException(error, 'updates.findByProject');
     return (data ?? []) as unknown as UpdateListItem[];
   }

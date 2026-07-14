@@ -77,7 +77,8 @@ export class LinksController {
   remove(
     @Param('projectId', ParseUUIDPipe) projectId: string,
     @Param('linkId', ParseUUIDPipe) linkId: string,
+    @CurrentUser() user: AuthUser,
   ) {
-    return this.links.remove(projectId, linkId);
+    return this.links.remove(projectId, linkId, user.id);
   }
 }

@@ -68,10 +68,18 @@ export class ProjectsRepository {
     return data;
   }
 
-  async findAll(): Promise<Project[]> {
-    const { data, error } = await this.table
+  async findAll(page?: {
+    limit?: number;
+    offset?: number;
+  }): Promise<Project[]> {
+    let query = this.table
       .select(COLUMNS)
       .order('created_at', { ascending: false });
+    if (page?.limit) {
+      const from = page.offset ?? 0;
+      query = query.range(from, from + page.limit - 1);
+    }
+    const { data, error } = await query;
     if (error) throw toHttpException(error, 'projects.findAll');
     return data ?? [];
   }

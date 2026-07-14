@@ -4,6 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { randomUUID } from 'node:crypto';
+import { RecordHistoryService } from '../../database/record-history.service';
 import {
   AttachmentsRepository,
   ATTACHMENTS_BUCKET,
@@ -20,12 +21,15 @@ export interface UploadedFileLike {
 }
 
 function safeName(name: string): string {
-  return name.replace(/[^\w.\-]+/g, '_').slice(0, 180) || 'file';
+  return name.replace(/[^\w.-]+/g, '_').slice(0, 180) || 'file';
 }
 
 @Injectable()
 export class AttachmentsService {
-  constructor(private readonly repo: AttachmentsRepository) {}
+  constructor(
+    private readonly repo: AttachmentsRepository,
+    private readonly auditLog: RecordHistoryService,
+  ) {}
 
   list(projectId: string) {
     return this.repo.findByProject(projectId);
@@ -95,11 +99,18 @@ export class AttachmentsService {
     return this.repo.update(projectId, attachmentId, patch);
   }
 
-  async remove(projectId: string, attachmentId: string) {
+  async remove(projectId: string, attachmentId: string, userId: string) {
     const att = await this.repo.findOne(projectId, attachmentId);
     if (!att) throw new NotFoundException('Attachment not found.');
     await this.repo.removeObject(att.storage_path);
     await this.repo.removeRow(projectId, attachmentId);
+    await this.auditLog.logDeleted({
+      table: 'attachments',
+      recordId: attachmentId,
+      projectId,
+      label: att.file_name,
+      userId,
+    });
     return { deleted: true };
   }
 }

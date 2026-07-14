@@ -7,8 +7,10 @@ import {
   ParseUUIDPipe,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { ApiBody } from '@nestjs/swagger';
+import { PaginationQueryDto } from '../../common/dto/pagination-query.dto';
 import { UpdatesService } from './updates.service';
 import { CreateUpdateDto } from './dto/create-update.dto';
 import { UpdateUpdateDto } from './dto/update-update.dto';
@@ -22,8 +24,11 @@ export class UpdatesController {
   constructor(private readonly updates: UpdatesService) {}
 
   @Get()
-  list(@Param('projectId', ParseUUIDPipe) projectId: string) {
-    return this.updates.list(projectId);
+  list(
+    @Param('projectId', ParseUUIDPipe) projectId: string,
+    @Query() page: PaginationQueryDto,
+  ) {
+    return this.updates.list(projectId, page);
   }
 
   @Post()
@@ -77,7 +82,8 @@ export class UpdatesController {
   remove(
     @Param('projectId', ParseUUIDPipe) projectId: string,
     @Param('updateId', ParseUUIDPipe) updateId: string,
+    @CurrentUser() user: AuthUser,
   ) {
-    return this.updates.remove(projectId, updateId);
+    return this.updates.remove(projectId, updateId, user.id);
   }
 }

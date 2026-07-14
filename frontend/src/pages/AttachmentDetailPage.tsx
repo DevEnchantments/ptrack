@@ -1,3 +1,4 @@
+import { toast } from '@/lib/toast'
 import { useCallback, useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { attachmentsApi, type AttachmentDetail } from '@/lib/api'
@@ -80,7 +81,7 @@ export function AttachmentDetailPage() {
     attachmentsApi
       .downloadUrl(projectId, attachmentId)
       .then(({ url }) => window.open(url, '_blank'))
-      .catch(() => {})
+      .catch(() => toast.error('Could not get the download link.'))
   }
 
   if (loading) {

@@ -7,8 +7,10 @@ import {
   ParseUUIDPipe,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { ApiBody } from '@nestjs/swagger';
+import { PaginationQueryDto } from '../../common/dto/pagination-query.dto';
 import { ProjectsService } from './projects.service';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
@@ -62,8 +64,8 @@ export class ProjectsController {
   }
 
   @Get()
-  findAll() {
-    return this.projects.findAll();
+  findAll(@Query() page: PaginationQueryDto) {
+    return this.projects.findAll(page);
   }
 
   @Get(':id')

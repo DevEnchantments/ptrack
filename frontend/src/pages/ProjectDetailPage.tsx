@@ -1,3 +1,4 @@
+import { toast } from '@/lib/toast'
 import { useCallback, useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import {
@@ -227,42 +228,42 @@ export function ProjectDetailPage() {
 
   const loadMilestones = useCallback(() => {
     if (!id) return
-    milestonesApi.list(id).then(setMilestones).catch(() => {})
+    milestonesApi.list(id).then(setMilestones).catch(() => toast.error('Could not load milestones.'))
   }, [id])
 
   const loadActionItems = useCallback(() => {
     if (!id) return
-    actionItemsApi.list(id).then(setActionItems).catch(() => {})
+    actionItemsApi.list(id).then(setActionItems).catch(() => toast.error('Could not load action items.'))
   }, [id])
 
   const loadLinks = useCallback(() => {
     if (!id) return
-    linksApi.list(id).then(setLinks).catch(() => {})
+    linksApi.list(id).then(setLinks).catch(() => toast.error('Could not load links.'))
   }, [id])
 
   const loadResources = useCallback(() => {
     if (!id) return
-    resourcesApi.list(id).then(setResources).catch(() => {})
+    resourcesApi.list(id).then(setResources).catch(() => toast.error('Could not load resources.'))
   }, [id])
 
   const loadIssues = useCallback(() => {
     if (!id) return
-    issuesApi.list(id).then(setIssues).catch(() => {})
+    issuesApi.list(id).then(setIssues).catch(() => toast.error('Could not load issues.'))
   }, [id])
 
   const loadUpdates = useCallback(() => {
     if (!id) return
-    updatesApi.list(id).then(setUpdates).catch(() => {})
+    updatesApi.list(id).then(setUpdates).catch(() => toast.error('Could not load updates.'))
   }, [id])
 
   const loadStatusReports = useCallback(() => {
     if (!id) return
-    statusReportsApi.list(id).then(setStatusReports).catch(() => {})
+    statusReportsApi.list(id).then(setStatusReports).catch(() => toast.error('Could not load status reports.'))
   }, [id])
 
   const loadAttachments = useCallback(() => {
     if (!id) return
-    attachmentsApi.list(id).then(setAttachments).catch(() => {})
+    attachmentsApi.list(id).then(setAttachments).catch(() => toast.error('Could not load attachments.'))
   }, [id])
 
   useEffect(() => {
@@ -357,7 +358,7 @@ export function ProjectDetailPage() {
     attachmentsApi
       .downloadUrl(project.id, attachmentId)
       .then(({ url }) => window.open(url, '_blank'))
-      .catch(() => {})
+      .catch(() => toast.error('Could not get the download link.'))
   }
 
   function openEditMilestone(milestoneId: string) {
@@ -368,7 +369,7 @@ export function ProjectDetailPage() {
         setEditingMilestone(md)
         setMilestoneOpen(true)
       })
-      .catch(() => {})
+      .catch(() => toast.error('Could not open the milestone.'))
   }
 
   return (

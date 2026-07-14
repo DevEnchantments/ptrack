@@ -1,5 +1,6 @@
 import { Global, Module } from '@nestjs/common';
 import { DatabaseService } from './database.service';
+import { RecordHistoryService } from './record-history.service';
 
 /**
  * Global so any feature module can inject DatabaseService without importing
@@ -7,7 +8,7 @@ import { DatabaseService } from './database.service';
  */
 @Global()
 @Module({
-  providers: [DatabaseService],
-  exports: [DatabaseService],
+  providers: [DatabaseService, RecordHistoryService],
+  exports: [DatabaseService, RecordHistoryService],
 })
 export class DatabaseModule {}

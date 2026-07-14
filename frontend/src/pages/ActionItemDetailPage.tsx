@@ -1,3 +1,4 @@
+import { toast } from '@/lib/toast'
 import { useCallback, useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import {
@@ -74,7 +75,7 @@ export function ActionItemDetailPage() {
     actionItemsApi
       .listComments(projectId, actionItemId)
       .then(setComments)
-      .catch(() => {})
+      .catch(() => toast.error('Could not load comments.'))
   }, [projectId, actionItemId])
 
   useEffect(() => {

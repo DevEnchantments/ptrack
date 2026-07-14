@@ -71,19 +71,19 @@ export class StatusReportsRepository {
     return (data as unknown as StatusReportDetail) ?? null;
   }
 
-  /** Returns the deleted id, or null when the report is not in this project. */
+  /** Returns the deleted row's id+label, or null when not in this project. */
   async remove(
     projectId: string,
     statusReportId: string,
-  ): Promise<string | null> {
+  ): Promise<{ id: string; label: string | null } | null> {
     const { data, error } = await this.table
       .delete()
       .eq('project_id', projectId)
       .eq('id', statusReportId)
-      .select('id')
-      .maybeSingle<{ id: string }>();
+      .select('id, title')
+      .maybeSingle<{ id: string; title: string | null }>();
     if (error) throw toHttpException(error, 'statusReports.remove');
-    return data?.id ?? null;
+    return data ? { id: data.id, label: data.title } : null;
   }
 
   async findByProject(projectId: string): Promise<StatusReportListItem[]> {

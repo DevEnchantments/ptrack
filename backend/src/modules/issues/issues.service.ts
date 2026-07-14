@@ -1,11 +1,15 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { RecordHistoryService } from '../../database/record-history.service';
 import { IssuesRepository } from './issues.repository';
 import { CreateIssueDto } from './dto/create-issue.dto';
 import { UpdateIssueDto } from './dto/update-issue.dto';
 
 @Injectable()
 export class IssuesService {
-  constructor(private readonly repo: IssuesRepository) {}
+  constructor(
+    private readonly repo: IssuesRepository,
+    private readonly auditLog: RecordHistoryService,
+  ) {}
 
   list(projectId: string) {
     return this.repo.findByProject(projectId);
@@ -52,9 +56,16 @@ export class IssuesService {
     return this.repo.update(projectId, issueId, patch);
   }
 
-  async remove(projectId: string, issueId: string) {
+  async remove(projectId: string, issueId: string, userId: string) {
     const deleted = await this.repo.remove(projectId, issueId);
     if (!deleted) throw new NotFoundException('Issue not found.');
+    await this.auditLog.logDeleted({
+      table: 'issues',
+      recordId: deleted.id,
+      projectId,
+      label: deleted.label,
+      userId,
+    });
     return { deleted: true };
   }
 }

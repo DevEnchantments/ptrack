@@ -32,7 +32,7 @@ export class DatabaseService implements OnModuleInit {
 
     this._client = createClient(url, secretKey, {
       auth: { autoRefreshToken: false, persistSession: false },
-    });
+    }) as SupabaseClient;
   }
 
   /** The shared, privileged Supabase client. */

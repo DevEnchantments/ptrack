@@ -1,3 +1,4 @@
+import { toast } from '@/lib/toast'
 import { useEffect, useState } from 'react'
 import { lookupsApi, categoriesApi, type Lookup } from '@/lib/api'
 import { Button } from '@/components/ui/button'
@@ -27,7 +28,7 @@ export function CategorySelect({ value, onChange }: Props) {
     lookupsApi
       .list('project-categories')
       .then(setCategories)
-      .catch(() => {})
+      .catch(() => toast.error('Could not load categories.'))
   }, [])
 
   async function saveNew() {

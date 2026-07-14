@@ -1,3 +1,4 @@
+import { toast } from '@/lib/toast'
 import { useCallback, useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import {
@@ -53,7 +54,7 @@ export function StatusReportDetailPage() {
     statusReportsApi
       .list(projectId)
       .then((list) => setOthers(list.filter((r) => r.id !== statusReportId)))
-      .catch(() => {})
+      .catch(() => toast.error('Could not load other status reports.'))
   }, [projectId, statusReportId])
 
   useEffect(() => {

@@ -43,8 +43,11 @@ export class ProjectsService {
     return project;
   }
 
-  async findAll(): Promise<Project[]> {
-    return this.repo.findAll();
+  async findAll(page?: {
+    limit?: number;
+    offset?: number;
+  }): Promise<Project[]> {
+    return this.repo.findAll(page);
   }
 
   async getDetail(id: string): Promise<ProjectDetail> {

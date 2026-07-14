@@ -1,11 +1,15 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { RecordHistoryService } from '../../database/record-history.service';
 import { LinksRepository } from './links.repository';
 import { CreateLinkDto } from './dto/create-link.dto';
 import { UpdateLinkDto } from './dto/update-link.dto';
 
 @Injectable()
 export class LinksService {
-  constructor(private readonly repo: LinksRepository) {}
+  constructor(
+    private readonly repo: LinksRepository,
+    private readonly auditLog: RecordHistoryService,
+  ) {}
 
   list(projectId: string) {
     return this.repo.findByProject(projectId);
@@ -40,9 +44,16 @@ export class LinksService {
     return this.repo.update(projectId, linkId, patch);
   }
 
-  async remove(projectId: string, linkId: string) {
+  async remove(projectId: string, linkId: string, userId: string) {
     const deleted = await this.repo.remove(projectId, linkId);
     if (!deleted) throw new NotFoundException('Link not found.');
+    await this.auditLog.logDeleted({
+      table: 'links',
+      recordId: deleted.id,
+      projectId,
+      label: deleted.label,
+      userId,
+    });
     return { deleted: true };
   }
 }

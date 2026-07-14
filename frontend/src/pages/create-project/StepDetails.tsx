@@ -1,3 +1,4 @@
+import { toast } from '@/lib/toast'
 import { useEffect, useState } from 'react'
 import type { CreateProjectForm } from '../CreateProjectWizard'
 import { lookupsApi, type Lookup } from '@/lib/api'
@@ -24,8 +25,8 @@ export function StepDetails({ form, errors, update }: Props) {
   const [sizes, setSizes] = useState<Lookup[]>([])
 
   useEffect(() => {
-    lookupsApi.list('project-statuses').then(setStatuses).catch(() => {})
-    lookupsApi.list('project-sizes').then(setSizes).catch(() => {})
+    lookupsApi.list('project-statuses').then(setStatuses).catch(() => toast.error('Could not load project statuses.'))
+    lookupsApi.list('project-sizes').then(setSizes).catch(() => toast.error('Could not load project sizes.'))
   }, [])
 
   return (

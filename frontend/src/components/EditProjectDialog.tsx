@@ -1,3 +1,4 @@
+import { toast } from '@/lib/toast'
 import { useEffect, useState } from 'react'
 import {
   projectsApi,
@@ -70,10 +71,10 @@ export function EditProjectDialog({
 
   useEffect(() => {
     if (!open) return
-    lookupsApi.list('project-statuses').then(setStatuses).catch(() => {})
-    lookupsApi.list('project-sizes').then(setSizes).catch(() => {})
-    lookupsApi.list('project-categories').then(setCategories).catch(() => {})
-    projectsApi.list().then(setProjects).catch(() => {})
+    lookupsApi.list('project-statuses').then(setStatuses).catch(() => toast.error('Could not load project statuses.'))
+    lookupsApi.list('project-sizes').then(setSizes).catch(() => toast.error('Could not load project sizes.'))
+    lookupsApi.list('project-categories').then(setCategories).catch(() => toast.error('Could not load project categories.'))
+    projectsApi.list().then(setProjects).catch(() => toast.error('Could not load projects.'))
   }, [open])
 
   useEffect(() => {

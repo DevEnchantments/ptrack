@@ -8,10 +8,13 @@ import { ActionItemDetailPage } from '@/pages/ActionItemDetailPage'
 import { MilestoneDetailPage } from '@/pages/MilestoneDetailPage'
 import { StatusReportDetailPage } from '@/pages/StatusReportDetailPage'
 import { AttachmentDetailPage } from '@/pages/AttachmentDetailPage'
+import { Toaster } from '@/components/ui/toaster'
 
 function App() {
   return (
-    <Routes>
+    <>
+      <Toaster />
+      <Routes>
       <Route path="/login" element={<LoginPage />} />
       <Route element={<ProtectedRoute />}>
         <Route path="/" element={<HomePage />} />
@@ -34,8 +37,9 @@ function App() {
           element={<AttachmentDetailPage />}
         />
       </Route>
-      <Route path="*" element={<Navigate to="/" replace />} />
-    </Routes>
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </>
   )
 }
 

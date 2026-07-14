@@ -55,16 +55,19 @@ export class ResourcesRepository {
     return data;
   }
 
-  /** Returns the deleted id, or null when the resource is not in this project. */
-  async remove(projectId: string, resourceId: string): Promise<string | null> {
+  /** Returns the deleted row's id+label, or null when not in this project. */
+  async remove(
+    projectId: string,
+    resourceId: string,
+  ): Promise<{ id: string; label: string | null } | null> {
     const { data, error } = await this.table
       .delete()
       .eq('project_id', projectId)
       .eq('id', resourceId)
-      .select('id')
-      .maybeSingle<{ id: string }>();
+      .select('id, name')
+      .maybeSingle<{ id: string; name: string | null }>();
     if (error) throw toHttpException(error, 'resources.remove');
-    return data?.id ?? null;
+    return data ? { id: data.id, label: data.name } : null;
   }
 
   async findByProject(projectId: string): Promise<ResourceListItem[]> {

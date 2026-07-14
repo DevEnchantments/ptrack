@@ -1,3 +1,4 @@
+import { toast } from '@/lib/toast'
 import { useCallback, useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import {
@@ -121,7 +122,7 @@ export function MilestoneDetailPage() {
       .then((all) =>
         setActionItems(all.filter((a) => a.milestone_id === milestoneId)),
       )
-      .catch(() => {})
+      .catch(() => toast.error('Could not load milestone data.'))
   }, [projectId, milestoneId])
 
   useEffect(() => {

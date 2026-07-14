@@ -1,11 +1,15 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { RecordHistoryService } from '../../database/record-history.service';
 import { MilestonesRepository } from './milestones.repository';
 import { CreateMilestoneDto } from './dto/create-milestone.dto';
 import { UpdateMilestoneDto } from './dto/update-milestone.dto';
 
 @Injectable()
 export class MilestonesService {
-  constructor(private readonly repo: MilestonesRepository) {}
+  constructor(
+    private readonly repo: MilestonesRepository,
+    private readonly auditLog: RecordHistoryService,
+  ) {}
 
   list(projectId: string) {
     return this.repo.findByProject(projectId);
@@ -72,9 +76,16 @@ export class MilestonesService {
     return this.repo.findHistory(projectId, milestoneId);
   }
 
-  async remove(projectId: string, milestoneId: string) {
-    await this.get(projectId, milestoneId); // 404 if not in this project
+  async remove(projectId: string, milestoneId: string, userId: string) {
+    const milestone = await this.get(projectId, milestoneId); // 404 if not in this project
     await this.repo.remove(projectId, milestoneId);
+    await this.auditLog.logDeleted({
+      table: 'milestones',
+      recordId: milestoneId,
+      projectId,
+      label: milestone.name,
+      userId,
+    });
     return { deleted: true };
   }
 }

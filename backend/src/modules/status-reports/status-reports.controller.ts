@@ -81,7 +81,8 @@ export class StatusReportsController {
   remove(
     @Param('projectId', ParseUUIDPipe) projectId: string,
     @Param('statusReportId', ParseUUIDPipe) statusReportId: string,
+    @CurrentUser() user: AuthUser,
   ) {
-    return this.reports.remove(projectId, statusReportId);
+    return this.reports.remove(projectId, statusReportId, user.id);
   }
 }

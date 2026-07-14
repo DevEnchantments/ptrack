@@ -100,7 +100,8 @@ export class AttachmentsController {
   remove(
     @Param('projectId', ParseUUIDPipe) projectId: string,
     @Param('attachmentId', ParseUUIDPipe) attachmentId: string,
+    @CurrentUser() user: AuthUser,
   ) {
-    return this.attachments.remove(projectId, attachmentId);
+    return this.attachments.remove(projectId, attachmentId, user.id);
   }
 }

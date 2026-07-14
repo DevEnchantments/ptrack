@@ -1,4 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { RecordHistoryService } from '../../database/record-history.service';
 import { ActionItemsRepository } from './action-items.repository';
 import { CreateActionItemDto } from './dto/create-action-item.dto';
 import { UpdateActionItemDto } from './dto/update-action-item.dto';
@@ -22,7 +23,10 @@ function ownersLabel(owners: Owners | undefined): string {
 
 @Injectable()
 export class ActionItemsService {
-  constructor(private readonly repo: ActionItemsRepository) {}
+  constructor(
+    private readonly repo: ActionItemsRepository,
+    private readonly auditLog: RecordHistoryService,
+  ) {}
 
   list(projectId: string) {
     return this.repo.findByProject(projectId);
@@ -115,9 +119,16 @@ export class ActionItemsService {
     return this.repo.findHistory(projectId, actionItemId);
   }
 
-  async remove(projectId: string, actionItemId: string) {
-    await this.get(projectId, actionItemId); // 404 if not in this project
+  async remove(projectId: string, actionItemId: string, userId: string) {
+    const item = await this.get(projectId, actionItemId); // 404 if not in this project
     await this.repo.remove(projectId, actionItemId);
+    await this.auditLog.logDeleted({
+      table: 'action_items',
+      recordId: actionItemId,
+      projectId,
+      label: item.title,
+      userId,
+    });
     return { deleted: true };
   }
 

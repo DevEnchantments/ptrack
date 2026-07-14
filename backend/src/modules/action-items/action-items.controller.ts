@@ -136,7 +136,8 @@ export class ActionItemsController {
   remove(
     @Param('projectId', ParseUUIDPipe) projectId: string,
     @Param('actionItemId', ParseUUIDPipe) actionItemId: string,
+    @CurrentUser() user: AuthUser,
   ) {
-    return this.actionItems.remove(projectId, actionItemId);
+    return this.actionItems.remove(projectId, actionItemId, user.id);
   }
 }

@@ -1,3 +1,4 @@
+import { toast } from '@/lib/toast'
 import { useEffect, useState } from 'react'
 import type { ProjectMemberInput } from '@/pages/CreateProjectWizard'
 import { lookupsApi, issuesApi, type Lookup, type Issue } from '@/lib/api'
@@ -101,9 +102,9 @@ export function AddIssueDialog({
 
   useEffect(() => {
     if (!open) return
-    lookupsApi.list('project-roles').then(setRoles).catch(() => {})
-    lookupsApi.list('issue-levels').then(setLevels).catch(() => {})
-    lookupsApi.list('issue-categories').then(setCategories).catch(() => {})
+    lookupsApi.list('project-roles').then(setRoles).catch(() => toast.error('Could not load project roles.'))
+    lookupsApi.list('issue-levels').then(setLevels).catch(() => toast.error('Could not load issue levels.'))
+    lookupsApi.list('issue-categories').then(setCategories).catch(() => toast.error('Could not load issue categories.'))
   }, [open])
 
   useEffect(() => {

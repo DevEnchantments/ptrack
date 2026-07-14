@@ -1,3 +1,4 @@
+import { toast } from '@/lib/toast'
 import { useEffect, useState } from 'react'
 import type { CreateProjectForm, ProjectMemberInput } from '../CreateProjectWizard'
 import { emptyMember } from '../CreateProjectWizard'
@@ -36,7 +37,7 @@ export function StepAccess({ form, errors, update }: Props) {
           })
         }
       })
-      .catch(() => {})
+      .catch(() => toast.error('Could not load project roles.'))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

@@ -1,3 +1,4 @@
+import { toast } from '@/lib/toast'
 import { useEffect, useState } from 'react'
 import { lookupsApi, resourcesApi, type Lookup, type Resource } from '@/lib/api'
 import { Button } from '@/components/ui/button'
@@ -64,7 +65,7 @@ export function AddResourceDialog({
 
   useEffect(() => {
     if (!open) return
-    lookupsApi.list('resource-types').then(setTypes).catch(() => {})
+    lookupsApi.list('resource-types').then(setTypes).catch(() => toast.error('Could not load resource types.'))
   }, [open])
 
   useEffect(() => {
