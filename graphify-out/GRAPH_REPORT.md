@@ -1,7 +1,7 @@
 # Graph Report - ptrack  (2026-07-14)
 
 ## Corpus Check
-- 142 files · ~43,295 words
+- 142 files · ~43,464 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `657d7c01`
+- Built from commit: `aacab525`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -340,7 +340,7 @@ Cohesion: 0.36
 Nodes (9): AddActionItemDialog(), emptyOwner(), ownerFromItem(), ownersFromItem(), profileName(), Props, STATUSES, today() (+1 more)
 
 ## Knowledge Gaps
-- **273 isolated node(s):** `ActionItemComment`, `Owners`, `$schema`, `defaultMode`, `Bash(npm run dev:*)` (+268 more)
+- **273 isolated node(s):** `What this project is`, `Tech stack`, `Hard architectural rules (do not violate)`, `Repo & environment`, `Current state — Phase 1 complete (full CRUD)` (+268 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **9 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -348,12 +348,12 @@ Nodes (9): AddActionItemDialog(), emptyOwner(), ownerFromItem(), ownersFromItem(
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `toHttpException()` connect `toHttpException` to `Community 1`, `Community 2`, `Community 3`, `Community 5`, `status-reports.repository.ts`, `Community 7`, `Community 8`, `Community 9`, `Community 10`, `CreatePersonDto`, `projects.controller.ts`, `PeopleRepository`?**
-  _High betweenness centrality (0.049) - this node is a cross-community bridge._
+  _High betweenness centrality (0.062) - this node is a cross-community bridge._
 - **Why does `AuthUser` connect `Community 6` to `Community 1`, `Community 5`, `Community 7`, `Community 8`, `Community 9`, `@base-ui/react`, `Community 10`, `@nestjs/swagger`, `Community 16`, `CreateProjectDto`, `projects.controller.ts`, `PeopleRepository`?**
-  _High betweenness centrality (0.048) - this node is a cross-community bridge._
+  _High betweenness centrality (0.035) - this node is a cross-community bridge._
 - **Why does `CurrentUser` connect `Community 6` to `Community 1`, `Community 5`, `Community 7`, `Community 8`, `Community 9`, `@base-ui/react`, `Community 10`, `@nestjs/swagger`, `Community 16`, `CreateProjectDto`, `projects.controller.ts`, `PeopleRepository`?**
-  _High betweenness centrality (0.048) - this node is a cross-community bridge._
-- **What connects `ActionItemComment`, `Owners`, `$schema` to the rest of the system?**
+  _High betweenness centrality (0.035) - this node is a cross-community bridge._
+- **What connects `What this project is`, `Tech stack`, `Hard architectural rules (do not violate)` to the rest of the system?**
   _273 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.09090909090909091 - nodes in this community are weakly interconnected._
