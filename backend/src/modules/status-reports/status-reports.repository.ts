@@ -81,7 +81,7 @@ export class StatusReportsRepository {
       .eq('project_id', projectId)
       .eq('id', statusReportId)
       .select('id')
-      .maybeSingle();
+      .maybeSingle<{ id: string }>();
     if (error) throw toHttpException(error, 'statusReports.remove');
     return data?.id ?? null;
   }

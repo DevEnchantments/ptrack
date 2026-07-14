@@ -122,6 +122,10 @@ updates.
   need a hand-written `@ApiConsumes` + `@ApiBody` schema.
 - **FK example values in Swagger are placeholders**, not real rows. Lookup-backed IDs must
   be fetched from `GET /lookups/:name` before a request will succeed.
+- **supabase-js + typescript-eslint contradict each other on typed selects:**
+  `no-unsafe-return` calls `.select('id').maybeSingle()` results `any`, while casting
+  them trips `no-unnecessary-type-assertion`. Type the result via the generic instead:
+  `.maybeSingle<{ id: string }>()`.
 - **History for many-to-many fields cannot be a DB trigger.** A trigger on the parent row
   never sees the join table, and services replace join rows wholesale on every save
   (delete-all + re-insert), so a trigger on the join table would log a "change" on every

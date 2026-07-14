@@ -63,7 +63,7 @@ export class UpdatesRepository {
       .eq('project_id', projectId)
       .eq('id', updateId)
       .select('id')
-      .maybeSingle();
+      .maybeSingle<{ id: string }>();
     if (error) throw toHttpException(error, 'updates.remove');
     return data?.id ?? null;
   }

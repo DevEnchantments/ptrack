@@ -76,7 +76,7 @@ export class IssuesRepository {
       .eq('project_id', projectId)
       .eq('id', issueId)
       .select('id')
-      .maybeSingle();
+      .maybeSingle<{ id: string }>();
     if (error) throw toHttpException(error, 'issues.remove');
     return data?.id ?? null;
   }

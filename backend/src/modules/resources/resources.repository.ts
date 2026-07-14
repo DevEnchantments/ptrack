@@ -62,7 +62,7 @@ export class ResourcesRepository {
       .eq('project_id', projectId)
       .eq('id', resourceId)
       .select('id')
-      .maybeSingle();
+      .maybeSingle<{ id: string }>();
     if (error) throw toHttpException(error, 'resources.remove');
     return data?.id ?? null;
   }

@@ -1,10 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../../database/database.service';
 import { toHttpException } from '../../common/supabase-error';
-import {
-  HISTORY_SELECT,
-  type HistoryEntry,
-} from '../../common/record-history';
+import { HISTORY_SELECT, type HistoryEntry } from '../../common/record-history';
 
 export interface Milestone {
   id: string;

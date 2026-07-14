@@ -66,7 +66,7 @@ export class LinksRepository {
       .eq('project_id', projectId)
       .eq('id', linkId)
       .select('id')
-      .maybeSingle();
+      .maybeSingle<{ id: string }>();
     if (error) throw toHttpException(error, 'links.remove');
     return data?.id ?? null;
   }

@@ -22,20 +22,39 @@ const ALLOWED: Record<string, string> = {
 
 const ACCESS_LEVELS = ['read_only', 'read_write', 'read_write_admin'];
 
+// Lookup tables are near-static (they change through admin action, not user
+// traffic), yet every dialog open refetches them. A short TTL keeps the data
+// fresh-enough while making repeat opens free. Writes below invalidate early.
+const CACHE_TTL_MS = 60_000;
+
+interface CacheSlot {
+  data: Array<{ id: string; name: string }>;
+  expires: number;
+}
+
 @Injectable()
 export class LookupsService {
+  private readonly cache = new Map<string, CacheSlot>();
+
   constructor(private readonly db: DatabaseService) {}
 
   async list(name: string) {
     const table = ALLOWED[name];
     if (!table) throw new NotFoundException(`Unknown lookup: ${name}`);
+
+    const hit = this.cache.get(name);
+    if (hit && hit.expires > Date.now()) return hit.data;
+
     const { data, error } = await this.db.client
       .from(table)
       .select('id, name')
       .eq('is_active', true)
       .order('sort_order', { ascending: true });
     if (error) throw toHttpException(error, `lookups.${name}`);
-    return data ?? [];
+
+    const rows = data ?? [];
+    this.cache.set(name, { data: rows, expires: Date.now() + CACHE_TTL_MS });
+    return rows;
   }
 
   async createCategory(name: string) {
@@ -47,6 +66,7 @@ export class LookupsService {
       .select('id, name')
       .single();
     if (error) throw toHttpException(error, 'lookups.createCategory');
+    this.cache.delete('project-categories');
     return data;
   }
 
@@ -62,6 +82,7 @@ export class LookupsService {
       .select('id, name')
       .single();
     if (error) throw toHttpException(error, 'lookups.createRole');
+    this.cache.delete('project-roles');
     return data;
   }
 }

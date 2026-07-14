@@ -4,14 +4,124 @@
   "graph": {},
   "nodes": [
     {
+      "label": "CLAUDE.md",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "claude",
+      "community": 57,
+      "norm_label": "claude.md"
+    },
+    {
+      "label": "CLAUDE.md \u2014 P-Track",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "claude_claude_md_p_track",
+      "community": 57,
+      "norm_label": "claude.md \u2014 p-track"
+    },
+    {
+      "label": "What this project is",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "claude_what_this_project_is",
+      "community": 57,
+      "norm_label": "what this project is"
+    },
+    {
+      "label": "Tech stack",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L20",
+      "_origin": "ast",
+      "id": "claude_tech_stack",
+      "community": 57,
+      "norm_label": "tech stack"
+    },
+    {
+      "label": "Hard architectural rules (do not violate)",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L26",
+      "_origin": "ast",
+      "id": "claude_hard_architectural_rules_do_not_violate",
+      "community": 57,
+      "norm_label": "hard architectural rules (do not violate)"
+    },
+    {
+      "label": "Repo & environment",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L36",
+      "_origin": "ast",
+      "id": "claude_repo_environment",
+      "community": 57,
+      "norm_label": "repo & environment"
+    },
+    {
+      "label": "Current state \u2014 Phase 1 complete (full CRUD)",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L47",
+      "_origin": "ast",
+      "id": "claude_current_state_phase_1_complete_full_crud",
+      "community": 57,
+      "norm_label": "current state \u2014 phase 1 complete (full crud)"
+    },
+    {
+      "label": "Roadmap \u2014 deferred to Phase 2+",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L76",
+      "_origin": "ast",
+      "id": "claude_roadmap_deferred_to_phase_2",
+      "community": 57,
+      "norm_label": "roadmap \u2014 deferred to phase 2+"
+    },
+    {
+      "label": "How I like to work \u2014 follow precisely",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L92",
+      "_origin": "ast",
+      "id": "claude_how_i_like_to_work_follow_precisely",
+      "community": 57,
+      "norm_label": "how i like to work \u2014 follow precisely"
+    },
+    {
+      "label": "Known gotchas \u2014 carry these forward",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L106",
+      "_origin": "ast",
+      "id": "claude_known_gotchas_carry_these_forward",
+      "community": 57,
+      "norm_label": "known gotchas \u2014 carry these forward"
+    },
+    {
+      "label": "graphify",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L133",
+      "_origin": "ast",
+      "id": "claude_graphify",
+      "community": 57,
+      "norm_label": "graphify"
+    },
+    {
       "label": "record-history.ts",
       "file_type": "code",
       "source_file": "backend/src/common/record-history.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "backend_src_common_record_history",
       "community": 55,
-      "norm_label": "record-history.ts"
+      "norm_label": "record-history.ts",
+      "id": "backend_src_common_record_history"
     },
     {
       "label": "HistoryEntry",
@@ -19,9 +129,9 @@
       "source_file": "backend/src/common/record-history.ts",
       "source_location": "L8",
       "_origin": "ast",
-      "id": "backend_src_common_record_history_historyentry",
       "community": 55,
-      "norm_label": "historyentry"
+      "norm_label": "historyentry",
+      "id": "backend_src_common_record_history_historyentry"
     },
     {
       "label": "HistoryInsert",
@@ -29,9 +139,9 @@
       "source_file": "backend/src/common/record-history.ts",
       "source_location": "L29",
       "_origin": "ast",
-      "id": "backend_src_common_record_history_historyinsert",
       "community": 32,
-      "norm_label": "historyinsert"
+      "norm_label": "historyinsert",
+      "id": "backend_src_common_record_history_historyinsert"
     },
     {
       "label": "action-items.repository.ts",
@@ -39,9 +149,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "backend_src_modules_action_items_action_items_repository",
       "community": 55,
-      "norm_label": "action-items.repository.ts"
+      "norm_label": "action-items.repository.ts",
+      "id": "backend_src_modules_action_items_action_items_repository"
     },
     {
       "label": "ActionItem",
@@ -49,9 +159,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L10",
       "_origin": "ast",
-      "id": "backend_src_modules_action_items_action_items_repository_actionitem",
       "community": 55,
-      "norm_label": "actionitem"
+      "norm_label": "actionitem",
+      "id": "backend_src_modules_action_items_action_items_repository_actionitem"
     },
     {
       "label": "ActionItemListItem",
@@ -59,9 +169,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L25",
       "_origin": "ast",
-      "id": "backend_src_modules_action_items_action_items_repository_actionitemlistitem",
       "community": 55,
-      "norm_label": "actionitemlistitem"
+      "norm_label": "actionitemlistitem",
+      "id": "backend_src_modules_action_items_action_items_repository_actionitemlistitem"
     },
     {
       "label": "ActionItemComment",
@@ -69,9 +179,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L45",
       "_origin": "ast",
-      "id": "backend_src_modules_action_items_action_items_repository_actionitemcomment",
       "community": 55,
-      "norm_label": "actionitemcomment"
+      "norm_label": "actionitemcomment",
+      "id": "backend_src_modules_action_items_action_items_repository_actionitemcomment"
     },
     {
       "label": "ActionItemsRepository",
@@ -79,9 +189,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L57",
       "_origin": "ast",
-      "id": "backend_src_modules_action_items_action_items_repository_actionitemsrepository",
       "community": 32,
-      "norm_label": "actionitemsrepository"
+      "norm_label": "actionitemsrepository",
+      "id": "backend_src_modules_action_items_action_items_repository_actionitemsrepository"
     },
     {
       "label": "Injectable",
@@ -89,9 +199,9 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "id": "backend_src_modules_action_items_action_items_repository_ts_injectable",
       "community": 32,
-      "norm_label": "injectable"
+      "norm_label": "injectable",
+      "id": "backend_src_modules_action_items_action_items_repository_ts_injectable"
     },
     {
       "label": ".constructor()",
@@ -99,9 +209,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L58",
       "_origin": "ast",
-      "id": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_constructor",
       "community": 32,
-      "norm_label": ".constructor()"
+      "norm_label": ".constructor()",
+      "id": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_constructor"
     },
     {
       "label": ".table()",
@@ -109,9 +219,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L60",
       "_origin": "ast",
-      "id": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_table",
       "community": 32,
-      "norm_label": ".table()"
+      "norm_label": ".table()",
+      "id": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_table"
     },
     {
       "label": ".insert()",
@@ -119,9 +229,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L64",
       "_origin": "ast",
-      "id": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_insert",
       "community": 32,
-      "norm_label": ".insert()"
+      "norm_label": ".insert()",
+      "id": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_insert"
     },
     {
       "label": ".update()",
@@ -129,9 +239,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L73",
       "_origin": "ast",
-      "id": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_update",
       "community": 32,
-      "norm_label": ".update()"
+      "norm_label": ".update()",
+      "id": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_update"
     },
     {
       "label": ".insertHistory()",
@@ -139,9 +249,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L92",
       "_origin": "ast",
-      "id": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_inserthistory",
       "community": 32,
-      "norm_label": ".inserthistory()"
+      "norm_label": ".inserthistory()",
+      "id": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_inserthistory"
     },
     {
       "label": ".findHistory()",
@@ -149,9 +259,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L99",
       "_origin": "ast",
-      "id": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_findhistory",
       "community": 32,
-      "norm_label": ".findhistory()"
+      "norm_label": ".findhistory()",
+      "id": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_findhistory"
     },
     {
       "label": ".remove()",
@@ -159,9 +269,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L114",
       "_origin": "ast",
-      "id": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_remove",
       "community": 32,
-      "norm_label": ".remove()"
+      "norm_label": ".remove()",
+      "id": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_remove"
     },
     {
       "label": ".insertOwners()",
@@ -169,9 +279,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L122",
       "_origin": "ast",
-      "id": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_insertowners",
       "community": 32,
-      "norm_label": ".insertowners()"
+      "norm_label": ".insertowners()",
+      "id": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_insertowners"
     },
     {
       "label": ".deleteOwners()",
@@ -179,9 +289,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L135",
       "_origin": "ast",
-      "id": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_deleteowners",
       "community": 32,
-      "norm_label": ".deleteowners()"
+      "norm_label": ".deleteowners()",
+      "id": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_deleteowners"
     },
     {
       "label": ".findByProject()",
@@ -189,9 +299,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L143",
       "_origin": "ast",
-      "id": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_findbyproject",
       "community": 32,
-      "norm_label": ".findbyproject()"
+      "norm_label": ".findbyproject()",
+      "id": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_findbyproject"
     },
     {
       "label": ".findOne()",
@@ -199,9 +309,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L161",
       "_origin": "ast",
-      "id": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_findone",
       "community": 32,
-      "norm_label": ".findone()"
+      "norm_label": ".findone()",
+      "id": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_findone"
     },
     {
       "label": ".listComments()",
@@ -209,9 +319,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L186",
       "_origin": "ast",
-      "id": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_listcomments",
       "community": 32,
-      "norm_label": ".listcomments()"
+      "norm_label": ".listcomments()",
+      "id": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_listcomments"
     },
     {
       "label": ".insertComment()",
@@ -219,9 +329,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L199",
       "_origin": "ast",
-      "id": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_insertcomment",
       "community": 32,
-      "norm_label": ".insertcomment()"
+      "norm_label": ".insertcomment()",
+      "id": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_insertcomment"
     },
     {
       "label": "action-items.service.ts",
@@ -229,9 +339,9 @@
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "backend_src_modules_action_items_action_items_service",
       "community": 55,
-      "norm_label": "action-items.service.ts"
+      "norm_label": "action-items.service.ts",
+      "id": "backend_src_modules_action_items_action_items_service"
     },
     {
       "label": "Owners",
@@ -239,9 +349,9 @@
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
       "source_location": "L6",
       "_origin": "ast",
-      "id": "backend_src_modules_action_items_action_items_service_owners",
       "community": 55,
-      "norm_label": "owners"
+      "norm_label": "owners",
+      "id": "backend_src_modules_action_items_action_items_service_owners"
     },
     {
       "label": "ownersLabel()",
@@ -249,9 +359,9 @@
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
       "source_location": "L15",
       "_origin": "ast",
-      "id": "backend_src_modules_action_items_action_items_service_ownerslabel",
       "community": 55,
-      "norm_label": "ownerslabel()"
+      "norm_label": "ownerslabel()",
+      "id": "backend_src_modules_action_items_action_items_service_ownerslabel"
     },
     {
       "label": "ActionItemsService",
@@ -259,9 +369,9 @@
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
       "source_location": "L24",
       "_origin": "ast",
-      "id": "backend_src_modules_action_items_action_items_service_actionitemsservice",
       "community": 32,
-      "norm_label": "actionitemsservice"
+      "norm_label": "actionitemsservice",
+      "id": "backend_src_modules_action_items_action_items_service_actionitemsservice"
     },
     {
       "label": "Injectable",
@@ -269,9 +379,9 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "id": "backend_src_modules_action_items_action_items_service_ts_injectable",
       "community": 32,
-      "norm_label": "injectable"
+      "norm_label": "injectable",
+      "id": "backend_src_modules_action_items_action_items_service_ts_injectable"
     },
     {
       "label": ".constructor()",
@@ -279,9 +389,9 @@
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
       "source_location": "L25",
       "_origin": "ast",
-      "id": "backend_src_modules_action_items_action_items_service_actionitemsservice_constructor",
       "community": 32,
-      "norm_label": ".constructor()"
+      "norm_label": ".constructor()",
+      "id": "backend_src_modules_action_items_action_items_service_actionitemsservice_constructor"
     },
     {
       "label": ".list()",
@@ -289,9 +399,9 @@
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
       "source_location": "L27",
       "_origin": "ast",
-      "id": "backend_src_modules_action_items_action_items_service_actionitemsservice_list",
       "community": 32,
-      "norm_label": ".list()"
+      "norm_label": ".list()",
+      "id": "backend_src_modules_action_items_action_items_service_actionitemsservice_list"
     },
     {
       "label": ".add()",
@@ -299,9 +409,9 @@
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
       "source_location": "L31",
       "_origin": "ast",
-      "id": "backend_src_modules_action_items_action_items_service_actionitemsservice_add",
       "community": 32,
-      "norm_label": ".add()"
+      "norm_label": ".add()",
+      "id": "backend_src_modules_action_items_action_items_service_actionitemsservice_add"
     },
     {
       "label": ".get()",
@@ -309,9 +419,9 @@
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
       "source_location": "L52",
       "_origin": "ast",
-      "id": "backend_src_modules_action_items_action_items_service_actionitemsservice_get",
       "community": 32,
-      "norm_label": ".get()"
+      "norm_label": ".get()",
+      "id": "backend_src_modules_action_items_action_items_service_actionitemsservice_get"
     },
     {
       "label": ".update()",
@@ -319,9 +429,9 @@
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
       "source_location": "L58",
       "_origin": "ast",
-      "id": "backend_src_modules_action_items_action_items_service_actionitemsservice_update",
       "community": 32,
-      "norm_label": ".update()"
+      "norm_label": ".update()",
+      "id": "backend_src_modules_action_items_action_items_service_actionitemsservice_update"
     },
     {
       "label": ".history()",
@@ -329,9 +439,9 @@
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
       "source_location": "L113",
       "_origin": "ast",
-      "id": "backend_src_modules_action_items_action_items_service_actionitemsservice_history",
       "community": 32,
-      "norm_label": ".history()"
+      "norm_label": ".history()",
+      "id": "backend_src_modules_action_items_action_items_service_actionitemsservice_history"
     },
     {
       "label": ".remove()",
@@ -339,9 +449,9 @@
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
       "source_location": "L118",
       "_origin": "ast",
-      "id": "backend_src_modules_action_items_action_items_service_actionitemsservice_remove",
       "community": 32,
-      "norm_label": ".remove()"
+      "norm_label": ".remove()",
+      "id": "backend_src_modules_action_items_action_items_service_actionitemsservice_remove"
     },
     {
       "label": ".listComments()",
@@ -349,9 +459,9 @@
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
       "source_location": "L124",
       "_origin": "ast",
-      "id": "backend_src_modules_action_items_action_items_service_actionitemsservice_listcomments",
       "community": 32,
-      "norm_label": ".listcomments()"
+      "norm_label": ".listcomments()",
+      "id": "backend_src_modules_action_items_action_items_service_actionitemsservice_listcomments"
     },
     {
       "label": ".addComment()",
@@ -359,9 +469,9 @@
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
       "source_location": "L129",
       "_origin": "ast",
-      "id": "backend_src_modules_action_items_action_items_service_actionitemsservice_addcomment",
       "community": 32,
-      "norm_label": ".addcomment()"
+      "norm_label": ".addcomment()",
+      "id": "backend_src_modules_action_items_action_items_service_actionitemsservice_addcomment"
     },
     {
       "label": "settings.json",
@@ -11884,116 +11994,6 @@
       "id": "package_json_react_router_dom"
     },
     {
-      "label": "CLAUDE.md",
-      "file_type": "document",
-      "source_file": "CLAUDE.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 57,
-      "norm_label": "claude.md",
-      "id": "claude"
-    },
-    {
-      "label": "CLAUDE.md \u2014 P-Track",
-      "file_type": "document",
-      "source_file": "CLAUDE.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 57,
-      "norm_label": "claude.md \u2014 p-track",
-      "id": "claude_claude_md_p_track"
-    },
-    {
-      "label": "What this project is",
-      "file_type": "document",
-      "source_file": "CLAUDE.md",
-      "source_location": "L6",
-      "_origin": "ast",
-      "community": 57,
-      "norm_label": "what this project is",
-      "id": "claude_what_this_project_is"
-    },
-    {
-      "label": "Tech stack",
-      "file_type": "document",
-      "source_file": "CLAUDE.md",
-      "source_location": "L20",
-      "_origin": "ast",
-      "community": 57,
-      "norm_label": "tech stack",
-      "id": "claude_tech_stack"
-    },
-    {
-      "label": "Hard architectural rules (do not violate)",
-      "file_type": "document",
-      "source_file": "CLAUDE.md",
-      "source_location": "L26",
-      "_origin": "ast",
-      "community": 57,
-      "norm_label": "hard architectural rules (do not violate)",
-      "id": "claude_hard_architectural_rules_do_not_violate"
-    },
-    {
-      "label": "Repo & environment",
-      "file_type": "document",
-      "source_file": "CLAUDE.md",
-      "source_location": "L36",
-      "_origin": "ast",
-      "community": 57,
-      "norm_label": "repo & environment",
-      "id": "claude_repo_environment"
-    },
-    {
-      "label": "Current state \u2014 Phase 1 complete (full CRUD)",
-      "file_type": "document",
-      "source_file": "CLAUDE.md",
-      "source_location": "L47",
-      "_origin": "ast",
-      "community": 57,
-      "norm_label": "current state \u2014 phase 1 complete (full crud)",
-      "id": "claude_current_state_phase_1_complete_full_crud"
-    },
-    {
-      "label": "Roadmap \u2014 deferred to Phase 2+",
-      "file_type": "document",
-      "source_file": "CLAUDE.md",
-      "source_location": "L67",
-      "_origin": "ast",
-      "community": 57,
-      "norm_label": "roadmap \u2014 deferred to phase 2+",
-      "id": "claude_roadmap_deferred_to_phase_2"
-    },
-    {
-      "label": "How I like to work \u2014 follow precisely",
-      "file_type": "document",
-      "source_file": "CLAUDE.md",
-      "source_location": "L83",
-      "_origin": "ast",
-      "community": 57,
-      "norm_label": "how i like to work \u2014 follow precisely",
-      "id": "claude_how_i_like_to_work_follow_precisely"
-    },
-    {
-      "label": "Known gotchas \u2014 carry these forward",
-      "file_type": "document",
-      "source_file": "CLAUDE.md",
-      "source_location": "L97",
-      "_origin": "ast",
-      "community": 57,
-      "norm_label": "known gotchas \u2014 carry these forward",
-      "id": "claude_known_gotchas_carry_these_forward"
-    },
-    {
-      "label": "graphify",
-      "file_type": "document",
-      "source_file": "CLAUDE.md",
-      "source_location": "L120",
-      "_origin": "ast",
-      "community": 57,
-      "norm_label": "graphify",
-      "id": "claude_graphify"
-    },
-    {
       "label": "README.md",
       "file_type": "document",
       "source_file": "README.md",
@@ -12378,12 +12378,112 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "CLAUDE.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "claude",
+      "target": "claude_claude_md_p_track",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CLAUDE.md",
+      "source_location": "L47",
+      "weight": 1.0,
+      "source": "claude_claude_md_p_track",
+      "target": "claude_current_state_phase_1_complete_full_crud",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CLAUDE.md",
+      "source_location": "L133",
+      "weight": 1.0,
+      "source": "claude_claude_md_p_track",
+      "target": "claude_graphify",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CLAUDE.md",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "claude_claude_md_p_track",
+      "target": "claude_hard_architectural_rules_do_not_violate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CLAUDE.md",
+      "source_location": "L92",
+      "weight": 1.0,
+      "source": "claude_claude_md_p_track",
+      "target": "claude_how_i_like_to_work_follow_precisely",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CLAUDE.md",
+      "source_location": "L106",
+      "weight": 1.0,
+      "source": "claude_claude_md_p_track",
+      "target": "claude_known_gotchas_carry_these_forward",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CLAUDE.md",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "claude_claude_md_p_track",
+      "target": "claude_repo_environment",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CLAUDE.md",
+      "source_location": "L76",
+      "weight": 1.0,
+      "source": "claude_claude_md_p_track",
+      "target": "claude_roadmap_deferred_to_phase_2",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CLAUDE.md",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "claude_claude_md_p_track",
+      "target": "claude_tech_stack",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CLAUDE.md",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "claude_claude_md_p_track",
+      "target": "claude_what_this_project_is",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "backend/src/common/record-history.ts",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_common_record_history",
-      "target": "backend_src_common_record_history_historyentry",
-      "confidence_score": 1.0
+      "target": "backend_src_common_record_history_historyentry"
     },
     {
       "relation": "contains",
@@ -12391,9 +12491,9 @@
       "source_file": "backend/src/common/record-history.ts",
       "source_location": "L29",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_common_record_history",
-      "target": "backend_src_common_record_history_historyinsert",
-      "confidence_score": 1.0
+      "target": "backend_src_common_record_history_historyinsert"
     },
     {
       "relation": "imports_from",
@@ -12402,9 +12502,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository",
-      "target": "backend_src_common_record_history",
-      "confidence_score": 1.0
+      "target": "backend_src_common_record_history"
     },
     {
       "relation": "imports_from",
@@ -12424,9 +12524,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository",
-      "target": "backend_src_common_record_history_historyentry",
-      "confidence_score": 1.0
+      "target": "backend_src_common_record_history_historyentry"
     },
     {
       "relation": "references",
@@ -12435,9 +12535,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L99",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_findhistory",
-      "target": "backend_src_common_record_history_historyentry",
-      "confidence_score": 1.0
+      "target": "backend_src_common_record_history_historyentry"
     },
     {
       "relation": "imports",
@@ -12468,9 +12568,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository",
-      "target": "backend_src_common_record_history_historyinsert",
-      "confidence_score": 1.0
+      "target": "backend_src_common_record_history_historyinsert"
     },
     {
       "relation": "references",
@@ -12479,9 +12579,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L92",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_inserthistory",
-      "target": "backend_src_common_record_history_historyinsert",
-      "confidence_score": 1.0
+      "target": "backend_src_common_record_history_historyinsert"
     },
     {
       "relation": "imports_from",
@@ -12500,9 +12600,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository",
-      "target": "backend_src_modules_action_items_action_items_repository_actionitem",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_repository_actionitem"
     },
     {
       "relation": "contains",
@@ -12510,9 +12610,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L45",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository",
-      "target": "backend_src_modules_action_items_action_items_repository_actionitemcomment",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_repository_actionitemcomment"
     },
     {
       "relation": "contains",
@@ -12520,9 +12620,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L25",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository",
-      "target": "backend_src_modules_action_items_action_items_repository_actionitemlistitem",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_repository_actionitemlistitem"
     },
     {
       "relation": "contains",
@@ -12530,9 +12630,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L57",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository",
-      "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository"
     },
     {
       "relation": "imports_from",
@@ -12541,9 +12641,9 @@
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_service",
-      "target": "backend_src_modules_action_items_action_items_repository",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_repository"
     },
     {
       "relation": "inherits",
@@ -12552,9 +12652,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L25",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemlistitem",
-      "target": "backend_src_modules_action_items_action_items_repository_actionitem",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_repository_actionitem"
     },
     {
       "relation": "imports",
@@ -12573,9 +12673,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L58",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository",
-      "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_constructor",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_constructor"
     },
     {
       "relation": "method",
@@ -12583,9 +12683,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L135",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository",
-      "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_deleteowners",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_deleteowners"
     },
     {
       "relation": "method",
@@ -12593,9 +12693,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L143",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository",
-      "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_findbyproject",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_findbyproject"
     },
     {
       "relation": "method",
@@ -12603,9 +12703,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L99",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository",
-      "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_findhistory",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_findhistory"
     },
     {
       "relation": "method",
@@ -12613,9 +12713,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L161",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository",
-      "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_findone",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_findone"
     },
     {
       "relation": "method",
@@ -12623,9 +12723,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L64",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository",
-      "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_insert",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_insert"
     },
     {
       "relation": "method",
@@ -12633,9 +12733,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L199",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository",
-      "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_insertcomment",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_insertcomment"
     },
     {
       "relation": "method",
@@ -12643,9 +12743,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L92",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository",
-      "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_inserthistory",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_inserthistory"
     },
     {
       "relation": "method",
@@ -12653,9 +12753,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L122",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository",
-      "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_insertowners",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_insertowners"
     },
     {
       "relation": "method",
@@ -12663,9 +12763,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L186",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository",
-      "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_listcomments",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_listcomments"
     },
     {
       "relation": "method",
@@ -12673,9 +12773,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L114",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository",
-      "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_remove",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_remove"
     },
     {
       "relation": "method",
@@ -12683,9 +12783,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L60",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository",
-      "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_table",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_table"
     },
     {
       "relation": "method",
@@ -12693,9 +12793,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L73",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository",
-      "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_update",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_update"
     },
     {
       "relation": "references",
@@ -12704,9 +12804,9 @@
       "source_location": "L56",
       "weight": 1.0,
       "context": "decorator",
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository",
-      "target": "backend_src_modules_action_items_action_items_repository_ts_injectable",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_repository_ts_injectable"
     },
     {
       "relation": "imports",
@@ -12715,9 +12815,9 @@
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_service",
-      "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository"
     },
     {
       "relation": "references",
@@ -12726,9 +12826,9 @@
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
       "source_location": "L25",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_service_actionitemsservice_constructor",
-      "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository"
     },
     {
       "relation": "calls",
@@ -12737,9 +12837,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L204",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_insertcomment",
-      "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_insert",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_insert"
     },
     {
       "relation": "calls",
@@ -12748,9 +12848,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L93",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_inserthistory",
-      "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_insert",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_insert"
     },
     {
       "relation": "calls",
@@ -12759,9 +12859,9 @@
       "source_file": "backend/src/modules/action-items/action-items.repository.ts",
       "source_location": "L129",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_insertowners",
-      "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_insert",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_repository_actionitemsrepository_insert"
     },
     {
       "relation": "calls",
@@ -12923,9 +13023,9 @@
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
       "source_location": "L24",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_service",
-      "target": "backend_src_modules_action_items_action_items_service_actionitemsservice",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_service_actionitemsservice"
     },
     {
       "relation": "contains",
@@ -12933,9 +13033,9 @@
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_service",
-      "target": "backend_src_modules_action_items_action_items_service_owners",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_service_owners"
     },
     {
       "relation": "contains",
@@ -12943,9 +13043,9 @@
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_service",
-      "target": "backend_src_modules_action_items_action_items_service_ownerslabel",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_service_ownerslabel"
     },
     {
       "relation": "calls",
@@ -12954,9 +13054,9 @@
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
       "source_location": "L96",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_service_actionitemsservice_update",
-      "target": "backend_src_modules_action_items_action_items_service_ownerslabel",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_service_ownerslabel"
     },
     {
       "relation": "imports",
@@ -12997,9 +13097,9 @@
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
       "source_location": "L31",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_service_actionitemsservice",
-      "target": "backend_src_modules_action_items_action_items_service_actionitemsservice_add",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_service_actionitemsservice_add"
     },
     {
       "relation": "method",
@@ -13007,9 +13107,9 @@
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
       "source_location": "L129",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_service_actionitemsservice",
-      "target": "backend_src_modules_action_items_action_items_service_actionitemsservice_addcomment",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_service_actionitemsservice_addcomment"
     },
     {
       "relation": "method",
@@ -13017,9 +13117,9 @@
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
       "source_location": "L25",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_service_actionitemsservice",
-      "target": "backend_src_modules_action_items_action_items_service_actionitemsservice_constructor",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_service_actionitemsservice_constructor"
     },
     {
       "relation": "method",
@@ -13027,9 +13127,9 @@
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
       "source_location": "L52",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_service_actionitemsservice",
-      "target": "backend_src_modules_action_items_action_items_service_actionitemsservice_get",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_service_actionitemsservice_get"
     },
     {
       "relation": "method",
@@ -13037,9 +13137,9 @@
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
       "source_location": "L113",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_service_actionitemsservice",
-      "target": "backend_src_modules_action_items_action_items_service_actionitemsservice_history",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_service_actionitemsservice_history"
     },
     {
       "relation": "method",
@@ -13047,9 +13147,9 @@
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
       "source_location": "L27",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_service_actionitemsservice",
-      "target": "backend_src_modules_action_items_action_items_service_actionitemsservice_list",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_service_actionitemsservice_list"
     },
     {
       "relation": "method",
@@ -13057,9 +13157,9 @@
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
       "source_location": "L124",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_service_actionitemsservice",
-      "target": "backend_src_modules_action_items_action_items_service_actionitemsservice_listcomments",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_service_actionitemsservice_listcomments"
     },
     {
       "relation": "method",
@@ -13067,9 +13167,9 @@
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
       "source_location": "L118",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_service_actionitemsservice",
-      "target": "backend_src_modules_action_items_action_items_service_actionitemsservice_remove",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_service_actionitemsservice_remove"
     },
     {
       "relation": "method",
@@ -13077,9 +13177,9 @@
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
       "source_location": "L58",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_service_actionitemsservice",
-      "target": "backend_src_modules_action_items_action_items_service_actionitemsservice_update",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_service_actionitemsservice_update"
     },
     {
       "relation": "references",
@@ -13088,9 +13188,9 @@
       "source_location": "L23",
       "weight": 1.0,
       "context": "decorator",
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_service_actionitemsservice",
-      "target": "backend_src_modules_action_items_action_items_service_ts_injectable",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_service_ts_injectable"
     },
     {
       "relation": "calls",
@@ -13121,9 +13221,9 @@
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
       "source_location": "L135",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_service_actionitemsservice_addcomment",
-      "target": "backend_src_modules_action_items_action_items_service_actionitemsservice_get",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_service_actionitemsservice_get"
     },
     {
       "relation": "calls",
@@ -13132,9 +13232,9 @@
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
       "source_location": "L114",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_service_actionitemsservice_history",
-      "target": "backend_src_modules_action_items_action_items_service_actionitemsservice_get",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_service_actionitemsservice_get"
     },
     {
       "relation": "calls",
@@ -13143,9 +13243,9 @@
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
       "source_location": "L125",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_service_actionitemsservice_listcomments",
-      "target": "backend_src_modules_action_items_action_items_service_actionitemsservice_get",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_service_actionitemsservice_get"
     },
     {
       "relation": "calls",
@@ -13154,9 +13254,9 @@
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
       "source_location": "L119",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_service_actionitemsservice_remove",
-      "target": "backend_src_modules_action_items_action_items_service_actionitemsservice_get",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_service_actionitemsservice_get"
     },
     {
       "relation": "calls",
@@ -13165,9 +13265,9 @@
       "source_file": "backend/src/modules/action-items/action-items.service.ts",
       "source_location": "L66",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "backend_src_modules_action_items_action_items_service_actionitemsservice_update",
-      "target": "backend_src_modules_action_items_action_items_service_actionitemsservice_get",
-      "confidence_score": 1.0
+      "target": "backend_src_modules_action_items_action_items_service_actionitemsservice_get"
     },
     {
       "relation": "calls",
@@ -38120,106 +38220,6 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "CLAUDE.md",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "claude",
-      "target": "claude_claude_md_p_track"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "CLAUDE.md",
-      "source_location": "L47",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "claude_claude_md_p_track",
-      "target": "claude_current_state_phase_1_complete_full_crud"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "CLAUDE.md",
-      "source_location": "L120",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "claude_claude_md_p_track",
-      "target": "claude_graphify"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "CLAUDE.md",
-      "source_location": "L26",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "claude_claude_md_p_track",
-      "target": "claude_hard_architectural_rules_do_not_violate"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "CLAUDE.md",
-      "source_location": "L83",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "claude_claude_md_p_track",
-      "target": "claude_how_i_like_to_work_follow_precisely"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "CLAUDE.md",
-      "source_location": "L97",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "claude_claude_md_p_track",
-      "target": "claude_known_gotchas_carry_these_forward"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "CLAUDE.md",
-      "source_location": "L36",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "claude_claude_md_p_track",
-      "target": "claude_repo_environment"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "CLAUDE.md",
-      "source_location": "L67",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "claude_claude_md_p_track",
-      "target": "claude_roadmap_deferred_to_phase_2"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "CLAUDE.md",
-      "source_location": "L20",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "claude_claude_md_p_track",
-      "target": "claude_tech_stack"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "CLAUDE.md",
-      "source_location": "L6",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "claude_claude_md_p_track",
-      "target": "claude_what_this_project_is"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "README.md",
       "source_location": "L1",
       "weight": 1.0,
@@ -38559,5 +38559,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "657d7c01f027e82a45f8c27c9ead9c69ba0f0402"
+  "built_at_commit": "aacab525620d7ef8f2694cf47d9f4d8f3c598008"
 }

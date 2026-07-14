@@ -125,18 +125,43 @@ export interface Lookup {
   name: string
 }
 
+// Lookups are near-static, but every dialog open refetches them. Cache the
+// in-flight promise (not just the data) so simultaneous mounts share one
+// request; drop failed promises so a network blip doesn't cache an error.
+const LOOKUP_TTL_MS = 60_000
+const lookupCache = new Map<string, { p: Promise<Lookup[]>; expires: number }>()
+
 export const lookupsApi = {
-  list: (name: string) => apiGet<Lookup[]>(`/lookups/${name}`),
+  list: (name: string): Promise<Lookup[]> => {
+    const hit = lookupCache.get(name)
+    if (hit && hit.expires > Date.now()) return hit.p
+    const p = apiGet<Lookup[]>(`/lookups/${name}`)
+    lookupCache.set(name, { p, expires: Date.now() + LOOKUP_TTL_MS })
+    p.catch(() => lookupCache.delete(name))
+    return p
+  },
+  invalidate: (name: string) => {
+    lookupCache.delete(name)
+  },
 }
 
 export const categoriesApi = {
-  create: (name: string) =>
-    apiPost<Lookup>('/lookups/project-categories', { name }),
+  create: async (name: string) => {
+    const row = await apiPost<Lookup>('/lookups/project-categories', { name })
+    lookupsApi.invalidate('project-categories')
+    return row
+  },
 }
 
 export const rolesApi = {
-  create: (name: string, default_access_level: string) =>
-    apiPost<Lookup>('/lookups/project-roles', { name, default_access_level }),
+  create: async (name: string, default_access_level: string) => {
+    const row = await apiPost<Lookup>('/lookups/project-roles', {
+      name,
+      default_access_level,
+    })
+    lookupsApi.invalidate('project-roles')
+    return row
+  },
 }
 
 export const peopleApi = {
