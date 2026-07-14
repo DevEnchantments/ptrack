@@ -58,19 +58,28 @@ Every record type now has Create, Read, Update **and Delete**.
 - **Project-level:** 4-step Create Project wizard; Edit Project (PATCH, with Parent
   Project picker and creatable Category); Delete Project; restricted-project lock icon;
   orphaned Storage cleanup on project delete
+- **History tabs:** Milestone + Action Item show field-level change history. Capture is a
+  Postgres trigger (`db/record_history.sql`) writing one `record_history` row per changed
+  field, with values resolved to display text **at write time** (FK → name, date →
+  `07-JUL-2026`, null → `""`) so history shows what a value *was*, not what it resolves to
+  today. Attribution comes from `NEW.updated_by`, which the services already set.
+  Action-item **owners** are the exception: they live in the `action_item_owners` join
+  table, which the trigger cannot see, so `ActionItemsService.update` diffs the owner set
+  and logs one entry itself. Rendered by the shared `RecordHistory` component.
 - **API docs:** Swagger at `:3000/api/docs` (non-production only). Schemas are derived
   automatically from `class-validator` decorators by the `@nestjs/swagger` CLI plugin —
   DTOs carry `@ApiProperty` examples, and POST/PATCH routes carry runnable `@ApiBody`
   examples.
-- **Schema:** `ptrack_phase1_schema.sql`, reconciled against the live Supabase DB (28 tables)
+- **Schema:** `ptrack_phase1_schema.sql`, reconciled against the live Supabase DB (28 tables),
+  plus `db/record_history.sql` (run separately in the Supabase SQL editor).
 
 ## Roadmap — deferred to Phase 2+
 
-**Unfinished Phase 1 loose ends:** History/audit tabs (literal "coming in a later step"
-placeholders on the Milestone + Action Item detail pages) · Status Report ↔ Updates
-junction — the junction table does not exist, and the `status_id` "health" column on
-`status_reports` is dead (written nowhere) · Reference Identifier (visible on the demo's
-Issue dialog) · Project Logo upload · Key/AAGP code column · Email buttons · RLS enforcement.
+**Unfinished Phase 1 loose ends:** Status Report ↔ Updates junction — the junction table
+does not exist, and the `status_id` "health" column on `status_reports` is dead (written
+nowhere) · Reference Identifier (visible on the demo's Issue dialog) · `original_due_date`
+on milestones (the demo's History shows an "Original Due Date" field; the column does not
+exist here) · Project Logo upload · Key/AAGP code column · Email buttons · RLS enforcement.
 
 **Not yet started (whole modules from the original):** dashboards & reporting (no charting
 library is installed — Gantt, timeline, calendar, heatmap all have no foundation) · email
@@ -113,6 +122,10 @@ updates.
   need a hand-written `@ApiConsumes` + `@ApiBody` schema.
 - **FK example values in Swagger are placeholders**, not real rows. Lookup-backed IDs must
   be fetched from `GET /lookups/:name` before a request will succeed.
+- **History for many-to-many fields cannot be a DB trigger.** A trigger on the parent row
+  never sees the join table, and services replace join rows wholesale on every save
+  (delete-all + re-insert), so a trigger on the join table would log a "change" on every
+  save even when the set is identical. Diff the rendered set in the service instead.
 - **Profiles FK disambiguation:** use the `profiles!user_id` FK hint when multiple FKs
   point to the same table.
 - **File/export sanity check:** every component's export name should match its filename.
