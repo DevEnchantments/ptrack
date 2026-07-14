@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="60" viewBox="0 0 900 60" role="img" aria-label="Tracking projects, milestones, action items, status reports">
+  <defs>
+    <clipPath id="w1c"><rect x="332" y="12" height="36" width="0">
+      <animate attributeName="width" calcMode="discrete"
+        values="0;22;44;66;88;110;132;154;154;0;0"
+        keyTimes="0;0.015;0.03;0.045;0.06;0.075;0.09;0.105;0.24;0.25;1"
+        dur="16s" repeatCount="indefinite"/>
+    </rect></clipPath>
+    <clipPath id="w2c"><rect x="332" y="12" height="36" width="0">
+      <animate attributeName="width" calcMode="discrete"
+        values="0;0;24;48;72;96;120;144;168;192;192;0;0"
+        keyTimes="0;0.25;0.263;0.276;0.289;0.302;0.315;0.328;0.341;0.354;0.49;0.5;1"
+        dur="16s" repeatCount="indefinite"/>
+    </rect></clipPath>
+    <clipPath id="w3c"><rect x="332" y="12" height="36" width="0">
+      <animate attributeName="width" calcMode="discrete"
+        values="0;0;25;50;75;100;125;150;175;200;225;225;0;0"
+        keyTimes="0;0.5;0.512;0.524;0.536;0.548;0.56;0.572;0.584;0.596;0.608;0.74;0.75;1"
+        dur="16s" repeatCount="indefinite"/>
+    </rect></clipPath>
+    <clipPath id="w4c"><rect x="332" y="12" height="36" width="0">
+      <animate attributeName="width" calcMode="discrete"
+        values="0;0;26;52;78;104;130;156;182;208;234;260;260;0"
+        keyTimes="0;0.75;0.761;0.772;0.783;0.794;0.805;0.816;0.827;0.838;0.849;0.86;0.99;1"
+        dur="16s" repeatCount="indefinite"/>
+    </rect></clipPath>
+  </defs>
+
+  <rect width="900" height="60" rx="10" fill="#0b1220"/>
+
+  <text x="120" y="38" font-family="Consolas, Menlo, monospace" font-size="20" fill="#94a3b8">tracking&#160;›</text>
+
+  <g font-family="Consolas, Menlo, monospace" font-size="20" font-weight="600">
+    <text x="332" y="38" fill="#14b8a6" clip-path="url(#w1c)">projects</text>
+    <text x="332" y="38" fill="#6366f1" clip-path="url(#w2c)">milestones</text>
+    <text x="332" y="38" fill="#f59e0b" clip-path="url(#w3c)">action items</text>
+    <text x="332" y="38" fill="#f8fafc" clip-path="url(#w4c)">status reports</text>
+  </g>
+
+  <!-- caret: hops along as if typing, blinks forever -->
+  <rect x="334" y="18" width="10" height="26" fill="#e2e8f0" opacity="0.9">
+    <animate attributeName="opacity" values="0.9;0;0.9" dur="1s" repeatCount="indefinite"/>
+    <animate attributeName="x" calcMode="discrete"
+      values="334;356;378;400;422;444;466;488;490;334;358;382;406;430;454;478;502;526;528;334;359;384;409;434;459;484;509;534;559;561;334;360;386;412;438;464;490;516;542;568;594;598;334"
+      keyTimes="0;0.015;0.03;0.045;0.06;0.075;0.09;0.105;0.24;0.25;0.263;0.276;0.289;0.302;0.315;0.328;0.341;0.354;0.49;0.5;0.512;0.524;0.536;0.548;0.56;0.572;0.584;0.596;0.608;0.74;0.75;0.761;0.772;0.783;0.794;0.805;0.816;0.827;0.838;0.849;0.86;0.99;1"
+      dur="16s" repeatCount="indefinite"/>
+  </rect>
+</svg>

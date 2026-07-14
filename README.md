@@ -13,7 +13,7 @@
 
 **A ground-up rebuild of an enterprise Oracle APEX PPM application as a modern web stack.**
 
-*Track projects, milestones, action items, issues, status reports, resources and people — with field-level audit history throughout.*
+<img src=".github/assets/typing.svg" alt="tracking › projects, milestones, action items, status reports" width="100%"/>
 
 </div>
 
@@ -31,6 +31,10 @@
 | 📖 | **Live API docs** | Swagger at `/api/docs` with runnable request examples |
 | 🔐 | **Local JWT verification** | Supabase tokens verified in-process (JWKS) — no per-request auth round-trip |
 | ✅ | **CI-gated** | Typecheck, lint, build and tests on every push |
+
+<div align="center">
+<img src=".github/assets/audit-trail.svg" alt="Audit trail: created, changed, owners changed, deleted" width="100%"/>
+</div>
 
 ## 🏗 Architecture
 
@@ -53,6 +57,10 @@ flowchart LR
     N --> S
     R -. "sign-in only" .-> A
 ```
+
+<div align="center">
+<img src=".github/assets/dataflow.svg" alt="Request pulse: React to NestJS (JWT verified in-process) to Supabase and back" width="100%"/>
+</div>
 
 > **The one hard rule:** the React app **never** talks to Supabase data directly.
 > Everything flows **React → NestJS → Supabase**. The frontend touches Supabase
