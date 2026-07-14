@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="230" viewBox="0 0 900 230" role="img" aria-label="P-Track — Project Portfolio Management">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b1220"/>
+      <stop offset="100%" stop-color="#101b33"/>
+    </linearGradient>
+    <linearGradient id="bar1" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#14b8a6"/>
+      <stop offset="100%" stop-color="#0d9488"/>
+    </linearGradient>
+    <linearGradient id="bar2" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#4f46e5"/>
+    </linearGradient>
+    <linearGradient id="bar3" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#14b8a6"/>
+      <stop offset="50%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+  </defs>
+
+  <!-- background -->
+  <rect width="900" height="230" rx="14" fill="url(#bg)"/>
+
+  <!-- faint grid (weeks) -->
+  <g stroke="#ffffff" stroke-opacity="0.05">
+    <line x1="500" y1="30" x2="500" y2="200"/>
+    <line x1="570" y1="30" x2="570" y2="200"/>
+    <line x1="640" y1="30" x2="640" y2="200"/>
+    <line x1="710" y1="30" x2="710" y2="200"/>
+    <line x1="780" y1="30" x2="780" y2="200"/>
+    <line x1="850" y1="30" x2="850" y2="200"/>
+  </g>
+
+  <!-- title block -->
+  <text x="56" y="105" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="52" font-weight="700" fill="#f8fafc">
+    P-Track
+    <animate attributeName="opacity" values="0;1" dur="0.9s" fill="freeze"/>
+  </text>
+  <text x="58" y="138" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="17" fill="#94a3b8">
+    Project Portfolio Management
+    <animate attributeName="opacity" values="0;0;1" dur="1.4s" fill="freeze"/>
+  </text>
+  <text x="58" y="164" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="13" fill="#64748b">
+    React · NestJS · Supabase
+    <animate attributeName="opacity" values="0;0;1" dur="1.8s" fill="freeze"/>
+  </text>
+
+  <!-- animated accent underline -->
+  <rect x="58" y="117" height="3" rx="1.5" fill="url(#accent)">
+    <animate attributeName="width" values="0;190" dur="1.1s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
+  </rect>
+
+  <!-- mini gantt: bars draw themselves in, then stay -->
+  <g>
+    <rect x="500" y="52" height="16" rx="8" fill="url(#bar1)">
+      <animate attributeName="width" values="0;210" begin="0.3s" dur="1.2s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
+    </rect>
+    <rect x="560" y="86" height="16" rx="8" fill="url(#bar2)">
+      <animate attributeName="width" values="0;180" begin="0.7s" dur="1.2s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
+    </rect>
+    <rect x="530" y="120" height="16" rx="8" fill="url(#bar3)">
+      <animate attributeName="width" values="0;250" begin="1.1s" dur="1.2s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
+    </rect>
+    <rect x="590" y="154" height="16" rx="8" fill="url(#bar1)" opacity="0.75">
+      <animate attributeName="width" values="0;150" begin="1.5s" dur="1.2s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
+    </rect>
+  </g>
+
+  <!-- milestone diamonds: pop in, then pulse forever -->
+  <g>
+    <rect x="717" y="53" width="13" height="13" rx="2" fill="#f8fafc" transform="rotate(45 723.5 59.5)">
+      <animate attributeName="opacity" values="0;0;1" dur="1.6s" fill="freeze"/>
+      <animate attributeName="opacity" values="1;0.45;1" begin="2.5s" dur="2.4s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="787" y="121" width="13" height="13" rx="2" fill="#f8fafc" transform="rotate(45 793.5 127.5)">
+      <animate attributeName="opacity" values="0;0;1" dur="2.4s" fill="freeze"/>
+      <animate attributeName="opacity" values="1;0.45;1" begin="3.1s" dur="2.4s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+
+  <!-- "today" line sweeping the plan, forever -->
+  <line x1="0" y1="38" x2="0" y2="192" stroke="#f8fafc" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="4 4">
+    <animateTransform attributeName="transform" type="translate" values="500 0; 860 0; 500 0" dur="14s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1; 0.4 0 0.6 1"/>
+  </line>
+</svg>
