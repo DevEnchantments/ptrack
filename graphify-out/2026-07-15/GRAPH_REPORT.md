@@ -1,7 +1,7 @@
 # Graph Report - ptrack  (2026-07-15)
 
 ## Corpus Check
-- 149 files · ~46,574 words
+- 149 files · ~46,924 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `f7a1a6aa`
+- Built from commit: `b4d0e9cd`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -416,7 +416,7 @@ Cohesion: 0.50
 Nodes (3): AddIssueDialog(), emptyPerson(), Props
 
 ## Knowledge Gaps
-- **309 isolated node(s):** `name`, `version`, `description`, `author`, `private` (+304 more)
+- **309 isolated node(s):** `What this project is`, `Tech stack`, `Hard architectural rules (do not violate)`, `Repo & environment`, `Current state — Phase 1 complete (full CRUD)` (+304 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **15 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -426,10 +426,10 @@ _Questions this graph is uniquely positioned to answer:_
 - **Why does `@nestjs/swagger` connect `CreateProjectDto` to `nest-cli.json`, `CreateIssueDto`, `CreateLinkDto`, `status-reports.repository.ts`, `CreateUpdateDto`, `UpdateProjectDto`, `RecordHistory.tsx`, `CreateResourceDto`, `Community 12`, `PaginationQueryDto`, `MiniCalendar.tsx`, `UpdateAttachmentDto`, `CreateStatusReportDto`, `Community 9`, `Community 26`, `PeopleRepository`?**
   _High betweenness centrality (0.105) - this node is a cross-community bridge._
 - **Why does `AuthUser` connect `CreateProjectDto` to `CreateActionItemDto`, `SupabaseAuthGuard`, `LinksController`, `Community 3`, `Community 5`, `.add`, `Community 9`, `Community 10`, `toHttpException`, `@types/node`, `PeopleRepository`?**
-  _High betweenness centrality (0.034) - this node is a cross-community bridge._
+  _High betweenness centrality (0.044) - this node is a cross-community bridge._
 - **Why does `CurrentUser` connect `CreateProjectDto` to `CreateActionItemDto`, `SupabaseAuthGuard`, `LinksController`, `Community 3`, `Community 5`, `.add`, `Community 9`, `Community 10`, `toHttpException`, `@types/node`, `PeopleRepository`?**
-  _High betweenness centrality (0.034) - this node is a cross-community bridge._
-- **What connects `name`, `version`, `description` to the rest of the system?**
+  _High betweenness centrality (0.044) - this node is a cross-community bridge._
+- **What connects `What this project is`, `Tech stack`, `Hard architectural rules (do not violate)` to the rest of the system?**
   _309 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.09090909090909091 - nodes in this community are weakly interconnected._
