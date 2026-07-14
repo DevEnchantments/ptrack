@@ -66,12 +66,30 @@ Every record type now has Create, Read, Update **and Delete**.
   Action-item **owners** are the exception: they live in the `action_item_owners` join
   table, which the trigger cannot see, so `ActionItemsService.update` diffs the owner set
   and logs one entry itself. Rendered by the shared `RecordHistory` component.
+  **Deletions** are audited too (`event='deleted'`, who + what): written by
+  `RecordHistoryService` from the service layer (a DELETE trigger only sees the last
+  *editor*), best-effort so a failed audit insert never turns a successful delete into
+  a 500. No UI reads deletion rows yet — that's the future Project History page.
+- **Auth:** the guard verifies Supabase JWTs **locally** (jose, JWKS cached in memory) —
+  no per-request call to Supabase Auth. Confirmed live on this project (asymmetric keys).
+  Legacy-HS256 tokens fall back to `auth.getUser()` with a one-time warning; setting
+  `SUPABASE_JWT_SECRET` in `.env` restores local verification in that case.
+- **Perf conventions:** lookups are cached ~60s on both sides (backend `LookupsService`
+  map + frontend `lookupsApi` promise cache, invalidated by the create routes). List
+  pagination is **opt-in** via `?limit=&offset=` (shared `PaginationQueryDto`; omit =
+  return all rows) — wired on `GET /projects` and `GET .../updates` so far.
+- **Quality baseline:** GitHub Actions CI (`.github/workflows/ci.yml`) — typecheck, lint,
+  build, test on both halves. Backend lint is **0 errors and blocking**; frontend lint has
+  16 pre-existing errors and is non-blocking until paid down. 12 unit tests cover the
+  action-item owner-diff and the auth guard verify/fallback chain. Frontend fetch failures
+  surface as toasts (`lib/toast.ts` + `Toaster` in App) — no more silent empty sections.
 - **API docs:** Swagger at `:3000/api/docs` (non-production only). Schemas are derived
   automatically from `class-validator` decorators by the `@nestjs/swagger` CLI plugin —
   DTOs carry `@ApiProperty` examples, and POST/PATCH routes carry runnable `@ApiBody`
   examples.
 - **Schema:** `ptrack_phase1_schema.sql`, reconciled against the live Supabase DB (28 tables),
-  plus `db/record_history.sql` (run separately in the Supabase SQL editor).
+  plus `db/record_history.sql` and `db/record_history_deleted.sql` (both run separately in
+  the Supabase SQL editor; the latter widens the event check to allow `'deleted'`).
 
 ## Roadmap — deferred to Phase 2+
 
@@ -79,7 +97,13 @@ Every record type now has Create, Read, Update **and Delete**.
 does not exist, and the `status_id` "health" column on `status_reports` is dead (written
 nowhere) · Reference Identifier (visible on the demo's Issue dialog) · `original_due_date`
 on milestones (the demo's History shows an "Original Due Date" field; the column does not
-exist here) · Project Logo upload · Key/AAGP code column · Email buttons · RLS enforcement.
+exist here) · Project Logo upload · Key/AAGP code column · Email buttons · RLS enforcement ·
+pay down the 16 frontend lint errors, then flip the CI lint step to blocking.
+
+**Known perf debt (found in review, deliberately deferred):** action-item save is up to 6
+sequential DB round-trips (before-get → update → owner replace → after-get → history) ·
+the project page eagerly fires all 8 section list calls on load regardless of visible tab —
+revisit if projects grow heavy.
 
 **Not yet started (whole modules from the original):** dashboards & reporting (no charting
 library is installed — Gantt, timeline, calendar, heatmap all have no foundation) · email
@@ -122,6 +146,12 @@ updates.
   need a hand-written `@ApiConsumes` + `@ApiBody` schema.
 - **FK example values in Swagger are placeholders**, not real rows. Lookup-backed IDs must
   be fetched from `GET /lookups/:name` before a request will succeed.
+- **jose v6 is ESM-only.** The app runs because Node 24 can `require()` ESM, but Jest
+  cannot — its config needs the `transformIgnorePatterns: ["node_modules/(?!jose)"]` +
+  `allowJs` exception (already in `backend/package.json`). Applies to any future ESM-only dep.
+- **Files exporting a React component must export ONLY components**
+  (`react-refresh/only-export-components`). Shared helpers/objects go in `lib/` — this is
+  why `toast` lives in `lib/toast.ts` while `Toaster` lives in `components/ui/toaster.tsx`.
 - **supabase-js + typescript-eslint contradict each other on typed selects:**
   `no-unsafe-return` calls `.select('id').maybeSingle()` results `any`, while casting
   them trips `no-unnecessary-type-assertion`. Type the result via the generic instead:

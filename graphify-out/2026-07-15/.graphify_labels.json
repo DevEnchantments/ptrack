@@ -54,13 +54,15 @@
   "52": "Community 52",
   "53": "Community 53",
   "54": "@eslint/js",
+  "55": "transform",
   "56": "auth-context.tsx",
   "57": "CLAUDE.md — P-Track",
+  "58": "reflect-metadata",
+  "59": "@types/node",
   "60": "ActionItemDetailPage.tsx",
   "61": "PeopleRepository",
   "62": "StatusReportDetailPage.tsx",
   "64": ".update",
   "65": "SupabaseAuthGuard",
-  "66": "react-dom",
-  "67": "ActionItemDetailPage.tsx"
+  "66": "react-dom"
 }
