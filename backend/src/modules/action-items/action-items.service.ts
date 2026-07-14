@@ -3,6 +3,23 @@ import { ActionItemsRepository } from './action-items.repository';
 import { CreateActionItemDto } from './dto/create-action-item.dto';
 import { UpdateActionItemDto } from './dto/update-action-item.dto';
 
+type Owners = Array<{
+  slot: number;
+  profile: { full_name: string | null; email: string | null } | null;
+}>;
+
+/**
+ * Owners rendered as history text, in slot order — e.g. "Dana Whitfield, Sam Ali".
+ * Empty string when there are none, matching how the trigger renders null values.
+ */
+function ownersLabel(owners: Owners | undefined): string {
+  return (owners ?? [])
+    .slice()
+    .sort((a, b) => a.slot - b.slot)
+    .map((o) => o.profile?.full_name || o.profile?.email || 'Unknown')
+    .join(', ');
+}
+
 @Injectable()
 export class ActionItemsService {
   constructor(private readonly repo: ActionItemsRepository) {}
@@ -44,8 +61,9 @@ export class ActionItemsService {
     dto: UpdateActionItemDto,
     userId: string,
   ) {
-    // Ensures the item exists in this project (404 otherwise).
-    await this.get(projectId, actionItemId);
+    // Ensures the item exists in this project (404 otherwise). Kept so the
+    // owner set can be diffed after the write.
+    const before = await this.get(projectId, actionItemId);
 
     // Build the column patch only from fields that were provided.
     const patch: Record<string, unknown> = { updated_by: userId };
@@ -70,7 +88,26 @@ export class ActionItemsService {
     }
 
     // Return the fully-joined item so the UI can refresh.
-    return this.get(projectId, actionItemId);
+    const after = await this.get(projectId, actionItemId);
+
+    // Owners are replaced wholesale on every save, so the DB trigger cannot tell
+    // a real change from a rewrite of the same set — and it never sees the join
+    // table anyway. Diff the rendered sets and log one entry only if they differ.
+    const oldOwners = ownersLabel(before.owners);
+    const newOwners = ownersLabel(after.owners);
+    if (oldOwners !== newOwners) {
+      await this.repo.insertHistory({
+        table_name: 'action_items',
+        record_id: actionItemId,
+        project_id: projectId,
+        field_label: 'Owners',
+        old_value: oldOwners,
+        new_value: newOwners,
+        changed_by: userId,
+      });
+    }
+
+    return after;
   }
 
   async history(projectId: string, actionItemId: string) {

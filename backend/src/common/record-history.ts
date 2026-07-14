@@ -19,3 +19,19 @@ export interface HistoryEntry {
 export const HISTORY_SELECT =
   'id, event, field_label, old_value, new_value, changed_at, ' +
   'actor:profiles!changed_by ( full_name, email )';
+
+/**
+ * A history row written from the service layer rather than the DB trigger.
+ *
+ * Needed for many-to-many fields: the trigger only sees the parent row, so
+ * changes that live in a join table (action item owners) never reach it.
+ */
+export interface HistoryInsert {
+  table_name: string;
+  record_id: string;
+  project_id: string;
+  field_label: string;
+  old_value: string;
+  new_value: string;
+  changed_by: string;
+}

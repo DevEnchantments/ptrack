@@ -4,6 +4,7 @@ import { toHttpException } from '../../common/supabase-error';
 import {
   HISTORY_SELECT,
   type HistoryEntry,
+  type HistoryInsert,
 } from '../../common/record-history';
 
 export interface ActionItem {
@@ -82,6 +83,17 @@ export class ActionItemsRepository {
       .single();
     if (error) throw toHttpException(error, 'actionItems.update');
     return data;
+  }
+
+  /**
+   * Owners live in the action_item_owners join table, which the record_history
+   * trigger never sees — so that one field is logged here instead.
+   */
+  async insertHistory(entry: HistoryInsert): Promise<void> {
+    const { error } = await this.db.client
+      .from('record_history')
+      .insert({ ...entry, event: 'changed' });
+    if (error) throw toHttpException(error, 'actionItems.insertHistory');
   }
 
   async findHistory(
