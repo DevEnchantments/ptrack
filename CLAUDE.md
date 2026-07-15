@@ -93,9 +93,13 @@ Every record type now has Create, Read, Update **and Delete**.
 
 ## Roadmap — deferred to Phase 2+
 
-**Unfinished Phase 1 loose ends:** Project Logo upload · Email buttons (demo: an Email
-button on the Status Report detail header) · RLS enforcement · pay down the 16 frontend
-lint errors, then flip the CI lint step to blocking.
+**Unfinished Phase 1 loose ends:** Email buttons (demo: an Email button on the Status
+Report detail header) · RLS enforcement · pay down the 16 frontend lint errors, then flip
+the CI lint step to blocking.
+
+**Deferred (2026-07-15):** Project Logo upload — neither of us could locate the demo's
+upload/display surfaces, and the field-mapping rule forbids inferring UI from the schema
+doc. Revisit only if the demo UI turns up.
 
 **Closed after demo review (2026-07-15):** Status Report ↔ Updates junction + report
 health. All three demo surfaces (list, edit page, detail page) show no update-linking UI
