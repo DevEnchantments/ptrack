@@ -235,13 +235,13 @@
     "semantic_hash": ""
   },
   "backend/src/modules/milestones/milestones.repository.ts": {
-    "mtime": 1784015576.4922683,
-    "ast_hash": "5c7658f61c09a06c69952f56b8422e33",
+    "mtime": 1784090594.079296,
+    "ast_hash": "dd6858b644bff55181b4ac2d8ed325a1",
     "semantic_hash": ""
   },
   "backend/src/modules/milestones/milestones.service.ts": {
-    "mtime": 1784059664.6642516,
-    "ast_hash": "dd64ee1c72adcbfabe771848aa940d3a",
+    "mtime": 1784090596.7321596,
+    "ast_hash": "e039515e4a2d1a271ca66162c7944b15",
     "semantic_hash": ""
   },
   "backend/src/modules/people/dto/create-person.dto.ts": {
@@ -555,8 +555,8 @@
     "semantic_hash": "69ec66b8dde852cc89c1217075253d87"
   },
   "frontend/src/lib/api.ts": {
-    "mtime": 1784012243.4149418,
-    "ast_hash": "222f7102b408311026698dac6e26051b",
+    "mtime": 1784090598.3074477,
+    "ast_hash": "c379498b4b1c6767a69859a81b64130d",
     "semantic_hash": ""
   },
   "frontend/src/lib/auth-context.tsx": {
@@ -605,8 +605,8 @@
     "semantic_hash": "78a8624718bac076a92a2145a6ee4393"
   },
   "frontend/src/pages/MilestoneDetailPage.tsx": {
-    "mtime": 1784060428.1610255,
-    "ast_hash": "4c5d9f8db360446820ec8d4f94c3af75",
+    "mtime": 1784090600.3765376,
+    "ast_hash": "c2aa2c5d8a025d76dd9bcb25780daf5b",
     "semantic_hash": ""
   },
   "frontend/src/pages/ProjectDetailPage.tsx": {
@@ -665,13 +665,13 @@
     "semantic_hash": "2e092757eaa8553feb3c7bb53e6a8a3b"
   },
   "CLAUDE.md": {
-    "mtime": 1784061228.0662918,
-    "ast_hash": "4269c5c2ce0886853bbcf13a68817e88",
+    "mtime": 1784090126.5295315,
+    "ast_hash": "087f3e1b1741552c4525fa6be058c987",
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1784062452.689905,
-    "ast_hash": "15318406b74bbfc7d4d71be2595ba2d1",
+    "mtime": 1784089136.6641092,
+    "ast_hash": "bfcf1862191024ecb54fe3c2ecfaf571",
     "semantic_hash": ""
   },
   "backend/README.md": {
@@ -725,8 +725,8 @@
     "semantic_hash": ""
   },
   "backend/db/record_history.sql": {
-    "mtime": 1784059376.4166217,
-    "ast_hash": "6b27931a9c6676b000f99f9666ee1353",
+    "mtime": 1784090589.5969622,
+    "ast_hash": "f8e19fa5aa93c54c4628193ff403672c",
     "semantic_hash": ""
   },
   "backend/src/common/record-history.ts": {
@@ -782,6 +782,56 @@
   ".github/assets/banner.svg": {
     "mtime": 1784062413.8778484,
     "ast_hash": "ba8a742d11d594cc23f42ea7ce56c31b",
+    "semantic_hash": ""
+  },
+  ".github/assets/audit-trail.svg": {
+    "mtime": 1784064908.734375,
+    "ast_hash": "02704d3574e12d3a57a99f144224dc74",
+    "semantic_hash": ""
+  },
+  ".github/assets/dataflow.svg": {
+    "mtime": 1784064972.9133582,
+    "ast_hash": "fe6a6bb8bf5f1f0e6c21fc6230ad6f1f",
+    "semantic_hash": ""
+  },
+  ".github/assets/typing.svg": {
+    "mtime": 1784064980.326511,
+    "ast_hash": "28788b905dcc89783daf192e9787261f",
+    "semantic_hash": ""
+  },
+  ".github/assets/orbit.svg": {
+    "mtime": 1784089091.3663175,
+    "ast_hash": "481f97704ba42e7b3004e936c5001acb",
+    "semantic_hash": ""
+  },
+  ".github/assets/pipeline.svg": {
+    "mtime": 1784089040.994696,
+    "ast_hash": "1f8b2040e03da08ccaba3c4f29c7af54",
+    "semantic_hash": ""
+  },
+  ".github/assets/progress.svg": {
+    "mtime": 1784089030.517969,
+    "ast_hash": "95d1785a7fe0ca5c585cb4937dfa8133",
+    "semantic_hash": ""
+  },
+  ".github/assets/stack.svg": {
+    "mtime": 1784089100.2036388,
+    "ast_hash": "e5cea5ccc753cc9d26ecf0c8aa603489",
+    "semantic_hash": ""
+  },
+  ".github/assets/terminal.svg": {
+    "mtime": 1784089017.7363799,
+    "ast_hash": "d61a26b629cd8c35fed8c25007ac30a4",
+    "semantic_hash": ""
+  },
+  ".github/assets/wave.svg": {
+    "mtime": 1784089105.8505757,
+    "ast_hash": "fe436b804a12981ae4f637960dc5d965",
+    "semantic_hash": ""
+  },
+  "backend/db/milestone_original_due_date.sql": {
+    "mtime": 1784090586.8474689,
+    "ast_hash": "36ff338848d221204e470a454ebbecd0",
     "semantic_hash": ""
   }
 }
