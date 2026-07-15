@@ -93,12 +93,18 @@ Every record type now has Create, Read, Update **and Delete**.
 
 ## Roadmap — deferred to Phase 2+
 
-**Unfinished Phase 1 loose ends:** Status Report ↔ Updates junction — the junction table
-does not exist, and the `status_id` "health" column on `status_reports` is dead (written
-nowhere) · Reference Identifier (visible on the demo's Issue dialog) · `original_due_date`
-on milestones (the demo's History shows an "Original Due Date" field; the column does not
-exist here) · Project Logo upload · Key/AAGP code column · Email buttons · RLS enforcement ·
-pay down the 16 frontend lint errors, then flip the CI lint step to blocking.
+**Unfinished Phase 1 loose ends:** Reference Identifier (visible on the demo's Issue
+dialog) · `original_due_date` on milestones (the demo's History shows an "Original Due
+Date" field; the column does not exist here) · Project Logo upload · Key/AAGP code column
+(demo shows it as "Project Key AAGP" in the Status Report detail sidebar) · Email buttons
+(demo: an Email button on the Status Report detail header) · RLS enforcement · pay down
+the 16 frontend lint errors, then flip the CI lint step to blocking.
+
+**Closed after demo review (2026-07-15):** Status Report ↔ Updates junction + report
+health. All three demo surfaces (list, edit page, detail page) show no update-linking UI
+and no health picker — those existed only in the original's data-model docs. Our fields
+match the demo exactly. Not built; the dead `status_reports.status_id` column stays until
+a Phase 2 feature (likely dashboards' health heatmap) claims it.
 
 **Known perf debt (found in review, deliberately deferred):** action-item save is up to 6
 sequential DB round-trips (before-get → update → owner replace → after-get → history) ·
