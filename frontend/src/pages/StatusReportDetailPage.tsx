@@ -105,7 +105,12 @@ export function StatusReportDetailPage() {
         <div className="mb-6 flex items-center justify-between">
           <h1 className="text-2xl font-semibold">Status Report</h1>
           <div className="flex gap-2">
-            <Button variant="outline" size="sm" disabled title="Coming in a later step">
+            <Button
+              variant="outline"
+              size="sm"
+              disabled
+              title="Email arrives with the Phase 2 notification subsystem"
+            >
               Email
             </Button>
             <Button

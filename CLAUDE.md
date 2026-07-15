@@ -93,9 +93,12 @@ Every record type now has Create, Read, Update **and Delete**.
 
 ## Roadmap — deferred to Phase 2+
 
-**Unfinished Phase 1 loose ends:** Email buttons (demo: an Email button on the Status
-Report detail header) · RLS enforcement · pay down the 16 frontend lint errors, then flip
-the CI lint step to blocking.
+**Unfinished Phase 1 loose ends:** RLS enforcement (deliberately deferred to the security
+phase) · pay down the 16 frontend lint errors, then flip the CI lint step to blocking.
+
+**Closed (2026-07-15):** Email button on the Status Report detail header — ships as a
+disabled stub in the demo's position, tooltip pointing at the Phase 2 notification
+subsystem. Real sending (queue, templates, email log) arrives with that subsystem.
 
 **Deferred (2026-07-15):** Project Logo upload — neither of us could locate the demo's
 upload/display surfaces, and the field-mapping rule forbids inferring UI from the schema
