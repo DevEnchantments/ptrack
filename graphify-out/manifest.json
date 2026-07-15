@@ -670,8 +670,8 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1784062452.689905,
-    "ast_hash": "15318406b74bbfc7d4d71be2595ba2d1",
+    "mtime": 1784064925.8219297,
+    "ast_hash": "c2dd90975be4db362a820617e665219d",
     "semantic_hash": ""
   },
   "backend/README.md": {
@@ -782,6 +782,21 @@
   ".github/assets/banner.svg": {
     "mtime": 1784062413.8778484,
     "ast_hash": "ba8a742d11d594cc23f42ea7ce56c31b",
+    "semantic_hash": ""
+  },
+  ".github/assets/audit-trail.svg": {
+    "mtime": 1784064908.734375,
+    "ast_hash": "02704d3574e12d3a57a99f144224dc74",
+    "semantic_hash": ""
+  },
+  ".github/assets/dataflow.svg": {
+    "mtime": 1784064972.9133582,
+    "ast_hash": "fe6a6bb8bf5f1f0e6c21fc6230ad6f1f",
+    "semantic_hash": ""
+  },
+  ".github/assets/typing.svg": {
+    "mtime": 1784064980.326511,
+    "ast_hash": "28788b905dcc89783daf192e9787261f",
     "semantic_hash": ""
   }
 }

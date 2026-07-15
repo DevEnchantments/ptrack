@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="70" viewBox="0 0 900 70" role="img" aria-label="Built with React, NestJS, Supabase, TypeScript, Tailwind">
+  <rect width="900" height="70" rx="10" fill="#0b1220"/>
+  <g font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="600" text-anchor="middle">
+    <g>
+      <rect x="90" y="20" width="120" height="30" rx="15" fill="#0e2233" stroke="#61dafb" stroke-opacity="0.3">
+        <animate attributeName="stroke-opacity" values="0.3;1;0.3" dur="3s" repeatCount="indefinite"/>
+      </rect>
+      <text x="150" y="40" fill="#61dafb">⚛ React</text>
+    </g>
+    <g>
+      <rect x="240" y="20" width="120" height="30" rx="15" fill="#2a0e17" stroke="#e0234e" stroke-opacity="0.3">
+        <animate attributeName="stroke-opacity" values="0.3;1;0.3" begin="0.6s" dur="3s" repeatCount="indefinite"/>
+      </rect>
+      <text x="300" y="40" fill="#f87181">🪺 NestJS</text>
+    </g>
+    <g>
+      <rect x="390" y="20" width="120" height="30" rx="15" fill="#0d2620" stroke="#3ecf8e" stroke-opacity="0.3">
+        <animate attributeName="stroke-opacity" values="0.3;1;0.3" begin="1.2s" dur="3s" repeatCount="indefinite"/>
+      </rect>
+      <text x="450" y="40" fill="#3ecf8e">⚡ Supabase</text>
+    </g>
+    <g>
+      <rect x="540" y="20" width="120" height="30" rx="15" fill="#102340" stroke="#3178c6" stroke-opacity="0.3">
+        <animate attributeName="stroke-opacity" values="0.3;1;0.3" begin="1.8s" dur="3s" repeatCount="indefinite"/>
+      </rect>
+      <text x="600" y="40" fill="#60a5fa">TS strict</text>
+    </g>
+    <g>
+      <rect x="690" y="20" width="120" height="30" rx="15" fill="#0c2531" stroke="#38bdf8" stroke-opacity="0.3">
+        <animate attributeName="stroke-opacity" values="0.3;1;0.3" begin="2.4s" dur="3s" repeatCount="indefinite"/>
+      </rect>
+      <text x="750" y="40" fill="#7dd3fc">🌊 Tailwind</text>
+    </g>
+  </g>
+</svg>

@@ -21,6 +21,10 @@
 
 ## ✨ What's inside
 
+<div align="center">
+<img src=".github/assets/orbit.svg" alt="Nine record types orbiting one project" width="100%"/>
+</div>
+
 | | Feature | Notes |
 |---|---|---|
 | 📁 | **Full CRUD, 9 record types** | Milestones, Action Items, Issues, Links, Resources, Updates, Status Reports, Attachments, People |
@@ -89,6 +93,10 @@ npm install
 npm run dev
 ```
 
+<div align="center">
+<img src=".github/assets/terminal.svg" alt="npm run dev boots the NestJS API on :3000" width="100%"/>
+</div>
+
 Create `backend/.env`:
 
 | Variable | Required | What it is |
@@ -130,12 +138,20 @@ npx eslint "src/**/*.ts"      # backend lint — zero errors, CI-blocking
 
 CI runs all of the above plus full builds for every push and pull request.
 
+<div align="center">
+<img src=".github/assets/pipeline.svg" alt="A commit travels the CI pipeline: typecheck, lint, test, merged" width="100%"/>
+</div>
+
 ## 🗺 Roadmap
 
 Phase 1 (full CRUD + audit history) is complete. Next up, roughly in order of appetite:
 **dashboards & reporting** (Gantt · timeline · heatmap) · **Code Table Administration** ·
 **search & saved searches** · **email/notification subsystem** · **Flex Columns**
 (no-code custom fields) · **RLS enforcement**.
+
+<div align="center">
+<img src=".github/assets/progress.svg" alt="Roadmap progress: Phase 1 complete, quality baseline complete, dashboards next" width="100%"/>
+</div>
 
 ## 📚 More docs
 
@@ -145,5 +161,11 @@ Phase 1 (full CRUD + audit history) is complete. Next up, roughly in order of ap
 | [`original-app-features.md`](original-app-features.md) | Feature reference for the original Oracle APEX application being rebuilt |
 
 <div align="center">
+
+<img src=".github/assets/stack.svg" alt="Built with React, NestJS, Supabase, TypeScript, Tailwind" width="100%"/>
+
 <sub>Built as an independent rebuild — no access to the original database, only its demo. 1:1 parity is not the goal; a better P-Track is.</sub>
+
+<img src=".github/assets/wave.svg" alt="" width="100%"/>
+
 </div>
