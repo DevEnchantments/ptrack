@@ -64,6 +64,15 @@ export class CreateIssueDto {
   @MaxLength(2048)
   url?: string | null;
 
+  @ApiPropertyOptional({
+    example: 'SNOW-48213',
+    description: 'External ticket / tracking number. Free text.',
+  })
+  @IsOptional()
+  @IsString()
+  @MaxLength(255)
+  reference_identifier?: string | null;
+
   @ApiPropertyOptional({ type: [String], example: ['data-quality'] })
   @IsOptional()
   @IsArray()

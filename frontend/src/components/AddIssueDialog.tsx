@@ -77,6 +77,7 @@ export function AddIssueDialog({
   const [categoryId, setCategoryId] = useState<string | null>(null)
   const [description, setDescription] = useState('')
   const [url, setUrl] = useState('')
+  const [referenceId, setReferenceId] = useState('')
   const [tags, setTags] = useState('')
   const [resolution, setResolution] = useState('')
   const [error, setError] = useState<string | null>(null)
@@ -128,6 +129,7 @@ export function AddIssueDialog({
       setCategoryId(existing.category_id)
       setDescription(existing.description ?? '')
       setUrl(existing.url ?? '')
+      setReferenceId(existing.reference_identifier ?? '')
       setTags(existing.tags?.join(', ') ?? '')
       setResolution(existing.resolution ?? '')
     } else {
@@ -146,6 +148,7 @@ export function AddIssueDialog({
     setCategoryId(null)
     setDescription('')
     setUrl('')
+    setReferenceId('')
     setTags('')
     setResolution('')
     setError(null)
@@ -187,6 +190,7 @@ export function AddIssueDialog({
         category_id: categoryId,
         description: description.trim() || null,
         url: url.trim() || null,
+        reference_identifier: referenceId.trim() || null,
         tags: tagList.length ? tagList : null,
         resolution: status === 'closed' ? resolution.trim() : null,
       }
@@ -324,24 +328,37 @@ export function AddIssueDialog({
             </div>
           </div>
 
-          <div className="flex flex-col gap-2 sm:w-1/2 sm:pr-2">
-            <Label>Category</Label>
-            <Select
-              items={categories.map((c) => ({ label: c.name, value: c.id }))}
-              value={categoryId ?? ''}
-              onValueChange={(v) => setCategoryId(v ?? null)}
-            >
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="- Select -" />
-              </SelectTrigger>
-              <SelectContent>
-                {categories.map((c) => (
-                  <SelectItem key={c.id} value={c.id}>
-                    {c.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="flex flex-col gap-2">
+              <Label>Category</Label>
+              <Select
+                items={categories.map((c) => ({ label: c.name, value: c.id }))}
+                value={categoryId ?? ''}
+                onValueChange={(v) => setCategoryId(v ?? null)}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="- Select -" />
+                </SelectTrigger>
+                <SelectContent>
+                  {categories.map((c) => (
+                    <SelectItem key={c.id} value={c.id}>
+                      {c.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-1.5">
+                <Label>Reference Identifier</Label>
+                <HelpDot text="An external ticket or tracking number for this issue (e.g. from your service desk or task tracker)." />
+              </div>
+              <Input
+                value={referenceId}
+                onChange={(e) => setReferenceId(e.target.value)}
+              />
+            </div>
           </div>
 
           {status === 'closed' && (

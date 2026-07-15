@@ -26,6 +26,7 @@ export class IssuesService {
       category_id: dto.category_id ?? null,
       description: dto.description?.trim() || null,
       url: dto.url?.trim() || null,
+      reference_identifier: dto.reference_identifier?.trim() || null,
       tags: dto.tags?.length ? dto.tags : null,
       resolution: dto.resolution?.trim() || null,
       created_by: userId,
@@ -50,6 +51,8 @@ export class IssuesService {
     if (dto.description !== undefined)
       patch.description = dto.description?.trim() || null;
     if (dto.url !== undefined) patch.url = dto.url?.trim() || null;
+    if (dto.reference_identifier !== undefined)
+      patch.reference_identifier = dto.reference_identifier?.trim() || null;
     if (dto.tags !== undefined) patch.tags = dto.tags?.length ? dto.tags : null;
     if (dto.resolution !== undefined)
       patch.resolution = dto.resolution?.trim() || null;

@@ -13,6 +13,8 @@ export interface Issue {
   owner_id: string | null;
   status: string;
   url: string | null;
+  /** External ticket / tracking number (free text, demo's "Reference Identifier"). */
+  reference_identifier: string | null;
   tags: string[] | null;
   resolution: string | null;
   created_at: string;
@@ -31,7 +33,7 @@ export interface IssueListItem extends Issue {
 }
 
 const COLUMNS =
-  'id, project_id, title, description, category_id, level_id, role_id, owner_id, status, url, tags, resolution, created_at, updated_at';
+  'id, project_id, title, description, category_id, level_id, role_id, owner_id, status, url, reference_identifier, tags, resolution, created_at, updated_at';
 
 const JOINS = `${COLUMNS},
   category:issue_categories ( name ),

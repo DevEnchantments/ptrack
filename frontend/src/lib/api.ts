@@ -378,6 +378,7 @@ export interface Issue {
   owner_id: string | null
   status: string
   url: string | null
+  reference_identifier: string | null
   tags: string[] | null
   resolution: string | null
   created_at: string
