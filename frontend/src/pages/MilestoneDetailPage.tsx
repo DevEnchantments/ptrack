@@ -201,6 +201,10 @@ export function MilestoneDetailPage() {
           <Field label="Start Date" value={formatLongDate(milestone.start_date)} />
           <Field label="Due Date" value={formatLongDate(milestone.due_date)} />
           <Field
+            label="Original Due Date"
+            value={formatLongDate(milestone.original_due_date)}
+          />
+          <Field
             label="Status"
             value={STATUS_LABELS[milestone.status] ?? milestone.status}
           />

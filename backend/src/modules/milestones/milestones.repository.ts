@@ -10,6 +10,8 @@ export interface Milestone {
   description: string | null;
   start_date: string | null;
   due_date: string | null;
+  /** Set once at creation; due_date may slip, this records where it started. */
+  original_due_date: string | null;
   status: string;
   role_id: string | null;
   owner_id: string | null;
@@ -37,7 +39,7 @@ export interface MilestoneListItem extends Milestone {
 }
 
 const COLUMNS =
-  'id, project_id, name, description, start_date, due_date, status, role_id, owner_id, is_major, tags, weightage, percent_complete, completed_date, created_at, updated_at';
+  'id, project_id, name, description, start_date, due_date, original_due_date, status, role_id, owner_id, is_major, tags, weightage, percent_complete, completed_date, created_at, updated_at';
 
 @Injectable()
 export class MilestonesRepository {

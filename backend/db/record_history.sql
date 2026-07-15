@@ -144,6 +144,8 @@ begin
                         hist_date(old.start_date), hist_date(new.start_date), v_actor);
     perform hist_change(tg_table_name, new.id, new.project_id, 'Due Date',
                         hist_date(old.due_date), hist_date(new.due_date), v_actor);
+    perform hist_change(tg_table_name, new.id, new.project_id, 'Original Due Date',
+                        hist_date(old.original_due_date), hist_date(new.original_due_date), v_actor);
     perform hist_change(tg_table_name, new.id, new.project_id, 'Completed Date',
                         hist_date(old.completed_date), hist_date(new.completed_date), v_actor);
     perform hist_change(tg_table_name, new.id, new.project_id, 'Status',

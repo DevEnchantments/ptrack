@@ -28,6 +28,9 @@ export class MilestonesService {
       description: dto.description?.trim() || null,
       start_date: dto.start_date,
       due_date: dto.due_date,
+      // Frozen at creation: due_date may slip later, the original never moves.
+      // Deliberately absent from UpdateMilestoneDto, so PATCH cannot touch it.
+      original_due_date: dto.due_date,
       status: dto.status,
       role_id: dto.role_id ?? null,
       owner_id: dto.owner_id ?? null,
