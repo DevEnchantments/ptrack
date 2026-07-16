@@ -615,8 +615,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/StatusReportDetailPage.tsx": {
-    "mtime": 1784060428.411269,
-    "ast_hash": "e418ea2ff391d73c67f9aa509bb3f5e5",
+    "mtime": 1784092800.7034154,
+    "ast_hash": "b80c9216c3efa9bf3bde38312ef0b5c5",
     "semantic_hash": ""
   },
   "frontend/src/pages/create-project/StepAccess.tsx": {
@@ -665,8 +665,8 @@
     "semantic_hash": "2e092757eaa8553feb3c7bb53e6a8a3b"
   },
   "CLAUDE.md": {
-    "mtime": 1784090126.5295315,
-    "ast_hash": "087f3e1b1741552c4525fa6be058c987",
+    "mtime": 1784092803.664791,
+    "ast_hash": "077d988eaf0e1813a81e521329715824",
     "semantic_hash": ""
   },
   "README.md": {

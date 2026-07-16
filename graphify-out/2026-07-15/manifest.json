@@ -140,8 +140,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/issues/dto/create-issue.dto.ts": {
-    "mtime": 1783942248.549218,
-    "ast_hash": "99e85e3e54fd4373436a30ac4bb8f38b",
+    "mtime": 1784091735.8849316,
+    "ast_hash": "af3994848be347dad6c2203be2f0a98e",
     "semantic_hash": ""
   },
   "backend/src/modules/issues/dto/update-issue.dto.ts": {
@@ -160,13 +160,13 @@
     "semantic_hash": ""
   },
   "backend/src/modules/issues/issues.repository.ts": {
-    "mtime": 1784059422.9037862,
-    "ast_hash": "ba1081f69e3880f6e9c74ea18c9aff1e",
+    "mtime": 1784091732.9740129,
+    "ast_hash": "779f9618dd47edd744e418ddf146fa34",
     "semantic_hash": ""
   },
   "backend/src/modules/issues/issues.service.ts": {
-    "mtime": 1784059664.26572,
-    "ast_hash": "2ec851e5c173552c5865cf7c8be923de",
+    "mtime": 1784091740.913632,
+    "ast_hash": "a40733fe92751feb0915bcedbec9afcf",
     "semantic_hash": ""
   },
   "backend/src/modules/links/dto/create-link.dto.ts": {
@@ -460,8 +460,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/AddIssueDialog.tsx": {
-    "mtime": 1784060428.6333084,
-    "ast_hash": "39ee6ee3c8c497aa6599e8d935e68364",
+    "mtime": 1784091769.1262803,
+    "ast_hash": "469a3192aa501d83f766d8eb79477684",
     "semantic_hash": ""
   },
   "frontend/src/components/AddLinkDialog.tsx": {
@@ -555,8 +555,8 @@
     "semantic_hash": "69ec66b8dde852cc89c1217075253d87"
   },
   "frontend/src/lib/api.ts": {
-    "mtime": 1784090598.3074477,
-    "ast_hash": "c379498b4b1c6767a69859a81b64130d",
+    "mtime": 1784091742.3806088,
+    "ast_hash": "5733546f2fd7e92b577ab9f9104a6ffb",
     "semantic_hash": ""
   },
   "frontend/src/lib/auth-context.tsx": {
@@ -665,8 +665,8 @@
     "semantic_hash": "2e092757eaa8553feb3c7bb53e6a8a3b"
   },
   "CLAUDE.md": {
-    "mtime": 1784090126.5295315,
-    "ast_hash": "087f3e1b1741552c4525fa6be058c987",
+    "mtime": 1784092549.130033,
+    "ast_hash": "7be210bf1082ac1f44220ce318fe7029",
     "semantic_hash": ""
   },
   "README.md": {
@@ -832,6 +832,11 @@
   "backend/db/milestone_original_due_date.sql": {
     "mtime": 1784090586.8474689,
     "ast_hash": "36ff338848d221204e470a454ebbecd0",
+    "semantic_hash": ""
+  },
+  "backend/db/issue_reference_identifier.sql": {
+    "mtime": 1784091729.506384,
+    "ast_hash": "71351beaba589ff3ef1666e92369586a",
     "semantic_hash": ""
   }
 }

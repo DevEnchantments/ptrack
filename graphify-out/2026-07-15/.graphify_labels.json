@@ -72,5 +72,12 @@
   "70": "nest-cli.json",
   "71": "CreateUpdateDto",
   "72": ".add",
-  "73": "MiniCalendar.tsx"
+  "73": "MiniCalendar.tsx",
+  "74": "ApiPropertyOptional",
+  "75": "IsArray",
+  "76": "IsIn",
+  "77": "IsOptional",
+  "78": "IsString",
+  "79": "IsUUID",
+  "80": "MaxLength"
 }
