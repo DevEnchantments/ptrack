@@ -1,7 +1,7 @@
 {
   ".claude/settings.json": {
-    "mtime": 1784175821.2155342,
-    "ast_hash": "541b55b850e9114fcb4c66319fcb88db",
+    "mtime": 1783936097.6898174,
+    "ast_hash": "3ea5ff26a04049adeedce7b5059111d5",
     "semantic_hash": ""
   },
   "backend/db/ptrack_phase1_schema.sql": {
@@ -837,11 +837,6 @@
   "backend/db/issue_reference_identifier.sql": {
     "mtime": 1784091729.506384,
     "ast_hash": "71351beaba589ff3ef1666e92369586a",
-    "semantic_hash": ""
-  },
-  "backend/db/enable_rls_lockdown.sql": {
-    "mtime": 1784094912.4410157,
-    "ast_hash": "99f383032b0602771b968abe28b663b7",
     "semantic_hash": ""
   }
 }
