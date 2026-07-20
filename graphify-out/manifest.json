@@ -510,8 +510,8 @@
     "semantic_hash": "a1ce5fb6fdc385d891138d445265d0b5"
   },
   "frontend/src/components/PersonAutocomplete.tsx": {
-    "mtime": 1784554421.6639192,
-    "ast_hash": "bd0da7d851821bd836fe7e122df6a314",
+    "mtime": 1784559397.4946897,
+    "ast_hash": "dbe2073625475c980589780bc35a4e24",
     "semantic_hash": ""
   },
   "frontend/src/components/ProtectedRoute.tsx": {
@@ -575,9 +575,9 @@
     "semantic_hash": "5a6fd53fdcf2be529e9cc0b718fde352"
   },
   "frontend/src/main.tsx": {
-    "mtime": 1783348430.5409982,
-    "ast_hash": "d88c14dc26ec9edc991af54dfd7f375d",
-    "semantic_hash": "d88c14dc26ec9edc991af54dfd7f375d"
+    "mtime": 1784559339.0665452,
+    "ast_hash": "ef55ccefafa9129a2a7bee258e3086fb",
+    "semantic_hash": ""
   },
   "frontend/src/pages/ActionItemDetailPage.tsx": {
     "mtime": 1784558220.8015,
@@ -610,8 +610,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ProjectDetailPage.tsx": {
-    "mtime": 1784558154.6214428,
-    "ast_hash": "84dadd7307dbc7d1d31b22dfc261fbbf",
+    "mtime": 1784559404.0695484,
+    "ast_hash": "fad8eb9c1ab07ec0952703af7d84469f",
     "semantic_hash": ""
   },
   "frontend/src/pages/StatusReportDetailPage.tsx": {
@@ -855,13 +855,13 @@
     "semantic_hash": ""
   },
   "frontend/src/components/AppLayout.tsx": {
-    "mtime": 1784556399.5244586,
-    "ast_hash": "38f470c42117a88bc4541be623470601",
+    "mtime": 1784559377.2563233,
+    "ast_hash": "0df43c2ed5174f92664a19c6f458898d",
     "semantic_hash": ""
   },
   "frontend/src/pages/DashboardPage.tsx": {
-    "mtime": 1784555248.5111208,
-    "ast_hash": "4fe9d1b2096e1a86a478e5bf7879905a",
+    "mtime": 1784559356.2690248,
+    "ast_hash": "36f963bc9f2cfad57842471c04735e7c",
     "semantic_hash": ""
   },
   "frontend/src/components/SectionCard.tsx": {
@@ -880,8 +880,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/StatusPill.tsx": {
-    "mtime": 1784555119.3992522,
-    "ast_hash": "d772312adac5d4152b2637e81c6e11f9",
+    "mtime": 1784559390.9100904,
+    "ast_hash": "627a90fe69e0f751cb72ee8e42a0f9b3",
     "semantic_hash": ""
   },
   "frontend/src/lib/use-page-title.ts": {
@@ -890,8 +890,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/InitialsAvatar.tsx": {
-    "mtime": 1784558142.6605296,
-    "ast_hash": "1374b94dec9e16b690ea162977056da3",
+    "mtime": 1784559394.7211335,
+    "ast_hash": "9f11dc23f7efc327f91c4ea7217fab92",
     "semantic_hash": ""
   }
 }

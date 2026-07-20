@@ -1,10 +1,10 @@
 const PALETTE = [
-  'bg-blue-100 text-blue-700',
-  'bg-teal-100 text-teal-700',
-  'bg-purple-100 text-purple-700',
-  'bg-amber-100 text-amber-700',
-  'bg-rose-100 text-rose-700',
-  'bg-emerald-100 text-emerald-700',
+  'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200',
+  'bg-teal-100 text-teal-700 dark:bg-teal-900 dark:text-teal-200',
+  'bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-200',
+  'bg-amber-100 text-amber-700 dark:bg-amber-900 dark:text-amber-200',
+  'bg-rose-100 text-rose-700 dark:bg-rose-900 dark:text-rose-200',
+  'bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-200',
 ]
 
 function initialsOf(name: string): string {

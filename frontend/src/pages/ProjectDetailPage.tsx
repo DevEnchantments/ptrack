@@ -644,7 +644,7 @@ export function ProjectDetailPage() {
                       <InitialsAvatar name={memberName(m)} />
                       <span className="text-sm font-medium">{memberName(m)}</span>
                       {m.status === 'pending' && (
-                        <span className="text-xs text-amber-600">(pending)</span>
+                        <span className="text-xs text-amber-600 dark:text-amber-400">(pending)</span>
                       )}
                     </div>
                     <span className="text-sm text-muted-foreground">
@@ -704,7 +704,7 @@ export function ProjectDetailPage() {
                         <span
                           className={
                             isOverdue(m.due_date, m.status)
-                              ? 'font-medium text-red-600'
+                              ? 'font-medium text-red-600 dark:text-red-400'
                               : ''
                           }
                         >
@@ -771,7 +771,7 @@ export function ProjectDetailPage() {
                         <span
                           className={
                             isOverdue(a.due_date, a.status)
-                              ? 'font-medium text-red-600'
+                              ? 'font-medium text-red-600 dark:text-red-400'
                               : ''
                           }
                         >
@@ -844,7 +844,7 @@ export function ProjectDetailPage() {
                           {l.label || l.url}
                         </span>
                         {l.is_gold && (
-                          <span className="inline-flex items-center gap-1 text-xs text-amber-600">
+                          <span className="inline-flex items-center gap-1 text-xs text-amber-600 dark:text-amber-400">
                             <span className="h-2 w-2 rounded-full bg-amber-500" />
                             Gold
                           </span>
@@ -1013,7 +1013,7 @@ export function ProjectDetailPage() {
                       </span>
                       <span>· {relativeTime(u.created_at)}</span>
                       {u.is_gold && (
-                        <span className="inline-flex items-center gap-1 text-amber-600">
+                        <span className="inline-flex items-center gap-1 text-amber-600 dark:text-amber-400">
                           <span className="h-2 w-2 rounded-full bg-amber-500" />
                           Gold
                         </span>
@@ -1127,7 +1127,7 @@ export function ProjectDetailPage() {
                           {a.file_name}
                         </button>
                         {a.is_gold && (
-                          <span className="inline-flex shrink-0 items-center gap-1 text-xs text-amber-600">
+                          <span className="inline-flex shrink-0 items-center gap-1 text-xs text-amber-600 dark:text-amber-400">
                             <span className="h-2 w-2 rounded-full bg-amber-500" />
                             Gold
                           </span>

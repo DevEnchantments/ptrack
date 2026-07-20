@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from '@/lib/auth-context'
 import { Button } from '@/components/ui/button'
@@ -14,7 +14,9 @@ import {
   ListChecks,
   LogOut,
   Menu,
+  Moon,
   Settings,
+  Sun,
   Users,
 } from 'lucide-react'
 
@@ -46,6 +48,20 @@ export function AppLayout() {
   const [collapsed, setCollapsed] = useState(false)
   const [showScrollTop, setShowScrollTop] = useState(false)
   const scrollRef = useRef<HTMLDivElement | null>(null)
+
+  // Theme: main.tsx applies the saved class before first paint; this state
+  // mirrors it and the effect keeps <html> + localStorage in sync on toggle.
+  const [dark, setDark] = useState(
+    () => localStorage.getItem('ptrack:theme') === 'dark',
+  )
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', dark)
+    try {
+      localStorage.setItem('ptrack:theme', dark ? 'dark' : 'light')
+    } catch {
+      // Storage unavailable — the toggle still works for this session.
+    }
+  }, [dark])
 
   // Projects owns "/" and every project route; other live items match by prefix.
   const isActive = (to: string) =>
@@ -113,6 +129,15 @@ export function AppLayout() {
 
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="flex h-14 shrink-0 items-center justify-end gap-4 border-b bg-background px-6">
+          <button
+            type="button"
+            onClick={() => setDark((d) => !d)}
+            title={dark ? 'Switch to light mode' : 'Switch to dark mode'}
+            aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}
+            className="rounded-md p-2 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+          >
+            {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+          </button>
           <span className="hidden text-sm text-muted-foreground sm:inline">
             {user?.email}
           </span>

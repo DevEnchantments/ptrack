@@ -660,8 +660,9 @@ function FlowLineChart() {
   )
 }
 
-// Sequential single-hue ramp for the heatmap (teal, light -> dark, monotonic).
-const HEAT_RAMP = ['#eef6f7', '#c9e6e8', '#8fcdd1', '#48abb1', '#00939b']
+// Sequential single-hue ramp for the heatmap — theme tokens so the ramp flips
+// with dark mode (both variants monotonic in lightness).
+const HEAT_RAMP = [1, 2, 3, 4, 5].map((i) => `var(--heat-${i})`)
 const HEAT_DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri']
 const HEAT_WEEKS = 12
 // Deterministic pseudo-random sample intensities (0-4).
