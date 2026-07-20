@@ -52,6 +52,11 @@ Every record type now has Create, Read, Update **and Delete**.
 
 - **Record types:** Person, Milestone, Action Item, Link, Resource, Issue, Update,
   Status Report, Attachment
+- **App shell:** collapsible dark sidebar in the demo's layout (`AppLayout`, wraps all
+  protected routes; top bar owns user/sign-out). Only Projects is live; the other nine
+  demo nav items are disabled stubs with a "Coming in Phase 2" tooltip — same convention
+  as the email button. No submenus built (demo chevron contents unseen — field-mapping
+  rule applies to nav too).
 - **Detail pages:** Milestone, Action Item, Status Report, Attachment. Issues, Links,
   Updates and Resources are **dialog-only in the demo** — they need no detail page.
 - **Delete:** one convention everywhere — a red `Delete` in the edit-dialog footer

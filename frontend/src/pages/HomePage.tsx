@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '@/lib/auth-context'
 import { projectsApi, lookupsApi, type Project, type Lookup } from '@/lib/api'
 import { Button } from '@/components/ui/button'
 
@@ -11,7 +10,6 @@ function initials(name: string) {
 }
 
 export function HomePage() {
-  const { user, signOut } = useAuth()
   const navigate = useNavigate()
   const [projects, setProjects] = useState<Project[]>([])
   const [statuses, setStatuses] = useState<Lookup[]>([])
@@ -43,14 +41,8 @@ export function HomePage() {
           </p>
         </div>
         <div className="flex items-center gap-4">
-          <span className="hidden text-sm text-muted-foreground sm:inline">
-            {user?.email}
-          </span>
           <Button onClick={() => navigate('/projects/new')}>
             Create Project
-          </Button>
-          <Button variant="outline" size="sm" onClick={() => signOut()}>
-            Sign out
           </Button>
         </div>
       </header>
