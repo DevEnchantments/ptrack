@@ -173,17 +173,18 @@ export function CreateProjectWizard() {
           <li key={label} className="flex items-center gap-2">
             <span
               className={
-                'flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-medium ' +
+                'flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-medium transition-all duration-300 ' +
                 (i <= step
                   ? 'bg-primary text-primary-foreground'
-                  : 'bg-muted text-muted-foreground')
+                  : 'bg-muted text-muted-foreground') +
+                (i === step ? ' scale-110 ring-4 ring-primary/15' : '')
               }
             >
               {i + 1}
             </span>
             <span
               className={
-                'text-sm ' +
+                'text-sm transition-colors duration-300 ' +
                 (i === step ? 'font-medium' : 'text-muted-foreground')
               }
             >
@@ -193,10 +194,13 @@ export function CreateProjectWizard() {
         ))}
       </ol>
 
-      {step === 0 && <StepProject form={form} errors={errors} update={update} />}
-      {step === 1 && <StepAccess form={form} errors={errors} update={update} />}
-      {step === 2 && <StepDetails form={form} errors={errors} update={update} />}
-      {step === 3 && <StepConfirmation form={form} />}
+      {/* Keyed on step so each step remounts and plays its entrance. */}
+      <div key={step} className="animate-step-in">
+        {step === 0 && <StepProject form={form} errors={errors} update={update} />}
+        {step === 1 && <StepAccess form={form} errors={errors} update={update} />}
+        {step === 2 && <StepDetails form={form} errors={errors} update={update} />}
+        {step === 3 && <StepConfirmation form={form} />}
+      </div>
 
       {submitError && (
         <p className="mt-4 text-sm text-destructive">{submitError}</p>

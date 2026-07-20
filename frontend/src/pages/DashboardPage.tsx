@@ -746,15 +746,15 @@ export function DashboardPage() {
         ))}
       </div>
 
-      <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
+      {/* items-start: cards keep their natural height instead of the tallest
+          column inflating its neighbor with empty card space. */}
+      <div className="mt-4 grid grid-cols-1 items-start gap-4 lg:grid-cols-2">
         <ActivityLineChart />
-        <div className="grid grid-cols-1 gap-4">
-          <ProjectsBarChart />
-          <ActionItemsBreakdown />
-        </div>
+        <ProjectsBarChart />
       </div>
 
-      <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-3">
+      <div className="mt-4 grid grid-cols-1 items-start gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <ActionItemsBreakdown />
         <CategoryDonut />
         <MilestoneColumns />
         <CompletionRadial />

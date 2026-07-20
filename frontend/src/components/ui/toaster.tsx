@@ -37,7 +37,7 @@ export function Toaster() {
         <div
           key={t.id}
           role="alert"
-          className="rounded-md border border-destructive/40 bg-background px-4 py-3 text-sm text-destructive shadow-lg"
+          className="toast-in rounded-md border border-l-4 border-destructive/30 border-l-destructive bg-background px-4 py-3 text-sm text-destructive shadow-lg"
         >
           {t.message}
         </div>

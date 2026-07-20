@@ -1,5 +1,8 @@
 import { toast } from '@/lib/toast'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { SectionCard } from '@/components/SectionCard'
+import { SectionNav } from '@/components/SectionNav'
+import { Skeleton } from '@/components/ui/skeleton'
 import { useParams, useNavigate } from 'react-router-dom'
 import {
   projectsApi,
@@ -181,6 +184,44 @@ function EditButton({ onClick, label }: { onClick: () => void; label: string }) 
   )
 }
 
+const SECTION_IDS = [
+  { id: 'people', label: 'People' },
+  { id: 'milestones', label: 'Milestones' },
+  { id: 'action-items', label: 'Action Items' },
+  { id: 'links', label: 'Links' },
+  { id: 'resources', label: 'Resources' },
+  { id: 'issues', label: 'Issues' },
+  { id: 'updates', label: 'Updates' },
+  { id: 'status-reports', label: 'Status Reports' },
+  { id: 'attachments', label: 'Attachments' },
+]
+
+function collapsePrefsKey(projectId: string) {
+  return `ptrack:collapsed:${projectId}`
+}
+
+function readCollapsePrefs(projectId: string): Record<string, boolean> {
+  try {
+    return JSON.parse(
+      localStorage.getItem(collapsePrefsKey(projectId)) ?? '{}',
+    ) as Record<string, boolean>
+  } catch {
+    return {}
+  }
+}
+
+/** One-time entrance flag — flips a frame after mount so transitions run. */
+function useEntranceFlag(): boolean {
+  const [entered, setEntered] = useState(false)
+  useEffect(() => {
+    const raf = requestAnimationFrame(() =>
+      requestAnimationFrame(() => setEntered(true)),
+    )
+    return () => cancelAnimationFrame(raf)
+  }, [])
+  return entered
+}
+
 export function ProjectDetailPage() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
@@ -216,6 +257,69 @@ export function ProjectDetailPage() {
   const [attachmentOpen, setAttachmentOpen] = useState(false)
   const [editingAttachment, setEditingAttachment] = useState<Attachment | null>(null)
   const [editProjectOpen, setEditProjectOpen] = useState(false)
+
+  // --- UX pass: section loading, collapse prefs, scroll-spy, entrance ---
+  const [sectionsLoading, setSectionsLoading] = useState(true)
+  const [collapsed, setCollapsed] = useState<Record<string, boolean>>(() =>
+    id ? readCollapsePrefs(id) : {},
+  )
+  const [activeSection, setActiveSection] = useState<string | null>(null)
+  const [titleInView, setTitleInView] = useState(true)
+  const titleRef = useRef<HTMLHeadingElement | null>(null)
+  const entered = useEntranceFlag()
+
+  // Reload collapse prefs when navigating between projects (render-phase
+  // prev-key pattern — the set-state-in-effect rule bans the effect shape).
+  const [prevPrefsId, setPrevPrefsId] = useState(id)
+  if (prevPrefsId !== id) {
+    setPrevPrefsId(id)
+    setCollapsed(id ? readCollapsePrefs(id) : {})
+  }
+
+  function toggleSection(sectionId: string) {
+    setCollapsed((cur) => {
+      const next = { ...cur, [sectionId]: !cur[sectionId] }
+      if (id) {
+        try {
+          localStorage.setItem(collapsePrefsKey(id), JSON.stringify(next))
+        } catch {
+          // Storage full/blocked — collapse still works for this visit.
+        }
+      }
+      return next
+    })
+  }
+
+  // Scroll-spy: highlight the section nearest the top of the viewport.
+  useEffect(() => {
+    if (sectionsLoading) return
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
+        if (visible[0]) setActiveSection(visible[0].target.id)
+      },
+      { rootMargin: '-96px 0px -55% 0px' },
+    )
+    for (const s of SECTION_IDS) {
+      const el = document.getElementById(s.id)
+      if (el) observer.observe(el)
+    }
+    return () => observer.disconnect()
+  }, [sectionsLoading])
+
+  // Show the project name in the sticky bar once the H1 scrolls away.
+  useEffect(() => {
+    const el = titleRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => setTitleInView(entry.isIntersecting),
+      { rootMargin: '-56px 0px 0px 0px' },
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [project])
 
   const load = useCallback(() => {
     if (!id) return
@@ -285,10 +389,50 @@ export function ProjectDetailPage() {
         setAttachments(s.attachments)
       })
       .catch(() => toast.error('Could not load project sections.'))
+      .finally(() => setSectionsLoading(false))
   }, [id, load])
 
   if (loading) {
-    return <div className="p-6 text-muted-foreground">Loading…</div>
+    // Skeleton mirroring the real layout: breadcrumb, title, fields, sections.
+    return (
+      <div className="min-h-svh">
+        <header className="border-b px-6 py-4">
+          <Skeleton className="h-4 w-40" />
+        </header>
+        <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 p-6 lg:grid-cols-[1fr_260px]">
+          <div>
+            <div className="mb-6 flex items-center justify-between">
+              <Skeleton className="h-8 w-64" />
+              <Skeleton className="h-8 w-24" />
+            </div>
+            <div className="flex flex-col gap-3 rounded-md border p-4">
+              {Array.from({ length: 6 }, (_, i) => (
+                <div key={i} className="flex gap-6">
+                  <Skeleton className="h-4 w-32" />
+                  <Skeleton className="h-4 flex-1" />
+                </div>
+              ))}
+            </div>
+            {Array.from({ length: 3 }, (_, i) => (
+              <div key={i} className="mt-8">
+                <Skeleton className="mb-3 h-6 w-40" />
+                <div className="flex flex-col gap-2 rounded-md border p-4">
+                  <Skeleton className="h-4 w-2/3" />
+                  <Skeleton className="h-4 w-1/2" />
+                </div>
+              </div>
+            ))}
+          </div>
+          <aside>
+            <div className="flex flex-col gap-2 rounded-md border p-3">
+              {Array.from({ length: 9 }, (_, i) => (
+                <Skeleton key={i} className="h-7 w-full" />
+              ))}
+            </div>
+          </aside>
+        </div>
+      </div>
+    )
   }
   if (error || !project) {
     return (
@@ -371,6 +515,22 @@ export function ProjectDetailPage() {
       .catch(() => toast.error('Could not open the milestone.'))
   }
 
+  const sectionCounts: Record<string, number> = {
+    people: project.members.length,
+    milestones: milestones.length,
+    'action-items': actionItems.length,
+    links: links.length,
+    resources: resources.length,
+    issues: issues.length,
+    updates: updates.length,
+    'status-reports': statusReports.length,
+    attachments: attachments.length,
+  }
+  const sectionMeta = SECTION_IDS.map((s) => ({
+    ...s,
+    count: sectionCounts[s.id] ?? 0,
+  }))
+
   return (
     <div className="min-h-svh">
       <header className="border-b px-6 py-4">
@@ -389,10 +549,22 @@ export function ProjectDetailPage() {
         </span>
       </header>
 
+      <SectionNav
+        sections={sectionMeta}
+        activeId={activeSection}
+        projectName={project.name}
+        restricted={project.access_control === 'restricted'}
+        showName={!titleInView}
+        onEdit={() => setEditProjectOpen(true)}
+      />
+
       <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 p-6 lg:grid-cols-[1fr_260px]">
         <div>
           <div className="mb-6 flex items-center justify-between">
-            <h1 className="flex items-center gap-2 text-2xl font-semibold">
+            <h1
+              ref={titleRef}
+              className="flex items-center gap-2 text-2xl font-semibold"
+            >
               {project.access_control === 'restricted' && (
                 <Lock className="h-5 w-5 text-muted-foreground" />
               )}
@@ -431,11 +603,20 @@ export function ProjectDetailPage() {
             />
           </dl>
 
-          <h2 className="mb-3 mt-8 text-lg font-semibold">People</h2>
-          {project.members.length === 0 ? (
-            <p className="text-sm text-muted-foreground">No people assigned.</p>
-          ) : (
-            <ul className="divide-y rounded-md border">
+          <SectionCard
+            id="people"
+            title="People"
+            count={project.members.length}
+            collapsed={!!collapsed['people']}
+            onToggle={() => toggleSection('people')}
+            index={0}
+            entered={entered}
+            loading={false}
+            emptyLabel="No people assigned yet."
+            emptyActionLabel="Add person"
+            onEmptyAction={() => onAction('Add Person')}
+          >
+            <ul className="section-list divide-y rounded-md border">
               {project.members.map((m) => (
                 <li
                   key={m.id}
@@ -464,13 +645,22 @@ export function ProjectDetailPage() {
                 </li>
               ))}
             </ul>
-          )}
+          </SectionCard>
 
-          <h2 className="mb-3 mt-8 text-lg font-semibold">Milestones</h2>
-          {milestones.length === 0 ? (
-            <p className="text-sm text-muted-foreground">No milestones yet.</p>
-          ) : (
-            <ul className="divide-y rounded-md border">
+          <SectionCard
+            id="milestones"
+            title="Milestones"
+            count={milestones.length}
+            collapsed={!!collapsed['milestones']}
+            onToggle={() => toggleSection('milestones')}
+            index={1}
+            entered={entered}
+            loading={sectionsLoading}
+            emptyLabel="No milestones yet."
+            emptyActionLabel="Add milestone"
+            onEmptyAction={() => onAction('Add Milestone')}
+          >
+            <ul className="section-list divide-y rounded-md border">
               {milestones.map((m) => (
                 <li
                   key={m.id}
@@ -508,13 +698,22 @@ export function ProjectDetailPage() {
                 </li>
               ))}
             </ul>
-          )}
+          </SectionCard>
 
-          <h2 className="mb-3 mt-8 text-lg font-semibold">Action Items</h2>
-          {actionItems.length === 0 ? (
-            <p className="text-sm text-muted-foreground">No action items yet.</p>
-          ) : (
-            <ul className="divide-y rounded-md border">
+          <SectionCard
+            id="action-items"
+            title="Action Items"
+            count={actionItems.length}
+            collapsed={!!collapsed['action-items']}
+            onToggle={() => toggleSection('action-items')}
+            index={2}
+            entered={entered}
+            loading={sectionsLoading}
+            emptyLabel="No action items yet."
+            emptyActionLabel="Add action item"
+            onEmptyAction={() => onAction('Add Action Item')}
+          >
+            <ul className="section-list divide-y rounded-md border">
               {actionItems.map((a) => (
                 <li
                   key={a.id}
@@ -563,13 +762,22 @@ export function ProjectDetailPage() {
                 </li>
               ))}
             </ul>
-          )}
+          </SectionCard>
 
-          <h2 className="mb-3 mt-8 text-lg font-semibold">Links</h2>
-          {links.length === 0 ? (
-            <p className="text-sm text-muted-foreground">No links yet.</p>
-          ) : (
-            <ul className="divide-y rounded-md border">
+          <SectionCard
+            id="links"
+            title="Links"
+            count={links.length}
+            collapsed={!!collapsed['links']}
+            onToggle={() => toggleSection('links')}
+            index={3}
+            entered={entered}
+            loading={sectionsLoading}
+            emptyLabel="No links yet."
+            emptyActionLabel="Add link"
+            onEmptyAction={() => onAction('Add Link')}
+          >
+            <ul className="section-list divide-y rounded-md border">
               {links.map((l) => (
                 <li
                   key={l.id}
@@ -613,13 +821,22 @@ export function ProjectDetailPage() {
                 </li>
               ))}
             </ul>
-          )}
+          </SectionCard>
 
-          <h2 className="mb-3 mt-8 text-lg font-semibold">Resources</h2>
-          {resources.length === 0 ? (
-            <p className="text-sm text-muted-foreground">No resources yet.</p>
-          ) : (
-            <ul className="divide-y rounded-md border">
+          <SectionCard
+            id="resources"
+            title="Resources"
+            count={resources.length}
+            collapsed={!!collapsed['resources']}
+            onToggle={() => toggleSection('resources')}
+            index={4}
+            entered={entered}
+            loading={sectionsLoading}
+            emptyLabel="No resources yet."
+            emptyActionLabel="Add resource"
+            onEmptyAction={() => onAction('Add Resource')}
+          >
+            <ul className="section-list divide-y rounded-md border">
               {resources.map((r) => (
                 <li
                   key={r.id}
@@ -647,12 +864,21 @@ export function ProjectDetailPage() {
                 </li>
               ))}
             </ul>
-          )}
+          </SectionCard>
 
-          <h2 className="mb-3 mt-8 text-lg font-semibold">Issues</h2>
-          {issues.length === 0 ? (
-            <p className="text-sm text-muted-foreground">No issues yet.</p>
-          ) : (
+          <SectionCard
+            id="issues"
+            title="Issues"
+            count={issues.length}
+            collapsed={!!collapsed['issues']}
+            onToggle={() => toggleSection('issues')}
+            index={5}
+            entered={entered}
+            loading={sectionsLoading}
+            emptyLabel="No issues yet."
+            emptyActionLabel="Add issue"
+            onEmptyAction={() => onAction('Add Issue')}
+          >
             <>
               <label className="mb-3 flex items-center gap-2 text-sm">
                 <input
@@ -674,7 +900,7 @@ export function ProjectDetailPage() {
                     </p>
                   )
                 return (
-                  <ul className="divide-y rounded-md border">
+                  <ul className="section-list divide-y rounded-md border">
                     {visible.map((i) => (
                       <li
                         key={i.id}
@@ -713,13 +939,22 @@ export function ProjectDetailPage() {
                 )
               })()}
             </>
-          )}
+          </SectionCard>
 
-          <h2 className="mb-3 mt-8 text-lg font-semibold">Updates</h2>
-          {updates.length === 0 ? (
-            <p className="text-sm text-muted-foreground">No updates yet.</p>
-          ) : (
-            <ul className="flex flex-col gap-4">
+          <SectionCard
+            id="updates"
+            title="Updates"
+            count={updates.length}
+            collapsed={!!collapsed['updates']}
+            onToggle={() => toggleSection('updates')}
+            index={6}
+            entered={entered}
+            loading={sectionsLoading}
+            emptyLabel="No updates yet."
+            emptyActionLabel="Add update"
+            onEmptyAction={() => onAction('Add Update')}
+          >
+            <ul className="section-list flex flex-col gap-4">
               {updates.map((u) => (
                 <li key={u.id} className="flex gap-3">
                   <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-teal-400 text-xs font-semibold text-white">
@@ -756,14 +991,22 @@ export function ProjectDetailPage() {
                 </li>
               ))}
             </ul>
-          )}
-          <h2 className="mb-3 mt-8 text-lg font-semibold">Status Reports</h2>
-          {statusReports.length === 0 ? (
-            <p className="text-sm text-muted-foreground">
-              No status reports yet.
-            </p>
-          ) : (
-            <ul className="divide-y rounded-md border">
+          </SectionCard>
+
+          <SectionCard
+            id="status-reports"
+            title="Status Reports"
+            count={statusReports.length}
+            collapsed={!!collapsed['status-reports']}
+            onToggle={() => toggleSection('status-reports')}
+            index={7}
+            entered={entered}
+            loading={sectionsLoading}
+            emptyLabel="No status reports yet."
+            emptyActionLabel="Add status report"
+            onEmptyAction={() => onAction('Add Status Report')}
+          >
+            <ul className="section-list divide-y rounded-md border">
               {statusReports.map((r) => (
                 <li
                   key={r.id}
@@ -791,12 +1034,22 @@ export function ProjectDetailPage() {
                 </li>
               ))}
             </ul>
-          )}
-          <h2 className="mb-3 mt-8 text-lg font-semibold">Attachments</h2>
-          {attachments.length === 0 ? (
-            <p className="text-sm text-muted-foreground">No attachments yet.</p>
-          ) : (
-            <ul className="divide-y rounded-md border">
+          </SectionCard>
+
+          <SectionCard
+            id="attachments"
+            title="Attachments"
+            count={attachments.length}
+            collapsed={!!collapsed['attachments']}
+            onToggle={() => toggleSection('attachments')}
+            index={8}
+            entered={entered}
+            loading={sectionsLoading}
+            emptyLabel="No attachments yet."
+            emptyActionLabel="Attach file"
+            onEmptyAction={() => onAction('Attach File')}
+          >
+            <ul className="section-list divide-y rounded-md border">
               {attachments.map((a) => {
                 const ext = fileExt(a.file_name)
                 const iconCls = EXT_STYLES[ext.toLowerCase()] ?? 'bg-slate-400'
@@ -862,12 +1115,12 @@ export function ProjectDetailPage() {
                 )
               })}
             </ul>
-          )}
+          </SectionCard>
         </div>
 
-        <aside>
+        <aside className="lg:sticky lg:top-24 lg:self-start">
           <div className="rounded-md border p-2">
-            {ACTIONS.map((a) => {
+            {ACTIONS.map((a, i) => {
               const enabled = enabledActions.has(a)
               return (
                 <button
@@ -875,8 +1128,9 @@ export function ProjectDetailPage() {
                   disabled={!enabled}
                   onClick={enabled ? () => onAction(a) : undefined}
                   title={enabled ? '' : 'Coming in a later step'}
+                  style={{ animationDelay: `${i * 35}ms` }}
                   className={
-                    'w-full rounded px-3 py-2 text-left text-sm ' +
+                    'stagger-in w-full rounded px-3 py-2 text-left text-sm transition-colors ' +
                     (enabled
                       ? 'hover:bg-accent'
                       : 'text-muted-foreground disabled:cursor-not-allowed')

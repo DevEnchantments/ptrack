@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { projectsApi, lookupsApi, type Project, type Lookup } from '@/lib/api'
 import { Button } from '@/components/ui/button'
+import { Skeleton } from '@/components/ui/skeleton'
 
 function initials(name: string) {
   const parts = name.trim().split(/\s+/)
@@ -48,7 +49,21 @@ export function HomePage() {
       </header>
 
       <main className="p-6">
-        {loading && <p className="text-muted-foreground">Loading projects…</p>}
+        {loading && (
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {Array.from({ length: 6 }, (_, i) => (
+              <div key={i} className="rounded-lg border bg-card p-5">
+                <div className="mb-3 flex items-start justify-between gap-3">
+                  <Skeleton className="h-5 w-2/3" />
+                  <Skeleton className="h-9 w-9 rounded-full" />
+                </div>
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="mt-2 h-4 w-4/5" />
+                <Skeleton className="mt-5 h-3 w-24" />
+              </div>
+            ))}
+          </div>
+        )}
 
         {error && (
           <p className="text-destructive">Couldn't load projects: {error}</p>
@@ -70,7 +85,7 @@ export function HomePage() {
                 <div
                   key={p.id}
                   onClick={() => navigate(`/projects/${p.id}`)}
-                  className="flex cursor-pointer flex-col rounded-lg border p-5 transition-colors hover:bg-accent"
+                  className="flex cursor-pointer flex-col rounded-lg border bg-card p-5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
                 >
                   <div className="mb-3 flex items-start justify-between gap-3">
                     <h2 className="text-base font-semibold">{p.name}</h2>

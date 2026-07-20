@@ -51,9 +51,11 @@ export function AppLayout() {
       : location.pathname.startsWith(to)
 
   return (
-    <div className="flex min-h-svh">
+    // h-svh + overflow-hidden: the shell fills the viewport; the sidebar and
+    // the content pane each scroll independently.
+    <div className="flex h-svh overflow-hidden">
       <aside
-        className={`flex shrink-0 flex-col bg-sidebar text-sidebar-foreground transition-all ${
+        className={`flex shrink-0 flex-col overflow-y-auto bg-sidebar text-sidebar-foreground transition-all ${
           collapsed ? 'w-14' : 'w-56'
         }`}
       >
@@ -79,6 +81,7 @@ export function AppLayout() {
               <NavLink
                 key={item.label}
                 to={item.to}
+                viewTransition
                 title={collapsed ? item.label : undefined}
                 className={`flex items-center gap-3 rounded-md px-2.5 py-2 text-sm hover:bg-sidebar-accent hover:text-sidebar-accent-foreground ${
                   isActive(item.to)
@@ -106,7 +109,7 @@ export function AppLayout() {
       </aside>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="flex h-14 items-center justify-end gap-4 border-b bg-background px-6">
+        <header className="flex h-14 shrink-0 items-center justify-end gap-4 border-b bg-background px-6">
           <span className="hidden text-sm text-muted-foreground sm:inline">
             {user?.email}
           </span>
@@ -115,7 +118,8 @@ export function AppLayout() {
             Sign out
           </Button>
         </header>
-        <div className="min-w-0 flex-1">
+        {/* The app's scroll container — in-page sticky bars stick to its top. */}
+        <div className="min-w-0 flex-1 overflow-y-auto scroll-smooth">
           <Outlet />
         </div>
       </div>

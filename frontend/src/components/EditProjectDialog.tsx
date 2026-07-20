@@ -256,7 +256,7 @@ export function EditProjectDialog({
                 <input
                   type="radio"
                   name="access-control"
-                  className="h-4 w-4 accent-primary"
+                  className="h-4 w-4 accent-primary transition-transform duration-150 hover:scale-110"
                   checked={accessControl === 'open'}
                   onChange={() => setAccessControl('open')}
                 />
@@ -266,7 +266,7 @@ export function EditProjectDialog({
                 <input
                   type="radio"
                   name="access-control"
-                  className="h-4 w-4 accent-primary"
+                  className="h-4 w-4 accent-primary transition-transform duration-150 hover:scale-110"
                   checked={accessControl === 'restricted'}
                   onChange={() => setAccessControl('restricted')}
                 />

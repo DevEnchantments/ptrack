@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { UserCheck, UserPlus } from 'lucide-react'
 import type { ProjectMemberInput } from '@/pages/CreateProjectWizard'
 import { usersApi, type UserSummary } from '@/lib/api'
 import { Input } from '@/components/ui/input'
@@ -69,7 +70,7 @@ export function PersonAutocomplete({ value, onChange }: Props) {
         }}
       />
       {open && searchable && results.length > 0 && (
-        <ul className="absolute z-50 mt-1 w-full overflow-hidden rounded-md border bg-popover shadow-md">
+        <ul className="animate-in fade-in-0 zoom-in-95 slide-in-from-top-1 absolute z-50 mt-1 w-full origin-top overflow-hidden rounded-md border bg-popover shadow-md duration-100">
           {results.map((u) => (
             <li key={u.id}>
               <button
@@ -87,9 +88,15 @@ export function PersonAutocomplete({ value, onChange }: Props) {
         </ul>
       )}
       {value.user_id ? (
-        <p className="mt-1 text-xs text-muted-foreground">Existing user</p>
+        <p className="hint-in mt-1.5 inline-flex items-center gap-1 rounded-full bg-secondary px-2 py-0.5 text-xs font-medium text-secondary-foreground">
+          <UserCheck className="h-3 w-3" />
+          Existing user
+        </p>
       ) : value.display_name.trim() ? (
-        <p className="mt-1 text-xs text-amber-600">Will be added as pending</p>
+        <p className="hint-in mt-1.5 inline-flex items-center gap-1 rounded-full border border-amber-300 bg-amber-50 px-2 py-0.5 text-xs font-medium text-amber-700">
+          <UserPlus className="h-3 w-3" />
+          Will be added as pending
+        </p>
       ) : null}
     </div>
   )

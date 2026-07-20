@@ -292,7 +292,7 @@ export function AddIssueDialog({
                   <input
                     type="radio"
                     name="issue-status"
-                    className="h-4 w-4 accent-primary"
+                    className="h-4 w-4 accent-primary transition-transform duration-150 hover:scale-110"
                     checked={status === 'open'}
                     onChange={() => setStatus('open')}
                   />
@@ -302,7 +302,7 @@ export function AddIssueDialog({
                   <input
                     type="radio"
                     name="issue-status"
-                    className="h-4 w-4 accent-primary"
+                    className="h-4 w-4 accent-primary transition-transform duration-150 hover:scale-110"
                     checked={status === 'closed'}
                     onChange={() => setStatus('closed')}
                   />

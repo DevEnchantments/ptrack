@@ -65,7 +65,7 @@ function RadioRow({
             <input
               type="radio"
               name={name}
-              className="h-4 w-4 accent-primary"
+              className="h-4 w-4 accent-primary transition-transform duration-150 hover:scale-110"
               checked={value === o.value}
               onChange={() => onChange(o.value)}
             />
