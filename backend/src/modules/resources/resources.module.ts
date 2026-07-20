@@ -6,5 +6,6 @@ import { ResourcesRepository } from './resources.repository';
 @Module({
   controllers: [ResourcesController],
   providers: [ResourcesService, ResourcesRepository],
+  exports: [ResourcesService],
 })
 export class ResourcesModule {}

@@ -6,5 +6,6 @@ import { ActionItemsRepository } from './action-items.repository';
 @Module({
   controllers: [ActionItemsController],
   providers: [ActionItemsService, ActionItemsRepository],
+  exports: [ActionItemsService],
 })
 export class ActionItemsModule {}

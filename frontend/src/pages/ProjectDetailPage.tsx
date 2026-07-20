@@ -266,27 +266,26 @@ export function ProjectDetailPage() {
     attachmentsApi.list(id).then(setAttachments).catch(() => toast.error('Could not load attachments.'))
   }, [id])
 
+  // Initial load: the project itself plus all eight section lists in one
+  // request. The per-section load* callbacks above stay in use for refreshing
+  // a single section after its dialog saves.
   useEffect(() => {
+    if (!id) return
     load()
-    loadMilestones()
-    loadActionItems()
-    loadLinks()
-    loadResources()
-    loadIssues()
-    loadUpdates()
-    loadStatusReports()
-    loadAttachments()
-  }, [
-    load,
-    loadMilestones,
-    loadActionItems,
-    loadLinks,
-    loadResources,
-    loadIssues,
-    loadUpdates,
-    loadStatusReports,
-    loadAttachments,
-  ])
+    projectsApi
+      .sections(id)
+      .then((s) => {
+        setMilestones(s.milestones)
+        setActionItems(s.actionItems)
+        setLinks(s.links)
+        setResources(s.resources)
+        setIssues(s.issues)
+        setUpdates(s.updates)
+        setStatusReports(s.statusReports)
+        setAttachments(s.attachments)
+      })
+      .catch(() => toast.error('Could not load project sections.'))
+  }, [id, load])
 
   if (loading) {
     return <div className="p-6 text-muted-foreground">Loading…</div>

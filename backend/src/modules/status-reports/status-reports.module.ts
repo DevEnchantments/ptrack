@@ -6,5 +6,6 @@ import { StatusReportsRepository } from './status-reports.repository';
 @Module({
   controllers: [StatusReportsController],
   providers: [StatusReportsService, StatusReportsRepository],
+  exports: [StatusReportsService],
 })
 export class StatusReportsModule {}

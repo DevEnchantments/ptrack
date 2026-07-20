@@ -6,5 +6,6 @@ import { UpdatesRepository } from './updates.repository';
 @Module({
   controllers: [UpdatesController],
   providers: [UpdatesService, UpdatesRepository],
+  exports: [UpdatesService],
 })
 export class UpdatesModule {}

@@ -6,5 +6,6 @@ import { LinksRepository } from './links.repository';
 @Module({
   controllers: [LinksController],
   providers: [LinksService, LinksRepository],
+  exports: [LinksService],
 })
 export class LinksModule {}

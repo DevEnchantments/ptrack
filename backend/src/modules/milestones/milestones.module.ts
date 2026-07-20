@@ -6,5 +6,6 @@ import { MilestonesRepository } from './milestones.repository';
 @Module({
   controllers: [MilestonesController],
   providers: [MilestonesService, MilestonesRepository],
+  exports: [MilestonesService],
 })
 export class MilestonesModule {}

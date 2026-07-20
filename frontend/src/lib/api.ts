@@ -98,9 +98,24 @@ export interface ProjectDetail extends Project {
   members: ProjectMemberDetail[]
 }
 
+// All eight section lists of a project in a single request (initial page load);
+// the per-section list endpoints remain for refreshes after a save.
+export interface ProjectSections {
+  milestones: Milestone[]
+  actionItems: ActionItem[]
+  links: Link[]
+  resources: Resource[]
+  issues: Issue[]
+  updates: Update[]
+  statusReports: StatusReport[]
+  attachments: Attachment[]
+}
+
 export const projectsApi = {
   list: () => apiGet<Project[]>('/projects'),
   get: (id: string) => apiGet<ProjectDetail>(`/projects/${id}`),
+  sections: (id: string) =>
+    apiGet<ProjectSections>(`/projects/${id}/sections`),
   create: (data: Record<string, unknown>) =>
     apiPost<Project>('/projects', data),
   update: (id: string, data: Record<string, unknown>) =>
