@@ -1,3 +1,4 @@
+import { usePageTitle } from '@/lib/use-page-title'
 import { toast } from '@/lib/toast'
 import { useCallback, useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
@@ -33,6 +34,7 @@ function longDate(iso: string): string {
 }
 
 export function StatusReportDetailPage() {
+  usePageTitle('Status Report')
   const { projectId, statusReportId } = useParams<{
     projectId: string
     statusReportId: string
@@ -101,7 +103,7 @@ export function StatusReportDetailPage() {
         <span className="text-sm">{report.title ?? 'Status Report'}</span>
       </header>
 
-      <div className="mx-auto max-w-5xl p-6">
+      <div className="animate-step-in mx-auto max-w-5xl p-6">
         <div className="mb-6 flex items-center justify-between">
           <h1 className="text-2xl font-semibold">Status Report</h1>
           <div className="flex gap-2">

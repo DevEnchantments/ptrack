@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { SectionCard } from '@/components/SectionCard'
 import { SectionNav } from '@/components/SectionNav'
 import { StatusPill } from '@/components/StatusPill'
+import { AvatarCluster, InitialsAvatar } from '@/components/InitialsAvatar'
 import { Skeleton } from '@/components/ui/skeleton'
 import { usePageTitle } from '@/lib/use-page-title'
 import { useParams, useNavigate } from 'react-router-dom'
@@ -638,13 +639,12 @@ export function ProjectDetailPage() {
                       setPersonOpen(true)
                     }}
                   />
-                  <div className="flex flex-1 items-center justify-between">
-                    <div>
+                  <div className="flex flex-1 items-center justify-between gap-3">
+                    <div className="flex items-center gap-2.5">
+                      <InitialsAvatar name={memberName(m)} />
                       <span className="text-sm font-medium">{memberName(m)}</span>
                       {m.status === 'pending' && (
-                        <span className="ml-2 text-xs text-amber-600">
-                          (pending)
-                        </span>
+                        <span className="text-xs text-amber-600">(pending)</span>
                       )}
                     </div>
                     <span className="text-sm text-muted-foreground">
@@ -712,7 +712,13 @@ export function ProjectDetailPage() {
                           {isOverdue(m.due_date, m.status) && ' — overdue'}
                         </span>
                       )}
-                      {ownerName(m) && <span>Owner: {ownerName(m)}</span>}
+                      {ownerName(m) && (
+                        <span className="flex items-center gap-1.5">
+                          Owner:
+                          <InitialsAvatar name={ownerName(m) as string} size="sm" />
+                          {ownerName(m)}
+                        </span>
+                      )}
                       {m.role?.name && <span>Role: {m.role.name}</span>}
                     </div>
                   </div>
@@ -778,16 +784,19 @@ export function ProjectDetailPage() {
                         <span>Milestone: {a.milestone.name}</span>
                       )}
                       {a.owners.length > 0 && (
-                        <span>
-                          Owners:{' '}
-                          {a.owners
-                            .slice()
-                            .sort((x, y) => x.slot - y.slot)
-                            .map(
-                              (o) =>
-                                o.profile?.full_name || o.profile?.email || '—',
-                            )
-                            .join(', ')}
+                        <span className="flex items-center gap-1.5">
+                          Owners:
+                          <AvatarCluster
+                            names={a.owners
+                              .slice()
+                              .sort((x, y) => x.slot - y.slot)
+                              .map(
+                                (o) =>
+                                  o.profile?.full_name ||
+                                  o.profile?.email ||
+                                  '—',
+                              )}
+                          />
                         </span>
                       )}
                     </div>

@@ -65,10 +65,13 @@ export interface Project {
   description: string | null
   parent_project_id: string | null
   status_id: string | null
+  size_id: string | null
+  category_id: string | null
   access_control: string
   start_date: string | null
   created_by: string | null
   created_at: string
+  updated_at: string
 }
 
 export interface ProjectMemberDetail {

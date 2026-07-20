@@ -1,3 +1,4 @@
+import { usePageTitle } from '@/lib/use-page-title'
 import { toast } from '@/lib/toast'
 import { useCallback, useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
@@ -93,6 +94,7 @@ function Field({ label, value }: { label: string; value: React.ReactNode }) {
 }
 
 export function MilestoneDetailPage() {
+  usePageTitle('Milestone')
   const { projectId, milestoneId } = useParams<{
     projectId: string
     milestoneId: string
@@ -173,7 +175,7 @@ export function MilestoneDetailPage() {
         <span className="text-sm">Milestone</span>
       </header>
 
-      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-8 p-6 lg:grid-cols-[1fr_240px]">
+      <div className="animate-step-in mx-auto grid max-w-6xl grid-cols-1 gap-8 p-6 lg:grid-cols-[1fr_240px]">
         <div>
         <div className="mb-6 flex items-center justify-between">
           <h1 className="text-2xl font-semibold">Milestone</h1>

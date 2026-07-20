@@ -1,3 +1,4 @@
+import { usePageTitle } from '@/lib/use-page-title'
 import { toast } from '@/lib/toast'
 import { useCallback, useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
@@ -54,6 +55,7 @@ function Row({ label, value }: { label: string; value: React.ReactNode }) {
 }
 
 export function AttachmentDetailPage() {
+  usePageTitle('Attachment')
   const { projectId, attachmentId } = useParams<{
     projectId: string
     attachmentId: string
@@ -132,7 +134,7 @@ export function AttachmentDetailPage() {
         </Button>
       </header>
 
-      <div className="mx-auto max-w-3xl p-6">
+      <div className="animate-step-in mx-auto max-w-3xl p-6">
         <div className="rounded-lg border p-8">
           <div className="mb-6 flex flex-col items-center">
             <Download className="h-12 w-12 text-primary" />

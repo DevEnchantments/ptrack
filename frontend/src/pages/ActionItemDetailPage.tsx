@@ -1,3 +1,4 @@
+import { usePageTitle } from '@/lib/use-page-title'
 import { toast } from '@/lib/toast'
 import { useCallback, useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
@@ -45,6 +46,7 @@ function commentAuthor(c: ActionItemComment): string {
 }
 
 export function ActionItemDetailPage() {
+  usePageTitle('Action Item')
   const { projectId, actionItemId } = useParams<{
     projectId: string
     actionItemId: string
@@ -141,7 +143,7 @@ export function ActionItemDetailPage() {
         <span className="text-sm">Action Item</span>
       </header>
 
-      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-8 p-6 lg:grid-cols-[1fr_240px]">
+      <div className="animate-step-in mx-auto grid max-w-6xl grid-cols-1 gap-8 p-6 lg:grid-cols-[1fr_240px]">
         <div>
         <div className="mb-6 flex items-center justify-between">
           <h1 className="text-2xl font-semibold">Action Item</h1>
