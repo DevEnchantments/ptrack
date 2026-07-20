@@ -91,7 +91,8 @@ Every record type now has Create, Read, Update **and Delete**.
   examples.
 - **Schema:** `ptrack_phase1_schema.sql`, reconciled against the live Supabase DB (28 tables),
   plus `db/record_history.sql` and `db/record_history_deleted.sql` (both run separately in
-  the Supabase SQL editor; the latter widens the event check to allow `'deleted'`).
+  the Supabase SQL editor; the latter widens the event check to allow `'deleted'`), and
+  `db/replace_action_item_owners.sql` (atomic owner-set replace used by action-item saves).
 
 ## Roadmap — deferred to Phase 2+
 
@@ -122,10 +123,11 @@ display-only generated code (seen as "Project Key AAGP" in the Status Report sid
 **Shipped from the loose-ends list (2026-07-15):** Reference Identifier on issues ·
 `original_due_date` on milestones (frozen at creation; demo-matching History label).
 
-**Known perf debt (found in review, deliberately deferred):** action-item save is up to 6
-sequential DB round-trips (before-get → update → owner replace → after-get → history) ·
-the project page eagerly fires all 8 section list calls on load regardless of visible tab —
-revisit if projects grow heavy.
+**Perf debt closed (2026-07-20):** project page now loads all 8 section lists via one
+`GET /projects/:id/sections` aggregate (server-side `Promise.all`; per-section endpoints
+remain for post-save refreshes) · action-item save cut from 6 sequential round-trips to
+3 (before-get → atomic `replace_action_item_owners` RPC → update with joined select;
+history insert only when the owner set changed).
 
 **Not yet started (whole modules from the original):** dashboards & reporting (no charting
 library is installed — Gantt, timeline, calendar, heatmap all have no foundation) · email

@@ -53,6 +53,20 @@ export interface ActionItemComment {
 const COLUMNS =
   'id, project_id, milestone_id, title, description, type_id, role_id, due_date, status, tags, created_at, updated_at';
 
+// Fully-joined shape used by findOne AND by update, so a save can return the
+// refreshed detail row without a follow-up select.
+const DETAIL_SELECT = `${COLUMNS},
+  type:action_item_types ( name ),
+  role:project_roles ( name ),
+  milestone:milestones ( name ),
+  project:projects ( name ),
+  owners:action_item_owners (
+    slot, user_id,
+    profile:profiles!user_id ( full_name, email )
+  ),
+  created_by_profile:profiles!created_by ( full_name, email ),
+  updated_by_profile:profiles!updated_by ( full_name, email )`;
+
 @Injectable()
 export class ActionItemsRepository {
   constructor(private readonly db: DatabaseService) {}
@@ -74,15 +88,15 @@ export class ActionItemsRepository {
     projectId: string,
     actionItemId: string,
     patch: Record<string, unknown>,
-  ): Promise<ActionItem> {
+  ): Promise<ActionItemListItem> {
     const { data, error } = await this.table
       .update(patch)
       .eq('project_id', projectId)
       .eq('id', actionItemId)
-      .select(COLUMNS)
+      .select(DETAIL_SELECT)
       .single();
     if (error) throw toHttpException(error, 'actionItems.update');
-    return data;
+    return data as unknown as ActionItemListItem;
   }
 
   /**
@@ -132,12 +146,17 @@ export class ActionItemsRepository {
     if (error) throw toHttpException(error, 'actionItems.insertOwners');
   }
 
-  async deleteOwners(actionItemId: string): Promise<void> {
-    const { error } = await this.db.client
-      .from('action_item_owners')
-      .delete()
-      .eq('action_item_id', actionItemId);
-    if (error) throw toHttpException(error, 'actionItems.deleteOwners');
+  /**
+   * Replaces the whole owner set atomically in one round-trip via the
+   * replace_action_item_owners Postgres function
+   * (db/replace_action_item_owners.sql — must be run in the SQL editor).
+   */
+  async replaceOwners(actionItemId: string, ownerIds: string[]): Promise<void> {
+    const { error } = await this.db.client.rpc('replace_action_item_owners', {
+      p_action_item_id: actionItemId,
+      p_owner_ids: ownerIds,
+    });
+    if (error) throw toHttpException(error, 'actionItems.replaceOwners');
   }
 
   async findByProject(projectId: string): Promise<ActionItemListItem[]> {
@@ -163,19 +182,7 @@ export class ActionItemsRepository {
     actionItemId: string,
   ): Promise<ActionItemListItem | null> {
     const { data, error } = await this.table
-      .select(
-        `${COLUMNS},
-         type:action_item_types ( name ),
-         role:project_roles ( name ),
-         milestone:milestones ( name ),
-         project:projects ( name ),
-         owners:action_item_owners (
-           slot, user_id,
-           profile:profiles!user_id ( full_name, email )
-         ),
-         created_by_profile:profiles!created_by ( full_name, email ),
-         updated_by_profile:profiles!updated_by ( full_name, email )`,
-      )
+      .select(DETAIL_SELECT)
       .eq('project_id', projectId)
       .eq('id', actionItemId)
       .maybeSingle();

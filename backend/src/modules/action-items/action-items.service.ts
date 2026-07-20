@@ -69,6 +69,13 @@ export class ActionItemsService {
     // owner set can be diffed after the write.
     const before = await this.get(projectId, actionItemId);
 
+    // Owners first — one atomic RPC — so the joined select on the column
+    // update below already returns the new set.
+    if (dto.owner_ids !== undefined) {
+      const ownerIds = [...new Set(dto.owner_ids ?? [])].slice(0, 4);
+      await this.repo.replaceOwners(actionItemId, ownerIds);
+    }
+
     // Build the column patch only from fields that were provided.
     const patch: Record<string, unknown> = { updated_by: userId };
     if (dto.title !== undefined) patch.title = dto.title.trim();
@@ -82,17 +89,8 @@ export class ActionItemsService {
     if (dto.role_id !== undefined) patch.role_id = dto.role_id ?? null;
     if (dto.tags !== undefined) patch.tags = dto.tags?.length ? dto.tags : null;
 
-    await this.repo.update(projectId, actionItemId, patch);
-
-    // Owners: if provided, replace the whole set (delete + re-insert in order).
-    if (dto.owner_ids !== undefined) {
-      const ownerIds = [...new Set(dto.owner_ids ?? [])].slice(0, 4);
-      await this.repo.deleteOwners(actionItemId);
-      await this.repo.insertOwners(actionItemId, ownerIds);
-    }
-
-    // Return the fully-joined item so the UI can refresh.
-    const after = await this.get(projectId, actionItemId);
+    // The update returns the fully-joined row, so no follow-up get is needed.
+    const after = await this.repo.update(projectId, actionItemId, patch);
 
     // Owners are replaced wholesale on every save, so the DB trigger cannot tell
     // a real change from a rewrite of the same set — and it never sees the join
