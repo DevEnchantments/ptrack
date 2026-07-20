@@ -27,9 +27,11 @@ the name alone.
 
 1. **React NEVER talks to Supabase directly.** All data flows React → NestJS → Supabase.
    There is no Supabase client in the frontend.
-2. NestJS uses the **service-role / secret key** and currently bypasses RLS. RLS
-   enforcement is **deliberately deferred** to a later security phase — do not add RLS
-   policies or per-request user keys yet.
+2. NestJS uses the **service-role / secret key**, which bypasses RLS. Since 2026-07-18,
+   **RLS is ENABLED on every table with zero policies** (`db/enable_rls_lockdown.sql`) —
+   a deny-all that closes direct PostgREST access via the public anon key while leaving
+   NestJS untouched. RLS **policies** remain deliberately deferred to the security phase —
+   do not add policies or per-request user keys yet.
 3. NestJS is organized **feature-first: one module per domain entity**, each with its own
    controller, service, repository, and DTOs.
 
@@ -178,6 +180,9 @@ updates.
   save even when the set is identical. Diff the rendered set in the service instead.
 - **Profiles FK disambiguation:** use the `profiles!user_id` FK hint when multiple FKs
   point to the same table.
+- **Every NEW table must `enable row level security` at creation** (or re-run
+  `db/enable_rls_lockdown.sql`). A table without RLS is publicly readable/writable through
+  PostgREST with the anon key, and Supabase's Security Advisor will email about it.
 - **File/export sanity check:** every component's export name should match its filename.
 
 ## graphify
