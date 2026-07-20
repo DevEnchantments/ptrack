@@ -64,10 +64,17 @@
   "62": "@supabase/supabase-js",
   "63": "AttachmentDetailPage.tsx",
   "64": "AddPersonDialog.tsx",
+  "65": "RecordHistory.tsx",
   "66": "react-dom",
+  "67": "ActionItemDetailPage.tsx",
   "68": ".createCategory",
+  "69": "AppModule",
+  "70": "HomePage.tsx",
   "71": "CreateUpdateDto",
   "72": "@nestjs/config",
+  "73": "SectionNav.tsx",
   "74": "milestones.repository.ts",
-  "76": "tw-animate-css"
+  "75": "class-validator",
+  "76": "tw-animate-css",
+  "77": "@eslint/js"
 }

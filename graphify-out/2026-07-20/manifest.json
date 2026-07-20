@@ -855,8 +855,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/AppLayout.tsx": {
-    "mtime": 1784560958.0393775,
-    "ast_hash": "3ddc64facff82ca4279d17be5d3d4719",
+    "mtime": 1784561175.0212495,
+    "ast_hash": "2badd84ccc624fc39fb9e44332e756cf",
     "semantic_hash": ""
   },
   "frontend/src/pages/DashboardPage.tsx": {
@@ -897,6 +897,11 @@
   "frontend/src/components/FieldError.tsx": {
     "mtime": 1784560492.6539936,
     "ast_hash": "30b9fad78f2d56a3eac56ae360058b1d",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/CommandPalette.tsx": {
+    "mtime": 1784561166.9369774,
+    "ast_hash": "9336963fbf0d33b332ed27b57ef8064b",
     "semantic_hash": ""
   }
 }
