@@ -555,8 +555,8 @@
     "semantic_hash": ""
   },
   "frontend/src/lib/api.ts": {
-    "mtime": 1784526447.335183,
-    "ast_hash": "3853b2b98cbc05057b8712ba967746e7",
+    "mtime": 1784557888.6217642,
+    "ast_hash": "d367f085a6cf374f7ea210c356df5cb4",
     "semantic_hash": ""
   },
   "frontend/src/lib/auth-context.tsx": {
@@ -580,13 +580,13 @@
     "semantic_hash": "d88c14dc26ec9edc991af54dfd7f375d"
   },
   "frontend/src/pages/ActionItemDetailPage.tsx": {
-    "mtime": 1784060427.6541498,
-    "ast_hash": "44107dfab5fddf1cf30db378e796dde2",
+    "mtime": 1784558220.8015,
+    "ast_hash": "e28a4f2ac32213bb9c3372df17884e14",
     "semantic_hash": ""
   },
   "frontend/src/pages/AttachmentDetailPage.tsx": {
-    "mtime": 1784060427.7679477,
-    "ast_hash": "1b1f0c34518bc3ea3cdf2869840b8842",
+    "mtime": 1784558221.7726188,
+    "ast_hash": "884147d41f11100cb6c92d9b3fa2be0b",
     "semantic_hash": ""
   },
   "frontend/src/pages/CreateProjectWizard.tsx": {
@@ -595,8 +595,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/HomePage.tsx": {
-    "mtime": 1784555154.1055074,
-    "ast_hash": "f29b93c43042f52a3e0a4072889614e5",
+    "mtime": 1784557930.9789064,
+    "ast_hash": "683736428c22b719b1dd7c853798fe00",
     "semantic_hash": ""
   },
   "frontend/src/pages/LoginPage.tsx": {
@@ -605,18 +605,18 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/MilestoneDetailPage.tsx": {
-    "mtime": 1784090600.3765376,
-    "ast_hash": "c2aa2c5d8a025d76dd9bcb25780daf5b",
+    "mtime": 1784558220.284137,
+    "ast_hash": "d536b3409f55e215b2e049bb0666e1cb",
     "semantic_hash": ""
   },
   "frontend/src/pages/ProjectDetailPage.tsx": {
-    "mtime": 1784555178.5115151,
-    "ast_hash": "5ee30f060a706964d9600ea5e8ecb1b8",
+    "mtime": 1784558154.6214428,
+    "ast_hash": "84dadd7307dbc7d1d31b22dfc261fbbf",
     "semantic_hash": ""
   },
   "frontend/src/pages/StatusReportDetailPage.tsx": {
-    "mtime": 1784092800.7034154,
-    "ast_hash": "b80c9216c3efa9bf3bde38312ef0b5c5",
+    "mtime": 1784558221.287737,
+    "ast_hash": "5d07d1a528911b04248c8789c04d56a0",
     "semantic_hash": ""
   },
   "frontend/src/pages/create-project/StepAccess.tsx": {
@@ -887,6 +887,11 @@
   "frontend/src/lib/use-page-title.ts": {
     "mtime": 1784555120.5822937,
     "ast_hash": "48f0c1b7410c85cbd0c66b582f92284c",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/InitialsAvatar.tsx": {
+    "mtime": 1784558142.6605296,
+    "ast_hash": "1374b94dec9e16b690ea162977056da3",
     "semantic_hash": ""
   }
 }

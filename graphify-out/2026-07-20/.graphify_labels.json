@@ -63,10 +63,18 @@
   "61": "PeopleRepository",
   "62": "MilestonesController",
   "63": "HomePage.tsx",
+  "64": "AddPersonDialog.tsx",
   "65": "SupabaseAuthGuard",
   "66": "react-dom",
+  "67": "RecordHistory.tsx",
+  "68": "AttachmentDetailPage.tsx",
+  "69": "SupabaseAuthGuard",
   "70": "nest-cli.json",
   "71": "CreateUpdateDto",
+  "72": "InitialsAvatar.tsx",
   "73": "@nestjs/swagger",
-  "74": "milestones.repository.ts"
+  "74": "milestones.repository.ts",
+  "75": "moduleFileExtensions",
+  "76": "tw-animate-css",
+  "77": "@eslint/js"
 }
