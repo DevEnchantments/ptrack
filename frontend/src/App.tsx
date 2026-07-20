@@ -1,4 +1,5 @@
 import { HomePage } from '@/pages/HomePage'
+import { DashboardPage } from '@/pages/DashboardPage'
 import { LoginPage } from '@/pages/LoginPage'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { ProtectedRoute } from '@/components/ProtectedRoute'
@@ -20,6 +21,7 @@ function App() {
       <Route element={<ProtectedRoute />}>
         <Route element={<AppLayout />}>
           <Route path="/" element={<HomePage />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/projects/new" element={<CreateProjectWizard />} />
           <Route path="/projects/:id" element={<ProjectDetailPage />} />
           <Route

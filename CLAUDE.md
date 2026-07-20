@@ -53,10 +53,20 @@ Every record type now has Create, Read, Update **and Delete**.
 - **Record types:** Person, Milestone, Action Item, Link, Resource, Issue, Update,
   Status Report, Attachment
 - **App shell:** collapsible dark sidebar in the demo's layout (`AppLayout`, wraps all
-  protected routes; top bar owns user/sign-out). Only Projects is live; the other nine
-  demo nav items are disabled stubs with a "Coming in Phase 2" tooltip — same convention
-  as the email button. No submenus built (demo chevron contents unseen — field-mapping
-  rule applies to nav too).
+  protected routes; top bar owns user/sign-out). Projects and My Dashboard are live; the
+  other eight demo nav items are disabled stubs with a "Coming in Phase 2" tooltip — same
+  convention as the email button. No submenus built (demo chevron contents unseen —
+  field-mapping rule applies to nav too).
+- **UI theme ("palette C", picked after supervisor contrast complaint 2026-07-20):** every
+  color flows from the shadcn tokens in `frontend/src/index.css` — soft-gray canvas
+  `#F6F7F9`, white cards, slate ink `#1A2333`, primary blue `#2563EB`, navy sidebar
+  `#0D1526` with blue active pill. Change colors by editing tokens only; components must
+  not hardcode hexes. AA-verified pairs; alternates A/B/D live in the session scratchpad.
+- **My Dashboard preview (`/dashboard`):** sample-data-only page (badged as such) with 9
+  hand-rolled SVG/CSS chart types — deliberately NO charting library, so the Phase 2
+  library decision stays open. Chart series colors are the `--chart-1..3` tokens,
+  validated (CVD-safe adjacency: green|blue|orange order matters — blue separates the
+  colorblind-confusable green/orange pair). Animations respect `prefers-reduced-motion`.
 - **Detail pages:** Milestone, Action Item, Status Report, Attachment. Issues, Links,
   Updates and Resources are **dialog-only in the demo** — they need no detail page.
 - **Delete:** one convention everywhere — a red `Delete` in the edit-dialog footer
@@ -151,7 +161,8 @@ updates.
   panel is the review surface, so keep each file coherent when you write it.
 - **Confirm field mapping from the demo screenshots before building a new record type.**
   Never infer fields from the schema alone.
-- **Suggest a commit message at each natural commit point** (no need to ask first):
+- **Fares runs every commit himself (since 2026-07-20). Never run `git commit`** —
+  suggest the commit message at each natural commit point (no need to ask first):
   `feat:` / `chore:` style, joining scope items with `+` and `&`.
 - I communicate casually but produce **semi-formal deliverables for supervisors**. When I
   correct scope creep or a framing error, incorporate the correction without pushback.
