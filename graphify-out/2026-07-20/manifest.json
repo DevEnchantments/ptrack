@@ -445,8 +445,8 @@
     "semantic_hash": "e16b561c6ee8903f8502945f8f334a05"
   },
   "frontend/src/App.tsx": {
-    "mtime": 1784060161.0614643,
-    "ast_hash": "bb7809182c519a67d0432a56402bdade",
+    "mtime": 1784534692.8967116,
+    "ast_hash": "3c94ac702af3567af0b4bf070b2f2199",
     "semantic_hash": ""
   },
   "frontend/src/components/AddActionItemDialog.tsx": {
@@ -595,9 +595,9 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/HomePage.tsx": {
-    "mtime": 1783404914.5575697,
-    "ast_hash": "1a51f27def6e3240d6da61144ec9d092",
-    "semantic_hash": "1a51f27def6e3240d6da61144ec9d092"
+    "mtime": 1784534712.21661,
+    "ast_hash": "07fd49238cdb73f6fbff5517fa1e8971",
+    "semantic_hash": ""
   },
   "frontend/src/pages/LoginPage.tsx": {
     "mtime": 1783348391.084559,
@@ -665,8 +665,8 @@
     "semantic_hash": "2e092757eaa8553feb3c7bb53e6a8a3b"
   },
   "CLAUDE.md": {
-    "mtime": 1784526784.019963,
-    "ast_hash": "a1a31cb0c01f65fee71384f3509866f7",
+    "mtime": 1784534978.3011715,
+    "ast_hash": "dcf0d761a3d9b2b966f992260da53a15",
     "semantic_hash": ""
   },
   "README.md": {
@@ -852,6 +852,11 @@
   "db/replace_action_item_owners.sql": {
     "mtime": 1784526694.8659995,
     "ast_hash": "706f7dd13e2b35d05a8df5236ab37684",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/AppLayout.tsx": {
+    "mtime": 1784534660.2791016,
+    "ast_hash": "0b3c17c1b9e6a23f28dbe5c6560f54ed",
     "semantic_hash": ""
   }
 }
