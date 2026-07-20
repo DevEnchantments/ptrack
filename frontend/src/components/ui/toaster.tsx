@@ -1,30 +1,37 @@
 import { useEffect, useState } from 'react'
-import { subscribeToasts } from '@/lib/toast'
+import { CheckCircle2, CircleAlert } from 'lucide-react'
+import { subscribeToasts, type ToastKind } from '@/lib/toast'
 
 /**
- * Renders error toasts fired via `toast.error()` (lib/toast.ts). Mounted once
- * in App. Exists because the app's data loaders used to swallow failures
- * silently — an empty section looked identical to "no data", which is a lie
- * when the request failed.
+ * Renders toasts fired via `toast.error()` / `toast.success()` (lib/toast.ts).
+ * Mounted once in App. Errors exist because the app's data loaders used to
+ * swallow failures silently; successes close the loop on saves.
  */
 interface ToastItem {
   id: number
   message: string
+  kind: ToastKind
 }
 
-const TOAST_MS = 6000
+const TOAST_MS = { error: 6000, success: 3000 }
 let seq = 0
+
+const KIND_CLASSES: Record<ToastKind, string> = {
+  error: 'border-destructive/30 border-l-destructive text-destructive',
+  success:
+    'border-emerald-300/50 border-l-emerald-600 text-emerald-700 dark:border-emerald-800/60 dark:border-l-emerald-400 dark:text-emerald-300',
+}
 
 export function Toaster() {
   const [toasts, setToasts] = useState<ToastItem[]>([])
 
   useEffect(() => {
-    return subscribeToasts((message) => {
+    return subscribeToasts((message, kind) => {
       const id = ++seq
-      setToasts((prev) => [...prev, { id, message }])
+      setToasts((prev) => [...prev, { id, message, kind }])
       setTimeout(
         () => setToasts((prev) => prev.filter((t) => t.id !== id)),
-        TOAST_MS,
+        TOAST_MS[kind],
       )
     })
   }, [])
@@ -36,9 +43,14 @@ export function Toaster() {
       {toasts.map((t) => (
         <div
           key={t.id}
-          role="alert"
-          className="toast-in rounded-md border border-l-4 border-destructive/30 border-l-destructive bg-background px-4 py-3 text-sm text-destructive shadow-lg"
+          role={t.kind === 'error' ? 'alert' : 'status'}
+          className={`toast-in flex items-start gap-2 rounded-md border border-l-4 bg-background px-4 py-3 text-sm shadow-lg ${KIND_CLASSES[t.kind]}`}
         >
+          {t.kind === 'success' ? (
+            <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" />
+          ) : (
+            <CircleAlert className="mt-0.5 h-4 w-4 shrink-0" />
+          )}
           {t.message}
         </div>
       ))}

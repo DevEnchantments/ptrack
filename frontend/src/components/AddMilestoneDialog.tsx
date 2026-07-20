@@ -1,3 +1,4 @@
+import { FieldError } from '@/components/FieldError'
 import { Loader2 } from 'lucide-react'
 import { toast } from '@/lib/toast'
 import { useEffect, useState } from 'react'
@@ -94,6 +95,7 @@ export function AddMilestoneDialog({
   const [weightage, setWeightage] = useState('')
   const [percent, setPercent] = useState('')
   const [error, setError] = useState<string | null>(null)
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
   const [saving, setSaving] = useState(false)
   const [confirmDelete, setConfirmDelete] = useState(false)
   const [deleting, setDeleting] = useState(false)
@@ -148,6 +150,7 @@ export function AddMilestoneDialog({
         resetFields()
       }
       setError(null)
+      setFieldErrors({})
       setConfirmDelete(false)
     }
   }
@@ -155,6 +158,7 @@ export function AddMilestoneDialog({
   function reset() {
     resetFields()
     setError(null)
+    setFieldErrors({})
     setConfirmDelete(false)
   }
 
@@ -169,9 +173,14 @@ export function AddMilestoneDialog({
 
   async function submit() {
     setError(null)
-    if (!name.trim()) return setError('A milestone name is required.')
-    if (!startDate) return setError('A start date is required.')
-    if (!dueDate) return setError('A due date is required.')
+    setFieldErrors({})
+    const errs: Record<string, string> = {}
+    if (!name.trim()) errs.name = 'A milestone name is required.'
+    if (!startDate) errs.startDate = 'A start date is required.'
+    if (!dueDate) errs.dueDate = 'A due date is required.'
+
+    setFieldErrors(errs)
+    if (Object.keys(errs).length > 0) return
 
     setSaving(true)
     try {
@@ -201,6 +210,7 @@ export function AddMilestoneDialog({
       }
       reset()
       onOpenChange(false)
+      toast.success(isEdit ? 'Milestone updated.' : 'Milestone added.')
       onAdded()
     } catch (e) {
       setError((e as Error).message)
@@ -212,11 +222,13 @@ export function AddMilestoneDialog({
   async function doDelete() {
     if (!existing) return
     setError(null)
+    setFieldErrors({})
     setDeleting(true)
     try {
       await milestonesApi.remove(projectId, existing.id)
       reset()
       onOpenChange(false)
+      toast.success('Milestone deleted.')
       if (onDeleted) onDeleted()
       else onAdded()
     } catch (e) {
@@ -247,7 +259,8 @@ export function AddMilestoneDialog({
             <Label>
               Milestone <span className="text-destructive">*</span>
             </Label>
-            <Input value={name} onChange={(e) => setName(e.target.value)} />
+            <Input value={name} onChange={(e) => setName(e.target.value)}  aria-invalid={fieldErrors.name ? true : undefined} />
+            <FieldError message={fieldErrors.name} />
           </div>
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -259,7 +272,9 @@ export function AddMilestoneDialog({
                 type="date"
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
+                aria-invalid={fieldErrors.startDate ? true : undefined}
               />
+              <FieldError message={fieldErrors.startDate} />
             </div>
             <div className="flex flex-col gap-2">
               <Label>
@@ -269,7 +284,9 @@ export function AddMilestoneDialog({
                 type="date"
                 value={dueDate}
                 onChange={(e) => setDueDate(e.target.value)}
+                aria-invalid={fieldErrors.dueDate ? true : undefined}
               />
+              <FieldError message={fieldErrors.dueDate} />
             </div>
           </div>
 

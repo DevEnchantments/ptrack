@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from '@/lib/auth-context'
 import { Button } from '@/components/ui/button'
+import { CommandPalette } from '@/components/CommandPalette'
 import {
   ArrowUp,
   BarChart3,
@@ -47,7 +48,20 @@ export function AppLayout() {
   const location = useLocation()
   const [collapsed, setCollapsed] = useState(false)
   const [showScrollTop, setShowScrollTop] = useState(false)
+  const [paletteOpen, setPaletteOpen] = useState(false)
   const scrollRef = useRef<HTMLDivElement | null>(null)
+
+  // Global Ctrl/Cmd+K opens the command palette.
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault()
+        setPaletteOpen((o) => !o)
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [])
 
   // Theme: main.tsx applies the saved class before first paint; this state
   // mirrors it and the effect keeps <html> + localStorage in sync on toggle.
@@ -73,6 +87,12 @@ export function AppLayout() {
     // h-svh + overflow-hidden: the shell fills the viewport; the sidebar and
     // the content pane each scroll independently.
     <div className="flex h-svh overflow-hidden">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 focus:rounded-md focus:bg-primary focus:px-3 focus:py-2 focus:text-sm focus:text-primary-foreground"
+      >
+        Skip to content
+      </a>
       <aside
         className={`flex shrink-0 flex-col overflow-y-auto bg-sidebar text-sidebar-foreground transition-all ${
           collapsed ? 'w-14' : 'w-56'
@@ -84,6 +104,7 @@ export function AppLayout() {
             onClick={() => setCollapsed((c) => !c)}
             className="rounded-md p-2 hover:bg-sidebar-accent"
             title={collapsed ? 'Expand menu' : 'Collapse menu'}
+            aria-label={collapsed ? 'Expand menu' : 'Collapse menu'}
           >
             <Menu className="h-5 w-5" />
           </button>
@@ -131,6 +152,16 @@ export function AppLayout() {
         <header className="flex h-14 shrink-0 items-center justify-end gap-4 border-b bg-background px-6">
           <button
             type="button"
+            onClick={() => setPaletteOpen(true)}
+            className="flex items-center gap-2 rounded-md border bg-muted/50 px-2.5 py-1.5 text-xs text-muted-foreground transition-colors hover:border-ring/50 hover:text-foreground"
+          >
+            Search…
+            <kbd className="rounded border bg-background px-1 text-[10px]">
+              Ctrl K
+            </kbd>
+          </button>
+          <button
+            type="button"
             onClick={() => setDark((d) => !d)}
             title={dark ? 'Switch to light mode' : 'Switch to dark mode'}
             aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}
@@ -151,6 +182,7 @@ export function AppLayout() {
             content height and the inner pane never overflows (= no scrolling). */}
         <div className="relative min-h-0 min-w-0 flex-1">
           <div
+            id="main-content"
             ref={scrollRef}
             onScroll={(e) => setShowScrollTop(e.currentTarget.scrollTop > 600)}
             className="h-full overflow-y-auto scroll-smooth"
@@ -171,6 +203,7 @@ export function AppLayout() {
           )}
         </div>
       </div>
+      <CommandPalette open={paletteOpen} onOpenChange={setPaletteOpen} />
     </div>
   )
 }

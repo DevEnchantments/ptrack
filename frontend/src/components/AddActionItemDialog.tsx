@@ -1,3 +1,4 @@
+import { FieldError } from '@/components/FieldError'
 import { Loader2 } from 'lucide-react'
 import { toast } from '@/lib/toast'
 import { useEffect, useState } from 'react'
@@ -114,6 +115,7 @@ export function AddActionItemDialog({
   const [description, setDescription] = useState('')
   const [tags, setTags] = useState('')
   const [error, setError] = useState<string | null>(null)
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
   const [saving, setSaving] = useState(false)
   const [confirmDelete, setConfirmDelete] = useState(false)
   const [deleting, setDeleting] = useState(false)
@@ -160,6 +162,7 @@ export function AddActionItemDialog({
         if (defaultMilestoneId) setMilestoneId(defaultMilestoneId)
       }
       setError(null)
+      setFieldErrors({})
       setConfirmDelete(false)
     }
   }
@@ -167,6 +170,7 @@ export function AddActionItemDialog({
   function reset() {
     resetFields()
     setError(null)
+    setFieldErrors({})
     setConfirmDelete(false)
   }
 
@@ -184,14 +188,19 @@ export function AddActionItemDialog({
 
   async function submit() {
     setError(null)
-    if (!title.trim()) return setError('An action is required.')
-    if (!dueDate) return setError('A due date is required.')
+    setFieldErrors({})
+    const errs: Record<string, string> = {}
+    if (!title.trim()) errs.title = 'An action is required.'
+    if (!dueDate) errs.dueDate = 'A due date is required.'
 
     const ownerIds = [
       ...new Set(
         owners.map((o) => o.user_id).filter((id): id is string => Boolean(id)),
       ),
     ].slice(0, 4)
+
+    setFieldErrors(errs)
+    if (Object.keys(errs).length > 0) return
 
     setSaving(true)
     try {
@@ -219,6 +228,7 @@ export function AddActionItemDialog({
       }
       reset()
       onOpenChange(false)
+      toast.success(isEdit ? 'Action item updated.' : 'Action item added.')
       onSaved()
     } catch (e) {
       setError((e as Error).message)
@@ -230,11 +240,13 @@ export function AddActionItemDialog({
   async function doDelete() {
     if (!existing) return
     setError(null)
+    setFieldErrors({})
     setDeleting(true)
     try {
       await actionItemsApi.remove(projectId, existing.id)
       reset()
       onOpenChange(false)
+      toast.success('Action item deleted.')
       if (onDeleted) onDeleted()
       else onSaved()
     } catch (e) {
@@ -265,7 +277,8 @@ export function AddActionItemDialog({
             <Label>
               Action <span className="text-destructive">*</span>
             </Label>
-            <Input value={title} onChange={(e) => setTitle(e.target.value)} />
+            <Input value={title} onChange={(e) => setTitle(e.target.value)}  aria-invalid={fieldErrors.title ? true : undefined} />
+            <FieldError message={fieldErrors.title} />
           </div>
 
           <div className="flex flex-col gap-2">
@@ -308,7 +321,9 @@ export function AddActionItemDialog({
               type="date"
               value={dueDate}
               onChange={(e) => setDueDate(e.target.value)}
+              aria-invalid={fieldErrors.dueDate ? true : undefined}
             />
+            <FieldError message={fieldErrors.dueDate} />
           </div>
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">

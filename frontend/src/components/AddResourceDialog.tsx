@@ -1,3 +1,4 @@
+import { FieldError } from '@/components/FieldError'
 import { Loader2 } from 'lucide-react'
 import { toast } from '@/lib/toast'
 import { useEffect, useState } from 'react'
@@ -44,6 +45,7 @@ export function AddResourceDialog({
   const [typeId, setTypeId] = useState<string | null>(null)
   const [notes, setNotes] = useState('')
   const [error, setError] = useState<string | null>(null)
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
   const [saving, setSaving] = useState(false)
   const [deleting, setDeleting] = useState(false)
   const busy = saving || deleting
@@ -51,11 +53,13 @@ export function AddResourceDialog({
   async function remove() {
     if (!existing) return
     setError(null)
+    setFieldErrors({})
     setDeleting(true)
     try {
       await resourcesApi.remove(projectId, existing.id)
       reset()
       onOpenChange(false)
+      toast.success('Resource deleted.')
       onAdded()
     } catch (e) {
       setError((e as Error).message)
@@ -74,6 +78,7 @@ export function AddResourceDialog({
     setTypeId(null)
     setNotes('')
     setError(null)
+    setFieldErrors({})
   }
 
   // Populate on open / record change — render-phase prev-key pattern.
@@ -90,13 +95,19 @@ export function AddResourceDialog({
         reset()
       }
       setError(null)
+      setFieldErrors({})
     }
   }
 
   async function submit() {
     setError(null)
-    if (!name.trim()) return setError('A resource name is required.')
-    if (!typeId) return setError('A type is required.')
+    setFieldErrors({})
+    const errs: Record<string, string> = {}
+    if (!name.trim()) errs.name = 'A resource name is required.'
+    if (!typeId) errs.typeId = 'A type is required.'
+
+    setFieldErrors(errs)
+    if (Object.keys(errs).length > 0) return
 
     setSaving(true)
     try {
@@ -112,6 +123,7 @@ export function AddResourceDialog({
       }
       reset()
       onOpenChange(false)
+      toast.success(isEdit ? 'Resource updated.' : 'Resource added.')
       onAdded()
     } catch (e) {
       setError((e as Error).message)
@@ -138,7 +150,8 @@ export function AddResourceDialog({
             <Label>
               Resource Name <span className="text-destructive">*</span>
             </Label>
-            <Input value={name} onChange={(e) => setName(e.target.value)} />
+            <Input value={name} onChange={(e) => setName(e.target.value)}  aria-invalid={fieldErrors.name ? true : undefined} />
+            <FieldError message={fieldErrors.name} />
           </div>
 
           <div className="flex flex-col gap-2">
@@ -161,6 +174,7 @@ export function AddResourceDialog({
                 ))}
               </SelectContent>
             </Select>
+            <FieldError message={fieldErrors.typeId} />
           </div>
 
           <div className="flex flex-col gap-2">

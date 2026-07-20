@@ -1,3 +1,5 @@
+import { FieldError } from '@/components/FieldError'
+import { toast } from '@/lib/toast'
 import { Loader2 } from 'lucide-react'
 import { useState } from 'react'
 import { statusReportsApi, type StatusReport } from '@/lib/api'
@@ -93,6 +95,7 @@ export function AddStatusReportDialog({
   const [editableBy, setEditableBy] = useState('submitter')
   const [reportDate, setReportDate] = useState(today())
   const [error, setError] = useState<string | null>(null)
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
   const [saving, setSaving] = useState(false)
   const [deleting, setDeleting] = useState(false)
   const busy = saving || deleting
@@ -100,11 +103,13 @@ export function AddStatusReportDialog({
   async function remove() {
     if (!existing) return
     setError(null)
+    setFieldErrors({})
     setDeleting(true)
     try {
       await statusReportsApi.remove(projectId, existing.id)
       reset()
       onOpenChange(false)
+      toast.success('Status report deleted.')
       onAdded()
     } catch (e) {
       setError((e as Error).message)
@@ -120,6 +125,7 @@ export function AddStatusReportDialog({
     setEditableBy('submitter')
     setReportDate(today())
     setError(null)
+    setFieldErrors({})
   }
 
   // Populate on open / record change — render-phase prev-key pattern.
@@ -135,6 +141,7 @@ export function AddStatusReportDialog({
         setEditableBy(existing.editable_by)
         setReportDate(existing.report_date)
         setError(null)
+        setFieldErrors({})
       } else {
         reset()
       }
@@ -143,9 +150,14 @@ export function AddStatusReportDialog({
 
   async function submit() {
     setError(null)
-    if (!title.trim()) return setError('A title is required.')
-    if (!summary.trim()) return setError('A status report is required.')
-    if (!reportDate) return setError('A submission date is required.')
+    setFieldErrors({})
+    const errs: Record<string, string> = {}
+    if (!title.trim()) errs.title = 'A title is required.'
+    if (!summary.trim()) errs.summary = 'A status report is required.'
+    if (!reportDate) errs.reportDate = 'A submission date is required.'
+
+    setFieldErrors(errs)
+    if (Object.keys(errs).length > 0) return
 
     setSaving(true)
     try {
@@ -163,6 +175,7 @@ export function AddStatusReportDialog({
       }
       reset()
       onOpenChange(false)
+      toast.success(isEdit ? 'Status report updated.' : 'Status report added.')
       onAdded()
     } catch (e) {
       setError((e as Error).message)
@@ -198,7 +211,8 @@ export function AddStatusReportDialog({
             <Label>
               Title <span className="text-destructive">*</span>
             </Label>
-            <Input value={title} onChange={(e) => setTitle(e.target.value)} />
+            <Input value={title} onChange={(e) => setTitle(e.target.value)}  aria-invalid={fieldErrors.title ? true : undefined} />
+            <FieldError message={fieldErrors.title} />
           </div>
 
           <div className="flex flex-col gap-2">
@@ -209,7 +223,9 @@ export function AddStatusReportDialog({
               rows={8}
               value={summary}
               onChange={(e) => setSummary(e.target.value)}
+              aria-invalid={fieldErrors.summary ? true : undefined}
             />
+            <FieldError message={fieldErrors.summary} />
           </div>
 
           <RadioRow
@@ -236,7 +252,9 @@ export function AddStatusReportDialog({
               type="date"
               value={reportDate}
               onChange={(e) => setReportDate(e.target.value)}
+              aria-invalid={fieldErrors.reportDate ? true : undefined}
             />
+            <FieldError message={fieldErrors.reportDate} />
           </div>
 
           {error && <p className="text-sm text-destructive">{error}</p>}

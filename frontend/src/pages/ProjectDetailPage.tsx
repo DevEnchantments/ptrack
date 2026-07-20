@@ -668,6 +668,22 @@ export function ProjectDetailPage() {
             emptyLabel="No milestones yet."
             emptyActionLabel="Add milestone"
             onEmptyAction={() => onAction('Add Milestone')}
+            headerExtra={
+              milestones.length > 0 ? (
+                <span className="flex items-center gap-2 text-xs text-muted-foreground">
+                  <span className="h-1.5 w-24 overflow-hidden rounded-full bg-muted">
+                    <span
+                      className="block h-full rounded-full bg-(--chart-1) transition-[width] duration-500"
+                      style={{
+                        width: `${Math.round((milestones.filter((m) => m.status === 'closed_completed').length / milestones.length) * 100)}%`,
+                      }}
+                    />
+                  </span>
+                  {milestones.filter((m) => m.status === 'closed_completed').length}
+                  /{milestones.length} closed
+                </span>
+              ) : undefined
+            }
           >
             <ul className="section-list divide-y rounded-md border">
               {milestones.map((m) => (
@@ -683,7 +699,12 @@ export function ProjectDetailPage() {
                     onClick={() =>
                       navigate(`/projects/${project.id}/milestones/${m.id}`)
                     }
-                    className="flex-1 cursor-pointer"
+                    role="link"
+                    tabIndex={0}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') navigate(`/projects/${project.id}/milestones/${m.id}`)
+                    }}
+                    className="flex-1 cursor-pointer rounded focus-visible:outline-2 focus-visible:outline-ring"
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
@@ -720,6 +741,20 @@ export function ProjectDetailPage() {
                         </span>
                       )}
                       {m.role?.name && <span>Role: {m.role.name}</span>}
+                      {m.percent_complete !== null &&
+                        m.percent_complete !== undefined && (
+                          <span className="flex items-center gap-1.5">
+                            <span className="h-1 w-14 overflow-hidden rounded-full bg-muted">
+                              <span
+                                className="block h-full rounded-full bg-(--chart-1)"
+                                style={{
+                                  width: `${Math.min(Math.max(m.percent_complete, 0), 100)}%`,
+                                }}
+                              />
+                            </span>
+                            {m.percent_complete}%
+                          </span>
+                        )}
                     </div>
                   </div>
                 </li>
@@ -757,7 +792,12 @@ export function ProjectDetailPage() {
                     onClick={() =>
                       navigate(`/projects/${project.id}/action-items/${a.id}`)
                     }
-                    className="flex-1 cursor-pointer"
+                    role="link"
+                    tabIndex={0}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') navigate(`/projects/${project.id}/action-items/${a.id}`)
+                    }}
+                    className="flex-1 cursor-pointer rounded focus-visible:outline-2 focus-visible:outline-ring"
                   >
                     <div className="flex items-center justify-between">
                       <span className="text-sm font-medium">{a.title}</span>
@@ -1058,7 +1098,13 @@ export function ProjectDetailPage() {
                       `/projects/${project.id}/status-reports/${r.id}`,
                     )
                   }
-                  className="cursor-pointer px-4 py-3 hover:bg-accent"
+                  role="link"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter')
+                      navigate(`/projects/${project.id}/status-reports/${r.id}`)
+                  }}
+                  className="cursor-pointer px-4 py-3 hover:bg-accent focus-visible:outline-2 focus-visible:outline-ring"
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div className="min-w-0">

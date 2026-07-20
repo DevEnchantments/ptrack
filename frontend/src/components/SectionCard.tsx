@@ -16,6 +16,8 @@ interface Props {
   emptyLabel: string
   emptyActionLabel?: string
   onEmptyAction?: () => void
+  /** Optional extra header content (e.g. a progress bar), left of the chevron. */
+  headerExtra?: ReactNode
   children: ReactNode
 }
 
@@ -36,6 +38,7 @@ export function SectionCard({
   emptyLabel,
   emptyActionLabel,
   onEmptyAction,
+  headerExtra,
   children,
 }: Props) {
   return (
@@ -58,11 +61,14 @@ export function SectionCard({
         <span className="rounded-full bg-muted px-2 py-0.5 text-xs font-medium tabular-nums text-muted-foreground">
           {loading ? '…' : count}
         </span>
-        <ChevronDown
-          className={`ml-auto h-4 w-4 text-muted-foreground transition-transform duration-300 group-hover:text-foreground ${
-            collapsed ? '-rotate-90' : ''
-          }`}
-        />
+        <span className="ml-auto flex items-center gap-3">
+          {headerExtra}
+          <ChevronDown
+            className={`h-4 w-4 text-muted-foreground transition-transform duration-300 group-hover:text-foreground ${
+              collapsed ? '-rotate-90' : ''
+            }`}
+          />
+        </span>
       </button>
 
       <div

@@ -1,3 +1,4 @@
+import { FieldError } from '@/components/FieldError'
 import { Loader2 } from 'lucide-react'
 import { toast } from '@/lib/toast'
 import { useEffect, useState } from 'react'
@@ -66,6 +67,7 @@ export function EditProjectDialog({
   const [startDate, setStartDate] = useState('')
 
   const [error, setError] = useState<string | null>(null)
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
   const [saving, setSaving] = useState(false)
   const [confirmDelete, setConfirmDelete] = useState(false)
   const [deleting, setDeleting] = useState(false)
@@ -98,14 +100,20 @@ export function EditProjectDialog({
       setPrimaryUrl(project.primary_url ?? '')
       setStartDate(project.start_date ?? '')
       setError(null)
+      setFieldErrors({})
       setConfirmDelete(false)
     }
   }
 
   async function submit() {
     setError(null)
-    if (!name.trim()) return setError('A project name is required.')
-    if (!statusId) return setError('A status is required.')
+    setFieldErrors({})
+    const errs: Record<string, string> = {}
+    if (!name.trim()) errs.name = 'A project name is required.'
+    if (!statusId) errs.statusId = 'A status is required.'
+
+    setFieldErrors(errs)
+    if (Object.keys(errs).length > 0) return
 
     setSaving(true)
     try {
@@ -139,6 +147,7 @@ export function EditProjectDialog({
         start_date: startDate || null,
       })
       onOpenChange(false)
+      toast.success('Project updated.')
       onSaved()
     } catch (e) {
       setError((e as Error).message)
@@ -149,10 +158,12 @@ export function EditProjectDialog({
 
   async function doDelete() {
     setError(null)
+    setFieldErrors({})
     setDeleting(true)
     try {
       await projectsApi.remove(project.id)
       onOpenChange(false)
+      toast.success('Project deleted.')
       onDeleted()
     } catch (e) {
       setError((e as Error).message)
@@ -177,7 +188,8 @@ export function EditProjectDialog({
             <Label>
               Project Name <span className="text-destructive">*</span>
             </Label>
-            <Input value={name} onChange={(e) => setName(e.target.value)} />
+            <Input value={name} onChange={(e) => setName(e.target.value)}  aria-invalid={fieldErrors.name ? true : undefined} />
+            <FieldError message={fieldErrors.name} />
           </div>
 
           <div className="flex flex-col gap-2">
@@ -225,6 +237,7 @@ export function EditProjectDialog({
                   ))}
                 </SelectContent>
               </Select>
+              <FieldError message={fieldErrors.statusId} />
             </div>
 
             <div className="flex flex-col gap-2">

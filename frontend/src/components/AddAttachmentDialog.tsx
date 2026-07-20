@@ -1,3 +1,5 @@
+import { FieldError } from '@/components/FieldError'
+import { toast } from '@/lib/toast'
 import { Loader2 } from 'lucide-react'
 import { useState } from 'react'
 import { attachmentsApi, type Attachment } from '@/lib/api'
@@ -45,6 +47,7 @@ export function AddAttachmentDialog({
   const [description, setDescription] = useState('')
   const [tags, setTags] = useState('')
   const [error, setError] = useState<string | null>(null)
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
   const [saving, setSaving] = useState(false)
   const [deleting, setDeleting] = useState(false)
   const busy = saving || deleting
@@ -52,11 +55,13 @@ export function AddAttachmentDialog({
   async function remove() {
     if (!existing) return
     setError(null)
+    setFieldErrors({})
     setDeleting(true)
     try {
       await attachmentsApi.remove(projectId, existing.id)
       reset()
       onOpenChange(false)
+      toast.success('Attachment deleted.')
       onAdded()
     } catch (e) {
       setError((e as Error).message)
@@ -71,6 +76,7 @@ export function AddAttachmentDialog({
     setDescription('')
     setTags('')
     setError(null)
+    setFieldErrors({})
   }
 
   // Populate on open / record change — render-phase prev-key pattern.
@@ -88,11 +94,13 @@ export function AddAttachmentDialog({
         reset()
       }
       setError(null)
+      setFieldErrors({})
     }
   }
 
   async function submit() {
     setError(null)
+    setFieldErrors({})
     const tagList = tags
       .split(',')
       .map((t) => t.trim())
@@ -109,11 +117,13 @@ export function AddAttachmentDialog({
       } else {
         if (!file) {
           setSaving(false)
-          return setError('A file is required.')
+          setFieldErrors({ file: 'A file is required.' })
+          return
         }
         if (file.size > MAX_BYTES) {
           setSaving(false)
-          return setError('Attachments must be under 100M in size.')
+          setFieldErrors({ file: 'Attachments must be under 100M in size.' })
+          return
         }
         const fd = new FormData()
         fd.append('file', file)
@@ -124,6 +134,7 @@ export function AddAttachmentDialog({
       }
       reset()
       onOpenChange(false)
+      toast.success(isEdit ? 'Attachment updated.' : 'Attachment added.')
       onAdded()
     } catch (e) {
       setError((e as Error).message)
@@ -169,6 +180,7 @@ export function AddAttachmentDialog({
                 onChange={(e) => setFile(e.target.files?.[0] ?? null)}
                 className="block w-full text-sm text-muted-foreground file:mr-3 file:rounded-md file:border file:border-input file:bg-background file:px-3 file:py-2 file:text-sm file:font-medium hover:file:bg-accent"
               />
+              <FieldError message={fieldErrors.file} />
             </div>
           )}
 

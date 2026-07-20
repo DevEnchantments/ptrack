@@ -1,3 +1,5 @@
+import { FieldError } from '@/components/FieldError'
+import { toast } from '@/lib/toast'
 import { useState } from 'react'
 import { linksApi, type Link } from '@/lib/api'
 import { Button } from '@/components/ui/button'
@@ -45,6 +47,7 @@ export function AddLinkDialog({
   const [isGold, setIsGold] = useState(false)
   const [tags, setTags] = useState('')
   const [error, setError] = useState<string | null>(null)
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
   const [saving, setSaving] = useState(false)
   const [deleting, setDeleting] = useState(false)
 
@@ -55,6 +58,7 @@ export function AddLinkDialog({
     setIsGold(false)
     setTags('')
     setError(null)
+    setFieldErrors({})
   }
 
   // Populate when the dialog opens or the edited record changes — during
@@ -72,6 +76,7 @@ export function AddLinkDialog({
         setIsGold(existing.is_gold)
         setTags(existing.tags?.join(', ') ?? '')
         setError(null)
+        setFieldErrors({})
       } else {
         reset()
       }
@@ -85,10 +90,15 @@ export function AddLinkDialog({
 
   async function submit() {
     setError(null)
+    setFieldErrors({})
+    const errs: Record<string, string> = {}
     const trimmedUrl = url.trim()
-    if (!trimmedUrl) return setError('A URL is required.')
+    if (!trimmedUrl) errs.url = 'A URL is required.'
     if (!URL_PATTERN.test(trimmedUrl))
-      return setError('URL must start with http:// or https://')
+      errs.url = 'URL must start with http:// or https://'
+
+    setFieldErrors(errs)
+    if (Object.keys(errs).length > 0) return
 
     setSaving(true)
     try {
@@ -112,6 +122,7 @@ export function AddLinkDialog({
       }
       reset()
       onOpenChange(false)
+      toast.success(isEdit ? 'Link updated.' : 'Link added.')
       onAdded()
     } catch (e) {
       setError((e as Error).message)
@@ -123,11 +134,13 @@ export function AddLinkDialog({
   async function remove() {
     if (!existing) return
     setError(null)
+    setFieldErrors({})
     setDeleting(true)
     try {
       await linksApi.remove(projectId, existing.id)
       reset()
       onOpenChange(false)
+      toast.success('Link deleted.')
       onAdded()
     } catch (e) {
       setError((e as Error).message)
@@ -160,7 +173,9 @@ export function AddLinkDialog({
               value={url}
               placeholder="https://example.com"
               onChange={(e) => setUrl(e.target.value)}
+              aria-invalid={fieldErrors.url ? true : undefined}
             />
+            <FieldError message={fieldErrors.url} />
             {urlError && <p className="text-sm text-destructive">{urlError}</p>}
           </div>
 

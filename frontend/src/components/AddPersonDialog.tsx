@@ -1,3 +1,4 @@
+import { FieldError } from '@/components/FieldError'
 import { Loader2 } from 'lucide-react'
 import { toast } from '@/lib/toast'
 import { useEffect, useState } from 'react'
@@ -73,6 +74,7 @@ export function AddPersonDialog({
   const [newRoleName, setNewRoleName] = useState('')
   const [newRoleLevel, setNewRoleLevel] = useState('read_only')
   const [error, setError] = useState<string | null>(null)
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
   const [saving, setSaving] = useState(false)
   const [confirmRemove, setConfirmRemove] = useState(false)
   const [removing, setRemoving] = useState(false)
@@ -109,6 +111,7 @@ export function AddPersonDialog({
         resetFields()
       }
       setError(null)
+      setFieldErrors({})
       setConfirmRemove(false)
     }
   }
@@ -116,14 +119,20 @@ export function AddPersonDialog({
   function reset() {
     resetFields()
     setError(null)
+    setFieldErrors({})
     setConfirmRemove(false)
   }
 
   async function submit() {
     setError(null)
+    setFieldErrors({})
+    const errs: Record<string, string> = {}
     if (!isEdit && !person.display_name.trim())
-      return setError('A user is required.')
-    if (!roleId) return setError('A project role is required.')
+      errs.person = 'A user is required.'
+    if (!roleId) errs.roleId = 'A project role is required.'
+
+    setFieldErrors(errs)
+    if (Object.keys(errs).length > 0) return
 
     setSaving(true)
     try {
@@ -156,6 +165,7 @@ export function AddPersonDialog({
       }
       reset()
       onOpenChange(false)
+      toast.success(isEdit ? 'Person updated.' : 'Person added.')
       onAdded()
     } catch (e) {
       setError((e as Error).message)
@@ -167,11 +177,13 @@ export function AddPersonDialog({
   async function doRemove() {
     if (!existing) return
     setError(null)
+    setFieldErrors({})
     setRemoving(true)
     try {
       await peopleApi.remove(projectId, existing.id)
       reset()
       onOpenChange(false)
+      toast.success('Person deleted.')
       if (onRemoved) onRemoved()
       else onAdded()
     } catch (e) {
@@ -205,10 +217,13 @@ export function AddPersonDialog({
             {isEdit && existing ? (
               <p className="text-sm font-semibold">{memberName(existing)}</p>
             ) : (
-              <PersonAutocomplete
-                value={person}
-                onChange={(p) => setPerson((cur) => ({ ...cur, ...p }))}
-              />
+              <>
+                <PersonAutocomplete
+                  value={person}
+                  onChange={(p) => setPerson((cur) => ({ ...cur, ...p }))}
+                />
+                <FieldError message={fieldErrors.person} />
+              </>
             )}
           </div>
 
@@ -237,6 +252,7 @@ export function AddPersonDialog({
                   <SelectItem value={NEW_ROLE}>- New Role -</SelectItem>
                 </SelectContent>
               </Select>
+              <FieldError message={fieldErrors.roleId} />
             </div>
 
             <div className="flex flex-col gap-2">

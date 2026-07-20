@@ -450,48 +450,48 @@
     "semantic_hash": ""
   },
   "frontend/src/components/AddActionItemDialog.tsx": {
-    "mtime": 1784555203.7255566,
-    "ast_hash": "d32b2acc882a962a4357b4cb5b64b719",
+    "mtime": 1784560646.4731894,
+    "ast_hash": "3d2192b8b341bef0e28a0e198e589835",
     "semantic_hash": ""
   },
   "frontend/src/components/AddAttachmentDialog.tsx": {
-    "mtime": 1784555204.261429,
-    "ast_hash": "4c45d056037f18f211573906e97a6347",
+    "mtime": 1784560767.1237817,
+    "ast_hash": "d1091b7adc377f35e8d12d0c13c95d6e",
     "semantic_hash": ""
   },
   "frontend/src/components/AddIssueDialog.tsx": {
-    "mtime": 1784555204.8077817,
-    "ast_hash": "c8432421d28782758e4fdaa87acc3bc3",
+    "mtime": 1784560646.4563098,
+    "ast_hash": "7668b87acacb4758f70cbf2e30ddfd0f",
     "semantic_hash": ""
   },
   "frontend/src/components/AddLinkDialog.tsx": {
-    "mtime": 1784524715.4327257,
-    "ast_hash": "86014f1eb3cf54967b33e9db6f0d7a49",
+    "mtime": 1784560646.4563098,
+    "ast_hash": "660c0ae331b00f90bd6f36cef6fa33b0",
     "semantic_hash": ""
   },
   "frontend/src/components/AddMilestoneDialog.tsx": {
-    "mtime": 1784555205.4026546,
-    "ast_hash": "758b97e604be4fc76b4b5b51b89a14b5",
+    "mtime": 1784560646.4751782,
+    "ast_hash": "106523bf0b86fecc2507c97999edd2ba",
     "semantic_hash": ""
   },
   "frontend/src/components/AddPersonDialog.tsx": {
-    "mtime": 1784555205.9613469,
-    "ast_hash": "aff54b5ff7e937cf4b4849af001fc141",
+    "mtime": 1784560657.790258,
+    "ast_hash": "c7aa291029a6a37f2597cfbf0bd4ebf4",
     "semantic_hash": ""
   },
   "frontend/src/components/AddResourceDialog.tsx": {
-    "mtime": 1784555206.5072124,
-    "ast_hash": "18a87a13593ceadd15792394acaa44e1",
+    "mtime": 1784560646.4563098,
+    "ast_hash": "15e1c6d3bfcccd379ea4d3ed9b23072d",
     "semantic_hash": ""
   },
   "frontend/src/components/AddStatusReportDialog.tsx": {
-    "mtime": 1784555206.9880893,
-    "ast_hash": "7bc50b16ab543eb566ca18452e8142ba",
+    "mtime": 1784560646.4563098,
+    "ast_hash": "62d24dffc528172bbc26a3cb4089740f",
     "semantic_hash": ""
   },
   "frontend/src/components/AddUpdateDialog.tsx": {
-    "mtime": 1784555207.5289044,
-    "ast_hash": "4f1ed5814679c8291a8d8027f2d59220",
+    "mtime": 1784560646.4563098,
+    "ast_hash": "50e096d0dd5eb4010ef0f9755121baf4",
     "semantic_hash": ""
   },
   "frontend/src/components/CategorySelect.tsx": {
@@ -500,8 +500,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/EditProjectDialog.tsx": {
-    "mtime": 1784555208.0816767,
-    "ast_hash": "836309a43655d904fb4119dfb1e469e8",
+    "mtime": 1784560646.4760284,
+    "ast_hash": "9794616d8b5f574cc1b91444498bdeab",
     "semantic_hash": ""
   },
   "frontend/src/components/MiniCalendar.tsx": {
@@ -510,8 +510,8 @@
     "semantic_hash": "a1ce5fb6fdc385d891138d445265d0b5"
   },
   "frontend/src/components/PersonAutocomplete.tsx": {
-    "mtime": 1784559397.4946897,
-    "ast_hash": "dbe2073625475c980589780bc35a4e24",
+    "mtime": 1784561008.3271358,
+    "ast_hash": "ba8c0a154b144289317abfe0d0558e0e",
     "semantic_hash": ""
   },
   "frontend/src/components/ProtectedRoute.tsx": {
@@ -580,8 +580,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ActionItemDetailPage.tsx": {
-    "mtime": 1784558220.8015,
-    "ast_hash": "e28a4f2ac32213bb9c3372df17884e14",
+    "mtime": 1784561034.3114145,
+    "ast_hash": "808bd21050d1fae15c697ec7761c5c69",
     "semantic_hash": ""
   },
   "frontend/src/pages/AttachmentDetailPage.tsx": {
@@ -595,8 +595,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/HomePage.tsx": {
-    "mtime": 1784557930.9789064,
-    "ast_hash": "683736428c22b719b1dd7c853798fe00",
+    "mtime": 1784560983.389945,
+    "ast_hash": "e02e23c6cf01d89d56c1a063fa77e44e",
     "semantic_hash": ""
   },
   "frontend/src/pages/LoginPage.tsx": {
@@ -610,8 +610,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ProjectDetailPage.tsx": {
-    "mtime": 1784559404.0695484,
-    "ast_hash": "fad8eb9c1ab07ec0952703af7d84469f",
+    "mtime": 1784560983.3879545,
+    "ast_hash": "03b2cb9bf420f6c914d8c603b64e34bf",
     "semantic_hash": ""
   },
   "frontend/src/pages/StatusReportDetailPage.tsx": {
@@ -765,13 +765,13 @@
     "semantic_hash": ""
   },
   "frontend/src/components/ui/toaster.tsx": {
-    "mtime": 1784554405.8822708,
-    "ast_hash": "908f9aff075bc9a592d805dad2b88c4a",
+    "mtime": 1784560409.122617,
+    "ast_hash": "36eac43a6aacf47f9d087ddc575cdd57",
     "semantic_hash": ""
   },
   "frontend/src/lib/toast.ts": {
-    "mtime": 1784060418.549513,
-    "ast_hash": "29d4e726a9024e57f3ad82a93df9b854",
+    "mtime": 1784560423.8158443,
+    "ast_hash": "5e4008dcc82c64a8e3a02efb43c5f853",
     "semantic_hash": ""
   },
   ".github/workflows/ci.yml": {
@@ -855,8 +855,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/AppLayout.tsx": {
-    "mtime": 1784559377.2563233,
-    "ast_hash": "0df43c2ed5174f92664a19c6f458898d",
+    "mtime": 1784561175.0212495,
+    "ast_hash": "2badd84ccc624fc39fb9e44332e756cf",
     "semantic_hash": ""
   },
   "frontend/src/pages/DashboardPage.tsx": {
@@ -865,13 +865,13 @@
     "semantic_hash": ""
   },
   "frontend/src/components/SectionCard.tsx": {
-    "mtime": 1784551004.871778,
-    "ast_hash": "2dab466d11167b015947be0c7fbc261c",
+    "mtime": 1784560920.0599592,
+    "ast_hash": "df6498f12bd007729a16b3badb2ddb90",
     "semantic_hash": ""
   },
   "frontend/src/components/SectionNav.tsx": {
-    "mtime": 1784552557.333855,
-    "ast_hash": "98e3f97bdf3430ddd4980c6f803a84bd",
+    "mtime": 1784560959.8922498,
+    "ast_hash": "b6edd28fb820d4d581f0a2d8c8b74ab8",
     "semantic_hash": ""
   },
   "frontend/src/components/ui/skeleton.tsx": {
@@ -892,6 +892,16 @@
   "frontend/src/components/InitialsAvatar.tsx": {
     "mtime": 1784559394.7211335,
     "ast_hash": "9f11dc23f7efc327f91c4ea7217fab92",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/FieldError.tsx": {
+    "mtime": 1784560492.6539936,
+    "ast_hash": "30b9fad78f2d56a3eac56ae360058b1d",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/CommandPalette.tsx": {
+    "mtime": 1784561166.9369774,
+    "ast_hash": "9336963fbf0d33b332ed27b57ef8064b",
     "semantic_hash": ""
   }
 }

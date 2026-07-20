@@ -1,3 +1,4 @@
+import { FieldError } from '@/components/FieldError'
 import { Loader2 } from 'lucide-react'
 import { toast } from '@/lib/toast'
 import { useEffect, useState } from 'react'
@@ -52,6 +53,7 @@ export function AddUpdateDialog({
   const [isGold, setIsGold] = useState(false)
   const [tags, setTags] = useState('')
   const [error, setError] = useState<string | null>(null)
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
   const [saving, setSaving] = useState(false)
   const [deleting, setDeleting] = useState(false)
   const busy = saving || deleting
@@ -59,11 +61,13 @@ export function AddUpdateDialog({
   async function remove() {
     if (!existing) return
     setError(null)
+    setFieldErrors({})
     setDeleting(true)
     try {
       await updatesApi.remove(projectId, existing.id)
       reset()
       onOpenChange(false)
+      toast.success('Update deleted.')
       onAdded()
     } catch (e) {
       setError((e as Error).message)
@@ -95,6 +99,7 @@ export function AddUpdateDialog({
     setIsGold(false)
     setTags('')
     setError(null)
+    setFieldErrors({})
   }
 
   // Populate on open / record change — render-phase prev-key pattern.
@@ -112,12 +117,18 @@ export function AddUpdateDialog({
         reset()
       }
       setError(null)
+      setFieldErrors({})
     }
   }
 
   async function submit() {
     setError(null)
-    if (!body.trim()) return setError('An update is required.')
+    setFieldErrors({})
+    const errs: Record<string, string> = {}
+    if (!body.trim()) errs.body = 'An update is required.'
+
+    setFieldErrors(errs)
+    if (Object.keys(errs).length > 0) return
 
     setSaving(true)
     try {
@@ -140,6 +151,7 @@ export function AddUpdateDialog({
       }
       reset()
       onOpenChange(false)
+      toast.success(isEdit ? 'Update updated.' : 'Update added.')
       onAdded()
     } catch (e) {
       setError((e as Error).message)
@@ -167,7 +179,9 @@ export function AddUpdateDialog({
             value={body}
             placeholder="Enter Project Update Here …"
             onChange={(e) => setBody(e.target.value)}
+            aria-invalid={fieldErrors.body ? true : undefined}
           />
+          <FieldError message={fieldErrors.body} />
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="flex flex-col gap-2">

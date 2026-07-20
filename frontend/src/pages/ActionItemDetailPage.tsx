@@ -1,4 +1,5 @@
 import { usePageTitle } from '@/lib/use-page-title'
+import { InitialsAvatar } from '@/components/InitialsAvatar'
 import { toast } from '@/lib/toast'
 import { useCallback, useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
@@ -221,15 +222,20 @@ export function ActionItemDetailPage() {
             ) : (
               <ul className="divide-y rounded-md border">
                 {comments.map((c) => (
-                  <li key={c.id} className="px-4 py-3">
-                    <div className="mb-1 flex items-center gap-2 text-xs text-muted-foreground">
-                      <span className="font-medium text-foreground">
-                        {commentAuthor(c)}
-                      </span>
-                      <span>·</span>
-                      <span>{new Date(c.created_at).toLocaleString()}</span>
+                  <li key={c.id} className="flex gap-3 px-4 py-3">
+                    <InitialsAvatar name={commentAuthor(c)} />
+                    <div className="min-w-0 flex-1">
+                      <div className="inline-block max-w-full whitespace-pre-wrap rounded-lg rounded-tl-sm bg-muted px-3 py-2 text-sm">
+                        {c.body}
+                      </div>
+                      <div className="mt-1 flex items-center gap-2 text-xs text-muted-foreground">
+                        <span className="font-medium text-foreground">
+                          {commentAuthor(c)}
+                        </span>
+                        <span>·</span>
+                        <span>{new Date(c.created_at).toLocaleString()}</span>
+                      </div>
                     </div>
-                    <p className="whitespace-pre-wrap text-sm">{c.body}</p>
                   </li>
                 ))}
               </ul>

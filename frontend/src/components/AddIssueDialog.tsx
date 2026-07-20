@@ -1,3 +1,4 @@
+import { FieldError } from '@/components/FieldError'
 import { Loader2 } from 'lucide-react'
 import { toast } from '@/lib/toast'
 import { useEffect, useState } from 'react'
@@ -82,6 +83,7 @@ export function AddIssueDialog({
   const [tags, setTags] = useState('')
   const [resolution, setResolution] = useState('')
   const [error, setError] = useState<string | null>(null)
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
   const [saving, setSaving] = useState(false)
   const [deleting, setDeleting] = useState(false)
   const busy = saving || deleting
@@ -89,11 +91,13 @@ export function AddIssueDialog({
   async function remove() {
     if (!existing) return
     setError(null)
+    setFieldErrors({})
     setDeleting(true)
     try {
       await issuesApi.remove(projectId, existing.id)
       reset()
       onOpenChange(false)
+      toast.success('Issue deleted.')
       onAdded()
     } catch (e) {
       setError((e as Error).message)
@@ -122,6 +126,7 @@ export function AddIssueDialog({
     setTags('')
     setResolution('')
     setError(null)
+    setFieldErrors({})
   }
 
   // Populate on open / record change — render-phase prev-key pattern.
@@ -156,6 +161,7 @@ export function AddIssueDialog({
         reset()
       }
       setError(null)
+      setFieldErrors({})
     }
   }
 
@@ -175,9 +181,14 @@ export function AddIssueDialog({
 
   async function submit() {
     setError(null)
-    if (!title.trim()) return setError('An issue title is required.')
+    setFieldErrors({})
+    const errs: Record<string, string> = {}
+    if (!title.trim()) errs.title = 'An issue title is required.'
     if (status === 'closed' && !resolution.trim())
-      return setError('Resolution / Mitigation is required when the issue is closed.')
+      errs.resolution = 'Resolution / Mitigation is required when the issue is closed.'
+
+    setFieldErrors(errs)
+    if (Object.keys(errs).length > 0) return
 
     setSaving(true)
     try {
@@ -207,6 +218,7 @@ export function AddIssueDialog({
       }
       reset()
       onOpenChange(false)
+      toast.success(isEdit ? 'Issue updated.' : 'Issue added.')
       onAdded()
     } catch (e) {
       setError((e as Error).message)
@@ -233,7 +245,8 @@ export function AddIssueDialog({
             <Label>
               Issue <span className="text-destructive">*</span>
             </Label>
-            <Input value={title} onChange={(e) => setTitle(e.target.value)} />
+            <Input value={title} onChange={(e) => setTitle(e.target.value)}  aria-invalid={fieldErrors.title ? true : undefined} />
+            <FieldError message={fieldErrors.title} />
           </div>
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -376,7 +389,9 @@ export function AddIssueDialog({
                 rows={3}
                 value={resolution}
                 onChange={(e) => setResolution(e.target.value)}
+                aria-invalid={fieldErrors.resolution ? true : undefined}
               />
+              <FieldError message={fieldErrors.resolution} />
             </div>
           )}
 

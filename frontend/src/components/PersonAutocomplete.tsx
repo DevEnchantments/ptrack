@@ -12,6 +12,7 @@ interface Props {
 export function PersonAutocomplete({ value, onChange }: Props) {
   const [results, setResults] = useState<UserSummary[]>([])
   const [open, setOpen] = useState(false)
+  const [active, setActive] = useState(-1)
   const boxRef = useRef<HTMLDivElement>(null)
 
   // Suggestions only apply while a name is typed and no user is linked yet;
@@ -29,6 +30,7 @@ export function PersonAutocomplete({ value, onChange }: Props) {
         .then((r) => {
           setResults(r)
           setOpen(r.length > 0)
+          setActive(-1)
         })
         .catch(() => setResults([]))
     }, 250)
@@ -68,15 +70,33 @@ export function PersonAutocomplete({ value, onChange }: Props) {
         onFocus={() => {
           if (results.length) setOpen(true)
         }}
+        onKeyDown={(e) => {
+          if (!open || results.length === 0) return
+          if (e.key === 'ArrowDown') {
+            e.preventDefault()
+            setActive((a) => Math.min(a + 1, results.length - 1))
+          } else if (e.key === 'ArrowUp') {
+            e.preventDefault()
+            setActive((a) => Math.max(a - 1, 0))
+          } else if (e.key === 'Enter' && active >= 0) {
+            e.preventDefault()
+            pick(results[active])
+          } else if (e.key === 'Escape') {
+            setOpen(false)
+          }
+        }}
       />
       {open && searchable && results.length > 0 && (
         <ul className="animate-in fade-in-0 zoom-in-95 slide-in-from-top-1 absolute z-50 mt-1 w-full origin-top overflow-hidden rounded-md border bg-popover shadow-md duration-100">
-          {results.map((u) => (
+          {results.map((u, i) => (
             <li key={u.id}>
               <button
                 type="button"
                 onClick={() => pick(u)}
-                className="flex w-full flex-col items-start px-3 py-2 text-left text-sm hover:bg-accent"
+                onMouseEnter={() => setActive(i)}
+                className={`flex w-full flex-col items-start px-3 py-2 text-left text-sm hover:bg-accent ${
+                  i === active ? 'bg-accent' : ''
+                }`}
               >
                 <span>{u.full_name || u.email}</span>
                 {u.email && (

@@ -354,8 +354,13 @@ export function HomePage() {
                       <div
                         key={p.id}
                         onClick={() => navigate(`/projects/${p.id}`)}
+                        role="link"
+                        tabIndex={0}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') navigate(`/projects/${p.id}`)
+                        }}
                         style={{ animationDelay: `${Math.min(i, 12) * 30}ms` }}
-                        className="stagger-in flex cursor-pointer flex-col rounded-lg border bg-card p-5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
+                        className="stagger-in flex cursor-pointer flex-col rounded-lg border bg-card p-5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-2 focus-visible:outline-ring"
                       >
                         <div className="mb-3 flex items-start justify-between gap-3">
                           <h2 className="text-base font-semibold">{p.name}</h2>
