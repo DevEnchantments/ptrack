@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from '@/lib/auth-context'
 import { Button } from '@/components/ui/button'
 import {
+  ArrowUp,
   BarChart3,
   Bot,
   Clock,
@@ -43,6 +44,8 @@ export function AppLayout() {
   const { user, signOut } = useAuth()
   const location = useLocation()
   const [collapsed, setCollapsed] = useState(false)
+  const [showScrollTop, setShowScrollTop] = useState(false)
+  const scrollRef = useRef<HTMLDivElement | null>(null)
 
   // Projects owns "/" and every project route; other live items match by prefix.
   const isActive = (to: string) =>
@@ -118,9 +121,29 @@ export function AppLayout() {
             Sign out
           </Button>
         </header>
-        {/* The app's scroll container — in-page sticky bars stick to its top. */}
-        <div className="min-w-0 flex-1 overflow-y-auto scroll-smooth">
-          <Outlet />
+        {/* The app's scroll container — in-page sticky bars stick to its top.
+            min-h-0 is load-bearing: without it this flex child grows to its
+            content height and the inner pane never overflows (= no scrolling). */}
+        <div className="relative min-h-0 min-w-0 flex-1">
+          <div
+            ref={scrollRef}
+            onScroll={(e) => setShowScrollTop(e.currentTarget.scrollTop > 600)}
+            className="h-full overflow-y-auto scroll-smooth"
+          >
+            <Outlet />
+          </div>
+          {showScrollTop && (
+            <button
+              type="button"
+              aria-label="Back to top"
+              onClick={() =>
+                scrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' })
+              }
+              className="toast-in absolute bottom-5 right-5 z-40 flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg transition-transform hover:-translate-y-0.5"
+            >
+              <ArrowUp className="h-5 w-5" />
+            </button>
+          )}
         </div>
       </div>
     </div>

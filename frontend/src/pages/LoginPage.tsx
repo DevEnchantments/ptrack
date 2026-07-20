@@ -1,6 +1,8 @@
 import { useState, type FormEvent } from 'react'
+import { Loader2 } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/lib/auth-context'
+import { usePageTitle } from '@/lib/use-page-title'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -13,6 +15,7 @@ import {
 } from '@/components/ui/card'
 
 export function LoginPage() {
+  usePageTitle('Sign in')
   const { signIn } = useAuth()
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
@@ -35,9 +38,21 @@ export function LoginPage() {
 
   return (
     <div className="flex min-h-svh items-center justify-center bg-muted/40 p-4">
-      <Card className="w-full max-w-sm">
+      <div className="animate-step-in w-full max-w-sm">
+        <div className="mb-6 flex flex-col items-center gap-3">
+          <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-xl font-bold text-primary-foreground shadow-md">
+            P
+          </span>
+          <div className="text-center">
+            <h1 className="text-xl font-semibold">P-Track</h1>
+            <p className="text-sm text-muted-foreground">
+              Project portfolio management
+            </p>
+          </div>
+        </div>
+        <Card className="w-full">
         <CardHeader>
-          <CardTitle className="text-2xl">P-Track</CardTitle>
+          <CardTitle className="text-2xl">Welcome back</CardTitle>
           <CardDescription>Sign in to your account</CardDescription>
         </CardHeader>
         <CardContent>
@@ -65,11 +80,13 @@ export function LoginPage() {
             </div>
             {error && <p className="text-sm text-destructive">{error}</p>}
             <Button type="submit" disabled={submitting} className="w-full">
+              {submitting && <Loader2 className="animate-spin" />}
               {submitting ? 'Signing in…' : 'Sign in'}
             </Button>
           </form>
         </CardContent>
-      </Card>
+        </Card>
+      </div>
     </div>
   )
 }

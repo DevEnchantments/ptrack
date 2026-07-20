@@ -73,7 +73,6 @@
   "71": "CreateUpdateDto",
   "72": ".add",
   "73": "@nestjs/swagger",
-  "74": "prettier",
   "75": "ApiBody",
   "76": "Body",
   "77": "Controller",
@@ -83,13 +82,5 @@
   "81": "Patch",
   "82": "Post",
   "83": "Query",
-  "84": "Injectable",
-  "85": "source-map-support",
-  "86": "supertest",
-  "87": "ts-jest",
-  "88": "ts-loader",
-  "89": "tsconfig-paths",
-  "90": "@types/express",
-  "91": "@types/jest",
-  "92": "typescript"
+  "84": "Injectable"
 }

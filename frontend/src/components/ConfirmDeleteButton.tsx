@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 interface Props {
@@ -38,6 +39,7 @@ export function ConfirmDeleteButton({
   if (deleting) {
     return (
       <Button variant="destructive" disabled>
+        <Loader2 className="animate-spin" />
         Deleting…
       </Button>
     )

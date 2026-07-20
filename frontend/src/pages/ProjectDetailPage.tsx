@@ -2,7 +2,9 @@ import { toast } from '@/lib/toast'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { SectionCard } from '@/components/SectionCard'
 import { SectionNav } from '@/components/SectionNav'
+import { StatusPill } from '@/components/StatusPill'
 import { Skeleton } from '@/components/ui/skeleton'
+import { usePageTitle } from '@/lib/use-page-title'
 import { useParams, useNavigate } from 'react-router-dom'
 import {
   projectsApi,
@@ -200,6 +202,12 @@ function collapsePrefsKey(projectId: string) {
   return `ptrack:collapsed:${projectId}`
 }
 
+/** Open work with a due date in the past gets the red treatment. */
+function isOverdue(dueDate: string | null, status: string): boolean {
+  if (!dueDate || status !== 'open') return false
+  return dueDate < new Date().toISOString().slice(0, 10)
+}
+
 function readCollapsePrefs(projectId: string): Record<string, boolean> {
   try {
     return JSON.parse(
@@ -267,6 +275,7 @@ export function ProjectDetailPage() {
   const [titleInView, setTitleInView] = useState(true)
   const titleRef = useRef<HTMLHeadingElement | null>(null)
   const entered = useEntranceFlag()
+  usePageTitle(project?.name)
 
   // Reload collapse prefs when navigating between projects (render-phase
   // prev-key pattern — the set-state-in-effect rule bans the effect shape).
@@ -685,12 +694,24 @@ export function ProjectDetailPage() {
                           </span>
                         )}
                       </div>
-                      <span className="text-sm text-muted-foreground">
-                        {STATUS_LABELS[m.status] ?? m.status}
-                      </span>
+                      <StatusPill
+                        status={m.status}
+                        label={STATUS_LABELS[m.status] ?? m.status}
+                      />
                     </div>
                     <div className="mt-1 flex flex-wrap gap-x-4 text-xs text-muted-foreground">
-                      {m.due_date && <span>Due {m.due_date}</span>}
+                      {m.due_date && (
+                        <span
+                          className={
+                            isOverdue(m.due_date, m.status)
+                              ? 'font-medium text-red-600'
+                              : ''
+                          }
+                        >
+                          Due {m.due_date}
+                          {isOverdue(m.due_date, m.status) && ' — overdue'}
+                        </span>
+                      )}
                       {ownerName(m) && <span>Owner: {ownerName(m)}</span>}
                       {m.role?.name && <span>Role: {m.role.name}</span>}
                     </div>
@@ -734,12 +755,24 @@ export function ProjectDetailPage() {
                   >
                     <div className="flex items-center justify-between">
                       <span className="text-sm font-medium">{a.title}</span>
-                      <span className="text-sm text-muted-foreground">
-                        {STATUS_LABELS[a.status] ?? a.status}
-                      </span>
+                      <StatusPill
+                        status={a.status}
+                        label={STATUS_LABELS[a.status] ?? a.status}
+                      />
                     </div>
                     <div className="mt-1 flex flex-wrap gap-x-4 text-xs text-muted-foreground">
-                      {a.due_date && <span>Due {a.due_date}</span>}
+                      {a.due_date && (
+                        <span
+                          className={
+                            isOverdue(a.due_date, a.status)
+                              ? 'font-medium text-red-600'
+                              : ''
+                          }
+                        >
+                          Due {a.due_date}
+                          {isOverdue(a.due_date, a.status) && ' — overdue'}
+                        </span>
+                      )}
                       {a.type?.name && <span>Type: {a.type.name}</span>}
                       {a.milestone?.name && (
                         <span>Milestone: {a.milestone.name}</span>
@@ -918,9 +951,10 @@ export function ProjectDetailPage() {
                             <span className="text-sm font-medium">
                               {i.title}
                             </span>
-                            <span className="text-sm text-muted-foreground">
-                              {ISSUE_STATUS_LABELS[i.status] ?? i.status}
-                            </span>
+                            <StatusPill
+                              status={i.status}
+                              label={ISSUE_STATUS_LABELS[i.status] ?? i.status}
+                            />
                           </div>
                           <div className="mt-1 flex flex-wrap gap-x-4 text-xs text-muted-foreground">
                             {i.category?.name && (

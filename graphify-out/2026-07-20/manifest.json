@@ -445,8 +445,8 @@
     "semantic_hash": "e16b561c6ee8903f8502945f8f334a05"
   },
   "frontend/src/App.tsx": {
-    "mtime": 1784534692.8967116,
-    "ast_hash": "3c94ac702af3567af0b4bf070b2f2199",
+    "mtime": 1784546958.7057135,
+    "ast_hash": "e09d064a7d7bcfffb6b0177019c74057",
     "semantic_hash": ""
   },
   "frontend/src/components/AddActionItemDialog.tsx": {
@@ -665,8 +665,8 @@
     "semantic_hash": "2e092757eaa8553feb3c7bb53e6a8a3b"
   },
   "CLAUDE.md": {
-    "mtime": 1784534978.3011715,
-    "ast_hash": "dcf0d761a3d9b2b966f992260da53a15",
+    "mtime": 1784550160.089119,
+    "ast_hash": "0c53efe5cce63ab160604cece09621ed",
     "semantic_hash": ""
   },
   "README.md": {
@@ -855,8 +855,13 @@
     "semantic_hash": ""
   },
   "frontend/src/components/AppLayout.tsx": {
-    "mtime": 1784534660.2791016,
-    "ast_hash": "0b3c17c1b9e6a23f28dbe5c6560f54ed",
+    "mtime": 1784546955.655846,
+    "ast_hash": "cf04fa1f2601a5d06813f4e229929530",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/DashboardPage.tsx": {
+    "mtime": 1784549167.531656,
+    "ast_hash": "31e123cbaf7edbc210606eea0f8345a3",
     "semantic_hash": ""
   }
 }

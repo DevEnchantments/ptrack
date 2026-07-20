@@ -1,3 +1,4 @@
+import { Loader2 } from 'lucide-react'
 import { toast } from '@/lib/toast'
 import { useEffect, useState } from 'react'
 import {
@@ -410,6 +411,7 @@ export function EditProjectDialog({
               Cancel
             </Button>
             <Button onClick={submit} disabled={busy}>
+            {saving && <Loader2 className="animate-spin" />}
               {saving ? 'Saving…' : 'Apply Changes'}
             </Button>
           </div>

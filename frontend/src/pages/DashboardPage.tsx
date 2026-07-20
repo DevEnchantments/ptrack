@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { usePageTitle } from '@/lib/use-page-title'
 
 /**
  * My Dashboard — PREVIEW with sample data.
@@ -728,6 +729,7 @@ function ActivityHeatmap() {
 }
 
 export function DashboardPage() {
+  usePageTitle('My Dashboard')
   return (
     <div className="p-6">
       <header className="mb-5 flex flex-wrap items-center gap-3">

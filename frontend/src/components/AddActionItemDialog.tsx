@@ -1,3 +1,4 @@
+import { Loader2 } from 'lucide-react'
 import { toast } from '@/lib/toast'
 import { useEffect, useState } from 'react'
 import type { ProjectMemberInput } from '@/pages/CreateProjectWizard'
@@ -505,6 +506,7 @@ export function AddActionItemDialog({
               Cancel
             </Button>
             <Button onClick={submit} disabled={busy}>
+            {saving && <Loader2 className="animate-spin" />}
               {saving
                 ? isEdit
                   ? 'Saving…'

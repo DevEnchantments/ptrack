@@ -1,8 +1,10 @@
 import { useState } from 'react'
+import { Loader2 } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/lib/auth-context'
 import { projectsApi } from '@/lib/api'
 import { emptyMember } from '@/lib/project-form'
+import { usePageTitle } from '@/lib/use-page-title'
 import { Button } from '@/components/ui/button'
 import { StepProject } from './create-project/StepProject'
 import { StepAccess } from './create-project/StepAccess'
@@ -39,6 +41,7 @@ function todayISO() {
 }
 
 export function CreateProjectWizard() {
+  usePageTitle('Create Project')
   const navigate = useNavigate()
   const { user } = useAuth()
   const [step, setStep] = useState(0)
@@ -218,6 +221,7 @@ export function CreateProjectWizard() {
           )}
           {isLast ? (
             <Button onClick={submit} disabled={submitting}>
+              {submitting && <Loader2 className="animate-spin" />}
               {submitting ? 'Creating…' : 'Create Project'}
             </Button>
           ) : (

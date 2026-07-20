@@ -1,3 +1,4 @@
+import { Loader2 } from 'lucide-react'
 import { useState } from 'react'
 import { statusReportsApi, type StatusReport } from '@/lib/api'
 import { Button } from '@/components/ui/button'
@@ -263,6 +264,7 @@ export function AddStatusReportDialog({
             )}
           </div>
           <Button onClick={submit} disabled={busy}>
+            {saving && <Loader2 className="animate-spin" />}
             {saving
               ? isEdit
                 ? 'Saving…'

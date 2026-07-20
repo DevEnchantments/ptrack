@@ -1,3 +1,4 @@
+import { Loader2 } from 'lucide-react'
 import { toast } from '@/lib/toast'
 import { useEffect, useState } from 'react'
 import { lookupsApi, updatesApi, type Lookup, type Update } from '@/lib/api'
@@ -245,6 +246,7 @@ export function AddUpdateDialog({
             )}
           </div>
           <Button onClick={submit} disabled={busy}>
+            {saving && <Loader2 className="animate-spin" />}
             {saving
               ? isEdit
                 ? 'Saving…'

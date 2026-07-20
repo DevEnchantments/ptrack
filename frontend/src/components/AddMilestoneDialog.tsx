@@ -1,3 +1,4 @@
+import { Loader2 } from 'lucide-react'
 import { toast } from '@/lib/toast'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -475,6 +476,7 @@ export function AddMilestoneDialog({
               Cancel
             </Button>
             <Button onClick={submit} disabled={busy}>
+            {saving && <Loader2 className="animate-spin" />}
               {saving
                 ? isEdit
                   ? 'Saving…'

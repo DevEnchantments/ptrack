@@ -1,3 +1,4 @@
+import { Loader2 } from 'lucide-react'
 import { useState } from 'react'
 import { attachmentsApi, type Attachment } from '@/lib/api'
 import { Button } from '@/components/ui/button'
@@ -235,6 +236,7 @@ export function AddAttachmentDialog({
             )}
           </div>
           <Button onClick={submit} disabled={busy}>
+            {saving && <Loader2 className="animate-spin" />}
             {saving
               ? isEdit
                 ? 'Saving…'

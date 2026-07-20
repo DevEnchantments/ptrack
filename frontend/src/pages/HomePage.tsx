@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { projectsApi, lookupsApi, type Project, type Lookup } from '@/lib/api'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
+import { StatusPill } from '@/components/StatusPill'
+import { usePageTitle } from '@/lib/use-page-title'
 
 function initials(name: string) {
   const parts = name.trim().split(/\s+/)
@@ -11,6 +13,7 @@ function initials(name: string) {
 }
 
 export function HomePage() {
+  usePageTitle('Projects')
   const navigate = useNavigate()
   const [projects, setProjects] = useState<Project[]>([])
   const [statuses, setStatuses] = useState<Lookup[]>([])
@@ -93,13 +96,12 @@ export function HomePage() {
                       {initials(p.name)}
                     </span>
                   </div>
+                  {status && (
+                    <div className="mb-2">
+                      <StatusPill status={status} />
+                    </div>
+                  )}
                   <p className="flex-1 text-sm text-muted-foreground">
-                    {status && (
-                      <span className="font-medium text-foreground">
-                        {status}
-                      </span>
-                    )}
-                    {status && p.description ? ', ' : ''}
                     {p.description ?? ''}
                   </p>
                   <p className="mt-4 text-xs text-muted-foreground">
