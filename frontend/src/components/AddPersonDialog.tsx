@@ -82,22 +82,6 @@ export function AddPersonDialog({
     lookupsApi.list('involvement-levels').then(setLevels).catch(() => toast.error('Could not load involvement levels.'))
   }, [open])
 
-  useEffect(() => {
-    if (!open) return
-    if (existing) {
-      setPerson(emptyPerson())
-      setRoleId(existing.role_id)
-      setAccessLevel(existing.access_level || 'read_only')
-      setInvolvementId(existing.involvement_level_id)
-      setNotes(existing.notes ?? '')
-    } else {
-      resetFields()
-    }
-    setError(null)
-    setConfirmRemove(false)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, existing])
-
   function resetFields() {
     setPerson(emptyPerson())
     setRoleId(null)
@@ -106,6 +90,26 @@ export function AddPersonDialog({
     setNotes('')
     setNewRoleName('')
     setNewRoleLevel('read_only')
+  }
+
+  // Populate on open / record change — render-phase prev-key pattern.
+  const populateKey = open ? (existing?.id ?? '__new__') : null
+  const [prevPopulateKey, setPrevPopulateKey] = useState<string | null>(null)
+  if (prevPopulateKey !== populateKey) {
+    setPrevPopulateKey(populateKey)
+    if (populateKey !== null) {
+      if (existing) {
+        setPerson(emptyPerson())
+        setRoleId(existing.role_id)
+        setAccessLevel(existing.access_level || 'read_only')
+        setInvolvementId(existing.involvement_level_id)
+        setNotes(existing.notes ?? '')
+      } else {
+        resetFields()
+      }
+      setError(null)
+      setConfirmRemove(false)
+    }
   }
 
   function reset() {

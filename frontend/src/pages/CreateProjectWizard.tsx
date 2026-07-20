@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/lib/auth-context'
 import { projectsApi } from '@/lib/api'
+import { emptyMember } from '@/lib/project-form'
 import { Button } from '@/components/ui/button'
 import { StepProject } from './create-project/StepProject'
 import { StepAccess } from './create-project/StepAccess'
@@ -35,10 +36,6 @@ const STEP_LABELS = ['Project', 'Access', 'Details', 'Confirmation']
 
 function todayISO() {
   return new Date().toISOString().slice(0, 10)
-}
-
-export function emptyMember(): ProjectMemberInput {
-  return { user_id: null, display_name: '', email: null, role_id: null }
 }
 
 export function CreateProjectWizard() {

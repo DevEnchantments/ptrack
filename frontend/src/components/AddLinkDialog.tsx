@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { linksApi, type Link } from '@/lib/api'
 import { Button } from '@/components/ui/button'
 import { ConfirmDeleteButton } from '@/components/ConfirmDeleteButton'
@@ -48,21 +48,6 @@ export function AddLinkDialog({
   const [saving, setSaving] = useState(false)
   const [deleting, setDeleting] = useState(false)
 
-  useEffect(() => {
-    if (!open) return
-    if (existing) {
-      setUrl(existing.url)
-      setLabel(existing.label ?? '')
-      setDescription(existing.description ?? '')
-      setIsGold(existing.is_gold)
-      setTags(existing.tags?.join(', ') ?? '')
-      setError(null)
-    } else {
-      reset()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, existing])
-
   function reset() {
     setUrl('')
     setLabel('')
@@ -70,6 +55,27 @@ export function AddLinkDialog({
     setIsGold(false)
     setTags('')
     setError(null)
+  }
+
+  // Populate when the dialog opens or the edited record changes — during
+  // render (prev-key pattern, as in ConfirmDeleteButton), not in an effect;
+  // the set-state-in-effect lint rule bans the old shape.
+  const populateKey = open ? (existing?.id ?? '__new__') : null
+  const [prevPopulateKey, setPrevPopulateKey] = useState<string | null>(null)
+  if (prevPopulateKey !== populateKey) {
+    setPrevPopulateKey(populateKey)
+    if (populateKey !== null) {
+      if (existing) {
+        setUrl(existing.url)
+        setLabel(existing.label ?? '')
+        setDescription(existing.description ?? '')
+        setIsGold(existing.is_gold)
+        setTags(existing.tags?.join(', ') ?? '')
+        setError(null)
+      } else {
+        reset()
+      }
+    }
   }
 
   const urlError =

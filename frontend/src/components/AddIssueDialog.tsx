@@ -108,37 +108,6 @@ export function AddIssueDialog({
     lookupsApi.list('issue-categories').then(setCategories).catch(() => toast.error('Could not load issue categories.'))
   }, [open])
 
-  useEffect(() => {
-    if (!open) return
-    if (existing) {
-      setTitle(existing.title)
-      setRoleId(existing.role_id)
-      setOwner(
-        existing.owner_id
-          ? {
-              user_id: existing.owner_id,
-              display_name:
-                existing.owner?.full_name || existing.owner?.email || '',
-              email: existing.owner?.email ?? null,
-              role_id: null,
-            }
-          : emptyPerson(),
-      )
-      setStatus(existing.status === 'closed' ? 'closed' : 'open')
-      setLevelId(existing.level_id)
-      setCategoryId(existing.category_id)
-      setDescription(existing.description ?? '')
-      setUrl(existing.url ?? '')
-      setReferenceId(existing.reference_identifier ?? '')
-      setTags(existing.tags?.join(', ') ?? '')
-      setResolution(existing.resolution ?? '')
-    } else {
-      reset()
-    }
-    setError(null)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, existing])
-
   function reset() {
     setTitle('')
     setRoleId(null)
@@ -152,6 +121,41 @@ export function AddIssueDialog({
     setTags('')
     setResolution('')
     setError(null)
+  }
+
+  // Populate on open / record change — render-phase prev-key pattern.
+  const populateKey = open ? (existing?.id ?? '__new__') : null
+  const [prevPopulateKey, setPrevPopulateKey] = useState<string | null>(null)
+  if (prevPopulateKey !== populateKey) {
+    setPrevPopulateKey(populateKey)
+    if (populateKey !== null) {
+      if (existing) {
+        setTitle(existing.title)
+        setRoleId(existing.role_id)
+        setOwner(
+          existing.owner_id
+            ? {
+                user_id: existing.owner_id,
+                display_name:
+                  existing.owner?.full_name || existing.owner?.email || '',
+                email: existing.owner?.email ?? null,
+                role_id: null,
+              }
+            : emptyPerson(),
+        )
+        setStatus(existing.status === 'closed' ? 'closed' : 'open')
+        setLevelId(existing.level_id)
+        setCategoryId(existing.category_id)
+        setDescription(existing.description ?? '')
+        setUrl(existing.url ?? '')
+        setReferenceId(existing.reference_identifier ?? '')
+        setTags(existing.tags?.join(', ') ?? '')
+        setResolution(existing.resolution ?? '')
+      } else {
+        reset()
+      }
+      setError(null)
+    }
   }
 
   function setMe() {

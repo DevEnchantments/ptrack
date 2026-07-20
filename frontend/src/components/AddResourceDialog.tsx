@@ -68,24 +68,28 @@ export function AddResourceDialog({
     lookupsApi.list('resource-types').then(setTypes).catch(() => toast.error('Could not load resource types.'))
   }, [open])
 
-  useEffect(() => {
-    if (!open) return
-    if (existing) {
-      setName(existing.name)
-      setTypeId(existing.type_id)
-      setNotes(existing.description ?? '')
-    } else {
-      reset()
-    }
-    setError(null)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, existing])
-
   function reset() {
     setName('')
     setTypeId(null)
     setNotes('')
     setError(null)
+  }
+
+  // Populate on open / record change — render-phase prev-key pattern.
+  const populateKey = open ? (existing?.id ?? '__new__') : null
+  const [prevPopulateKey, setPrevPopulateKey] = useState<string | null>(null)
+  if (prevPopulateKey !== populateKey) {
+    setPrevPopulateKey(populateKey)
+    if (populateKey !== null) {
+      if (existing) {
+        setName(existing.name)
+        setTypeId(existing.type_id)
+        setNotes(existing.description ?? '')
+      } else {
+        reset()
+      }
+      setError(null)
+    }
   }
 
   async function submit() {

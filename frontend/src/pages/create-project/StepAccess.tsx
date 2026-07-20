@@ -1,7 +1,7 @@
 import { toast } from '@/lib/toast'
 import { useEffect, useState } from 'react'
 import type { CreateProjectForm, ProjectMemberInput } from '../CreateProjectWizard'
-import { emptyMember } from '../CreateProjectWizard'
+import { emptyMember } from '@/lib/project-form'
 import { lookupsApi, type Lookup } from '@/lib/api'
 import { Label } from '@/components/ui/label'
 import { PersonAutocomplete } from '@/components/PersonAutocomplete'

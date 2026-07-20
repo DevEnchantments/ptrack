@@ -77,25 +77,29 @@ export function EditProjectDialog({
     projectsApi.list().then(setProjects).catch(() => toast.error('Could not load projects.'))
   }, [open])
 
-  useEffect(() => {
-    if (!open) return
-    setName(project.name)
-    setParentId(project.parent_project_id)
-    setStatusId(project.status_id)
-    setSizeId(project.size_id)
-    setAccessControl(project.access_control || 'open')
-    setCategoryId(project.category_id)
-    setNewCategory('')
-    setDescription(project.description ?? '')
-    setGoal(project.goal ?? '')
-    setTags(project.tags?.join(', ') ?? '')
-    setCustomer(project.customer ?? '')
-    setPrimaryUrl(project.primary_url ?? '')
-    setStartDate(project.start_date ?? '')
-    setError(null)
-    setConfirmDelete(false)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, project])
+  // Populate on open / project change — render-phase prev-key pattern.
+  const populateKey = open ? project.id : null
+  const [prevPopulateKey, setPrevPopulateKey] = useState<string | null>(null)
+  if (prevPopulateKey !== populateKey) {
+    setPrevPopulateKey(populateKey)
+    if (populateKey !== null) {
+      setName(project.name)
+      setParentId(project.parent_project_id)
+      setStatusId(project.status_id)
+      setSizeId(project.size_id)
+      setAccessControl(project.access_control || 'open')
+      setCategoryId(project.category_id)
+      setNewCategory('')
+      setDescription(project.description ?? '')
+      setGoal(project.goal ?? '')
+      setTags(project.tags?.join(', ') ?? '')
+      setCustomer(project.customer ?? '')
+      setPrimaryUrl(project.primary_url ?? '')
+      setStartDate(project.start_date ?? '')
+      setError(null)
+      setConfirmDelete(false)
+    }
+  }
 
   async function submit() {
     setError(null)

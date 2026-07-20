@@ -450,48 +450,48 @@
     "semantic_hash": ""
   },
   "frontend/src/components/AddActionItemDialog.tsx": {
-    "mtime": 1784524622.5983472,
-    "ast_hash": "c37f2c2d0313ebd4519f5d7e086ea435",
+    "mtime": 1784060428.528795,
+    "ast_hash": "27789bd6d58769947f7d0624ae28d762",
     "semantic_hash": ""
   },
   "frontend/src/components/AddAttachmentDialog.tsx": {
-    "mtime": 1784524717.384927,
-    "ast_hash": "8276d39f948614e59b77116526b7aaf1",
+    "mtime": 1783945928.7313106,
+    "ast_hash": "c006201349f47826076c94bdb5bf9d54",
     "semantic_hash": ""
   },
   "frontend/src/components/AddIssueDialog.tsx": {
-    "mtime": 1784524307.4278388,
-    "ast_hash": "28fc457ae86d700ace586817898e4712",
+    "mtime": 1784091769.1262803,
+    "ast_hash": "469a3192aa501d83f766d8eb79477684",
     "semantic_hash": ""
   },
   "frontend/src/components/AddLinkDialog.tsx": {
-    "mtime": 1784524715.4327257,
-    "ast_hash": "86014f1eb3cf54967b33e9db6f0d7a49",
+    "mtime": 1783945908.8459158,
+    "ast_hash": "083c971755b7d7f80cf1f43364d721a1",
     "semantic_hash": ""
   },
   "frontend/src/components/AddMilestoneDialog.tsx": {
-    "mtime": 1784524646.5623422,
-    "ast_hash": "316d6dd81b8933f56b5acf3bf47500ca",
+    "mtime": 1784060428.714313,
+    "ast_hash": "c941447af4d0add8cecd5ba2388181b6",
     "semantic_hash": ""
   },
   "frontend/src/components/AddPersonDialog.tsx": {
-    "mtime": 1784524657.7483377,
-    "ast_hash": "c7833b3a6e52cc58087e2f64603c1638",
+    "mtime": 1784060428.8292005,
+    "ast_hash": "6d1c65095b9ab363b498ed1a47232e91",
     "semantic_hash": ""
   },
   "frontend/src/components/AddResourceDialog.tsx": {
-    "mtime": 1784524255.5534537,
-    "ast_hash": "a47aeaef11fa4015d5df6baacca2e62e",
+    "mtime": 1784060428.942227,
+    "ast_hash": "caa8c710687064aa66322c3d3f18a4eb",
     "semantic_hash": ""
   },
   "frontend/src/components/AddStatusReportDialog.tsx": {
-    "mtime": 1784524718.4833548,
-    "ast_hash": "e1f23eccfc9f09092872123734d5de46",
+    "mtime": 1783945925.039644,
+    "ast_hash": "222e0dd2622f34c6eb178ab28b1889ea",
     "semantic_hash": ""
   },
   "frontend/src/components/AddUpdateDialog.tsx": {
-    "mtime": 1784524279.1216235,
-    "ast_hash": "712ccf49ac39c5fc84cd65671e9bed2a",
+    "mtime": 1784060429.0372317,
+    "ast_hash": "9abf2e03e52c8f5b803bfaa28434658c",
     "semantic_hash": ""
   },
   "frontend/src/components/CategorySelect.tsx": {
@@ -500,8 +500,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/EditProjectDialog.tsx": {
-    "mtime": 1784524671.8043597,
-    "ast_hash": "e6b59afeb5c2350ea2e9d5f8c002dab0",
+    "mtime": 1784060429.2293003,
+    "ast_hash": "4961fe27a9eb815803de2cacfbf0be25",
     "semantic_hash": ""
   },
   "frontend/src/components/MiniCalendar.tsx": {
@@ -510,9 +510,9 @@
     "semantic_hash": "a1ce5fb6fdc385d891138d445265d0b5"
   },
   "frontend/src/components/PersonAutocomplete.tsx": {
-    "mtime": 1784524691.9551685,
-    "ast_hash": "e695b132dc8e0c9ffede3fcc4dfcd2e5",
-    "semantic_hash": ""
+    "mtime": 1783398758.1953106,
+    "ast_hash": "ee9f045d6822a3b49c24b5bfc6b46233",
+    "semantic_hash": "ee9f045d6822a3b49c24b5bfc6b46233"
   },
   "frontend/src/components/ProtectedRoute.tsx": {
     "mtime": 1783719537.853551,
@@ -520,9 +520,9 @@
     "semantic_hash": "59d4b25bb78d19ee1dcb46e7d7f84c63"
   },
   "frontend/src/components/ui/button.tsx": {
-    "mtime": 1784524719.5794642,
-    "ast_hash": "14126d69dc1409ba8be7fd168beb507e",
-    "semantic_hash": ""
+    "mtime": 1783345997.964143,
+    "ast_hash": "9f8174e21759b5eac561dfef26977906",
+    "semantic_hash": "9f8174e21759b5eac561dfef26977906"
   },
   "frontend/src/components/ui/card.tsx": {
     "mtime": 1783347782.790836,
@@ -590,9 +590,9 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/CreateProjectWizard.tsx": {
-    "mtime": 1784524732.9027116,
-    "ast_hash": "52ceaff80ec3bf9b477e3d43d969a7c6",
-    "semantic_hash": ""
+    "mtime": 1783403160.7887962,
+    "ast_hash": "c702cd6689727bf58ef97b632433d175",
+    "semantic_hash": "c702cd6689727bf58ef97b632433d175"
   },
   "frontend/src/pages/HomePage.tsx": {
     "mtime": 1783404914.5575697,
@@ -620,8 +620,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/create-project/StepAccess.tsx": {
-    "mtime": 1784524734.4073575,
-    "ast_hash": "ee5b53e97775856c0766caed6745d34e",
+    "mtime": 1784060427.8534636,
+    "ast_hash": "62c23278089eb1196d8d0608572ecff2",
     "semantic_hash": ""
   },
   "frontend/src/pages/create-project/StepConfirmation.tsx": {
@@ -665,8 +665,8 @@
     "semantic_hash": "2e092757eaa8553feb3c7bb53e6a8a3b"
   },
   "CLAUDE.md": {
-    "mtime": 1784524995.5825408,
-    "ast_hash": "b50390b3be0af1a88db14a127e410a4d",
+    "mtime": 1784523697.8749647,
+    "ast_hash": "4651463243bbfa855b463e7389e5cfe0",
     "semantic_hash": ""
   },
   "README.md": {
@@ -775,8 +775,8 @@
     "semantic_hash": ""
   },
   ".github/workflows/ci.yml": {
-    "mtime": 1784524972.4022799,
-    "ast_hash": "9aa2a0252853a2ed8686dba797773fc8",
+    "mtime": 1784059241.2506344,
+    "ast_hash": "bd84c7389e2f65083f2462ff8bfe7660",
     "semantic_hash": ""
   },
   ".github/assets/banner.svg": {
@@ -842,11 +842,6 @@
   "backend/db/enable_rls_lockdown.sql": {
     "mtime": 1784094912.4410157,
     "ast_hash": "99f383032b0602771b968abe28b663b7",
-    "semantic_hash": ""
-  },
-  "frontend/src/lib/project-form.ts": {
-    "mtime": 1784524720.7373056,
-    "ast_hash": "7ee7513e6e78d153978caee3b651efe7",
     "semantic_hash": ""
   }
 }

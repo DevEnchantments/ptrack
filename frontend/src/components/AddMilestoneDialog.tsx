@@ -102,37 +102,6 @@ export function AddMilestoneDialog({
     lookupsApi.list('project-roles').then(setRoles).catch(() => toast.error('Could not load project roles.'))
   }, [open])
 
-  useEffect(() => {
-    if (!open) return
-    if (existing) {
-      setName(existing.name)
-      setStartDate(existing.start_date ?? today())
-      setDueDate(existing.due_date ?? today())
-      setStatus(existing.status)
-      setRoleId(existing.role_id)
-      setOwner(ownerFromMilestone(existing))
-      setIsMajor(existing.is_major ? 'true' : 'false')
-      setDescription(existing.description ?? '')
-      setTags(existing.tags?.join(', ') ?? '')
-      setWeightage(
-        existing.weightage === null || existing.weightage === undefined
-          ? ''
-          : String(existing.weightage),
-      )
-      setPercent(
-        existing.percent_complete === null ||
-          existing.percent_complete === undefined
-          ? ''
-          : String(existing.percent_complete),
-      )
-    } else {
-      resetFields()
-    }
-    setError(null)
-    setConfirmDelete(false)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, existing])
-
   function resetFields() {
     setName('')
     setStartDate(today())
@@ -145,6 +114,41 @@ export function AddMilestoneDialog({
     setTags('')
     setWeightage('')
     setPercent('')
+  }
+
+  // Populate on open / record change — render-phase prev-key pattern.
+  const populateKey = open ? (existing?.id ?? '__new__') : null
+  const [prevPopulateKey, setPrevPopulateKey] = useState<string | null>(null)
+  if (prevPopulateKey !== populateKey) {
+    setPrevPopulateKey(populateKey)
+    if (populateKey !== null) {
+      if (existing) {
+        setName(existing.name)
+        setStartDate(existing.start_date ?? today())
+        setDueDate(existing.due_date ?? today())
+        setStatus(existing.status)
+        setRoleId(existing.role_id)
+        setOwner(ownerFromMilestone(existing))
+        setIsMajor(existing.is_major ? 'true' : 'false')
+        setDescription(existing.description ?? '')
+        setTags(existing.tags?.join(', ') ?? '')
+        setWeightage(
+          existing.weightage === null || existing.weightage === undefined
+            ? ''
+            : String(existing.weightage),
+        )
+        setPercent(
+          existing.percent_complete === null ||
+            existing.percent_complete === undefined
+            ? ''
+            : String(existing.percent_complete),
+        )
+      } else {
+        resetFields()
+      }
+      setError(null)
+      setConfirmDelete(false)
+    }
   }
 
   function reset() {

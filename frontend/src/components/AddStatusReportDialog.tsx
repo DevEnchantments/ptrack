@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { statusReportsApi, type StatusReport } from '@/lib/api'
 import { Button } from '@/components/ui/button'
 import { ConfirmDeleteButton } from '@/components/ConfirmDeleteButton'
@@ -112,21 +112,6 @@ export function AddStatusReportDialog({
     }
   }
 
-  useEffect(() => {
-    if (!open) return
-    if (existing) {
-      setTitle(existing.title ?? '')
-      setSummary(existing.summary ?? '')
-      setViewableBy(existing.viewable_by)
-      setEditableBy(existing.editable_by)
-      setReportDate(existing.report_date)
-      setError(null)
-    } else {
-      reset()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, existing])
-
   function reset() {
     setTitle('')
     setSummary('')
@@ -134,6 +119,25 @@ export function AddStatusReportDialog({
     setEditableBy('submitter')
     setReportDate(today())
     setError(null)
+  }
+
+  // Populate on open / record change — render-phase prev-key pattern.
+  const populateKey = open ? (existing?.id ?? '__new__') : null
+  const [prevPopulateKey, setPrevPopulateKey] = useState<string | null>(null)
+  if (prevPopulateKey !== populateKey) {
+    setPrevPopulateKey(populateKey)
+    if (populateKey !== null) {
+      if (existing) {
+        setTitle(existing.title ?? '')
+        setSummary(existing.summary ?? '')
+        setViewableBy(existing.viewable_by)
+        setEditableBy(existing.editable_by)
+        setReportDate(existing.report_date)
+        setError(null)
+      } else {
+        reset()
+      }
+    }
   }
 
   async function submit() {

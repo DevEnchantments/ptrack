@@ -124,27 +124,6 @@ export function AddActionItemDialog({
     milestonesApi.list(projectId).then(setMilestones).catch(() => toast.error('Could not load milestones.'))
   }, [open, projectId])
 
-  useEffect(() => {
-    if (!open) return
-    if (existing) {
-      setTitle(existing.title)
-      setMilestoneId(existing.milestone_id)
-      setDueDate(existing.due_date ?? today())
-      setStatus(existing.status)
-      setTypeId(existing.type_id)
-      setRoleId(existing.role_id)
-      setOwners(ownersFromItem(existing))
-      setDescription(existing.description ?? '')
-      setTags(existing.tags?.join(', ') ?? '')
-    } else {
-      resetFields()
-      if (defaultMilestoneId) setMilestoneId(defaultMilestoneId)
-    }
-    setError(null)
-    setConfirmDelete(false)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, existing, defaultMilestoneId])
-
   function resetFields() {
     setTitle('')
     setMilestoneId(null)
@@ -155,6 +134,33 @@ export function AddActionItemDialog({
     setOwners([emptyOwner(), emptyOwner(), emptyOwner(), emptyOwner()])
     setDescription('')
     setTags('')
+  }
+
+  // Populate on open / record change — render-phase prev-key pattern.
+  const populateKey = open
+    ? `${existing?.id ?? '__new__'}|${defaultMilestoneId ?? ''}`
+    : null
+  const [prevPopulateKey, setPrevPopulateKey] = useState<string | null>(null)
+  if (prevPopulateKey !== populateKey) {
+    setPrevPopulateKey(populateKey)
+    if (populateKey !== null) {
+      if (existing) {
+        setTitle(existing.title)
+        setMilestoneId(existing.milestone_id)
+        setDueDate(existing.due_date ?? today())
+        setStatus(existing.status)
+        setTypeId(existing.type_id)
+        setRoleId(existing.role_id)
+        setOwners(ownersFromItem(existing))
+        setDescription(existing.description ?? '')
+        setTags(existing.tags?.join(', ') ?? '')
+      } else {
+        resetFields()
+        if (defaultMilestoneId) setMilestoneId(defaultMilestoneId)
+      }
+      setError(null)
+      setConfirmDelete(false)
+    }
   }
 
   function reset() {

@@ -13,13 +13,15 @@ export function PersonAutocomplete({ value, onChange }: Props) {
   const [open, setOpen] = useState(false)
   const boxRef = useRef<HTMLDivElement>(null)
 
-  // Debounced search while a name is typed and no existing user is linked yet.
+  // Suggestions only apply while a name is typed and no user is linked yet;
+  // when not searchable the list is hidden by the render guard below instead
+  // of being cleared from inside the effect.
+  const term = value.display_name.trim()
+  const searchable = Boolean(term) && !value.user_id
+
+  // Debounced search.
   useEffect(() => {
-    const term = value.display_name.trim()
-    if (!term || value.user_id) {
-      setResults([])
-      return
-    }
+    if (!searchable) return
     const t = setTimeout(() => {
       usersApi
         .search(term)
@@ -30,7 +32,7 @@ export function PersonAutocomplete({ value, onChange }: Props) {
         .catch(() => setResults([]))
     }, 250)
     return () => clearTimeout(t)
-  }, [value.display_name, value.user_id])
+  }, [term, searchable])
 
   // Close the suggestion list on outside click.
   useEffect(() => {
@@ -66,7 +68,7 @@ export function PersonAutocomplete({ value, onChange }: Props) {
           if (results.length) setOpen(true)
         }}
       />
-      {open && results.length > 0 && (
+      {open && searchable && results.length > 0 && (
         <ul className="absolute z-50 mt-1 w-full overflow-hidden rounded-md border bg-popover shadow-md">
           {results.map((u) => (
             <li key={u.id}>

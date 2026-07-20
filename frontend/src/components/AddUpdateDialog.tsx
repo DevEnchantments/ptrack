@@ -88,29 +88,30 @@ export function AddUpdateDialog({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open])
 
-  useEffect(() => {
-    if (!open) return
-    if (existing) {
-      setBody(existing.body ?? '')
-      setTypeId(existing.type_id)
-      setIsGold(existing.is_gold)
-      setTags(existing.tags?.join(', ') ?? '')
-    } else {
-      setBody('')
-      setTypeId(null)
-      setIsGold(false)
-      setTags('')
-    }
-    setError(null)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, existing])
-
   function reset() {
     setBody('')
     setTypeId(null)
     setIsGold(false)
     setTags('')
     setError(null)
+  }
+
+  // Populate on open / record change — render-phase prev-key pattern.
+  const populateKey = open ? (existing?.id ?? '__new__') : null
+  const [prevPopulateKey, setPrevPopulateKey] = useState<string | null>(null)
+  if (prevPopulateKey !== populateKey) {
+    setPrevPopulateKey(populateKey)
+    if (populateKey !== null) {
+      if (existing) {
+        setBody(existing.body ?? '')
+        setTypeId(existing.type_id)
+        setIsGold(existing.is_gold)
+        setTags(existing.tags?.join(', ') ?? '')
+      } else {
+        reset()
+      }
+      setError(null)
+    }
   }
 
   async function submit() {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { attachmentsApi, type Attachment } from '@/lib/api'
 import { Button } from '@/components/ui/button'
 import { ConfirmDeleteButton } from '@/components/ConfirmDeleteButton'
@@ -64,26 +64,30 @@ export function AddAttachmentDialog({
     }
   }
 
-  useEffect(() => {
-    if (!open) return
-    if (existing) {
-      setFile(null)
-      setIsGold(existing.is_gold)
-      setDescription(existing.description ?? '')
-      setTags(existing.tags?.join(', ') ?? '')
-    } else {
-      reset()
-    }
-    setError(null)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, existing])
-
   function reset() {
     setFile(null)
     setIsGold(false)
     setDescription('')
     setTags('')
     setError(null)
+  }
+
+  // Populate on open / record change — render-phase prev-key pattern.
+  const populateKey = open ? (existing?.id ?? '__new__') : null
+  const [prevPopulateKey, setPrevPopulateKey] = useState<string | null>(null)
+  if (prevPopulateKey !== populateKey) {
+    setPrevPopulateKey(populateKey)
+    if (populateKey !== null) {
+      if (existing) {
+        setFile(null)
+        setIsGold(existing.is_gold)
+        setDescription(existing.description ?? '')
+        setTags(existing.tags?.join(', ') ?? '')
+      } else {
+        reset()
+      }
+      setError(null)
+    }
   }
 
   async function submit() {

@@ -81,8 +81,8 @@ Every record type now has Create, Read, Update **and Delete**.
   pagination is **opt-in** via `?limit=&offset=` (shared `PaginationQueryDto`; omit =
   return all rows) — wired on `GET /projects` and `GET .../updates` so far.
 - **Quality baseline:** GitHub Actions CI (`.github/workflows/ci.yml`) — typecheck, lint,
-  build, test on both halves. Backend lint is **0 errors and blocking**; frontend lint has
-  16 pre-existing errors and is non-blocking until paid down. 12 unit tests cover the
+  build, test on both halves. Lint is **0 errors and blocking on both halves** (frontend
+  paid down 16 → 0 on 2026-07-20). 12 unit tests cover the
   action-item owner-diff and the auth guard verify/fallback chain. Frontend fetch failures
   surface as toasts (`lib/toast.ts` + `Toaster` in App) — no more silent empty sections.
 - **API docs:** Swagger at `:3000/api/docs` (non-production only). Schemas are derived
@@ -96,7 +96,11 @@ Every record type now has Create, Read, Update **and Delete**.
 ## Roadmap — deferred to Phase 2+
 
 **Unfinished Phase 1 loose ends:** RLS enforcement (deliberately deferred to the security
-phase) · pay down the 16 frontend lint errors, then flip the CI lint step to blocking.
+phase).
+
+**Closed (2026-07-20):** frontend lint paid down 16 → 0 (populate effects became
+render-phase prev-key blocks; `buttonVariants` unexported; `emptyMember` moved to
+`lib/project-form.ts`) and the CI frontend lint step is now blocking like the backend's.
 
 **Closed (2026-07-15):** Email button on the Status Report detail header — ships as a
 disabled stub in the demo's position, tooltip pointing at the Phase 2 notification
