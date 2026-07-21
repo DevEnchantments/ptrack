@@ -665,8 +665,8 @@
     "semantic_hash": "2e092757eaa8553feb3c7bb53e6a8a3b"
   },
   "CLAUDE.md": {
-    "mtime": 1784579312.0527663,
-    "ast_hash": "a09697418c87653d7d2dc7f226cb55ee",
+    "mtime": 1784550160.089119,
+    "ast_hash": "0c53efe5cce63ab160604cece09621ed",
     "semantic_hash": ""
   },
   "README.md": {
@@ -902,11 +902,6 @@
   "frontend/src/components/CommandPalette.tsx": {
     "mtime": 1784561166.9369774,
     "ast_hash": "9336963fbf0d33b332ed27b57ef8064b",
-    "semantic_hash": ""
-  },
-  "docs/FDD-ALIGNMENT.md": {
-    "mtime": 1784610471.677953,
-    "ast_hash": "70ba247683824813dce674f7d9831023",
     "semantic_hash": ""
   }
 }
