@@ -11,11 +11,12 @@ application. There is **no access to the original database** — only a demo ins
 so this is a clean rebuild, not a migration or an enhancement. The rebuild was mandated
 to include Supabase in the stack.
 
-The full feature breakdown of the original APEX app lives in `original-app-features.md`
-(repo root). Treat it as a **reference for intended behaviour, not a spec** — it describes
-a mature APEX app, and 1:1 parity is not the goal. Read it (or `@`-mention it) when
-building any feature that maps to an original module — do **not** assume behaviour from
-the name alone.
+**Since 2026-07-21 the governing spec is the Project Tracker FDD** (PDF supplied by the
+supervisor). `docs/FDD-ALIGNMENT.md` is the living map of FDD ⇄ P-Track (data objects,
+FR/UC checklists, open supervisor questions, staged roadmap) — **read it at the start of
+every session and keep it updated**. Formulas require recorded supervisor sign-off in
+`docs/FORMULAS.md` before implementation. `original-app-features.md` is historical
+reference only.
 
 ## Tech stack
 
