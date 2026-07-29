@@ -913,5 +913,10 @@
     "mtime": 1785316368.4381206,
     "ast_hash": "4668d97a397bf057fbac40a01fe73d0e",
     "semantic_hash": ""
+  },
+  "dev.ps1": {
+    "mtime": 1785317642.862269,
+    "ast_hash": "dc8a7e3359c13e7f910610c7cb4115f9",
+    "semantic_hash": ""
   }
 }

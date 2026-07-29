@@ -665,8 +665,8 @@
     "semantic_hash": "2e092757eaa8553feb3c7bb53e6a8a3b"
   },
   "CLAUDE.md": {
-    "mtime": 1784579312.0527663,
-    "ast_hash": "a09697418c87653d7d2dc7f226cb55ee",
+    "mtime": 1785328638.0203488,
+    "ast_hash": "42bec625a17c63f7272e1a52714b9dac",
     "semantic_hash": ""
   },
   "README.md": {
@@ -917,6 +917,11 @@
   "dev.ps1": {
     "mtime": 1785317642.862269,
     "ast_hash": "dc8a7e3359c13e7f910610c7cb4115f9",
+    "semantic_hash": ""
+  },
+  "docs/UI-AUDIT.md": {
+    "mtime": 1785328620.6206388,
+    "ast_hash": "3432986a65bde40f9a2b89541446c959",
     "semantic_hash": ""
   }
 }
