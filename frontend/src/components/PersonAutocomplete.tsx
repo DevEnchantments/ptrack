@@ -113,7 +113,7 @@ export function PersonAutocomplete({ value, onChange }: Props) {
           Existing user
         </p>
       ) : value.display_name.trim() ? (
-        <p className="hint-in mt-1.5 inline-flex items-center gap-1 rounded-full border border-amber-300 bg-amber-50 px-2 py-0.5 text-xs font-medium text-amber-700 dark:border-amber-800 dark:bg-amber-950 dark:text-amber-300">
+        <p className="hint-in mt-1.5 inline-flex items-center gap-1 rounded-full border border-status-amber-border bg-status-amber-bg px-2 py-0.5 text-xs font-medium text-status-amber-fg">
           <UserPlus className="h-3 w-3" />
           Will be added as pending
         </p>

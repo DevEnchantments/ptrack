@@ -458,7 +458,7 @@ export function EditProjectDialog({
             <Star
               className={
                 isPriority
-                  ? 'h-4 w-4 fill-amber-400 text-amber-400'
+                  ? 'h-4 w-4 fill-gold text-gold'
                   : 'h-4 w-4 text-muted-foreground'
               }
             />

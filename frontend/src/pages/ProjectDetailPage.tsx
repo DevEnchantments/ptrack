@@ -118,20 +118,20 @@ function formatReportDate(iso: string): string {
 }
 
 const EXT_STYLES: Record<string, string> = {
-  pdf: 'bg-red-600',
-  doc: 'bg-blue-600',
-  docx: 'bg-blue-600',
-  xls: 'bg-green-600',
-  xlsx: 'bg-green-600',
-  csv: 'bg-green-600',
-  ppt: 'bg-orange-600',
-  pptx: 'bg-orange-600',
-  png: 'bg-amber-500',
-  jpg: 'bg-amber-500',
-  jpeg: 'bg-amber-500',
-  gif: 'bg-amber-500',
-  zip: 'bg-slate-500',
-  rar: 'bg-slate-500',
+  pdf: 'border-status-red-border bg-status-red-bg text-status-red-fg',
+  doc: 'border-status-blue-border bg-status-blue-bg text-status-blue-fg',
+  docx: 'border-status-blue-border bg-status-blue-bg text-status-blue-fg',
+  xls: 'border-status-green-border bg-status-green-bg text-status-green-fg',
+  xlsx: 'border-status-green-border bg-status-green-bg text-status-green-fg',
+  csv: 'border-status-green-border bg-status-green-bg text-status-green-fg',
+  ppt: 'border-status-amber-border bg-status-amber-bg text-status-amber-fg',
+  pptx: 'border-status-amber-border bg-status-amber-bg text-status-amber-fg',
+  png: 'border-status-amber-border bg-status-amber-bg text-status-amber-fg',
+  jpg: 'border-status-amber-border bg-status-amber-bg text-status-amber-fg',
+  jpeg: 'border-status-amber-border bg-status-amber-bg text-status-amber-fg',
+  gif: 'border-status-amber-border bg-status-amber-bg text-status-amber-fg',
+  zip: 'border-border bg-muted text-muted-foreground',
+  rar: 'border-border bg-muted text-muted-foreground',
 }
 
 function fileExt(name: string): string {
@@ -553,7 +553,7 @@ export function ProjectDetailPage() {
         <span className="mx-2 text-muted-foreground">/</span>
         <span className="inline-flex items-center gap-1 text-sm">
           {project.access_control === 'restricted' && (
-            <Lock className="h-3.5 w-3.5 text-muted-foreground" />
+            <Lock className="h-4 w-4 text-muted-foreground" />
           )}
           {project.name}
         </span>
@@ -571,15 +571,20 @@ export function ProjectDetailPage() {
       <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 p-6 lg:grid-cols-[1fr_260px]">
         <div>
           <div className="mb-6 flex items-center justify-between">
-            <h1
-              ref={titleRef}
-              className="flex items-center gap-2 text-2xl font-semibold"
-            >
-              {project.access_control === 'restricted' && (
-                <Lock className="h-5 w-5 text-muted-foreground" />
-              )}
-              {project.name}
-            </h1>
+            <div>
+              <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                Project
+              </p>
+              <h1
+                ref={titleRef}
+                className="flex items-center gap-2 text-2xl font-semibold"
+              >
+                {project.access_control === 'restricted' && (
+                  <Lock className="h-4 w-4 text-muted-foreground" />
+                )}
+                {project.name}
+              </h1>
+            </div>
             <Button
               variant="outline"
               size="sm"
@@ -678,7 +683,7 @@ export function ProjectDetailPage() {
                       <InitialsAvatar name={memberName(m)} />
                       <span className="text-sm font-medium">{memberName(m)}</span>
                       {m.status === 'pending' && (
-                        <span className="text-xs text-amber-600 dark:text-amber-400">(pending)</span>
+                        <span className="text-xs text-gold">(pending)</span>
                       )}
                     </div>
                     <span className="text-sm text-muted-foreground">
@@ -759,7 +764,7 @@ export function ProjectDetailPage() {
                         <span
                           className={
                             isOverdue(m.due_date, m.status)
-                              ? 'font-medium text-red-600 dark:text-red-400'
+                              ? 'font-medium text-destructive'
                               : ''
                           }
                         >
@@ -845,7 +850,7 @@ export function ProjectDetailPage() {
                         <span
                           className={
                             isOverdue(a.due_date, a.status)
-                              ? 'font-medium text-red-600 dark:text-red-400'
+                              ? 'font-medium text-destructive'
                               : ''
                           }
                         >
@@ -918,8 +923,8 @@ export function ProjectDetailPage() {
                           {l.label || l.url}
                         </span>
                         {l.is_gold && (
-                          <span className="inline-flex items-center gap-1 text-xs text-amber-600 dark:text-amber-400">
-                            <span className="h-2 w-2 rounded-full bg-amber-500" />
+                          <span className="inline-flex items-center gap-1 text-xs text-gold">
+                            <span className="h-2 w-2 rounded-full bg-gold" />
                             Gold
                           </span>
                         )}
@@ -1011,9 +1016,9 @@ export function ProjectDetailPage() {
                   : issues.filter((i) => i.status === 'open')
                 if (visible.length === 0)
                   return (
-                    <p className="text-sm text-muted-foreground">
+                    <div className="rounded-md border border-dashed px-4 py-5 text-sm text-muted-foreground">
                       No open issues.
-                    </p>
+                    </div>
                   )
                 return (
                   <ul className="section-list divide-y rounded-md border">
@@ -1074,7 +1079,7 @@ export function ProjectDetailPage() {
             <ul className="section-list flex flex-col gap-4">
               {updates.map((u) => (
                 <li key={u.id} className="flex gap-3">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-teal-400 text-xs font-semibold text-white">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-semibold text-primary-foreground">
                     {initials(updateAuthorName(u))}
                   </div>
                   <div className="flex-1">
@@ -1087,8 +1092,8 @@ export function ProjectDetailPage() {
                       </span>
                       <span>· {relativeTime(u.created_at)}</span>
                       {u.is_gold && (
-                        <span className="inline-flex items-center gap-1 text-amber-600 dark:text-amber-400">
-                          <span className="h-2 w-2 rounded-full bg-amber-500" />
+                        <span className="inline-flex items-center gap-1 text-gold">
+                          <span className="h-2 w-2 rounded-full bg-gold" />
                           Gold
                         </span>
                       )}
@@ -1101,7 +1106,7 @@ export function ProjectDetailPage() {
                         aria-label="Edit update"
                         className="text-muted-foreground hover:text-foreground"
                       >
-                        <Pencil className="h-3.5 w-3.5" />
+                        <Pencil className="h-4 w-4" />
                       </button>
                     </div>
                   </div>
@@ -1175,7 +1180,7 @@ export function ProjectDetailPage() {
             <ul className="section-list divide-y rounded-md border">
               {attachments.map((a) => {
                 const ext = fileExt(a.file_name)
-                const iconCls = EXT_STYLES[ext.toLowerCase()] ?? 'bg-slate-400'
+                const iconCls = EXT_STYLES[ext.toLowerCase()] ?? 'border-border bg-muted text-muted-foreground'
                 return (
                   <li
                     key={a.id}
@@ -1189,7 +1194,7 @@ export function ProjectDetailPage() {
                       }}
                     />
                     <div
-                      className={`flex h-9 w-9 shrink-0 items-center justify-center rounded ${iconCls} text-[9px] font-bold text-white`}
+                      className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-md border ${iconCls} text-[9px] font-bold`}
                     >
                       {ext.slice(0, 4) || 'FILE'}
                     </div>
@@ -1207,8 +1212,8 @@ export function ProjectDetailPage() {
                           {a.file_name}
                         </button>
                         {a.is_gold && (
-                          <span className="inline-flex shrink-0 items-center gap-1 text-xs text-amber-600 dark:text-amber-400">
-                            <span className="h-2 w-2 rounded-full bg-amber-500" />
+                          <span className="inline-flex shrink-0 items-center gap-1 text-xs text-gold">
+                            <span className="h-2 w-2 rounded-full bg-gold" />
                             Gold
                           </span>
                         )}

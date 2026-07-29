@@ -1,11 +1,11 @@
 const TONE_CLASSES: Record<string, string> = {
   positive:
-    'border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-900 dark:bg-emerald-950 dark:text-emerald-300',
+    'border-status-green-border bg-status-green-bg text-status-green-fg',
   caution:
-    'border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-300',
+    'border-status-amber-border bg-status-amber-bg text-status-amber-fg',
   critical:
-    'border-red-200 bg-red-50 text-red-700 dark:border-red-900 dark:bg-red-950 dark:text-red-300',
-  info: 'border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-900 dark:bg-blue-950 dark:text-blue-300',
+    'border-status-red-border bg-status-red-bg text-status-red-fg',
+  info: 'border-status-blue-border bg-status-blue-bg text-status-blue-fg',
   neutral: 'border-transparent bg-muted text-muted-foreground',
 }
 

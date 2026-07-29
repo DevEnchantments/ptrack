@@ -195,10 +195,23 @@ StepConfirmation: `gap-4`/`px-4`/`—` where siblings use `gap-6`/`px-1`/`-`.
   GOLD_HELP; `aria-invalid` on invalid Selects (Resource Type, Person Role,
   EditProject Status); ConfirmDeleteButton armed state tokenized via new
   `--destructive-foreground` (see section 1 table); radio hover-scale removed.
-- [ ] **Stage 3 — Detail pages.** Skeletons on the four text-loading pages; one
-  empty-state recipe; unified `Field`; container/rail widths; icon normalization;
-  raw palette → Stage 1 tokens (incl. teal avatar, gold ambers, file-type chips,
-  StatusPill, brand strip).
+- [x] **Stage 3 — Detail pages.** SHIPPED 2026-07-29, visually confirmed by Fares.
+  Layout-mirroring skeletons on Milestone/ActionItem/StatusReport/Attachment (+
+  RecordHistory); dashed empty-state recipe everywhere (incl. "No Data Found." →
+  "No action items yet."); `Field`/`Row` drop empty rows on all pages;
+  eyebrow-kicker + record-name H1 on all five detail pages (section 6 ruling 2);
+  containers `max-w-5xl` + rail `260px` + aside `gap-4` (Attachment keeps its
+  centered 3xl hero); Milestone text-glyph buttons → lucide Plus/ChevronRight;
+  Lock/Pencil at `h-4 w-4`; StatusPill on Milestone rows; raw palette swept onto
+  tokens: StatusPill + file-type chips + PersonAutocomplete pending chip → 
+  `--status-*` pill trios (chips restyled from solid squares to tinted pills for
+  dark-mode AA), overdue → `text-destructive`, gold ambers → `--gold`, teal
+  avatar → `bg-primary`, brand strip → new `--brand`/`--brand-foreground`
+  (#dc2626 / #ffffff, 4.83 PASS, same both themes); em-dash placeholders → `-`.
+  **Known remaining exception:** `InitialsAvatar`'s 8-hue identity-hashing array
+  still uses raw `*-100`/`*-700` palette pairs (deliberate variety; tokenizing
+  needs 16 more tokens). Revisit only if asked. AppLayout's brand `text-white`
+  lands in Stage 4.
 - [ ] **Stage 4 — Shell + Home.** Palette animation removal; sidebar width
   transition; scroll-top exit; nav hover transition; Home card transition + error
   recovery button.

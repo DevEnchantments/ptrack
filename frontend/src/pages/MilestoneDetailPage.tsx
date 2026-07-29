@@ -8,7 +8,10 @@ import {
   type MilestoneDetail,
   type ActionItem,
 } from '@/lib/api'
+import { ChevronRight, Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { Skeleton } from '@/components/ui/skeleton'
+import { StatusPill } from '@/components/StatusPill'
 import { AddMilestoneDialog } from '@/components/AddMilestoneDialog'
 import { AddActionItemDialog } from '@/components/AddActionItemDialog'
 import { MiniCalendar } from '@/components/MiniCalendar'
@@ -84,11 +87,11 @@ function auditLine(
 }
 
 function Field({ label, value }: { label: string; value: React.ReactNode }) {
-  const empty = value === null || value === undefined || value === ''
+  if (value === null || value === undefined || value === '') return null
   return (
     <div className="grid grid-cols-3 gap-4 border-b px-1 py-3 last:border-0">
       <dt className="text-sm text-muted-foreground">{label}</dt>
-      <dd className="col-span-2 text-sm">{empty ? '-' : value}</dd>
+      <dd className="col-span-2 text-sm">{value}</dd>
     </div>
   )
 }
@@ -133,7 +136,42 @@ export function MilestoneDetailPage() {
   }, [load, loadActionItems])
 
   if (loading) {
-    return <div className="p-6 text-muted-foreground">Loading…</div>
+    return (
+      <div className="min-h-svh">
+        <header className="border-b px-6 py-4">
+          <Skeleton className="h-4 w-48" />
+        </header>
+        <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 p-6 lg:grid-cols-[1fr_260px]">
+          <div>
+            <div className="mb-6 flex items-center justify-between">
+              <div className="flex flex-col gap-2">
+                <Skeleton className="h-3 w-20" />
+                <Skeleton className="h-8 w-64" />
+              </div>
+              <Skeleton className="h-8 w-52" />
+            </div>
+            <div className="flex flex-col gap-3 rounded-md border p-4">
+              {[0, 1, 2, 3, 4, 5].map((i) => (
+                <div key={i} className="flex gap-4">
+                  <Skeleton className="h-4 w-32" />
+                  <Skeleton className="h-4 flex-1" />
+                </div>
+              ))}
+            </div>
+            <Skeleton className="mt-6 h-6 w-64" />
+            <div className="mt-4 flex flex-col gap-2 rounded-md border p-4">
+              <Skeleton className="h-4 w-2/3" />
+              <Skeleton className="h-4 w-1/2" />
+              <Skeleton className="h-4 w-3/5" />
+            </div>
+          </div>
+          <aside className="flex flex-col gap-4">
+            <Skeleton className="h-44 w-full rounded-md" />
+            <Skeleton className="h-44 w-full rounded-md" />
+          </aside>
+        </div>
+      </div>
+    )
   }
   if (error || !milestone) {
     return (
@@ -175,10 +213,15 @@ export function MilestoneDetailPage() {
         <span className="text-sm">Milestone</span>
       </header>
 
-      <div className="animate-step-in mx-auto grid max-w-6xl grid-cols-1 gap-8 p-6 lg:grid-cols-[1fr_240px]">
+      <div className="animate-step-in mx-auto grid max-w-5xl grid-cols-1 gap-8 p-6 lg:grid-cols-[1fr_260px]">
         <div>
         <div className="mb-6 flex items-center justify-between">
-          <h1 className="text-2xl font-semibold">Milestone</h1>
+          <div>
+            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+              Milestone
+            </p>
+            <h1 className="text-2xl font-semibold">{milestone.name}</h1>
+          </div>
           <div className="flex gap-2">
             <Button
               variant="outline"
@@ -252,7 +295,7 @@ export function MilestoneDetailPage() {
               {milestone.description ? (
                 <p className="whitespace-pre-wrap">{milestone.description}</p>
               ) : (
-                <p className="text-muted-foreground">No description.</p>
+                <p className="text-muted-foreground">No description yet.</p>
               )}
             </div>
           </section>
@@ -267,23 +310,23 @@ export function MilestoneDetailPage() {
                   onClick={() => setAddAiOpen(true)}
                   aria-label="Add action item"
                   title="Add action item"
-                  className="rounded px-2 py-1 text-lg leading-none hover:bg-accent"
+                  className="rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
                 >
-                  +
+                  <Plus className="h-4 w-4" />
                 </button>
                 <button
                   onClick={() => navigate(`/projects/${projectId}`)}
                   aria-label="View all action items"
                   title="View all action items"
-                  className="rounded px-2 py-1 text-lg leading-none hover:bg-accent"
+                  className="rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
                 >
-                  ›
+                  <ChevronRight className="h-4 w-4" />
                 </button>
               </div>
             </div>
             {actionItems.length === 0 ? (
-              <div className="rounded-md border p-6 text-sm text-muted-foreground">
-                No Data Found.
+              <div className="rounded-md border border-dashed px-4 py-5 text-sm text-muted-foreground">
+                No action items yet.
               </div>
             ) : (
               <ul className="divide-y rounded-md border">
@@ -295,11 +338,12 @@ export function MilestoneDetailPage() {
                     }
                     className="cursor-pointer px-4 py-3 hover:bg-accent"
                   >
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between gap-3">
                       <span className="text-sm font-medium">{a.title}</span>
-                      <span className="text-sm text-muted-foreground">
-                        {STATUS_LABELS[a.status] ?? a.status}
-                      </span>
+                      <StatusPill
+                        status={a.status}
+                        label={STATUS_LABELS[a.status] ?? a.status}
+                      />
                     </div>
                     <div className="mt-1 flex flex-wrap gap-x-4 text-xs text-muted-foreground">
                       {a.due_date && <span>Due {a.due_date}</span>}
@@ -314,7 +358,7 @@ export function MilestoneDetailPage() {
                               (o) =>
                                 o.profile?.full_name ||
                                 o.profile?.email ||
-                                '—',
+                                'Unknown',
                             )
                             .join(', ')}
                         </span>

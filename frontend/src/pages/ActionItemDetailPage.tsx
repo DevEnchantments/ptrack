@@ -9,6 +9,7 @@ import {
   type ActionItemComment,
 } from '@/lib/api'
 import { Button } from '@/components/ui/button'
+import { Skeleton } from '@/components/ui/skeleton'
 import { Textarea } from '@/components/ui/textarea'
 import { AddActionItemDialog } from '@/components/AddActionItemDialog'
 import { MiniCalendar } from '@/components/MiniCalendar'
@@ -38,7 +39,7 @@ function ownersLabel(item: ActionItem): string | null {
   return item.owners
     .slice()
     .sort((a, b) => a.slot - b.slot)
-    .map((o) => o.profile?.full_name || o.profile?.email || '—')
+    .map((o) => o.profile?.full_name || o.profile?.email || 'Unknown')
     .join(', ')
 }
 
@@ -104,7 +105,40 @@ export function ActionItemDetailPage() {
   }
 
   if (loading) {
-    return <div className="p-6 text-muted-foreground">Loading…</div>
+    return (
+      <div className="min-h-svh">
+        <header className="border-b px-6 py-4">
+          <Skeleton className="h-4 w-48" />
+        </header>
+        <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 p-6 lg:grid-cols-[1fr_260px]">
+          <div>
+            <div className="mb-6 flex items-center justify-between">
+              <div className="flex flex-col gap-2">
+                <Skeleton className="h-3 w-24" />
+                <Skeleton className="h-8 w-64" />
+              </div>
+              <Skeleton className="h-8 w-32" />
+            </div>
+            <div className="flex flex-col gap-3 rounded-md border p-4">
+              {[0, 1, 2, 3, 4, 5].map((i) => (
+                <div key={i} className="flex gap-4">
+                  <Skeleton className="h-4 w-32" />
+                  <Skeleton className="h-4 flex-1" />
+                </div>
+              ))}
+            </div>
+            <Skeleton className="mt-6 h-6 w-40" />
+            <div className="mt-4 flex flex-col gap-2 rounded-md border p-4">
+              <Skeleton className="h-4 w-2/3" />
+              <Skeleton className="h-4 w-1/2" />
+            </div>
+          </div>
+          <aside className="flex flex-col gap-4">
+            <Skeleton className="h-44 w-full rounded-md" />
+          </aside>
+        </div>
+      </div>
+    )
   }
   if (error || !item) {
     return (
@@ -144,10 +178,15 @@ export function ActionItemDetailPage() {
         <span className="text-sm">Action Item</span>
       </header>
 
-      <div className="animate-step-in mx-auto grid max-w-6xl grid-cols-1 gap-8 p-6 lg:grid-cols-[1fr_240px]">
+      <div className="animate-step-in mx-auto grid max-w-5xl grid-cols-1 gap-8 p-6 lg:grid-cols-[1fr_260px]">
         <div>
         <div className="mb-6 flex items-center justify-between">
-          <h1 className="text-2xl font-semibold">Action Item</h1>
+          <div>
+            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+              Action Item
+            </p>
+            <h1 className="text-2xl font-semibold">{item.title}</h1>
+          </div>
           <Button
             variant="outline"
             size="sm"
@@ -218,7 +257,9 @@ export function ActionItemDetailPage() {
             </div>
 
             {comments.length === 0 ? (
-              <p className="text-sm text-muted-foreground">No comments found.</p>
+              <div className="rounded-md border border-dashed px-4 py-5 text-sm text-muted-foreground">
+                No comments yet.
+              </div>
             ) : (
               <ul className="divide-y rounded-md border">
                 {comments.map((c) => (

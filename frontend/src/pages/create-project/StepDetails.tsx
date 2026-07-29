@@ -299,7 +299,7 @@ export function StepDetails({ form, errors, update }: Props) {
         <Star
           className={
             form.is_priority
-              ? 'h-4 w-4 fill-amber-400 text-amber-400'
+              ? 'h-4 w-4 fill-gold text-gold'
               : 'h-4 w-4 text-muted-foreground'
           }
         />

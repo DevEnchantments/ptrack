@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Skeleton } from '@/components/ui/skeleton'
 import type { HistoryEntry } from '@/lib/api'
 
 interface Props {
@@ -74,15 +75,23 @@ export function RecordHistory({ load, refreshKey, recordNoun }: Props) {
 
   if (entries === null) {
     return (
-      <div className="rounded-md border p-6 text-sm text-muted-foreground">
-        Loading history…
+      <div className="flex flex-col gap-4 rounded-md border p-6">
+        {[0, 1, 2].map((i) => (
+          <div key={i} className="flex gap-3">
+            <Skeleton className="h-8 w-8 rounded-full" />
+            <div className="flex flex-1 flex-col gap-2">
+              <Skeleton className="h-3 w-40" />
+              <Skeleton className="h-4 w-2/3" />
+            </div>
+          </div>
+        ))}
       </div>
     )
   }
 
   if (entries.length === 0) {
     return (
-      <div className="rounded-md border p-6 text-sm text-muted-foreground">
+      <div className="rounded-md border border-dashed px-4 py-5 text-sm text-muted-foreground">
         No history recorded yet.
       </div>
     )

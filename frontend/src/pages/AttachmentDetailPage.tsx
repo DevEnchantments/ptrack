@@ -5,6 +5,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { attachmentsApi, type AttachmentDetail } from '@/lib/api'
 import { Download } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { Skeleton } from '@/components/ui/skeleton'
 
 function uploaderName(
   a: { full_name: string | null; email: string | null } | null | undefined,
@@ -46,6 +47,7 @@ function longDate(iso: string): string {
 }
 
 function Row({ label, value }: { label: string; value: React.ReactNode }) {
+  if (value === null || value === undefined || value === '') return null
   return (
     <div className="grid grid-cols-3 gap-4 border-b px-1 py-3 last:border-0">
       <dt className="text-sm text-muted-foreground">{label}</dt>
@@ -87,7 +89,35 @@ export function AttachmentDetailPage() {
   }
 
   if (loading) {
-    return <div className="p-6 text-muted-foreground">Loading…</div>
+    return (
+      <div className="min-h-svh">
+        <header className="flex items-center justify-between border-b px-6 py-4">
+          <div className="flex flex-col gap-2">
+            <Skeleton className="h-4 w-48" />
+            <Skeleton className="h-8 w-64" />
+          </div>
+          <Skeleton className="h-8 w-36" />
+        </header>
+        <div className="mx-auto max-w-3xl p-6">
+          <div className="rounded-lg border p-8">
+            <div className="mb-6 flex flex-col items-center gap-4">
+              <Skeleton className="h-12 w-12 rounded-md" />
+            </div>
+            <div className="flex flex-col gap-3 rounded-md border p-4">
+              {[0, 1, 2, 3, 4].map((i) => (
+                <div key={i} className="flex gap-4">
+                  <Skeleton className="h-4 w-32" />
+                  <Skeleton className="h-4 flex-1" />
+                </div>
+              ))}
+            </div>
+            <div className="mt-6 flex justify-center">
+              <Skeleton className="h-9 w-32" />
+            </div>
+          </div>
+        </div>
+      </div>
+    )
   }
   if (error || !att) {
     return (
@@ -123,7 +153,10 @@ export function AttachmentDetailPage() {
           >
             {projectName}
           </button>
-          <h1 className="mt-1 text-2xl font-semibold">Attachment</h1>
+          <p className="mt-1 text-xs font-medium uppercase tracking-wide text-muted-foreground">
+            Attachment
+          </p>
+          <h1 className="text-2xl font-semibold break-all">{att.file_name}</h1>
         </div>
         <Button
           variant="outline"
@@ -138,15 +171,12 @@ export function AttachmentDetailPage() {
         <div className="rounded-lg border p-8">
           <div className="mb-6 flex flex-col items-center">
             <Download className="h-12 w-12 text-primary" />
-            <h2 className="mt-4 text-center text-xl font-semibold break-all">
-              {att.file_name}
-            </h2>
           </div>
 
           <dl className="rounded-md border px-4">
             <Row label="File Name" value={att.file_name} />
             <Row label="Size" value={formatSize(att.size_bytes)} />
-            <Row label="Description" value={att.description || '-'} />
+            <Row label="Description" value={att.description} />
             <Row
               label="Created By"
               value={uploaderName(att.uploaded_by_profile)}

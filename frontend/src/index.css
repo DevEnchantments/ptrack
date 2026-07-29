@@ -63,6 +63,8 @@
     --color-status-blue-bg: var(--status-blue-bg);
     --color-status-blue-fg: var(--status-blue-fg);
     --color-status-blue-border: var(--status-blue-border);
+    --color-brand: var(--brand);
+    --color-brand-foreground: var(--brand-foreground);
 }
 
 /* House easing curves (UI-AUDIT section 4). Plain @theme (not inline) so the
@@ -119,6 +121,9 @@
     --status-blue-bg: #eff6ff;
     --status-blue-fg: #1d4ed8;
     --status-blue-border: #bfdbfe;
+    /* Brand strip (status-report header): identical in both themes. */
+    --brand: #dc2626;
+    --brand-foreground: #ffffff;
     /* Chart series — validated categorical trio (CVD-safe, >=3:1 on card),
        in fixed assignment order (blue separates green/orange); 4-5 are spares. */
     --chart-1: #16a34a;

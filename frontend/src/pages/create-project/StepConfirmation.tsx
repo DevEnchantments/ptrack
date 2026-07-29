@@ -25,7 +25,7 @@ export function StepConfirmation({ form }: { form: CreateProjectForm }) {
     lookupsApi.list('strategic-objectives').then(setObjectives).catch(() => toast.error('Could not load strategic objectives.'))
   }, [])
 
-  const statusName = statuses.find((s) => s.id === form.status_id)?.name ?? '—'
+  const statusName = statuses.find((s) => s.id === form.status_id)?.name ?? '-'
   const tierName = tiers.find((t) => t.id === form.tier_id)?.name
   const objectiveName = objectives.find(
     (o) => o.id === form.strategic_objective_id,
@@ -35,7 +35,7 @@ export function StepConfirmation({ form }: { form: CreateProjectForm }) {
       ? 'Open'
       : 'Restricted – Only Accessible by Associated People'
   const roleName = (id: string | null) =>
-    roles.find((r) => r.id === id)?.name ?? '—'
+    roles.find((r) => r.id === id)?.name ?? '-'
   const members = form.members.filter((m) => m.display_name.trim() && m.role_id)
 
   return (
@@ -44,10 +44,10 @@ export function StepConfirmation({ form }: { form: CreateProjectForm }) {
         Review the details below, then create the project.
       </p>
       <dl className="divide-y rounded-md border">
-        <Row label="Project" value={form.name || '—'} />
+        <Row label="Project" value={form.name || '-'} />
         <Row label="Status" value={statusName} />
         <Row label="Access Control" value={accessLabel} />
-        <Row label="Start Date" value={form.start_date || '—'} />
+        <Row label="Start Date" value={form.start_date || '-'} />
         {form.reference_id.trim() && (
           <Row label="Reference ID" value={form.reference_id.trim()} />
         )}
@@ -90,7 +90,7 @@ export function StepConfirmation({ form }: { form: CreateProjectForm }) {
           label="Project Owner(s)"
           value={
             members.length === 0 ? (
-              '—'
+              '-'
             ) : (
               <ul className="flex flex-col gap-1">
                 {members.map((m, i) => (
@@ -101,7 +101,7 @@ export function StepConfirmation({ form }: { form: CreateProjectForm }) {
                       — {roleName(m.role_id)}
                     </span>
                     {!m.user_id && (
-                      <span className="text-amber-600"> (pending)</span>
+                      <span className="text-gold"> (pending)</span>
                     )}
                   </li>
                 ))}

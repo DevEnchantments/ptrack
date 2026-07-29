@@ -8,6 +8,7 @@ import {
   type StatusReport,
 } from '@/lib/api'
 import { Button } from '@/components/ui/button'
+import { Skeleton } from '@/components/ui/skeleton'
 import { MiniCalendar } from '@/components/MiniCalendar'
 import { AddStatusReportDialog } from '@/components/AddStatusReportDialog'
 
@@ -64,7 +65,38 @@ export function StatusReportDetailPage() {
   }, [load])
 
   if (loading) {
-    return <div className="p-6 text-muted-foreground">Loading…</div>
+    return (
+      <div className="min-h-svh">
+        <header className="border-b px-6 py-4">
+          <Skeleton className="h-4 w-48" />
+        </header>
+        <div className="mx-auto max-w-5xl p-6">
+          <div className="mb-6 flex items-center justify-between">
+            <div className="flex flex-col gap-2">
+              <Skeleton className="h-3 w-28" />
+              <Skeleton className="h-8 w-64" />
+            </div>
+            <Skeleton className="h-8 w-64" />
+          </div>
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_260px]">
+            <div className="overflow-hidden rounded-md border">
+              <Skeleton className="h-12 w-full rounded-none" />
+              <div className="flex flex-col gap-3 p-6">
+                <Skeleton className="h-6 w-56" />
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-2/3" />
+              </div>
+            </div>
+            <aside className="flex flex-col gap-4">
+              <Skeleton className="h-28 w-full rounded-md" />
+              <Skeleton className="h-44 w-full rounded-md" />
+              <Skeleton className="h-28 w-full rounded-md" />
+            </aside>
+          </div>
+        </div>
+      </div>
+    )
   }
   if (error || !report) {
     return (
@@ -105,7 +137,14 @@ export function StatusReportDetailPage() {
 
       <div className="animate-step-in mx-auto max-w-5xl p-6">
         <div className="mb-6 flex items-center justify-between">
-          <h1 className="text-2xl font-semibold">Status Report</h1>
+          <div>
+            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+              Status Report
+            </p>
+            <h1 className="text-2xl font-semibold">
+              {report.title || 'Untitled'}
+            </h1>
+          </div>
           <div className="flex gap-2">
             <Button
               variant="outline"
@@ -132,10 +171,10 @@ export function StatusReportDetailPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_280px]">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_260px]">
           <div className="overflow-hidden rounded-md border">
-            <div className="bg-red-600 px-6 py-4">
-              <span className="text-sm font-semibold tracking-wide text-white">
+            <div className="bg-brand px-6 py-4">
+              <span className="text-sm font-semibold tracking-wide text-brand-foreground">
                 P-TRACK
               </span>
             </div>
@@ -170,7 +209,7 @@ export function StatusReportDetailPage() {
             </div>
           </div>
 
-          <aside className="flex flex-col gap-6">
+          <aside className="flex flex-col gap-4">
             <div className="rounded-md border p-4">
               <h3 className="mb-3 text-sm font-semibold">Visibility</h3>
               <p className="text-sm">
@@ -191,9 +230,9 @@ export function StatusReportDetailPage() {
             <div className="rounded-md border p-4">
               <h3 className="mb-3 text-sm font-semibold">Recent Reports</h3>
               {others.length === 0 ? (
-                <p className="text-sm text-muted-foreground">
-                  No other reports found.
-                </p>
+                <div className="rounded-md border border-dashed px-4 py-4 text-sm text-muted-foreground">
+                  No other reports yet.
+                </div>
               ) : (
                 <ul className="flex flex-col gap-2">
                   {others.slice(0, 5).map((r) => (
