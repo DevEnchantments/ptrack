@@ -228,7 +228,7 @@ export function CreateProjectWizard() {
           <li key={label} className="flex items-center gap-2">
             <span
               className={
-                'flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-medium transition-all duration-300 ' +
+                'flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-medium transition-[background-color,color,box-shadow,scale] duration-200 ' +
                 (i <= step
                   ? 'bg-primary text-primary-foreground'
                   : 'bg-muted text-muted-foreground') +
@@ -239,7 +239,7 @@ export function CreateProjectWizard() {
             </span>
             <span
               className={
-                'text-sm transition-colors duration-300 ' +
+                'text-sm transition-colors duration-200 ' +
                 (i === step ? 'font-medium' : 'text-muted-foreground')
               }
             >
@@ -250,7 +250,7 @@ export function CreateProjectWizard() {
       </ol>
 
       {/* Keyed on step so each step remounts and plays its entrance. */}
-      <div key={step} className="animate-step-in">
+      <div key={step} className="animate-step-in rounded-lg border bg-card p-6 shadow-xs">
         {step === 0 && <StepProject form={form} errors={errors} update={update} />}
         {step === 1 && <StepAccess form={form} errors={errors} update={update} />}
         {step === 2 && <StepDetails form={form} errors={errors} update={update} />}

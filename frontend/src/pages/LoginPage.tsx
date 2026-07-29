@@ -37,14 +37,14 @@ export function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-svh items-center justify-center bg-muted/40 p-4">
+    <div className="flex min-h-svh items-center justify-center bg-muted/40 p-6">
       <div className="animate-step-in w-full max-w-sm">
         <div className="mb-6 flex flex-col items-center gap-3">
           <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-xl font-bold text-primary-foreground shadow-md">
             P
           </span>
           <div className="text-center">
-            <h1 className="text-xl font-semibold">P-Track</h1>
+            <h1 className="text-2xl font-semibold">P-Track</h1>
             <p className="text-sm text-muted-foreground">
               Project portfolio management
             </p>
@@ -52,7 +52,7 @@ export function LoginPage() {
         </div>
         <Card className="w-full">
         <CardHeader>
-          <CardTitle className="text-2xl">Welcome back</CardTitle>
+          <CardTitle className="text-xl">Welcome back</CardTitle>
           <CardDescription>Sign in to your account</CardDescription>
         </CardHeader>
         <CardContent>

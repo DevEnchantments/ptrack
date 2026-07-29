@@ -96,7 +96,7 @@ function StatTile({
 }) {
   const shown = useCountUp(value)
   return (
-    <div className="rounded-xl border bg-card p-4">
+    <div className="rounded-lg border bg-card p-4 shadow-xs">
       <p className="text-sm text-muted-foreground">{label}</p>
       <p className="mt-1 text-3xl font-semibold tabular-nums">{shown}</p>
       <p className="mt-1 text-xs text-muted-foreground">{note}</p>
@@ -144,8 +144,8 @@ function ActivityLineChart() {
   const gridValues = [0, 10, 20, 30]
 
   return (
-    <div className="rounded-xl border bg-card p-4">
-      <p className="text-sm font-medium">Activity — updates per week</p>
+    <div className="rounded-lg border bg-card p-4 shadow-xs">
+      <h2 className="text-sm font-medium">Activity — updates per week</h2>
       <div className="relative mt-2">
         <svg
           viewBox={`0 0 ${LINE_W} ${LINE_H}`}
@@ -277,8 +277,8 @@ function ProjectsBarChart() {
   const max = Math.max(...PROJECTS_BY_STATUS.map((d) => d.value))
 
   return (
-    <div className="rounded-xl border bg-card p-4">
-      <p className="text-sm font-medium">Projects by status</p>
+    <div className="rounded-lg border bg-card p-4 shadow-xs">
+      <h2 className="text-sm font-medium">Projects by status</h2>
       <div className="mt-3 flex flex-col gap-2">
         {PROJECTS_BY_STATUS.map((d, i) => (
           <div
@@ -316,8 +316,8 @@ function ActionItemsBreakdown() {
   const total = ACTION_ITEM_SEGMENTS.reduce((s, d) => s + d.value, 0)
 
   return (
-    <div className="rounded-xl border bg-card p-4">
-      <p className="text-sm font-medium">Action items</p>
+    <div className="rounded-lg border bg-card p-4 shadow-xs">
+      <h2 className="text-sm font-medium">Action items</h2>
       {/* 100% stacked bar with 2px surface gaps between segments. */}
       <div className="mt-4 flex h-4 w-full gap-0.5 overflow-hidden rounded">
         {ACTION_ITEM_SEGMENTS.map((d, i) => (
@@ -377,8 +377,8 @@ function CategoryDonut() {
   const center = hover !== null ? CATEGORY_SEGMENTS[hover] : null
 
   return (
-    <div className="rounded-xl border bg-card p-4">
-      <p className="text-sm font-medium">Projects by category</p>
+    <div className="rounded-lg border bg-card p-4 shadow-xs">
+      <h2 className="text-sm font-medium">Projects by category</h2>
       <div className="mt-2 flex items-center gap-4">
         <svg viewBox="0 0 120 120" className="h-32 w-32 shrink-0" role="img"
           aria-label="Donut chart of projects by category, sample data">
@@ -447,8 +447,8 @@ function MilestoneColumns() {
   const max = Math.max(...MILESTONES_PER_MONTH.map((d) => d.value))
 
   return (
-    <div className="rounded-xl border bg-card p-4">
-      <p className="text-sm font-medium">Milestones completed / month</p>
+    <div className="rounded-lg border bg-card p-4 shadow-xs">
+      <h2 className="text-sm font-medium">Milestones completed / month</h2>
       <div className="mt-3 flex h-36 items-end gap-2">
         {MILESTONES_PER_MONTH.map((d, i) => (
           <div
@@ -490,8 +490,8 @@ function CompletionRadial() {
   const target = 0.68
 
   return (
-    <div className="rounded-xl border bg-card p-4">
-      <p className="text-sm font-medium">Overall milestone completion</p>
+    <div className="rounded-lg border bg-card p-4 shadow-xs">
+      <h2 className="text-sm font-medium">Overall milestone completion</h2>
       <div className="mt-2 flex justify-center">
         <svg viewBox="0 0 120 120" className="h-32 w-32" role="img"
           aria-label="Radial gauge showing 68 percent overall completion, sample data">
@@ -545,9 +545,9 @@ function FlowLineChart() {
   const gridValues = [0, 5, 10, 15, 20]
 
   return (
-    <div className="rounded-xl border bg-card p-4">
+    <div className="rounded-lg border bg-card p-4 shadow-xs">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <p className="text-sm font-medium">Action items — created vs completed</p>
+        <h2 className="text-sm font-medium">Action items — created vs completed</h2>
         <ul className="flex items-center gap-4">
           {series.map((s) => (
             <li key={s.label} className="flex items-center gap-1.5 text-xs text-muted-foreground">
@@ -679,9 +679,9 @@ function ActivityHeatmap() {
   const [hover, setHover] = useState<{ w: number; d: number } | null>(null)
 
   return (
-    <div className="rounded-xl border bg-card p-4">
+    <div className="rounded-lg border bg-card p-4 shadow-xs">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <p className="text-sm font-medium">Team activity — last 12 weeks</p>
+        <h2 className="text-sm font-medium">Team activity — last 12 weeks</h2>
         <div className="flex items-center gap-1 text-[10px] text-muted-foreground">
           Less
           {HEAT_RAMP.map((c) => (

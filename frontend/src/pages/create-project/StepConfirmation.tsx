@@ -39,7 +39,7 @@ export function StepConfirmation({ form }: { form: CreateProjectForm }) {
   const members = form.members.filter((m) => m.display_name.trim() && m.role_id)
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-6">
       <p className="text-sm text-muted-foreground">
         Review the details below, then create the project.
       </p>

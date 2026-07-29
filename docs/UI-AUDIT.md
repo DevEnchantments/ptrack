@@ -231,8 +231,15 @@ StepConfirmation: `gap-4`/`px-4`/`—` where siblings use `gap-6`/`px-1`/`-`.
   Translucent header re-evaluated on merit and still skipped: the header sits
   OUTSIDE the scroll container (content never passes beneath it), so blur would
   have nothing to show; restructuring the scroll shell is not worth it.
-- [ ] **Stage 5 — Dashboard + Login + Wizard polish.** Card recipe adoption; chart
-  heading semantics; Login hierarchy + padding; StepConfirmation alignment.
+- [x] **Stage 5 — Dashboard + Login + Wizard polish.** SHIPPED 2026-07-29,
+  visually confirmed by Fares. Dashboard's nine chart cards + Home cards on the
+  house card recipe (`rounded-lg` + `shadow-xs`); chart titles `<p>` → `<h2>`
+  (semantic only); Login hierarchy fixed (brand `text-2xl` > card title
+  `text-xl`) + `p-6`; wizard steps wrapped in a card container (approved
+  judgment call under the lifted rulings) + stepper pills off `transition-all`
+  to explicit properties at 200ms; StepConfirmation outer gap matches sibling
+  steps. Dashboard draw-in durations (650-900ms) deliberately kept: one-time
+  decorative reveals.
 - [ ] **Stage 6 — Accessibility (NOT visual-only; separate commit).** Section 6 items
   5 and 6: `prefers-reduced-motion` guard in ProjectDetailPage's `useEntranceFlag`;
   `tabIndex`/`role`/key handling on Milestone's clickable rows. Kept out of Stages 1-5

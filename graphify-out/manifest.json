@@ -590,18 +590,18 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/CreateProjectWizard.tsx": {
-    "mtime": 1785316713.391602,
-    "ast_hash": "d69ed54df8efc0cd0ba8f295f4d0f2ad",
+    "mtime": 1785336203.722006,
+    "ast_hash": "96b9daf9528cb666d6ff869e43705493",
     "semantic_hash": ""
   },
   "frontend/src/pages/HomePage.tsx": {
-    "mtime": 1785335017.2725515,
-    "ast_hash": "7310b9273f9e37c557bdfa6f28f274fd",
+    "mtime": 1785336203.7189794,
+    "ast_hash": "ffc0b0defb397cde193bf9da9044e98e",
     "semantic_hash": ""
   },
   "frontend/src/pages/LoginPage.tsx": {
-    "mtime": 1784555245.7425065,
-    "ast_hash": "9fa1dbd1dfaa2b336c0d2afafdb95612",
+    "mtime": 1785336203.7209876,
+    "ast_hash": "ba33ddca81a6cb8626e13040c2348d1c",
     "semantic_hash": ""
   },
   "frontend/src/pages/MilestoneDetailPage.tsx": {
@@ -625,8 +625,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/create-project/StepConfirmation.tsx": {
-    "mtime": 1785333454.0420475,
-    "ast_hash": "280dde6045de93b6e8155e8829fcef26",
+    "mtime": 1785336203.7245104,
+    "ast_hash": "46767456b69465a47af26240eac0af93",
     "semantic_hash": ""
   },
   "frontend/src/pages/create-project/StepDetails.tsx": {
@@ -860,8 +860,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/DashboardPage.tsx": {
-    "mtime": 1784559356.2690248,
-    "ast_hash": "36f963bc9f2cfad57842471c04735e7c",
+    "mtime": 1785336203.7166324,
+    "ast_hash": "21a8c61c8f645441a66ea29c814c9a64",
     "semantic_hash": ""
   },
   "frontend/src/components/SectionCard.tsx": {
@@ -920,8 +920,8 @@
     "semantic_hash": ""
   },
   "docs/UI-AUDIT.md": {
-    "mtime": 1785335668.4114974,
-    "ast_hash": "5406ae5cd91ac4691026a5eb3131a42b",
+    "mtime": 1785336887.891318,
+    "ast_hash": "22bd1c618334df2a2b213acd4ef69edf",
     "semantic_hash": ""
   },
   "frontend/src/components/HelpDot.tsx": {

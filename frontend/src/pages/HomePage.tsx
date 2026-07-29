@@ -166,7 +166,7 @@ export function HomePage() {
         {loading && (
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {Array.from({ length: 6 }, (_, i) => (
-              <div key={i} className="rounded-lg border bg-card p-5">
+              <div key={i} className="rounded-lg border bg-card p-5 shadow-xs">
                 <div className="mb-3 flex items-start justify-between gap-3">
                   <Skeleton className="h-5 w-2/3" />
                   <Skeleton className="h-9 w-9 rounded-full" />
@@ -371,7 +371,7 @@ export function HomePage() {
                           if (e.key === 'Enter') navigate(`/projects/${p.id}`)
                         }}
                         style={{ animationDelay: `${Math.min(i, 12) * 30}ms` }}
-                        className="stagger-in flex cursor-pointer flex-col rounded-lg border bg-card p-5 transition-[translate,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-2 focus-visible:outline-ring"
+                        className="stagger-in flex cursor-pointer flex-col rounded-lg border bg-card p-5 shadow-xs transition-[translate,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-2 focus-visible:outline-ring"
                       >
                         <div className="mb-3 flex items-start justify-between gap-3">
                           <h2 className="text-base font-semibold">{p.name}</h2>
