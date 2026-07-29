@@ -210,8 +210,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/lookups/lookups.service.ts": {
-    "mtime": 1784012214.5347772,
-    "ast_hash": "6592331a7409225dd5148385da87fc9c",
+    "mtime": 1785315925.0771747,
+    "ast_hash": "615593266582bdddc611efc607ccabea",
     "semantic_hash": ""
   },
   "backend/src/modules/milestones/dto/create-milestone.dto.ts": {
@@ -275,13 +275,13 @@
     "semantic_hash": ""
   },
   "backend/src/modules/projects/dto/create-project.dto.ts": {
-    "mtime": 1783942248.549218,
-    "ast_hash": "28028e6a52180b968066a578b833faf0",
+    "mtime": 1785316381.628007,
+    "ast_hash": "f93af560406ba90d0eb9510ba59d9d54",
     "semantic_hash": ""
   },
   "backend/src/modules/projects/dto/update-project.dto.ts": {
-    "mtime": 1783942248.549218,
-    "ast_hash": "43dd5dc6960b272f825de310978b1931",
+    "mtime": 1785316381.6302311,
+    "ast_hash": "428026eccf5d88e7278ac4de0216fcad",
     "semantic_hash": ""
   },
   "backend/src/modules/projects/projects.controller.ts": {
@@ -295,13 +295,13 @@
     "semantic_hash": ""
   },
   "backend/src/modules/projects/projects.repository.ts": {
-    "mtime": 1784059741.841317,
-    "ast_hash": "17873369be0a8bb2ae2c82f686e1e267",
+    "mtime": 1785316407.1599777,
+    "ast_hash": "42b4fa6a50b0fc652fed53795809a1ea",
     "semantic_hash": ""
   },
   "backend/src/modules/projects/projects.service.ts": {
-    "mtime": 1784526265.0687027,
-    "ast_hash": "97e320c5fa07901c782dd0639e2a288b",
+    "mtime": 1785316381.63273,
+    "ast_hash": "a813c39d6307e352577d9bbbc491d7dd",
     "semantic_hash": ""
   },
   "backend/src/modules/resources/dto/create-resource.dto.ts": {
@@ -500,8 +500,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/EditProjectDialog.tsx": {
-    "mtime": 1784560646.4760284,
-    "ast_hash": "9794616d8b5f574cc1b91444498bdeab",
+    "mtime": 1785316682.8090422,
+    "ast_hash": "0f5bcd11e6aad07bf8fce9e07ed97a53",
     "semantic_hash": ""
   },
   "frontend/src/components/MiniCalendar.tsx": {
@@ -555,8 +555,8 @@
     "semantic_hash": ""
   },
   "frontend/src/lib/api.ts": {
-    "mtime": 1784557888.6217642,
-    "ast_hash": "d367f085a6cf374f7ea210c356df5cb4",
+    "mtime": 1785316619.6894202,
+    "ast_hash": "c2b1fa202e490ec1966163aed8b524c9",
     "semantic_hash": ""
   },
   "frontend/src/lib/auth-context.tsx": {
@@ -590,8 +590,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/CreateProjectWizard.tsx": {
-    "mtime": 1784555226.619513,
-    "ast_hash": "cf31fa86500da3a6f912a1c81f84ae9e",
+    "mtime": 1785316713.391602,
+    "ast_hash": "d69ed54df8efc0cd0ba8f295f4d0f2ad",
     "semantic_hash": ""
   },
   "frontend/src/pages/HomePage.tsx": {
@@ -610,8 +610,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ProjectDetailPage.tsx": {
-    "mtime": 1784560983.3879545,
-    "ast_hash": "03b2cb9bf420f6c914d8c603b64e34bf",
+    "mtime": 1785316784.0228598,
+    "ast_hash": "c51aa07c42fc7223d828aef0eae2698e",
     "semantic_hash": ""
   },
   "frontend/src/pages/StatusReportDetailPage.tsx": {
@@ -625,13 +625,13 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/create-project/StepConfirmation.tsx": {
-    "mtime": 1784060427.9649916,
-    "ast_hash": "efdc4d79b821cbe5eefd6a1f3d40b922",
+    "mtime": 1785316779.307693,
+    "ast_hash": "0701a6fce0c23527171a7ceead64bbc0",
     "semantic_hash": ""
   },
   "frontend/src/pages/create-project/StepDetails.tsx": {
-    "mtime": 1784060428.0775044,
-    "ast_hash": "ca9fe087751c391e38bfb6ba4a4372d6",
+    "mtime": 1785316751.0913627,
+    "ast_hash": "7328d4d35770dd17e4e5ad65f54e3de2",
     "semantic_hash": ""
   },
   "frontend/src/pages/create-project/StepProject.tsx": {
@@ -905,8 +905,13 @@
     "semantic_hash": ""
   },
   "docs/FDD-ALIGNMENT.md": {
-    "mtime": 1784610471.677953,
-    "ast_hash": "70ba247683824813dce674f7d9831023",
+    "mtime": 1785317156.4947464,
+    "ast_hash": "1d2ca0df50597a1d46d8411db8210c1f",
+    "semantic_hash": ""
+  },
+  "backend/db/fdd_project_fields.sql": {
+    "mtime": 1785316368.4381206,
+    "ast_hash": "4668d97a397bf057fbac40a01fe73d0e",
     "semantic_hash": ""
   }
 }
