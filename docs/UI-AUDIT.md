@@ -14,8 +14,10 @@ update the ratio tables if any token value changes.
 - No new dependencies, no charting library (Phase 2 decision stays open).
 - Colors only via the shadcn tokens in `frontend/src/index.css`; no hardcoded hexes
   in components. Any token change must hold AA and show before/after ratios here.
-- Layout mirrors the demo by design: flag divergences (section 6), never make them
-  unprompted.
+- ~~Layout mirrors the demo by design.~~ **LIFTED 2026-07-29 by Fares: the demo no
+  longer constrains the design.** Diverge where it produces a better result. Every
+  `⚠ DEMO-PARITY` marker in section 2 is superseded; section 6 records the resolved
+  calls. Field sets remain frozen regardless: that is a spec matter, not a demo one.
 - Respect `prefers-reduced-motion`. Lint stays blocking at 0 errors.
 
 ---
@@ -185,6 +187,10 @@ StepConfirmation: `gap-4`/`px-4`/`—` where siblings use `gap-6`/`px-1`/`-`.
   recovery button.
 - [ ] **Stage 5 — Dashboard + Login + Wizard polish.** Card recipe adoption; chart
   heading semantics; Login hierarchy + padding; StepConfirmation alignment.
+- [ ] **Stage 6 — Accessibility (NOT visual-only; separate commit).** Section 6 items
+  5 and 6: `prefers-reduced-motion` guard in ProjectDetailPage's `useEntranceFlag`;
+  `tabIndex`/`role`/key handling on Milestone's clickable rows. Kept out of Stages 1-5
+  so the one behavior-touching commit stands alone and reverts cleanly.
 
 **Recommended order rationale:** Stage 1 first because every later stage consumes
 its tokens/recipes; Stages 2-5 then become class-swaps instead of local decisions.
@@ -219,13 +225,37 @@ trusting stale numbers. Highest-value grep targets: `transition-all`, `text-whit
 
 ---
 
-## 6. Flagged: needs Fares's call before touching (do NOT fold into stages)
+## 6. RESOLVED 2026-07-29 (Fares ruled on all seven; demo constraint lifted)
 
-1. Placeholder-string unification (`- Select -` vs `- No X -` vs `- None -`):
-   confirm against demo screenshots first.
-2. Detail-page H1: static noun vs record name: demo question.
-3. AddUpdate body field label: demo may deliberately show placeholder-only.
-4. Translucent/backdrop-blur header bar: diverges from demo.
-5. Reduced-motion guard in ProjectDetailPage's `useEntranceFlag`: touches a hook.
-6. Keyboard focus (`tabIndex`/`role`) on Milestone clickable rows: markup behavior.
-7. Toast hover-pause of the dismiss timer: logic.
+| # | Ruling | Lands in |
+|---|---|---|
+| 1 | Placeholders: unify **prompts only** (see below). Sentinel labels untouched. | Stage 2 |
+| 2 | Detail-page H1 = **the record's name** on all detail pages, matching ProjectDetail. Static nouns move to an eyebrow/kicker above the H1 or are dropped. | Stage 3 |
+| 3 | AddUpdate body Textarea **gets a real `Label`** like every other required field. | Stage 2 |
+| 4 | Translucent/blur header: **NOT doing it.** Now purely a taste call, and an opaque header on a navy sidebar is cleaner than a blurred one. Revisit only if asked. | none |
+| 5 | Reduced-motion guard in `useEntranceFlag`: **do it.** | Stage 6 |
+| 6 | Keyboard focus (`tabIndex`/`role`) on Milestone rows: **do it.** | Stage 6 |
+| 7 | Toast hover-pause: **deferred.** Genuine nicety, real logic, no accessibility argument. | none |
+
+### Item 1 detail: the two categories must not be collapsed
+
+Nine distinct strings exist, in two semantically different groups. Unifying across the
+groups would turn a chosen value into a "nothing picked yet" prompt: a meaning change,
+not a restyle.
+
+- **Prompts** (placeholder only, no matching `SelectItem`): `- Select -`,
+  `- Select Role -`, `- Select Level -`, `- Select Type -`, `- Select Category -`.
+  → **Unify all five to `- Select -`.** The `Label` already names the field.
+- **Sentinel values** (appear in the `items` array AND as a `SelectItem`, bound to
+  `NONE` / `NO_ROLE` / `NO_TYPE` / `NO_MILESTONE`): `- None -`, `- No Role -`,
+  `- No Type -`, `- No Milestone -`. → **Leave exactly as they are.** These are
+  data-bearing option labels, and `- No Milestone -` reads better than a generic
+  `- None -` anyway.
+
+### Items 5-6 scope note
+
+Both cross the visual-only line, which is why they were fenced. They ship as their own
+commit (Stage 6), never folded into a visual stage, so the behavior change is reviewable
+on its own. Both are accessibility defects, not polish: the entrance animation currently
+ignores `prefers-reduced-motion`, and Milestone's clickable rows cannot be reached by
+keyboard at all.
