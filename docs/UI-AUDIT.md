@@ -240,10 +240,17 @@ StepConfirmation: `gap-4`/`px-4`/`—` where siblings use `gap-6`/`px-1`/`-`.
   to explicit properties at 200ms; StepConfirmation outer gap matches sibling
   steps. Dashboard draw-in durations (650-900ms) deliberately kept: one-time
   decorative reveals.
-- [ ] **Stage 6 — Accessibility (NOT visual-only; separate commit).** Section 6 items
-  5 and 6: `prefers-reduced-motion` guard in ProjectDetailPage's `useEntranceFlag`;
-  `tabIndex`/`role`/key handling on Milestone's clickable rows. Kept out of Stages 1-5
-  so the one behavior-touching commit stands alone and reverts cleanly.
+- [x] **Stage 6 — Accessibility (behavior; separate commit).** SHIPPED 2026-07-29,
+  confirmed by Fares. ProjectDetailPage's `useEntranceFlag` gains the
+  `prefersReducedMotion()` guard (mirrors DashboardPage's verbatim: starts
+  entered, no movement); Milestone's clickable action-item rows gain
+  `role="link"` + `tabIndex={0}` + Enter navigation + the standard
+  `focus-visible:outline-2 focus-visible:outline-ring` ring (mirrors
+  ProjectDetailPage's own rows). All six stages complete: the audit is DONE.
+  Open leftovers if anyone resumes styling work later: hover motion not gated
+  behind `@media (hover: hover)` app-wide; `InitialsAvatar` raw-palette hue
+  hashing (documented exception, Stage 3 note); toast hover-pause (deferred,
+  section 6 item 7).
 
 **Recommended order rationale:** Stage 1 first because every later stage consumes
 its tokens/recipes; Stages 2-5 then become class-swaps instead of local decisions.

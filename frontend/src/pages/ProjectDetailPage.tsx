@@ -219,9 +219,13 @@ function readCollapsePrefs(projectId: string): Record<string, boolean> {
   }
 }
 
-/** One-time entrance flag — flips a frame after mount so transitions run. */
+function prefersReducedMotion(): boolean {
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches
+}
+
+/** Flips true one frame after mount so CSS transitions run (starts true on reduced motion). */
 function useEntranceFlag(): boolean {
-  const [entered, setEntered] = useState(false)
+  const [entered, setEntered] = useState(() => prefersReducedMotion())
   useEffect(() => {
     const raf = requestAnimationFrame(() =>
       requestAnimationFrame(() => setEntered(true)),

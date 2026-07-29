@@ -605,13 +605,13 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/MilestoneDetailPage.tsx": {
-    "mtime": 1785333550.4765716,
-    "ast_hash": "34b15cb87232c1fce7c2440eaa8672a5",
+    "mtime": 1785337092.2031016,
+    "ast_hash": "77e88597541bbc8238d1d362a9742e93",
     "semantic_hash": ""
   },
   "frontend/src/pages/ProjectDetailPage.tsx": {
-    "mtime": 1785333520.5720198,
-    "ast_hash": "5ba18656ad0300e644087d796b8daba3",
+    "mtime": 1785337089.1154609,
+    "ast_hash": "1c8c2cb2db2686d0eaacebf0b8374832",
     "semantic_hash": ""
   },
   "frontend/src/pages/StatusReportDetailPage.tsx": {
@@ -920,8 +920,8 @@
     "semantic_hash": ""
   },
   "docs/UI-AUDIT.md": {
-    "mtime": 1785336887.891318,
-    "ast_hash": "22bd1c618334df2a2b213acd4ef69edf",
+    "mtime": 1785337464.3402991,
+    "ast_hash": "30160efdd8d9d7c44030bedf116f24e9",
     "semantic_hash": ""
   },
   "frontend/src/components/HelpDot.tsx": {

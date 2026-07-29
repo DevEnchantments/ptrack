@@ -72,12 +72,7 @@
   "70": "StatusPill.tsx",
   "71": "AddStatusReportDialog.tsx",
   "72": "@nestjs/config",
-  "73": "DatabaseModule",
-  "74": "AddPersonDialog.tsx",
-  "75": "class-validator",
   "76": "tw-animate-css",
   "77": "dev.ps1",
-  "78": "attachments.repository.ts",
-  "79": "StatusPill.tsx",
-  "80": "@types/node"
+  "79": "StatusPill.tsx"
 }

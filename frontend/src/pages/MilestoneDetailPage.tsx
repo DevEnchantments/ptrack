@@ -333,10 +333,16 @@ export function MilestoneDetailPage() {
                 {actionItems.map((a) => (
                   <li
                     key={a.id}
+                    role="link"
+                    tabIndex={0}
                     onClick={() =>
                       navigate(`/projects/${projectId}/action-items/${a.id}`)
                     }
-                    className="cursor-pointer px-4 py-3 hover:bg-accent"
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter')
+                        navigate(`/projects/${projectId}/action-items/${a.id}`)
+                    }}
+                    className="cursor-pointer px-4 py-3 hover:bg-accent focus-visible:outline-2 focus-visible:outline-ring"
                   >
                     <div className="flex items-center justify-between gap-3">
                       <span className="text-sm font-medium">{a.title}</span>
