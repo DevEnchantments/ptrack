@@ -179,7 +179,18 @@ export function HomePage() {
           </div>
         )}
 
-        {!loading && error && <p className="text-destructive">{error}</p>}
+        {!loading && error && (
+          <div>
+            <p className="text-destructive">{error}</p>
+            <Button
+              variant="outline"
+              className="mt-4"
+              onClick={() => window.location.reload()}
+            >
+              Reload
+            </Button>
+          </div>
+        )}
 
         {!loading && !error && projects.length === 0 && (
           <div className="rounded-md border border-dashed p-10 text-center text-muted-foreground">
@@ -211,7 +222,7 @@ export function HomePage() {
                       <label className="flex cursor-pointer items-center gap-2 text-sm">
                         <input
                           type="checkbox"
-                          className="h-4 w-4 rounded accent-primary transition-transform duration-150 hover:scale-110"
+                          className="h-4 w-4 rounded accent-primary"
                           checked={!uncheckedEff.includes(s.id)}
                           onChange={() => toggleStatus(s.id)}
                         />
@@ -360,7 +371,7 @@ export function HomePage() {
                           if (e.key === 'Enter') navigate(`/projects/${p.id}`)
                         }}
                         style={{ animationDelay: `${Math.min(i, 12) * 30}ms` }}
-                        className="stagger-in flex cursor-pointer flex-col rounded-lg border bg-card p-5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-2 focus-visible:outline-ring"
+                        className="stagger-in flex cursor-pointer flex-col rounded-lg border bg-card p-5 transition-[translate,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-2 focus-visible:outline-ring"
                       >
                         <div className="mb-3 flex items-start justify-between gap-3">
                           <h2 className="text-base font-semibold">{p.name}</h2>

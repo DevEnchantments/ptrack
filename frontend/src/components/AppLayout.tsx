@@ -94,7 +94,7 @@ export function AppLayout() {
         Skip to content
       </a>
       <aside
-        className={`flex shrink-0 flex-col overflow-y-auto bg-sidebar text-sidebar-foreground transition-all ${
+        className={`flex shrink-0 flex-col overflow-y-auto bg-sidebar text-sidebar-foreground transition-[width] duration-200 ease-in-out ${
           collapsed ? 'w-14' : 'w-56'
         }`}
       >
@@ -102,17 +102,19 @@ export function AppLayout() {
           <button
             type="button"
             onClick={() => setCollapsed((c) => !c)}
-            className="rounded-md p-2 hover:bg-sidebar-accent"
+            className="rounded-md p-2 transition-colors hover:bg-sidebar-accent"
             title={collapsed ? 'Expand menu' : 'Collapse menu'}
             aria-label={collapsed ? 'Expand menu' : 'Collapse menu'}
           >
             <Menu className="h-5 w-5" />
           </button>
-          {!collapsed && (
-            <span className="truncate text-sm font-semibold text-white">
-              P-Track
-            </span>
-          )}
+          <span
+            className={`truncate text-sm font-semibold text-sidebar-accent-foreground transition-opacity duration-200 ${
+              collapsed ? 'w-0 opacity-0' : 'opacity-100'
+            }`}
+          >
+            P-Track
+          </span>
         </div>
 
         <nav className="flex flex-1 flex-col gap-0.5 px-2 py-2">
@@ -123,14 +125,22 @@ export function AppLayout() {
                 to={item.to}
                 viewTransition
                 title={collapsed ? item.label : undefined}
-                className={`flex items-center gap-3 rounded-md px-2.5 py-2 text-sm hover:bg-sidebar-accent hover:text-sidebar-accent-foreground ${
+                className={`flex items-center rounded-md px-2.5 py-2 text-sm transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground ${
+                  collapsed ? 'justify-center' : 'gap-3'
+                } ${
                   isActive(item.to)
                     ? 'bg-sidebar-primary font-medium text-sidebar-primary-foreground'
                     : ''
                 }`}
               >
                 <item.icon className="h-4 w-4 shrink-0" />
-                {!collapsed && <span className="truncate">{item.label}</span>}
+                <span
+                  className={`min-w-0 truncate transition-opacity duration-200 ${
+                    collapsed ? 'w-0 opacity-0' : 'opacity-100'
+                  }`}
+                >
+                  {item.label}
+                </span>
               </NavLink>
             ) : (
               <span
@@ -138,10 +148,18 @@ export function AppLayout() {
                 title={
                   collapsed ? `${item.label} — ${PHASE2_TOOLTIP}` : PHASE2_TOOLTIP
                 }
-                className="flex cursor-not-allowed items-center gap-3 rounded-md px-2.5 py-2 text-sm text-sidebar-foreground/60"
+                className={`flex cursor-not-allowed items-center rounded-md px-2.5 py-2 text-sm text-sidebar-foreground/60 ${
+                  collapsed ? 'justify-center' : 'gap-3'
+                }`}
               >
                 <item.icon className="h-4 w-4 shrink-0" />
-                {!collapsed && <span className="truncate">{item.label}</span>}
+                <span
+                  className={`min-w-0 truncate transition-opacity duration-200 ${
+                    collapsed ? 'w-0 opacity-0' : 'opacity-100'
+                  }`}
+                >
+                  {item.label}
+                </span>
               </span>
             ),
           )}
@@ -189,18 +207,22 @@ export function AppLayout() {
           >
             <Outlet />
           </div>
-          {showScrollTop && (
-            <button
-              type="button"
-              aria-label="Back to top"
-              onClick={() =>
-                scrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' })
-              }
-              className="toast-in absolute bottom-5 right-5 z-40 flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg transition-transform hover:-translate-y-0.5"
-            >
-              <ArrowUp className="h-5 w-5" />
-            </button>
-          )}
+          <button
+            type="button"
+            aria-label="Back to top"
+            aria-hidden={!showScrollTop}
+            tabIndex={showScrollTop ? 0 : -1}
+            onClick={() =>
+              scrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' })
+            }
+            className={`absolute bottom-5 right-5 z-40 flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg transition-[opacity,translate] duration-200 hover:-translate-y-0.5 ${
+              showScrollTop
+                ? 'opacity-100'
+                : 'pointer-events-none translate-y-2 opacity-0'
+            }`}
+          >
+            <ArrowUp className="h-5 w-5" />
+          </button>
         </div>
       </div>
       <CommandPalette open={paletteOpen} onOpenChange={setPaletteOpen} />

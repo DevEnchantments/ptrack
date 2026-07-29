@@ -212,9 +212,25 @@ StepConfirmation: `gap-4`/`px-4`/`—` where siblings use `gap-6`/`px-1`/`-`.
   still uses raw `*-100`/`*-700` palette pairs (deliberate variety; tokenizing
   needs 16 more tokens). Revisit only if asked. AppLayout's brand `text-white`
   lands in Stage 4.
-- [ ] **Stage 4 — Shell + Home.** Palette animation removal; sidebar width
-  transition; scroll-top exit; nav hover transition; Home card transition + error
-  recovery button.
+- [x] **Stage 4 — Shell + Home.** SHIPPED 2026-07-29, visually confirmed by Fares.
+  CommandPalette: entrance animation DELETED (keyboard surface), overlay → 
+  `bg-overlay` token, footer kbd-hint strip added. AppLayout: sidebar
+  `transition-[width] duration-200 ease-in-out` with always-mounted fading labels
+  (icons center when collapsed), nav/collapse `transition-colors`, brand text → 
+  `text-sidebar-accent-foreground`, scroll-top button always mounted with
+  symmetric opacity+translate fade (aria-hidden + tabIndex=-1 while hidden).
+  Home: cards `transition-[translate,box-shadow]`, checkbox hover-scale removed,
+  error state gains a Reload button (full page reload; loader is inline to its
+  effect). review-animations verdict: Approve; accepted exceptions on record:
+  sidebar animates `width` (content must reflow), card hover animates
+  `box-shadow` (paint-only, cheap). Known app-wide gap, still open: hover motion
+  not gated behind `@media (hover: hover)`.
+  NOTE 2026-07-29: Fares lifted the section 6 taste rulings ("go all out; judge by
+  the audit and what's good for the site"). Hard rules unchanged (visual-only
+  Stages 1-5, frozen fields, no deps, tokens, AA, reduced-motion, lint 0).
+  Translucent header re-evaluated on merit and still skipped: the header sits
+  OUTSIDE the scroll container (content never passes beneath it), so blur would
+  have nothing to show; restructuring the scroll shell is not worth it.
 - [ ] **Stage 5 — Dashboard + Login + Wizard polish.** Card recipe adoption; chart
   heading semantics; Login hierarchy + padding; StepConfirmation alignment.
 - [ ] **Stage 6 — Accessibility (NOT visual-only; separate commit).** Section 6 items

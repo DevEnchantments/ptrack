@@ -82,12 +82,14 @@ export function CommandPalette({ open, onOpenChange }: Props) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-start justify-center bg-black/20 pt-[15vh] backdrop-blur-xs"
+      className="fixed inset-0 z-50 flex items-start justify-center bg-overlay pt-[15vh] backdrop-blur-xs"
       onMouseDown={(e) => {
         if (e.target === e.currentTarget) onOpenChange(false)
       }}
     >
-      <div className="animate-in fade-in-0 zoom-in-95 w-full max-w-lg overflow-hidden rounded-xl border bg-popover shadow-2xl duration-100">
+      {/* Deliberately unanimated: Ctrl+K surfaces are keyboard-initiated and
+          used constantly, so they must appear instantly (see UI-AUDIT). */}
+      <div className="w-full max-w-lg overflow-hidden rounded-xl border bg-popover shadow-2xl">
         <div className="flex items-center gap-2 border-b px-3">
           <Search className="h-4 w-4 shrink-0 text-muted-foreground" />
           <input
@@ -148,6 +150,17 @@ export function CommandPalette({ open, onOpenChange }: Props) {
             </li>
           ))}
         </ul>
+        <div className="flex items-center gap-4 border-t bg-muted/40 px-3 py-1.5 text-xs text-muted-foreground">
+          <span className="flex items-center gap-1">
+            <kbd className="rounded border bg-background px-1">↑↓</kbd> navigate
+          </span>
+          <span className="flex items-center gap-1">
+            <kbd className="rounded border bg-background px-1">Enter</kbd> open
+          </span>
+          <span className="flex items-center gap-1">
+            <kbd className="rounded border bg-background px-1">Esc</kbd> close
+          </span>
+        </div>
       </div>
     </div>
   )
