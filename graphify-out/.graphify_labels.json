@@ -73,15 +73,8 @@
   "71": "CreateUpdateDto",
   "72": "@nestjs/config",
   "73": "DatabaseModule",
-  "74": "updates.repository.ts",
   "75": "class-validator",
   "76": "tw-animate-css",
   "77": "dev.ps1",
-  "78": "@eslint/js",
-  "79": "ApiProperty",
-  "80": "Type",
-  "81": "SectionNav.tsx",
-  "82": "AppModule",
-  "83": "StatusPill.tsx",
-  "84": "Attachment"
+  "78": "@eslint/js"
 }

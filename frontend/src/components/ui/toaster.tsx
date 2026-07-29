@@ -11,15 +11,17 @@ interface ToastItem {
   id: number
   message: string
   kind: ToastKind
+  closing?: boolean
 }
 
 const TOAST_MS = { error: 6000, success: 3000 }
+// Exit runs the entrance path in reverse; must match .toast-out in index.css.
+const EXIT_MS = 150
 let seq = 0
 
 const KIND_CLASSES: Record<ToastKind, string> = {
   error: 'border-destructive/30 border-l-destructive text-destructive',
-  success:
-    'border-emerald-300/50 border-l-emerald-600 text-emerald-700 dark:border-emerald-800/60 dark:border-l-emerald-400 dark:text-emerald-300',
+  success: 'border-success-border/40 border-l-success-border text-success',
 }
 
 export function Toaster() {
@@ -29,10 +31,15 @@ export function Toaster() {
     return subscribeToasts((message, kind) => {
       const id = ++seq
       setToasts((prev) => [...prev, { id, message, kind }])
-      setTimeout(
-        () => setToasts((prev) => prev.filter((t) => t.id !== id)),
-        TOAST_MS[kind],
-      )
+      setTimeout(() => {
+        setToasts((prev) =>
+          prev.map((t) => (t.id === id ? { ...t, closing: true } : t)),
+        )
+        setTimeout(
+          () => setToasts((prev) => prev.filter((t) => t.id !== id)),
+          EXIT_MS,
+        )
+      }, TOAST_MS[kind])
     })
   }, [])
 
@@ -44,7 +51,7 @@ export function Toaster() {
         <div
           key={t.id}
           role={t.kind === 'error' ? 'alert' : 'status'}
-          className={`toast-in flex items-start gap-2 rounded-md border border-l-4 bg-background px-4 py-3 text-sm shadow-lg ${KIND_CLASSES[t.kind]}`}
+          className={`${t.closing ? 'toast-out' : 'toast-in'} flex items-start gap-2 rounded-md border border-l-4 bg-popover px-4 py-3 text-sm shadow-lg ${KIND_CLASSES[t.kind]}`}
         >
           {t.kind === 'success' ? (
             <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" />

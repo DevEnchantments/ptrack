@@ -138,7 +138,7 @@ export function AppLayout() {
                 title={
                   collapsed ? `${item.label} — ${PHASE2_TOOLTIP}` : PHASE2_TOOLTIP
                 }
-                className="flex cursor-not-allowed items-center gap-3 rounded-md px-2.5 py-2 text-sm text-sidebar-foreground/40"
+                className="flex cursor-not-allowed items-center gap-3 rounded-md px-2.5 py-2 text-sm text-sidebar-foreground/60"
               >
                 <item.icon className="h-4 w-4 shrink-0" />
                 {!collapsed && <span className="truncate">{item.label}</span>}

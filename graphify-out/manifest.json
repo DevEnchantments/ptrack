@@ -520,8 +520,8 @@
     "semantic_hash": "59d4b25bb78d19ee1dcb46e7d7f84c63"
   },
   "frontend/src/components/ui/button.tsx": {
-    "mtime": 1784524719.5794642,
-    "ast_hash": "14126d69dc1409ba8be7fd168beb507e",
+    "mtime": 1785330404.370313,
+    "ast_hash": "13bab161ea50ba6bfffe4476bd4c425b",
     "semantic_hash": ""
   },
   "frontend/src/components/ui/card.tsx": {
@@ -530,9 +530,9 @@
     "semantic_hash": "8a174626e6fe8ee080d676f2416a21e3"
   },
   "frontend/src/components/ui/dialog.tsx": {
-    "mtime": 1783407227.7727635,
-    "ast_hash": "a3389201f032a5cbc4c6671836c91965",
-    "semantic_hash": "a3389201f032a5cbc4c6671836c91965"
+    "mtime": 1785330414.156147,
+    "ast_hash": "95ca124882b954dc699422bb4ccece75",
+    "semantic_hash": ""
   },
   "frontend/src/components/ui/input.tsx": {
     "mtime": 1784554386.062586,
@@ -545,8 +545,8 @@
     "semantic_hash": "92c6cf712c42f55463403a9241294aa0"
   },
   "frontend/src/components/ui/select.tsx": {
-    "mtime": 1784554394.2106214,
-    "ast_hash": "c6b3546273b681f39c9fdf22cfb5ad1c",
+    "mtime": 1785330417.1585438,
+    "ast_hash": "c5754637054760ba12b4a58905351d30",
     "semantic_hash": ""
   },
   "frontend/src/components/ui/textarea.tsx": {
@@ -765,8 +765,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/ui/toaster.tsx": {
-    "mtime": 1784560409.122617,
-    "ast_hash": "36eac43a6aacf47f9d087ddc575cdd57",
+    "mtime": 1785330423.5500104,
+    "ast_hash": "feb6cf3be51dc7a222a7478da805d84a",
     "semantic_hash": ""
   },
   "frontend/src/lib/toast.ts": {
@@ -855,8 +855,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/AppLayout.tsx": {
-    "mtime": 1784561175.0212495,
-    "ast_hash": "2badd84ccc624fc39fb9e44332e756cf",
+    "mtime": 1785330418.656135,
+    "ast_hash": "864eb7addbab6bc1d8e14cbf7a6a3d1f",
     "semantic_hash": ""
   },
   "frontend/src/pages/DashboardPage.tsx": {
@@ -920,8 +920,8 @@
     "semantic_hash": ""
   },
   "docs/UI-AUDIT.md": {
-    "mtime": 1785329644.910707,
-    "ast_hash": "d4c64916a0becdc763f9b6c921961ee6",
+    "mtime": 1785331025.0873258,
+    "ast_hash": "16bd58f06abb5129a90e8dd15158c7be",
     "semantic_hash": ""
   }
 }

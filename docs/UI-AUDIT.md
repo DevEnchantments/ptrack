@@ -39,7 +39,7 @@ classes that bypass the tokens:
 | Priority star fill, light | `amber-400` on white | 1.67:1 | tolerable: always paired with text |
 | Input hairlines | `#e2e6ec` on white | 1.25:1 | inputs identified by fill + label; nudge only |
 
-### Proposed token changes (Stage 1), before → after, all computed
+### Token changes — SHIPPED in Stage 1 (2026-07-29), re-measured after landing
 
 | Token | Before | After | Ratio before → after |
 |---|---|---|---|
@@ -54,6 +54,12 @@ Dark-mode ambers/emeralds already pass (9.93 to 11.92), so only light values mov
 Other measured references: red-600 overdue on card 4.83 PASS; white on red-600 brand
 strip 4.83 PASS; StatusPill pairs (emerald 5.21, amber 4.84, red 5.91, blue 6.16) all
 PASS but bypass tokens; `--chart-1..3` trio previously validated CVD-safe, untouched.
+
+**Post-Stage-1 measured state (all PASS):** destructive 4.81 canvas / 5.15 card;
+stubs 3.87; success 5.48 light / 10.88 dark; gold 5.02 light / 9.93 dark; status
+pills 4.84-6.16 light / 8.15-10.39 dark; hairlines 1.63 (deliberate, see table).
+Still open (fixed by later stages, not tokens): teal-avatar 1.86 and raw amber-600
+gold labels 3.19, both swept in Stage 3 onto the new tokens.
 
 ---
 
@@ -169,11 +175,14 @@ StepConfirmation: `gap-4`/`px-4`/`—` where siblings use `gap-6`/`px-1`/`-`.
 
 ## 3. Staged plan (one stage = one commit; tick when shipped)
 
-- [ ] **Stage 1 — Foundation (tokens + primitives).** index.css: `--ease-out`/
-  `--ease-in-out`, `--success`, `--gold`, `--overlay`, `--status-*`; destructive +
-  input/border nudges per section 1 table; stub opacity. ui/: button transition +
-  `active:scale-[0.98]`, toast exit + tokens + `bg-popover`, dialog scrim +
-  elevation, select chevron rotation. Acceptance test = section 1 ratios re-verified.
+- [x] **Stage 1 — Foundation (tokens + primitives).** SHIPPED 2026-07-29, visually
+  confirmed by Fares. index.css: `--ease-out`/`--ease-in-out` (plain `@theme` block,
+  also upgrades the `ease-out` utility app-wide), `--success`, `--gold`, `--overlay`,
+  `--status-*`; destructive + input/border nudges; stub opacity `/60`; `toast-out`
+  keyframes. ui/: button explicit transition list + `active:scale-[0.98]`, toaster
+  exit animation (closing flag + 150ms delay) + success tokens + `bg-popover`,
+  dialog `bg-overlay` scrim + `shadow-lg`, select chevron rotates via
+  `group-data-popup-open/trigger`. Ratios re-verified (see section 1).
 - [ ] **Stage 2 — Dialog consistency.** One width recipe; split footer everywhere;
   one delete copy set (`Delete` → `Delete?` + `Confirm`/`No`); spinner in AddLink;
   one error style; asterisk-truth pass; shared HelpDot; `aria-invalid` on Selects;

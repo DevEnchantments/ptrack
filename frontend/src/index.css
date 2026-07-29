@@ -46,6 +46,30 @@
     --radius-2xl: calc(var(--radius) * 1.8);
     --radius-3xl: calc(var(--radius) * 2.2);
     --radius-4xl: calc(var(--radius) * 2.6);
+    --color-success: var(--success);
+    --color-success-border: var(--success-border);
+    --color-gold: var(--gold);
+    --color-overlay: var(--overlay);
+    --color-status-green-bg: var(--status-green-bg);
+    --color-status-green-fg: var(--status-green-fg);
+    --color-status-green-border: var(--status-green-border);
+    --color-status-amber-bg: var(--status-amber-bg);
+    --color-status-amber-fg: var(--status-amber-fg);
+    --color-status-amber-border: var(--status-amber-border);
+    --color-status-red-bg: var(--status-red-bg);
+    --color-status-red-fg: var(--status-red-fg);
+    --color-status-red-border: var(--status-red-border);
+    --color-status-blue-bg: var(--status-blue-bg);
+    --color-status-blue-fg: var(--status-blue-fg);
+    --color-status-blue-border: var(--status-blue-border);
+}
+
+/* House easing curves (UI-AUDIT section 4). Plain @theme (not inline) so the
+   vars are emitted for the CSS keyframe classes below, and the `ease-out` /
+   `ease-in-out` utilities pick up the stronger curves everywhere. */
+@theme {
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 }
 
 /*
@@ -69,10 +93,30 @@
     --muted-foreground: #5d6b80;
     --accent: #e8eefb;
     --accent-foreground: #1a2333;
-    --destructive: oklch(0.577 0.245 27.325);
-    --border: #e2e6ec;
-    --input: #e2e6ec;
+    /* Darkened 2026-07-29 (UI-AUDIT section 1): destructive 4.45 -> 4.81 on
+       canvas; border/input hairlines 1.25 -> 1.63 on card. */
+    --destructive: oklch(0.55 0.245 27.325);
+    --border: #c2ccd8;
+    --input: #c2ccd8;
     --ring: #2563eb;
+    /* Semantic accents (UI-AUDIT Stage 1): success (toasts), gold (starred /
+       gold-flagged records), overlay (dialog scrim), status pill trios. */
+    --success: #047857;
+    --success-border: #059669;
+    --gold: #b45309;
+    --overlay: rgb(13 21 38 / 0.35);
+    --status-green-bg: #ecfdf5;
+    --status-green-fg: #047857;
+    --status-green-border: #a7f3d0;
+    --status-amber-bg: #fffbeb;
+    --status-amber-fg: #b45309;
+    --status-amber-border: #fde68a;
+    --status-red-bg: #fef2f2;
+    --status-red-fg: #b91c1c;
+    --status-red-border: #fecaca;
+    --status-blue-bg: #eff6ff;
+    --status-blue-fg: #1d4ed8;
+    --status-blue-border: #bfdbfe;
     /* Chart series — validated categorical trio (CVD-safe, >=3:1 on card),
        in fixed assignment order (blue separates green/orange); 4-5 are spares. */
     --chart-1: #16a34a;
@@ -119,6 +163,22 @@
     --border: #263344;
     --input: #263344;
     --ring: #60a5fa;
+    --success: #6ee7b7;
+    --success-border: #34d399;
+    --gold: #fbbf24;
+    --overlay: rgb(0 0 0 / 0.55);
+    --status-green-bg: #022c22;
+    --status-green-fg: #6ee7b7;
+    --status-green-border: #064e3b;
+    --status-amber-bg: #451a03;
+    --status-amber-fg: #fcd34d;
+    --status-amber-border: #78350f;
+    --status-red-bg: #450a0a;
+    --status-red-fg: #fca5a5;
+    --status-red-border: #7f1d1d;
+    --status-blue-bg: #172554;
+    --status-blue-fg: #93c5fd;
+    --status-blue-border: #1e3a8a;
     --chart-1: #16a34a;
     --chart-2: #ea580c;
     --chart-3: #3b82f6;
@@ -163,7 +223,7 @@
     }
 }
 .section-list > li {
-    animation: row-in 300ms ease-out both;
+    animation: row-in 300ms var(--ease-out) both;
 }
 
 /* Wizard steps sliding in (element remounts per step via key={step}). */
@@ -174,15 +234,16 @@
     }
 }
 .animate-step-in {
-    animation: step-in 250ms ease-out both;
+    animation: step-in 250ms var(--ease-out) both;
 }
 
 /* Generic staggered entrance — pair with an inline animation-delay. */
 .stagger-in {
-    animation: row-in 300ms ease-out both;
+    animation: row-in 300ms var(--ease-out) both;
 }
 
-/* Toasts sliding in from the right with a slight overshoot. */
+/* Toasts sliding in from the right with a slight overshoot, and exiting back
+   the way they came (spatial consistency), faster than they entered. */
 @keyframes toast-in {
     from {
         opacity: 0;
@@ -191,6 +252,15 @@
 }
 .toast-in {
     animation: toast-in 250ms cubic-bezier(0.2, 0.9, 0.3, 1.15) both;
+}
+@keyframes toast-out {
+    to {
+        opacity: 0;
+        transform: translateX(24px) scale(0.97);
+    }
+}
+.toast-out {
+    animation: toast-out 150ms var(--ease-out) both;
 }
 
 /* Inline hints (autocomplete status chips etc.) fading up into place. */
@@ -201,7 +271,7 @@
     }
 }
 .hint-in {
-    animation: hint-in 200ms ease-out both;
+    animation: hint-in 200ms var(--ease-out) both;
 }
 
 /* Cross-fade between routes (react-router viewTransition links). Browsers
