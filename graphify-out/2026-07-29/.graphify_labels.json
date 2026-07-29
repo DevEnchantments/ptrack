@@ -79,5 +79,6 @@
   "77": "dev.ps1",
   "78": "@eslint/js",
   "79": "ApiProperty",
-  "80": "Type"
+  "80": "Type",
+  "81": "SectionNav.tsx"
 }

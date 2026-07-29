@@ -80,5 +80,8 @@
   "78": "@eslint/js",
   "79": "ApiProperty",
   "80": "Type",
-  "81": "SectionNav.tsx"
+  "81": "SectionNav.tsx",
+  "82": "AppModule",
+  "83": "StatusPill.tsx",
+  "84": "Attachment"
 }
