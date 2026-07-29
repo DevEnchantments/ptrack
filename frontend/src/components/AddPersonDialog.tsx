@@ -204,7 +204,7 @@ export function AddPersonDialog({
         onOpenChange(o)
       }}
     >
-      <DialogContent className="sm:max-w-2xl">
+      <DialogContent className="max-h-[85vh] overflow-y-auto sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle>Person</DialogTitle>
         </DialogHeader>
@@ -240,8 +240,11 @@ export function AddPersonDialog({
                 value={roleId ?? ''}
                 onValueChange={(v) => setRoleId(v ?? null)}
               >
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="- Select Role -" />
+                <SelectTrigger
+                  className="w-full"
+                  aria-invalid={fieldErrors.roleId ? true : undefined}
+                >
+                  <SelectValue placeholder="- Select -" />
                 </SelectTrigger>
                 <SelectContent>
                   {roles.map((r) => (
@@ -285,7 +288,7 @@ export function AddPersonDialog({
                 onValueChange={(v) => setInvolvementId(v ?? null)}
               >
                 <SelectTrigger className="w-full">
-                  <SelectValue placeholder="- Select Level -" />
+                  <SelectValue placeholder="- Select -" />
                 </SelectTrigger>
                 <SelectContent>
                   {levels.map((l) => (
@@ -339,7 +342,7 @@ export function AddPersonDialog({
             />
           </div>
 
-          {error && <p className="text-sm text-destructive">{error}</p>}
+          {error && <p className="hint-in text-sm font-medium text-destructive">{error}</p>}
         </div>
 
         <DialogFooter className="sm:justify-between">
@@ -373,7 +376,7 @@ export function AddPersonDialog({
                   onClick={() => setConfirmRemove(true)}
                   disabled={busy}
                 >
-                  Remove User
+                  Remove
                 </Button>
               ))}
           </div>

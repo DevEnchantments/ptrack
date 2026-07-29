@@ -232,7 +232,7 @@ export function EditProjectDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-3xl">
+      <DialogContent className="max-h-[85vh] overflow-y-auto sm:max-w-3xl">
         <DialogHeader>
           <DialogTitle>Project Details</DialogTitle>
         </DialogHeader>
@@ -310,7 +310,10 @@ export function EditProjectDialog({
                 value={statusId ?? ''}
                 onValueChange={(v) => setStatusId(v ?? null)}
               >
-                <SelectTrigger className="w-full">
+                <SelectTrigger
+                  className="w-full"
+                  aria-invalid={fieldErrors.statusId ? true : undefined}
+                >
                   <SelectValue placeholder="- Select -" />
                 </SelectTrigger>
                 <SelectContent>
@@ -471,7 +474,7 @@ export function EditProjectDialog({
                 <input
                   type="radio"
                   name="access-control"
-                  className="h-4 w-4 accent-primary transition-transform duration-150 hover:scale-110"
+                  className="h-4 w-4 accent-primary"
                   checked={accessControl === 'open'}
                   onChange={() => setAccessControl('open')}
                 />
@@ -481,7 +484,7 @@ export function EditProjectDialog({
                 <input
                   type="radio"
                   name="access-control"
-                  className="h-4 w-4 accent-primary transition-transform duration-150 hover:scale-110"
+                  className="h-4 w-4 accent-primary"
                   checked={accessControl === 'restricted'}
                   onChange={() => setAccessControl('restricted')}
                 />
@@ -576,7 +579,7 @@ export function EditProjectDialog({
             />
           </div>
 
-          {error && <p className="text-sm text-destructive">{error}</p>}
+          {error && <p className="hint-in text-sm font-medium text-destructive">{error}</p>}
         </div>
 
         <DialogFooter className="sm:justify-between">
@@ -584,7 +587,7 @@ export function EditProjectDialog({
             {confirmDelete ? (
               <div className="flex items-center gap-2">
                 <span className="text-sm text-destructive">
-                  Delete this project?
+                  Delete?
                 </span>
                 <Button
                   variant="destructive"
@@ -600,7 +603,7 @@ export function EditProjectDialog({
                   onClick={() => setConfirmDelete(false)}
                   disabled={busy}
                 >
-                  Cancel
+                  No
                 </Button>
               </div>
             ) : (

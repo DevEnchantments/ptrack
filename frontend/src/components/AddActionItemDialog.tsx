@@ -328,7 +328,9 @@ export function AddActionItemDialog({
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="flex flex-col gap-2">
-              <Label>Status</Label>
+              <Label>
+                Status <span className="text-destructive">*</span>
+              </Label>
               <Select
                 items={STATUSES}
                 value={status}
@@ -470,7 +472,7 @@ export function AddActionItemDialog({
             </div>
           )}
 
-          {error && <p className="text-sm text-destructive">{error}</p>}
+          {error && <p className="hint-in text-sm font-medium text-destructive">{error}</p>}
         </div>
 
         <DialogFooter className="sm:justify-between">

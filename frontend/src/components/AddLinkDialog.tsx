@@ -1,7 +1,10 @@
 import { FieldError } from '@/components/FieldError'
+import { Loader2 } from 'lucide-react'
 import { toast } from '@/lib/toast'
 import { useState } from 'react'
 import { linksApi, type Link } from '@/lib/api'
+import { GOLD_HELP } from '@/lib/help-text'
+import { HelpDot } from '@/components/HelpDot'
 import { Button } from '@/components/ui/button'
 import { ConfirmDeleteButton } from '@/components/ConfirmDeleteButton'
 import { Input } from '@/components/ui/input'
@@ -14,13 +17,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-
-const GOLD_HELP =
-  'Marking a link as a "Gold" link ensures that it appears at the top of the ' +
-  'links section on the project details page and is always included in project ' +
-  'details emails. If a link is not marked as "Gold" it might be omitted from ' +
-  'project details emails (depending on the number of links in the project and ' +
-  'the date that it was created).'
 
 const URL_PATTERN = /^https?:\/\//
 
@@ -175,8 +171,7 @@ export function AddLinkDialog({
               onChange={(e) => setUrl(e.target.value)}
               aria-invalid={fieldErrors.url ? true : undefined}
             />
-            <FieldError message={fieldErrors.url} />
-            {urlError && <p className="text-sm text-destructive">{urlError}</p>}
+            <FieldError message={fieldErrors.url ?? urlError ?? undefined} />
           </div>
 
           <div className="flex flex-col gap-2">
@@ -196,12 +191,7 @@ export function AddLinkDialog({
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-1.5">
               <Label>Gold</Label>
-              <span
-                title={GOLD_HELP}
-                className="inline-flex h-4 w-4 cursor-help items-center justify-center rounded-full border text-[10px] text-muted-foreground"
-              >
-                ?
-              </span>
+              <HelpDot text={GOLD_HELP} />
             </div>
             <label className="flex cursor-pointer items-center gap-2">
               <input
@@ -223,11 +213,21 @@ export function AddLinkDialog({
             />
           </div>
 
-          {error && <p className="text-sm text-destructive">{error}</p>}
+          {error && <p className="hint-in text-sm font-medium text-destructive">{error}</p>}
         </div>
 
-        <DialogFooter>
-          <div className="flex gap-2 sm:mr-auto">
+        <DialogFooter className="sm:justify-between">
+          <div>
+            {isEdit && (
+              <ConfirmDeleteButton
+                onConfirm={remove}
+                deleting={deleting}
+                disabled={saving}
+                resetKey={open}
+              />
+            )}
+          </div>
+          <div className="flex gap-2">
             <Button
               variant="outline"
               onClick={() => {
@@ -238,24 +238,17 @@ export function AddLinkDialog({
             >
               Cancel
             </Button>
-            {isEdit && (
-              <ConfirmDeleteButton
-                onConfirm={remove}
-                deleting={deleting}
-                disabled={saving}
-                resetKey={open}
-              />
-            )}
+            <Button onClick={submit} disabled={busy || Boolean(urlError)}>
+              {saving && <Loader2 className="animate-spin" />}
+              {saving
+                ? isEdit
+                  ? 'Saving…'
+                  : 'Adding…'
+                : isEdit
+                  ? 'Apply Changes'
+                  : 'Add Link'}
+            </Button>
           </div>
-          <Button onClick={submit} disabled={busy || Boolean(urlError)}>
-            {saving
-              ? isEdit
-                ? 'Saving…'
-                : 'Adding…'
-              : isEdit
-                ? 'Apply Changes'
-                : 'Add Link'}
-          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

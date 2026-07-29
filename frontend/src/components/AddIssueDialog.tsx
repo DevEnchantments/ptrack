@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import type { ProjectMemberInput } from '@/pages/CreateProjectWizard'
 import { lookupsApi, issuesApi, type Lookup, type Issue } from '@/lib/api'
 import { useAuth } from '@/lib/auth-context'
+import { HelpDot } from '@/components/HelpDot'
 import { PersonAutocomplete } from '@/components/PersonAutocomplete'
 import { Button } from '@/components/ui/button'
 import { ConfirmDeleteButton } from '@/components/ConfirmDeleteButton'
@@ -36,17 +37,6 @@ const ROLE_HELP =
 
 function emptyPerson(): ProjectMemberInput {
   return { user_id: null, display_name: '', email: null, role_id: null }
-}
-
-function HelpDot({ text }: { text: string }) {
-  return (
-    <span
-      title={text}
-      className="inline-flex h-4 w-4 cursor-help items-center justify-center rounded-full border text-[10px] text-muted-foreground"
-    >
-      ?
-    </span>
-  )
 }
 
 interface Props {
@@ -300,13 +290,15 @@ export function AddIssueDialog({
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="flex flex-col gap-2">
-              <Label>Status</Label>
+              <Label>
+                Status <span className="text-destructive">*</span>
+              </Label>
               <div className="flex items-center gap-6 pt-1">
                 <label className="flex cursor-pointer items-center gap-2">
                   <input
                     type="radio"
                     name="issue-status"
-                    className="h-4 w-4 accent-primary transition-transform duration-150 hover:scale-110"
+                    className="h-4 w-4 accent-primary"
                     checked={status === 'open'}
                     onChange={() => setStatus('open')}
                   />
@@ -316,7 +308,7 @@ export function AddIssueDialog({
                   <input
                     type="radio"
                     name="issue-status"
-                    className="h-4 w-4 accent-primary transition-transform duration-150 hover:scale-110"
+                    className="h-4 w-4 accent-primary"
                     checked={status === 'closed'}
                     onChange={() => setStatus('closed')}
                   />
@@ -418,11 +410,21 @@ export function AddIssueDialog({
             />
           </div>
 
-          {error && <p className="text-sm text-destructive">{error}</p>}
+          {error && <p className="hint-in text-sm font-medium text-destructive">{error}</p>}
         </div>
 
-        <DialogFooter>
-          <div className="flex gap-2 sm:mr-auto">
+        <DialogFooter className="sm:justify-between">
+          <div>
+            {isEdit && (
+              <ConfirmDeleteButton
+                onConfirm={remove}
+                deleting={deleting}
+                disabled={saving}
+                resetKey={open}
+              />
+            )}
+          </div>
+          <div className="flex gap-2">
             <Button
               variant="outline"
               onClick={() => {
@@ -433,25 +435,17 @@ export function AddIssueDialog({
             >
               Cancel
             </Button>
-            {isEdit && (
-              <ConfirmDeleteButton
-                onConfirm={remove}
-                deleting={deleting}
-                disabled={saving}
-                resetKey={open}
-              />
-            )}
+            <Button onClick={submit} disabled={busy}>
+              {saving && <Loader2 className="animate-spin" />}
+              {saving
+                ? isEdit
+                  ? 'Saving…'
+                  : 'Adding…'
+                : isEdit
+                  ? 'Apply Changes'
+                  : 'Add Issue'}
+            </Button>
           </div>
-          <Button onClick={submit} disabled={busy}>
-            {saving && <Loader2 className="animate-spin" />}
-            {saving
-              ? isEdit
-                ? 'Saving…'
-                : 'Adding…'
-              : isEdit
-                ? 'Apply Changes'
-                : 'Add Issue'}
-          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

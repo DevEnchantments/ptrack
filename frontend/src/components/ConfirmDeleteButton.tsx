@@ -50,7 +50,7 @@ export function ConfirmDeleteButton({
       <div className="flex gap-2">
         <Button
           variant="destructive"
-          className="bg-destructive text-white hover:bg-destructive/90"
+          className="border border-destructive bg-destructive text-destructive-foreground hover:bg-destructive/90"
           onClick={() => void onConfirm()}
           disabled={disabled}
         >

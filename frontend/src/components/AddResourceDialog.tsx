@@ -140,7 +140,7 @@ export function AddResourceDialog({
         onOpenChange(o)
       }}
     >
-      <DialogContent className="sm:max-w-lg">
+      <DialogContent className="max-h-[85vh] overflow-y-auto sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle>Project Resource</DialogTitle>
         </DialogHeader>
@@ -163,8 +163,11 @@ export function AddResourceDialog({
               value={typeId ?? ''}
               onValueChange={(v) => setTypeId(v ?? null)}
             >
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="- Select Type -" />
+              <SelectTrigger
+                className="w-full"
+                aria-invalid={fieldErrors.typeId ? true : undefined}
+              >
+                <SelectValue placeholder="- Select -" />
               </SelectTrigger>
               <SelectContent>
                 {types.map((t) => (
@@ -186,11 +189,21 @@ export function AddResourceDialog({
             />
           </div>
 
-          {error && <p className="text-sm text-destructive">{error}</p>}
+          {error && <p className="hint-in text-sm font-medium text-destructive">{error}</p>}
         </div>
 
-        <DialogFooter>
-          <div className="flex gap-2 sm:mr-auto">
+        <DialogFooter className="sm:justify-between">
+          <div>
+            {isEdit && (
+              <ConfirmDeleteButton
+                onConfirm={remove}
+                deleting={deleting}
+                disabled={saving}
+                resetKey={open}
+              />
+            )}
+          </div>
+          <div className="flex gap-2">
             <Button
               variant="outline"
               onClick={() => {
@@ -201,25 +214,17 @@ export function AddResourceDialog({
             >
               Cancel
             </Button>
-            {isEdit && (
-              <ConfirmDeleteButton
-                onConfirm={remove}
-                deleting={deleting}
-                disabled={saving}
-                resetKey={open}
-              />
-            )}
+            <Button onClick={submit} disabled={busy}>
+              {saving && <Loader2 className="animate-spin" />}
+              {saving
+                ? isEdit
+                  ? 'Saving…'
+                  : 'Adding…'
+                : isEdit
+                  ? 'Apply Changes'
+                  : 'Add Resource'}
+            </Button>
           </div>
-          <Button onClick={submit} disabled={busy}>
-            {saving && <Loader2 className="animate-spin" />}
-            {saving
-              ? isEdit
-                ? 'Saving…'
-                : 'Adding…'
-              : isEdit
-                ? 'Apply Changes'
-                : 'Add Resource'}
-          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

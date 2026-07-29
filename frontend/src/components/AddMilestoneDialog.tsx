@@ -442,7 +442,7 @@ export function AddMilestoneDialog({
             </div>
           )}
 
-          {error && <p className="text-sm text-destructive">{error}</p>}
+          {error && <p className="hint-in text-sm font-medium text-destructive">{error}</p>}
         </div>
 
         <DialogFooter className="sm:justify-between">

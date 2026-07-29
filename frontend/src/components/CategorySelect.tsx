@@ -98,7 +98,7 @@ export function CategorySelect({ value, onChange }: Props) {
       }}
     >
       <SelectTrigger className="w-full">
-        <SelectValue placeholder="- Select Category -" />
+        <SelectValue placeholder="- Select -" />
       </SelectTrigger>
       <SelectContent>
         {categories.map((c) => (

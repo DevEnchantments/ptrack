@@ -25,6 +25,7 @@
     --color-input: var(--input);
     --color-border: var(--border);
     --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
     --color-accent-foreground: var(--accent-foreground);
     --color-accent: var(--accent);
     --color-muted-foreground: var(--muted-foreground);
@@ -96,6 +97,7 @@
     /* Darkened 2026-07-29 (UI-AUDIT section 1): destructive 4.45 -> 4.81 on
        canvas; border/input hairlines 1.25 -> 1.63 on card. */
     --destructive: oklch(0.55 0.245 27.325);
+    --destructive-foreground: #ffffff;
     --border: #c2ccd8;
     --input: #c2ccd8;
     --ring: #2563eb;
@@ -160,6 +162,7 @@
     --accent: #1d2938;
     --accent-foreground: #e6eaf0;
     --destructive: oklch(0.704 0.191 22.216);
+    --destructive-foreground: #450a0a;
     --border: #263344;
     --input: #263344;
     --ring: #60a5fa;

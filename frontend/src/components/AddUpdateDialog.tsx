@@ -3,6 +3,8 @@ import { Loader2 } from 'lucide-react'
 import { toast } from '@/lib/toast'
 import { useEffect, useState } from 'react'
 import { lookupsApi, updatesApi, type Lookup, type Update } from '@/lib/api'
+import { GOLD_HELP } from '@/lib/help-text'
+import { HelpDot } from '@/components/HelpDot'
 import { Button } from '@/components/ui/button'
 import { ConfirmDeleteButton } from '@/components/ConfirmDeleteButton'
 import { Input } from '@/components/ui/input'
@@ -22,13 +24,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-
-const GOLD_HELP =
-  'Marking an update as a "Gold" update ensures that it appears at the top of ' +
-  'the updates section and is always included in project details emails. If an ' +
-  'update is not marked as "Gold" it might be omitted from project details ' +
-  'emails (depending on the number of updates in the project and the date that ' +
-  'it was created).'
 
 interface Props {
   projectId: string
@@ -174,14 +169,19 @@ export function AddUpdateDialog({
         </DialogHeader>
 
         <div className="flex flex-col gap-4">
-          <Textarea
-            rows={8}
-            value={body}
-            placeholder="Enter Project Update Here …"
-            onChange={(e) => setBody(e.target.value)}
-            aria-invalid={fieldErrors.body ? true : undefined}
-          />
-          <FieldError message={fieldErrors.body} />
+          <div className="flex flex-col gap-2">
+            <Label>
+              Update <span className="text-destructive">*</span>
+            </Label>
+            <Textarea
+              rows={8}
+              value={body}
+              placeholder="Enter Project Update Here …"
+              onChange={(e) => setBody(e.target.value)}
+              aria-invalid={fieldErrors.body ? true : undefined}
+            />
+            <FieldError message={fieldErrors.body} />
+          </div>
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="flex flex-col gap-2">
@@ -207,14 +207,9 @@ export function AddUpdateDialog({
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-1.5">
                 <Label>Gold Status</Label>
-                <span
-                  title={GOLD_HELP}
-                  className="inline-flex h-4 w-4 cursor-help items-center justify-center rounded-full border text-[10px] text-muted-foreground"
-                >
-                  ?
-                </span>
+                <HelpDot text={GOLD_HELP} />
               </div>
-              <label className="flex cursor-pointer items-center gap-2 pt-1">
+              <label className="flex cursor-pointer items-center gap-2">
                 <input
                   type="checkbox"
                   className="h-4 w-4 rounded border-input accent-primary"
@@ -235,11 +230,21 @@ export function AddUpdateDialog({
             />
           </div>
 
-          {error && <p className="text-sm text-destructive">{error}</p>}
+          {error && <p className="hint-in text-sm font-medium text-destructive">{error}</p>}
         </div>
 
-        <DialogFooter>
-          <div className="flex gap-2 sm:mr-auto">
+        <DialogFooter className="sm:justify-between">
+          <div>
+            {isEdit && (
+              <ConfirmDeleteButton
+                onConfirm={remove}
+                deleting={deleting}
+                disabled={saving}
+                resetKey={open}
+              />
+            )}
+          </div>
+          <div className="flex gap-2">
             <Button
               variant="outline"
               onClick={() => {
@@ -250,25 +255,17 @@ export function AddUpdateDialog({
             >
               Cancel
             </Button>
-            {isEdit && (
-              <ConfirmDeleteButton
-                onConfirm={remove}
-                deleting={deleting}
-                disabled={saving}
-                resetKey={open}
-              />
-            )}
+            <Button onClick={submit} disabled={busy}>
+              {saving && <Loader2 className="animate-spin" />}
+              {saving
+                ? isEdit
+                  ? 'Saving…'
+                  : 'Adding…'
+                : isEdit
+                  ? 'Apply Changes'
+                  : 'Add Update'}
+            </Button>
           </div>
-          <Button onClick={submit} disabled={busy}>
-            {saving && <Loader2 className="animate-spin" />}
-            {saving
-              ? isEdit
-                ? 'Saving…'
-                : 'Adding…'
-              : isEdit
-                ? 'Apply Changes'
-                : 'Add Update'}
-          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

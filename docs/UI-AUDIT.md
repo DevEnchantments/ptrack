@@ -49,6 +49,7 @@ classes that bypass the tokens:
 | NEW `--success` (+ border shade) | raw `emerald-700/600/300…` in toaster | `#047857` light / `#6ee7b7` dark | 5.12 light, 11.92 dark, PASS |
 | NEW `--gold` (light) | raw `amber-600` | `#b45309` (amber-700) | 3.19 → 5.02 |
 | Update avatar (class swap) | `bg-teal-400` + `text-white` | `bg-primary` + `text-primary-foreground` | 1.86 → 5.17 |
+| NEW `--destructive-foreground` (Stage 2) | raw `text-white` in ConfirmDeleteButton | `#ffffff` light / `#450a0a` dark | 5.15 light, 5.59 dark, PASS |
 
 Dark-mode ambers/emeralds already pass (9.93 to 11.92), so only light values move.
 Other measured references: red-600 overdue on card 4.83 PASS; white on red-600 brand
@@ -183,10 +184,17 @@ StepConfirmation: `gap-4`/`px-4`/`—` where siblings use `gap-6`/`px-1`/`-`.
   exit animation (closing flag + 150ms delay) + success tokens + `bg-popover`,
   dialog `bg-overlay` scrim + `shadow-lg`, select chevron rotates via
   `group-data-popup-open/trigger`. Ratios re-verified (see section 1).
-- [ ] **Stage 2 — Dialog consistency.** One width recipe; split footer everywhere;
-  one delete copy set (`Delete` → `Delete?` + `Confirm`/`No`); spinner in AddLink;
-  one error style; asterisk-truth pass; shared HelpDot; `aria-invalid` on Selects;
-  ConfirmDeleteButton state continuity.
+- [x] **Stage 2 — Dialog consistency.** SHIPPED 2026-07-29, visually confirmed by
+  Fares. One size recipe (`max-h-[85vh] overflow-y-auto sm:max-w-2xl`; EditProject
+  keeps `3xl` for its 3-col rows); split footer in all 10 (delete far left); one
+  delete copy set (`Delete?` + `Confirm`/`No`; Person keeps the verb Remove);
+  spinner in AddLink + single URL-error slot; form-level errors get
+  `hint-in font-medium`; asterisk-truth pass (Status in ActionItem/Issue, Update
+  body labeled, readOnly + RadioRow asterisks removed); prompt placeholders → 
+  `- Select -` (sentinel values untouched); shared `HelpDot` + `lib/help-text.ts`
+  GOLD_HELP; `aria-invalid` on invalid Selects (Resource Type, Person Role,
+  EditProject Status); ConfirmDeleteButton armed state tokenized via new
+  `--destructive-foreground` (see section 1 table); radio hover-scale removed.
 - [ ] **Stage 3 — Detail pages.** Skeletons on the four text-loading pages; one
   empty-state recipe; unified `Field`; container/rail widths; icon normalization;
   raw palette → Stage 1 tokens (incl. teal avatar, gold ambers, file-type chips,

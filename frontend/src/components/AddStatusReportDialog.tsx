@@ -56,9 +56,7 @@ function RadioRow({
 }) {
   return (
     <div className="flex flex-col gap-2">
-      <Label>
-        {label} <span className="text-destructive">*</span>
-      </Label>
+      <Label>{label}</Label>
       <div className="flex flex-wrap gap-x-6 gap-y-2">
         {options.map((o) => (
           <label
@@ -68,7 +66,7 @@ function RadioRow({
             <input
               type="radio"
               name={name}
-              className="h-4 w-4 accent-primary transition-transform duration-150 hover:scale-110"
+              className="h-4 w-4 accent-primary"
               checked={value === o.value}
               onChange={() => onChange(o.value)}
             />
@@ -201,9 +199,7 @@ export function AddStatusReportDialog({
 
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
-            <Label>
-              Project <span className="text-destructive">*</span>
-            </Label>
+            <Label>Project</Label>
             <Input value={projectName} readOnly disabled />
           </div>
 
@@ -257,11 +253,21 @@ export function AddStatusReportDialog({
             <FieldError message={fieldErrors.reportDate} />
           </div>
 
-          {error && <p className="text-sm text-destructive">{error}</p>}
+          {error && <p className="hint-in text-sm font-medium text-destructive">{error}</p>}
         </div>
 
-        <DialogFooter>
-          <div className="flex gap-2 sm:mr-auto">
+        <DialogFooter className="sm:justify-between">
+          <div>
+            {isEdit && (
+              <ConfirmDeleteButton
+                onConfirm={remove}
+                deleting={deleting}
+                disabled={saving}
+                resetKey={open}
+              />
+            )}
+          </div>
+          <div className="flex gap-2">
             <Button
               variant="outline"
               onClick={() => {
@@ -272,25 +278,17 @@ export function AddStatusReportDialog({
             >
               Cancel
             </Button>
-            {isEdit && (
-              <ConfirmDeleteButton
-                onConfirm={remove}
-                deleting={deleting}
-                disabled={saving}
-                resetKey={open}
-              />
-            )}
+            <Button onClick={submit} disabled={busy}>
+              {saving && <Loader2 className="animate-spin" />}
+              {saving
+                ? isEdit
+                  ? 'Saving…'
+                  : 'Adding…'
+                : isEdit
+                  ? 'Apply Changes'
+                  : 'Add Status Report'}
+            </Button>
           </div>
-          <Button onClick={submit} disabled={busy}>
-            {saving && <Loader2 className="animate-spin" />}
-            {saving
-              ? isEdit
-                ? 'Saving…'
-                : 'Adding…'
-              : isEdit
-                ? 'Apply Changes'
-                : 'Add Status Report'}
-          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
