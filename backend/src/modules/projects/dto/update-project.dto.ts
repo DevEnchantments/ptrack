@@ -1,6 +1,10 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsArray,
+  IsBoolean,
+  IsInt,
+  IsNumber,
+  Min,
   IsDateString,
   IsIn,
   IsOptional,
@@ -90,4 +94,70 @@ export class UpdateProjectDto {
   @IsOptional()
   @IsDateString()
   start_date?: string | null;
+
+  @ApiPropertyOptional({ example: '1.1.1' })
+  @IsOptional()
+  @IsString()
+  @MaxLength(50)
+  reference_id?: string | null;
+
+  @ApiPropertyOptional({ example: 'PRJ-0239' })
+  @IsOptional()
+  @IsString()
+  @MaxLength(50)
+  project_number?: string | null;
+
+  @ApiPropertyOptional({ example: 26 })
+  @IsOptional()
+  @IsInt()
+  plan_year?: number | null;
+
+  @ApiPropertyOptional({ example: '2' })
+  @IsOptional()
+  @IsString()
+  @MaxLength(50)
+  finance_code?: string | null;
+
+  @ApiPropertyOptional({ example: 'All members of Abu Dhabi community' })
+  @IsOptional()
+  @IsString()
+  target_group?: string | null;
+
+  @ApiPropertyOptional({ example: 'PMO office' })
+  @IsOptional()
+  @IsString()
+  internal_stakeholder?: string | null;
+
+  @ApiPropertyOptional({ example: false })
+  @IsOptional()
+  @IsBoolean()
+  is_priority?: boolean;
+
+  @ApiPropertyOptional({ example: 30000000 })
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  approved_budget?: number | null;
+
+  @ApiPropertyOptional({ example: 20827300 })
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  utilized_budget?: number | null;
+
+  @ApiPropertyOptional({
+    format: 'uuid',
+    description: 'Fetch from `GET /lookups/tiers`.',
+  })
+  @IsOptional()
+  @IsUUID()
+  tier_id?: string | null;
+
+  @ApiPropertyOptional({
+    format: 'uuid',
+    description: 'Fetch from `GET /lookups/strategic-objectives`.',
+  })
+  @IsOptional()
+  @IsUUID()
+  strategic_objective_id?: string | null;
 }

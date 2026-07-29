@@ -2,6 +2,10 @@ import { Type } from 'class-transformer';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsArray,
+  IsBoolean,
+  IsInt,
+  IsNumber,
+  Min,
   IsDateString,
   IsIn,
   IsNotEmpty,
@@ -121,6 +125,79 @@ export class CreateProjectDto {
   @IsString()
   @MaxLength(2048)
   primary_url?: string;
+
+  @ApiPropertyOptional({ example: '1.1.1', description: 'FDD Reference ID.' })
+  @IsOptional()
+  @IsString()
+  @MaxLength(50)
+  reference_id?: string;
+
+  @ApiPropertyOptional({ example: 'PRJ-0239' })
+  @IsOptional()
+  @IsString()
+  @MaxLength(50)
+  project_number?: string;
+
+  @ApiPropertyOptional({ example: 26, description: 'Plan (fiscal) year.' })
+  @IsOptional()
+  @IsInt()
+  plan_year?: number;
+
+  @ApiPropertyOptional({ example: '2' })
+  @IsOptional()
+  @IsString()
+  @MaxLength(50)
+  finance_code?: string;
+
+  @ApiPropertyOptional({ example: 'All members of Abu Dhabi community' })
+  @IsOptional()
+  @IsString()
+  target_group?: string;
+
+  @ApiPropertyOptional({ example: 'PMO office' })
+  @IsOptional()
+  @IsString()
+  internal_stakeholder?: string;
+
+  @ApiPropertyOptional({ example: false, description: 'Priority star.' })
+  @IsOptional()
+  @IsBoolean()
+  is_priority?: boolean;
+
+  @ApiPropertyOptional({
+    example: 30000000,
+    description: 'Approved budget (AED).',
+  })
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  approved_budget?: number;
+
+  @ApiPropertyOptional({
+    example: 20827300,
+    description:
+      'Utilized budget (AED). Manual for now; FDD 3.7 leaves derivation open.',
+  })
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  utilized_budget?: number;
+
+  @ApiPropertyOptional({
+    format: 'uuid',
+    description: 'Fetch from `GET /lookups/tiers`.',
+  })
+  @IsOptional()
+  @IsUUID()
+  tier_id?: string;
+
+  @ApiPropertyOptional({
+    format: 'uuid',
+    description: 'Fetch from `GET /lookups/strategic-objectives`.',
+  })
+  @IsOptional()
+  @IsUUID()
+  strategic_objective_id?: string;
 
   @ApiPropertyOptional({ type: [ProjectMemberDto] })
   @IsOptional()

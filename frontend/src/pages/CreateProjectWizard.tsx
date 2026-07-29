@@ -32,6 +32,18 @@ export interface CreateProjectForm {
   customer: string
   tags: string
   primary_url: string
+  // FDD Stage-1 fields (docs/FDD-ALIGNMENT.md section 1.1)
+  reference_id: string
+  project_number: string
+  plan_year: string
+  finance_code: string
+  target_group: string
+  internal_stakeholder: string
+  is_priority: boolean
+  approved_budget: string
+  utilized_budget: string
+  tier_id: string | null
+  strategic_objective_id: string | null
 }
 
 const STEP_LABELS = ['Project', 'Access', 'Details', 'Confirmation']
@@ -68,6 +80,17 @@ export function CreateProjectWizard() {
     customer: '',
     tags: '',
     primary_url: '',
+    reference_id: '',
+    project_number: '',
+    plan_year: '',
+    finance_code: '',
+    target_group: '',
+    internal_stakeholder: '',
+    is_priority: false,
+    approved_budget: '',
+    utilized_budget: '',
+    tier_id: null,
+    strategic_objective_id: null,
   }))
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [submitting, setSubmitting] = useState(false)
@@ -106,6 +129,20 @@ export function CreateProjectWizard() {
   function validateStep3() {
     const e: Record<string, string> = {}
     if (!form.status_id) e.status_id = 'Status is required.'
+    if (form.plan_year.trim() && !Number.isInteger(Number(form.plan_year)))
+      e.plan_year = 'Plan year must be a whole number.'
+    if (
+      form.approved_budget.trim() &&
+      (Number.isNaN(Number(form.approved_budget)) ||
+        Number(form.approved_budget) < 0)
+    )
+      e.approved_budget = 'Enter a valid amount.'
+    if (
+      form.utilized_budget.trim() &&
+      (Number.isNaN(Number(form.utilized_budget)) ||
+        Number(form.utilized_budget) < 0)
+    )
+      e.utilized_budget = 'Enter a valid amount.'
     setErrors(e)
     return Object.keys(e).length === 0
   }
@@ -148,6 +185,21 @@ export function CreateProjectWizard() {
       customer: form.customer.trim() || undefined,
       tags: tags.length ? tags : undefined,
       primary_url: form.primary_url.trim() || undefined,
+      reference_id: form.reference_id.trim() || undefined,
+      project_number: form.project_number.trim() || undefined,
+      plan_year: form.plan_year.trim() ? Number(form.plan_year) : undefined,
+      finance_code: form.finance_code.trim() || undefined,
+      target_group: form.target_group.trim() || undefined,
+      internal_stakeholder: form.internal_stakeholder.trim() || undefined,
+      is_priority: form.is_priority,
+      approved_budget: form.approved_budget.trim()
+        ? Number(form.approved_budget)
+        : undefined,
+      utilized_budget: form.utilized_budget.trim()
+        ? Number(form.utilized_budget)
+        : undefined,
+      tier_id: form.tier_id ?? undefined,
+      strategic_objective_id: form.strategic_objective_id ?? undefined,
       members,
     }
   }

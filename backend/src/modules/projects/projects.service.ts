@@ -135,6 +135,26 @@ export class ProjectsService {
       patch.primary_url = dto.primary_url?.trim() || null;
     if (dto.tags !== undefined) patch.tags = dto.tags?.length ? dto.tags : null;
     if (dto.start_date !== undefined) patch.start_date = dto.start_date || null;
+    // FDD Stage-1 fields (docs/FDD-ALIGNMENT.md section 1.1).
+    if (dto.reference_id !== undefined)
+      patch.reference_id = dto.reference_id?.trim() || null;
+    if (dto.project_number !== undefined)
+      patch.project_number = dto.project_number?.trim() || null;
+    if (dto.plan_year !== undefined) patch.plan_year = dto.plan_year ?? null;
+    if (dto.finance_code !== undefined)
+      patch.finance_code = dto.finance_code?.trim() || null;
+    if (dto.target_group !== undefined)
+      patch.target_group = dto.target_group?.trim() || null;
+    if (dto.internal_stakeholder !== undefined)
+      patch.internal_stakeholder = dto.internal_stakeholder?.trim() || null;
+    if (dto.is_priority !== undefined) patch.is_priority = dto.is_priority;
+    if (dto.approved_budget !== undefined)
+      patch.approved_budget = dto.approved_budget ?? null;
+    if (dto.utilized_budget !== undefined)
+      patch.utilized_budget = dto.utilized_budget ?? null;
+    if (dto.tier_id !== undefined) patch.tier_id = dto.tier_id ?? null;
+    if (dto.strategic_objective_id !== undefined)
+      patch.strategic_objective_id = dto.strategic_objective_id ?? null;
 
     await this.repo.update(id, patch);
     return this.getDetail(id);

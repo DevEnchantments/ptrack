@@ -15,13 +15,21 @@ function Row({ label, value }: { label: string; value: React.ReactNode }) {
 export function StepConfirmation({ form }: { form: CreateProjectForm }) {
   const [statuses, setStatuses] = useState<Lookup[]>([])
   const [roles, setRoles] = useState<Lookup[]>([])
+  const [tiers, setTiers] = useState<Lookup[]>([])
+  const [objectives, setObjectives] = useState<Lookup[]>([])
 
   useEffect(() => {
     lookupsApi.list('project-statuses').then(setStatuses).catch(() => toast.error('Could not load project statuses.'))
     lookupsApi.list('project-roles').then(setRoles).catch(() => toast.error('Could not load project roles.'))
+    lookupsApi.list('tiers').then(setTiers).catch(() => toast.error('Could not load tiers.'))
+    lookupsApi.list('strategic-objectives').then(setObjectives).catch(() => toast.error('Could not load strategic objectives.'))
   }, [])
 
   const statusName = statuses.find((s) => s.id === form.status_id)?.name ?? '—'
+  const tierName = tiers.find((t) => t.id === form.tier_id)?.name
+  const objectiveName = objectives.find(
+    (o) => o.id === form.strategic_objective_id,
+  )?.name
   const accessLabel =
     form.access_control === 'open'
       ? 'Open'
@@ -40,6 +48,44 @@ export function StepConfirmation({ form }: { form: CreateProjectForm }) {
         <Row label="Status" value={statusName} />
         <Row label="Access Control" value={accessLabel} />
         <Row label="Start Date" value={form.start_date || '—'} />
+        {form.reference_id.trim() && (
+          <Row label="Reference ID" value={form.reference_id.trim()} />
+        )}
+        {form.project_number.trim() && (
+          <Row label="Project Number" value={form.project_number.trim()} />
+        )}
+        {form.plan_year.trim() && (
+          <Row label="Plan Year" value={form.plan_year.trim()} />
+        )}
+        {objectiveName && (
+          <Row label="Strategic Objective" value={objectiveName} />
+        )}
+        {tierName && <Row label="Tier" value={tierName} />}
+        {form.approved_budget.trim() && (
+          <Row
+            label="Approved Budget"
+            value={`AED ${Number(form.approved_budget).toLocaleString()}`}
+          />
+        )}
+        {form.utilized_budget.trim() && (
+          <Row
+            label="Utilized Budget"
+            value={`AED ${Number(form.utilized_budget).toLocaleString()}`}
+          />
+        )}
+        {form.finance_code.trim() && (
+          <Row label="Finance Code" value={form.finance_code.trim()} />
+        )}
+        {form.internal_stakeholder.trim() && (
+          <Row
+            label="Internal Stakeholder"
+            value={form.internal_stakeholder.trim()}
+          />
+        )}
+        {form.target_group.trim() && (
+          <Row label="Target Group" value={form.target_group.trim()} />
+        )}
+        {form.is_priority && <Row label="Priority" value="Yes" />}
         <Row
           label="Project Owner(s)"
           value={

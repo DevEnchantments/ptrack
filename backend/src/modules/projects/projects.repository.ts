@@ -24,6 +24,18 @@ export interface Project {
   start_date: string | null;
   target_end_date: string | null;
   actual_end_date: string | null;
+  /** FDD Stage-1 fields (docs/FDD-ALIGNMENT.md section 1.1). */
+  reference_id: string | null;
+  project_number: string | null;
+  plan_year: number | null;
+  finance_code: string | null;
+  target_group: string | null;
+  internal_stakeholder: string | null;
+  is_priority: boolean;
+  approved_budget: number | null;
+  utilized_budget: number | null;
+  tier_id: string | null;
+  strategic_objective_id: string | null;
   created_by: string | null;
   updated_by: string | null;
   created_at: string;
@@ -34,6 +46,8 @@ export interface ProjectDetail extends Project {
   status: { name: string } | null;
   size: { name: string } | null;
   category: { name: string } | null;
+  tier: { name: string } | null;
+  strategic_objective: { name: string } | null;
   members: Array<{
     id: string;
     user_id: string | null;
@@ -49,7 +63,7 @@ export interface ProjectDetail extends Project {
 }
 
 const COLUMNS =
-  'id, name, description, parent_project_id, owner_id, sponsor, status_id, size_id, category_id, deal_type_id, region_id, country_id, access_control, goal, customer, tags, primary_url, start_date, target_end_date, actual_end_date, created_by, updated_by, created_at, updated_at';
+  'id, name, description, parent_project_id, owner_id, sponsor, status_id, size_id, category_id, deal_type_id, region_id, country_id, access_control, goal, customer, tags, primary_url, start_date, target_end_date, actual_end_date, reference_id, project_number, plan_year, finance_code, target_group, internal_stakeholder, is_priority, approved_budget, utilized_budget, tier_id, strategic_objective_id, created_by, updated_by, created_at, updated_at';
 
 @Injectable()
 export class ProjectsRepository {
@@ -92,6 +106,8 @@ export class ProjectsRepository {
         status:project_statuses ( name ),
         size:project_sizes ( name ),
         category:project_categories ( name ),
+        tier:tiers ( name ),
+        strategic_objective:strategic_objectives ( name ),
         members:project_members (
           id, user_id, pending_name, role_id, access_level,
           involvement_level_id, notes, status,

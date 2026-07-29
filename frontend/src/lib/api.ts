@@ -72,6 +72,18 @@ export interface Project {
   created_by: string | null
   created_at: string
   updated_at: string
+  // FDD Stage-1 fields (docs/FDD-ALIGNMENT.md section 1.1)
+  reference_id: string | null
+  project_number: string | null
+  plan_year: number | null
+  finance_code: string | null
+  target_group: string | null
+  internal_stakeholder: string | null
+  is_priority: boolean
+  approved_budget: number | null
+  utilized_budget: number | null
+  tier_id: string | null
+  strategic_objective_id: string | null
 }
 
 export interface ProjectMemberDetail {
@@ -98,6 +110,8 @@ export interface ProjectDetail extends Project {
   status: { name: string } | null
   size: { name: string } | null
   category: { name: string } | null
+  tier: { name: string } | null
+  strategic_objective: { name: string } | null
   members: ProjectMemberDetail[]
 }
 

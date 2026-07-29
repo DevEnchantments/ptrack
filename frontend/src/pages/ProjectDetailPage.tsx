@@ -598,6 +598,40 @@ export function ProjectDetailPage() {
             <Field label="Customer" value={project.customer} />
             <Field label="Project Start Date" value={project.start_date} />
             <Field label="Project Size" value={project.size?.name ?? null} />
+            <Field label="Reference ID" value={project.reference_id} />
+            <Field label="Project Number" value={project.project_number} />
+            <Field label="Plan Year" value={project.plan_year} />
+            <Field
+              label="Strategic Objective"
+              value={project.strategic_objective?.name ?? null}
+            />
+            <Field label="Tier" value={project.tier?.name ?? null} />
+            <Field
+              label="Approved Budget"
+              value={
+                project.approved_budget != null
+                  ? `AED ${Number(project.approved_budget).toLocaleString()}`
+                  : null
+              }
+            />
+            <Field
+              label="Utilized Budget"
+              value={
+                project.utilized_budget != null
+                  ? `AED ${Number(project.utilized_budget).toLocaleString()}`
+                  : null
+              }
+            />
+            <Field label="Finance Code" value={project.finance_code} />
+            <Field
+              label="Internal Stakeholder"
+              value={project.internal_stakeholder}
+            />
+            <Field label="Target Group" value={project.target_group} />
+            <Field
+              label="Priority"
+              value={project.is_priority ? 'Yes' : null}
+            />
             <Field
               label="Tags"
               value={project.tags?.length ? project.tags.join(', ') : null}

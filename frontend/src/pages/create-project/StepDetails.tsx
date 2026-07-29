@@ -1,4 +1,5 @@
 import { toast } from '@/lib/toast'
+import { Star } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import type { CreateProjectForm } from '../CreateProjectWizard'
 import { lookupsApi, type Lookup } from '@/lib/api'
@@ -23,11 +24,17 @@ interface Props {
 export function StepDetails({ form, errors, update }: Props) {
   const [statuses, setStatuses] = useState<Lookup[]>([])
   const [sizes, setSizes] = useState<Lookup[]>([])
+  const [tiers, setTiers] = useState<Lookup[]>([])
+  const [objectives, setObjectives] = useState<Lookup[]>([])
 
   useEffect(() => {
     lookupsApi.list('project-statuses').then(setStatuses).catch(() => toast.error('Could not load project statuses.'))
     lookupsApi.list('project-sizes').then(setSizes).catch(() => toast.error('Could not load project sizes.'))
+    lookupsApi.list('tiers').then(setTiers).catch(() => toast.error('Could not load tiers.'))
+    lookupsApi.list('strategic-objectives').then(setObjectives).catch(() => toast.error('Could not load strategic objectives.'))
   }, [])
+
+  const NONE = '__none__'
 
   return (
     <div className="flex flex-col gap-6">
@@ -135,6 +142,169 @@ export function StepDetails({ form, errors, update }: Props) {
           onChange={(e) => update({ primary_url: e.target.value })}
         />
       </div>
+
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+        <div className="flex flex-col gap-2">
+          <Label htmlFor="reference_id">Reference ID</Label>
+          <Input
+            id="reference_id"
+            value={form.reference_id}
+            placeholder="e.g. 1.1.1"
+            onChange={(e) => update({ reference_id: e.target.value })}
+          />
+        </div>
+        <div className="flex flex-col gap-2">
+          <Label htmlFor="project_number">Project Number</Label>
+          <Input
+            id="project_number"
+            value={form.project_number}
+            placeholder="e.g. PRJ-0239"
+            onChange={(e) => update({ project_number: e.target.value })}
+          />
+        </div>
+        <div className="flex flex-col gap-2">
+          <Label htmlFor="plan_year">Plan Year</Label>
+          <Input
+            id="plan_year"
+            type="number"
+            value={form.plan_year}
+            placeholder="e.g. 26"
+            onChange={(e) => update({ plan_year: e.target.value })}
+            aria-invalid={errors.plan_year ? true : undefined}
+          />
+          {errors.plan_year && (
+            <p className="text-sm text-destructive">{errors.plan_year}</p>
+          )}
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+        <div className="flex flex-col gap-2">
+          <Label>Strategic Objective</Label>
+          <Select
+            items={[
+              { label: '- None -', value: NONE },
+              ...objectives.map((o) => ({ label: o.name, value: o.id })),
+            ]}
+            value={form.strategic_objective_id ?? NONE}
+            onValueChange={(v) =>
+              update({ strategic_objective_id: v === NONE ? null : v })
+            }
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="- None -" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value={NONE}>- None -</SelectItem>
+              {objectives.map((o) => (
+                <SelectItem key={o.id} value={o.id}>
+                  {o.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <Label>Tier</Label>
+          <Select
+            items={[
+              { label: '- None -', value: NONE },
+              ...tiers.map((t) => ({ label: t.name, value: t.id })),
+            ]}
+            value={form.tier_id ?? NONE}
+            onValueChange={(v) => update({ tier_id: v === NONE ? null : v })}
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="- None -" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value={NONE}>- None -</SelectItem>
+              {tiers.map((t) => (
+                <SelectItem key={t.id} value={t.id}>
+                  {t.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+        <div className="flex flex-col gap-2">
+          <Label htmlFor="approved_budget">Approved Budget (AED)</Label>
+          <Input
+            id="approved_budget"
+            type="number"
+            min={0}
+            value={form.approved_budget}
+            onChange={(e) => update({ approved_budget: e.target.value })}
+            aria-invalid={errors.approved_budget ? true : undefined}
+          />
+          {errors.approved_budget && (
+            <p className="text-sm text-destructive">{errors.approved_budget}</p>
+          )}
+        </div>
+        <div className="flex flex-col gap-2">
+          <Label htmlFor="utilized_budget">Utilized Budget (AED)</Label>
+          <Input
+            id="utilized_budget"
+            type="number"
+            min={0}
+            value={form.utilized_budget}
+            onChange={(e) => update({ utilized_budget: e.target.value })}
+            aria-invalid={errors.utilized_budget ? true : undefined}
+          />
+          {errors.utilized_budget && (
+            <p className="text-sm text-destructive">{errors.utilized_budget}</p>
+          )}
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+        <div className="flex flex-col gap-2">
+          <Label htmlFor="finance_code">Finance Code</Label>
+          <Input
+            id="finance_code"
+            value={form.finance_code}
+            onChange={(e) => update({ finance_code: e.target.value })}
+          />
+        </div>
+        <div className="flex flex-col gap-2">
+          <Label htmlFor="internal_stakeholder">Internal Stakeholder</Label>
+          <Input
+            id="internal_stakeholder"
+            value={form.internal_stakeholder}
+            onChange={(e) => update({ internal_stakeholder: e.target.value })}
+          />
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-2">
+        <Label htmlFor="target_group">Target Group</Label>
+        <Input
+          id="target_group"
+          value={form.target_group}
+          placeholder="Who this project serves"
+          onChange={(e) => update({ target_group: e.target.value })}
+        />
+      </div>
+
+      <button
+        type="button"
+        onClick={() => update({ is_priority: !form.is_priority })}
+        aria-pressed={form.is_priority}
+        className="flex w-fit cursor-pointer items-center gap-2 rounded-md border border-input px-3 py-2 text-sm transition-colors hover:bg-accent"
+      >
+        <Star
+          className={
+            form.is_priority
+              ? 'h-4 w-4 fill-amber-400 text-amber-400'
+              : 'h-4 w-4 text-muted-foreground'
+          }
+        />
+        {form.is_priority ? 'Priority project' : 'Not a priority project'}
+      </button>
     </div>
   )
 }

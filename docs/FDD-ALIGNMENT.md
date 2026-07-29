@@ -20,31 +20,38 @@ Verdicts: **HAVE** (exists, usable) · **EXTEND** (exists, needs columns/changes
 **BUILD** (new table/module) · **ASK** (needs supervisor decision first)
 
 ### 1.1 Project → `projects` (EXTEND)
+**Shipped 2026-07-29 (Stage 1, step 1):** all EXTEND rows below marked ✅ are live end-to-end:
+`backend/db/fdd_project_fields.sql` (run in the Supabase SQL editor; adds `tiers` +
+`strategic_objectives` lookups with RLS + seeds, and 11 `projects` columns), repository +
+DTOs + update patch, `lookups` ALLOWED map (`tiers`, `strategic-objectives`), Edit Project
+dialog, Create Project wizard (StepDetails + confirmation), and project detail page rows.
+`internal_stakeholder` ships as plain text for now (the external-stakeholder chips question
+is still open); everything stays optional until the mandatory-field list is confirmed.
 | FDD attribute | P-Track today | Verdict |
 |---|---|---|
 | Project ID | `id` | HAVE |
 | Name | `name` | HAVE |
-| Reference ID | — | EXTEND (`reference_id`) |
-| Internal ID / Project Number | — | EXTEND (`project_number`) — FDD Fig 11 shows both |
-| Plan Year | — | EXTEND (`plan_year`) |
+| Reference ID | — | ✅ EXTEND (`reference_id`) — see numbering note under question 2b |
+| Internal ID / Project Number | — | ✅ EXTEND (`project_number`) — FDD Fig 11 shows both |
+| Plan Year | — | ✅ EXTEND (`plan_year` int; dropdown range still open) |
 | Description | `description` | HAVE |
-| Strategic alignment/objective | — | EXTEND (lookup `strategic_objectives` + FK) |
+| Strategic alignment/objective | — | ✅ EXTEND (lookup `strategic_objectives` + FK) |
 | Strategic Program | — | ASK — program hierarchy vs our `parent_project_id`? |
-| Tier | — | EXTEND (lookup `tiers` + FK) — values seen: Tier 1/2/3 |
+| Tier | — | ✅ EXTEND (lookup `tiers` + FK) — seeded Tier 1/2/3 |
 | Type | `deal_type_id` exists | ASK — is deal_type the FDD "Type" or new lookup? |
 | Sector | `category_id`? `region_id`? | ASK — sector may map to category, or be its own lookup |
 | Status | `status_id` | HAVE (values differ — FDD: In Progress etc. → ASK mapping) |
 | Start / End Date | `start_date`, `target_end_date` | HAVE |
 | Actual end | `actual_end_date` | HAVE |
-| Approved Budget (AED) | — | EXTEND (`approved_budget numeric`) |
-| Utilized Budget (AED) | — | EXTEND (`utilized_budget numeric`) — ASK: manual entry or derived? |
-| Finance Code | — | EXTEND (`finance_code`) |
+| Approved Budget (AED) | — | ✅ EXTEND (`approved_budget numeric`) |
+| Utilized Budget (AED) | — | ✅ EXTEND (`utilized_budget numeric`, manual for now) — ASK: manual entry or derived? |
+| Finance Code | — | ✅ EXTEND (`finance_code`) |
 | Owner / Project Owner | `owner_id` | HAVE |
 | Sponsor | `sponsor` (text) | HAVE |
 | Project Manager / Manager 2 / PMO Partner | via `project_members` roles | ASK — dedicated FKs vs member roles |
-| Internal / External Stakeholders | — | EXTEND — external = multi-select chips (Fig 11) → join table |
-| Target Group | — | EXTEND (`target_group` text) |
-| Priority flag | — | EXTEND (`is_priority boolean`) — star in Fig 11 |
+| Internal / External Stakeholders | — | internal ✅ (`internal_stakeholder` text); external = multi-select chips (Fig 11) → join table, ASK pending |
+| Target Group | — | ✅ EXTEND (`target_group` text) |
+| Priority flag | — | ✅ EXTEND (`is_priority boolean`) — star toggle in forms |
 
 ### 1.2 Milestone → `milestones` (mostly HAVE — big head start)
 | FDD attribute | P-Track today | Verdict |
@@ -150,7 +157,9 @@ notification subsystem.
 ## 6. Open questions for the supervisor (blockers marked ⛔)
 1. ⛔ (OI-02) Formulas: calculated progress roll-up, planned progress over time, risk score, KPI achievement %, data-quality index.
 2. ⛔ Sector vs our category; Tier values; Type vs deal_type; status value mappings (project + milestone buckets).
+   2b. **Discovery (2026-07-29):** Reference IDs in the FDD look like `1.1.1` — dotted numbering that plausibly encodes the strategy hierarchy (objective.program.project). If confirmed, Reference ID is derivable from the Strategic Program cascade, not free text.
 3. ⛔ (OI-03) Workflow routing: who reviews/validates/approves; return rules; cycle calendar (monthly? Fig 32 shows 12 cycles/yr).
+   **Discovery (2026-07-29):** the Fig 10 approval-chain names are the Fig 11 person fields (Project Manager → REVIEW, PMO Partner → VALIDATE, Project Owner → APPROVE). Answering the person-fields question therefore also defines the workflow actors; the two must be designed together.
 4. (OI-05) Exact mandatory fields + LOV values for project/milestone/risk/issue forms.
 5. Utilized budget: manual entry or finance-derived?
 6. Task-level progress % and task-level attachments — in scope?

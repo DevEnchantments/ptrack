@@ -1,5 +1,5 @@
 import { FieldError } from '@/components/FieldError'
-import { Loader2 } from 'lucide-react'
+import { Loader2, Star } from 'lucide-react'
 import { toast } from '@/lib/toast'
 import { useEffect, useState } from 'react'
 import {
@@ -50,6 +50,8 @@ export function EditProjectDialog({
   const [statuses, setStatuses] = useState<Lookup[]>([])
   const [sizes, setSizes] = useState<Lookup[]>([])
   const [categories, setCategories] = useState<Lookup[]>([])
+  const [tiers, setTiers] = useState<Lookup[]>([])
+  const [objectives, setObjectives] = useState<Lookup[]>([])
   const [projects, setProjects] = useState<Project[]>([])
 
   const [name, setName] = useState('')
@@ -65,6 +67,18 @@ export function EditProjectDialog({
   const [customer, setCustomer] = useState('')
   const [primaryUrl, setPrimaryUrl] = useState('')
   const [startDate, setStartDate] = useState('')
+  // FDD Stage-1 fields (docs/FDD-ALIGNMENT.md section 1.1)
+  const [referenceId, setReferenceId] = useState('')
+  const [projectNumber, setProjectNumber] = useState('')
+  const [planYear, setPlanYear] = useState('')
+  const [financeCode, setFinanceCode] = useState('')
+  const [targetGroup, setTargetGroup] = useState('')
+  const [internalStakeholder, setInternalStakeholder] = useState('')
+  const [isPriority, setIsPriority] = useState(false)
+  const [approvedBudget, setApprovedBudget] = useState('')
+  const [utilizedBudget, setUtilizedBudget] = useState('')
+  const [tierId, setTierId] = useState<string | null>(null)
+  const [objectiveId, setObjectiveId] = useState<string | null>(null)
 
   const [error, setError] = useState<string | null>(null)
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
@@ -77,6 +91,8 @@ export function EditProjectDialog({
     lookupsApi.list('project-statuses').then(setStatuses).catch(() => toast.error('Could not load project statuses.'))
     lookupsApi.list('project-sizes').then(setSizes).catch(() => toast.error('Could not load project sizes.'))
     lookupsApi.list('project-categories').then(setCategories).catch(() => toast.error('Could not load project categories.'))
+    lookupsApi.list('tiers').then(setTiers).catch(() => toast.error('Could not load tiers.'))
+    lookupsApi.list('strategic-objectives').then(setObjectives).catch(() => toast.error('Could not load strategic objectives.'))
     projectsApi.list().then(setProjects).catch(() => toast.error('Could not load projects.'))
   }, [open])
 
@@ -99,6 +115,21 @@ export function EditProjectDialog({
       setCustomer(project.customer ?? '')
       setPrimaryUrl(project.primary_url ?? '')
       setStartDate(project.start_date ?? '')
+      setReferenceId(project.reference_id ?? '')
+      setProjectNumber(project.project_number ?? '')
+      setPlanYear(project.plan_year != null ? String(project.plan_year) : '')
+      setFinanceCode(project.finance_code ?? '')
+      setTargetGroup(project.target_group ?? '')
+      setInternalStakeholder(project.internal_stakeholder ?? '')
+      setIsPriority(project.is_priority ?? false)
+      setApprovedBudget(
+        project.approved_budget != null ? String(project.approved_budget) : '',
+      )
+      setUtilizedBudget(
+        project.utilized_budget != null ? String(project.utilized_budget) : '',
+      )
+      setTierId(project.tier_id)
+      setObjectiveId(project.strategic_objective_id)
       setError(null)
       setFieldErrors({})
       setConfirmDelete(false)
@@ -111,6 +142,18 @@ export function EditProjectDialog({
     const errs: Record<string, string> = {}
     if (!name.trim()) errs.name = 'A project name is required.'
     if (!statusId) errs.statusId = 'A status is required.'
+    if (planYear.trim() && !Number.isInteger(Number(planYear)))
+      errs.planYear = 'Plan year must be a whole number.'
+    if (
+      approvedBudget.trim() &&
+      (Number.isNaN(Number(approvedBudget)) || Number(approvedBudget) < 0)
+    )
+      errs.approvedBudget = 'Enter a valid amount.'
+    if (
+      utilizedBudget.trim() &&
+      (Number.isNaN(Number(utilizedBudget)) || Number(utilizedBudget) < 0)
+    )
+      errs.utilizedBudget = 'Enter a valid amount.'
 
     setFieldErrors(errs)
     if (Object.keys(errs).length > 0) return
@@ -145,6 +188,17 @@ export function EditProjectDialog({
         primary_url: primaryUrl.trim() || null,
         tags: tagList.length ? tagList : null,
         start_date: startDate || null,
+        reference_id: referenceId.trim() || null,
+        project_number: projectNumber.trim() || null,
+        plan_year: planYear.trim() ? Number(planYear) : null,
+        finance_code: financeCode.trim() || null,
+        target_group: targetGroup.trim() || null,
+        internal_stakeholder: internalStakeholder.trim() || null,
+        is_priority: isPriority,
+        approved_budget: approvedBudget.trim() ? Number(approvedBudget) : null,
+        utilized_budget: utilizedBudget.trim() ? Number(utilizedBudget) : null,
+        tier_id: tierId,
+        strategic_objective_id: objectiveId,
       })
       onOpenChange(false)
       toast.success('Project updated.')
@@ -190,6 +244,36 @@ export function EditProjectDialog({
             </Label>
             <Input value={name} onChange={(e) => setName(e.target.value)}  aria-invalid={fieldErrors.name ? true : undefined} />
             <FieldError message={fieldErrors.name} />
+          </div>
+
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            <div className="flex flex-col gap-2">
+              <Label>Reference ID</Label>
+              <Input
+                value={referenceId}
+                placeholder="e.g. 1.1.1"
+                onChange={(e) => setReferenceId(e.target.value)}
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <Label>Project Number</Label>
+              <Input
+                value={projectNumber}
+                placeholder="e.g. PRJ-0239"
+                onChange={(e) => setProjectNumber(e.target.value)}
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <Label>Plan Year</Label>
+              <Input
+                type="number"
+                value={planYear}
+                placeholder="e.g. 26"
+                onChange={(e) => setPlanYear(e.target.value)}
+                aria-invalid={fieldErrors.planYear ? true : undefined}
+              />
+              <FieldError message={fieldErrors.planYear} />
+            </div>
           </div>
 
           <div className="flex flex-col gap-2">
@@ -260,6 +344,123 @@ export function EditProjectDialog({
               </Select>
             </div>
           </div>
+
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="flex flex-col gap-2">
+              <Label>Strategic Objective</Label>
+              <Select
+                items={[
+                  { label: '- None -', value: NONE },
+                  ...objectives.map((o) => ({ label: o.name, value: o.id })),
+                ]}
+                value={objectiveId ?? NONE}
+                onValueChange={(v) => setObjectiveId(v === NONE ? null : v)}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="- None -" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value={NONE}>- None -</SelectItem>
+                  {objectives.map((o) => (
+                    <SelectItem key={o.id} value={o.id}>
+                      {o.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <Label>Tier</Label>
+              <Select
+                items={[
+                  { label: '- None -', value: NONE },
+                  ...tiers.map((t) => ({ label: t.name, value: t.id })),
+                ]}
+                value={tierId ?? NONE}
+                onValueChange={(v) => setTierId(v === NONE ? null : v)}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="- None -" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value={NONE}>- None -</SelectItem>
+                  {tiers.map((t) => (
+                    <SelectItem key={t.id} value={t.id}>
+                      {t.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="flex flex-col gap-2">
+              <Label>Approved Budget (AED)</Label>
+              <Input
+                type="number"
+                min={0}
+                value={approvedBudget}
+                onChange={(e) => setApprovedBudget(e.target.value)}
+                aria-invalid={fieldErrors.approvedBudget ? true : undefined}
+              />
+              <FieldError message={fieldErrors.approvedBudget} />
+            </div>
+            <div className="flex flex-col gap-2">
+              <Label>Utilized Budget (AED)</Label>
+              <Input
+                type="number"
+                min={0}
+                value={utilizedBudget}
+                onChange={(e) => setUtilizedBudget(e.target.value)}
+                aria-invalid={fieldErrors.utilizedBudget ? true : undefined}
+              />
+              <FieldError message={fieldErrors.utilizedBudget} />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="flex flex-col gap-2">
+              <Label>Finance Code</Label>
+              <Input
+                value={financeCode}
+                onChange={(e) => setFinanceCode(e.target.value)}
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <Label>Internal Stakeholder</Label>
+              <Input
+                value={internalStakeholder}
+                onChange={(e) => setInternalStakeholder(e.target.value)}
+              />
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <Label>Target Group</Label>
+            <Input
+              value={targetGroup}
+              placeholder="Who this project serves"
+              onChange={(e) => setTargetGroup(e.target.value)}
+            />
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setIsPriority((p) => !p)}
+            aria-pressed={isPriority}
+            className="flex w-fit cursor-pointer items-center gap-2 rounded-md border border-input px-3 py-2 text-sm transition-colors hover:bg-accent"
+          >
+            <Star
+              className={
+                isPriority
+                  ? 'h-4 w-4 fill-amber-400 text-amber-400'
+                  : 'h-4 w-4 text-muted-foreground'
+              }
+            />
+            {isPriority ? 'Priority project' : 'Not a priority project'}
+          </button>
 
           <div className="flex flex-col gap-2">
             <Label>
