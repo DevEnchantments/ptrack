@@ -530,8 +530,8 @@
     "semantic_hash": "8a174626e6fe8ee080d676f2416a21e3"
   },
   "frontend/src/components/ui/dialog.tsx": {
-    "mtime": 1785330414.156147,
-    "ast_hash": "95ca124882b954dc699422bb4ccece75",
+    "mtime": 1785338162.3872683,
+    "ast_hash": "2eb92bea4fc67ed6579a89a645ef26af",
     "semantic_hash": ""
   },
   "frontend/src/components/ui/input.tsx": {
@@ -855,8 +855,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/AppLayout.tsx": {
-    "mtime": 1785335338.885505,
-    "ast_hash": "82a2155b8459fa81fa6b61fce1183bde",
+    "mtime": 1785338159.6035411,
+    "ast_hash": "1f7e83c6e864fc360f475ad4dbf705a9",
     "semantic_hash": ""
   },
   "frontend/src/pages/DashboardPage.tsx": {
