@@ -94,7 +94,7 @@ export function AppLayout() {
         Skip to content
       </a>
       <aside
-        className={`flex shrink-0 flex-col overflow-y-auto bg-sidebar text-sidebar-foreground transition-[width] duration-200 ease-in-out ${
+        className={`flex shrink-0 flex-col overflow-y-auto bg-linear-to-b from-sidebar to-sidebar-deep text-sidebar-foreground transition-[width] duration-200 ease-in-out ${
           collapsed ? 'w-14' : 'w-56'
         }`}
       >

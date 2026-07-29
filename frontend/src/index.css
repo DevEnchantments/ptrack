@@ -65,6 +65,7 @@
     --color-status-blue-border: var(--status-blue-border);
     --color-brand: var(--brand);
     --color-brand-foreground: var(--brand-foreground);
+    --color-sidebar-deep: var(--sidebar-deep);
 }
 
 /* House easing curves (UI-AUDIT section 4). Plain @theme (not inline) so the
@@ -73,6 +74,20 @@
 @theme {
     --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
     --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+    /* Navy-tinted elevation scale (depth pass, 2026-07-29): softer and more
+       diffuse than Tailwind's neutral-black defaults, tinted with the slate
+       ink (#0d1526) so shadows read as the app's own light. Re-themes every
+       existing shadow-xs/md/lg/2xl usage (cards, selects, dialogs, toasts). */
+    --shadow-xs: 0 1px 2px 0 rgb(13 21 38 / 0.05);
+    --shadow-md:
+        0 2px 8px -2px rgb(13 21 38 / 0.1),
+        0 4px 16px -4px rgb(13 21 38 / 0.08);
+    --shadow-lg:
+        0 4px 16px -4px rgb(13 21 38 / 0.12),
+        0 12px 32px -8px rgb(13 21 38 / 0.16);
+    --shadow-2xl:
+        0 8px 24px -6px rgb(13 21 38 / 0.16),
+        0 24px 64px -12px rgb(13 21 38 / 0.22);
 }
 
 /*
@@ -133,6 +148,7 @@
     --chart-5: #86efac;
     --radius: 0.625rem;
     --sidebar: #0d1526;
+    --sidebar-deep: #070d19;
     --sidebar-foreground: #a8b3c7;
     --sidebar-primary: #2563eb;
     --sidebar-primary-foreground: #ffffff;
@@ -193,6 +209,7 @@
     --chart-4: #93c5fd;
     --chart-5: #86efac;
     --sidebar: #0a101a;
+    --sidebar-deep: #05090f;
     --sidebar-foreground: #a8b3c7;
     --sidebar-primary: #2563eb;
     --sidebar-primary-foreground: #ffffff;
@@ -213,10 +230,20 @@
     }
   body {
     @apply bg-background text-foreground;
+    /* Digits align in columns everywhere (budgets, counts, dates). */
+    font-variant-numeric: tabular-nums;
     }
   html {
     @apply font-sans;
     scroll-behavior: smooth;
+    }
+  /* Size-appropriate tracking: large headings tighten (Inter reads too loose
+     as it grows); body stays at 0. */
+  h1 {
+    letter-spacing: -0.02em;
+    }
+  h2 {
+    letter-spacing: -0.0125em;
     }
 }
 
