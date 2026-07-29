@@ -595,8 +595,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/HomePage.tsx": {
-    "mtime": 1784560983.389945,
-    "ast_hash": "e02e23c6cf01d89d56c1a063fa77e44e",
+    "mtime": 1785335017.2725515,
+    "ast_hash": "7310b9273f9e37c557bdfa6f28f274fd",
     "semantic_hash": ""
   },
   "frontend/src/pages/LoginPage.tsx": {
@@ -855,8 +855,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/AppLayout.tsx": {
-    "mtime": 1785330418.656135,
-    "ast_hash": "864eb7addbab6bc1d8e14cbf7a6a3d1f",
+    "mtime": 1785335338.885505,
+    "ast_hash": "82a2155b8459fa81fa6b61fce1183bde",
     "semantic_hash": ""
   },
   "frontend/src/pages/DashboardPage.tsx": {
@@ -900,8 +900,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/CommandPalette.tsx": {
-    "mtime": 1784561166.9369774,
-    "ast_hash": "9336963fbf0d33b332ed27b57ef8064b",
+    "mtime": 1785334988.0859618,
+    "ast_hash": "53ab8659be006b8383cae83b247fc95b",
     "semantic_hash": ""
   },
   "docs/FDD-ALIGNMENT.md": {
@@ -920,8 +920,8 @@
     "semantic_hash": ""
   },
   "docs/UI-AUDIT.md": {
-    "mtime": 1785334419.3224032,
-    "ast_hash": "3c6e15d020ab44c3c42c835f6771799c",
+    "mtime": 1785335668.4114974,
+    "ast_hash": "5406ae5cd91ac4691026a5eb3131a42b",
     "semantic_hash": ""
   },
   "frontend/src/components/HelpDot.tsx": {
