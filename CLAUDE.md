@@ -16,7 +16,8 @@ supervisor). `docs/FDD-ALIGNMENT.md` is the living map of FDD ⇄ P-Track (data 
 FR/UC checklists, open supervisor questions, staged roadmap) — **read it at the start of
 every session and keep it updated**. Formulas require recorded supervisor sign-off in
 `docs/FORMULAS.md` before implementation. `original-app-features.md` is historical
-reference only.
+reference only. `docs/UI-AUDIT.md` is the staged visual-restyling checklist
+(2026-07-29 audit); consult it before any UI styling work.
 
 ## Tech stack
 
