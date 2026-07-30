@@ -253,6 +253,7 @@ export function MilestoneDetailPage() {
             label="Status"
             value={STATUS_LABELS[milestone.status] ?? milestone.status}
           />
+          <Field label="Outcome" value={milestone.outcome?.name ?? null} />
           <Field
             label="Tags"
             value={milestone.tags?.length ? milestone.tags.join(', ') : null}

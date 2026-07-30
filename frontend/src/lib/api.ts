@@ -119,6 +119,7 @@ export interface ProjectDetail extends Project {
 // the per-section list endpoints remain for refreshes after a save.
 export interface ProjectSections {
   milestones: Milestone[]
+  outcomes: ProgramOutcome[]
   actionItems: ActionItem[]
   links: Link[]
   resources: Resource[]
@@ -212,6 +213,22 @@ export const peopleApi = {
     apiDelete<{ deleted: boolean }>(`/projects/${projectId}/people/${memberId}`),
 }
 
+export interface ProgramOutcome {
+  id: string
+  project_id: string
+  name: string
+  sort_order: number | null
+  start_date: string | null
+  end_date: string | null
+}
+
+export const outcomesApi = {
+  list: (projectId: string) =>
+    apiGet<ProgramOutcome[]>(`/projects/${projectId}/outcomes`),
+  create: (projectId: string, data: Record<string, unknown>) =>
+    apiPost<ProgramOutcome>(`/projects/${projectId}/outcomes`, data),
+}
+
 export interface Milestone {
   id: string
   project_id: string
@@ -227,6 +244,9 @@ export interface Milestone {
   tags: string[] | null
   weightage: number | null
   percent_complete: number | null
+  // FDD Fig 2 outcome grouping (docs/FDD-ALIGNMENT.md section 1.2)
+  outcome_id: string | null
+  outcome?: { id: string; name: string; sort_order: number | null } | null
   role: { name: string } | null
   owner: { full_name: string | null; email: string | null } | null
 }

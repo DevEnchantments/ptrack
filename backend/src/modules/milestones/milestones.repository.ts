@@ -20,6 +20,8 @@ export interface Milestone {
   weightage: number | null;
   percent_complete: number | null;
   completed_date: string | null;
+  /** FDD Fig 2 outcome grouping (docs/FDD-ALIGNMENT.md section 1.2). */
+  outcome_id: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -27,6 +29,7 @@ export interface Milestone {
 export interface MilestoneListItem extends Milestone {
   role: { name: string } | null;
   owner: { full_name: string | null; email: string | null } | null;
+  outcome?: { id: string; name: string; sort_order: number | null } | null;
   project?: { name: string } | null;
   created_by_profile?: {
     full_name: string | null;
@@ -39,7 +42,7 @@ export interface MilestoneListItem extends Milestone {
 }
 
 const COLUMNS =
-  'id, project_id, name, description, start_date, due_date, original_due_date, status, role_id, owner_id, is_major, tags, weightage, percent_complete, completed_date, created_at, updated_at';
+  'id, project_id, name, description, start_date, due_date, original_due_date, status, role_id, owner_id, is_major, tags, weightage, percent_complete, completed_date, outcome_id, created_at, updated_at';
 
 @Injectable()
 export class MilestonesRepository {
@@ -101,7 +104,8 @@ export class MilestonesRepository {
       .select(
         `${COLUMNS},
          role:project_roles ( name ),
-         owner:profiles!owner_id ( full_name, email )`,
+         owner:profiles!owner_id ( full_name, email ),
+         outcome:program_outcomes ( id, name, sort_order )`,
       )
       .eq('project_id', projectId)
       .order('due_date', { ascending: true });
@@ -118,6 +122,7 @@ export class MilestonesRepository {
         `${COLUMNS},
          role:project_roles ( name ),
          owner:profiles!owner_id ( full_name, email ),
+         outcome:program_outcomes ( id, name, sort_order ),
          project:projects ( name ),
          created_by_profile:profiles!created_by ( full_name, email ),
          updated_by_profile:profiles!updated_by ( full_name, email )`,

@@ -38,6 +38,7 @@ export class MilestonesService {
       tags: dto.tags?.length ? dto.tags : null,
       weightage: dto.weightage ?? null,
       percent_complete: dto.percent_complete ?? null,
+      outcome_id: dto.outcome_id ?? null,
       created_by: userId,
       updated_by: userId,
     });
@@ -67,6 +68,7 @@ export class MilestonesService {
     if (dto.weightage !== undefined) patch.weightage = dto.weightage ?? null;
     if (dto.percent_complete !== undefined)
       patch.percent_complete = dto.percent_complete ?? null;
+    if (dto.outcome_id !== undefined) patch.outcome_id = dto.outcome_id ?? null;
 
     await this.repo.update(projectId, milestoneId, patch);
 

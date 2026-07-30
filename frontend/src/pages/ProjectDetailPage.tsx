@@ -1,5 +1,5 @@
 import { toast } from '@/lib/toast'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { SectionCard } from '@/components/SectionCard'
 import { SectionNav } from '@/components/SectionNav'
 import { StatusPill } from '@/components/StatusPill'
@@ -10,6 +10,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import {
   projectsApi,
   milestonesApi,
+  outcomesApi,
   actionItemsApi,
   linksApi,
   resourcesApi,
@@ -20,6 +21,7 @@ import {
   type ProjectDetail,
   type ProjectMemberDetail,
   type Milestone,
+  type ProgramOutcome,
   type MilestoneDetail,
   type ActionItem,
   type Link,
@@ -240,6 +242,7 @@ export function ProjectDetailPage() {
   const navigate = useNavigate()
   const [project, setProject] = useState<ProjectDetail | null>(null)
   const [milestones, setMilestones] = useState<Milestone[]>([])
+  const [outcomes, setOutcomes] = useState<ProgramOutcome[]>([])
   const [actionItems, setActionItems] = useState<ActionItem[]>([])
   const [links, setLinks] = useState<Link[]>([])
   const [resources, setResources] = useState<Resource[]>([])
@@ -347,6 +350,7 @@ export function ProjectDetailPage() {
   const loadMilestones = useCallback(() => {
     if (!id) return
     milestonesApi.list(id).then(setMilestones).catch(() => toast.error('Could not load milestones.'))
+    outcomesApi.list(id).then(setOutcomes).catch(() => toast.error('Could not load outcomes.'))
   }, [id])
 
   const loadActionItems = useCallback(() => {
@@ -394,6 +398,7 @@ export function ProjectDetailPage() {
       .sections(id)
       .then((s) => {
         setMilestones(s.milestones)
+        setOutcomes(s.outcomes)
         setActionItems(s.actionItems)
         setLinks(s.links)
         setResources(s.resources)
@@ -544,6 +549,40 @@ export function ProjectDetailPage() {
     ...s,
     count: sectionCounts[s.id] ?? 0,
   }))
+
+  // FDD Fig 2: milestones grouped under numbered outcomes; flat list when no
+  // outcomes exist. Ungrouped milestones trail under their own header.
+  const outcomeRange = (o: ProgramOutcome) =>
+    o.start_date && o.end_date
+      ? ` (${o.start_date} to ${o.end_date})`
+      : o.start_date
+        ? ` (from ${o.start_date})`
+        : o.end_date
+          ? ` (until ${o.end_date})`
+          : ''
+  const grouped = outcomes
+    .map((o) => ({
+      key: o.id,
+      header: `${o.sort_order != null ? `${o.sort_order}. ` : ''}${o.name}${outcomeRange(o)}`,
+      items: milestones.filter((m) => m.outcome_id === o.id),
+    }))
+    .filter((g) => g.items.length > 0)
+  const ungroupedMilestones = milestones.filter((m) => !m.outcome_id)
+  const milestoneGroups =
+    grouped.length === 0
+      ? [{ key: 'all', header: null as string | null, items: milestones }]
+      : [
+          ...grouped,
+          ...(ungroupedMilestones.length > 0
+            ? [
+                {
+                  key: 'ungrouped',
+                  header: 'No outcome' as string | null,
+                  items: ungroupedMilestones,
+                },
+              ]
+            : []),
+        ]
 
   return (
     <div className="min-h-svh">
@@ -729,7 +768,14 @@ export function ProjectDetailPage() {
             }
           >
             <ul className="section-list divide-y rounded-md border">
-              {milestones.map((m) => (
+              {milestoneGroups.map((g) => (
+                <Fragment key={g.key}>
+                  {g.header && (
+                    <li className="bg-muted/40 px-4 py-2 text-xs font-medium text-muted-foreground">
+                      {g.header}
+                    </li>
+                  )}
+                  {g.items.map((m) => (
                 <li
                   key={m.id}
                   className="flex items-start gap-3 px-4 py-3 hover:bg-accent"
@@ -801,6 +847,8 @@ export function ProjectDetailPage() {
                     </div>
                   </div>
                 </li>
+                  ))}
+                </Fragment>
               ))}
             </ul>
           </SectionCard>

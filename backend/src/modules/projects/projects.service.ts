@@ -8,6 +8,7 @@ import {
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
 import { MilestonesService } from '../milestones/milestones.service';
+import { ProgramOutcomesService } from '../program-outcomes/program-outcomes.service';
 import { ActionItemsService } from '../action-items/action-items.service';
 import { LinksService } from '../links/links.service';
 import { ResourcesService } from '../resources/resources.service';
@@ -21,6 +22,7 @@ export class ProjectsService {
   constructor(
     private readonly repo: ProjectsRepository,
     private readonly milestones: MilestonesService,
+    private readonly outcomes: ProgramOutcomesService,
     private readonly actionItems: ActionItemsService,
     private readonly links: LinksService,
     private readonly resources: ResourcesService,
@@ -38,6 +40,7 @@ export class ProjectsService {
   async sections(projectId: string) {
     const [
       milestones,
+      outcomes,
       actionItems,
       links,
       resources,
@@ -47,6 +50,7 @@ export class ProjectsService {
       attachments,
     ] = await Promise.all([
       this.milestones.list(projectId),
+      this.outcomes.list(projectId),
       this.actionItems.list(projectId),
       this.links.list(projectId),
       this.resources.list(projectId),
@@ -57,6 +61,7 @@ export class ProjectsService {
     ]);
     return {
       milestones,
+      outcomes,
       actionItems,
       links,
       resources,

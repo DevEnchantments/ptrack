@@ -8,6 +8,7 @@ import { UsersModule } from './modules/users/users.module';
 import { LookupsModule } from './modules/lookups/lookups.module';
 import { PeopleModule } from './modules/people/people.module';
 import { MilestonesModule } from './modules/milestones/milestones.module';
+import { ProgramOutcomesModule } from './modules/program-outcomes/program-outcomes.module';
 import { ActionItemsModule } from './modules/action-items/action-items.module';
 import { LinksModule } from './modules/links/links.module';
 import { ResourcesModule } from './modules/resources/resources.module';
@@ -27,6 +28,7 @@ import { AppService } from './app.service';
     LookupsModule,
     PeopleModule,
     MilestonesModule,
+    ProgramOutcomesModule,
     ActionItemsModule,
     LinksModule,
     ResourcesModule,

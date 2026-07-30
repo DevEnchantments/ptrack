@@ -57,7 +57,7 @@ is still open); everything stays optional until the mandatory-field list is conf
 | FDD attribute | P-Track today | Verdict |
 |---|---|---|
 | Milestone ID / project ID | `id`, `project_id` | HAVE |
-| Outcome group | — | BUILD `program_outcomes` table + `milestones.outcome_id` (Fig 2 groups milestones under numbered outcomes with date ranges) |
+| Outcome group | — | ✅ BUILD SHIPPED 2026-07-30: `program_outcomes` table (RLS, numbered, date ranges) + `milestones.outcome_id` — `backend/db/fdd_program_outcomes.sql` (run in Supabase SQL editor), full CRUD module at `/projects/:id/outcomes` (in the sections aggregate), milestone dialog Outcome select with creatable "- New Outcome -", grouped milestone list on the project page. Follow-ups: outcome edit/reorder UI (rename/dates only via API for now) · `outcome_id` not yet in the record-history trigger |
 | Name, start, end | `name`, `start_date`, `due_date` (+ `original_due_date`) | HAVE |
 | Weight | `weightage` | HAVE (validation: weights total 100% — build rule) |
 | Progress | `percent_complete` | HAVE |

@@ -3,6 +3,7 @@ import { ProjectsController } from './projects.controller';
 import { ProjectsService } from './projects.service';
 import { ProjectsRepository } from './projects.repository';
 import { MilestonesModule } from '../milestones/milestones.module';
+import { ProgramOutcomesModule } from '../program-outcomes/program-outcomes.module';
 import { ActionItemsModule } from '../action-items/action-items.module';
 import { LinksModule } from '../links/links.module';
 import { ResourcesModule } from '../resources/resources.module';
@@ -14,6 +15,7 @@ import { AttachmentsModule } from '../attachments/attachments.module';
 @Module({
   imports: [
     MilestonesModule,
+    ProgramOutcomesModule,
     ActionItemsModule,
     LinksModule,
     ResourcesModule,

@@ -79,4 +79,13 @@ export class CreateMilestoneDto {
   @IsOptional()
   @IsNumber()
   percent_complete?: number | null;
+
+  @ApiPropertyOptional({
+    format: 'uuid',
+    description:
+      'Program outcome this milestone rolls up under (FDD Fig 2). Fetch from `GET /projects/:projectId/outcomes`.',
+  })
+  @IsOptional()
+  @IsUUID()
+  outcome_id?: string | null;
 }

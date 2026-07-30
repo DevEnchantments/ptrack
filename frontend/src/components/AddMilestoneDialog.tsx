@@ -7,8 +7,10 @@ import type { ProjectMemberInput } from '@/pages/CreateProjectWizard'
 import {
   lookupsApi,
   milestonesApi,
+  outcomesApi,
   type Lookup,
   type MilestoneDetail,
+  type ProgramOutcome,
 } from '@/lib/api'
 import { useAuth } from '@/lib/auth-context'
 import { PersonAutocomplete } from '@/components/PersonAutocomplete'
@@ -32,6 +34,8 @@ import {
 } from '@/components/ui/select'
 
 const NO_ROLE = '__no_role__'
+const NO_OUTCOME = '__no_outcome__'
+const NEW_OUTCOME = '__new_outcome__'
 const STATUSES = [
   { label: 'Open', value: 'open' },
   { label: 'Closed / Completed', value: 'closed_completed' },
@@ -83,6 +87,9 @@ export function AddMilestoneDialog({
   const isEdit = Boolean(existing)
 
   const [roles, setRoles] = useState<Lookup[]>([])
+  const [outcomes, setOutcomes] = useState<ProgramOutcome[]>([])
+  const [outcomeId, setOutcomeId] = useState<string | null>(null)
+  const [newOutcome, setNewOutcome] = useState('')
   const [name, setName] = useState('')
   const [startDate, setStartDate] = useState(today())
   const [dueDate, setDueDate] = useState(today())
@@ -103,7 +110,8 @@ export function AddMilestoneDialog({
   useEffect(() => {
     if (!open) return
     lookupsApi.list('project-roles').then(setRoles).catch(() => toast.error('Could not load project roles.'))
-  }, [open])
+    outcomesApi.list(projectId).then(setOutcomes).catch(() => toast.error('Could not load outcomes.'))
+  }, [open, projectId])
 
   function resetFields() {
     setName('')
@@ -117,6 +125,8 @@ export function AddMilestoneDialog({
     setTags('')
     setWeightage('')
     setPercent('')
+    setOutcomeId(null)
+    setNewOutcome('')
   }
 
   // Populate on open / record change — render-phase prev-key pattern.
@@ -131,6 +141,8 @@ export function AddMilestoneDialog({
         setDueDate(existing.due_date ?? today())
         setStatus(existing.status)
         setRoleId(existing.role_id)
+        setOutcomeId(existing.outcome_id ?? null)
+        setNewOutcome('')
         setOwner(ownerFromMilestone(existing))
         setIsMajor(existing.is_major ? 'true' : 'false')
         setDescription(existing.description ?? '')
@@ -184,6 +196,19 @@ export function AddMilestoneDialog({
 
     setSaving(true)
     try {
+      let finalOutcomeId: string | null =
+        outcomeId === NEW_OUTCOME ? null : outcomeId
+      if (outcomeId === NEW_OUTCOME) {
+        if (!newOutcome.trim()) {
+          setSaving(false)
+          return setError('Enter a name for the new outcome.')
+        }
+        const created = await outcomesApi.create(projectId, {
+          name: newOutcome.trim(),
+        })
+        finalOutcomeId = created.id
+      }
+
       const tagList = tags
         .split(',')
         .map((t) => t.trim())
@@ -201,6 +226,7 @@ export function AddMilestoneDialog({
         tags: tagList.length ? tagList : undefined,
         weightage: weightage.trim() ? Number(weightage) : undefined,
         percent_complete: percent.trim() ? Number(percent) : undefined,
+        outcome_id: finalOutcomeId,
       }
 
       if (isEdit && existing) {
@@ -288,6 +314,45 @@ export function AddMilestoneDialog({
               />
               <FieldError message={fieldErrors.dueDate} />
             </div>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <Label>Outcome</Label>
+            <Select
+              items={[
+                { label: '- No Outcome -', value: NO_OUTCOME },
+                ...outcomes.map((o) => ({
+                  label:
+                    o.sort_order != null ? `${o.sort_order}. ${o.name}` : o.name,
+                  value: o.id,
+                })),
+                { label: '- New Outcome -', value: NEW_OUTCOME },
+              ]}
+              value={outcomeId ?? NO_OUTCOME}
+              onValueChange={(v) => setOutcomeId(v === NO_OUTCOME ? null : v)}
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="- No Outcome -" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value={NO_OUTCOME}>- No Outcome -</SelectItem>
+                {outcomes.map((o) => (
+                  <SelectItem key={o.id} value={o.id}>
+                    {o.sort_order != null
+                      ? `${o.sort_order}. ${o.name}`
+                      : o.name}
+                  </SelectItem>
+                ))}
+                <SelectItem value={NEW_OUTCOME}>- New Outcome -</SelectItem>
+              </SelectContent>
+            </Select>
+            {outcomeId === NEW_OUTCOME && (
+              <Input
+                value={newOutcome}
+                placeholder="New Outcome Name"
+                onChange={(e) => setNewOutcome(e.target.value)}
+              />
+            )}
           </div>
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
