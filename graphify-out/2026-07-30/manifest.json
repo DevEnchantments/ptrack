@@ -295,13 +295,13 @@
     "semantic_hash": ""
   },
   "backend/src/modules/projects/projects.repository.ts": {
-    "mtime": 1785316407.1599777,
-    "ast_hash": "42b4fa6a50b0fc652fed53795809a1ea",
+    "mtime": 1785388740.4674106,
+    "ast_hash": "73698697693064934f8d25a02c48faed",
     "semantic_hash": ""
   },
   "backend/src/modules/projects/projects.service.ts": {
-    "mtime": 1785316381.63273,
-    "ast_hash": "a813c39d6307e352577d9bbbc491d7dd",
+    "mtime": 1785388748.2976692,
+    "ast_hash": "1921b01638c12ea949f23a1812f6543b",
     "semantic_hash": ""
   },
   "backend/src/modules/resources/dto/create-resource.dto.ts": {
@@ -445,8 +445,8 @@
     "semantic_hash": "e16b561c6ee8903f8502945f8f334a05"
   },
   "frontend/src/App.tsx": {
-    "mtime": 1785388067.5745668,
-    "ast_hash": "0413a91935cc6bbe33e550bfa4108198",
+    "mtime": 1785389059.776546,
+    "ast_hash": "e09d064a7d7bcfffb6b0177019c74057",
     "semantic_hash": ""
   },
   "frontend/src/components/AddActionItemDialog.tsx": {
@@ -555,8 +555,8 @@
     "semantic_hash": ""
   },
   "frontend/src/lib/api.ts": {
-    "mtime": 1785316619.6894202,
-    "ast_hash": "c2b1fa202e490ec1966163aed8b524c9",
+    "mtime": 1785389037.0763762,
+    "ast_hash": "331ac5ab23ac345f2ca9d5e7ac8895c3",
     "semantic_hash": ""
   },
   "frontend/src/lib/auth-context.tsx": {
@@ -595,8 +595,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/HomePage.tsx": {
-    "mtime": 1785336203.7189794,
-    "ast_hash": "ffc0b0defb397cde193bf9da9044e98e",
+    "mtime": 1785389241.144648,
+    "ast_hash": "fe3d8b4f50a814fea7dc3e6864a2602d",
     "semantic_hash": ""
   },
   "frontend/src/pages/LoginPage.tsx": {
@@ -905,8 +905,8 @@
     "semantic_hash": ""
   },
   "docs/FDD-ALIGNMENT.md": {
-    "mtime": 1785317156.4947464,
-    "ast_hash": "1d2ca0df50597a1d46d8411db8210c1f",
+    "mtime": 1785389523.3489833,
+    "ast_hash": "e9dad95c57c06b012f20fe2b69624856",
     "semantic_hash": ""
   },
   "backend/db/fdd_project_fields.sql": {
@@ -932,31 +932,6 @@
   "frontend/src/lib/help-text.ts": {
     "mtime": 1785331489.719674,
     "ast_hash": "10f70b0d4e31b8f7e755dd9843789651",
-    "semantic_hash": ""
-  },
-  "frontend/src/pages/prototypes/home-card/CardEditorial.tsx": {
-    "mtime": 1785387806.7091224,
-    "ast_hash": "49b7eac4d5cec09fbecf3c49e627984e",
-    "semantic_hash": ""
-  },
-  "frontend/src/pages/prototypes/home-card/CardLedger.tsx": {
-    "mtime": 1785387789.5703268,
-    "ast_hash": "ffbb5d6ffa31f3afbc330eefb85637de",
-    "semantic_hash": ""
-  },
-  "frontend/src/pages/prototypes/home-card/CardVitals.tsx": {
-    "mtime": 1785387800.3722394,
-    "ast_hash": "0f3d14d96498f7996b95e240ab1fb029",
-    "semantic_hash": ""
-  },
-  "frontend/src/pages/prototypes/home-card/HomeCardPrototypes.tsx": {
-    "mtime": 1785388067.576567,
-    "ast_hash": "115579fca86162789d13846538a51c3a",
-    "semantic_hash": ""
-  },
-  "frontend/src/pages/prototypes/home-card/data.ts": {
-    "mtime": 1785387786.6478603,
-    "ast_hash": "8bc1e9817507b457687e0366549b78cd",
     "semantic_hash": ""
   }
 }
