@@ -1,6 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsArray,
+  IsDateString,
   IsIn,
   IsOptional,
   IsString,
@@ -85,4 +86,29 @@ export class CreateIssueDto {
   @IsOptional()
   @IsString()
   resolution?: string | null;
+
+  @ApiPropertyOptional({
+    example: 'Add a checksum pre-validation step to the import wizard.',
+    description: 'FDD issue register: recommended remedial action.',
+  })
+  @IsOptional()
+  @IsString()
+  recommendation?: string | null;
+
+  @ApiPropertyOptional({
+    example: 'Amna Khalid',
+    description: 'FDD issue register: who reported the issue. Free text.',
+  })
+  @IsOptional()
+  @IsString()
+  @MaxLength(255)
+  reported_by?: string | null;
+
+  @ApiPropertyOptional({
+    example: '2026-08-15',
+    description: 'FDD issue register: date the issue was closed.',
+  })
+  @IsOptional()
+  @IsDateString()
+  date_closed?: string | null;
 }

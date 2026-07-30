@@ -420,6 +420,10 @@ export interface Issue {
   reference_identifier: string | null
   tags: string[] | null
   resolution: string | null
+  // FDD issue-register extensions (docs/FDD-ALIGNMENT.md section 1.5)
+  recommendation: string | null
+  reported_by: string | null
+  date_closed: string | null
   created_at: string
   updated_at: string
   category: { name: string } | null

@@ -88,8 +88,10 @@ levels, impact levels, responses.
 ### 1.5 Issue → `issues` (EXTEND)
 FDD issue register columns: issue, recommendation, date created, reported_by, type,
 status, date_closed, action. We have title/description/status/level/category/owner/
-resolution/reference. EXTEND: `recommendation`, `reported_by`, `date_closed`.
-ASK: does FDD "severity" map to our `level_id`?
+resolution/reference. ✅ EXTEND SHIPPED 2026-07-30: `recommendation`,
+`reported_by` (free text), `date_closed` — `backend/db/fdd_issue_fields.sql` (run
+in Supabase SQL editor) + DTOs/service + AddIssueDialog fields.
+ASK still open: does FDD "severity" map to our `level_id`?
 
 ### 1.6 Workflow Submission → BUILD `cycles` + `submissions`
 States seen (Figs 10, 15, 24): REVIEW → VALIDATE → APPROVE, plus DRAFT / RETURNED /

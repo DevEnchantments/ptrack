@@ -17,6 +17,10 @@ export interface Issue {
   reference_identifier: string | null;
   tags: string[] | null;
   resolution: string | null;
+  /** FDD issue-register extensions (docs/FDD-ALIGNMENT.md section 1.5). */
+  recommendation: string | null;
+  reported_by: string | null;
+  date_closed: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -33,7 +37,7 @@ export interface IssueListItem extends Issue {
 }
 
 const COLUMNS =
-  'id, project_id, title, description, category_id, level_id, role_id, owner_id, status, url, reference_identifier, tags, resolution, created_at, updated_at';
+  'id, project_id, title, description, category_id, level_id, role_id, owner_id, status, url, reference_identifier, tags, resolution, recommendation, reported_by, date_closed, created_at, updated_at';
 
 const JOINS = `${COLUMNS},
   category:issue_categories ( name ),

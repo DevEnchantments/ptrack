@@ -29,6 +29,9 @@ export class IssuesService {
       reference_identifier: dto.reference_identifier?.trim() || null,
       tags: dto.tags?.length ? dto.tags : null,
       resolution: dto.resolution?.trim() || null,
+      recommendation: dto.recommendation?.trim() || null,
+      reported_by: dto.reported_by?.trim() || null,
+      date_closed: dto.date_closed || null,
       created_by: userId,
       updated_by: userId,
     });
@@ -56,6 +59,12 @@ export class IssuesService {
     if (dto.tags !== undefined) patch.tags = dto.tags?.length ? dto.tags : null;
     if (dto.resolution !== undefined)
       patch.resolution = dto.resolution?.trim() || null;
+    if (dto.recommendation !== undefined)
+      patch.recommendation = dto.recommendation?.trim() || null;
+    if (dto.reported_by !== undefined)
+      patch.reported_by = dto.reported_by?.trim() || null;
+    if (dto.date_closed !== undefined)
+      patch.date_closed = dto.date_closed || null;
     return this.repo.update(projectId, issueId, patch);
   }
 

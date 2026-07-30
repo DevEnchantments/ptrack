@@ -72,6 +72,9 @@ export function AddIssueDialog({
   const [referenceId, setReferenceId] = useState('')
   const [tags, setTags] = useState('')
   const [resolution, setResolution] = useState('')
+  const [recommendation, setRecommendation] = useState('')
+  const [reportedBy, setReportedBy] = useState('')
+  const [dateClosed, setDateClosed] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
   const [saving, setSaving] = useState(false)
@@ -115,6 +118,9 @@ export function AddIssueDialog({
     setReferenceId('')
     setTags('')
     setResolution('')
+    setRecommendation('')
+    setReportedBy('')
+    setDateClosed('')
     setError(null)
     setFieldErrors({})
   }
@@ -147,6 +153,9 @@ export function AddIssueDialog({
         setReferenceId(existing.reference_identifier ?? '')
         setTags(existing.tags?.join(', ') ?? '')
         setResolution(existing.resolution ?? '')
+        setRecommendation(existing.recommendation ?? '')
+        setReportedBy(existing.reported_by ?? '')
+        setDateClosed(existing.date_closed ?? '')
       } else {
         reset()
       }
@@ -199,6 +208,9 @@ export function AddIssueDialog({
         reference_identifier: referenceId.trim() || null,
         tags: tagList.length ? tagList : null,
         resolution: status === 'closed' ? resolution.trim() : null,
+        recommendation: recommendation.trim() || null,
+        reported_by: reportedBy.trim() || null,
+        date_closed: dateClosed || null,
       }
 
       if (isEdit && existing) {
@@ -371,6 +383,24 @@ export function AddIssueDialog({
             </div>
           </div>
 
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="flex flex-col gap-2">
+              <Label>Reported By</Label>
+              <Input
+                value={reportedBy}
+                onChange={(e) => setReportedBy(e.target.value)}
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <Label>Date Closed</Label>
+              <Input
+                type="date"
+                value={dateClosed}
+                onChange={(e) => setDateClosed(e.target.value)}
+              />
+            </div>
+          </div>
+
           {status === 'closed' && (
             <div className="flex flex-col gap-2">
               <Label>
@@ -393,6 +423,15 @@ export function AddIssueDialog({
               rows={3}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+            />
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <Label>Recommendation</Label>
+            <Textarea
+              rows={3}
+              value={recommendation}
+              onChange={(e) => setRecommendation(e.target.value)}
             />
           </div>
 
