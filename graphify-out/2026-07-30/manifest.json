@@ -140,8 +140,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/issues/dto/create-issue.dto.ts": {
-    "mtime": 1784091735.8849316,
-    "ast_hash": "af3994848be347dad6c2203be2f0a98e",
+    "mtime": 1785390175.3100898,
+    "ast_hash": "c59c6f3359285b12817f424873506d2b",
     "semantic_hash": ""
   },
   "backend/src/modules/issues/dto/update-issue.dto.ts": {
@@ -160,13 +160,13 @@
     "semantic_hash": ""
   },
   "backend/src/modules/issues/issues.repository.ts": {
-    "mtime": 1784091732.9740129,
-    "ast_hash": "779f9618dd47edd744e418ddf146fa34",
+    "mtime": 1785390167.7638762,
+    "ast_hash": "42c5f448b163fb7f546bea1fe5c0a307",
     "semantic_hash": ""
   },
   "backend/src/modules/issues/issues.service.ts": {
-    "mtime": 1784091740.913632,
-    "ast_hash": "a40733fe92751feb0915bcedbec9afcf",
+    "mtime": 1785390180.8366444,
+    "ast_hash": "4a8790ba0535754034e112ea949e217a",
     "semantic_hash": ""
   },
   "backend/src/modules/links/dto/create-link.dto.ts": {
@@ -460,8 +460,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/AddIssueDialog.tsx": {
-    "mtime": 1785331589.6200585,
-    "ast_hash": "f58dd6bc788337be0206018b05b185ee",
+    "mtime": 1785390439.10754,
+    "ast_hash": "89d7d21a95096c2bc7b4b0084e071005",
     "semantic_hash": ""
   },
   "frontend/src/components/AddLinkDialog.tsx": {
@@ -555,8 +555,8 @@
     "semantic_hash": ""
   },
   "frontend/src/lib/api.ts": {
-    "mtime": 1785389037.0763762,
-    "ast_hash": "331ac5ab23ac345f2ca9d5e7ac8895c3",
+    "mtime": 1785390439.1045296,
+    "ast_hash": "5c2a6ab25b58f895221f294f199b2dc8",
     "semantic_hash": ""
   },
   "frontend/src/lib/auth-context.tsx": {
@@ -932,6 +932,11 @@
   "frontend/src/lib/help-text.ts": {
     "mtime": 1785331489.719674,
     "ast_hash": "10f70b0d4e31b8f7e755dd9843789651",
+    "semantic_hash": ""
+  },
+  "backend/db/fdd_issue_fields.sql": {
+    "mtime": 1785390163.104352,
+    "ast_hash": "30700addc020748198d035bdf48f3abb",
     "semantic_hash": ""
   }
 }
