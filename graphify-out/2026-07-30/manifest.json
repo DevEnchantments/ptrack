@@ -35,8 +35,8 @@
     "semantic_hash": ""
   },
   "backend/src/app.module.ts": {
-    "mtime": 1783942248.548218,
-    "ast_hash": "bda6c12cfa415627326fbac8fb00bf18",
+    "mtime": 1785392561.0740447,
+    "ast_hash": "1bf9fdcb8dbe6551f962afa668ba6209",
     "semantic_hash": ""
   },
   "backend/src/app.service.ts": {
@@ -215,8 +215,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/milestones/dto/create-milestone.dto.ts": {
-    "mtime": 1783942248.549218,
-    "ast_hash": "fe1d1ae1478b4a9e9dc0aee41c874962",
+    "mtime": 1785392587.9133308,
+    "ast_hash": "25bf014b4a0018b7c0e290d1095f809b",
     "semantic_hash": ""
   },
   "backend/src/modules/milestones/dto/update-milestone.dto.ts": {
@@ -235,13 +235,13 @@
     "semantic_hash": ""
   },
   "backend/src/modules/milestones/milestones.repository.ts": {
-    "mtime": 1784090594.079296,
-    "ast_hash": "dd6858b644bff55181b4ac2d8ed325a1",
+    "mtime": 1785392584.6582904,
+    "ast_hash": "f4086c005c665c87086b9005adcea2f1",
     "semantic_hash": ""
   },
   "backend/src/modules/milestones/milestones.service.ts": {
-    "mtime": 1784090596.7321596,
-    "ast_hash": "e039515e4a2d1a271ca66162c7944b15",
+    "mtime": 1785392806.7463186,
+    "ast_hash": "603a5f07ee48862946e3fdcbbbe20daf",
     "semantic_hash": ""
   },
   "backend/src/modules/people/dto/create-person.dto.ts": {
@@ -290,8 +290,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/projects/projects.module.ts": {
-    "mtime": 1784526251.4721465,
-    "ast_hash": "aa264259842f0425ebfe91879a9cd6ec",
+    "mtime": 1785392565.042781,
+    "ast_hash": "61569efc77032391b3c5be450eedae9a",
     "semantic_hash": ""
   },
   "backend/src/modules/projects/projects.repository.ts": {
@@ -300,8 +300,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/projects/projects.service.ts": {
-    "mtime": 1785388748.2976692,
-    "ast_hash": "1921b01638c12ea949f23a1812f6543b",
+    "mtime": 1785392572.7443745,
+    "ast_hash": "bcd57dc275dd08a3b337c165413a8fd5",
     "semantic_hash": ""
   },
   "backend/src/modules/resources/dto/create-resource.dto.ts": {
@@ -470,8 +470,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/AddMilestoneDialog.tsx": {
-    "mtime": 1785331384.1509829,
-    "ast_hash": "7e9c67a54ce31cc9b81117bf08c22640",
+    "mtime": 1785393068.162053,
+    "ast_hash": "d142bf71e19d8cfc2ba0a41624f2af15",
     "semantic_hash": ""
   },
   "frontend/src/components/AddPersonDialog.tsx": {
@@ -555,8 +555,8 @@
     "semantic_hash": ""
   },
   "frontend/src/lib/api.ts": {
-    "mtime": 1785390439.1045296,
-    "ast_hash": "5c2a6ab25b58f895221f294f199b2dc8",
+    "mtime": 1785393068.160051,
+    "ast_hash": "83bf760a64c159a345473c2033d3b168",
     "semantic_hash": ""
   },
   "frontend/src/lib/auth-context.tsx": {
@@ -605,13 +605,13 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/MilestoneDetailPage.tsx": {
-    "mtime": 1785337092.2031016,
-    "ast_hash": "77e88597541bbc8238d1d362a9742e93",
+    "mtime": 1785393068.2083154,
+    "ast_hash": "dd78f45f1ed38e93ff0e84723500194d",
     "semantic_hash": ""
   },
   "frontend/src/pages/ProjectDetailPage.tsx": {
-    "mtime": 1785337089.1154609,
-    "ast_hash": "1c8c2cb2db2686d0eaacebf0b8374832",
+    "mtime": 1785393068.1650553,
+    "ast_hash": "9cfb4f2e0a19709d4f2f6ca7b2d79149",
     "semantic_hash": ""
   },
   "frontend/src/pages/StatusReportDetailPage.tsx": {
@@ -905,8 +905,8 @@
     "semantic_hash": ""
   },
   "docs/FDD-ALIGNMENT.md": {
-    "mtime": 1785390674.9002657,
-    "ast_hash": "907fc4367af88534cd8b57375e92702f",
+    "mtime": 1785393281.8140802,
+    "ast_hash": "22f83a9e1a99da641f3623a241785ca6",
     "semantic_hash": ""
   },
   "backend/db/fdd_project_fields.sql": {
@@ -937,6 +937,41 @@
   "backend/db/fdd_issue_fields.sql": {
     "mtime": 1785390163.104352,
     "ast_hash": "30700addc020748198d035bdf48f3abb",
+    "semantic_hash": ""
+  },
+  "backend/db/fdd_program_outcomes.sql": {
+    "mtime": 1785392518.2733462,
+    "ast_hash": "a89b28e1a8e397f7a82165de9668f27a",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/program-outcomes/dto/create-program-outcome.dto.ts": {
+    "mtime": 1785392530.0368032,
+    "ast_hash": "d829b456c739a1c22a9ad341ac4591ca",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/program-outcomes/dto/update-program-outcome.dto.ts": {
+    "mtime": 1785392532.0231144,
+    "ast_hash": "76860a364230aebbf1fa44e092e6e5d6",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/program-outcomes/program-outcomes.controller.ts": {
+    "mtime": 1785392548.8088565,
+    "ast_hash": "4800e096d2d2cb3e27282cb4e2076c53",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/program-outcomes/program-outcomes.module.ts": {
+    "mtime": 1785392550.8790455,
+    "ast_hash": "734bd2f68084e11a0e4146f484f5e1a3",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/program-outcomes/program-outcomes.repository.ts": {
+    "mtime": 1785392526.3293476,
+    "ast_hash": "8cb533164f39ca5f45655bd0c782b6b4",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/program-outcomes/program-outcomes.service.ts": {
+    "mtime": 1785392540.5214,
+    "ast_hash": "a667e132810c511dcb03f2a1eaeb52be",
     "semantic_hash": ""
   }
 }
