@@ -610,8 +610,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ProjectDetailPage.tsx": {
-    "mtime": 1785393068.1650553,
-    "ast_hash": "9cfb4f2e0a19709d4f2f6ca7b2d79149",
+    "mtime": 1785396944.627108,
+    "ast_hash": "76e7849ec3fade565f90084198409ada",
     "semantic_hash": ""
   },
   "frontend/src/pages/StatusReportDetailPage.tsx": {
@@ -855,8 +855,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/AppLayout.tsx": {
-    "mtime": 1785338159.6035411,
-    "ast_hash": "1f7e83c6e864fc360f475ad4dbf705a9",
+    "mtime": 1785396159.4912362,
+    "ast_hash": "f4a2fa3c28ca5ee6416165eff7b3f958",
     "semantic_hash": ""
   },
   "frontend/src/pages/DashboardPage.tsx": {
@@ -865,13 +865,13 @@
     "semantic_hash": ""
   },
   "frontend/src/components/SectionCard.tsx": {
-    "mtime": 1784560920.0599592,
-    "ast_hash": "df6498f12bd007729a16b3badb2ddb90",
+    "mtime": 1785396269.680379,
+    "ast_hash": "fdc2b355cbb8ce01a0e6157f8b6941b0",
     "semantic_hash": ""
   },
   "frontend/src/components/SectionNav.tsx": {
-    "mtime": 1784560959.8922498,
-    "ast_hash": "b6edd28fb820d4d581f0a2d8c8b74ab8",
+    "mtime": 1785396122.391256,
+    "ast_hash": "4c46291864dedd44d253086daee4aa8d",
     "semantic_hash": ""
   },
   "frontend/src/components/ui/skeleton.tsx": {
@@ -1532,6 +1532,16 @@
   ".claude/skills/ui-ux-pro-max/references/quick-reference.md": {
     "mtime": 1785394344.3755147,
     "ast_hash": "9cc216f41bb4343a7ea4e10e1f00a563",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/ProjectActions.tsx": {
+    "mtime": 1785396084.2795098,
+    "ast_hash": "46b6ee368c937f0beb50f5ef9217b912",
+    "semantic_hash": ""
+  },
+  "frontend/src/lib/format.ts": {
+    "mtime": 1785396044.9549627,
+    "ast_hash": "86709643d260beac4d6a9bd7aacc8181",
     "semantic_hash": ""
   }
 }

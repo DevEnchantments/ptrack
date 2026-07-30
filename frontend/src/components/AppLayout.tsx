@@ -203,7 +203,7 @@ export function AppLayout() {
             id="main-content"
             ref={scrollRef}
             onScroll={(e) => setShowScrollTop(e.currentTarget.scrollTop > 600)}
-            className="h-full overflow-y-auto scroll-smooth"
+            className="h-full overflow-y-auto motion-safe:scroll-smooth"
           >
             <Outlet />
           </div>

@@ -18,6 +18,12 @@ interface Props {
   onEmptyAction?: () => void
   /** Optional extra header content (e.g. a progress bar), left of the chevron. */
   headerExtra?: ReactNode
+  /**
+   * Render `children` even at count 0, leaving the section to draw its own
+   * empty state. Needed where the body owns a filter control: swapping in the
+   * shared empty state would hide the very control that emptied the list.
+   */
+  ownEmptyState?: boolean
   children: ReactNode
 }
 
@@ -25,6 +31,10 @@ interface Props {
  * Collapsible project-page section: header with count + chevron, animated
  * height (grid-rows trick — no measuring), skeleton while loading, and an
  * actionable empty state. Entrance is a one-time staggered fade-up.
+ *
+ * `scroll-mt` reads `--nav-h`, which the page sets from the sticky bar's
+ * current height (it grows when the project-name band appears), so anchor
+ * jumps land flush under the bar in either state.
  */
 export function SectionCard({
   id,
@@ -39,12 +49,13 @@ export function SectionCard({
   emptyActionLabel,
   onEmptyAction,
   headerExtra,
+  ownEmptyState = false,
   children,
 }: Props) {
   return (
     <section
       id={id}
-      className="mt-8 scroll-mt-28 transition-[opacity,transform] duration-500 ease-out"
+      className="mt-8 scroll-mt-(--nav-h) transition-[opacity,transform] duration-500 ease-out"
       style={{
         opacity: entered ? 1 : 0,
         transform: entered ? 'none' : 'translateY(10px)',
@@ -83,7 +94,7 @@ export function SectionCard({
                 <Skeleton className="h-4 w-1/2" />
                 <Skeleton className="h-4 w-3/5" />
               </div>
-            ) : count === 0 ? (
+            ) : count === 0 && !ownEmptyState ? (
               <div className="flex items-center justify-between gap-3 rounded-md border border-dashed px-4 py-5">
                 <p className="text-sm text-muted-foreground">{emptyLabel}</p>
                 {emptyActionLabel && onEmptyAction && (

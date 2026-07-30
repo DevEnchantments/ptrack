@@ -15,8 +15,17 @@ async function bootstrap() {
     }),
   );
 
-  // Let the Vite dev frontend call this API.
-  app.enableCors({ origin: ['http://localhost:5173'] });
+  // Let the Vite dev frontend call this API. Vite falls through to the next
+  // free port when 5173 is already taken, and a single hardcoded origin turns
+  // that into an opaque preflight failure — so both dev ports are allowed by
+  // default. CORS_ORIGINS (comma-separated) replaces the list outright.
+  const corsOrigins = (
+    process.env.CORS_ORIGINS ?? 'http://localhost:5173,http://localhost:5174'
+  )
+    .split(',')
+    .map((o) => o.trim())
+    .filter(Boolean);
+  app.enableCors({ origin: corsOrigins });
 
   // API docs. Not mounted in production: NestJS holds the Supabase service-role
   // key and RLS is still deferred, so the schema stays off the public surface.
