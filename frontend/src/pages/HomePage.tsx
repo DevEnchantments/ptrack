@@ -1,7 +1,12 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Search } from 'lucide-react'
-import { projectsApi, lookupsApi, type Project, type Lookup } from '@/lib/api'
+import { CircleAlert, Lock, Search, Star } from 'lucide-react'
+import {
+  projectsApi,
+  lookupsApi,
+  type ProjectListItem,
+  type Lookup,
+} from '@/lib/api'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -33,6 +38,37 @@ const ROWS_OPTIONS = [
   { label: '48', value: '48' },
 ]
 
+function relativeTime(iso: string): string {
+  const sec = Math.round((Date.now() - new Date(iso).getTime()) / 1000)
+  if (sec < 60) return 'just now'
+  const min = Math.round(sec / 60)
+  if (min < 60) return `${min} minute${min === 1 ? '' : 's'} ago`
+  const hr = Math.round(min / 60)
+  if (hr < 24) return `${hr} hour${hr === 1 ? '' : 's'} ago`
+  const day = Math.round(hr / 24)
+  if (day < 30) return `${day} day${day === 1 ? '' : 's'} ago`
+  const mo = Math.round(day / 30)
+  if (mo < 12) return `${mo} month${mo === 1 ? '' : 's'} ago`
+  const yr = Math.round(mo / 12)
+  return `${yr} year${yr === 1 ? '' : 's'} ago`
+}
+
+function prefersReducedMotion(): boolean {
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches
+}
+
+/** Flips true one frame after mount so the milestone bars sweep in (starts true on reduced motion). */
+function useEntranceFlag(): boolean {
+  const [entered, setEntered] = useState(() => prefersReducedMotion())
+  useEffect(() => {
+    const raf = requestAnimationFrame(() =>
+      requestAnimationFrame(() => setEntered(true)),
+    )
+    return () => cancelAnimationFrame(raf)
+  }, [])
+  return entered
+}
+
 function initials(name: string) {
   const parts = name.trim().split(/\s+/).filter(Boolean)
   if (parts.length === 0) return '?'
@@ -43,7 +79,8 @@ function initials(name: string) {
 export function HomePage() {
   usePageTitle('Projects')
   const navigate = useNavigate()
-  const [projects, setProjects] = useState<Project[]>([])
+  const [projects, setProjects] = useState<ProjectListItem[]>([])
+  const entered = useEntranceFlag()
   const [statuses, setStatuses] = useState<Lookup[]>([])
   const [sizes, setSizes] = useState<Lookup[]>([])
   const [categories, setCategories] = useState<Lookup[]>([])
@@ -83,7 +120,7 @@ export function HomePage() {
 
   // Projects with no (or unmapped) status fall into a synthetic Unknown bucket.
   const knownIds = new Set(statuses.map((s) => s.id))
-  const bucketOf = (p: Project) =>
+  const bucketOf = (p: ProjectListItem) =>
     p.status_id && knownIds.has(p.status_id) ? p.status_id : UNKNOWN_STATUS
 
   const counts = new Map<string, number>()
@@ -173,7 +210,8 @@ export function HomePage() {
                 </div>
                 <Skeleton className="h-4 w-full" />
                 <Skeleton className="mt-2 h-4 w-4/5" />
-                <Skeleton className="mt-5 h-3 w-24" />
+                <Skeleton className="mt-4 h-1.5 w-full rounded-full" />
+                <Skeleton className="mt-4 h-3 w-32" />
               </div>
             ))}
           </div>
@@ -373,25 +411,55 @@ export function HomePage() {
                         style={{ animationDelay: `${Math.min(i, 12) * 30}ms` }}
                         className="stagger-in flex cursor-pointer flex-col rounded-lg border bg-card p-5 shadow-xs transition-[translate,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-2 focus-visible:outline-ring"
                       >
-                        <div className="mb-3 flex items-start justify-between gap-3">
-                          <h2 className="text-base font-semibold">{p.name}</h2>
+                        <div className="mb-2 flex items-start justify-between gap-3">
+                          <h2 className="text-base font-semibold">
+                            {p.is_priority && (
+                              <Star className="mr-1 inline h-4 w-4 fill-gold text-gold" />
+                            )}
+                            {p.access_control === 'restricted' && (
+                              <Lock className="mr-1 inline h-4 w-4 text-muted-foreground" />
+                            )}
+                            {p.name}
+                          </h2>
                           <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-medium text-primary-foreground">
                             {initials(p.name)}
                           </span>
                         </div>
                         {status && (
-                          <div className="mb-2">
+                          <div className="mb-3">
                             <StatusPill status={status} />
                           </div>
                         )}
-                        <p className="flex-1 text-sm text-muted-foreground">
+                        <p className="line-clamp-2 flex-1 text-sm text-muted-foreground">
                           {p.description ?? ''}
                         </p>
-                        <p className="mt-4 text-xs text-muted-foreground">
-                          {p.access_control === 'restricted'
-                            ? 'Restricted Access'
-                            : 'Open Access'}
-                        </p>
+                        <div className="mt-3 mb-1 flex items-center justify-between text-xs text-muted-foreground">
+                          <span>Milestones</span>
+                          <span className="font-medium text-foreground">
+                            {p.milestones_done}/{p.milestones_total}
+                          </span>
+                        </div>
+                        <div className="h-1.5 overflow-hidden rounded-full bg-muted">
+                          <div
+                            className="h-full rounded-full bg-primary transition-[width] duration-500 ease-out"
+                            style={{
+                              width:
+                                entered && p.milestones_total > 0
+                                  ? `${(p.milestones_done / p.milestones_total) * 100}%`
+                                  : '0%',
+                            }}
+                          />
+                        </div>
+                        <div className="mt-3 flex items-center gap-4 border-t pt-3 text-xs text-muted-foreground">
+                          <span className="flex items-center gap-1">
+                            <CircleAlert className="h-3.5 w-3.5" />
+                            {p.open_issues} open{' '}
+                            {p.open_issues === 1 ? 'issue' : 'issues'}
+                          </span>
+                          <span className="ml-auto">
+                            {relativeTime(p.updated_at)}
+                          </span>
+                        </div>
                       </div>
                     )
                   })}

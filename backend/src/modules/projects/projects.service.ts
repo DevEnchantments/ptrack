@@ -3,6 +3,7 @@ import {
   ProjectsRepository,
   Project,
   ProjectDetail,
+  ProjectListStats,
 } from './projects.repository';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
@@ -101,8 +102,10 @@ export class ProjectsService {
   async findAll(page?: {
     limit?: number;
     offset?: number;
-  }): Promise<Project[]> {
-    return this.repo.findAll(page);
+  }): Promise<Array<Project & ProjectListStats>> {
+    const projects = await this.repo.findAll(page);
+    const stats = await this.repo.listStats(projects.map((p) => p.id));
+    return projects.map((p) => ({ ...p, ...stats[p.id] }));
   }
 
   async getDetail(id: string): Promise<ProjectDetail> {

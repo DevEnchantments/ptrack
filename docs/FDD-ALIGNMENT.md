@@ -112,7 +112,7 @@ index (timeliness/completeness/reliability, Figs 30–31) — **formulas = ASK (
 
 | FR | Summary | P-Track status |
 |---|---|---|
-| FR-01 | Project register grid: filters, pagination, sort, status indicators | PARTIAL — filter rail + status pills exist; no manual/calculated progress columns, no grid view |
+| FR-01 | Project register grid: filters, pagination, sort, status indicators | PARTIAL — filter rail + status pills exist; no manual/calculated progress columns, no grid view. 2026-07-30: home cards show a **milestone-completion** bar (done/total, labeled "Milestones") + open-issue counts via `GET /projects` aggregates — deliberately NOT the FDD's calculated progress, which awaits OI-02 formula sign-off (docs/FORMULAS.md rule); swap the bar to official progress when it lands |
 | FR-02 | Navigation: lists / views / reports / dashboards | PARTIAL — shell + stub items exist |
 | FR-03 | Project detail tabs (Overview, Achievement, Risk & Issue, Comment, Dashboard, Documentation, KPI, Change History) | PARTIAL — sections exist; tab layout + missing tabs to map |
 | FR-04 | Actual/planned progress, milestones done/total, budget cards | MISSING (math phase core) |

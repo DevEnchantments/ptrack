@@ -42,6 +42,13 @@ export interface Project {
   updated_at: string;
 }
 
+/** Per-project aggregates carried by the list endpoint (home cards). */
+export interface ProjectListStats {
+  milestones_done: number;
+  milestones_total: number;
+  open_issues: number;
+}
+
 export interface ProjectDetail extends Project {
   status: { name: string } | null;
   size: { name: string } | null;
@@ -120,6 +127,47 @@ export class ProjectsRepository {
       .maybeSingle();
     if (error) throw toHttpException(error, 'projects.findDetail');
     return (data as unknown as ProjectDetail) ?? null;
+  }
+
+  /**
+   * Aggregates for the list endpoint: milestone completion and open-issue
+   * counts per project, computed from two grouped fetches (no schema change).
+   * "Done" mirrors the milestone status enum; "open" excludes resolved/closed.
+   */
+  async listStats(
+    projectIds: string[],
+  ): Promise<Record<string, ProjectListStats>> {
+    const stats: Record<string, ProjectListStats> = {};
+    for (const id of projectIds) {
+      stats[id] = { milestones_done: 0, milestones_total: 0, open_issues: 0 };
+    }
+    if (projectIds.length === 0) return stats;
+
+    const [ms, iss] = await Promise.all([
+      this.db.client
+        .from('milestones')
+        .select('project_id, status')
+        .in('project_id', projectIds),
+      this.db.client
+        .from('issues')
+        .select('project_id, status')
+        .in('project_id', projectIds),
+    ]);
+    if (ms.error) throw toHttpException(ms.error, 'projects.listStats');
+    if (iss.error) throw toHttpException(iss.error, 'projects.listStats');
+
+    (ms.data ?? []).forEach((r: { project_id: string; status: string }) => {
+      const s = stats[r.project_id];
+      if (!s) return;
+      s.milestones_total += 1;
+      if (r.status === 'closed_completed') s.milestones_done += 1;
+    });
+    (iss.data ?? []).forEach((r: { project_id: string; status: string }) => {
+      const s = stats[r.project_id];
+      if (!s) return;
+      if (r.status !== 'resolved' && r.status !== 'closed') s.open_issues += 1;
+    });
+    return stats;
   }
 
   async insertMembers(rows: Record<string, unknown>[]): Promise<void> {

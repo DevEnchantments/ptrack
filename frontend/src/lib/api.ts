@@ -128,8 +128,15 @@ export interface ProjectSections {
   attachments: Attachment[]
 }
 
+// Aggregates the list endpoint attaches to each project (home cards).
+export interface ProjectListItem extends Project {
+  milestones_done: number
+  milestones_total: number
+  open_issues: number
+}
+
 export const projectsApi = {
-  list: () => apiGet<Project[]>('/projects'),
+  list: () => apiGet<ProjectListItem[]>('/projects'),
   get: (id: string) => apiGet<ProjectDetail>(`/projects/${id}`),
   sections: (id: string) =>
     apiGet<ProjectSections>(`/projects/${id}/sections`),
