@@ -35,8 +35,8 @@
     "semantic_hash": ""
   },
   "backend/src/app.module.ts": {
-    "mtime": 1785392561.0740447,
-    "ast_hash": "1bf9fdcb8dbe6551f962afa668ba6209",
+    "mtime": 1785742919.3423376,
+    "ast_hash": "59ef2394ad756975dba52fe65bff2c4a",
     "semantic_hash": ""
   },
   "backend/src/app.service.ts": {
@@ -210,8 +210,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/lookups/lookups.service.ts": {
-    "mtime": 1785315925.0771747,
-    "ast_hash": "615593266582bdddc611efc607ccabea",
+    "mtime": 1785742840.7007005,
+    "ast_hash": "d27dd43271a6770ecc0f284ab91f6fa8",
     "semantic_hash": ""
   },
   "backend/src/modules/milestones/dto/create-milestone.dto.ts": {
@@ -290,8 +290,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/projects/projects.module.ts": {
-    "mtime": 1785392565.042781,
-    "ast_hash": "61569efc77032391b3c5be450eedae9a",
+    "mtime": 1785742919.343333,
+    "ast_hash": "48dbb061cbf6655603caf2fb135e7e28",
     "semantic_hash": ""
   },
   "backend/src/modules/projects/projects.repository.ts": {
@@ -300,8 +300,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/projects/projects.service.ts": {
-    "mtime": 1785392572.7443745,
-    "ast_hash": "bcd57dc275dd08a3b337c165413a8fd5",
+    "mtime": 1785742919.3444796,
+    "ast_hash": "c5082e756f86aef98f4941c1f68500eb",
     "semantic_hash": ""
   },
   "backend/src/modules/resources/dto/create-resource.dto.ts": {
@@ -555,8 +555,8 @@
     "semantic_hash": ""
   },
   "frontend/src/lib/api.ts": {
-    "mtime": 1785393068.160051,
-    "ast_hash": "83bf760a64c159a345473c2033d3b168",
+    "mtime": 1785743293.489223,
+    "ast_hash": "4774f147ffe5095de7804823cd2299dc",
     "semantic_hash": ""
   },
   "frontend/src/lib/auth-context.tsx": {
@@ -610,8 +610,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ProjectDetailPage.tsx": {
-    "mtime": 1785742700.560569,
-    "ast_hash": "6e0b9c0b07e58910ae908c09933e87c4",
+    "mtime": 1785743293.493223,
+    "ast_hash": "7711795343c9cfcc326a9f171a8dd3d3",
     "semantic_hash": ""
   },
   "frontend/src/pages/StatusReportDetailPage.tsx": {
@@ -905,8 +905,8 @@
     "semantic_hash": ""
   },
   "docs/FDD-ALIGNMENT.md": {
-    "mtime": 1785393281.8140802,
-    "ast_hash": "22f83a9e1a99da641f3623a241785ca6",
+    "mtime": 1785743437.9626129,
+    "ast_hash": "65d21c76770007c42c36808283de4132",
     "semantic_hash": ""
   },
   "backend/db/fdd_project_fields.sql": {
@@ -972,6 +972,46 @@
   "backend/src/modules/program-outcomes/program-outcomes.service.ts": {
     "mtime": 1785392540.5214,
     "ast_hash": "a667e132810c511dcb03f2a1eaeb52be",
+    "semantic_hash": ""
+  },
+  "backend/db/fdd_risks.sql": {
+    "mtime": 1785742838.3963797,
+    "ast_hash": "8d9f84c05ac1417b491f0f2940c3f7c3",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/risks/dto/create-risk.dto.ts": {
+    "mtime": 1785742872.4023185,
+    "ast_hash": "b87dfa3c8883a33a1d3cc84966d43b88",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/risks/dto/update-risk.dto.ts": {
+    "mtime": 1785742873.790871,
+    "ast_hash": "b2b5093f1412b88140ebdd8ad0927977",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/risks/risks.controller.ts": {
+    "mtime": 1785742894.6287968,
+    "ast_hash": "049d302fa6b63e2a2a62423c3f33202b",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/risks/risks.module.ts": {
+    "mtime": 1785742895.9159763,
+    "ast_hash": "20f267f42d97c0ea49b959c134d9ecea",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/risks/risks.repository.ts": {
+    "mtime": 1785742861.098467,
+    "ast_hash": "b16fdccd388d178c874abb61fa55f6c5",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/risks/risks.service.ts": {
+    "mtime": 1785743066.6545918,
+    "ast_hash": "dd97f68069bcb7146ed04c3e42340c9b",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/AddRiskDialog.tsx": {
+    "mtime": 1785743251.2592306,
+    "ast_hash": "52f53111e46512205fef1b319bb600ab",
     "semantic_hash": ""
   }
 }

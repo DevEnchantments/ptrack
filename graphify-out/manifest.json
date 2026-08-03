@@ -975,8 +975,8 @@
     "semantic_hash": ""
   },
   "backend/db/fdd_risks.sql": {
-    "mtime": 1785742838.3963797,
-    "ast_hash": "8d9f84c05ac1417b491f0f2940c3f7c3",
+    "mtime": 1785744088.8019989,
+    "ast_hash": "1df0f6a2022577b9d6c6659a80b53a1f",
     "semantic_hash": ""
   },
   "backend/src/modules/risks/dto/create-risk.dto.ts": {
