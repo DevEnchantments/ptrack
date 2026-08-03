@@ -295,13 +295,13 @@
     "semantic_hash": ""
   },
   "backend/src/modules/projects/projects.repository.ts": {
-    "mtime": 1785760617.6379693,
-    "ast_hash": "aef3537cabcf41f2d6b630c2a9ac4444",
+    "mtime": 1785763428.3919115,
+    "ast_hash": "5e6a04580a9b01659e82e3ca4a1ccb6c",
     "semantic_hash": ""
   },
   "backend/src/modules/projects/projects.service.ts": {
-    "mtime": 1785761580.8671699,
-    "ast_hash": "3f46fdb2e77e836904a5660c01f22d9f",
+    "mtime": 1785763682.370546,
+    "ast_hash": "348fa7dbc98de9936ed2c913c3b185e2",
     "semantic_hash": ""
   },
   "backend/src/modules/resources/dto/create-resource.dto.ts": {
@@ -555,8 +555,8 @@
     "semantic_hash": ""
   },
   "frontend/src/lib/api.ts": {
-    "mtime": 1785761944.1621084,
-    "ast_hash": "37a022c074a20432205e85bf1d431403",
+    "mtime": 1785763812.4356441,
+    "ast_hash": "5833945a4782d3eb1898217d46189f9c",
     "semantic_hash": ""
   },
   "frontend/src/lib/auth-context.tsx": {
@@ -595,8 +595,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/HomePage.tsx": {
-    "mtime": 1785757025.5846632,
-    "ast_hash": "0a7e599fa502b5c81d2408bc14f629d0",
+    "mtime": 1785764069.5275936,
+    "ast_hash": "0cb86adfac53f3a814a440fb093b8fc4",
     "semantic_hash": ""
   },
   "frontend/src/pages/LoginPage.tsx": {
@@ -905,8 +905,8 @@
     "semantic_hash": ""
   },
   "docs/FDD-ALIGNMENT.md": {
-    "mtime": 1785762264.5193188,
-    "ast_hash": "bef760448d182156d61290cae992cdfa",
+    "mtime": 1785764745.946388,
+    "ast_hash": "ba3b31bc93bf2f8468713fe286006af6",
     "semantic_hash": ""
   },
   "backend/db/fdd_project_fields.sql": {
@@ -1097,6 +1097,21 @@
   "frontend/src/components/WorkflowPanel.tsx": {
     "mtime": 1785762521.739966,
     "ast_hash": "2dc7770051d05cd656f5ccdf3e0a1ee1",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/ProjectsGrid.tsx": {
+    "mtime": 1785763987.9303646,
+    "ast_hash": "46627c9786fdd0d0072e28bce10d00bd",
+    "semantic_hash": ""
+  },
+  "frontend/src/lib/csv.ts": {
+    "mtime": 1785763973.8827147,
+    "ast_hash": "859ba0df52556557b069dbead221d216",
+    "semantic_hash": ""
+  },
+  "frontend/src/lib/project-grid.ts": {
+    "mtime": 1785763928.9150357,
+    "ast_hash": "fc9d892b1ded91f67f179a71c62531a0",
     "semantic_hash": ""
   }
 }
