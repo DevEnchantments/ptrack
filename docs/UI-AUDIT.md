@@ -318,6 +318,29 @@ production, deprecated `baseUrl` dropped from the root tsconfig, and a frontend
 test suite (vitest + Testing Library + jsdom, 15 tests over `lib/format.ts`,
 wired into CI).
 
+### npm audit, 2026-08-03
+
+Backend is at **0 vulnerabilities**. Frontend went 7 → 2 via plain
+`npm audit fix` (postcss, brace-expansion, fast-uri, @hono/node-server).
+
+The remaining 2 are one advisory counted twice (`react-router` +
+`react-router-dom`): **GHSA-qwww-vcr4-c8h2, RSC Mode CSRF Bypass**.
+
+**Decision: not fixed, deliberately. Do not "fix" this with `npm audit fix
+--force`.** Reasons:
+
+1. npm's only offered remedy is a **downgrade** to `react-router-dom@7.11.0`,
+   seven minor versions back from the installed 7.18.2. There is no patched
+   forward version: the advisory range is 7.12.0-8.2.0 and latest *is* 7.18.2.
+2. The advisory is specific to **RSC mode**, which needs framework/data-router
+   mode plus a server runtime. This app is a client-side Vite SPA on declarative
+   `<Routes>`/`<Route>`: no `createBrowserRouter`, no `RouterProvider`, no
+   loaders or actions, no `@react-router/*` packages. The vulnerable code path
+   is not reachable.
+
+Re-check when react-router publishes a patched release above 8.2.0; that is the
+fix to take, not the downgrade.
+
 ---
 
 ## 4. House recipes (decide once in Stage 1, reuse forever)

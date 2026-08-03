@@ -162,7 +162,6 @@
   "160": "Slides",
   "161": "AppModule",
   "162": "Brand Guidelines Template",
-  "163": "$type",
   "164": "radius",
   "165": "lg",
   "166": "sm",
@@ -174,14 +173,10 @@
   "172": "main",
   "173": "muted-foreground",
   "174": "primary-hover",
-  "175": "search.py",
   "176": "8",
   "177": "vitest",
-  "178": "@eslint/js",
   "179": "test-setup.ts",
-  "180": "@fontsource-variable/inter",
   "181": "ring",
-  "182": "globals",
   "183": "shadcn_add.py",
   "184": ".__init__",
   "185": "slides-create.md",
@@ -206,7 +201,5 @@
   "204": ".test_write_config_invalid_path",
   "205": ".test_init_framework",
   "206": ".test_custom_output_path",
-  "207": ".test_base_config_structure",
-  "208": "@testing-library/react",
-  "209": "typescript"
+  "207": ".test_base_config_structure"
 }
