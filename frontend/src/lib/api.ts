@@ -145,6 +145,7 @@ export interface ProjectSections {
   resources: Resource[]
   issues: Issue[]
   risks: Risk[]
+  submissions: Submission[]
   updates: Update[]
   statusReports: StatusReport[]
   attachments: Attachment[]
@@ -544,6 +545,53 @@ export const risksApi = {
     apiPatch<Risk>(`/projects/${projectId}/risks/${riskId}`, data),
   remove: (projectId: string, riskId: string) =>
     apiDelete<{ deleted: boolean }>(`/projects/${projectId}/risks/${riskId}`),
+}
+
+export interface Cycle {
+  id: string
+  name: string
+  period_start: string
+  period_end: string
+  status: string
+}
+
+export interface Submission {
+  id: string
+  project_id: string
+  cycle_id: string
+  status: string
+  comment: string | null
+  decision_comment: string | null
+  submitted_at: string | null
+  validated_at: string | null
+  approved_at: string | null
+  returned_at: string | null
+  created_at: string
+  updated_at: string
+  cycle: Cycle | null
+  submitter: { full_name: string | null; email: string | null } | null
+  validator: { full_name: string | null; email: string | null } | null
+  approver: { full_name: string | null; email: string | null } | null
+  returner: { full_name: string | null; email: string | null } | null
+}
+
+export const submissionsApi = {
+  list: (projectId: string) =>
+    apiGet<Submission[]>(`/projects/${projectId}/submissions`),
+  submit: (projectId: string, comment?: string) =>
+    apiPost<Submission>(`/projects/${projectId}/submissions/submit`, {
+      comment: comment?.trim() || undefined,
+    }),
+  act: (
+    projectId: string,
+    submissionId: string,
+    action: 'validate' | 'approve' | 'return' | 'reject',
+    comment?: string,
+  ) =>
+    apiPost<Submission>(
+      `/projects/${projectId}/submissions/${submissionId}/${action}`,
+      { comment: comment?.trim() || undefined },
+    ),
 }
 
 export interface Update {

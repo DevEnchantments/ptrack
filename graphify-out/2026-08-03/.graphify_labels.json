@@ -85,5 +85,14 @@
   "83": "formulas.ts",
   "84": "StatusPill.tsx",
   "85": "react-dom",
-  "90": "SectionNav.tsx"
+  "86": "ApiBody",
+  "87": "Body",
+  "88": "Controller",
+  "89": "Delete",
+  "90": "SectionNav.tsx",
+  "91": "Get",
+  "92": "Param",
+  "93": "Patch",
+  "94": "Post",
+  "95": "Query"
 }

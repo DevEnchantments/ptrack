@@ -17,6 +17,7 @@ import {
   resourcesApi,
   issuesApi,
   risksApi,
+  submissionsApi,
   updatesApi,
   statusReportsApi,
   attachmentsApi,
@@ -30,6 +31,7 @@ import {
   type Resource,
   type Issue,
   type Risk,
+  type Submission,
   type Update,
   type StatusReport,
   type Attachment,
@@ -46,6 +48,7 @@ import { AddPersonDialog } from '@/components/AddPersonDialog'
 import { AddMilestoneDialog } from '@/components/AddMilestoneDialog'
 import { AdjustWeightsDialog } from '@/components/AdjustWeightsDialog'
 import { ProjectOverviewCards } from '@/components/ProjectOverviewCards'
+import { WorkflowPanel } from '@/components/WorkflowPanel'
 import { AddActionItemDialog } from '@/components/AddActionItemDialog'
 import { AddLinkDialog } from '@/components/AddLinkDialog'
 import { AddResourceDialog } from '@/components/AddResourceDialog'
@@ -307,6 +310,7 @@ export function ProjectDetailPage() {
   const [risks, setRisks] = useState<Risk[]>([])
   const [riskOpen, setRiskOpen] = useState(false)
   const [adjustWeightsOpen, setAdjustWeightsOpen] = useState(false)
+  const [submissions, setSubmissions] = useState<Submission[]>([])
   const [editingRisk, setEditingRisk] = useState<Risk | null>(null)
   const [showAllRisks, setShowAllRisks] = useState(false)
   const [showAllIssues, setShowAllIssues] = useState(true)
@@ -425,6 +429,11 @@ export function ProjectDetailPage() {
     risksApi.list(id).then(setRisks).catch(() => toast.error('Could not load risks.'))
   }, [id])
 
+  const loadSubmissions = useCallback(() => {
+    if (!id) return
+    submissionsApi.list(id).then(setSubmissions).catch(() => toast.error('Could not load submissions.'))
+  }, [id])
+
   const loadUpdates = useCallback(() => {
     if (!id) return
     updatesApi.list(id).then(setUpdates).catch(() => toast.error('Could not load updates.'))
@@ -456,6 +465,7 @@ export function ProjectDetailPage() {
         setResources(s.resources)
         setIssues(s.issues)
         setRisks(s.risks)
+        setSubmissions(s.submissions)
         setUpdates(s.updates)
         setStatusReports(s.statusReports)
         setAttachments(s.attachments)
@@ -1642,6 +1652,11 @@ export function ProjectDetailPage() {
         </div>
 
         <aside className="lg:sticky lg:top-24 lg:self-start">
+          <WorkflowPanel
+            projectId={project.id}
+            submissions={submissions}
+            onChanged={loadSubmissions}
+          />
           <div className="rounded-md border p-2">
             {ACTIONS.map((a, i) => {
               const enabled = enabledActions.has(a)

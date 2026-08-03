@@ -14,6 +14,7 @@ import { LinksModule } from './modules/links/links.module';
 import { ResourcesModule } from './modules/resources/resources.module';
 import { IssuesModule } from './modules/issues/issues.module';
 import { RisksModule } from './modules/risks/risks.module';
+import { SubmissionsModule } from './modules/submissions/submissions.module';
 import { UpdatesModule } from './modules/updates/updates.module';
 import { StatusReportsModule } from './modules/status-reports/status-reports.module';
 import { AttachmentsModule } from './modules/attachments/attachments.module';
@@ -35,6 +36,7 @@ import { AppService } from './app.service';
     ResourcesModule,
     IssuesModule,
     RisksModule,
+    SubmissionsModule,
     UpdatesModule,
     StatusReportsModule,
     AttachmentsModule,

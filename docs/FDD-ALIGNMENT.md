@@ -108,6 +108,17 @@ States seen (Figs 10, 15, 24): REVIEW → VALIDATE → APPROVE, plus DRAFT / RET
 LOCKED / CLOSED / REJECTED. Monthly cycles with start/end dates per stage (Fig 32).
 Attributes: submission ID, project/cycle ID, submitter, reviewer, approver, status,
 comments, submitted/decision dates. Routing rules = ASK (OI-03).
+✅ ASSUMED+SHIPPED 2026-08-03: `backend/db/fdd_workflow.sql` (cycles = calendar
+months auto-created on first submission; submissions unique per project+cycle,
+both RLS'd). States: draft/returned → review → validated → approved, with
+returned/rejected branches. Actor rules per Fig 10: PMO Partner validates,
+Project Owner approves — enforced only when the person field is set. Submission
+gate = 3.3.2 mandatory fields + weights total 100 (when milestones exist), with
+the failure list in the 400 message. Endpoints under
+`/projects/:id/submissions` (list in the sections aggregate); WorkflowPanel in
+the project rail (chip, actor/date trail, comment box, contextual actions, past
+cycles). Rejected is terminal for its cycle. Not built: cycle lock/close admin,
+notifications on transitions (Wave 6).
 
 ### 1.7 Attachment → `attachments` (EXTEND for parent scoping — see 1.3)
 
@@ -137,7 +148,7 @@ index (timeliness/completeness/reliability, Figs 30–31) — **formulas = ASK (
 | FR-11 | KPI dashboards / scorecards | MISSING |
 | FR-12 | Report generation + Excel export | MISSING |
 | FR-13 | Download confirmation modal | MISSING |
-| FR-14 | Workflow states: submit/review/return/approve/close | MISSING |
+| FR-14 | Workflow states: submit/review/return/approve/close | ✅ ASSUMED+SHIPPED 2026-08-03 (see 1.6) — routing/cycle-calendar remain OI-03 questions |
 | FR-15 | Role-based restriction of create/update/approve/admin | PARTIAL — access_level data exists; enforcement deferred (security phase) |
 
 ## 3. Use cases UC-01…18 — acceptance checklist
@@ -155,7 +166,7 @@ UC-17 PMO hierarchy tree · UC-18 project details report.
 - **Milestone weights must total 100% before submission** — ✅ SHIPPED 2026-08-03: `PATCH /projects/:id/milestones/weights` rejects totals ≠ 100 (or all-null to clear); Adjust Weights dialog (UC-08) with live total; amber warning above the milestones list. Hard submission block lands with Wave 4's workflow
 - Utilized ≤ approved budget; highlight on threshold breach (threshold = ASK)
 - Risk: probability, impact, owner, response, action, status mandatory
-- Submission blocked if mandatory data incomplete
+- Submission blocked if mandatory data incomplete — ✅ SHIPPED 2026-08-03 (server-side gate on submit: 3.3.2 fields + weights=100)
 - Download confirmation before exports
 - Audit: created/updated by+date everywhere (we have this + `record_history`)
 

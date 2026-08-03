@@ -15,6 +15,7 @@ import { LinksService } from '../links/links.service';
 import { ResourcesService } from '../resources/resources.service';
 import { IssuesService } from '../issues/issues.service';
 import { RisksService } from '../risks/risks.service';
+import { SubmissionsService } from '../submissions/submissions.service';
 import { UpdatesService } from '../updates/updates.service';
 import { StatusReportsService } from '../status-reports/status-reports.service';
 import { AttachmentsService } from '../attachments/attachments.service';
@@ -30,6 +31,7 @@ export class ProjectsService {
     private readonly resources: ResourcesService,
     private readonly issues: IssuesService,
     private readonly risks: RisksService,
+    private readonly submissions: SubmissionsService,
     private readonly updates: UpdatesService,
     private readonly statusReports: StatusReportsService,
     private readonly attachments: AttachmentsService,
@@ -49,6 +51,7 @@ export class ProjectsService {
       resources,
       issues,
       risks,
+      submissions,
       updates,
       statusReports,
       attachments,
@@ -60,6 +63,7 @@ export class ProjectsService {
       this.resources.list(projectId),
       this.issues.list(projectId),
       this.risks.list(projectId),
+      this.submissions.list(projectId),
       this.updates.list(projectId),
       this.statusReports.list(projectId),
       this.attachments.list(projectId),
@@ -72,6 +76,7 @@ export class ProjectsService {
       resources,
       issues,
       risks,
+      submissions,
       updates,
       statusReports,
       attachments,
