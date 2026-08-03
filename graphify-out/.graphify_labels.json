@@ -179,7 +179,9 @@
   "177": "vitest",
   "178": "@eslint/js",
   "179": "test-setup.ts",
+  "180": "@fontsource-variable/inter",
   "181": "ring",
+  "182": "globals",
   "183": "shadcn_add.py",
   "184": ".__init__",
   "185": "slides-create.md",
@@ -204,5 +206,7 @@
   "204": ".test_write_config_invalid_path",
   "205": ".test_init_framework",
   "206": ".test_custom_output_path",
-  "207": ".test_base_config_structure"
+  "207": ".test_base_config_structure",
+  "208": "@testing-library/react",
+  "209": "typescript"
 }
