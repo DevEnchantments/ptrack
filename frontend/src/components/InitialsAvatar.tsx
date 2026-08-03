@@ -1,24 +1,21 @@
-const PALETTE = [
-  'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200',
-  'bg-teal-100 text-teal-700 dark:bg-teal-900 dark:text-teal-200',
-  'bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-200',
-  'bg-amber-100 text-amber-700 dark:bg-amber-900 dark:text-amber-200',
-  'bg-rose-100 text-rose-700 dark:bg-rose-900 dark:text-rose-200',
-  'bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-200',
-]
+import { initials } from '@/lib/format'
 
-function initialsOf(name: string): string {
-  const parts = name.trim().split(/\s+/).filter(Boolean)
-  if (parts.length === 0) return '?'
-  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase()
-  return (parts[0][0] + parts[1][0]).toUpperCase()
-}
+/** Count of --avatar-N-bg / --avatar-N-fg token pairs defined in index.css. */
+const AVATAR_HUES = 6
 
-/** Deterministic pastel per name, so the same person is always the same color. */
-function colorOf(name: string): string {
+/** Deterministic hue per name, so the same person is always the same color. */
+function hueOf(name: string): number {
   let hash = 0
   for (let i = 0; i < name.length; i++) hash = (hash * 31 + name.charCodeAt(i)) | 0
-  return PALETTE[Math.abs(hash) % PALETTE.length]
+  return (Math.abs(hash) % AVATAR_HUES) + 1
+}
+
+function hueStyle(name: string) {
+  const n = hueOf(name)
+  return {
+    backgroundColor: `var(--avatar-${n}-bg)`,
+    color: `var(--avatar-${n}-fg)`,
+  }
 }
 
 export function InitialsAvatar({
@@ -34,9 +31,10 @@ export function InitialsAvatar({
   return (
     <span
       title={name}
-      className={`flex shrink-0 items-center justify-center rounded-full font-semibold ${sizeCls} ${colorOf(name)} ${className}`}
+      style={hueStyle(name)}
+      className={`flex shrink-0 items-center justify-center rounded-full font-semibold ${sizeCls} ${className}`}
     >
-      {initialsOf(name)}
+      {initials(name)}
     </span>
   )
 }

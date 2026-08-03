@@ -8,7 +8,8 @@ import { AvatarCluster, InitialsAvatar } from '@/components/InitialsAvatar'
 import { Skeleton } from '@/components/ui/skeleton'
 import { usePageTitle } from '@/lib/use-page-title'
 import { formatDate, initials, relativeTime } from '@/lib/format'
-import { useParams, useNavigate } from 'react-router-dom'
+// Aliased: `Link` is already taken by the record type from lib/api.
+import { useParams, useNavigate, Link as RouterLink } from 'react-router-dom'
 import {
   projectsApi,
   milestonesApi,
@@ -922,16 +923,11 @@ export function ProjectDetailPage() {
                             pending={pendingMilestoneId === m.id}
                             onClick={() => openEditMilestone(m.id)}
                           />
-                          <div
-                            onClick={() =>
-                              navigate(`/projects/${project.id}/milestones/${m.id}`)
-                            }
-                            role="link"
-                            tabIndex={0}
-                            onKeyDown={(e) => {
-                              if (e.key === 'Enter') navigate(`/projects/${project.id}/milestones/${m.id}`)
-                            }}
-                            className="flex-1 cursor-pointer rounded focus-visible:outline-2 focus-visible:outline-ring"
+                          {/* A real <a>, so middle-click, ctrl-click and
+                              "open in new tab" work like anywhere else. */}
+                          <RouterLink
+                            to={`/projects/${project.id}/milestones/${m.id}`}
+                            className="flex-1 rounded focus-visible:outline-2 focus-visible:outline-ring"
                           >
                             <div className="flex items-center justify-between">
                               <div className="flex items-center gap-2">
@@ -983,7 +979,7 @@ export function ProjectDetailPage() {
                                   </span>
                                 )}
                             </div>
-                          </div>
+                          </RouterLink>
                         </li>
                       ))}
                     </ul>
@@ -1025,16 +1021,9 @@ export function ProjectDetailPage() {
                         setActionItemOpen(true)
                       }}
                     />
-                    <div
-                      onClick={() =>
-                        navigate(`/projects/${project.id}/action-items/${a.id}`)
-                      }
-                      role="link"
-                      tabIndex={0}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter') navigate(`/projects/${project.id}/action-items/${a.id}`)
-                      }}
-                      className="flex-1 cursor-pointer rounded focus-visible:outline-2 focus-visible:outline-ring"
+                    <RouterLink
+                      to={`/projects/${project.id}/action-items/${a.id}`}
+                      className="flex-1 rounded focus-visible:outline-2 focus-visible:outline-ring"
                     >
                       <div className="flex items-center justify-between">
                         <span className="text-sm font-medium">{a.title}</span>
@@ -1077,7 +1066,7 @@ export function ProjectDetailPage() {
                           </span>
                         )}
                       </div>
-                    </div>
+                    </RouterLink>
                   </li>
                 ))}
               </ul>
@@ -1379,21 +1368,11 @@ export function ProjectDetailPage() {
             <>
               <ul className="section-list divide-y rounded-md border">
                 {statusReportRows.map((r) => (
-                  <li
-                    key={r.id}
-                    onClick={() =>
-                      navigate(
-                        `/projects/${project.id}/status-reports/${r.id}`,
-                      )
-                    }
-                    role="link"
-                    tabIndex={0}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter')
-                        navigate(`/projects/${project.id}/status-reports/${r.id}`)
-                    }}
-                    className="cursor-pointer px-4 py-3 hover:bg-accent focus-visible:outline-2 focus-visible:outline-ring"
-                  >
+                  <li key={r.id} className="hover:bg-accent">
+                    <RouterLink
+                      to={`/projects/${project.id}/status-reports/${r.id}`}
+                      className="block px-4 py-3 focus-visible:outline-2 focus-visible:outline-ring"
+                    >
                     <div className="flex items-start justify-between gap-4">
                       <div className="min-w-0">
                         <span className="text-sm font-medium">{r.title}</span>
@@ -1408,6 +1387,7 @@ export function ProjectDetailPage() {
                         <div>{formatDate(r.report_date)}</div>
                       </div>
                     </div>
+                    </RouterLink>
                   </li>
                 ))}
               </ul>
@@ -1456,17 +1436,12 @@ export function ProjectDetailPage() {
                       </div>
                       <div className="min-w-0 flex-1">
                         <div className="flex items-center gap-2">
-                          <button
-                            type="button"
-                            onClick={() =>
-                              navigate(
-                                `/projects/${project.id}/attachments/${a.id}`,
-                              )
-                            }
-                            className="cursor-pointer truncate text-left text-sm font-medium text-primary hover:underline"
+                          <RouterLink
+                            to={`/projects/${project.id}/attachments/${a.id}`}
+                            className="truncate text-left text-sm font-medium text-primary hover:underline focus-visible:outline-2 focus-visible:outline-ring"
                           >
                             {a.file_name}
-                          </button>
+                          </RouterLink>
                           {a.is_gold && (
                             <span className="inline-flex shrink-0 items-center gap-1 text-xs text-gold">
                               <span className="h-2 w-2 rounded-full bg-gold" />

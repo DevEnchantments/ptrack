@@ -257,6 +257,69 @@ its tokens/recipes; Stages 2-5 then become class-swaps instead of local decision
 
 ---
 
+## 3b. Post-audit work on `experiment/ui-ux-pro-max` (2026-08-03)
+
+**Status: throwaway branch.** Everything below lives on `experiment/ui-ux-pro-max`
+and is NOT destined for main. Recorded here so the six-stage audit above is not
+read as the current state of those files. If any of it is ever promoted, re-run
+the contrast table in section 1 first.
+
+- **Project page, stages A-D.** Shared `lib/format.ts` (`formatDate` = the house
+  `07-JUL-2026`, `relativeTime`, `initials`) and every absolute date on the page
+  moved onto it; unique aria-labels per row (record name interpolated); row icon
+  buttons 16px → 36px (**deliberate deviation: not the 44px spec floor, which
+  would inflate every `py-3` row**); dead `enabledActions` branch removed;
+  `Field` stacks below `sm`; create actions reachable below `lg` via an "Add"
+  dialog in the sticky nav (Dialog primitive, not a dropdown — no dropdown-menu
+  component exists and adding one means a Radix dep in a Base UI codebase);
+  section-nav chip strip gained a scroll fade; `scroll-mt` now tracks the sticky
+  bar's real height via `--nav-h`; 25-row caps per section with "Show all N";
+  issue counts follow the filter (needed `ownEmptyState` on SectionCard, or
+  filtering to zero hides the checkbox that emptied the list); filter state
+  persisted (storage key `ptrack:collapsed:<id>` → `ptrack:prefs:<id>`, with a
+  fallback read so saved collapse state survives); milestone pencil shows a
+  pending spinner; outcome groups became real `<h3>` + nested `<ul>` instead of
+  an `<li>` masquerading as a header; section hash deep-linking with
+  `replaceState`; `motion-safe:scroll-smooth` on the app scroll container.
+- **Rows are now real links.** Milestone, action-item, status-report and
+  attachment rows use `<Link>` (aliased `RouterLink` — `Link` is taken by the
+  lib/api record type), so middle-click and open-in-new-tab work. This closes
+  the `role="link"` + Enter-only pattern that section 6 item 6 introduced.
+- **Dashboard motion pass.** New `--ease-spring` token; entrances moved from
+  mount to in-view (previously a third of the page's animation played below the
+  fold to nobody); card stagger + 3D tilt entrance; comet tracers; odometer stat
+  tiles; donut segment explode; radial heatmap bloom; pointer spotlight;
+  scroll-linked line drawing behind `@supports (animation-timeline: view())`;
+  bars/columns moved off `width`/`height` onto transforms. The two indefinite
+  animations (drifting gradient, Overdue pulse) are gated on continuous
+  visibility so they stop repainting off-screen.
+- **Card alignment.** Chart rows dropped `items-start`; cards are flex columns
+  with `flex-1` bodies, so a row shares one height without leaving gaps.
+
+**Closed from the "open leftovers" list above:**
+
+- ~~hover motion not gated behind `@media (hover: hover)` app-wide~~ — **stale
+  finding, no change needed.** Tailwind v4 already emits every `hover:` and
+  `group-hover:` utility inside `@media (hover: hover)`; verified in the built
+  CSS. The only hand-written `:hover` in `index.css` is the chart-card spotlight,
+  which is already inside a `(hover: hover) and (pointer: fine)` block.
+- ~~`InitialsAvatar` raw-palette hue hashing~~ — **closed.** Six
+  `--avatar-N-bg`/`--avatar-N-fg` token pairs in `index.css` (12 tokens, not the
+  24 utilities the Stage 3 note feared) applied as inline custom properties. The
+  component also now shares `initials()` from `lib/format.ts`.
+
+**Still open:** toast hover-pause (section 6 item 7). `relativeTime` still has
+private copies in HomePage, MilestoneDetailPage, AttachmentDetailPage and
+RecordHistory that should fold onto `lib/format.ts`.
+
+**Not a styling matter but landed alongside:** route-level code splitting
+(entry chunk 813 kB → 622 kB), `CORS_ORIGINS` env-driven and refused-if-unset in
+production, deprecated `baseUrl` dropped from the root tsconfig, and a frontend
+test suite (vitest + Testing Library + jsdom, 15 tests over `lib/format.ts`,
+wired into CI).
+
+---
+
 ## 4. House recipes (decide once in Stage 1, reuse forever)
 
 - **Card:** `rounded-lg border bg-card` + `shadow-xs`; hover-lift only on clickable

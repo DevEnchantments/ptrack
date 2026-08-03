@@ -63,31 +63,106 @@ function canHover(): boolean {
 }
 
 /**
- * Entrance flag driven by an IntersectionObserver rather than mount, so a
- * chart's reveal plays when it is actually on screen. One-shot. Starts already
- * entered under reduced motion, which also keeps the initial state out of an
- * effect (the set-state-in-effect rule bans that shape).
+ * Two flags from one observer:
+ *
+ * - `entered` latches on first sight and drives the one-shot reveals.
+ * - `visible` tracks presence continuously, and gates the only two animations
+ *   here that never end (the drifting gradient and the Overdue pulse) so they
+ *   stop costing repaints once scrolled off screen.
+ *
+ * `entered` starts true under reduced motion, which also keeps the initial
+ * state out of an effect (the set-state-in-effect rule bans that shape).
  */
 function useInViewEntrance() {
   const ref = useRef<HTMLDivElement | null>(null)
   const [entered, setEntered] = useState(() => prefersReducedMotion())
+  const [visible, setVisible] = useState(true)
   useEffect(() => {
-    if (prefersReducedMotion()) return
     const el = ref.current
     if (!el) return
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting) {
-          setEntered(true)
-          observer.disconnect()
-        }
+        const isIn = entries[0].isIntersecting
+        setVisible(isIn)
+        if (isIn) setEntered(true)
       },
       { threshold: 0.15, rootMargin: '0px 0px -10% 0px' },
     )
     observer.observe(el)
     return () => observer.disconnect()
   }, [])
-  return { ref, entered }
+  return { ref, entered, visible }
+}
+
+/**
+ * The accessible form of every chart on this page. Screen readers get the real
+ * numbers from a table; the SVG beside it is a picture of the same data.
+ */
+function ChartDataTable({
+  caption,
+  headers,
+  rows,
+}: {
+  caption: string
+  headers: string[]
+  rows: Array<Array<string | number>>
+}) {
+  return (
+    <table className="sr-only">
+      <caption>{caption}</caption>
+      <thead>
+        <tr>
+          {headers.map((h) => (
+            <th key={h} scope="col">
+              {h}
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((r, i) => (
+          <tr key={i}>
+            {r.map((c, j) =>
+              j === 0 ? (
+                <th key={j} scope="row">
+                  {c}
+                </th>
+              ) : (
+                <td key={j}>{c}</td>
+              ),
+            )}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  )
+}
+
+/**
+ * Arrow-key scrubbing for the line charts, so their per-point values are not
+ * pointer-only. Focus lands on the first point; Escape clears.
+ */
+function seriesKeyHandler(
+  count: number,
+  setHover: (fn: (h: number | null) => number | null) => void,
+) {
+  return (e: React.KeyboardEvent) => {
+    if (e.key === 'ArrowRight') {
+      e.preventDefault()
+      setHover((h) => Math.min((h ?? -1) + 1, count - 1))
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault()
+      setHover((h) => Math.max((h ?? count) - 1, 0))
+    } else if (e.key === 'Home') {
+      e.preventDefault()
+      setHover(() => 0)
+    } else if (e.key === 'End') {
+      e.preventDefault()
+      setHover(() => count - 1)
+    } else if (e.key === 'Escape') {
+      setHover(() => null)
+    }
+  }
 }
 
 /** rAF count-up (duration 0 on reduced motion — first frame lands on target). */
@@ -171,7 +246,7 @@ function StatTile({
   alert: boolean
   index: number
 }) {
-  const { ref, entered } = useInViewEntrance()
+  const { ref, entered, visible } = useInViewEntrance()
   return (
     <div
       ref={ref}
@@ -193,7 +268,7 @@ function StatTile({
           e.currentTarget.style.transform = ''
         }}
         className={`tile-tilt flex h-full flex-col rounded-lg border bg-card p-4 shadow-xs ${
-          alert ? 'tile-alert' : ''
+          alert && visible ? 'tile-alert' : ''
         }`}
       >
         <p className="text-sm text-muted-foreground">{label}</p>
@@ -219,9 +294,9 @@ function ChartCard({
   children,
 }: {
   index: number
-  children: (entered: boolean) => ReactNode
+  children: (entered: boolean, visible: boolean) => ReactNode
 }) {
-  const { ref, entered } = useInViewEntrance()
+  const { ref, entered, visible } = useInViewEntrance()
   return (
     <div
       ref={ref}
@@ -235,7 +310,7 @@ function ChartCard({
       style={{ transitionDelay: `${index * 60}ms` }}
       className="dash-card chart-card flex h-full flex-col rounded-lg border bg-card p-4 shadow-xs"
     >
-      {children(entered)}
+      {children(entered, visible)}
     </div>
   )
 }
@@ -298,7 +373,13 @@ function CometTracer({
   )
 }
 
-function ActivityLineChart({ entered }: { entered: boolean }) {
+function ActivityLineChart({
+  entered,
+  visible,
+}: {
+  entered: boolean
+  visible: boolean
+}) {
   const [hover, setHover] = useState<number | null>(null)
   const reduced = prefersReducedMotion()
 
@@ -326,9 +407,13 @@ function ActivityLineChart({ entered }: { entered: boolean }) {
       <div className="relative mt-2 flex-1">
         <svg
           viewBox={`0 0 ${LINE_W} ${LINE_H}`}
-          className="w-full"
+          className="w-full rounded focus-visible:outline-2 focus-visible:outline-ring"
           role="img"
-          aria-label="Line chart of updates per week over eight weeks, sample data"
+          tabIndex={0}
+          aria-label="Line chart of updates per week over eight weeks, sample data. Use arrow keys to read each week."
+          onKeyDown={seriesKeyHandler(WEEKLY_ACTIVITY.length, setHover)}
+          onFocus={() => setHover((h) => h ?? 0)}
+          onBlur={() => setHover(null)}
         >
           <defs>
             {/* Single-series chart, so a drifting gradient costs no colour
@@ -337,7 +422,10 @@ function ActivityLineChart({ entered }: { entered: boolean }) {
               <stop offset="0%" stopColor={SERIES.teal} />
               <stop offset="50%" stopColor={SERIES.blue} />
               <stop offset="100%" stopColor={SERIES.teal} />
-              {!reduced && (
+              {/* Unmounted when the card leaves the viewport: this is an
+                  indefinite animation, and off-screen it would keep repainting
+                  for nobody. */}
+              {!reduced && visible && (
                 <animateTransform
                   attributeName="gradientTransform"
                   type="translate"
@@ -474,6 +562,11 @@ function ActivityLineChart({ entered }: { entered: boolean }) {
           </span>
         </div>
       </div>
+      <ChartDataTable
+        caption="Updates per week, sample data"
+        headers={['Week', 'Updates']}
+        rows={WEEKLY_ACTIVITY.map((d) => [d.label, d.value])}
+      />
     </>
   )
 }
@@ -516,6 +609,11 @@ function ProjectsBarChart({ entered }: { entered: boolean }) {
           </div>
         ))}
       </div>
+      <ChartDataTable
+        caption="Projects by status, sample data"
+        headers={['Status', 'Projects']}
+        rows={PROJECTS_BY_STATUS.map((d) => [d.label, d.value])}
+      />
     </>
   )
 }
@@ -702,6 +800,11 @@ function MilestoneColumns({ entered }: { entered: boolean }) {
           </div>
         ))}
       </div>
+      <ChartDataTable
+        caption="Milestones completed per month, sample data"
+        headers={['Month', 'Milestones']}
+        rows={MILESTONES_PER_MONTH.map((d) => [d.label, d.value])}
+      />
     </>
   )
 }
@@ -784,8 +887,14 @@ function FlowLineChart({ entered }: { entered: boolean }) {
         </ul>
       </div>
       <div className="relative mt-2 flex-1">
-        <svg viewBox={`0 0 ${LINE_W} ${LINE_H}`} className="w-full" role="img"
-          aria-label="Two-series line chart comparing action items created and completed per week, sample data">
+        <svg viewBox={`0 0 ${LINE_W} ${LINE_H}`}
+          className="w-full rounded focus-visible:outline-2 focus-visible:outline-ring"
+          role="img"
+          tabIndex={0}
+          aria-label="Two-series line chart comparing action items created and completed per week, sample data. Use arrow keys to read each week."
+          onKeyDown={seriesKeyHandler(FLOW_WEEKS.length, setHover)}
+          onFocus={() => setHover((h) => h ?? 0)}
+          onBlur={() => setHover(null)}>
           {gridValues.map((v) => {
             const y = LINE_PAD.top + innerH - (v / max) * innerH
             return (
@@ -899,6 +1008,14 @@ function FlowLineChart({ entered }: { entered: boolean }) {
           ))}
         </div>
       </div>
+      <ChartDataTable
+        caption="Action items created versus completed per week, sample data"
+        headers={['Week', ...FLOW_SERIES.map((s) => s.label)]}
+        rows={FLOW_WEEKS.map((w, i) => [
+          w,
+          ...FLOW_SERIES.map((s) => s.values[i]),
+        ])}
+      />
     </>
   )
 }
@@ -977,6 +1094,19 @@ function ActivityHeatmap({ entered }: { entered: boolean }) {
           ? `Week ${hover.w + 1}, ${HEAT_DAYS[hover.d]} — ${HEAT_CELLS[hover.w][hover.d]} updates`
           : ' '}
       </p>
+      {/* The grid itself is 60 bare divs with no text, so this table is the
+          only way the values are readable without a pointer. */}
+      <ChartDataTable
+        caption="Team activity by day over the last 12 weeks, sample data"
+        headers={[
+          'Day',
+          ...Array.from({ length: HEAT_WEEKS }, (_, w) => `Week ${w + 1}`),
+        ]}
+        rows={HEAT_DAYS.map((day, d) => [
+          day,
+          ...HEAT_CELLS.map((week) => week[d]),
+        ])}
+      />
     </>
   )
 }
@@ -1006,7 +1136,9 @@ export function DashboardPage() {
           in the extra space rather than leaving a gap under it. */}
       <div className="dash-grid mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
         <ChartCard index={0}>
-          {(entered) => <ActivityLineChart entered={entered} />}
+          {(entered, visible) => (
+            <ActivityLineChart entered={entered} visible={visible} />
+          )}
         </ChartCard>
         <ChartCard index={1}>
           {(entered) => <ProjectsBarChart entered={entered} />}

@@ -320,6 +320,42 @@
     animation-duration: 150ms;
 }
 
+/* --- Avatar identity hues ------------------------------------------------ */
+
+/* Six deterministic hues for InitialsAvatar, hashed per name. Previously raw
+   Tailwind palette classes in the component, which was the last documented
+   token bypass (UI-AUDIT stage 3). Applied as inline custom properties rather
+   than utilities so six hues cost six token pairs, not 24 classes.
+   All pairs measured ≥4.8:1 in both themes. */
+:root {
+    --avatar-1-bg: #dbeafe;
+    --avatar-1-fg: #1d4ed8;
+    --avatar-2-bg: #ccfbf1;
+    --avatar-2-fg: #0f766e;
+    --avatar-3-bg: #f3e8ff;
+    --avatar-3-fg: #7e22ce;
+    --avatar-4-bg: #fef3c7;
+    --avatar-4-fg: #b45309;
+    --avatar-5-bg: #ffe4e6;
+    --avatar-5-fg: #be123c;
+    --avatar-6-bg: #d1fae5;
+    --avatar-6-fg: #047857;
+}
+.dark {
+    --avatar-1-bg: #1e3a8a;
+    --avatar-1-fg: #bfdbfe;
+    --avatar-2-bg: #134e4a;
+    --avatar-2-fg: #99f6e4;
+    --avatar-3-bg: #581c87;
+    --avatar-3-fg: #e9d5ff;
+    --avatar-4-bg: #78350f;
+    --avatar-4-fg: #fde68a;
+    --avatar-5-bg: #881337;
+    --avatar-5-fg: #fecdd3;
+    --avatar-6-bg: #064e3b;
+    --avatar-6-fg: #a7f3d0;
+}
+
 /* --- Dashboard motion pass (experiment/ui-ux-pro-max) -------------------- */
 
 /* Cards assemble with a slight forward tilt. The perspective lives on the

@@ -19,6 +19,16 @@ async function bootstrap() {
   // free port when 5173 is already taken, and a single hardcoded origin turns
   // that into an opaque preflight failure — so both dev ports are allowed by
   // default. CORS_ORIGINS (comma-separated) replaces the list outright.
+  //
+  // In production the localhost default is never right, so it is refused
+  // rather than silently applied: a deployed API quietly trusting a developer
+  // machine's origin is the kind of thing nobody notices until it matters.
+  const isProduction = process.env.NODE_ENV === 'production';
+  if (isProduction && !process.env.CORS_ORIGINS) {
+    throw new Error(
+      'CORS_ORIGINS must be set in production (comma-separated list of allowed origins).',
+    );
+  }
   const corsOrigins = (
     process.env.CORS_ORIGINS ?? 'http://localhost:5173,http://localhost:5174'
   )
