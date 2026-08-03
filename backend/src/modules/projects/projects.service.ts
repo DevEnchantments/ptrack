@@ -3,6 +3,7 @@ import {
   ProjectsRepository,
   Project,
   ProjectDetail,
+  ProjectListRow,
   ProjectListStats,
 } from './projects.repository';
 import { plannedProgress } from '../../common/formulas';
@@ -119,7 +120,9 @@ export class ProjectsService {
     limit?: number;
     offset?: number;
   }): Promise<
-    Array<Project & ProjectListStats & { planned_progress: number | null }>
+    Array<
+      ProjectListRow & ProjectListStats & { planned_progress: number | null }
+    >
   > {
     const projects = await this.repo.findAll(page);
     const stats = await this.repo.listStats(projects.map((p) => p.id));

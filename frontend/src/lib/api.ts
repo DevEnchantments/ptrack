@@ -153,6 +153,12 @@ export interface ProjectSections {
 
 // Aggregates the list endpoint attaches to each project (home cards).
 export interface ProjectListItem extends Project {
+  // Register-grid joins (Fig 1 columns)
+  owner: { full_name: string | null; email: string | null } | null
+  project_manager: { full_name: string | null; email: string | null } | null
+  sector: { name: string } | null
+  tier: { name: string } | null
+  status: { name: string } | null
   milestones_done: number
   milestones_total: number
   open_issues: number

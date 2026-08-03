@@ -1,6 +1,16 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { CircleAlert, Flag, Lock, Search, Star, TriangleAlert } from 'lucide-react'
+import {
+  CircleAlert,
+  Download,
+  Flag,
+  LayoutGrid,
+  Lock,
+  Search,
+  Star,
+  Table as TableIcon,
+  TriangleAlert,
+} from 'lucide-react'
 import {
   projectsApi,
   lookupsApi,
@@ -11,6 +21,16 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Skeleton } from '@/components/ui/skeleton'
 import { StatusPill } from '@/components/StatusPill'
+import { ProjectsGrid } from '@/components/ProjectsGrid'
+import { type GridSort, type GridSortKey } from '@/lib/project-grid'
+import { buildCsv, downloadCsv } from '@/lib/csv'
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
 import { usePageTitle } from '@/lib/use-page-title'
 import {
   Select,
@@ -81,6 +101,59 @@ export function HomePage() {
   const navigate = useNavigate()
   const [projects, setProjects] = useState<ProjectListItem[]>([])
   const entered = useEntranceFlag()
+  const [view, setView] = useState<'cards' | 'grid'>(
+    () => (localStorage.getItem('ptrack:home-view') === 'grid' ? 'grid' : 'cards'),
+  )
+  const [gridSort, setGridSort] = useState<GridSort>({
+    key: 'name',
+    dir: 'asc',
+  })
+  const [exportOpen, setExportOpen] = useState(false)
+
+  function switchView(v: 'cards' | 'grid') {
+    setView(v)
+    try {
+      localStorage.setItem('ptrack:home-view', v)
+    } catch {
+      /* storage unavailable — the toggle still works this session */
+    }
+  }
+
+  function toggleGridSort(key: GridSortKey) {
+    setGridSort((cur) =>
+      cur.key === key
+        ? { key, dir: cur.dir === 'asc' ? 'desc' : 'asc' }
+        : { key, dir: 'asc' },
+    )
+  }
+
+  function exportCsv(rows: typeof projects) {
+    const csv = buildCsv(
+      [
+        'Name', 'Reference ID', 'Project Number', 'Plan Year', 'Status',
+        'Tier', 'Sector', 'Owner', 'Project Manager', 'Sponsor',
+        'Start Date', 'End Date', 'Manual %', 'Calculated %', 'Planned %',
+        'At Risk', 'Priority', 'Approved Budget', 'Utilized Budget',
+        'Milestones Done', 'Milestones Total', 'Open Issues',
+      ],
+      rows.map((p) => [
+        p.name, p.reference_id, p.project_number, p.plan_year,
+        p.status?.name ?? '', p.tier?.name ?? '', p.sector?.name ?? '',
+        p.owner?.full_name ?? p.owner?.email ?? '',
+        p.project_manager?.full_name ?? p.project_manager?.email ?? '',
+        p.sponsor, p.start_date, p.target_end_date, p.manual_progress,
+        p.calculated_progress, p.planned_progress,
+        p.at_risk ? 'Yes' : 'No', p.is_priority ? 'Yes' : 'No',
+        p.approved_budget, p.utilized_budget, p.milestones_done,
+        p.milestones_total, p.open_issues,
+      ]),
+    )
+    downloadCsv(
+      `ptrack-projects-${new Date().toISOString().slice(0, 10)}.csv`,
+      csv,
+    )
+    setExportOpen(false)
+  }
   const [statuses, setStatuses] = useState<Lookup[]>([])
   const [sizes, setSizes] = useState<Lookup[]>([])
   const [categories, setCategories] = useState<Lookup[]>([])
@@ -388,10 +461,57 @@ export function HomePage() {
             </aside>
 
             <div className="min-w-0 flex-1">
+              <div className="mb-4 flex items-center justify-end gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setExportOpen(true)}
+                  disabled={visible.length === 0}
+                >
+                  <Download className="h-4 w-4" />
+                  Export
+                </Button>
+                <div className="flex rounded-md border">
+                  <button
+                    type="button"
+                    aria-label="Card view"
+                    aria-pressed={view === 'cards'}
+                    onClick={() => switchView('cards')}
+                    className={`rounded-l-[7px] p-1.5 transition-colors ${
+                      view === 'cards'
+                        ? 'bg-secondary text-secondary-foreground'
+                        : 'text-muted-foreground hover:text-foreground'
+                    }`}
+                  >
+                    <LayoutGrid className="h-4 w-4" />
+                  </button>
+                  <button
+                    type="button"
+                    aria-label="Grid view"
+                    aria-pressed={view === 'grid'}
+                    onClick={() => switchView('grid')}
+                    className={`rounded-r-[7px] p-1.5 transition-colors ${
+                      view === 'grid'
+                        ? 'bg-secondary text-secondary-foreground'
+                        : 'text-muted-foreground hover:text-foreground'
+                    }`}
+                  >
+                    <TableIcon className="h-4 w-4" />
+                  </button>
+                </div>
+              </div>
               {visible.length === 0 ? (
                 <div className="rounded-md border border-dashed p-10 text-center text-muted-foreground">
                   No projects match the current filters.
                 </div>
+              ) : (
+              view === 'grid' ? (
+                <ProjectsGrid
+                  projects={visible}
+                  sort={gridSort}
+                  onSort={toggleGridSort}
+                  onOpen={(pid) => navigate(`/projects/${pid}`)}
+                />
               ) : (
                 <div
                   key={filterKey}
@@ -473,10 +593,32 @@ export function HomePage() {
                     )
                   })}
                 </div>
-              )}
+              ))}
             </div>
           </div>
         )}
+
+        <Dialog open={exportOpen} onOpenChange={setExportOpen}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>Download projects</DialogTitle>
+            </DialogHeader>
+            <p className="text-sm text-muted-foreground">
+              You are about to download {visible.length}{' '}
+              {visible.length === 1 ? 'project record' : 'project records'} (the
+              currently filtered list) as a CSV file readable by Excel.
+            </p>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setExportOpen(false)}>
+                Cancel
+              </Button>
+              <Button onClick={() => exportCsv(visible)}>
+                <Download className="h-4 w-4" />
+                Download CSV
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </main>
     </div>
   )

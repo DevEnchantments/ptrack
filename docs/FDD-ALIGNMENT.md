@@ -135,7 +135,7 @@ index (timeliness/completeness/reliability, Figs 30–31) — **formulas = ASK (
 
 | FR | Summary | P-Track status |
 |---|---|---|
-| FR-01 | Project register grid: filters, pagination, sort, status indicators | PARTIAL — filter rail + status pills exist; no manual/calculated progress columns, no grid view. 2026-07-30: home cards show a **milestone-completion** bar (done/total, labeled "Milestones") + open-issue counts via `GET /projects` aggregates — deliberately NOT the FDD's calculated progress, which awaits OI-02 formula sign-off (docs/FORMULAS.md rule); swap the bar to official progress when it lands |
+| FR-01 | Project register grid: filters, pagination, sort, status indicators | PARTIAL — filter rail + status pills exist; grid view + manual/calculated columns ✅ SHIPPED 2026-08-03 (sortable Fig 1 grid as a card/grid toggle, persisted; CSV export via FR-13 confirm — UC-03, CSV not XLSX to stay dependency-free). 2026-07-30: home cards show a **milestone-completion** bar (done/total, labeled "Milestones") + open-issue counts via `GET /projects` aggregates — deliberately NOT the FDD's calculated progress, which awaits OI-02 formula sign-off (docs/FORMULAS.md rule); swap the bar to official progress when it lands |
 | FR-02 | Navigation: lists / views / reports / dashboards | PARTIAL — shell + stub items exist |
 | FR-03 | Project detail tabs (Overview, Achievement, Risk & Issue, Comment, Dashboard, Documentation, KPI, Change History) | ✅ SHIPPED 2026-08-03 (mapping ASSUMED: Overview=cards+fields+people · Achievement=milestones+action items · Risk & Issue=risks+issues · Comments=updates · Documentation=links+resources+reports+attachments · Change History=NEW project-wide audit feed incl. deletions via `GET /projects/:id/history`; Dashboard + KPI are disabled stubs pending their waves). Sticky SectionNav is tab-aware |
 | FR-04 | Actual/planned progress, milestones done/total, budget cards | ✅ SHIPPED 2026-08-03: overview cards on the project page (progress vs plan with delta + F4 suggestion, milestone donut, budget utilization with over-budget flag, open items) |
@@ -147,7 +147,7 @@ index (timeliness/completeness/reliability, Figs 30–31) — **formulas = ASK (
 | FR-10 | Portfolio dashboards: initiatives, budget, cycle status, monthly breakdown | MISSING (sample dashboard is placeholder) |
 | FR-11 | KPI dashboards / scorecards | MISSING |
 | FR-12 | Report generation + Excel export | MISSING |
-| FR-13 | Download confirmation modal | MISSING |
+| FR-13 | Download confirmation modal | ✅ SHIPPED 2026-08-03: confirm dialog (record count) before the CSV export |
 | FR-14 | Workflow states: submit/review/return/approve/close | ✅ ASSUMED+SHIPPED 2026-08-03 (see 1.6) — routing/cycle-calendar remain OI-03 questions |
 | FR-15 | Role-based restriction of create/update/approve/admin | PARTIAL — access_level data exists; enforcement deferred (security phase) |
 

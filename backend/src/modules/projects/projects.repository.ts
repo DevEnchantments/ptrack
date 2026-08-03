@@ -61,6 +61,15 @@ export interface Project {
   updated_at: string;
 }
 
+/** List rows carry the display joins the register grid needs (Fig 1). */
+export interface ProjectListRow extends Project {
+  owner: { full_name: string | null; email: string | null } | null;
+  project_manager: { full_name: string | null; email: string | null } | null;
+  sector: { name: string } | null;
+  tier: { name: string } | null;
+  status: { name: string } | null;
+}
+
 /** Per-project aggregates carried by the list endpoint (home cards). */
 export interface ProjectListStats {
   milestones_done: number;
@@ -119,9 +128,16 @@ export class ProjectsRepository {
   async findAll(page?: {
     limit?: number;
     offset?: number;
-  }): Promise<Project[]> {
+  }): Promise<ProjectListRow[]> {
     let query = this.table
-      .select(COLUMNS)
+      .select(
+        `${COLUMNS},
+         owner:profiles!owner_id ( full_name, email ),
+         project_manager:profiles!project_manager_id ( full_name, email ),
+         sector:sectors ( name ),
+         tier:tiers ( name ),
+         status:project_statuses ( name )`,
+      )
       .order('created_at', { ascending: false });
     if (page?.limit) {
       const from = page.offset ?? 0;
@@ -129,7 +145,7 @@ export class ProjectsRepository {
     }
     const { data, error } = await query;
     if (error) throw toHttpException(error, 'projects.findAll');
-    return data ?? [];
+    return (data ?? []) as unknown as ProjectListRow[];
   }
 
   async findDetail(id: string): Promise<ProjectDetail | null> {
