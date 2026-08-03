@@ -1,16 +1,16 @@
 # Graph Report - ptrack  (2026-08-03)
 
 ## Corpus Check
-- 196 files · ~80,598 words
+- 196 files · ~80,581 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1571 nodes · 3275 edges · 80 communities (68 shown, 12 thin omitted)
+- 1571 nodes · 3272 edges · 79 communities (67 shown, 12 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 2 edges (avg confidence: 0.65)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `a5c487b6`
+- Built from commit: `3186b765`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -67,7 +67,6 @@
 - RecordHistoryService
 - Community 50
 - ProjectsController
-- AttachmentDetailPage.tsx
 - @types/node
 - .update
 - @nestjs/swagger
@@ -120,7 +119,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (80 total, 12 thin omitted)
+## Communities (79 total, 12 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.05
@@ -171,8 +170,8 @@ Cohesion: 0.11
 Nodes (27): ACTION_ITEM_SEGMENTS, ActionItemsBreakdown(), ActivityHeatmap(), ActivityLineChart(), CATEGORY_SEGMENTS, CategoryDonut(), CompletionRadial(), DashboardPage() (+19 more)
 
 ### Community 12 - "Community 12"
-Cohesion: 0.11
-Nodes (13): LookupsController, Body, Controller, Get, Param, Post, ACCESS_LEVELS, ALLOWED (+5 more)
+Cohesion: 0.10
+Nodes (15): LookupsController, Body, Controller, Get, Param, Post, LookupsModule, Module (+7 more)
 
 ### Community 13 - "Community 13"
 Cohesion: 0.23
@@ -180,7 +179,7 @@ Nodes (7): ApiSecurity, AppController, Controller, Get, AppService, Injectable, 
 
 ### Community 14 - "Community 14"
 Cohesion: 0.09
-Nodes (34): fmtAed(), ProjectOverviewCards(), Props, atRiskSuggested(), calculatedProgress(), MilestoneProgressRow, plannedProgress(), riskScore() (+26 more)
+Nodes (33): fmtAed(), ProjectOverviewCards(), Props, calculatedProgress(), MilestoneProgressRow, plannedProgress(), riskScore(), riskSeverityTone() (+25 more)
 
 ### Community 15 - "Community 15"
 Cohesion: 0.08
@@ -191,8 +190,8 @@ Cohesion: 0.23
 Nodes (8): PeopleController, ApiBody, Body, Controller, Delete, Param, Patch, Post
 
 ### Community 17 - "CreateProjectDto"
-Cohesion: 0.13
-Nodes (14): ApiPropertyOptional, IsArray, IsBoolean, IsDateString, IsIn, IsInt, IsNumber, IsOptional (+6 more)
+Cohesion: 0.11
+Nodes (18): ApiPropertyOptional, IsArray, IsBoolean, IsDateString, IsIn, IsInt, IsNumber, IsOptional (+10 more)
 
 ### Community 18 - "Community 18"
 Cohesion: 0.09
@@ -267,8 +266,8 @@ Cohesion: 0.20
 Nodes (9): name, private, scripts, build, dev, lint, preview, type (+1 more)
 
 ### Community 36 - "ProjectsRepository"
-Cohesion: 0.26
-Nodes (8): calculatedProgress(), MilestoneProgressRow, plannedProgress(), Project, ProjectDetail, ProjectListStats, ProjectsService, Injectable
+Cohesion: 0.13
+Nodes (12): calculatedProgress(), MilestoneProgressRow, plannedProgress(), logger, toHttpException(), Project, ProjectDetail, ProjectListStats (+4 more)
 
 ### Community 37 - "Community 37"
 Cohesion: 0.25
@@ -315,16 +314,12 @@ Cohesion: 0.07
 Nodes (37): Props, Props, Props, Props, Props, Props, Props, Props (+29 more)
 
 ### Community 49 - "RecordHistoryService"
-Cohesion: 0.07
-Nodes (30): AppModule, Module, DatabaseModule, Module, bootstrap(), ActionItemsModule, Module, AttachmentsModule (+22 more)
+Cohesion: 0.09
+Nodes (28): AppModule, Module, DatabaseModule, Module, bootstrap(), ActionItemsModule, Module, AttachmentsModule (+20 more)
 
 ### Community 54 - "ProjectsController"
 Cohesion: 0.27
 Nodes (11): AddActionItemDialog(), emptyOwner(), ownerFromItem(), ownersFromItem(), profileName(), Props, STATUSES, today() (+3 more)
-
-### Community 55 - "AttachmentDetailPage.tsx"
-Cohesion: 0.24
-Nodes (4): logger, toHttpException(), ProjectsRepository, Injectable
 
 ### Community 56 - "@types/node"
 Cohesion: 0.47
@@ -371,8 +366,8 @@ Cohesion: 0.38
 Nodes (6): KIND_CLASSES, TOAST_MS, Toaster(), ToastItem, subscribeToasts(), ToastKind
 
 ### Community 76 - "tw-animate-css"
-Cohesion: 0.16
-Nodes (10): ProjectsController, ApiBody, Body, Controller, Delete, Get, Param, Patch (+2 more)
+Cohesion: 0.23
+Nodes (6): ProjectsController, Controller, Delete, Get, Param, Query
 
 ### Community 80 - "ApiProperty"
 Cohesion: 0.29
@@ -383,20 +378,20 @@ Cohesion: 0.24
 Nodes (11): AddMilestoneDialog(), emptyOwner(), ownerFromMilestone(), profileName(), Props, STATUSES, today(), MilestoneDetail (+3 more)
 
 ## Knowledge Gaps
-- **352 isolated node(s):** `1.1 Project → `projects` (EXTEND)`, `1.2 Milestone → `milestones` (mostly HAVE — big head start)`, `1.3 Task / Work Activity → `action_items` (EXTEND)`, `1.4 Risk → BUILD `risks` (new module, follows our new-record-type recipe)`, `1.5 Issue → `issues` (EXTEND)` (+347 more)
+- **352 isolated node(s):** `Props`, `1.1 Project → `projects` (EXTEND)`, `1.2 Milestone → `milestones` (mostly HAVE — big head start)`, `1.3 Task / Work Activity → `action_items` (EXTEND)`, `1.4 Risk → BUILD `risks` (new module, follows our new-record-type recipe)` (+347 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **12 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `toHttpException()` connect `AttachmentDetailPage.tsx` to `Community 1`, `Community 2`, `react-dom`, `RecordHistoryService`, `ProjectsRepository`, `Community 6`, `Community 7`, `Community 5`, `status-reports.repository.ts`, `Community 10`, `Community 9`, `Community 12`, `Community 44`, `nest-cli.json`, `Community 26`, `Community 27`, `PeopleRepository`, `CreateMilestoneDto`?**
+- **Why does `toHttpException()` connect `ProjectsRepository` to `Community 1`, `Community 2`, `react-dom`, `RecordHistoryService`, `Community 5`, `Community 6`, `Community 7`, `status-reports.repository.ts`, `Community 9`, `Community 10`, `Community 12`, `Community 44`, `nest-cli.json`, `Community 26`, `Community 27`, `PeopleRepository`, `CreateMilestoneDto`?**
   _High betweenness centrality (0.038) - this node is a cross-community bridge._
-- **Why does `@nestjs/swagger` connect `status-reports.repository.ts` to `Community 1`, `Community 2`, `nest-cli.json`, `Community 5`, `Community 6`, `Community 7`, `Community 10`, `Community 13`, `nest-cli.json`, `RecordHistoryService`, `CreateProjectDto`, `@types/node`, `Community 26`, `PeopleRepository`, `AddMilestoneDialog.tsx`?**
+- **Why does `@nestjs/swagger` connect `status-reports.repository.ts` to `Community 1`, `Community 2`, `nest-cli.json`, `ProjectsRepository`, `Community 5`, `Community 6`, `Community 7`, `Community 10`, `Community 13`, `nest-cli.json`, `RecordHistoryService`, `@types/node`, `Community 26`, `PeopleRepository`?**
   _High betweenness centrality (0.032) - this node is a cross-community bridge._
-- **Why does `AuthUser` connect `nest-cli.json` to `Community 1`, `Community 2`, `Community 34`, `Community 5`, `Community 6`, `Community 7`, `status-reports.repository.ts`, `Community 10`, `tw-animate-css`, `nest-cli.json`, `Community 16`, `Community 20`, `@types/node`, `Community 26`, `PeopleRepository`?**
+- **Why does `AuthUser` connect `nest-cli.json` to `Community 1`, `Community 2`, `Community 34`, `Community 5`, `Community 6`, `Community 7`, `status-reports.repository.ts`, `Community 10`, `nest-cli.json`, `Community 16`, `CreateProjectDto`, `Community 20`, `@types/node`, `Community 26`, `PeopleRepository`?**
   _High betweenness centrality (0.028) - this node is a cross-community bridge._
-- **What connects `1.1 Project → `projects` (EXTEND)`, `1.2 Milestone → `milestones` (mostly HAVE — big head start)`, `1.3 Task / Work Activity → `action_items` (EXTEND)` to the rest of the system?**
+- **What connects `Props`, `1.1 Project → `projects` (EXTEND)`, `1.2 Milestone → `milestones` (mostly HAVE — big head start)` to the rest of the system?**
   _352 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.045454545454545456 - nodes in this community are weakly interconnected._
