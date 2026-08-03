@@ -208,4 +208,31 @@ export class UpdateProjectDto {
   @IsOptional()
   @IsUUID()
   pmo_partner_id?: string | null;
+
+  @ApiPropertyOptional({
+    type: [String],
+    example: ['Department of Education', 'Vendor: MedSupply Co'],
+    description: 'External stakeholders as free-text chips (FDD Fig 11).',
+  })
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  external_stakeholders?: string[] | null;
+
+  @ApiPropertyOptional({
+    format: 'uuid',
+    description: 'Fetch from `GET /lookups/sectors`.',
+  })
+  @IsOptional()
+  @IsUUID()
+  sector_id?: string | null;
+
+  @ApiPropertyOptional({
+    format: 'uuid',
+    description:
+      'Cascades under the strategic objective. Fetch from `GET /lookups/strategic-programs`.',
+  })
+  @IsOptional()
+  @IsUUID()
+  strategic_program_id?: string | null;
 }

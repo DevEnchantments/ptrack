@@ -677,6 +677,19 @@ export function ProjectDetailPage() {
             />
             <Field label="Tier" value={project.tier?.name ?? null} />
             <Field
+              label="Strategic Program"
+              value={project.strategic_program?.name ?? null}
+            />
+            <Field label="Sector" value={project.sector?.name ?? null} />
+            <Field
+              label="External Stakeholders"
+              value={
+                project.external_stakeholders?.length
+                  ? project.external_stakeholders.join(', ')
+                  : null
+              }
+            />
+            <Field
               label="Approved Budget"
               value={
                 project.approved_budget != null

@@ -178,6 +178,13 @@ export class ProjectsService {
       patch.project_manager2_id = dto.project_manager2_id ?? null;
     if (dto.pmo_partner_id !== undefined)
       patch.pmo_partner_id = dto.pmo_partner_id ?? null;
+    if (dto.external_stakeholders !== undefined)
+      patch.external_stakeholders = dto.external_stakeholders?.length
+        ? dto.external_stakeholders
+        : null;
+    if (dto.sector_id !== undefined) patch.sector_id = dto.sector_id ?? null;
+    if (dto.strategic_program_id !== undefined)
+      patch.strategic_program_id = dto.strategic_program_id ?? null;
 
     await this.repo.update(id, patch);
     return this.getDetail(id);

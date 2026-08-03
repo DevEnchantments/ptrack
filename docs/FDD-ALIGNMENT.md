@@ -36,10 +36,10 @@ is still open); everything stays optional until the mandatory-field list is conf
 | Plan Year | — | ✅ EXTEND (`plan_year` int; dropdown range still open) |
 | Description | `description` | HAVE |
 | Strategic alignment/objective | — | ✅ EXTEND (lookup `strategic_objectives` + FK) |
-| Strategic Program | — | ASK — program hierarchy vs our `parent_project_id`? |
+| Strategic Program | — | ✅ ASSUMED+SHIPPED 2026-08-03: `strategic_programs` lookup cascading under objectives (`db/fdd_stakeholders_sector_programs.sql`) + cascading select in Edit Project (values SQL-managed for now). Reference ID stays free text pending the numbering theory (2b) |
 | Tier | — | ✅ EXTEND (lookup `tiers` + FK) — seeded Tier 1/2/3 |
 | Type | `deal_type_id` exists | ASK — is deal_type the FDD "Type" or new lookup? |
-| Sector | `category_id`? `region_id`? | ASK — sector may map to category, or be its own lookup |
+| Sector | `category_id`? `region_id`? | ✅ ASSUMED+SHIPPED 2026-08-03: own creatable `sectors` lookup (unseeded, '- New Sector -' in-app); category untouched |
 | Status | `status_id` | HAVE. ASSUMED 2026-08-03: standard FDD five (Not Started/In Progress/On Hold/Completed/Cancelled) ADDED to the lookup alongside demo values (`db/fdd_register_columns.sql`); exact LOVs remain question 2 |
 | Start / End Date | `start_date`, `target_end_date` | HAVE |
 | Actual end | `actual_end_date` | HAVE |
@@ -49,7 +49,7 @@ is still open); everything stays optional until the mandatory-field list is conf
 | Owner / Project Owner | `owner_id` | HAVE |
 | Sponsor | `sponsor` (text) | HAVE |
 | Project Manager / Manager 2 / PMO Partner | via `project_members` roles | ✅ ASSUMED+SHIPPED 2026-08-03: dedicated FK columns (`db/fdd_person_fields.sql`) + pickers in Edit Project; Project Owner reuses `owner_id` (now also FK-guaranteed + exposed). These are the Fig 10 workflow actors for Wave 4. Limitation: real users only — typed non-user names are not stored on these fields |
-| Internal / External Stakeholders | — | internal ✅ (`internal_stakeholder` text); external = multi-select chips (Fig 11) → join table, ASK pending |
+| Internal / External Stakeholders | — | internal ✅ (`internal_stakeholder` text); external ✅ ASSUMED+SHIPPED 2026-08-03: free-text chips stored `external_stakeholders text[]` (like tags); becomes a join table only if directory-backed |
 | Target Group | — | ✅ EXTEND (`target_group` text) |
 | Priority flag | — | ✅ EXTEND (`is_priority boolean`) — star toggle in forms |
 | Manual progress (Fig 1) | — | ✅ ASSUMED+SHIPPED 2026-08-03: `manual_progress numeric` (user-entered 0-100 per FDD 2.4) — edit dialog + detail row |

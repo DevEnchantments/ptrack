@@ -92,6 +92,10 @@ export interface Project {
   project_manager_id: string | null
   project_manager2_id: string | null
   pmo_partner_id: string | null
+  // FDD Wave 1.3 (ASSUMED shapes)
+  external_stakeholders: string[] | null
+  sector_id: string | null
+  strategic_program_id: string | null
 }
 
 export interface ProjectMemberDetail {
@@ -120,6 +124,8 @@ export interface ProjectDetail extends Project {
   category: { name: string } | null
   tier: { name: string } | null
   strategic_objective: { name: string } | null
+  sector: { name: string } | null
+  strategic_program: { name: string } | null
   owner: { full_name: string | null; email: string | null } | null
   project_manager: { full_name: string | null; email: string | null } | null
   project_manager2: { full_name: string | null; email: string | null } | null
@@ -176,6 +182,8 @@ export const usersApi = {
 export interface Lookup {
   id: string
   name: string
+  /** Present only on cascading lookups (strategic-programs). */
+  objective_id?: string | null
 }
 
 // Lookups are near-static, but every dialog open refetches them. Cache the
@@ -202,6 +210,14 @@ export const categoriesApi = {
   create: async (name: string) => {
     const row = await apiPost<Lookup>('/lookups/project-categories', { name })
     lookupsApi.invalidate('project-categories')
+    return row
+  },
+}
+
+export const sectorsApi = {
+  create: async (name: string) => {
+    const row = await apiPost<Lookup>('/lookups/sectors', { name })
+    lookupsApi.invalidate('sectors')
     return row
   },
 }

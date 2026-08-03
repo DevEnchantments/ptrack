@@ -2,13 +2,14 @@ import { FieldError } from '@/components/FieldError'
 import { PersonAutocomplete } from '@/components/PersonAutocomplete'
 import type { ProjectMemberInput } from '@/pages/CreateProjectWizard'
 import { useAuth } from '@/lib/auth-context'
-import { Loader2, Star, TriangleAlert } from 'lucide-react'
+import { Loader2, Star, TriangleAlert, X } from 'lucide-react'
 import { toast } from '@/lib/toast'
 import { useEffect, useState } from 'react'
 import {
   projectsApi,
   lookupsApi,
   categoriesApi,
+  sectorsApi,
   type ProjectDetail,
   type Project,
   type Lookup,
@@ -46,6 +47,7 @@ function personFromProfile(
   }
 }
 const NEW_CATEGORY = '__new_category__'
+const NEW_SECTOR = '__new_sector__'
 
 interface Props {
   project: ProjectDetail
@@ -68,6 +70,8 @@ export function EditProjectDialog({
   const [categories, setCategories] = useState<Lookup[]>([])
   const [tiers, setTiers] = useState<Lookup[]>([])
   const [objectives, setObjectives] = useState<Lookup[]>([])
+  const [programs, setPrograms] = useState<Lookup[]>([])
+  const [sectors, setSectors] = useState<Lookup[]>([])
   const [projects, setProjects] = useState<Project[]>([])
 
   const [name, setName] = useState('')
@@ -95,6 +99,11 @@ export function EditProjectDialog({
   const [utilizedBudget, setUtilizedBudget] = useState('')
   const [tierId, setTierId] = useState<string | null>(null)
   const [objectiveId, setObjectiveId] = useState<string | null>(null)
+  const [programId, setProgramId] = useState<string | null>(null)
+  const [sectorId, setSectorId] = useState<string | null>(null)
+  const [newSector, setNewSector] = useState('')
+  const [stakeholders, setStakeholders] = useState<string[]>([])
+  const [stakeholderDraft, setStakeholderDraft] = useState('')
   const [manualProgress, setManualProgress] = useState('')
   const [atRisk, setAtRisk] = useState(false)
   const [ownerPerson, setOwnerPerson] = useState<ProjectMemberInput>(
@@ -132,6 +141,8 @@ export function EditProjectDialog({
     lookupsApi.list('project-categories').then(setCategories).catch(() => toast.error('Could not load project categories.'))
     lookupsApi.list('tiers').then(setTiers).catch(() => toast.error('Could not load tiers.'))
     lookupsApi.list('strategic-objectives').then(setObjectives).catch(() => toast.error('Could not load strategic objectives.'))
+    lookupsApi.list('strategic-programs').then(setPrograms).catch(() => toast.error('Could not load strategic programs.'))
+    lookupsApi.list('sectors').then(setSectors).catch(() => toast.error('Could not load sectors.'))
     projectsApi.list().then(setProjects).catch(() => toast.error('Could not load projects.'))
   }, [open])
 
@@ -169,6 +180,11 @@ export function EditProjectDialog({
       )
       setTierId(project.tier_id)
       setObjectiveId(project.strategic_objective_id)
+      setProgramId(project.strategic_program_id)
+      setSectorId(project.sector_id)
+      setNewSector('')
+      setStakeholders(project.external_stakeholders ?? [])
+      setStakeholderDraft('')
       setManualProgress(
         project.manual_progress != null ? String(project.manual_progress) : '',
       )
@@ -185,6 +201,14 @@ export function EditProjectDialog({
       setFieldErrors({})
       setConfirmDelete(false)
     }
+  }
+
+
+  function addStakeholder() {
+    const clean = stakeholderDraft.trim()
+    if (!clean) return
+    setStakeholders((cur) => (cur.includes(clean) ? cur : [...cur, clean]))
+    setStakeholderDraft('')
   }
 
   async function submit() {
@@ -228,6 +252,21 @@ export function EditProjectDialog({
         finalCategoryId = created.id
       }
 
+      let finalSectorId = sectorId
+      if (sectorId === NEW_SECTOR) {
+        if (!newSector.trim()) {
+          setSaving(false)
+          return setError('Enter a name for the new sector.')
+        }
+        const createdSector = await sectorsApi.create(newSector.trim())
+        finalSectorId = createdSector.id
+      }
+
+      const allStakeholders = [
+        ...stakeholders,
+        ...(stakeholderDraft.trim() ? [stakeholderDraft.trim()] : []),
+      ]
+
       const tagList = tags
         .split(',')
         .map((t) => t.trim())
@@ -259,6 +298,9 @@ export function EditProjectDialog({
         strategic_objective_id: objectiveId,
         manual_progress: manualProgress.trim() ? Number(manualProgress) : null,
         at_risk: atRisk,
+        strategic_program_id: programId,
+        sector_id: finalSectorId === NEW_SECTOR ? null : finalSectorId,
+        external_stakeholders: allStakeholders.length ? allStakeholders : null,
         owner_id: ownerPerson.user_id,
         project_manager_id: pm.user_id,
         project_manager2_id: pm2.user_id,
@@ -421,7 +463,10 @@ export function EditProjectDialog({
                   ...objectives.map((o) => ({ label: o.name, value: o.id })),
                 ]}
                 value={objectiveId ?? NONE}
-                onValueChange={(v) => setObjectiveId(v === NONE ? null : v)}
+                onValueChange={(v) => {
+                  setObjectiveId(v === NONE ? null : v)
+                  setProgramId(null)
+                }}
               >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="- None -" />
@@ -459,6 +504,73 @@ export function EditProjectDialog({
                   ))}
                 </SelectContent>
               </Select>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="flex flex-col gap-2">
+              <Label>Strategic Program</Label>
+              <Select
+                items={[
+                  { label: '- None -', value: NONE },
+                  ...programs
+                    .filter((pr) => pr.objective_id === objectiveId)
+                    .map((pr) => ({ label: pr.name, value: pr.id })),
+                ]}
+                value={programId ?? NONE}
+                onValueChange={(v) => setProgramId(v === NONE ? null : v)}
+              >
+                <SelectTrigger className="w-full" disabled={!objectiveId}>
+                  <SelectValue
+                    placeholder={
+                      objectiveId ? '- None -' : 'Pick an objective first'
+                    }
+                  />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value={NONE}>- None -</SelectItem>
+                  {programs
+                    .filter((pr) => pr.objective_id === objectiveId)
+                    .map((pr) => (
+                      <SelectItem key={pr.id} value={pr.id}>
+                        {pr.name}
+                      </SelectItem>
+                    ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <Label>Sector</Label>
+              <Select
+                items={[
+                  { label: '- None -', value: NONE },
+                  ...sectors.map((sec) => ({ label: sec.name, value: sec.id })),
+                  { label: '- New Sector -', value: NEW_SECTOR },
+                ]}
+                value={sectorId ?? NONE}
+                onValueChange={(v) => setSectorId(v === NONE ? null : v)}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="- None -" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value={NONE}>- None -</SelectItem>
+                  {sectors.map((sec) => (
+                    <SelectItem key={sec.id} value={sec.id}>
+                      {sec.name}
+                    </SelectItem>
+                  ))}
+                  <SelectItem value={NEW_SECTOR}>- New Sector -</SelectItem>
+                </SelectContent>
+              </Select>
+              {sectorId === NEW_SECTOR && (
+                <Input
+                  value={newSector}
+                  placeholder="New Sector Name"
+                  onChange={(e) => setNewSector(e.target.value)}
+                />
+              )}
             </div>
           </div>
 
@@ -546,12 +658,49 @@ export function EditProjectDialog({
             />
           </div>
 
+          <div className="flex flex-col gap-2">
+            <Label>External Stakeholders</Label>
+            {stakeholders.length > 0 && (
+              <div className="flex flex-wrap gap-1.5">
+                {stakeholders.map((sh) => (
+                  <span
+                    key={sh}
+                    className="hint-in inline-flex items-center gap-1 rounded-full bg-secondary px-2 py-0.5 text-xs font-medium text-secondary-foreground"
+                  >
+                    {sh}
+                    <button
+                      type="button"
+                      aria-label={`Remove ${sh}`}
+                      onClick={() =>
+                        setStakeholders((cur) => cur.filter((x) => x !== sh))
+                      }
+                      className="rounded-full p-0.5 transition-colors hover:bg-accent"
+                    >
+                      <X className="h-3 w-3" />
+                    </button>
+                  </span>
+                ))}
+              </div>
+            )}
+            <Input
+              value={stakeholderDraft}
+              placeholder="Type a name and press Enter"
+              onChange={(e) => setStakeholderDraft(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ',') {
+                  e.preventDefault()
+                  addStakeholder()
+                }
+              }}
+            />
+          </div>
+
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div className="flex flex-col gap-2">
             <Label>Project Manager</Label>
             <div className="flex items-start gap-2">
               <div className="flex-1">
-                <PersonAutocomplete value={pm} onChange={(p) => setPm((cur) => ({ ...cur, ...p }))} />
+                <PersonAutocomplete allowPending={false} value={pm} onChange={(p) => setPm((cur) => ({ ...cur, ...p }))} />
               </div>
               <Button
                 type="button"
@@ -567,7 +716,7 @@ export function EditProjectDialog({
             <Label>Project Manager 2</Label>
             <div className="flex items-start gap-2">
               <div className="flex-1">
-                <PersonAutocomplete value={pm2} onChange={(p) => setPm2((cur) => ({ ...cur, ...p }))} />
+                <PersonAutocomplete allowPending={false} value={pm2} onChange={(p) => setPm2((cur) => ({ ...cur, ...p }))} />
               </div>
               <Button
                 type="button"
@@ -586,7 +735,7 @@ export function EditProjectDialog({
             <Label>Project Owner</Label>
             <div className="flex items-start gap-2">
               <div className="flex-1">
-                <PersonAutocomplete value={ownerPerson} onChange={(p) => setOwnerPerson((cur) => ({ ...cur, ...p }))} />
+                <PersonAutocomplete allowPending={false} value={ownerPerson} onChange={(p) => setOwnerPerson((cur) => ({ ...cur, ...p }))} />
               </div>
               <Button
                 type="button"
@@ -602,7 +751,7 @@ export function EditProjectDialog({
             <Label>PMO Partner</Label>
             <div className="flex items-start gap-2">
               <div className="flex-1">
-                <PersonAutocomplete value={pmoPartner} onChange={(p) => setPmoPartner((cur) => ({ ...cur, ...p }))} />
+                <PersonAutocomplete allowPending={false} value={pmoPartner} onChange={(p) => setPmoPartner((cur) => ({ ...cur, ...p }))} />
               </div>
               <Button
                 type="button"

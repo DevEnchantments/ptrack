@@ -7,9 +7,19 @@ import { Input } from '@/components/ui/input'
 interface Props {
   value: ProjectMemberInput
   onChange: (patch: Partial<ProjectMemberInput>) => void
+  /**
+   * Member dialogs keep the default: an unmatched name is stored as a
+   * pending member. FK person fields (e.g. Project Manager) must pass false —
+   * they can only reference real users, so an unmatched name is a warning.
+   */
+  allowPending?: boolean
 }
 
-export function PersonAutocomplete({ value, onChange }: Props) {
+export function PersonAutocomplete({
+  value,
+  onChange,
+  allowPending = true,
+}: Props) {
   const [results, setResults] = useState<UserSummary[]>([])
   const [open, setOpen] = useState(false)
   const [active, setActive] = useState(-1)
@@ -115,7 +125,9 @@ export function PersonAutocomplete({ value, onChange }: Props) {
       ) : value.display_name.trim() ? (
         <p className="hint-in mt-1.5 inline-flex items-center gap-1 rounded-full border border-status-amber-border bg-status-amber-bg px-2 py-0.5 text-xs font-medium text-status-amber-fg">
           <UserPlus className="h-3 w-3" />
-          Will be added as pending
+          {allowPending
+            ? 'Will be added as pending'
+            : 'Not a P-Track user — pick from the list or this won’t be saved'}
         </p>
       ) : null}
     </div>

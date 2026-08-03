@@ -275,13 +275,13 @@
     "semantic_hash": ""
   },
   "backend/src/modules/projects/dto/create-project.dto.ts": {
-    "mtime": 1785744906.9950712,
-    "ast_hash": "81e2c7714d4425816afaf1966b5be2d4",
+    "mtime": 1785745515.2658005,
+    "ast_hash": "da28708f356ed7eb7ee26d8cb75b921f",
     "semantic_hash": ""
   },
   "backend/src/modules/projects/dto/update-project.dto.ts": {
-    "mtime": 1785744906.9980712,
-    "ast_hash": "c2271c7f7885ec438cf595ebd996a6db",
+    "mtime": 1785745515.309802,
+    "ast_hash": "40549ceeb95e4283f9d487ad46ba6f03",
     "semantic_hash": ""
   },
   "backend/src/modules/projects/projects.controller.ts": {
@@ -295,13 +295,13 @@
     "semantic_hash": ""
   },
   "backend/src/modules/projects/projects.repository.ts": {
-    "mtime": 1785744621.0386343,
-    "ast_hash": "7f66636cc539da1ac833f82f6097ebd5",
+    "mtime": 1785745515.2209964,
+    "ast_hash": "8d0bfb7addd670888e6fa37cfb8be425",
     "semantic_hash": ""
   },
   "backend/src/modules/projects/projects.service.ts": {
-    "mtime": 1785744906.9990711,
-    "ast_hash": "6e6d55eacadb808eb8b370a26cb5905d",
+    "mtime": 1785745515.35699,
+    "ast_hash": "de161a1a6b2282e38b571bb07484e25f",
     "semantic_hash": ""
   },
   "backend/src/modules/resources/dto/create-resource.dto.ts": {
@@ -500,8 +500,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/EditProjectDialog.tsx": {
-    "mtime": 1785744976.6539435,
-    "ast_hash": "871cdd0fac91f2f5ecc3efa364e0251e",
+    "mtime": 1785746405.3256123,
+    "ast_hash": "c4e50be06222bb4707d567766e2bf482",
     "semantic_hash": ""
   },
   "frontend/src/components/MiniCalendar.tsx": {
@@ -510,8 +510,8 @@
     "semantic_hash": "a1ce5fb6fdc385d891138d445265d0b5"
   },
   "frontend/src/components/PersonAutocomplete.tsx": {
-    "mtime": 1785333453.909177,
-    "ast_hash": "b8f5cbc6c9e0e0402cfba803e97757c6",
+    "mtime": 1785746405.2789774,
+    "ast_hash": "e17c2acf1d3498d5ff38e5456f7fe4f9",
     "semantic_hash": ""
   },
   "frontend/src/components/ProtectedRoute.tsx": {
@@ -555,8 +555,8 @@
     "semantic_hash": ""
   },
   "frontend/src/lib/api.ts": {
-    "mtime": 1785744976.6489391,
-    "ast_hash": "543946dbf4f7a591df2b89d73bab8e2b",
+    "mtime": 1785745776.4004254,
+    "ast_hash": "32e7902663d2077e97d2eb34d1b77a6b",
     "semantic_hash": ""
   },
   "frontend/src/lib/auth-context.tsx": {
@@ -610,8 +610,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ProjectDetailPage.tsx": {
-    "mtime": 1785744976.65495,
-    "ast_hash": "7fcb7fdcd295350b4a25fb1843365559",
+    "mtime": 1785745776.4828596,
+    "ast_hash": "1a1d563ecdc15efcb55d1c90bcd37ec5",
     "semantic_hash": ""
   },
   "frontend/src/pages/StatusReportDetailPage.tsx": {
@@ -905,8 +905,8 @@
     "semantic_hash": ""
   },
   "docs/FDD-ALIGNMENT.md": {
-    "mtime": 1785745137.4621623,
-    "ast_hash": "808303e0d2f33e1cdd67e298061eccd6",
+    "mtime": 1785745936.9490416,
+    "ast_hash": "afe361ceac2e171d1cdab25f4f7a5986",
     "semantic_hash": ""
   },
   "backend/db/fdd_project_fields.sql": {
@@ -1017,6 +1017,11 @@
   "backend/db/fdd_register_columns.sql": {
     "mtime": 1785744603.0959067,
     "ast_hash": "721d629ae5a3edd619d76e9ff3f1bb68",
+    "semantic_hash": ""
+  },
+  "backend/db/fdd_person_fields.sql": {
+    "mtime": 1785745494.2861607,
+    "ast_hash": "0c9939404b8a354ae66420c22c888046",
     "semantic_hash": ""
   }
 }

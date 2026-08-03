@@ -25,6 +25,14 @@ const ALLOWED: Record<string, string> = {
   'risk-probability-levels': 'risk_probability_levels',
   'risk-impact-levels': 'risk_impact_levels',
   'risk-responses': 'risk_responses',
+  sectors: 'sectors',
+  'strategic-programs': 'strategic_programs',
+};
+
+// Most lookups serve id+name; tables here carry extra columns the UI needs
+// (e.g. the objective a program cascades under).
+const SELECTS: Record<string, string> = {
+  strategic_programs: 'id, name, objective_id',
 };
 
 const ACCESS_LEVELS = ['read_only', 'read_write', 'read_write_admin'];
@@ -34,8 +42,15 @@ const ACCESS_LEVELS = ['read_only', 'read_write', 'read_write_admin'];
 // fresh-enough while making repeat opens free. Writes below invalidate early.
 const CACHE_TTL_MS = 60_000;
 
+export interface LookupRow {
+  id: string;
+  name: string;
+  /** Present only for cascading lookups (e.g. strategic_programs). */
+  objective_id?: string | null;
+}
+
 interface CacheSlot {
-  data: Array<{ id: string; name: string }>;
+  data: LookupRow[];
   expires: number;
 }
 
@@ -54,12 +69,13 @@ export class LookupsService {
 
     const { data, error } = await this.db.client
       .from(table)
-      .select('id, name')
+      .select(SELECTS[table] ?? 'id, name')
       .eq('is_active', true)
       .order('sort_order', { ascending: true });
     if (error) throw toHttpException(error, `lookups.${name}`);
 
-    const rows = data ?? [];
+    // The dynamic select string defeats supabase-js's literal-type inference.
+    const rows = (data ?? []) as unknown as LookupRow[];
     this.cache.set(name, { data: rows, expires: Date.now() + CACHE_TTL_MS });
     return rows;
   }
@@ -74,6 +90,19 @@ export class LookupsService {
       .single();
     if (error) throw toHttpException(error, 'lookups.createCategory');
     this.cache.delete('project-categories');
+    return data;
+  }
+
+  async createSector(name: string) {
+    const clean = (name ?? '').trim();
+    if (!clean) throw new BadRequestException('Sector name is required.');
+    const { data, error } = await this.db.client
+      .from('sectors')
+      .insert({ name: clean })
+      .select('id, name')
+      .single();
+    if (error) throw toHttpException(error, 'lookups.createSector');
+    this.cache.delete('sectors');
     return data;
   }
 

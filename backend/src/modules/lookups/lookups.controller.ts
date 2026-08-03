@@ -15,6 +15,11 @@ export class LookupsController {
     return this.lookups.createCategory(name);
   }
 
+  @Post('sectors')
+  createSector(@Body('name') name: string) {
+    return this.lookups.createSector(name);
+  }
+
   @Post('project-roles')
   createRole(
     @Body('name') name: string,
