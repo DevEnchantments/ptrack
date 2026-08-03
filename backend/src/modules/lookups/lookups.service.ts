@@ -20,6 +20,11 @@ const ALLOWED: Record<string, string> = {
   'update-classes': 'update_classes',
   tiers: 'tiers',
   'strategic-objectives': 'strategic_objectives',
+  'risk-categories': 'risk_categories',
+  'risk-sources': 'risk_sources',
+  'risk-probability-levels': 'risk_probability_levels',
+  'risk-impact-levels': 'risk_impact_levels',
+  'risk-responses': 'risk_responses',
 };
 
 const ACCESS_LEVELS = ['read_only', 'read_write', 'read_write_admin'];

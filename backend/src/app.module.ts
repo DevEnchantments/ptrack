@@ -13,6 +13,7 @@ import { ActionItemsModule } from './modules/action-items/action-items.module';
 import { LinksModule } from './modules/links/links.module';
 import { ResourcesModule } from './modules/resources/resources.module';
 import { IssuesModule } from './modules/issues/issues.module';
+import { RisksModule } from './modules/risks/risks.module';
 import { UpdatesModule } from './modules/updates/updates.module';
 import { StatusReportsModule } from './modules/status-reports/status-reports.module';
 import { AttachmentsModule } from './modules/attachments/attachments.module';
@@ -33,6 +34,7 @@ import { AppService } from './app.service';
     LinksModule,
     ResourcesModule,
     IssuesModule,
+    RisksModule,
     UpdatesModule,
     StatusReportsModule,
     AttachmentsModule,

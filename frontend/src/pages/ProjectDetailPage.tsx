@@ -15,6 +15,7 @@ import {
   linksApi,
   resourcesApi,
   issuesApi,
+  risksApi,
   updatesApi,
   statusReportsApi,
   attachmentsApi,
@@ -27,6 +28,7 @@ import {
   type Link,
   type Resource,
   type Issue,
+  type Risk,
   type Update,
   type StatusReport,
   type Attachment,
@@ -39,13 +41,14 @@ import { AddActionItemDialog } from '@/components/AddActionItemDialog'
 import { AddLinkDialog } from '@/components/AddLinkDialog'
 import { AddResourceDialog } from '@/components/AddResourceDialog'
 import { AddIssueDialog } from '@/components/AddIssueDialog'
+import { AddRiskDialog } from '@/components/AddRiskDialog'
 import { AddUpdateDialog } from '@/components/AddUpdateDialog'
 import { AddStatusReportDialog } from '@/components/AddStatusReportDialog'
 import { AddAttachmentDialog } from '@/components/AddAttachmentDialog'
 import { EditProjectDialog } from '@/components/EditProjectDialog'
 
 const ACTIONS = [
-  'Add Person', 'Add Issue', 'Add Resource', 'Add Milestone',
+  'Add Person', 'Add Issue', 'Add Risk', 'Add Resource', 'Add Milestone',
   'Add Action Item', 'Add Link', 'Attach File', 'Add Update',
   'Add Status Report',
 ]
@@ -87,6 +90,10 @@ function linkAuthor(l: Link) {
 
 function resourceUpdatedBy(r: Resource) {
   return r.updated_by_profile?.full_name || r.updated_by_profile?.email || 'Unknown'
+}
+
+function riskOwnerDisplay(r: Risk): string | null {
+  return r.owner?.full_name || r.owner?.email || null
 }
 
 function issueOwnerDisplay(i: Issue): string | null {
@@ -196,6 +203,7 @@ const SECTION_IDS = [
   { id: 'links', label: 'Links' },
   { id: 'resources', label: 'Resources' },
   { id: 'issues', label: 'Issues' },
+  { id: 'risks', label: 'Risks' },
   { id: 'updates', label: 'Updates' },
   { id: 'status-reports', label: 'Status Reports' },
   { id: 'attachments', label: 'Attachments' },
@@ -263,6 +271,10 @@ export function ProjectDetailPage() {
   const [issues, setIssues] = useState<Issue[]>([])
   const [issueOpen, setIssueOpen] = useState(false)
   const [editingIssue, setEditingIssue] = useState<Issue | null>(null)
+  const [risks, setRisks] = useState<Risk[]>([])
+  const [riskOpen, setRiskOpen] = useState(false)
+  const [editingRisk, setEditingRisk] = useState<Risk | null>(null)
+  const [showAllRisks, setShowAllRisks] = useState(false)
   const [showAllIssues, setShowAllIssues] = useState(true)
   const [updates, setUpdates] = useState<Update[]>([])
   const [updateOpen, setUpdateOpen] = useState(false)
@@ -373,6 +385,11 @@ export function ProjectDetailPage() {
     issuesApi.list(id).then(setIssues).catch(() => toast.error('Could not load issues.'))
   }, [id])
 
+  const loadRisks = useCallback(() => {
+    if (!id) return
+    risksApi.list(id).then(setRisks).catch(() => toast.error('Could not load risks.'))
+  }, [id])
+
   const loadUpdates = useCallback(() => {
     if (!id) return
     updatesApi.list(id).then(setUpdates).catch(() => toast.error('Could not load updates.'))
@@ -403,6 +420,7 @@ export function ProjectDetailPage() {
         setLinks(s.links)
         setResources(s.resources)
         setIssues(s.issues)
+        setRisks(s.risks)
         setUpdates(s.updates)
         setStatusReports(s.statusReports)
         setAttachments(s.attachments)
@@ -480,6 +498,7 @@ export function ProjectDetailPage() {
     'Add Link',
     'Add Resource',
     'Add Issue',
+    'Add Risk',
     'Add Update',
     'Add Status Report',
     'Attach File',
@@ -504,6 +523,9 @@ export function ProjectDetailPage() {
     } else if (a === 'Add Issue') {
       setEditingIssue(null)
       setIssueOpen(true)
+    } else if (a === 'Add Risk') {
+      setEditingRisk(null)
+      setRiskOpen(true)
     } else if (a === 'Add Update') {
       setEditingUpdate(null)
       setUpdateOpen(true)
@@ -1116,12 +1138,96 @@ export function ProjectDetailPage() {
           </SectionCard>
 
           <SectionCard
+            id="risks"
+            title="Risks"
+            count={risks.length}
+            collapsed={!!collapsed['risks']}
+            onToggle={() => toggleSection('risks')}
+            index={6}
+            entered={entered}
+            loading={sectionsLoading}
+            emptyLabel="No risks yet."
+            emptyActionLabel="Add risk"
+            onEmptyAction={() => onAction('Add Risk')}
+          >
+            <>
+              <label className="mb-3 flex items-center gap-2 text-sm">
+                <input
+                  type="checkbox"
+                  className="h-4 w-4 accent-primary"
+                  checked={showAllRisks}
+                  onChange={(e) => setShowAllRisks(e.target.checked)}
+                />
+                Show All Risks (Open and Closed)
+              </label>
+              {(() => {
+                const visibleRisks = showAllRisks
+                  ? risks
+                  : risks.filter((r) => r.status === 'open')
+                if (visibleRisks.length === 0)
+                  return (
+                    <div className="rounded-md border border-dashed px-4 py-5 text-sm text-muted-foreground">
+                      No open risks.
+                    </div>
+                  )
+                return (
+                  <ul className="section-list divide-y rounded-md border">
+                    {visibleRisks.map((r) => (
+                      <li
+                        key={r.id}
+                        className="flex items-start gap-3 px-4 py-3 hover:bg-accent"
+                      >
+                        <EditButton
+                          label="Edit risk"
+                          onClick={() => {
+                            setEditingRisk(r)
+                            setRiskOpen(true)
+                          }}
+                        />
+                        <div className="flex-1">
+                          <div className="flex items-center justify-between gap-3">
+                            <span className="flex items-center gap-2 text-sm font-medium">
+                              <span className="rounded bg-accent px-1.5 py-0.5 text-xs font-semibold uppercase">
+                                {r.type}
+                              </span>
+                              {r.statement}
+                            </span>
+                            <StatusPill
+                              status={r.status}
+                              label={r.status === 'open' ? 'Open' : 'Closed'}
+                            />
+                          </div>
+                          <div className="mt-1 flex flex-wrap gap-x-4 text-xs text-muted-foreground">
+                            {r.probability?.name && (
+                              <span>Probability: {r.probability.name}</span>
+                            )}
+                            {r.impact?.name && (
+                              <span>Impact: {r.impact.name}</span>
+                            )}
+                            {r.response?.name && (
+                              <span>Response: {r.response.name}</span>
+                            )}
+                            {riskOwnerDisplay(r) && (
+                              <span>Owner: {riskOwnerDisplay(r)}</span>
+                            )}
+                            <span>Updated {relativeTime(r.updated_at)}</span>
+                          </div>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                )
+              })()}
+            </>
+          </SectionCard>
+
+          <SectionCard
             id="updates"
             title="Updates"
             count={updates.length}
             collapsed={!!collapsed['updates']}
             onToggle={() => toggleSection('updates')}
-            index={6}
+            index={7}
             entered={entered}
             loading={sectionsLoading}
             emptyLabel="No updates yet."
@@ -1173,7 +1279,7 @@ export function ProjectDetailPage() {
             count={statusReports.length}
             collapsed={!!collapsed['status-reports']}
             onToggle={() => toggleSection('status-reports')}
-            index={7}
+            index={8}
             entered={entered}
             loading={sectionsLoading}
             emptyLabel="No status reports yet."
@@ -1222,7 +1328,7 @@ export function ProjectDetailPage() {
             count={attachments.length}
             collapsed={!!collapsed['attachments']}
             onToggle={() => toggleSection('attachments')}
-            index={8}
+            index={9}
             entered={entered}
             loading={sectionsLoading}
             emptyLabel="No attachments yet."
@@ -1391,6 +1497,14 @@ export function ProjectDetailPage() {
         }}
         existing={editingIssue}
         onAdded={loadIssues}
+      />
+
+      <AddRiskDialog
+        projectId={project.id}
+        open={riskOpen}
+        onOpenChange={setRiskOpen}
+        existing={editingRisk}
+        onAdded={loadRisks}
       />
 
       <AddUpdateDialog

@@ -13,6 +13,7 @@ import { ActionItemsService } from '../action-items/action-items.service';
 import { LinksService } from '../links/links.service';
 import { ResourcesService } from '../resources/resources.service';
 import { IssuesService } from '../issues/issues.service';
+import { RisksService } from '../risks/risks.service';
 import { UpdatesService } from '../updates/updates.service';
 import { StatusReportsService } from '../status-reports/status-reports.service';
 import { AttachmentsService } from '../attachments/attachments.service';
@@ -27,6 +28,7 @@ export class ProjectsService {
     private readonly links: LinksService,
     private readonly resources: ResourcesService,
     private readonly issues: IssuesService,
+    private readonly risks: RisksService,
     private readonly updates: UpdatesService,
     private readonly statusReports: StatusReportsService,
     private readonly attachments: AttachmentsService,
@@ -45,6 +47,7 @@ export class ProjectsService {
       links,
       resources,
       issues,
+      risks,
       updates,
       statusReports,
       attachments,
@@ -55,6 +58,7 @@ export class ProjectsService {
       this.links.list(projectId),
       this.resources.list(projectId),
       this.issues.list(projectId),
+      this.risks.list(projectId),
       this.updates.list(projectId),
       this.statusReports.list(projectId),
       this.attachments.list(projectId),
@@ -66,6 +70,7 @@ export class ProjectsService {
       links,
       resources,
       issues,
+      risks,
       updates,
       statusReports,
       attachments,

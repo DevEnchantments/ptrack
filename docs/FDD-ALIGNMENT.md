@@ -84,6 +84,14 @@ category (lookup), risk_owner, probability level (lookup), impact level (lookup)
 priority, action (≤200), status (open/…), type (RISK/ISSUE toggle in register),
 last_updated audit, severity dot. New lookups: risk categories, sources, probability
 levels, impact levels, responses.
+✅ BUILD SHIPPED 2026-07-30: `backend/db/fdd_risks.sql` (risks table + 5 RLS'd
+lookup tables; probability/impact/response/source get PLACEHOLDER standard seeds
+pending the Fig 6 LOV values — question 4/OI-05; categories unseeded), full CRUD
+module at `/projects/:id/risks` (in the sections aggregate), AddRiskDialog (all
+Fig 6 fields with char counters on statement/action, RISK/ISSUE toggle), Risks
+section on the project page (open/closed filter, type badge, prob/impact/
+response/owner meta). Deliberately absent until sign-off: score + severity dot
+(OI-02 formula). Risks not in the record-history trigger yet.
 
 ### 1.5 Issue → `issues` (EXTEND)
 FDD issue register columns: issue, recommendation, date created, reported_by, type,

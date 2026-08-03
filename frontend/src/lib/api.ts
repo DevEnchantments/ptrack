@@ -124,6 +124,7 @@ export interface ProjectSections {
   links: Link[]
   resources: Resource[]
   issues: Issue[]
+  risks: Risk[]
   updates: Update[]
   statusReports: StatusReport[]
   attachments: Attachment[]
@@ -462,6 +463,43 @@ export const issuesApi = {
     apiPatch<Issue>(`/projects/${projectId}/issues/${issueId}`, data),
   remove: (projectId: string, issueId: string) =>
     apiDelete<{ deleted: boolean }>(`/projects/${projectId}/issues/${issueId}`),
+}
+
+export interface Risk {
+  id: string
+  project_id: string
+  statement: string
+  identified_by: string | null
+  date_identified: string | null
+  source_id: string | null
+  category_id: string | null
+  owner_id: string | null
+  probability_id: string | null
+  impact_id: string | null
+  response_id: string | null
+  response_plan: string | null
+  priority: string | null
+  action: string | null
+  status: string
+  type: string
+  created_at: string
+  updated_at: string
+  source: { name: string } | null
+  category: { name: string } | null
+  probability: { name: string } | null
+  impact: { name: string } | null
+  response: { name: string } | null
+  owner: { full_name: string | null; email: string | null } | null
+}
+
+export const risksApi = {
+  list: (projectId: string) => apiGet<Risk[]>(`/projects/${projectId}/risks`),
+  add: (projectId: string, data: Record<string, unknown>) =>
+    apiPost<Risk>(`/projects/${projectId}/risks`, data),
+  update: (projectId: string, riskId: string, data: Record<string, unknown>) =>
+    apiPatch<Risk>(`/projects/${projectId}/risks/${riskId}`, data),
+  remove: (projectId: string, riskId: string) =>
+    apiDelete<{ deleted: boolean }>(`/projects/${projectId}/risks/${riskId}`),
 }
 
 export interface Update {
