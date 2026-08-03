@@ -43,6 +43,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { AddPersonDialog } from '@/components/AddPersonDialog'
 import { AddMilestoneDialog } from '@/components/AddMilestoneDialog'
+import { AdjustWeightsDialog } from '@/components/AdjustWeightsDialog'
 import { AddActionItemDialog } from '@/components/AddActionItemDialog'
 import { AddLinkDialog } from '@/components/AddLinkDialog'
 import { AddResourceDialog } from '@/components/AddResourceDialog'
@@ -279,6 +280,7 @@ export function ProjectDetailPage() {
   const [editingIssue, setEditingIssue] = useState<Issue | null>(null)
   const [risks, setRisks] = useState<Risk[]>([])
   const [riskOpen, setRiskOpen] = useState(false)
+  const [adjustWeightsOpen, setAdjustWeightsOpen] = useState(false)
   const [editingRisk, setEditingRisk] = useState<Risk | null>(null)
   const [showAllRisks, setShowAllRisks] = useState(false)
   const [showAllIssues, setShowAllIssues] = useState(true)
@@ -578,6 +580,17 @@ export function ProjectDetailPage() {
     count: sectionCounts[s.id] ?? 0,
   }))
 
+  // FDD 3.3.2: weight totals surfaced here; hard-blocked only at submission
+  // (Wave 4 workflow).
+  const activeMilestones = milestones.filter(
+    (m) => m.status !== 'not_applicable',
+  )
+  const weightTotal = activeMilestones.reduce(
+    (sum, m) => sum + (m.weightage ?? 0),
+    0,
+  )
+  const anyWeights = activeMilestones.some((m) => (m.weightage ?? 0) > 0)
+
   // F1/F2 (docs/FORMULAS.md, PROVISIONAL) computed client-side from the
   // already-loaded sections; the list endpoint computes the same server-side.
   const calcProgress = calculatedProgress(milestones)
@@ -861,7 +874,32 @@ export function ProjectDetailPage() {
               ) : undefined
             }
           >
-            <ul className="section-list divide-y rounded-md border">
+            <>
+              <div className="mb-3 flex items-center justify-between gap-3">
+                <span
+                  className={`text-xs font-medium ${
+                    anyWeights && Math.abs(weightTotal - 100) > 0.001
+                      ? 'text-status-amber-fg'
+                      : 'text-muted-foreground'
+                  }`}
+                >
+                  {anyWeights
+                    ? `Weights ${weightTotal}/100${
+                        Math.abs(weightTotal - 100) > 0.001
+                          ? ' — must total 100 before submission'
+                          : ''
+                      }`
+                    : 'No weights set — milestones weigh equally'}
+                </span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setAdjustWeightsOpen(true)}
+                >
+                  Adjust Weights
+                </Button>
+              </div>
+              <ul className="section-list divide-y rounded-md border">
               {milestoneGroups.map((g) => (
                 <Fragment key={g.key}>
                   {g.header && (
@@ -944,7 +982,8 @@ export function ProjectDetailPage() {
                   ))}
                 </Fragment>
               ))}
-            </ul>
+              </ul>
+            </>
           </SectionCard>
 
           <SectionCard
@@ -1597,6 +1636,14 @@ export function ProjectDetailPage() {
         onOpenChange={setRiskOpen}
         existing={editingRisk}
         onAdded={loadRisks}
+      />
+
+      <AdjustWeightsDialog
+        projectId={project.id}
+        open={adjustWeightsOpen}
+        onOpenChange={setAdjustWeightsOpen}
+        milestones={milestones}
+        onSaved={loadMilestones}
       />
 
       <AddUpdateDialog

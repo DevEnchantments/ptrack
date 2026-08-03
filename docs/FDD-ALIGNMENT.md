@@ -152,7 +152,7 @@ UC-17 PMO hierarchy tree · UC-18 project details report.
 ## 4. Key validations / business rules (FDD 3.3.2)
 - Mandatory project fields (name, reference ID, plan year, owner, sponsor, sector, end date, approved budget) — ✅ ASSUMED+SHIPPED 2026-08-03: enforced in the UI (wizard steps 1/3 + edit dialog; not retroactive on stored rows; wizard's required first member stands in for owner at create, `owner_id` enforced from first edit). Sponsor + target end date finally exposed in forms. Exact list remains OI-05
 - Progress numeric, 0–100
-- **Milestone weights must total 100% before submission**
+- **Milestone weights must total 100% before submission** — ✅ SHIPPED 2026-08-03: `PATCH /projects/:id/milestones/weights` rejects totals ≠ 100 (or all-null to clear); Adjust Weights dialog (UC-08) with live total; amber warning above the milestones list. Hard submission block lands with Wave 4's workflow
 - Utilized ≤ approved budget; highlight on threshold breach (threshold = ASK)
 - Risk: probability, impact, owner, response, action, status mandatory
 - Submission blocked if mandatory data incomplete

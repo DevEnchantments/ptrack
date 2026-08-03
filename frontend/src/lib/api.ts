@@ -312,6 +312,13 @@ export interface HistoryEntry {
 export const milestonesApi = {
   list: (projectId: string) =>
     apiGet<Milestone[]>(`/projects/${projectId}/milestones`),
+  adjustWeights: (
+    projectId: string,
+    weights: Array<{ id: string; weightage: number | null }>,
+  ) =>
+    apiPatch<Milestone[]>(`/projects/${projectId}/milestones/weights`, {
+      weights,
+    }),
   history: (projectId: string, milestoneId: string) =>
     apiGet<HistoryEntry[]>(
       `/projects/${projectId}/milestones/${milestoneId}/history`,

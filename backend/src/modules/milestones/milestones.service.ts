@@ -1,8 +1,13 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { RecordHistoryService } from '../../database/record-history.service';
 import { MilestonesRepository } from './milestones.repository';
 import { CreateMilestoneDto } from './dto/create-milestone.dto';
 import { UpdateMilestoneDto } from './dto/update-milestone.dto';
+import { AdjustWeightsDto } from './dto/adjust-weights.dto';
 
 @Injectable()
 export class MilestonesService {
@@ -74,6 +79,38 @@ export class MilestonesService {
 
     // Return the fully-joined milestone so the UI can refresh.
     return this.get(projectId, milestoneId);
+  }
+
+  /**
+   * UC-08 Adjust Weights. FDD 3.3.2: weights must total exactly 100 before
+   * submission — enforced here on save; leaving every weight empty clears
+   * them (equal weighting per FORMULAS.md F1).
+   */
+  async adjustWeights(
+    projectId: string,
+    dto: AdjustWeightsDto,
+    userId: string,
+  ) {
+    if (dto.weights.length > 0) {
+      const set = dto.weights
+        .map((w) => w.weightage)
+        .filter((w): w is number => w != null);
+      const total = set.reduce((a, b) => a + b, 0);
+      if (set.length > 0 && Math.abs(total - 100) > 0.001) {
+        throw new BadRequestException(
+          `Milestone weights must total exactly 100 (got ${total}).`,
+        );
+      }
+      await Promise.all(
+        dto.weights.map((w) =>
+          this.repo.update(projectId, w.id, {
+            weightage: w.weightage ?? null,
+            updated_by: userId,
+          }),
+        ),
+      );
+    }
+    return this.list(projectId);
   }
 
   async history(projectId: string, milestoneId: string) {

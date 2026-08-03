@@ -12,6 +12,7 @@ import { ApiBody } from '@nestjs/swagger';
 import { MilestonesService } from './milestones.service';
 import { CreateMilestoneDto } from './dto/create-milestone.dto';
 import { UpdateMilestoneDto } from './dto/update-milestone.dto';
+import { AdjustWeightsDto } from './dto/adjust-weights.dto';
 import {
   CurrentUser,
   type AuthUser,
@@ -81,6 +82,29 @@ export class MilestonesController {
     @CurrentUser() user: AuthUser,
   ) {
     return this.milestones.add(projectId, dto, user.id);
+  }
+
+  @Patch('weights')
+  @ApiBody({
+    type: AdjustWeightsDto,
+    examples: {
+      example: {
+        summary: 'Weights must total exactly 100 (or all null to clear)',
+        value: {
+          weights: [
+            { id: '00000000-0000-0000-0000-000000000000', weightage: 60 },
+            { id: '00000000-0000-0000-0000-000000000001', weightage: 40 },
+          ],
+        },
+      },
+    },
+  })
+  adjustWeights(
+    @Param('projectId', ParseUUIDPipe) projectId: string,
+    @Body() dto: AdjustWeightsDto,
+    @CurrentUser() user: AuthUser,
+  ) {
+    return this.milestones.adjustWeights(projectId, dto, user.id);
   }
 
   @Patch(':milestoneId')
