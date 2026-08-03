@@ -215,6 +215,38 @@ export class CreateProjectDto {
   @IsBoolean()
   at_risk?: boolean;
 
+  @ApiPropertyOptional({
+    format: 'uuid',
+    description: 'Project Owner (user). Fetch from `GET /users`.',
+  })
+  @IsOptional()
+  @IsUUID()
+  owner_id?: string | null;
+
+  @ApiPropertyOptional({
+    format: 'uuid',
+    description: 'Project Manager (user). Fetch from `GET /users`.',
+  })
+  @IsOptional()
+  @IsUUID()
+  project_manager_id?: string | null;
+
+  @ApiPropertyOptional({
+    format: 'uuid',
+    description: 'Project Manager 2 (user). Fetch from `GET /users`.',
+  })
+  @IsOptional()
+  @IsUUID()
+  project_manager2_id?: string | null;
+
+  @ApiPropertyOptional({
+    format: 'uuid',
+    description: 'PMO Partner (user). Fetch from `GET /users`.',
+  })
+  @IsOptional()
+  @IsUUID()
+  pmo_partner_id?: string | null;
+
   @ApiPropertyOptional({ type: [ProjectMemberDto] })
   @IsOptional()
   @IsArray()

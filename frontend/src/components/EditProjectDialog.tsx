@@ -1,4 +1,7 @@
 import { FieldError } from '@/components/FieldError'
+import { PersonAutocomplete } from '@/components/PersonAutocomplete'
+import type { ProjectMemberInput } from '@/pages/CreateProjectWizard'
+import { useAuth } from '@/lib/auth-context'
 import { Loader2, Star, TriangleAlert } from 'lucide-react'
 import { toast } from '@/lib/toast'
 import { useEffect, useState } from 'react'
@@ -30,6 +33,18 @@ import {
 } from '@/components/ui/select'
 
 const NONE = '__none__'
+
+function personFromProfile(
+  id: string | null,
+  p?: { full_name: string | null; email: string | null } | null,
+): ProjectMemberInput {
+  return {
+    user_id: id,
+    display_name: p?.full_name || p?.email || '',
+    email: p?.email ?? null,
+    role_id: null,
+  }
+}
 const NEW_CATEGORY = '__new_category__'
 
 interface Props {
@@ -47,6 +62,7 @@ export function EditProjectDialog({
   onSaved,
   onDeleted,
 }: Props) {
+  const { user } = useAuth()
   const [statuses, setStatuses] = useState<Lookup[]>([])
   const [sizes, setSizes] = useState<Lookup[]>([])
   const [categories, setCategories] = useState<Lookup[]>([])
@@ -81,6 +97,27 @@ export function EditProjectDialog({
   const [objectiveId, setObjectiveId] = useState<string | null>(null)
   const [manualProgress, setManualProgress] = useState('')
   const [atRisk, setAtRisk] = useState(false)
+  const [ownerPerson, setOwnerPerson] = useState<ProjectMemberInput>(
+    personFromProfile(null),
+  )
+  const [pm, setPm] = useState<ProjectMemberInput>(personFromProfile(null))
+  const [pm2, setPm2] = useState<ProjectMemberInput>(personFromProfile(null))
+  const [pmoPartner, setPmoPartner] = useState<ProjectMemberInput>(
+    personFromProfile(null),
+  )
+
+  function setMeFor(setter: (p: ProjectMemberInput) => void) {
+    if (!user) return
+    setter({
+      user_id: user.id,
+      display_name:
+        (user.user_metadata?.full_name as string | undefined) ||
+        user.email ||
+        '',
+      email: user.email ?? null,
+      role_id: null,
+    })
+  }
 
   const [error, setError] = useState<string | null>(null)
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
@@ -136,6 +173,14 @@ export function EditProjectDialog({
         project.manual_progress != null ? String(project.manual_progress) : '',
       )
       setAtRisk(project.at_risk ?? false)
+      setOwnerPerson(personFromProfile(project.owner_id, project.owner))
+      setPm(personFromProfile(project.project_manager_id, project.project_manager))
+      setPm2(
+        personFromProfile(project.project_manager2_id, project.project_manager2),
+      )
+      setPmoPartner(
+        personFromProfile(project.pmo_partner_id, project.pmo_partner),
+      )
       setError(null)
       setFieldErrors({})
       setConfirmDelete(false)
@@ -214,6 +259,10 @@ export function EditProjectDialog({
         strategic_objective_id: objectiveId,
         manual_progress: manualProgress.trim() ? Number(manualProgress) : null,
         at_risk: atRisk,
+        owner_id: ownerPerson.user_id,
+        project_manager_id: pm.user_id,
+        project_manager2_id: pm2.user_id,
+        pmo_partner_id: pmoPartner.user_id,
       })
       onOpenChange(false)
       toast.success('Project updated.')
@@ -495,6 +544,76 @@ export function EditProjectDialog({
               placeholder="Who this project serves"
               onChange={(e) => setTargetGroup(e.target.value)}
             />
+          </div>
+
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div className="flex flex-col gap-2">
+            <Label>Project Manager</Label>
+            <div className="flex items-start gap-2">
+              <div className="flex-1">
+                <PersonAutocomplete value={pm} onChange={(p) => setPm((cur) => ({ ...cur, ...p }))} />
+              </div>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => setMeFor(setPm)}
+              >
+                Me
+              </Button>
+            </div>
+          </div>
+          <div className="flex flex-col gap-2">
+            <Label>Project Manager 2</Label>
+            <div className="flex items-start gap-2">
+              <div className="flex-1">
+                <PersonAutocomplete value={pm2} onChange={(p) => setPm2((cur) => ({ ...cur, ...p }))} />
+              </div>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => setMeFor(setPm2)}
+              >
+                Me
+              </Button>
+            </div>
+          </div>
+          </div>
+
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div className="flex flex-col gap-2">
+            <Label>Project Owner</Label>
+            <div className="flex items-start gap-2">
+              <div className="flex-1">
+                <PersonAutocomplete value={ownerPerson} onChange={(p) => setOwnerPerson((cur) => ({ ...cur, ...p }))} />
+              </div>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => setMeFor(setOwnerPerson)}
+              >
+                Me
+              </Button>
+            </div>
+          </div>
+          <div className="flex flex-col gap-2">
+            <Label>PMO Partner</Label>
+            <div className="flex items-start gap-2">
+              <div className="flex-1">
+                <PersonAutocomplete value={pmoPartner} onChange={(p) => setPmoPartner((cur) => ({ ...cur, ...p }))} />
+              </div>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => setMeFor(setPmoPartner)}
+              >
+                Me
+              </Button>
+            </div>
+          </div>
           </div>
 
           <button

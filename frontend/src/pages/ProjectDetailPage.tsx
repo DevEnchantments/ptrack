@@ -712,6 +712,30 @@ export function ProjectDetailPage() {
             />
             <Field label="At Risk" value={project.at_risk ? 'Yes' : null} />
             <Field
+              label="Project Owner"
+              value={
+                project.owner?.full_name ?? project.owner?.email ?? null
+              }
+            />
+            <Field
+              label="Project Manager"
+              value={
+                project.project_manager?.full_name ?? project.project_manager?.email ?? null
+              }
+            />
+            <Field
+              label="Project Manager 2"
+              value={
+                project.project_manager2?.full_name ?? project.project_manager2?.email ?? null
+              }
+            />
+            <Field
+              label="PMO Partner"
+              value={
+                project.pmo_partner?.full_name ?? project.pmo_partner?.email ?? null
+              }
+            />
+            <Field
               label="Tags"
               value={project.tags?.length ? project.tags.join(', ') : null}
             />

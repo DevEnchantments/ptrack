@@ -39,6 +39,10 @@ export interface Project {
   /** FDD register columns (Wave 1.1, ASSUMED semantics — see FDD-ALIGNMENT). */
   manual_progress: number | null;
   at_risk: boolean;
+  /** FDD person fields (Wave 1.2; owner_id above doubles as Project Owner). */
+  project_manager_id: string | null;
+  project_manager2_id: string | null;
+  pmo_partner_id: string | null;
   created_by: string | null;
   updated_by: string | null;
   created_at: string;
@@ -58,6 +62,10 @@ export interface ProjectDetail extends Project {
   category: { name: string } | null;
   tier: { name: string } | null;
   strategic_objective: { name: string } | null;
+  owner: { full_name: string | null; email: string | null } | null;
+  project_manager: { full_name: string | null; email: string | null } | null;
+  project_manager2: { full_name: string | null; email: string | null } | null;
+  pmo_partner: { full_name: string | null; email: string | null } | null;
   members: Array<{
     id: string;
     user_id: string | null;
@@ -73,7 +81,7 @@ export interface ProjectDetail extends Project {
 }
 
 const COLUMNS =
-  'id, name, description, parent_project_id, owner_id, sponsor, status_id, size_id, category_id, deal_type_id, region_id, country_id, access_control, goal, customer, tags, primary_url, start_date, target_end_date, actual_end_date, reference_id, project_number, plan_year, finance_code, target_group, internal_stakeholder, is_priority, approved_budget, utilized_budget, tier_id, strategic_objective_id, manual_progress, at_risk, created_by, updated_by, created_at, updated_at';
+  'id, name, description, parent_project_id, owner_id, sponsor, status_id, size_id, category_id, deal_type_id, region_id, country_id, access_control, goal, customer, tags, primary_url, start_date, target_end_date, actual_end_date, reference_id, project_number, plan_year, finance_code, target_group, internal_stakeholder, is_priority, approved_budget, utilized_budget, tier_id, strategic_objective_id, manual_progress, at_risk, project_manager_id, project_manager2_id, pmo_partner_id, created_by, updated_by, created_at, updated_at';
 
 @Injectable()
 export class ProjectsRepository {
@@ -118,6 +126,10 @@ export class ProjectsRepository {
         category:project_categories ( name ),
         tier:tiers ( name ),
         strategic_objective:strategic_objectives ( name ),
+        owner:profiles!owner_id ( full_name, email ),
+        project_manager:profiles!project_manager_id ( full_name, email ),
+        project_manager2:profiles!project_manager2_id ( full_name, email ),
+        pmo_partner:profiles!pmo_partner_id ( full_name, email ),
         members:project_members (
           id, user_id, pending_name, role_id, access_level,
           involvement_level_id, notes, status,

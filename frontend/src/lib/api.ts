@@ -87,6 +87,11 @@ export interface Project {
   // FDD register columns (Wave 1.1, ASSUMED semantics)
   manual_progress: number | null
   at_risk: boolean
+  // FDD person fields (Wave 1.2; owner_id doubles as Project Owner)
+  owner_id: string | null
+  project_manager_id: string | null
+  project_manager2_id: string | null
+  pmo_partner_id: string | null
 }
 
 export interface ProjectMemberDetail {
@@ -115,6 +120,10 @@ export interface ProjectDetail extends Project {
   category: { name: string } | null
   tier: { name: string } | null
   strategic_objective: { name: string } | null
+  owner: { full_name: string | null; email: string | null } | null
+  project_manager: { full_name: string | null; email: string | null } | null
+  project_manager2: { full_name: string | null; email: string | null } | null
+  pmo_partner: { full_name: string | null; email: string | null } | null
   members: ProjectMemberDetail[]
 }
 

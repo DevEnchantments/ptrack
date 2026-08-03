@@ -48,7 +48,7 @@ is still open); everything stays optional until the mandatory-field list is conf
 | Finance Code | — | ✅ EXTEND (`finance_code`) |
 | Owner / Project Owner | `owner_id` | HAVE |
 | Sponsor | `sponsor` (text) | HAVE |
-| Project Manager / Manager 2 / PMO Partner | via `project_members` roles | ASK — dedicated FKs vs member roles |
+| Project Manager / Manager 2 / PMO Partner | via `project_members` roles | ✅ ASSUMED+SHIPPED 2026-08-03: dedicated FK columns (`db/fdd_person_fields.sql`) + pickers in Edit Project; Project Owner reuses `owner_id` (now also FK-guaranteed + exposed). These are the Fig 10 workflow actors for Wave 4. Limitation: real users only — typed non-user names are not stored on these fields |
 | Internal / External Stakeholders | — | internal ✅ (`internal_stakeholder` text); external = multi-select chips (Fig 11) → join table, ASK pending |
 | Target Group | — | ✅ EXTEND (`target_group` text) |
 | Priority flag | — | ✅ EXTEND (`is_priority boolean`) — star toggle in forms |

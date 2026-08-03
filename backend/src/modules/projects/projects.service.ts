@@ -171,6 +171,13 @@ export class ProjectsService {
     if (dto.manual_progress !== undefined)
       patch.manual_progress = dto.manual_progress ?? null;
     if (dto.at_risk !== undefined) patch.at_risk = dto.at_risk ?? false;
+    if (dto.owner_id !== undefined) patch.owner_id = dto.owner_id ?? null;
+    if (dto.project_manager_id !== undefined)
+      patch.project_manager_id = dto.project_manager_id ?? null;
+    if (dto.project_manager2_id !== undefined)
+      patch.project_manager2_id = dto.project_manager2_id ?? null;
+    if (dto.pmo_partner_id !== undefined)
+      patch.pmo_partner_id = dto.pmo_partner_id ?? null;
 
     await this.repo.update(id, patch);
     return this.getDetail(id);
