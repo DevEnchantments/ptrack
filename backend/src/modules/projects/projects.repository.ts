@@ -5,6 +5,10 @@ import {
   calculatedProgress,
   type MilestoneProgressRow,
 } from '../../common/formulas';
+import {
+  PROJECT_HISTORY_SELECT,
+  type HistoryEntry,
+} from '../../common/record-history';
 import { ATTACHMENTS_BUCKET } from '../attachments/attachments.repository';
 
 export interface Project {
@@ -211,6 +215,18 @@ export class ProjectsRepository {
       if (r.status !== 'resolved' && r.status !== 'closed') s.open_issues += 1;
     });
     return stats;
+  }
+
+  /** Project-wide audit feed (FR-03 Change History tab), newest first. */
+  async findHistory(projectId: string): Promise<HistoryEntry[]> {
+    const { data, error } = await this.db.client
+      .from('record_history')
+      .select(PROJECT_HISTORY_SELECT)
+      .eq('project_id', projectId)
+      .order('changed_at', { ascending: false })
+      .limit(200);
+    if (error) throw toHttpException(error, 'projects.findHistory');
+    return (data ?? []) as unknown as HistoryEntry[];
   }
 
   async insertMembers(rows: Record<string, unknown>[]): Promise<void> {

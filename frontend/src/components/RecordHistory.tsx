@@ -26,6 +26,21 @@ function relativeTime(iso: string): string {
   return `${yr} year${yr === 1 ? '' : 's'} ago`
 }
 
+const TABLE_NOUNS: Record<string, string> = {
+  projects: 'project',
+  milestones: 'milestone',
+  program_outcomes: 'outcome',
+  action_items: 'action item',
+  links: 'link',
+  resources: 'resource',
+  issues: 'issue',
+  risks: 'risk',
+  updates: 'update',
+  status_reports: 'status report',
+  attachments: 'attachment',
+  project_members: 'person',
+}
+
 /** The original shows the email local-part (e.g. "fares.alareefi"), not the full name. */
 function username(actor: HistoryEntry['actor']): string {
   if (!actor) return 'Unknown'
@@ -107,12 +122,27 @@ export function RecordHistory({ load, refreshKey, recordNoun }: Props) {
           <div className="min-w-0">
             <div className="text-xs text-muted-foreground">
               {username(e.actor)} · {relativeTime(e.changed_at)}
+              {e.table_name && TABLE_NOUNS[e.table_name] && (
+                <> · {TABLE_NOUNS[e.table_name]}</>
+              )}
             </div>
             <div className="text-sm">
               {e.event === 'created' ? (
                 <span className="text-muted-foreground">
-                  Created this {recordNoun}.
+                  Created{' '}
+                  {e.table_name
+                    ? `a ${TABLE_NOUNS[e.table_name] ?? 'record'}`
+                    : `this ${recordNoun}`}
+                  .
                 </span>
+              ) : e.event === 'deleted' ? (
+                <>
+                  <span className="font-medium text-destructive">Deleted</span>{' '}
+                  {e.table_name
+                    ? (TABLE_NOUNS[e.table_name] ?? 'record')
+                    : recordNoun}{' '}
+                  <Value text={e.old_value} />
+                </>
               ) : (
                 <>
                   <span className="font-medium">{e.field_label}</span> changed

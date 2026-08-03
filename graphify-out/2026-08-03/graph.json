@@ -4,256 +4,6 @@
   "graph": {},
   "nodes": [
     {
-      "label": "FDD-ALIGNMENT.md",
-      "file_type": "document",
-      "source_file": "docs/FDD-ALIGNMENT.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "docs_fdd_alignment",
-      "community": 3,
-      "norm_label": "fdd-alignment.md"
-    },
-    {
-      "label": "FDD Alignment \u2014 P-Track \u21c4 Project Tracker FDD",
-      "file_type": "document",
-      "source_file": "docs/FDD-ALIGNMENT.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "docs_fdd_alignment_fdd_alignment_p_track_project_tracker_fdd",
-      "community": 3,
-      "norm_label": "fdd alignment \u2014 p-track \u21c4 project tracker fdd"
-    },
-    {
-      "label": "1. Data-object mapping (FDD Appendix A \u2192 P-Track schema)",
-      "file_type": "document",
-      "source_file": "docs/FDD-ALIGNMENT.md",
-      "source_location": "L17",
-      "_origin": "ast",
-      "id": "docs_fdd_alignment_1_data_object_mapping_fdd_appendix_a_p_track_schema",
-      "community": 3,
-      "norm_label": "1. data-object mapping (fdd appendix a \u2192 p-track schema)"
-    },
-    {
-      "label": "1.1 Project \u2192 `projects` (EXTEND)",
-      "file_type": "document",
-      "source_file": "docs/FDD-ALIGNMENT.md",
-      "source_location": "L22",
-      "_origin": "ast",
-      "id": "docs_fdd_alignment_1_1_project_projects_extend",
-      "community": 3,
-      "norm_label": "1.1 project \u2192 `projects` (extend)"
-    },
-    {
-      "label": "1.2 Milestone \u2192 `milestones` (mostly HAVE \u2014 big head start)",
-      "file_type": "document",
-      "source_file": "docs/FDD-ALIGNMENT.md",
-      "source_location": "L58",
-      "_origin": "ast",
-      "id": "docs_fdd_alignment_1_2_milestone_milestones_mostly_have_big_head_start",
-      "community": 3,
-      "norm_label": "1.2 milestone \u2192 `milestones` (mostly have \u2014 big head start)"
-    },
-    {
-      "label": "1.3 Task / Work Activity \u2192 `action_items` (EXTEND)",
-      "file_type": "document",
-      "source_file": "docs/FDD-ALIGNMENT.md",
-      "source_location": "L69",
-      "_origin": "ast",
-      "id": "docs_fdd_alignment_1_3_task_work_activity_action_items_extend",
-      "community": 3,
-      "norm_label": "1.3 task / work activity \u2192 `action_items` (extend)"
-    },
-    {
-      "label": "1.4 Risk \u2192 BUILD `risks` (new module, follows our new-record-type recipe)",
-      "file_type": "document",
-      "source_file": "docs/FDD-ALIGNMENT.md",
-      "source_location": "L82",
-      "_origin": "ast",
-      "id": "docs_fdd_alignment_1_4_risk_build_risks_new_module_follows_our_new_record_type_recipe",
-      "community": 3,
-      "norm_label": "1.4 risk \u2192 build `risks` (new module, follows our new-record-type recipe)"
-    },
-    {
-      "label": "1.5 Issue \u2192 `issues` (EXTEND)",
-      "file_type": "document",
-      "source_file": "docs/FDD-ALIGNMENT.md",
-      "source_location": "L98",
-      "_origin": "ast",
-      "id": "docs_fdd_alignment_1_5_issue_issues_extend",
-      "community": 3,
-      "norm_label": "1.5 issue \u2192 `issues` (extend)"
-    },
-    {
-      "label": "1.6 Workflow Submission \u2192 BUILD `cycles` + `submissions`",
-      "file_type": "document",
-      "source_file": "docs/FDD-ALIGNMENT.md",
-      "source_location": "L106",
-      "_origin": "ast",
-      "id": "docs_fdd_alignment_1_6_workflow_submission_build_cycles_submissions",
-      "community": 3,
-      "norm_label": "1.6 workflow submission \u2192 build `cycles` + `submissions`"
-    },
-    {
-      "label": "1.7 Attachment \u2192 `attachments` (EXTEND for parent scoping \u2014 see 1.3)",
-      "file_type": "document",
-      "source_file": "docs/FDD-ALIGNMENT.md",
-      "source_location": "L112",
-      "_origin": "ast",
-      "id": "docs_fdd_alignment_1_7_attachment_attachments_extend_for_parent_scoping_see_1_3",
-      "community": 3,
-      "norm_label": "1.7 attachment \u2192 `attachments` (extend for parent scoping \u2014 see 1.3)"
-    },
-    {
-      "label": "1.8 Dashboard/KPI \u2192 BUILD `kpis` + `kpi_readings` + `kpi_action_plans` (LAST)",
-      "file_type": "document",
-      "source_file": "docs/FDD-ALIGNMENT.md",
-      "source_location": "L114",
-      "_origin": "ast",
-      "id": "docs_fdd_alignment_1_8_dashboard_kpi_build_kpis_kpi_readings_kpi_action_plans_last",
-      "community": 3,
-      "norm_label": "1.8 dashboard/kpi \u2192 build `kpis` + `kpi_readings` + `kpi_action_plans` (last)"
-    },
-    {
-      "label": "2. Functionality inventory (FDD FR-01\u202615 \u2192 status)",
-      "file_type": "document",
-      "source_file": "docs/FDD-ALIGNMENT.md",
-      "source_location": "L123",
-      "_origin": "ast",
-      "id": "docs_fdd_alignment_2_functionality_inventory_fdd_fr_01_15_status",
-      "community": 3,
-      "norm_label": "2. functionality inventory (fdd fr-01...15 \u2192 status)"
-    },
-    {
-      "label": "3. Use cases UC-01\u202618 \u2014 acceptance checklist",
-      "file_type": "document",
-      "source_file": "docs/FDD-ALIGNMENT.md",
-      "source_location": "L143",
-      "_origin": "ast",
-      "id": "docs_fdd_alignment_3_use_cases_uc_01_18_acceptance_checklist",
-      "community": 3,
-      "norm_label": "3. use cases uc-01...18 \u2014 acceptance checklist"
-    },
-    {
-      "label": "4. Key validations / business rules (FDD 3.3.2)",
-      "file_type": "document",
-      "source_file": "docs/FDD-ALIGNMENT.md",
-      "source_location": "L152",
-      "_origin": "ast",
-      "id": "docs_fdd_alignment_4_key_validations_business_rules_fdd_3_3_2",
-      "community": 3,
-      "norm_label": "4. key validations / business rules (fdd 3.3.2)"
-    },
-    {
-      "label": "5. Reports & notifications (defer until math lands)",
-      "file_type": "document",
-      "source_file": "docs/FDD-ALIGNMENT.md",
-      "source_location": "L162",
-      "_origin": "ast",
-      "id": "docs_fdd_alignment_5_reports_notifications_defer_until_math_lands",
-      "community": 3,
-      "norm_label": "5. reports & notifications (defer until math lands)"
-    },
-    {
-      "label": "6. Open questions for the supervisor (blockers marked \u26d4)",
-      "file_type": "document",
-      "source_file": "docs/FDD-ALIGNMENT.md",
-      "source_location": "L169",
-      "_origin": "ast",
-      "id": "docs_fdd_alignment_6_open_questions_for_the_supervisor_blockers_marked",
-      "community": 3,
-      "norm_label": "6. open questions for the supervisor (blockers marked \u26d4)"
-    },
-    {
-      "label": "7. Execution roadmap",
-      "file_type": "document",
-      "source_file": "docs/FDD-ALIGNMENT.md",
-      "source_location": "L183",
-      "_origin": "ast",
-      "id": "docs_fdd_alignment_7_execution_roadmap",
-      "community": 3,
-      "norm_label": "7. execution roadmap"
-    },
-    {
-      "label": "8. Conventions carried forward",
-      "file_type": "document",
-      "source_file": "docs/FDD-ALIGNMENT.md",
-      "source_location": "L190",
-      "_origin": "ast",
-      "id": "docs_fdd_alignment_8_conventions_carried_forward",
-      "community": 3,
-      "norm_label": "8. conventions carried forward"
-    },
-    {
-      "label": "FORMULAS.md",
-      "file_type": "document",
-      "source_file": "docs/FORMULAS.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "docs_formulas",
-      "community": 80,
-      "norm_label": "formulas.md"
-    },
-    {
-      "label": "FORMULAS.md \u2014 P-Track calculation registry",
-      "file_type": "document",
-      "source_file": "docs/FORMULAS.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "docs_formulas_formulas_md_p_track_calculation_registry",
-      "community": 80,
-      "norm_label": "formulas.md \u2014 p-track calculation registry"
-    },
-    {
-      "label": "F1 \u2014 Calculated progress (project)",
-      "file_type": "document",
-      "source_file": "docs/FORMULAS.md",
-      "source_location": "L20",
-      "_origin": "ast",
-      "id": "docs_formulas_f1_calculated_progress_project",
-      "community": 80,
-      "norm_label": "f1 \u2014 calculated progress (project)"
-    },
-    {
-      "label": "F2 \u2014 Planned progress (project)",
-      "file_type": "document",
-      "source_file": "docs/FORMULAS.md",
-      "source_location": "L39",
-      "_origin": "ast",
-      "id": "docs_formulas_f2_planned_progress_project",
-      "community": 80,
-      "norm_label": "f2 \u2014 planned progress (project)"
-    },
-    {
-      "label": "F3 \u2014 Risk score and severity",
-      "file_type": "document",
-      "source_file": "docs/FORMULAS.md",
-      "source_location": "L50",
-      "_origin": "ast",
-      "id": "docs_formulas_f3_risk_score_and_severity",
-      "community": 80,
-      "norm_label": "f3 \u2014 risk score and severity"
-    },
-    {
-      "label": "F4 \u2014 At-risk suggestion (display-only)",
-      "file_type": "document",
-      "source_file": "docs/FORMULAS.md",
-      "source_location": "L61",
-      "_origin": "ast",
-      "id": "docs_formulas_f4_at_risk_suggestion_display_only",
-      "community": 80,
-      "norm_label": "f4 \u2014 at-risk suggestion (display-only)"
-    },
-    {
-      "label": "Explicitly not implemented (await real sign-off)",
-      "file_type": "document",
-      "source_file": "docs/FORMULAS.md",
-      "source_location": "L69",
-      "_origin": "ast",
-      "id": "docs_formulas_explicitly_not_implemented_await_real_sign_off",
-      "community": 80,
-      "norm_label": "explicitly not implemented (await real sign-off)"
-    },
-    {
       "label": "ProjectOverviewCards.tsx",
       "file_type": "code",
       "source_file": "frontend/src/components/ProjectOverviewCards.tsx",
@@ -304,14 +54,264 @@
       "norm_label": "projectoverviewcards()"
     },
     {
+      "label": "FDD-ALIGNMENT.md",
+      "file_type": "document",
+      "source_file": "docs/FDD-ALIGNMENT.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 3,
+      "norm_label": "fdd-alignment.md",
+      "id": "docs_fdd_alignment"
+    },
+    {
+      "label": "FDD Alignment \u2014 P-Track \u21c4 Project Tracker FDD",
+      "file_type": "document",
+      "source_file": "docs/FDD-ALIGNMENT.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 3,
+      "norm_label": "fdd alignment \u2014 p-track \u21c4 project tracker fdd",
+      "id": "docs_fdd_alignment_fdd_alignment_p_track_project_tracker_fdd"
+    },
+    {
+      "label": "1. Data-object mapping (FDD Appendix A \u2192 P-Track schema)",
+      "file_type": "document",
+      "source_file": "docs/FDD-ALIGNMENT.md",
+      "source_location": "L17",
+      "_origin": "ast",
+      "community": 3,
+      "norm_label": "1. data-object mapping (fdd appendix a \u2192 p-track schema)",
+      "id": "docs_fdd_alignment_1_data_object_mapping_fdd_appendix_a_p_track_schema"
+    },
+    {
+      "label": "1.1 Project \u2192 `projects` (EXTEND)",
+      "file_type": "document",
+      "source_file": "docs/FDD-ALIGNMENT.md",
+      "source_location": "L22",
+      "_origin": "ast",
+      "community": 3,
+      "norm_label": "1.1 project \u2192 `projects` (extend)",
+      "id": "docs_fdd_alignment_1_1_project_projects_extend"
+    },
+    {
+      "label": "1.2 Milestone \u2192 `milestones` (mostly HAVE \u2014 big head start)",
+      "file_type": "document",
+      "source_file": "docs/FDD-ALIGNMENT.md",
+      "source_location": "L58",
+      "_origin": "ast",
+      "community": 3,
+      "norm_label": "1.2 milestone \u2192 `milestones` (mostly have \u2014 big head start)",
+      "id": "docs_fdd_alignment_1_2_milestone_milestones_mostly_have_big_head_start"
+    },
+    {
+      "label": "1.3 Task / Work Activity \u2192 `action_items` (EXTEND)",
+      "file_type": "document",
+      "source_file": "docs/FDD-ALIGNMENT.md",
+      "source_location": "L69",
+      "_origin": "ast",
+      "community": 3,
+      "norm_label": "1.3 task / work activity \u2192 `action_items` (extend)",
+      "id": "docs_fdd_alignment_1_3_task_work_activity_action_items_extend"
+    },
+    {
+      "label": "1.4 Risk \u2192 BUILD `risks` (new module, follows our new-record-type recipe)",
+      "file_type": "document",
+      "source_file": "docs/FDD-ALIGNMENT.md",
+      "source_location": "L82",
+      "_origin": "ast",
+      "community": 3,
+      "norm_label": "1.4 risk \u2192 build `risks` (new module, follows our new-record-type recipe)",
+      "id": "docs_fdd_alignment_1_4_risk_build_risks_new_module_follows_our_new_record_type_recipe"
+    },
+    {
+      "label": "1.5 Issue \u2192 `issues` (EXTEND)",
+      "file_type": "document",
+      "source_file": "docs/FDD-ALIGNMENT.md",
+      "source_location": "L98",
+      "_origin": "ast",
+      "community": 3,
+      "norm_label": "1.5 issue \u2192 `issues` (extend)",
+      "id": "docs_fdd_alignment_1_5_issue_issues_extend"
+    },
+    {
+      "label": "1.6 Workflow Submission \u2192 BUILD `cycles` + `submissions`",
+      "file_type": "document",
+      "source_file": "docs/FDD-ALIGNMENT.md",
+      "source_location": "L106",
+      "_origin": "ast",
+      "community": 3,
+      "norm_label": "1.6 workflow submission \u2192 build `cycles` + `submissions`",
+      "id": "docs_fdd_alignment_1_6_workflow_submission_build_cycles_submissions"
+    },
+    {
+      "label": "1.7 Attachment \u2192 `attachments` (EXTEND for parent scoping \u2014 see 1.3)",
+      "file_type": "document",
+      "source_file": "docs/FDD-ALIGNMENT.md",
+      "source_location": "L112",
+      "_origin": "ast",
+      "community": 3,
+      "norm_label": "1.7 attachment \u2192 `attachments` (extend for parent scoping \u2014 see 1.3)",
+      "id": "docs_fdd_alignment_1_7_attachment_attachments_extend_for_parent_scoping_see_1_3"
+    },
+    {
+      "label": "1.8 Dashboard/KPI \u2192 BUILD `kpis` + `kpi_readings` + `kpi_action_plans` (LAST)",
+      "file_type": "document",
+      "source_file": "docs/FDD-ALIGNMENT.md",
+      "source_location": "L114",
+      "_origin": "ast",
+      "community": 3,
+      "norm_label": "1.8 dashboard/kpi \u2192 build `kpis` + `kpi_readings` + `kpi_action_plans` (last)",
+      "id": "docs_fdd_alignment_1_8_dashboard_kpi_build_kpis_kpi_readings_kpi_action_plans_last"
+    },
+    {
+      "label": "2. Functionality inventory (FDD FR-01\u202615 \u2192 status)",
+      "file_type": "document",
+      "source_file": "docs/FDD-ALIGNMENT.md",
+      "source_location": "L123",
+      "_origin": "ast",
+      "community": 3,
+      "norm_label": "2. functionality inventory (fdd fr-01...15 \u2192 status)",
+      "id": "docs_fdd_alignment_2_functionality_inventory_fdd_fr_01_15_status"
+    },
+    {
+      "label": "3. Use cases UC-01\u202618 \u2014 acceptance checklist",
+      "file_type": "document",
+      "source_file": "docs/FDD-ALIGNMENT.md",
+      "source_location": "L143",
+      "_origin": "ast",
+      "community": 3,
+      "norm_label": "3. use cases uc-01...18 \u2014 acceptance checklist",
+      "id": "docs_fdd_alignment_3_use_cases_uc_01_18_acceptance_checklist"
+    },
+    {
+      "label": "4. Key validations / business rules (FDD 3.3.2)",
+      "file_type": "document",
+      "source_file": "docs/FDD-ALIGNMENT.md",
+      "source_location": "L152",
+      "_origin": "ast",
+      "community": 3,
+      "norm_label": "4. key validations / business rules (fdd 3.3.2)",
+      "id": "docs_fdd_alignment_4_key_validations_business_rules_fdd_3_3_2"
+    },
+    {
+      "label": "5. Reports & notifications (defer until math lands)",
+      "file_type": "document",
+      "source_file": "docs/FDD-ALIGNMENT.md",
+      "source_location": "L162",
+      "_origin": "ast",
+      "community": 3,
+      "norm_label": "5. reports & notifications (defer until math lands)",
+      "id": "docs_fdd_alignment_5_reports_notifications_defer_until_math_lands"
+    },
+    {
+      "label": "6. Open questions for the supervisor (blockers marked \u26d4)",
+      "file_type": "document",
+      "source_file": "docs/FDD-ALIGNMENT.md",
+      "source_location": "L169",
+      "_origin": "ast",
+      "community": 3,
+      "norm_label": "6. open questions for the supervisor (blockers marked \u26d4)",
+      "id": "docs_fdd_alignment_6_open_questions_for_the_supervisor_blockers_marked"
+    },
+    {
+      "label": "7. Execution roadmap",
+      "file_type": "document",
+      "source_file": "docs/FDD-ALIGNMENT.md",
+      "source_location": "L183",
+      "_origin": "ast",
+      "community": 3,
+      "norm_label": "7. execution roadmap",
+      "id": "docs_fdd_alignment_7_execution_roadmap"
+    },
+    {
+      "label": "8. Conventions carried forward",
+      "file_type": "document",
+      "source_file": "docs/FDD-ALIGNMENT.md",
+      "source_location": "L190",
+      "_origin": "ast",
+      "community": 3,
+      "norm_label": "8. conventions carried forward",
+      "id": "docs_fdd_alignment_8_conventions_carried_forward"
+    },
+    {
+      "label": "FORMULAS.md",
+      "file_type": "document",
+      "source_file": "docs/FORMULAS.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 80,
+      "norm_label": "formulas.md",
+      "id": "docs_formulas"
+    },
+    {
+      "label": "FORMULAS.md \u2014 P-Track calculation registry",
+      "file_type": "document",
+      "source_file": "docs/FORMULAS.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 80,
+      "norm_label": "formulas.md \u2014 p-track calculation registry",
+      "id": "docs_formulas_formulas_md_p_track_calculation_registry"
+    },
+    {
+      "label": "F1 \u2014 Calculated progress (project)",
+      "file_type": "document",
+      "source_file": "docs/FORMULAS.md",
+      "source_location": "L20",
+      "_origin": "ast",
+      "community": 80,
+      "norm_label": "f1 \u2014 calculated progress (project)",
+      "id": "docs_formulas_f1_calculated_progress_project"
+    },
+    {
+      "label": "F2 \u2014 Planned progress (project)",
+      "file_type": "document",
+      "source_file": "docs/FORMULAS.md",
+      "source_location": "L39",
+      "_origin": "ast",
+      "community": 80,
+      "norm_label": "f2 \u2014 planned progress (project)",
+      "id": "docs_formulas_f2_planned_progress_project"
+    },
+    {
+      "label": "F3 \u2014 Risk score and severity",
+      "file_type": "document",
+      "source_file": "docs/FORMULAS.md",
+      "source_location": "L50",
+      "_origin": "ast",
+      "community": 80,
+      "norm_label": "f3 \u2014 risk score and severity",
+      "id": "docs_formulas_f3_risk_score_and_severity"
+    },
+    {
+      "label": "F4 \u2014 At-risk suggestion (display-only)",
+      "file_type": "document",
+      "source_file": "docs/FORMULAS.md",
+      "source_location": "L61",
+      "_origin": "ast",
+      "community": 80,
+      "norm_label": "f4 \u2014 at-risk suggestion (display-only)",
+      "id": "docs_formulas_f4_at_risk_suggestion_display_only"
+    },
+    {
+      "label": "Explicitly not implemented (await real sign-off)",
+      "file_type": "document",
+      "source_file": "docs/FORMULAS.md",
+      "source_location": "L69",
+      "_origin": "ast",
+      "community": 80,
+      "norm_label": "explicitly not implemented (await real sign-off)",
+      "id": "docs_formulas_explicitly_not_implemented_await_real_sign_off"
+    },
+    {
       "label": "formulas.ts",
       "file_type": "code",
       "source_file": "frontend/src/lib/formulas.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "frontend_src_lib_formulas",
       "community": 14,
-      "norm_label": "formulas.ts"
+      "norm_label": "formulas.ts",
+      "id": "frontend_src_lib_formulas"
     },
     {
       "label": "MilestoneProgressRow",
@@ -319,9 +319,9 @@
       "source_file": "frontend/src/lib/formulas.ts",
       "source_location": "L7",
       "_origin": "ast",
-      "id": "frontend_src_lib_formulas_milestoneprogressrow",
       "community": 14,
-      "norm_label": "milestoneprogressrow"
+      "norm_label": "milestoneprogressrow",
+      "id": "frontend_src_lib_formulas_milestoneprogressrow"
     },
     {
       "label": "calculatedProgress()",
@@ -329,9 +329,9 @@
       "source_file": "frontend/src/lib/formulas.ts",
       "source_location": "L14",
       "_origin": "ast",
-      "id": "frontend_src_lib_formulas_calculatedprogress",
       "community": 14,
-      "norm_label": "calculatedprogress()"
+      "norm_label": "calculatedprogress()",
+      "id": "frontend_src_lib_formulas_calculatedprogress"
     },
     {
       "label": "plannedProgress()",
@@ -339,9 +339,9 @@
       "source_file": "frontend/src/lib/formulas.ts",
       "source_location": "L34",
       "_origin": "ast",
-      "id": "frontend_src_lib_formulas_plannedprogress",
       "community": 14,
-      "norm_label": "plannedprogress()"
+      "norm_label": "plannedprogress()",
+      "id": "frontend_src_lib_formulas_plannedprogress"
     },
     {
       "label": "riskScore()",
@@ -349,9 +349,9 @@
       "source_file": "frontend/src/lib/formulas.ts",
       "source_location": "L48",
       "_origin": "ast",
-      "id": "frontend_src_lib_formulas_riskscore",
       "community": 14,
-      "norm_label": "riskscore()"
+      "norm_label": "riskscore()",
+      "id": "frontend_src_lib_formulas_riskscore"
     },
     {
       "label": "riskSeverityTone()",
@@ -359,9 +359,9 @@
       "source_file": "frontend/src/lib/formulas.ts",
       "source_location": "L57",
       "_origin": "ast",
-      "id": "frontend_src_lib_formulas_riskseveritytone",
       "community": 14,
-      "norm_label": "riskseveritytone()"
+      "norm_label": "riskseveritytone()",
+      "id": "frontend_src_lib_formulas_riskseveritytone"
     },
     {
       "label": "atRiskSuggested()",
@@ -369,9 +369,9 @@
       "source_file": "frontend/src/lib/formulas.ts",
       "source_location": "L64",
       "_origin": "ast",
-      "id": "frontend_src_lib_formulas_atrisksuggested",
       "community": 14,
-      "norm_label": "atrisksuggested()"
+      "norm_label": "atrisksuggested()",
+      "id": "frontend_src_lib_formulas_atrisksuggested"
     },
     {
       "label": "ProjectDetailPage.tsx",
@@ -379,9 +379,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "frontend_src_pages_projectdetailpage",
       "community": 14,
-      "norm_label": "projectdetailpage.tsx"
+      "norm_label": "projectdetailpage.tsx",
+      "id": "frontend_src_pages_projectdetailpage"
     },
     {
       "label": "ACTIONS",
@@ -389,9 +389,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L58",
       "_origin": "ast",
-      "id": "frontend_src_pages_projectdetailpage_actions",
       "community": 14,
-      "norm_label": "actions"
+      "norm_label": "actions",
+      "id": "frontend_src_pages_projectdetailpage_actions"
     },
     {
       "label": "STATUS_LABELS",
@@ -399,9 +399,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L64",
       "_origin": "ast",
-      "id": "frontend_src_pages_projectdetailpage_status_labels",
       "community": 14,
-      "norm_label": "status_labels"
+      "norm_label": "status_labels",
+      "id": "frontend_src_pages_projectdetailpage_status_labels"
     },
     {
       "label": "ISSUE_STATUS_LABELS",
@@ -409,9 +409,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L70",
       "_origin": "ast",
-      "id": "frontend_src_pages_projectdetailpage_issue_status_labels",
       "community": 14,
-      "norm_label": "issue_status_labels"
+      "norm_label": "issue_status_labels",
+      "id": "frontend_src_pages_projectdetailpage_issue_status_labels"
     },
     {
       "label": "Field()",
@@ -419,9 +419,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L77",
       "_origin": "ast",
-      "id": "frontend_src_pages_projectdetailpage_field",
       "community": 14,
-      "norm_label": "field()"
+      "norm_label": "field()",
+      "id": "frontend_src_pages_projectdetailpage_field"
     },
     {
       "label": "memberName()",
@@ -429,9 +429,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L87",
       "_origin": "ast",
-      "id": "frontend_src_pages_projectdetailpage_membername",
       "community": 14,
-      "norm_label": "membername()"
+      "norm_label": "membername()",
+      "id": "frontend_src_pages_projectdetailpage_membername"
     },
     {
       "label": "ownerName()",
@@ -439,9 +439,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L91",
       "_origin": "ast",
-      "id": "frontend_src_pages_projectdetailpage_ownername",
       "community": 14,
-      "norm_label": "ownername()"
+      "norm_label": "ownername()",
+      "id": "frontend_src_pages_projectdetailpage_ownername"
     },
     {
       "label": "linkAuthor()",
@@ -449,9 +449,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L95",
       "_origin": "ast",
-      "id": "frontend_src_pages_projectdetailpage_linkauthor",
       "community": 14,
-      "norm_label": "linkauthor()"
+      "norm_label": "linkauthor()",
+      "id": "frontend_src_pages_projectdetailpage_linkauthor"
     },
     {
       "label": "resourceUpdatedBy()",
@@ -459,9 +459,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L99",
       "_origin": "ast",
-      "id": "frontend_src_pages_projectdetailpage_resourceupdatedby",
       "community": 14,
-      "norm_label": "resourceupdatedby()"
+      "norm_label": "resourceupdatedby()",
+      "id": "frontend_src_pages_projectdetailpage_resourceupdatedby"
     },
     {
       "label": "riskOwnerDisplay()",
@@ -469,9 +469,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L103",
       "_origin": "ast",
-      "id": "frontend_src_pages_projectdetailpage_riskownerdisplay",
       "community": 14,
-      "norm_label": "riskownerdisplay()"
+      "norm_label": "riskownerdisplay()",
+      "id": "frontend_src_pages_projectdetailpage_riskownerdisplay"
     },
     {
       "label": "issueOwnerDisplay()",
@@ -479,9 +479,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L107",
       "_origin": "ast",
-      "id": "frontend_src_pages_projectdetailpage_issueownerdisplay",
       "community": 14,
-      "norm_label": "issueownerdisplay()"
+      "norm_label": "issueownerdisplay()",
+      "id": "frontend_src_pages_projectdetailpage_issueownerdisplay"
     },
     {
       "label": "updateAuthorName()",
@@ -489,9 +489,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L114",
       "_origin": "ast",
-      "id": "frontend_src_pages_projectdetailpage_updateauthorname",
       "community": 14,
-      "norm_label": "updateauthorname()"
+      "norm_label": "updateauthorname()",
+      "id": "frontend_src_pages_projectdetailpage_updateauthorname"
     },
     {
       "label": "initials()",
@@ -499,9 +499,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L118",
       "_origin": "ast",
-      "id": "frontend_src_pages_projectdetailpage_initials",
       "community": 14,
-      "norm_label": "initials()"
+      "norm_label": "initials()",
+      "id": "frontend_src_pages_projectdetailpage_initials"
     },
     {
       "label": "reportAuthor()",
@@ -509,9 +509,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L125",
       "_origin": "ast",
-      "id": "frontend_src_pages_projectdetailpage_reportauthor",
       "community": 14,
-      "norm_label": "reportauthor()"
+      "norm_label": "reportauthor()",
+      "id": "frontend_src_pages_projectdetailpage_reportauthor"
     },
     {
       "label": "formatReportDate()",
@@ -519,9 +519,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L129",
       "_origin": "ast",
-      "id": "frontend_src_pages_projectdetailpage_formatreportdate",
       "community": 14,
-      "norm_label": "formatreportdate()"
+      "norm_label": "formatreportdate()",
+      "id": "frontend_src_pages_projectdetailpage_formatreportdate"
     },
     {
       "label": "EXT_STYLES",
@@ -529,9 +529,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L137",
       "_origin": "ast",
-      "id": "frontend_src_pages_projectdetailpage_ext_styles",
       "community": 14,
-      "norm_label": "ext_styles"
+      "norm_label": "ext_styles",
+      "id": "frontend_src_pages_projectdetailpage_ext_styles"
     },
     {
       "label": "fileExt()",
@@ -539,9 +539,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L154",
       "_origin": "ast",
-      "id": "frontend_src_pages_projectdetailpage_fileext",
       "community": 14,
-      "norm_label": "fileext()"
+      "norm_label": "fileext()",
+      "id": "frontend_src_pages_projectdetailpage_fileext"
     },
     {
       "label": "formatSize()",
@@ -549,9 +549,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L159",
       "_origin": "ast",
-      "id": "frontend_src_pages_projectdetailpage_formatsize",
       "community": 14,
-      "norm_label": "formatsize()"
+      "norm_label": "formatsize()",
+      "id": "frontend_src_pages_projectdetailpage_formatsize"
     },
     {
       "label": "attachmentUploader()",
@@ -559,9 +559,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L170",
       "_origin": "ast",
-      "id": "frontend_src_pages_projectdetailpage_attachmentuploader",
       "community": 14,
-      "norm_label": "attachmentuploader()"
+      "norm_label": "attachmentuploader()",
+      "id": "frontend_src_pages_projectdetailpage_attachmentuploader"
     },
     {
       "label": "relativeTime()",
@@ -569,9 +569,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L178",
       "_origin": "ast",
-      "id": "frontend_src_pages_projectdetailpage_relativetime",
       "community": 14,
-      "norm_label": "relativetime()"
+      "norm_label": "relativetime()",
+      "id": "frontend_src_pages_projectdetailpage_relativetime"
     },
     {
       "label": "EditButton()",
@@ -579,9 +579,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L194",
       "_origin": "ast",
-      "id": "frontend_src_pages_projectdetailpage_editbutton",
       "community": 14,
-      "norm_label": "editbutton()"
+      "norm_label": "editbutton()",
+      "id": "frontend_src_pages_projectdetailpage_editbutton"
     },
     {
       "label": "SECTION_IDS",
@@ -589,9 +589,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L207",
       "_origin": "ast",
-      "id": "frontend_src_pages_projectdetailpage_section_ids",
       "community": 14,
-      "norm_label": "section_ids"
+      "norm_label": "section_ids",
+      "id": "frontend_src_pages_projectdetailpage_section_ids"
     },
     {
       "label": "collapsePrefsKey()",
@@ -599,9 +599,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L220",
       "_origin": "ast",
-      "id": "frontend_src_pages_projectdetailpage_collapseprefskey",
       "community": 14,
-      "norm_label": "collapseprefskey()"
+      "norm_label": "collapseprefskey()",
+      "id": "frontend_src_pages_projectdetailpage_collapseprefskey"
     },
     {
       "label": "isOverdue()",
@@ -609,9 +609,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L225",
       "_origin": "ast",
-      "id": "frontend_src_pages_projectdetailpage_isoverdue",
       "community": 14,
-      "norm_label": "isoverdue()"
+      "norm_label": "isoverdue()",
+      "id": "frontend_src_pages_projectdetailpage_isoverdue"
     },
     {
       "label": "readCollapsePrefs()",
@@ -619,9 +619,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L230",
       "_origin": "ast",
-      "id": "frontend_src_pages_projectdetailpage_readcollapseprefs",
       "community": 14,
-      "norm_label": "readcollapseprefs()"
+      "norm_label": "readcollapseprefs()",
+      "id": "frontend_src_pages_projectdetailpage_readcollapseprefs"
     },
     {
       "label": "prefersReducedMotion()",
@@ -629,9 +629,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L240",
       "_origin": "ast",
-      "id": "frontend_src_pages_projectdetailpage_prefersreducedmotion",
       "community": 14,
-      "norm_label": "prefersreducedmotion()"
+      "norm_label": "prefersreducedmotion()",
+      "id": "frontend_src_pages_projectdetailpage_prefersreducedmotion"
     },
     {
       "label": "useEntranceFlag()",
@@ -639,9 +639,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L245",
       "_origin": "ast",
-      "id": "frontend_src_pages_projectdetailpage_useentranceflag",
       "community": 14,
-      "norm_label": "useentranceflag()"
+      "norm_label": "useentranceflag()",
+      "id": "frontend_src_pages_projectdetailpage_useentranceflag"
     },
     {
       "label": "ProjectDetailPage()",
@@ -649,9 +649,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L256",
       "_origin": "ast",
-      "id": "frontend_src_pages_projectdetailpage_projectdetailpage",
       "community": 14,
-      "norm_label": "projectdetailpage()"
+      "norm_label": "projectdetailpage()",
+      "id": "frontend_src_pages_projectdetailpage_projectdetailpage"
     },
     {
       "label": "settings.json",
@@ -2519,7 +2519,7 @@
       "source_file": "backend/src/common/supabase-error.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 55,
+      "community": 36,
       "norm_label": "supabase-error.ts",
       "id": "backend_src_common_supabase_error"
     },
@@ -2529,7 +2529,7 @@
       "source_file": "backend/src/common/supabase-error.ts",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 55,
+      "community": 36,
       "norm_label": "logger",
       "id": "backend_src_common_supabase_error_logger"
     },
@@ -2539,7 +2539,7 @@
       "source_file": "backend/src/common/supabase-error.ts",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 55,
+      "community": 36,
       "norm_label": "tohttpexception()",
       "id": "backend_src_common_supabase_error_tohttpexception"
     },
@@ -5199,7 +5199,7 @@
       "source_file": "backend/src/modules/lookups/lookups.module.ts",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 49,
+      "community": 12,
       "norm_label": "lookupsmodule",
       "id": "backend_src_modules_lookups_lookups_module_lookupsmodule"
     },
@@ -5209,7 +5209,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 49,
+      "community": 12,
       "norm_label": "module",
       "id": "backend_src_modules_lookups_lookups_module_ts_module"
     },
@@ -7019,7 +7019,7 @@
       "source_file": "backend/src/modules/projects/dto/create-project.dto.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 31,
+      "community": 36,
       "norm_label": "create-project.dto.ts",
       "id": "backend_src_modules_projects_dto_create_project_dto"
     },
@@ -7219,7 +7219,7 @@
       "source_file": "backend/src/modules/projects/dto/update-project.dto.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 17,
+      "community": 36,
       "norm_label": "update-project.dto.ts",
       "id": "backend_src_modules_projects_dto_update_project_dto"
     },
@@ -7399,7 +7399,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 76,
+      "community": 17,
       "norm_label": "post",
       "id": "backend_src_modules_projects_projects_controller_ts_post"
     },
@@ -7409,7 +7409,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 76,
+      "community": 17,
       "norm_label": "apibody",
       "id": "backend_src_modules_projects_projects_controller_ts_apibody"
     },
@@ -7419,7 +7419,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 76,
+      "community": 17,
       "norm_label": "body",
       "id": "backend_src_modules_projects_projects_controller_ts_body"
     },
@@ -7459,7 +7459,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 76,
+      "community": 17,
       "norm_label": "patch",
       "id": "backend_src_modules_projects_projects_controller_ts_patch"
     },
@@ -7489,7 +7489,7 @@
       "source_file": "backend/src/modules/projects/projects.controller.ts",
       "source_location": "L62",
       "_origin": "ast",
-      "community": 76,
+      "community": 17,
       "norm_label": ".create()",
       "id": "backend_src_modules_projects_projects_controller_projectscontroller_create"
     },
@@ -7529,7 +7529,7 @@
       "source_file": "backend/src/modules/projects/projects.controller.ts",
       "source_location": "L94",
       "_origin": "ast",
-      "community": 76,
+      "community": 17,
       "norm_label": ".update()",
       "id": "backend_src_modules_projects_projects_controller_projectscontroller_update"
     },
@@ -7549,7 +7549,7 @@
       "source_file": "backend/src/modules/projects/projects.module.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 36,
+      "community": 49,
       "norm_label": "projects.module.ts",
       "id": "backend_src_modules_projects_projects_module"
     },
@@ -7619,7 +7619,7 @@
       "source_file": "backend/src/modules/projects/projects.repository.ts",
       "source_location": "L99",
       "_origin": "ast",
-      "community": 55,
+      "community": 36,
       "norm_label": "projectsrepository",
       "id": "backend_src_modules_projects_projects_repository_projectsrepository"
     },
@@ -7629,7 +7629,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 55,
+      "community": 36,
       "norm_label": "injectable",
       "id": "backend_src_modules_projects_projects_repository_ts_injectable"
     },
@@ -7649,7 +7649,7 @@
       "source_file": "backend/src/modules/projects/projects.repository.ts",
       "source_location": "L102",
       "_origin": "ast",
-      "community": 55,
+      "community": 36,
       "norm_label": ".table()",
       "id": "backend_src_modules_projects_projects_repository_projectsrepository_table"
     },
@@ -7659,7 +7659,7 @@
       "source_file": "backend/src/modules/projects/projects.repository.ts",
       "source_location": "L106",
       "_origin": "ast",
-      "community": 55,
+      "community": 36,
       "norm_label": ".insert()",
       "id": "backend_src_modules_projects_projects_repository_projectsrepository_insert"
     },
@@ -7669,7 +7669,7 @@
       "source_file": "backend/src/modules/projects/projects.repository.ts",
       "source_location": "L115",
       "_origin": "ast",
-      "community": 55,
+      "community": 36,
       "norm_label": ".findall()",
       "id": "backend_src_modules_projects_projects_repository_projectsrepository_findall"
     },
@@ -7679,7 +7679,7 @@
       "source_file": "backend/src/modules/projects/projects.repository.ts",
       "source_location": "L131",
       "_origin": "ast",
-      "community": 55,
+      "community": 36,
       "norm_label": ".finddetail()",
       "id": "backend_src_modules_projects_projects_repository_projectsrepository_finddetail"
     },
@@ -7699,7 +7699,7 @@
       "source_file": "backend/src/modules/projects/projects.repository.ts",
       "source_location": "L216",
       "_origin": "ast",
-      "community": 55,
+      "community": 36,
       "norm_label": ".insertmembers()",
       "id": "backend_src_modules_projects_projects_repository_projectsrepository_insertmembers"
     },
@@ -7709,7 +7709,7 @@
       "source_file": "backend/src/modules/projects/projects.repository.ts",
       "source_location": "L221",
       "_origin": "ast",
-      "community": 55,
+      "community": 36,
       "norm_label": ".update()",
       "id": "backend_src_modules_projects_projects_repository_projectsrepository_update"
     },
@@ -7719,7 +7719,7 @@
       "source_file": "backend/src/modules/projects/projects.repository.ts",
       "source_location": "L227",
       "_origin": "ast",
-      "community": 55,
+      "community": 36,
       "norm_label": ".deleteattachmentobjects()",
       "id": "backend_src_modules_projects_projects_repository_projectsrepository_deleteattachmentobjects"
     },
@@ -7729,7 +7729,7 @@
       "source_file": "backend/src/modules/projects/projects.repository.ts",
       "source_location": "L243",
       "_origin": "ast",
-      "community": 55,
+      "community": 36,
       "norm_label": ".delete()",
       "id": "backend_src_modules_projects_projects_repository_projectsrepository_delete"
     },
@@ -7789,7 +7789,7 @@
       "source_file": "backend/src/modules/projects/projects.service.ts",
       "source_location": "L81",
       "_origin": "ast",
-      "community": 55,
+      "community": 36,
       "norm_label": ".create()",
       "id": "backend_src_modules_projects_projects_service_projectsservice_create"
     },
@@ -7829,7 +7829,7 @@
       "source_file": "backend/src/modules/projects/projects.service.ts",
       "source_location": "L204",
       "_origin": "ast",
-      "community": 55,
+      "community": 36,
       "norm_label": ".remove()",
       "id": "backend_src_modules_projects_projects_service_projectsservice_remove"
     },
@@ -15718,236 +15718,6 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "docs/FDD-ALIGNMENT.md",
-      "source_location": "L1",
-      "weight": 1.0,
-      "source": "docs_fdd_alignment",
-      "target": "docs_fdd_alignment_fdd_alignment_p_track_project_tracker_fdd",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/FDD-ALIGNMENT.md",
-      "source_location": "L17",
-      "weight": 1.0,
-      "source": "docs_fdd_alignment_fdd_alignment_p_track_project_tracker_fdd",
-      "target": "docs_fdd_alignment_1_data_object_mapping_fdd_appendix_a_p_track_schema",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/FDD-ALIGNMENT.md",
-      "source_location": "L123",
-      "weight": 1.0,
-      "source": "docs_fdd_alignment_fdd_alignment_p_track_project_tracker_fdd",
-      "target": "docs_fdd_alignment_2_functionality_inventory_fdd_fr_01_15_status",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/FDD-ALIGNMENT.md",
-      "source_location": "L143",
-      "weight": 1.0,
-      "source": "docs_fdd_alignment_fdd_alignment_p_track_project_tracker_fdd",
-      "target": "docs_fdd_alignment_3_use_cases_uc_01_18_acceptance_checklist",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/FDD-ALIGNMENT.md",
-      "source_location": "L152",
-      "weight": 1.0,
-      "source": "docs_fdd_alignment_fdd_alignment_p_track_project_tracker_fdd",
-      "target": "docs_fdd_alignment_4_key_validations_business_rules_fdd_3_3_2",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/FDD-ALIGNMENT.md",
-      "source_location": "L162",
-      "weight": 1.0,
-      "source": "docs_fdd_alignment_fdd_alignment_p_track_project_tracker_fdd",
-      "target": "docs_fdd_alignment_5_reports_notifications_defer_until_math_lands",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/FDD-ALIGNMENT.md",
-      "source_location": "L169",
-      "weight": 1.0,
-      "source": "docs_fdd_alignment_fdd_alignment_p_track_project_tracker_fdd",
-      "target": "docs_fdd_alignment_6_open_questions_for_the_supervisor_blockers_marked",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/FDD-ALIGNMENT.md",
-      "source_location": "L183",
-      "weight": 1.0,
-      "source": "docs_fdd_alignment_fdd_alignment_p_track_project_tracker_fdd",
-      "target": "docs_fdd_alignment_7_execution_roadmap",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/FDD-ALIGNMENT.md",
-      "source_location": "L190",
-      "weight": 1.0,
-      "source": "docs_fdd_alignment_fdd_alignment_p_track_project_tracker_fdd",
-      "target": "docs_fdd_alignment_8_conventions_carried_forward",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/FDD-ALIGNMENT.md",
-      "source_location": "L22",
-      "weight": 1.0,
-      "source": "docs_fdd_alignment_1_data_object_mapping_fdd_appendix_a_p_track_schema",
-      "target": "docs_fdd_alignment_1_1_project_projects_extend",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/FDD-ALIGNMENT.md",
-      "source_location": "L58",
-      "weight": 1.0,
-      "source": "docs_fdd_alignment_1_data_object_mapping_fdd_appendix_a_p_track_schema",
-      "target": "docs_fdd_alignment_1_2_milestone_milestones_mostly_have_big_head_start",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/FDD-ALIGNMENT.md",
-      "source_location": "L69",
-      "weight": 1.0,
-      "source": "docs_fdd_alignment_1_data_object_mapping_fdd_appendix_a_p_track_schema",
-      "target": "docs_fdd_alignment_1_3_task_work_activity_action_items_extend",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/FDD-ALIGNMENT.md",
-      "source_location": "L82",
-      "weight": 1.0,
-      "source": "docs_fdd_alignment_1_data_object_mapping_fdd_appendix_a_p_track_schema",
-      "target": "docs_fdd_alignment_1_4_risk_build_risks_new_module_follows_our_new_record_type_recipe",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/FDD-ALIGNMENT.md",
-      "source_location": "L98",
-      "weight": 1.0,
-      "source": "docs_fdd_alignment_1_data_object_mapping_fdd_appendix_a_p_track_schema",
-      "target": "docs_fdd_alignment_1_5_issue_issues_extend",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/FDD-ALIGNMENT.md",
-      "source_location": "L106",
-      "weight": 1.0,
-      "source": "docs_fdd_alignment_1_data_object_mapping_fdd_appendix_a_p_track_schema",
-      "target": "docs_fdd_alignment_1_6_workflow_submission_build_cycles_submissions",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/FDD-ALIGNMENT.md",
-      "source_location": "L112",
-      "weight": 1.0,
-      "source": "docs_fdd_alignment_1_data_object_mapping_fdd_appendix_a_p_track_schema",
-      "target": "docs_fdd_alignment_1_7_attachment_attachments_extend_for_parent_scoping_see_1_3",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/FDD-ALIGNMENT.md",
-      "source_location": "L114",
-      "weight": 1.0,
-      "source": "docs_fdd_alignment_1_data_object_mapping_fdd_appendix_a_p_track_schema",
-      "target": "docs_fdd_alignment_1_8_dashboard_kpi_build_kpis_kpi_readings_kpi_action_plans_last",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/FORMULAS.md",
-      "source_location": "L1",
-      "weight": 1.0,
-      "source": "docs_formulas",
-      "target": "docs_formulas_formulas_md_p_track_calculation_registry",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/FORMULAS.md",
-      "source_location": "L69",
-      "weight": 1.0,
-      "source": "docs_formulas_formulas_md_p_track_calculation_registry",
-      "target": "docs_formulas_explicitly_not_implemented_await_real_sign_off",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/FORMULAS.md",
-      "source_location": "L20",
-      "weight": 1.0,
-      "source": "docs_formulas_formulas_md_p_track_calculation_registry",
-      "target": "docs_formulas_f1_calculated_progress_project",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/FORMULAS.md",
-      "source_location": "L39",
-      "weight": 1.0,
-      "source": "docs_formulas_formulas_md_p_track_calculation_registry",
-      "target": "docs_formulas_f2_planned_progress_project",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/FORMULAS.md",
-      "source_location": "L50",
-      "weight": 1.0,
-      "source": "docs_formulas_formulas_md_p_track_calculation_registry",
-      "target": "docs_formulas_f3_risk_score_and_severity",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/FORMULAS.md",
-      "source_location": "L61",
-      "weight": 1.0,
-      "source": "docs_formulas_formulas_md_p_track_calculation_registry",
-      "target": "docs_formulas_f4_at_risk_suggestion_display_only",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "frontend/src/components/ProjectOverviewCards.tsx",
       "source_location": "L25",
       "weight": 1.0,
@@ -15989,67 +15759,264 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "frontend/src/components/ProjectOverviewCards.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "source": "frontend_src_components_projectoverviewcards",
-      "target": "frontend_src_lib_formulas",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "frontend/src/components/ProjectOverviewCards.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "source": "frontend_src_components_projectoverviewcards",
-      "target": "frontend_src_lib_formulas_atrisksuggested",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L47",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage",
-      "target": "frontend_src_components_projectoverviewcards",
-      "confidence_score": 1.0
+      "target": "frontend_src_components_projectoverviewcards"
     },
     {
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/components/ProjectOverviewCards.tsx",
-      "source_location": "L248",
+      "source_location": "L253",
       "weight": 1.0,
       "source": "frontend_src_components_projectoverviewcards_projectoverviewcards",
       "target": "frontend_src_components_projectoverviewcards_fmtaed",
       "confidence_score": 1.0
     },
     {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "frontend/src/components/ProjectOverviewCards.tsx",
-      "source_location": "L118",
-      "weight": 1.0,
-      "source": "frontend_src_components_projectoverviewcards_projectoverviewcards",
-      "target": "frontend_src_lib_formulas_atrisksuggested"
-    },
-    {
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L47",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage",
-      "target": "frontend_src_components_projectoverviewcards_projectoverviewcards",
-      "confidence_score": 1.0
+      "target": "frontend_src_components_projectoverviewcards_projectoverviewcards"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/FDD-ALIGNMENT.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_fdd_alignment",
+      "target": "docs_fdd_alignment_fdd_alignment_p_track_project_tracker_fdd"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/FDD-ALIGNMENT.md",
+      "source_location": "L17",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_fdd_alignment_fdd_alignment_p_track_project_tracker_fdd",
+      "target": "docs_fdd_alignment_1_data_object_mapping_fdd_appendix_a_p_track_schema"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/FDD-ALIGNMENT.md",
+      "source_location": "L123",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_fdd_alignment_fdd_alignment_p_track_project_tracker_fdd",
+      "target": "docs_fdd_alignment_2_functionality_inventory_fdd_fr_01_15_status"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/FDD-ALIGNMENT.md",
+      "source_location": "L143",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_fdd_alignment_fdd_alignment_p_track_project_tracker_fdd",
+      "target": "docs_fdd_alignment_3_use_cases_uc_01_18_acceptance_checklist"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/FDD-ALIGNMENT.md",
+      "source_location": "L152",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_fdd_alignment_fdd_alignment_p_track_project_tracker_fdd",
+      "target": "docs_fdd_alignment_4_key_validations_business_rules_fdd_3_3_2"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/FDD-ALIGNMENT.md",
+      "source_location": "L162",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_fdd_alignment_fdd_alignment_p_track_project_tracker_fdd",
+      "target": "docs_fdd_alignment_5_reports_notifications_defer_until_math_lands"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/FDD-ALIGNMENT.md",
+      "source_location": "L169",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_fdd_alignment_fdd_alignment_p_track_project_tracker_fdd",
+      "target": "docs_fdd_alignment_6_open_questions_for_the_supervisor_blockers_marked"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/FDD-ALIGNMENT.md",
+      "source_location": "L183",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_fdd_alignment_fdd_alignment_p_track_project_tracker_fdd",
+      "target": "docs_fdd_alignment_7_execution_roadmap"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/FDD-ALIGNMENT.md",
+      "source_location": "L190",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_fdd_alignment_fdd_alignment_p_track_project_tracker_fdd",
+      "target": "docs_fdd_alignment_8_conventions_carried_forward"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/FDD-ALIGNMENT.md",
+      "source_location": "L22",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_fdd_alignment_1_data_object_mapping_fdd_appendix_a_p_track_schema",
+      "target": "docs_fdd_alignment_1_1_project_projects_extend"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/FDD-ALIGNMENT.md",
+      "source_location": "L58",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_fdd_alignment_1_data_object_mapping_fdd_appendix_a_p_track_schema",
+      "target": "docs_fdd_alignment_1_2_milestone_milestones_mostly_have_big_head_start"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/FDD-ALIGNMENT.md",
+      "source_location": "L69",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_fdd_alignment_1_data_object_mapping_fdd_appendix_a_p_track_schema",
+      "target": "docs_fdd_alignment_1_3_task_work_activity_action_items_extend"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/FDD-ALIGNMENT.md",
+      "source_location": "L82",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_fdd_alignment_1_data_object_mapping_fdd_appendix_a_p_track_schema",
+      "target": "docs_fdd_alignment_1_4_risk_build_risks_new_module_follows_our_new_record_type_recipe"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/FDD-ALIGNMENT.md",
+      "source_location": "L98",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_fdd_alignment_1_data_object_mapping_fdd_appendix_a_p_track_schema",
+      "target": "docs_fdd_alignment_1_5_issue_issues_extend"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/FDD-ALIGNMENT.md",
+      "source_location": "L106",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_fdd_alignment_1_data_object_mapping_fdd_appendix_a_p_track_schema",
+      "target": "docs_fdd_alignment_1_6_workflow_submission_build_cycles_submissions"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/FDD-ALIGNMENT.md",
+      "source_location": "L112",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_fdd_alignment_1_data_object_mapping_fdd_appendix_a_p_track_schema",
+      "target": "docs_fdd_alignment_1_7_attachment_attachments_extend_for_parent_scoping_see_1_3"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/FDD-ALIGNMENT.md",
+      "source_location": "L114",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_fdd_alignment_1_data_object_mapping_fdd_appendix_a_p_track_schema",
+      "target": "docs_fdd_alignment_1_8_dashboard_kpi_build_kpis_kpi_readings_kpi_action_plans_last"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/FORMULAS.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_formulas",
+      "target": "docs_formulas_formulas_md_p_track_calculation_registry"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/FORMULAS.md",
+      "source_location": "L69",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_formulas_formulas_md_p_track_calculation_registry",
+      "target": "docs_formulas_explicitly_not_implemented_await_real_sign_off"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/FORMULAS.md",
+      "source_location": "L20",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_formulas_formulas_md_p_track_calculation_registry",
+      "target": "docs_formulas_f1_calculated_progress_project"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/FORMULAS.md",
+      "source_location": "L39",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_formulas_formulas_md_p_track_calculation_registry",
+      "target": "docs_formulas_f2_planned_progress_project"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/FORMULAS.md",
+      "source_location": "L50",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_formulas_formulas_md_p_track_calculation_registry",
+      "target": "docs_formulas_f3_risk_score_and_severity"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/FORMULAS.md",
+      "source_location": "L61",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "docs_formulas_formulas_md_p_track_calculation_registry",
+      "target": "docs_formulas_f4_at_risk_suggestion_display_only"
     },
     {
       "relation": "contains",
@@ -16057,9 +16024,9 @@
       "source_file": "frontend/src/lib/formulas.ts",
       "source_location": "L64",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_lib_formulas",
-      "target": "frontend_src_lib_formulas_atrisksuggested",
-      "confidence_score": 1.0
+      "target": "frontend_src_lib_formulas_atrisksuggested"
     },
     {
       "relation": "contains",
@@ -16067,9 +16034,9 @@
       "source_file": "frontend/src/lib/formulas.ts",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_lib_formulas",
-      "target": "frontend_src_lib_formulas_calculatedprogress",
-      "confidence_score": 1.0
+      "target": "frontend_src_lib_formulas_calculatedprogress"
     },
     {
       "relation": "contains",
@@ -16077,9 +16044,9 @@
       "source_file": "frontend/src/lib/formulas.ts",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_lib_formulas",
-      "target": "frontend_src_lib_formulas_milestoneprogressrow",
-      "confidence_score": 1.0
+      "target": "frontend_src_lib_formulas_milestoneprogressrow"
     },
     {
       "relation": "contains",
@@ -16087,9 +16054,9 @@
       "source_file": "frontend/src/lib/formulas.ts",
       "source_location": "L34",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_lib_formulas",
-      "target": "frontend_src_lib_formulas_plannedprogress",
-      "confidence_score": 1.0
+      "target": "frontend_src_lib_formulas_plannedprogress"
     },
     {
       "relation": "contains",
@@ -16097,9 +16064,9 @@
       "source_file": "frontend/src/lib/formulas.ts",
       "source_location": "L48",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_lib_formulas",
-      "target": "frontend_src_lib_formulas_riskscore",
-      "confidence_score": 1.0
+      "target": "frontend_src_lib_formulas_riskscore"
     },
     {
       "relation": "contains",
@@ -16107,9 +16074,9 @@
       "source_file": "frontend/src/lib/formulas.ts",
       "source_location": "L57",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_lib_formulas",
-      "target": "frontend_src_lib_formulas_riskseveritytone",
-      "confidence_score": 1.0
+      "target": "frontend_src_lib_formulas_riskseveritytone"
     },
     {
       "relation": "imports_from",
@@ -16118,9 +16085,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L37",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage",
-      "target": "frontend_src_lib_formulas",
-      "confidence_score": 1.0
+      "target": "frontend_src_lib_formulas"
     },
     {
       "relation": "imports",
@@ -16129,9 +16096,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L37",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage",
-      "target": "frontend_src_lib_formulas_calculatedprogress",
-      "confidence_score": 1.0
+      "target": "frontend_src_lib_formulas_calculatedprogress"
     },
     {
       "relation": "calls",
@@ -16151,9 +16118,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L37",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage",
-      "target": "frontend_src_lib_formulas_plannedprogress",
-      "confidence_score": 1.0
+      "target": "frontend_src_lib_formulas_plannedprogress"
     },
     {
       "relation": "calls",
@@ -16173,9 +16140,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L37",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage",
-      "target": "frontend_src_lib_formulas_riskscore",
-      "confidence_score": 1.0
+      "target": "frontend_src_lib_formulas_riskscore"
     },
     {
       "relation": "calls",
@@ -16195,9 +16162,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L37",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage",
-      "target": "frontend_src_lib_formulas_riskseveritytone",
-      "confidence_score": 1.0
+      "target": "frontend_src_lib_formulas_riskseveritytone"
     },
     {
       "relation": "calls",
@@ -16227,9 +16194,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L58",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_actions",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_actions"
     },
     {
       "relation": "contains",
@@ -16237,9 +16204,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L170",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_attachmentuploader",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_attachmentuploader"
     },
     {
       "relation": "contains",
@@ -16247,9 +16214,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L220",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_collapseprefskey",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_collapseprefskey"
     },
     {
       "relation": "contains",
@@ -16257,9 +16224,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L194",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_editbutton",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_editbutton"
     },
     {
       "relation": "contains",
@@ -16267,9 +16234,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L137",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_ext_styles",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_ext_styles"
     },
     {
       "relation": "contains",
@@ -16277,9 +16244,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L77",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_field",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_field"
     },
     {
       "relation": "contains",
@@ -16287,9 +16254,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L154",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_fileext",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_fileext"
     },
     {
       "relation": "contains",
@@ -16297,9 +16264,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L129",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_formatreportdate",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_formatreportdate"
     },
     {
       "relation": "contains",
@@ -16307,9 +16274,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L159",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_formatsize",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_formatsize"
     },
     {
       "relation": "contains",
@@ -16317,9 +16284,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L118",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_initials",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_initials"
     },
     {
       "relation": "contains",
@@ -16327,9 +16294,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L225",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_isoverdue",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_isoverdue"
     },
     {
       "relation": "contains",
@@ -16337,9 +16304,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L70",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_issue_status_labels",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_issue_status_labels"
     },
     {
       "relation": "contains",
@@ -16347,9 +16314,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L107",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_issueownerdisplay",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_issueownerdisplay"
     },
     {
       "relation": "contains",
@@ -16357,9 +16324,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L95",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_linkauthor",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_linkauthor"
     },
     {
       "relation": "contains",
@@ -16367,9 +16334,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L87",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_membername",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_membername"
     },
     {
       "relation": "contains",
@@ -16377,9 +16344,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L91",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_ownername",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_ownername"
     },
     {
       "relation": "contains",
@@ -16387,9 +16354,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L240",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_prefersreducedmotion",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_prefersreducedmotion"
     },
     {
       "relation": "contains",
@@ -16397,9 +16364,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L256",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_projectdetailpage",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_projectdetailpage"
     },
     {
       "relation": "contains",
@@ -16407,9 +16374,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L230",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_readcollapseprefs",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_readcollapseprefs"
     },
     {
       "relation": "contains",
@@ -16417,9 +16384,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L178",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_relativetime",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_relativetime"
     },
     {
       "relation": "contains",
@@ -16427,9 +16394,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L125",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_reportauthor",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_reportauthor"
     },
     {
       "relation": "contains",
@@ -16437,9 +16404,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L99",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_resourceupdatedby",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_resourceupdatedby"
     },
     {
       "relation": "contains",
@@ -16447,9 +16414,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L103",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_riskownerdisplay",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_riskownerdisplay"
     },
     {
       "relation": "contains",
@@ -16457,9 +16424,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L207",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_section_ids",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_section_ids"
     },
     {
       "relation": "contains",
@@ -16467,9 +16434,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L64",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_status_labels",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_status_labels"
     },
     {
       "relation": "contains",
@@ -16477,9 +16444,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L114",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_updateauthorname",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_updateauthorname"
     },
     {
       "relation": "contains",
@@ -16487,9 +16454,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L245",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_useentranceflag",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_useentranceflag"
     },
     {
       "relation": "calls",
@@ -16498,9 +16465,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L844",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_membername",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_membername"
     },
     {
       "relation": "calls",
@@ -16509,9 +16476,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L968",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_ownername",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_ownername"
     },
     {
       "relation": "calls",
@@ -16520,9 +16487,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L1135",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_linkauthor",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_linkauthor"
     },
     {
       "relation": "calls",
@@ -16531,9 +16498,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L1178",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_resourceupdatedby",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_resourceupdatedby"
     },
     {
       "relation": "calls",
@@ -16542,9 +16509,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L1352",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_riskownerdisplay",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_riskownerdisplay"
     },
     {
       "relation": "calls",
@@ -16553,9 +16520,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L1248",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_issueownerdisplay",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_issueownerdisplay"
     },
     {
       "relation": "calls",
@@ -16564,9 +16531,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L1383",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_updateauthorname",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_updateauthorname"
     },
     {
       "relation": "calls",
@@ -16575,9 +16542,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L1383",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_initials",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_initials"
     },
     {
       "relation": "calls",
@@ -16586,9 +16553,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L1458",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_reportauthor",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_reportauthor"
     },
     {
       "relation": "calls",
@@ -16597,9 +16564,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L1459",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_formatreportdate",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_formatreportdate"
     },
     {
       "relation": "calls",
@@ -16608,9 +16575,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L1482",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_fileext",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_fileext"
     },
     {
       "relation": "calls",
@@ -16619,9 +16586,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L1528",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_formatsize",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_formatsize"
     },
     {
       "relation": "calls",
@@ -16630,9 +16597,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L1532",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_attachmentuploader",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_attachmentuploader"
     },
     {
       "relation": "calls",
@@ -16641,9 +16608,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L1135",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_relativetime",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_relativetime"
     },
     {
       "relation": "calls",
@@ -16652,9 +16619,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L233",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage_readcollapseprefs",
-      "target": "frontend_src_pages_projectdetailpage_collapseprefskey",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_collapseprefskey"
     },
     {
       "relation": "calls",
@@ -16663,9 +16630,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L959",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_isoverdue",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_isoverdue"
     },
     {
       "relation": "calls",
@@ -16674,9 +16641,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L301",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_readcollapseprefs",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_readcollapseprefs"
     },
     {
       "relation": "calls",
@@ -16685,9 +16652,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L246",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage_useentranceflag",
-      "target": "frontend_src_pages_projectdetailpage_prefersreducedmotion",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_prefersreducedmotion"
     },
     {
       "relation": "calls",
@@ -16696,9 +16663,9 @@
       "source_file": "frontend/src/pages/ProjectDetailPage.tsx",
       "source_location": "L306",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "frontend_src_pages_projectdetailpage_projectdetailpage",
-      "target": "frontend_src_pages_projectdetailpage_useentranceflag",
-      "confidence_score": 1.0
+      "target": "frontend_src_pages_projectdetailpage_useentranceflag"
     },
     {
       "relation": "imports",
@@ -50739,5 +50706,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "a5c487b630884357a2b1eaf856338063c1d842d1"
+  "built_at_commit": "3186b765d05b7f1fe2e3b52f44c52e6ee8c09aec"
 }

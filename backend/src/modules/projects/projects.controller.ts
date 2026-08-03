@@ -73,6 +73,11 @@ export class ProjectsController {
     return this.projects.getDetail(id);
   }
 
+  @Get(':id/history')
+  history(@Param('id', ParseUUIDPipe) id: string) {
+    return this.projects.history(id);
+  }
+
   @Get(':id/sections')
   sections(@Param('id', ParseUUIDPipe) id: string) {
     return this.projects.sections(id);

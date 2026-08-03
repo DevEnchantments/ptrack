@@ -165,6 +165,8 @@ export const projectsApi = {
   get: (id: string) => apiGet<ProjectDetail>(`/projects/${id}`),
   sections: (id: string) =>
     apiGet<ProjectSections>(`/projects/${id}/sections`),
+  history: (id: string) =>
+    apiGet<HistoryEntry[]>(`/projects/${id}/history`),
   create: (data: Record<string, unknown>) =>
     apiPost<Project>('/projects', data),
   update: (id: string, data: Record<string, unknown>) =>
@@ -301,7 +303,9 @@ export interface MilestoneDetail extends Milestone {
  */
 export interface HistoryEntry {
   id: string
-  event: 'created' | 'changed'
+  event: 'created' | 'changed' | 'deleted'
+  /** Present on project-wide history (which table the row came from). */
+  table_name?: string
   field_label: string | null
   old_value: string | null
   new_value: string | null

@@ -126,6 +126,10 @@ export class ProjectsService {
     }));
   }
 
+  history(id: string) {
+    return this.repo.findHistory(id);
+  }
+
   async getDetail(id: string): Promise<ProjectDetail> {
     const project = await this.repo.findDetail(id);
     if (!project) throw new NotFoundException(`Project ${id} not found`);

@@ -7,8 +7,10 @@
  */
 export interface HistoryEntry {
   id: string;
-  event: 'created' | 'changed';
-  /** null for 'created' entries. */
+  event: 'created' | 'changed' | 'deleted';
+  /** Present on project-wide history (which table the row came from). */
+  table_name?: string;
+  /** null for 'created'/'deleted' entries. */
   field_label: string | null;
   old_value: string | null;
   new_value: string | null;
@@ -18,6 +20,11 @@ export interface HistoryEntry {
 
 export const HISTORY_SELECT =
   'id, event, field_label, old_value, new_value, changed_at, ' +
+  'actor:profiles!changed_by ( full_name, email )';
+
+/** Project-wide feed additionally carries the source table. */
+export const PROJECT_HISTORY_SELECT =
+  'id, event, table_name, field_label, old_value, new_value, changed_at, ' +
   'actor:profiles!changed_by ( full_name, email )';
 
 /**

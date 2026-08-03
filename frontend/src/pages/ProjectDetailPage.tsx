@@ -2,6 +2,7 @@ import { toast } from '@/lib/toast'
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { SectionCard } from '@/components/SectionCard'
 import { SectionNav } from '@/components/SectionNav'
+import { RecordHistory } from '@/components/RecordHistory'
 import { StatusPill } from '@/components/StatusPill'
 import { AvatarCluster, InitialsAvatar } from '@/components/InitialsAvatar'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -217,6 +218,30 @@ const SECTION_IDS = [
   { id: 'attachments', label: 'Attachments' },
 ]
 
+/** FR-03 tab structure (mapping ASSUMED — see FDD-ALIGNMENT). */
+const PROJECT_TABS = [
+  'Overview',
+  'Achievement',
+  'Risk & Issue',
+  'Comments',
+  'Documentation',
+  'Change History',
+] as const
+type ProjectTab = (typeof PROJECT_TABS)[number]
+
+const TAB_OF_SECTION: Record<string, ProjectTab> = {
+  people: 'Overview',
+  milestones: 'Achievement',
+  'action-items': 'Achievement',
+  links: 'Documentation',
+  resources: 'Documentation',
+  issues: 'Risk & Issue',
+  risks: 'Risk & Issue',
+  updates: 'Comments',
+  'status-reports': 'Documentation',
+  attachments: 'Documentation',
+}
+
 function collapsePrefsKey(projectId: string) {
   return `ptrack:collapsed:${projectId}`
 }
@@ -301,6 +326,7 @@ export function ProjectDetailPage() {
     id ? readCollapsePrefs(id) : {},
   )
   const [activeSection, setActiveSection] = useState<string | null>(null)
+  const [activeTab, setActiveTab] = useState<ProjectTab>('Overview')
   const [titleInView, setTitleInView] = useState(true)
   const titleRef = useRef<HTMLHeadingElement | null>(null)
   const entered = useEntranceFlag()
@@ -576,7 +602,9 @@ export function ProjectDetailPage() {
     'status-reports': statusReports.length,
     attachments: attachments.length,
   }
-  const sectionMeta = SECTION_IDS.map((s) => ({
+  const sectionMeta = SECTION_IDS.filter(
+    (s) => TAB_OF_SECTION[s.id] === activeTab,
+  ).map((s) => ({
     ...s,
     count: sectionCounts[s.id] ?? 0,
   }))
@@ -686,6 +714,34 @@ export function ProjectDetailPage() {
             </Button>
           </div>
 
+          <div className="mb-6 flex gap-6 overflow-x-auto border-b">
+            {PROJECT_TABS.map((t) => (
+              <button
+                key={t}
+                onClick={() => setActiveTab(t)}
+                className={
+                  'whitespace-nowrap border-b-2 pb-2 text-sm transition-colors ' +
+                  (activeTab === t
+                    ? 'border-primary font-medium'
+                    : 'border-transparent text-muted-foreground hover:text-foreground')
+                }
+              >
+                {t}
+              </button>
+            ))}
+            {['Dashboard', 'KPI'].map((t) => (
+              <span
+                key={t}
+                title="Coming with the dashboards & KPI waves"
+                className="cursor-not-allowed whitespace-nowrap border-b-2 border-transparent pb-2 text-sm text-muted-foreground/50"
+              >
+                {t}
+              </span>
+            ))}
+          </div>
+
+          {activeTab === 'Overview' && (
+            <>
           <ProjectOverviewCards
             project={project}
             milestones={milestones}
@@ -812,7 +868,10 @@ export function ProjectDetailPage() {
               value={new Date(project.updated_at).toLocaleDateString()}
             />
           </dl>
+            </>
+          )}
 
+          {activeTab === 'Overview' && (
           <SectionCard
             id="people"
             title="People"
@@ -855,7 +914,9 @@ export function ProjectDetailPage() {
               ))}
             </ul>
           </SectionCard>
+          )}
 
+          {activeTab === 'Achievement' && (
           <SectionCard
             id="milestones"
             title="Milestones"
@@ -996,7 +1057,9 @@ export function ProjectDetailPage() {
               </ul>
             </>
           </SectionCard>
+          )}
 
+          {activeTab === 'Achievement' && (
           <SectionCard
             id="action-items"
             title="Action Items"
@@ -1080,7 +1143,9 @@ export function ProjectDetailPage() {
               ))}
             </ul>
           </SectionCard>
+          )}
 
+          {activeTab === 'Documentation' && (
           <SectionCard
             id="links"
             title="Links"
@@ -1139,7 +1204,9 @@ export function ProjectDetailPage() {
               ))}
             </ul>
           </SectionCard>
+          )}
 
+          {activeTab === 'Documentation' && (
           <SectionCard
             id="resources"
             title="Resources"
@@ -1182,7 +1249,9 @@ export function ProjectDetailPage() {
               ))}
             </ul>
           </SectionCard>
+          )}
 
+          {activeTab === 'Risk & Issue' && (
           <SectionCard
             id="issues"
             title="Issues"
@@ -1258,7 +1327,9 @@ export function ProjectDetailPage() {
               })()}
             </>
           </SectionCard>
+          )}
 
+          {activeTab === 'Risk & Issue' && (
           <SectionCard
             id="risks"
             title="Risks"
@@ -1362,7 +1433,9 @@ export function ProjectDetailPage() {
               })()}
             </>
           </SectionCard>
+          )}
 
+          {activeTab === 'Comments' && (
           <SectionCard
             id="updates"
             title="Updates"
@@ -1414,7 +1487,9 @@ export function ProjectDetailPage() {
               ))}
             </ul>
           </SectionCard>
+          )}
 
+          {activeTab === 'Documentation' && (
           <SectionCard
             id="status-reports"
             title="Status Reports"
@@ -1463,7 +1538,9 @@ export function ProjectDetailPage() {
               ))}
             </ul>
           </SectionCard>
+          )}
 
+          {activeTab === 'Documentation' && (
           <SectionCard
             id="attachments"
             title="Attachments"
@@ -1544,6 +1621,24 @@ export function ProjectDetailPage() {
               })}
             </ul>
           </SectionCard>
+          )}
+
+          {activeTab === 'Change History' && (
+            <section className="mt-8">
+              <h2 className="text-lg font-semibold">Change History</h2>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Every recorded change and deletion across this project, newest
+                first.
+              </p>
+              <div className="mt-3">
+                <RecordHistory
+                  recordNoun="project"
+                  refreshKey={activeTab}
+                  load={() => projectsApi.history(project.id)}
+                />
+              </div>
+            </section>
+          )}
         </div>
 
         <aside className="lg:sticky lg:top-24 lg:self-start">
