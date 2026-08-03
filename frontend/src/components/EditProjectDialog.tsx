@@ -1,5 +1,5 @@
 import { FieldError } from '@/components/FieldError'
-import { Loader2, Star } from 'lucide-react'
+import { Loader2, Star, TriangleAlert } from 'lucide-react'
 import { toast } from '@/lib/toast'
 import { useEffect, useState } from 'react'
 import {
@@ -79,6 +79,8 @@ export function EditProjectDialog({
   const [utilizedBudget, setUtilizedBudget] = useState('')
   const [tierId, setTierId] = useState<string | null>(null)
   const [objectiveId, setObjectiveId] = useState<string | null>(null)
+  const [manualProgress, setManualProgress] = useState('')
+  const [atRisk, setAtRisk] = useState(false)
 
   const [error, setError] = useState<string | null>(null)
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
@@ -130,6 +132,10 @@ export function EditProjectDialog({
       )
       setTierId(project.tier_id)
       setObjectiveId(project.strategic_objective_id)
+      setManualProgress(
+        project.manual_progress != null ? String(project.manual_progress) : '',
+      )
+      setAtRisk(project.at_risk ?? false)
       setError(null)
       setFieldErrors({})
       setConfirmDelete(false)
@@ -154,6 +160,13 @@ export function EditProjectDialog({
       (Number.isNaN(Number(utilizedBudget)) || Number(utilizedBudget) < 0)
     )
       errs.utilizedBudget = 'Enter a valid amount.'
+    if (
+      manualProgress.trim() &&
+      (Number.isNaN(Number(manualProgress)) ||
+        Number(manualProgress) < 0 ||
+        Number(manualProgress) > 100)
+    )
+      errs.manualProgress = 'Progress must be between 0 and 100.'
 
     setFieldErrors(errs)
     if (Object.keys(errs).length > 0) return
@@ -199,6 +212,8 @@ export function EditProjectDialog({
         utilized_budget: utilizedBudget.trim() ? Number(utilizedBudget) : null,
         tier_id: tierId,
         strategic_objective_id: objectiveId,
+        manual_progress: manualProgress.trim() ? Number(manualProgress) : null,
+        at_risk: atRisk,
       })
       onOpenChange(false)
       toast.success('Project updated.')
@@ -420,6 +435,39 @@ export function EditProjectDialog({
                 aria-invalid={fieldErrors.utilizedBudget ? true : undefined}
               />
               <FieldError message={fieldErrors.utilizedBudget} />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="flex flex-col gap-2">
+              <Label>Manual Progress (%)</Label>
+              <Input
+                type="number"
+                min={0}
+                max={100}
+                value={manualProgress}
+                onChange={(e) => setManualProgress(e.target.value)}
+                aria-invalid={fieldErrors.manualProgress ? true : undefined}
+              />
+              <FieldError message={fieldErrors.manualProgress} />
+            </div>
+            <div className="flex flex-col gap-2">
+              <Label>At Risk</Label>
+              <button
+                type="button"
+                onClick={() => setAtRisk((v) => !v)}
+                aria-pressed={atRisk}
+                className="flex w-fit cursor-pointer items-center gap-2 rounded-md border border-input px-3 py-2 text-sm transition-colors hover:bg-accent"
+              >
+                <TriangleAlert
+                  className={
+                    atRisk
+                      ? 'h-4 w-4 text-destructive'
+                      : 'h-4 w-4 text-muted-foreground'
+                  }
+                />
+                {atRisk ? 'Flagged at risk' : 'Not at risk'}
+              </button>
             </div>
           </div>
 

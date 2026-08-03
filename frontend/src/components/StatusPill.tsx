@@ -12,7 +12,7 @@ const TONE_CLASSES: Record<string, string> = {
 function toneFor(status: string): string {
   const s = status.trim().toLowerCase().replace(/_/g, ' ')
   if (s === 'hot' || s === 'overdue') return 'critical'
-  if (s === 'elevated') return 'caution'
+  if (s === 'elevated' || s === 'on hold') return 'caution'
   if (
     s === 'on track' ||
     s === 'complete' ||
@@ -22,7 +22,7 @@ function toneFor(status: string): string {
     s.startsWith('closed')
   )
     return 'positive'
-  if (s === 'open') return 'info'
+  if (s === 'open' || s === 'in progress') return 'info'
   return 'neutral' // dormant, unknown, not applicable, pending, custom values
 }
 

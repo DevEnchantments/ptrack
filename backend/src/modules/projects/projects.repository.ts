@@ -36,6 +36,9 @@ export interface Project {
   utilized_budget: number | null;
   tier_id: string | null;
   strategic_objective_id: string | null;
+  /** FDD register columns (Wave 1.1, ASSUMED semantics — see FDD-ALIGNMENT). */
+  manual_progress: number | null;
+  at_risk: boolean;
   created_by: string | null;
   updated_by: string | null;
   created_at: string;
@@ -70,7 +73,7 @@ export interface ProjectDetail extends Project {
 }
 
 const COLUMNS =
-  'id, name, description, parent_project_id, owner_id, sponsor, status_id, size_id, category_id, deal_type_id, region_id, country_id, access_control, goal, customer, tags, primary_url, start_date, target_end_date, actual_end_date, reference_id, project_number, plan_year, finance_code, target_group, internal_stakeholder, is_priority, approved_budget, utilized_budget, tier_id, strategic_objective_id, created_by, updated_by, created_at, updated_at';
+  'id, name, description, parent_project_id, owner_id, sponsor, status_id, size_id, category_id, deal_type_id, region_id, country_id, access_control, goal, customer, tags, primary_url, start_date, target_end_date, actual_end_date, reference_id, project_number, plan_year, finance_code, target_group, internal_stakeholder, is_priority, approved_budget, utilized_budget, tier_id, strategic_objective_id, manual_progress, at_risk, created_by, updated_by, created_at, updated_at';
 
 @Injectable()
 export class ProjectsRepository {

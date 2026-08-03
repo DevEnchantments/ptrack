@@ -703,6 +703,15 @@ export function ProjectDetailPage() {
               value={project.is_priority ? 'Yes' : null}
             />
             <Field
+              label="Manual Progress"
+              value={
+                project.manual_progress != null
+                  ? `${project.manual_progress}%`
+                  : null
+              }
+            />
+            <Field label="At Risk" value={project.at_risk ? 'Yes' : null} />
+            <Field
               label="Tags"
               value={project.tags?.length ? project.tags.join(', ') : null}
             />

@@ -84,6 +84,9 @@ export interface Project {
   utilized_budget: number | null
   tier_id: string | null
   strategic_objective_id: string | null
+  // FDD register columns (Wave 1.1, ASSUMED semantics)
+  manual_progress: number | null
+  at_risk: boolean
 }
 
 export interface ProjectMemberDetail {

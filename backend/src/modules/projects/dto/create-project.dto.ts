@@ -5,6 +5,7 @@ import {
   IsBoolean,
   IsInt,
   IsNumber,
+  Max,
   Min,
   IsDateString,
   IsIn,
@@ -198,6 +199,21 @@ export class CreateProjectDto {
   @IsOptional()
   @IsUUID()
   strategic_objective_id?: string;
+
+  @ApiPropertyOptional({
+    example: 35,
+    description: 'FDD manual progress: user-entered percent, 0-100.',
+  })
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  @Max(100)
+  manual_progress?: number | null;
+
+  @ApiPropertyOptional({ example: false, description: 'FDD at-risk flag.' })
+  @IsOptional()
+  @IsBoolean()
+  at_risk?: boolean;
 
   @ApiPropertyOptional({ type: [ProjectMemberDto] })
   @IsOptional()

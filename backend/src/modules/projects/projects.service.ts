@@ -168,6 +168,9 @@ export class ProjectsService {
     if (dto.tier_id !== undefined) patch.tier_id = dto.tier_id ?? null;
     if (dto.strategic_objective_id !== undefined)
       patch.strategic_objective_id = dto.strategic_objective_id ?? null;
+    if (dto.manual_progress !== undefined)
+      patch.manual_progress = dto.manual_progress ?? null;
+    if (dto.at_risk !== undefined) patch.at_risk = dto.at_risk ?? false;
 
     await this.repo.update(id, patch);
     return this.getDetail(id);

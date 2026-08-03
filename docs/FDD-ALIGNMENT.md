@@ -40,7 +40,7 @@ is still open); everything stays optional until the mandatory-field list is conf
 | Tier | — | ✅ EXTEND (lookup `tiers` + FK) — seeded Tier 1/2/3 |
 | Type | `deal_type_id` exists | ASK — is deal_type the FDD "Type" or new lookup? |
 | Sector | `category_id`? `region_id`? | ASK — sector may map to category, or be its own lookup |
-| Status | `status_id` | HAVE (values differ — FDD: In Progress etc. → ASK mapping) |
+| Status | `status_id` | HAVE. ASSUMED 2026-08-03: standard FDD five (Not Started/In Progress/On Hold/Completed/Cancelled) ADDED to the lookup alongside demo values (`db/fdd_register_columns.sql`); exact LOVs remain question 2 |
 | Start / End Date | `start_date`, `target_end_date` | HAVE |
 | Actual end | `actual_end_date` | HAVE |
 | Approved Budget (AED) | — | ✅ EXTEND (`approved_budget numeric`) |
@@ -52,6 +52,8 @@ is still open); everything stays optional until the mandatory-field list is conf
 | Internal / External Stakeholders | — | internal ✅ (`internal_stakeholder` text); external = multi-select chips (Fig 11) → join table, ASK pending |
 | Target Group | — | ✅ EXTEND (`target_group` text) |
 | Priority flag | — | ✅ EXTEND (`is_priority boolean`) — star toggle in forms |
+| Manual progress (Fig 1) | — | ✅ ASSUMED+SHIPPED 2026-08-03: `manual_progress numeric` (user-entered 0-100 per FDD 2.4) — edit dialog + detail row |
+| At Risk flag (Fig 1) | — | ✅ ASSUMED+SHIPPED 2026-08-03: `at_risk boolean` manual toggle; becomes formula-suggested in Wave 2 |
 
 ### 1.2 Milestone → `milestones` (mostly HAVE — big head start)
 | FDD attribute | P-Track today | Verdict |
