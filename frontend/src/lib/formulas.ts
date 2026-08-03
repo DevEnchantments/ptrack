@@ -59,3 +59,18 @@ export function riskSeverityTone(score: number): 'green' | 'amber' | 'red' {
   if (score >= 3) return 'amber'
   return 'green'
 }
+
+/** F4 — display-only at-risk suggestion; never writes the manual flag. */
+export function atRiskSuggested(
+  milestones: Array<{ status: string; due_date: string | null }>,
+  calculated: number | null,
+  planned: number | null,
+  today: string = new Date().toISOString().slice(0, 10),
+): boolean {
+  const overdue = milestones.some(
+    (m) => m.status === 'open' && m.due_date != null && m.due_date < today,
+  )
+  const behind =
+    calculated != null && planned != null && calculated + 15 < planned
+  return overdue || behind
+}

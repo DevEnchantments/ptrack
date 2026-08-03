@@ -127,8 +127,8 @@ index (timeliness/completeness/reliability, Figs 30–31) — **formulas = ASK (
 | FR-01 | Project register grid: filters, pagination, sort, status indicators | PARTIAL — filter rail + status pills exist; no manual/calculated progress columns, no grid view. 2026-07-30: home cards show a **milestone-completion** bar (done/total, labeled "Milestones") + open-issue counts via `GET /projects` aggregates — deliberately NOT the FDD's calculated progress, which awaits OI-02 formula sign-off (docs/FORMULAS.md rule); swap the bar to official progress when it lands |
 | FR-02 | Navigation: lists / views / reports / dashboards | PARTIAL — shell + stub items exist |
 | FR-03 | Project detail tabs (Overview, Achievement, Risk & Issue, Comment, Dashboard, Documentation, KPI, Change History) | PARTIAL — sections exist; tab layout + missing tabs to map |
-| FR-04 | Actual/planned progress, milestones done/total, budget cards | MISSING (math phase core) |
-| FR-05 | Milestone status donut (Completed / Not Started / On Target) | MISSING (chart system ready) |
+| FR-04 | Actual/planned progress, milestones done/total, budget cards | ✅ SHIPPED 2026-08-03: overview cards on the project page (progress vs plan with delta + F4 suggestion, milestone donut, budget utilization with over-budget flag, open items) |
+| FR-05 | Milestone status donut (Completed / Not Started / On Target) | ✅ SHIPPED 2026-08-03 (buckets ASSUMED: Completed / On Target / Overdue from status+due date; FDD bucket names remain the milestone-status ASK). CVD-validated chart trio, legend with counts |
 | FR-06 | Task lists: upcoming/completed, drawer, attachments, work notes | PARTIAL — action items + comments exist; drawer/grouping missing |
 | FR-07 | Risk & issue register with score/severity/audit | PARTIAL — issues yes, risks no |
 | FR-08 | Identify New Risk modal | MISSING |

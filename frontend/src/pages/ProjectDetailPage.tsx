@@ -44,6 +44,7 @@ import { Button } from '@/components/ui/button'
 import { AddPersonDialog } from '@/components/AddPersonDialog'
 import { AddMilestoneDialog } from '@/components/AddMilestoneDialog'
 import { AdjustWeightsDialog } from '@/components/AdjustWeightsDialog'
+import { ProjectOverviewCards } from '@/components/ProjectOverviewCards'
 import { AddActionItemDialog } from '@/components/AddActionItemDialog'
 import { AddLinkDialog } from '@/components/AddLinkDialog'
 import { AddResourceDialog } from '@/components/AddResourceDialog'
@@ -684,6 +685,16 @@ export function ProjectDetailPage() {
               Edit Project
             </Button>
           </div>
+
+          <ProjectOverviewCards
+            project={project}
+            milestones={milestones}
+            issues={issues}
+            risks={risks}
+            calcProgress={calcProgress}
+            planProgress={planProgress}
+            loading={sectionsLoading}
+          />
 
           <dl className="rounded-md border px-4">
             <Field label="Category" value={project.category?.name ?? null} />

@@ -62,8 +62,9 @@ change is render-only.
 
 A project *suggests* at-risk when it has at least one overdue open milestone,
 or `calculated + 15 < planned`. The stored `projects.at_risk` flag stays
-manual; the suggestion never writes it. (Not yet surfaced in the UI — reserved
-for Wave 3's overview cards.)
+manual; the suggestion never writes it. Surfaced 2026-08-03 on the project
+overview Progress card (amber "Suggested: at risk", shown only when the manual
+flag is off).
 
 ## Explicitly not implemented (await real sign-off)
 
