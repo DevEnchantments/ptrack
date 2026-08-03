@@ -185,6 +185,9 @@ export class ProjectsService {
     if (dto.sector_id !== undefined) patch.sector_id = dto.sector_id ?? null;
     if (dto.strategic_program_id !== undefined)
       patch.strategic_program_id = dto.strategic_program_id ?? null;
+    if (dto.sponsor !== undefined) patch.sponsor = dto.sponsor?.trim() || null;
+    if (dto.target_end_date !== undefined)
+      patch.target_end_date = dto.target_end_date || null;
 
     await this.repo.update(id, patch);
     return this.getDetail(id);

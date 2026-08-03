@@ -274,6 +274,24 @@ export class CreateProjectDto {
   @IsUUID()
   strategic_program_id?: string | null;
 
+  @ApiPropertyOptional({
+    example: 'Dept. of Community Development',
+    description: 'FDD 3.3.2 mandatory field (enforced in the UI).',
+  })
+  @IsOptional()
+  @IsString()
+  @MaxLength(255)
+  sponsor?: string | null;
+
+  @ApiPropertyOptional({
+    format: 'date',
+    example: '2026-12-31',
+    description: 'Target end date — FDD 3.3.2 mandatory (enforced in the UI).',
+  })
+  @IsOptional()
+  @IsDateString()
+  target_end_date?: string | null;
+
   @ApiPropertyOptional({ type: [ProjectMemberDto] })
   @IsOptional()
   @IsArray()

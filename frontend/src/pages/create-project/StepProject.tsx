@@ -76,18 +76,50 @@ export function StepProject({ form, errors, update }: Props) {
         )}
       </div>
 
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+        <div className="flex flex-col gap-2">
+          <Label htmlFor="start_date">
+            Start Date <span className="text-destructive">*</span>
+          </Label>
+          <Input
+            id="start_date"
+            type="date"
+            value={form.start_date}
+            onChange={(e) => update({ start_date: e.target.value })}
+          />
+          {errors.start_date && (
+            <p className="text-sm text-destructive">{errors.start_date}</p>
+          )}
+        </div>
+        <div className="flex flex-col gap-2">
+          <Label htmlFor="target_end_date">
+            Target End Date <span className="text-destructive">*</span>
+          </Label>
+          <Input
+            id="target_end_date"
+            type="date"
+            value={form.target_end_date}
+            onChange={(e) => update({ target_end_date: e.target.value })}
+            aria-invalid={errors.target_end_date ? true : undefined}
+          />
+          {errors.target_end_date && (
+            <p className="text-sm text-destructive">{errors.target_end_date}</p>
+          )}
+        </div>
+      </div>
+
       <div className="flex flex-col gap-2">
-        <Label htmlFor="start_date">
-          Start Date <span className="text-destructive">*</span>
+        <Label htmlFor="sponsor">
+          Sponsor <span className="text-destructive">*</span>
         </Label>
         <Input
-          id="start_date"
-          type="date"
-          value={form.start_date}
-          onChange={(e) => update({ start_date: e.target.value })}
+          id="sponsor"
+          value={form.sponsor}
+          onChange={(e) => update({ sponsor: e.target.value })}
+          aria-invalid={errors.sponsor ? true : undefined}
         />
-        {errors.start_date && (
-          <p className="text-sm text-destructive">{errors.start_date}</p>
+        {errors.sponsor && (
+          <p className="text-sm text-destructive">{errors.sponsor}</p>
         )}
       </div>
     </div>

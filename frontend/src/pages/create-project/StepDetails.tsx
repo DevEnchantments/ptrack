@@ -3,6 +3,7 @@ import { Star } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import type { CreateProjectForm } from '../CreateProjectWizard'
 import { lookupsApi, type Lookup } from '@/lib/api'
+import { NEW_SECTOR } from '@/lib/project-form'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -25,12 +26,14 @@ export function StepDetails({ form, errors, update }: Props) {
   const [statuses, setStatuses] = useState<Lookup[]>([])
   const [sizes, setSizes] = useState<Lookup[]>([])
   const [tiers, setTiers] = useState<Lookup[]>([])
+  const [sectors, setSectors] = useState<Lookup[]>([])
   const [objectives, setObjectives] = useState<Lookup[]>([])
 
   useEffect(() => {
     lookupsApi.list('project-statuses').then(setStatuses).catch(() => toast.error('Could not load project statuses.'))
     lookupsApi.list('project-sizes').then(setSizes).catch(() => toast.error('Could not load project sizes.'))
     lookupsApi.list('tiers').then(setTiers).catch(() => toast.error('Could not load tiers.'))
+    lookupsApi.list('sectors').then(setSectors).catch(() => toast.error('Could not load sectors.'))
     lookupsApi.list('strategic-objectives').then(setObjectives).catch(() => toast.error('Could not load strategic objectives.'))
   }, [])
 
@@ -145,13 +148,19 @@ export function StepDetails({ form, errors, update }: Props) {
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
         <div className="flex flex-col gap-2">
-          <Label htmlFor="reference_id">Reference ID</Label>
+          <Label htmlFor="reference_id">
+            Reference ID <span className="text-destructive">*</span>
+          </Label>
           <Input
             id="reference_id"
             value={form.reference_id}
             placeholder="e.g. 1.1.1"
             onChange={(e) => update({ reference_id: e.target.value })}
+            aria-invalid={errors.reference_id ? true : undefined}
           />
+          {errors.reference_id && (
+            <p className="text-sm text-destructive">{errors.reference_id}</p>
+          )}
         </div>
         <div className="flex flex-col gap-2">
           <Label htmlFor="project_number">Project Number</Label>
@@ -163,7 +172,9 @@ export function StepDetails({ form, errors, update }: Props) {
           />
         </div>
         <div className="flex flex-col gap-2">
-          <Label htmlFor="plan_year">Plan Year</Label>
+          <Label htmlFor="plan_year">
+            Plan Year <span className="text-destructive">*</span>
+          </Label>
           <Input
             id="plan_year"
             type="number"
@@ -232,7 +243,10 @@ export function StepDetails({ form, errors, update }: Props) {
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
         <div className="flex flex-col gap-2">
-          <Label htmlFor="approved_budget">Approved Budget (AED)</Label>
+          <Label htmlFor="approved_budget">
+            Approved Budget (AED){' '}
+            <span className="text-destructive">*</span>
+          </Label>
           <Input
             id="approved_budget"
             type="number"
@@ -278,6 +292,45 @@ export function StepDetails({ form, errors, update }: Props) {
             onChange={(e) => update({ internal_stakeholder: e.target.value })}
           />
         </div>
+      </div>
+
+      <div className="flex flex-col gap-2 sm:max-w-[calc(50%-0.75rem)]">
+        <Label>
+          Sector <span className="text-destructive">*</span>
+        </Label>
+        <Select
+          items={[
+            ...sectors.map((sec) => ({ label: sec.name, value: sec.id })),
+            { label: '- New Sector -', value: NEW_SECTOR },
+          ]}
+          value={form.sector_id ?? undefined}
+          onValueChange={(v) => update({ sector_id: v ?? null })}
+        >
+          <SelectTrigger
+            className="w-full"
+            aria-invalid={errors.sector_id ? true : undefined}
+          >
+            <SelectValue placeholder="- Select -" />
+          </SelectTrigger>
+          <SelectContent>
+            {sectors.map((sec) => (
+              <SelectItem key={sec.id} value={sec.id}>
+                {sec.name}
+              </SelectItem>
+            ))}
+            <SelectItem value={NEW_SECTOR}>- New Sector -</SelectItem>
+          </SelectContent>
+        </Select>
+        {form.sector_id === NEW_SECTOR && (
+          <Input
+            value={form.new_sector}
+            placeholder="New Sector Name"
+            onChange={(e) => update({ new_sector: e.target.value })}
+          />
+        )}
+        {errors.sector_id && (
+          <p className="text-sm text-destructive">{errors.sector_id}</p>
+        )}
       </div>
 
       <div className="flex flex-col gap-2">

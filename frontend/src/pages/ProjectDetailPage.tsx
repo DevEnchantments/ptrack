@@ -667,6 +667,11 @@ export function ProjectDetailPage() {
             <Field label="Goal" value={project.goal} />
             <Field label="Customer" value={project.customer} />
             <Field label="Project Start Date" value={project.start_date} />
+            <Field
+              label="Target End Date"
+              value={project.target_end_date}
+            />
+            <Field label="Sponsor" value={project.sponsor} />
             <Field label="Project Size" value={project.size?.name ?? null} />
             <Field label="Reference ID" value={project.reference_id} />
             <Field label="Project Number" value={project.project_number} />

@@ -16,17 +16,23 @@ export function StepConfirmation({ form }: { form: CreateProjectForm }) {
   const [statuses, setStatuses] = useState<Lookup[]>([])
   const [roles, setRoles] = useState<Lookup[]>([])
   const [tiers, setTiers] = useState<Lookup[]>([])
+  const [sectors, setSectors] = useState<Lookup[]>([])
   const [objectives, setObjectives] = useState<Lookup[]>([])
 
   useEffect(() => {
     lookupsApi.list('project-statuses').then(setStatuses).catch(() => toast.error('Could not load project statuses.'))
     lookupsApi.list('project-roles').then(setRoles).catch(() => toast.error('Could not load project roles.'))
     lookupsApi.list('tiers').then(setTiers).catch(() => toast.error('Could not load tiers.'))
+    lookupsApi.list('sectors').then(setSectors).catch(() => toast.error('Could not load sectors.'))
     lookupsApi.list('strategic-objectives').then(setObjectives).catch(() => toast.error('Could not load strategic objectives.'))
   }, [])
 
   const statusName = statuses.find((s) => s.id === form.status_id)?.name ?? '-'
   const tierName = tiers.find((t) => t.id === form.tier_id)?.name
+  const sectorName =
+    form.sector_id === '__new_sector__'
+      ? `${form.new_sector.trim()} (new)`
+      : sectors.find((sec) => sec.id === form.sector_id)?.name
   const objectiveName = objectives.find(
     (o) => o.id === form.strategic_objective_id,
   )?.name
@@ -48,6 +54,9 @@ export function StepConfirmation({ form }: { form: CreateProjectForm }) {
         <Row label="Status" value={statusName} />
         <Row label="Access Control" value={accessLabel} />
         <Row label="Start Date" value={form.start_date || '-'} />
+        <Row label="End Date" value={form.target_end_date || '-'} />
+        <Row label="Sponsor" value={form.sponsor.trim() || '-'} />
+        <Row label="Sector" value={sectorName || '-'} />
         {form.reference_id.trim() && (
           <Row label="Reference ID" value={form.reference_id.trim()} />
         )}

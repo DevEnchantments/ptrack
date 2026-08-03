@@ -275,13 +275,13 @@
     "semantic_hash": ""
   },
   "backend/src/modules/projects/dto/create-project.dto.ts": {
-    "mtime": 1785746950.521055,
-    "ast_hash": "4668b711b2f8a49b9e78847ba8104109",
+    "mtime": 1785748406.2986355,
+    "ast_hash": "c5eb17669d78fce83f096b2aef0c2cf7",
     "semantic_hash": ""
   },
   "backend/src/modules/projects/dto/update-project.dto.ts": {
-    "mtime": 1785746950.5220556,
-    "ast_hash": "c9b339e065d485d3d8ac586ab621b3b5",
+    "mtime": 1785748406.2996356,
+    "ast_hash": "37f9dc0f99b703bb3d56ce668f9a3203",
     "semantic_hash": ""
   },
   "backend/src/modules/projects/projects.controller.ts": {
@@ -300,8 +300,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/projects/projects.service.ts": {
-    "mtime": 1785746950.5230582,
-    "ast_hash": "03e78fa6d9dbd3ec9873a871385d5936",
+    "mtime": 1785748406.300635,
+    "ast_hash": "6a03795c8937b04509ec28a1a5a8d737",
     "semantic_hash": ""
   },
   "backend/src/modules/resources/dto/create-resource.dto.ts": {
@@ -500,8 +500,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/EditProjectDialog.tsx": {
-    "mtime": 1785747449.9163654,
-    "ast_hash": "72dd5eb846f19abc985b69e3f26c63f2",
+    "mtime": 1785748406.304641,
+    "ast_hash": "bc2dbead3a907bb45c866c0eec89b6ac",
     "semantic_hash": ""
   },
   "frontend/src/components/MiniCalendar.tsx": {
@@ -555,8 +555,8 @@
     "semantic_hash": ""
   },
   "frontend/src/lib/api.ts": {
-    "mtime": 1785747449.8734512,
-    "ast_hash": "997abe9b99e1602efd775dde0aca1aaf",
+    "mtime": 1785748406.3016353,
+    "ast_hash": "0112567e382e239865e66e5c400e27df",
     "semantic_hash": ""
   },
   "frontend/src/lib/auth-context.tsx": {
@@ -590,8 +590,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/CreateProjectWizard.tsx": {
-    "mtime": 1785336203.722006,
-    "ast_hash": "96b9daf9528cb666d6ff869e43705493",
+    "mtime": 1785748406.3066356,
+    "ast_hash": "9bf8960fc041d39c603567ef5b76fb9a",
     "semantic_hash": ""
   },
   "frontend/src/pages/HomePage.tsx": {
@@ -610,8 +610,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ProjectDetailPage.tsx": {
-    "mtime": 1785747449.9707408,
-    "ast_hash": "81d3da24f5990a474ed6da15bc69f596",
+    "mtime": 1785748406.3126352,
+    "ast_hash": "f09b28a2925684c6f752aab8cef7e10b",
     "semantic_hash": ""
   },
   "frontend/src/pages/StatusReportDetailPage.tsx": {
@@ -625,19 +625,19 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/create-project/StepConfirmation.tsx": {
-    "mtime": 1785336203.7245104,
-    "ast_hash": "46767456b69465a47af26240eac0af93",
+    "mtime": 1785748406.3106382,
+    "ast_hash": "9f0d1e94ed42545886dc0cbaf2e2322e",
     "semantic_hash": ""
   },
   "frontend/src/pages/create-project/StepDetails.tsx": {
-    "mtime": 1785333454.195758,
-    "ast_hash": "22e89b36db6ca0c8b593e18be43ec694",
+    "mtime": 1785748406.3096354,
+    "ast_hash": "1ba56491f0f929d7abf39f4239fce760",
     "semantic_hash": ""
   },
   "frontend/src/pages/create-project/StepProject.tsx": {
-    "mtime": 1783400898.4773314,
-    "ast_hash": "6f709c97dddca1aee28caff8838f00b1",
-    "semantic_hash": "6f709c97dddca1aee28caff8838f00b1"
+    "mtime": 1785748406.3086386,
+    "ast_hash": "0d4fa9a27e83e4731954416b59f1e19a",
+    "semantic_hash": ""
   },
   "frontend/tsconfig.app.json": {
     "mtime": 1784058965.3593576,
@@ -845,8 +845,8 @@
     "semantic_hash": ""
   },
   "frontend/src/lib/project-form.ts": {
-    "mtime": 1784524720.7373056,
-    "ast_hash": "7ee7513e6e78d153978caee3b651efe7",
+    "mtime": 1785748406.3036363,
+    "ast_hash": "ad71d591d59d4b120ab03f49be02a204",
     "semantic_hash": ""
   },
   "db/replace_action_item_owners.sql": {
@@ -905,8 +905,8 @@
     "semantic_hash": ""
   },
   "docs/FDD-ALIGNMENT.md": {
-    "mtime": 1785747618.1315858,
-    "ast_hash": "f9912391992a4fa6df32eb4b0abef696",
+    "mtime": 1785748786.9044952,
+    "ast_hash": "4269c98735c01be34345c69bed238a1d",
     "semantic_hash": ""
   },
   "backend/db/fdd_project_fields.sql": {

@@ -150,7 +150,7 @@ UC-17 PMO hierarchy tree · UC-18 project details report.
 (Track pass/fail per UC as features land — each finished stage must name which UCs it satisfies.)
 
 ## 4. Key validations / business rules (FDD 3.3.2)
-- Mandatory project fields (name, reference ID, plan year, owner, sponsor, sector, end date, approved budget) — confirm exact list (OI-05)
+- Mandatory project fields (name, reference ID, plan year, owner, sponsor, sector, end date, approved budget) — ✅ ASSUMED+SHIPPED 2026-08-03: enforced in the UI (wizard steps 1/3 + edit dialog; not retroactive on stored rows; wizard's required first member stands in for owner at create, `owner_id` enforced from first edit). Sponsor + target end date finally exposed in forms. Exact list remains OI-05
 - Progress numeric, 0–100
 - **Milestone weights must total 100% before submission**
 - Utilized ≤ approved budget; highlight on threshold breach (threshold = ASK)

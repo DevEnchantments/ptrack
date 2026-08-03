@@ -2,8 +2,8 @@ import { useState } from 'react'
 import { Loader2 } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/lib/auth-context'
-import { projectsApi } from '@/lib/api'
-import { emptyMember } from '@/lib/project-form'
+import { projectsApi, sectorsApi } from '@/lib/api'
+import { NEW_SECTOR, emptyMember } from '@/lib/project-form'
 import { usePageTitle } from '@/lib/use-page-title'
 import { Button } from '@/components/ui/button'
 import { StepProject } from './create-project/StepProject'
@@ -22,6 +22,8 @@ export interface CreateProjectForm {
   name: string
   parent_project_id: string | null
   start_date: string
+  target_end_date: string
+  sponsor: string
   access_control: 'open' | 'restricted'
   members: ProjectMemberInput[]
   status_id: string | null
@@ -44,6 +46,8 @@ export interface CreateProjectForm {
   utilized_budget: string
   tier_id: string | null
   strategic_objective_id: string | null
+  sector_id: string | null
+  new_sector: string
 }
 
 const STEP_LABELS = ['Project', 'Access', 'Details', 'Confirmation']
@@ -61,6 +65,8 @@ export function CreateProjectWizard() {
     name: '',
     parent_project_id: null,
     start_date: todayISO(),
+    target_end_date: '',
+    sponsor: '',
     access_control: 'open',
     members: [
       {
@@ -91,6 +97,8 @@ export function CreateProjectWizard() {
     utilized_budget: '',
     tier_id: null,
     strategic_objective_id: null,
+    sector_id: null,
+    new_sector: '',
   }))
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [submitting, setSubmitting] = useState(false)
@@ -104,6 +112,10 @@ export function CreateProjectWizard() {
     const e: Record<string, string> = {}
     if (!form.name.trim()) e.name = 'Project name is required.'
     if (!form.start_date) e.start_date = 'Start date is required.'
+    if (!form.target_end_date) e.target_end_date = 'An end date is required.'
+    else if (form.start_date && form.target_end_date < form.start_date)
+      e.target_end_date = 'End date must be on or after the start date.'
+    if (!form.sponsor.trim()) e.sponsor = 'A sponsor is required.'
     setErrors(e)
     return Object.keys(e).length === 0
   }
@@ -129,8 +141,17 @@ export function CreateProjectWizard() {
   function validateStep3() {
     const e: Record<string, string> = {}
     if (!form.status_id) e.status_id = 'Status is required.'
-    if (form.plan_year.trim() && !Number.isInteger(Number(form.plan_year)))
+    // FDD 3.3.2 mandatory fields (ASSUMED enforcement scope — UI-only).
+    if (!form.reference_id.trim())
+      e.reference_id = 'A reference ID is required.'
+    if (!form.plan_year.trim()) e.plan_year = 'A plan year is required.'
+    else if (!Number.isInteger(Number(form.plan_year)))
       e.plan_year = 'Plan year must be a whole number.'
+    if (!form.sector_id) e.sector_id = 'A sector is required.'
+    if (form.sector_id === NEW_SECTOR && !form.new_sector.trim())
+      e.sector_id = 'Enter a name for the new sector.'
+    if (!form.approved_budget.trim())
+      e.approved_budget = 'An approved budget is required.'
     if (
       form.approved_budget.trim() &&
       (Number.isNaN(Number(form.approved_budget)) ||
@@ -160,7 +181,7 @@ export function CreateProjectWizard() {
     setStep((s) => Math.max(s - 1, 0))
   }
 
-  function buildPayload() {
+  function buildPayload(sectorId: string | null) {
     const members = form.members
       .filter((m) => m.display_name.trim() && m.role_id)
       .map((m) => ({
@@ -199,6 +220,9 @@ export function CreateProjectWizard() {
         ? Number(form.utilized_budget)
         : undefined,
       tier_id: form.tier_id ?? undefined,
+      sector_id: sectorId ?? undefined,
+      sponsor: form.sponsor.trim() || undefined,
+      target_end_date: form.target_end_date || undefined,
       strategic_objective_id: form.strategic_objective_id ?? undefined,
       members,
     }
@@ -208,7 +232,12 @@ export function CreateProjectWizard() {
     setSubmitError(null)
     setSubmitting(true)
     try {
-      await projectsApi.create(buildPayload())
+      let sectorId = form.sector_id === NEW_SECTOR ? null : form.sector_id
+      if (form.sector_id === NEW_SECTOR) {
+        const created = await sectorsApi.create(form.new_sector.trim())
+        sectorId = created.id
+      }
+      await projectsApi.create(buildPayload(sectorId))
       navigate('/')
     } catch (e) {
       setSubmitError((e as Error).message)

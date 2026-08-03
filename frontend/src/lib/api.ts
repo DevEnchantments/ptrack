@@ -69,6 +69,8 @@ export interface Project {
   category_id: string | null
   access_control: string
   start_date: string | null
+  target_end_date: string | null
+  sponsor: string | null
   created_by: string | null
   created_at: string
   updated_at: string

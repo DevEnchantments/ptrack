@@ -2,6 +2,7 @@ import { FieldError } from '@/components/FieldError'
 import { PersonAutocomplete } from '@/components/PersonAutocomplete'
 import type { ProjectMemberInput } from '@/pages/CreateProjectWizard'
 import { useAuth } from '@/lib/auth-context'
+import { NEW_SECTOR } from '@/lib/project-form'
 import { Loader2, Star, TriangleAlert, X } from 'lucide-react'
 import { toast } from '@/lib/toast'
 import { useEffect, useState } from 'react'
@@ -47,7 +48,7 @@ function personFromProfile(
   }
 }
 const NEW_CATEGORY = '__new_category__'
-const NEW_SECTOR = '__new_sector__'
+
 
 interface Props {
   project: ProjectDetail
@@ -87,6 +88,8 @@ export function EditProjectDialog({
   const [customer, setCustomer] = useState('')
   const [primaryUrl, setPrimaryUrl] = useState('')
   const [startDate, setStartDate] = useState('')
+  const [targetEndDate, setTargetEndDate] = useState('')
+  const [sponsor, setSponsor] = useState('')
   // FDD Stage-1 fields (docs/FDD-ALIGNMENT.md section 1.1)
   const [referenceId, setReferenceId] = useState('')
   const [projectNumber, setProjectNumber] = useState('')
@@ -165,6 +168,8 @@ export function EditProjectDialog({
       setCustomer(project.customer ?? '')
       setPrimaryUrl(project.primary_url ?? '')
       setStartDate(project.start_date ?? '')
+      setTargetEndDate(project.target_end_date ?? '')
+      setSponsor(project.sponsor ?? '')
       setReferenceId(project.reference_id ?? '')
       setProjectNumber(project.project_number ?? '')
       setPlanYear(project.plan_year != null ? String(project.plan_year) : '')
@@ -217,11 +222,22 @@ export function EditProjectDialog({
     const errs: Record<string, string> = {}
     if (!name.trim()) errs.name = 'A project name is required.'
     if (!statusId) errs.statusId = 'A status is required.'
-    if (planYear.trim() && !Number.isInteger(Number(planYear)))
+    // FDD 3.3.2 mandatory fields (ASSUMED enforcement scope — UI-only).
+    if (!referenceId.trim()) errs.referenceId = 'A reference ID is required.'
+    if (!planYear.trim()) errs.planYear = 'A plan year is required.'
+    else if (!Number.isInteger(Number(planYear)))
       errs.planYear = 'Plan year must be a whole number.'
-    if (
-      approvedBudget.trim() &&
-      (Number.isNaN(Number(approvedBudget)) || Number(approvedBudget) < 0)
+    if (!sponsor.trim()) errs.sponsor = 'A sponsor is required.'
+    if (!sectorId) errs.sectorId = 'A sector is required.'
+    if (!ownerPerson.user_id) errs.owner = 'A project owner is required.'
+    if (!targetEndDate) errs.targetEndDate = 'An end date is required.'
+    else if (startDate && targetEndDate < startDate)
+      errs.targetEndDate = 'End date must be on or after the start date.'
+    if (!approvedBudget.trim())
+      errs.approvedBudget = 'An approved budget is required.'
+    else if (
+      Number.isNaN(Number(approvedBudget)) ||
+      Number(approvedBudget) < 0
     )
       errs.approvedBudget = 'Enter a valid amount.'
     if (
@@ -285,6 +301,8 @@ export function EditProjectDialog({
         primary_url: primaryUrl.trim() || null,
         tags: tagList.length ? tagList : null,
         start_date: startDate || null,
+        target_end_date: targetEndDate || null,
+        sponsor: sponsor.trim() || null,
         reference_id: referenceId.trim() || null,
         project_number: projectNumber.trim() || null,
         plan_year: planYear.trim() ? Number(planYear) : null,
@@ -354,12 +372,16 @@ export function EditProjectDialog({
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
             <div className="flex flex-col gap-2">
-              <Label>Reference ID</Label>
+              <Label>
+                Reference ID <span className="text-destructive">*</span>
+              </Label>
               <Input
                 value={referenceId}
                 placeholder="e.g. 1.1.1"
                 onChange={(e) => setReferenceId(e.target.value)}
+                aria-invalid={fieldErrors.referenceId ? true : undefined}
               />
+              <FieldError message={fieldErrors.referenceId} />
             </div>
             <div className="flex flex-col gap-2">
               <Label>Project Number</Label>
@@ -370,7 +392,9 @@ export function EditProjectDialog({
               />
             </div>
             <div className="flex flex-col gap-2">
-              <Label>Plan Year</Label>
+              <Label>
+                Plan Year <span className="text-destructive">*</span>
+              </Label>
               <Input
                 type="number"
                 value={planYear}
@@ -541,7 +565,9 @@ export function EditProjectDialog({
             </div>
 
             <div className="flex flex-col gap-2">
-              <Label>Sector</Label>
+              <Label>
+                Sector <span className="text-destructive">*</span>
+              </Label>
               <Select
                 items={[
                   { label: '- None -', value: NONE },
@@ -564,6 +590,7 @@ export function EditProjectDialog({
                   <SelectItem value={NEW_SECTOR}>- New Sector -</SelectItem>
                 </SelectContent>
               </Select>
+              <FieldError message={fieldErrors.sectorId} />
               {sectorId === NEW_SECTOR && (
                 <Input
                   value={newSector}
@@ -576,7 +603,10 @@ export function EditProjectDialog({
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="flex flex-col gap-2">
-              <Label>Approved Budget (AED)</Label>
+              <Label>
+                Approved Budget (AED){' '}
+                <span className="text-destructive">*</span>
+              </Label>
               <Input
                 type="number"
                 min={0}
@@ -732,7 +762,9 @@ export function EditProjectDialog({
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div className="flex flex-col gap-2">
-            <Label>Project Owner</Label>
+            <Label>
+              Project Owner <span className="text-destructive">*</span>
+            </Label>
             <div className="flex items-start gap-2">
               <div className="flex-1">
                 <PersonAutocomplete allowPending={false} value={ownerPerson} onChange={(p) => setOwnerPerson((cur) => ({ ...cur, ...p }))} />
@@ -746,6 +778,7 @@ export function EditProjectDialog({
                 Me
               </Button>
             </div>
+            <FieldError message={fieldErrors.owner} />
           </div>
           <div className="flex flex-col gap-2">
             <Label>PMO Partner</Label>
@@ -886,13 +919,39 @@ export function EditProjectDialog({
             </div>
           </div>
 
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="flex flex-col gap-2">
+              <Label>Project Start Date</Label>
+              <Input
+                type="date"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <Label>
+                Target End Date <span className="text-destructive">*</span>
+              </Label>
+              <Input
+                type="date"
+                value={targetEndDate}
+                onChange={(e) => setTargetEndDate(e.target.value)}
+                aria-invalid={fieldErrors.targetEndDate ? true : undefined}
+              />
+              <FieldError message={fieldErrors.targetEndDate} />
+            </div>
+          </div>
+
           <div className="flex flex-col gap-2 sm:w-1/2">
-            <Label>Project Start Date</Label>
+            <Label>
+              Sponsor <span className="text-destructive">*</span>
+            </Label>
             <Input
-              type="date"
-              value={startDate}
-              onChange={(e) => setStartDate(e.target.value)}
+              value={sponsor}
+              onChange={(e) => setSponsor(e.target.value)}
+              aria-invalid={fieldErrors.sponsor ? true : undefined}
             />
+            <FieldError message={fieldErrors.sponsor} />
           </div>
 
           {error && <p className="hint-in text-sm font-medium text-destructive">{error}</p>}
