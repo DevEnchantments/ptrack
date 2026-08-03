@@ -81,14 +81,5 @@
   "79": "StatusPill.tsx",
   "80": "IsOptional",
   "81": "IsString",
-  "82": "IsUUID",
-  "83": "MaxLength",
-  "84": "ApiBody",
-  "85": "Body",
-  "86": "Controller",
-  "87": "Delete",
-  "88": "Get",
-  "89": "Param",
-  "90": "Patch",
-  "91": "Post"
+  "82": "IsUUID"
 }
