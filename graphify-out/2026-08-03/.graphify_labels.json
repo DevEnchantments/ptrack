@@ -72,10 +72,16 @@
   "70": "StatusPill.tsx",
   "71": "moduleFileExtensions",
   "72": "@nestjs/config",
+  "73": "Link",
+  "74": "ProjectMemberDetail",
+  "75": "Resource",
   "76": "tw-animate-css",
   "77": "dev.ps1",
   "78": "@types/node",
   "79": "StatusPill.tsx",
+  "80": "ApiProperty",
+  "81": "Type",
   "82": "auth-context.tsx",
+  "83": "Injectable",
   "85": "react-dom"
 }

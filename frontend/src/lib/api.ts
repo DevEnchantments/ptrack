@@ -155,6 +155,9 @@ export interface ProjectListItem extends Project {
   milestones_done: number
   milestones_total: number
   open_issues: number
+  /** F1/F2, docs/FORMULAS.md (PROVISIONAL). */
+  calculated_progress: number | null
+  planned_progress: number | null
 }
 
 export const projectsApi = {
@@ -516,8 +519,8 @@ export interface Risk {
   updated_at: string
   source: { name: string } | null
   category: { name: string } | null
-  probability: { name: string } | null
-  impact: { name: string } | null
+  probability: { name: string; sort_order: number | null } | null
+  impact: { name: string; sort_order: number | null } | null
   response: { name: string } | null
   owner: { full_name: string | null; email: string | null } | null
 }

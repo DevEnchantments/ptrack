@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { CircleAlert, Lock, Search, Star } from 'lucide-react'
+import { CircleAlert, Flag, Lock, Search, Star, TriangleAlert } from 'lucide-react'
 import {
   projectsApi,
   lookupsApi,
@@ -419,6 +419,9 @@ export function HomePage() {
                             {p.access_control === 'restricted' && (
                               <Lock className="mr-1 inline h-4 w-4 text-muted-foreground" />
                             )}
+                            {p.at_risk && (
+                              <TriangleAlert className="mr-1 inline h-4 w-4 text-destructive" />
+                            )}
                             {p.name}
                           </h2>
                           <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-medium text-primary-foreground">
@@ -434,9 +437,9 @@ export function HomePage() {
                           {p.description ?? ''}
                         </p>
                         <div className="mt-3 mb-1 flex items-center justify-between text-xs text-muted-foreground">
-                          <span>Milestones</span>
+                          <span>Progress</span>
                           <span className="font-medium text-foreground">
-                            {p.milestones_done}/{p.milestones_total}
+                            {p.calculated_progress ?? 0}%
                           </span>
                         </div>
                         <div className="h-1.5 overflow-hidden rounded-full bg-muted">
@@ -444,18 +447,24 @@ export function HomePage() {
                             className="h-full rounded-full bg-primary transition-[width] duration-500 ease-out"
                             style={{
                               width:
-                                entered && p.milestones_total > 0
-                                  ? `${(p.milestones_done / p.milestones_total) * 100}%`
+                                entered && p.calculated_progress != null
+                                  ? `${p.calculated_progress}%`
                                   : '0%',
                             }}
                           />
                         </div>
                         <div className="mt-3 flex items-center gap-4 border-t pt-3 text-xs text-muted-foreground">
                           <span className="flex items-center gap-1">
-                            <CircleAlert className="h-3.5 w-3.5" />
-                            {p.open_issues} open{' '}
-                            {p.open_issues === 1 ? 'issue' : 'issues'}
+                            <Flag className="h-3.5 w-3.5" />
+                            {p.milestones_done}/{p.milestones_total}
                           </span>
+                          <span className="flex items-center gap-1">
+                            <CircleAlert className="h-3.5 w-3.5" />
+                            {p.open_issues} open
+                          </span>
+                          {p.manual_progress != null && (
+                            <span>Manual {p.manual_progress}%</span>
+                          )}
                           <span className="ml-auto">
                             {relativeTime(p.updated_at)}
                           </span>

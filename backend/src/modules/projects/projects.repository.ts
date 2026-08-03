@@ -1,6 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../../database/database.service';
 import { toHttpException } from '../../common/supabase-error';
+import {
+  calculatedProgress,
+  type MilestoneProgressRow,
+} from '../../common/formulas';
 import { ATTACHMENTS_BUCKET } from '../attachments/attachments.repository';
 
 export interface Project {
@@ -58,6 +62,8 @@ export interface ProjectListStats {
   milestones_done: number;
   milestones_total: number;
   open_issues: number;
+  /** F1, docs/FORMULAS.md (PROVISIONAL). Null when not computable. */
+  calculated_progress: number | null;
 }
 
 export interface ProjectDetail extends Project {
@@ -162,14 +168,19 @@ export class ProjectsRepository {
   ): Promise<Record<string, ProjectListStats>> {
     const stats: Record<string, ProjectListStats> = {};
     for (const id of projectIds) {
-      stats[id] = { milestones_done: 0, milestones_total: 0, open_issues: 0 };
+      stats[id] = {
+        milestones_done: 0,
+        milestones_total: 0,
+        open_issues: 0,
+        calculated_progress: null,
+      };
     }
     if (projectIds.length === 0) return stats;
 
     const [ms, iss] = await Promise.all([
       this.db.client
         .from('milestones')
-        .select('project_id, status')
+        .select('project_id, status, weightage, percent_complete')
         .in('project_id', projectIds),
       this.db.client
         .from('issues')
@@ -179,12 +190,21 @@ export class ProjectsRepository {
     if (ms.error) throw toHttpException(ms.error, 'projects.listStats');
     if (iss.error) throw toHttpException(iss.error, 'projects.listStats');
 
-    (ms.data ?? []).forEach((r: { project_id: string; status: string }) => {
-      const s = stats[r.project_id];
-      if (!s) return;
-      s.milestones_total += 1;
-      if (r.status === 'closed_completed') s.milestones_done += 1;
-    });
+    const progressRows: Record<string, MilestoneProgressRow[]> = {};
+    (ms.data ?? []).forEach(
+      (r: { project_id: string } & MilestoneProgressRow) => {
+        const s = stats[r.project_id];
+        if (!s) return;
+        s.milestones_total += 1;
+        if (r.status === 'closed_completed') s.milestones_done += 1;
+        (progressRows[r.project_id] ??= []).push(r);
+      },
+    );
+    for (const id of projectIds) {
+      stats[id].calculated_progress = calculatedProgress(
+        progressRows[id] ?? [],
+      );
+    }
     (iss.data ?? []).forEach((r: { project_id: string; status: string }) => {
       const s = stats[r.project_id];
       if (!s) return;

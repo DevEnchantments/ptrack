@@ -5,6 +5,7 @@ import {
   ProjectDetail,
   ProjectListStats,
 } from './projects.repository';
+import { plannedProgress } from '../../common/formulas';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
 import { MilestonesService } from '../milestones/milestones.service';
@@ -112,10 +113,17 @@ export class ProjectsService {
   async findAll(page?: {
     limit?: number;
     offset?: number;
-  }): Promise<Array<Project & ProjectListStats>> {
+  }): Promise<
+    Array<Project & ProjectListStats & { planned_progress: number | null }>
+  > {
     const projects = await this.repo.findAll(page);
     const stats = await this.repo.listStats(projects.map((p) => p.id));
-    return projects.map((p) => ({ ...p, ...stats[p.id] }));
+    return projects.map((p) => ({
+      ...p,
+      ...stats[p.id],
+      // F2, docs/FORMULAS.md (PROVISIONAL).
+      planned_progress: plannedProgress(p.start_date, p.target_end_date),
+    }));
   }
 
   async getDetail(id: string): Promise<ProjectDetail> {

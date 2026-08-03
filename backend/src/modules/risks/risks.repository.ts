@@ -27,8 +27,8 @@ export interface Risk {
 export interface RiskListItem extends Risk {
   source: { name: string } | null;
   category: { name: string } | null;
-  probability: { name: string } | null;
-  impact: { name: string } | null;
+  probability: { name: string; sort_order: number | null } | null;
+  impact: { name: string; sort_order: number | null } | null;
   response: { name: string } | null;
   owner: { full_name: string | null; email: string | null } | null;
   updated_by_profile?: {
@@ -43,8 +43,8 @@ const COLUMNS =
 const JOINS = `${COLUMNS},
   source:risk_sources ( name ),
   category:risk_categories ( name ),
-  probability:risk_probability_levels ( name ),
-  impact:risk_impact_levels ( name ),
+  probability:risk_probability_levels ( name, sort_order ),
+  impact:risk_impact_levels ( name, sort_order ),
   response:risk_responses ( name ),
   owner:profiles!owner_id ( full_name, email ),
   updated_by_profile:profiles!updated_by ( full_name, email )`;

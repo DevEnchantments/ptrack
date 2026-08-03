@@ -295,13 +295,13 @@
     "semantic_hash": ""
   },
   "backend/src/modules/projects/projects.repository.ts": {
-    "mtime": 1785746950.520054,
-    "ast_hash": "486e12b52cc6650d46ce8ad458d5907d",
+    "mtime": 1785756680.328758,
+    "ast_hash": "bfc2b2c4f4e42231346ccc972a5f4d9f",
     "semantic_hash": ""
   },
   "backend/src/modules/projects/projects.service.ts": {
-    "mtime": 1785748406.300635,
-    "ast_hash": "6a03795c8937b04509ec28a1a5a8d737",
+    "mtime": 1785756932.2835817,
+    "ast_hash": "b7c6e258bb2c8f2a8b2c5df6000e5fec",
     "semantic_hash": ""
   },
   "backend/src/modules/resources/dto/create-resource.dto.ts": {
@@ -555,8 +555,8 @@
     "semantic_hash": ""
   },
   "frontend/src/lib/api.ts": {
-    "mtime": 1785748406.3016353,
-    "ast_hash": "0112567e382e239865e66e5c400e27df",
+    "mtime": 1785757025.5826635,
+    "ast_hash": "e307a1ed253ae0f89207b2f2dc9b86fa",
     "semantic_hash": ""
   },
   "frontend/src/lib/auth-context.tsx": {
@@ -595,8 +595,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/HomePage.tsx": {
-    "mtime": 1785389241.144648,
-    "ast_hash": "fe3d8b4f50a814fea7dc3e6864a2602d",
+    "mtime": 1785757025.5846632,
+    "ast_hash": "0a7e599fa502b5c81d2408bc14f629d0",
     "semantic_hash": ""
   },
   "frontend/src/pages/LoginPage.tsx": {
@@ -610,8 +610,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ProjectDetailPage.tsx": {
-    "mtime": 1785748406.3126352,
-    "ast_hash": "f09b28a2925684c6f752aab8cef7e10b",
+    "mtime": 1785757025.586661,
+    "ast_hash": "1b84c0c100100dcef64f350b3671cacb",
     "semantic_hash": ""
   },
   "frontend/src/pages/StatusReportDetailPage.tsx": {
@@ -905,8 +905,8 @@
     "semantic_hash": ""
   },
   "docs/FDD-ALIGNMENT.md": {
-    "mtime": 1785748786.9044952,
-    "ast_hash": "4269c98735c01be34345c69bed238a1d",
+    "mtime": 1785757188.6699746,
+    "ast_hash": "c7a6e04700591eefb96cda3e81e9163e",
     "semantic_hash": ""
   },
   "backend/db/fdd_project_fields.sql": {
@@ -1000,8 +1000,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/risks/risks.repository.ts": {
-    "mtime": 1785742861.098467,
-    "ast_hash": "b16fdccd388d178c874abb61fa55f6c5",
+    "mtime": 1785756932.2855814,
+    "ast_hash": "1fb5876234da9d435b36f724264ea7d9",
     "semantic_hash": ""
   },
   "backend/src/modules/risks/risks.service.ts": {
@@ -1027,6 +1027,26 @@
   "backend/db/fdd_stakeholders_sector_programs.sql": {
     "mtime": 1785747753.2141302,
     "ast_hash": "54d86e8d6925e41f25eed0f53e5ec9e8",
+    "semantic_hash": ""
+  },
+  "backend/src/common/formulas.spec.ts": {
+    "mtime": 1785754162.4181104,
+    "ast_hash": "d00fc289a4d1fae169d3d4f7613ef3a3",
+    "semantic_hash": ""
+  },
+  "backend/src/common/formulas.ts": {
+    "mtime": 1785754154.2828274,
+    "ast_hash": "16ac5b8eaf844d4d401c2476e5248801",
+    "semantic_hash": ""
+  },
+  "frontend/src/lib/formulas.ts": {
+    "mtime": 1785757001.307917,
+    "ast_hash": "2ca3f41a108d84f7cf60e462cc7ece27",
+    "semantic_hash": ""
+  },
+  "docs/FORMULAS.md": {
+    "mtime": 1785754148.145664,
+    "ast_hash": "d4890bd036f07ca5b3c7131e8a589d52",
     "semantic_hash": ""
   }
 }

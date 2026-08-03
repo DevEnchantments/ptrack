@@ -167,7 +167,7 @@ threshold, milestone overdue — channel undecided (OI-07); ties to the long-pla
 notification subsystem.
 
 ## 6. Open questions for the supervisor (blockers marked ⛔)
-1. ⛔ (OI-02) Formulas: calculated progress roll-up, planned progress over time, risk score, KPI achievement %, data-quality index.
+1. (OI-02) Formulas — PROVISIONAL standard set adopted 2026-08-03 on Fares's authority and implemented (docs/FORMULAS.md F1-F4: calculated progress, planned progress, risk score+severity, at-risk suggestion). Sign-off still requested; KPI achievement % and data-quality index deliberately NOT implemented (policy numbers, not standards).
 2. ⛔ Sector vs our category; Tier values; Type vs deal_type; status value mappings (project + milestone buckets).
    2b. **Discovery (2026-07-29):** Reference IDs in the FDD look like `1.1.1` — dotted numbering that plausibly encodes the strategy hierarchy (objective.program.project). If confirmed, Reference ID is derivable from the Strategic Program cascade, not free text.
 3. ⛔ (OI-03) Workflow routing: who reviews/validates/approves; return rules; cycle calendar (monthly? Fig 32 shows 12 cycles/yr).

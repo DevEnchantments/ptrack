@@ -34,6 +34,12 @@ import {
   type Attachment,
 } from '@/lib/api'
 import { Pencil, Download, Lock } from 'lucide-react'
+import {
+  calculatedProgress,
+  plannedProgress,
+  riskScore,
+  riskSeverityTone,
+} from '@/lib/formulas'
 import { Button } from '@/components/ui/button'
 import { AddPersonDialog } from '@/components/AddPersonDialog'
 import { AddMilestoneDialog } from '@/components/AddMilestoneDialog'
@@ -572,6 +578,13 @@ export function ProjectDetailPage() {
     count: sectionCounts[s.id] ?? 0,
   }))
 
+  // F1/F2 (docs/FORMULAS.md, PROVISIONAL) computed client-side from the
+  // already-loaded sections; the list endpoint computes the same server-side.
+  const calcProgress = calculatedProgress(milestones)
+  const planProgress = project
+    ? plannedProgress(project.start_date, project.target_end_date)
+    : null
+
   // FDD Fig 2: milestones grouped under numbered outcomes; flat list when no
   // outcomes exist. Ungrouped milestones trail under their own header.
   const outcomeRange = (o: ProgramOutcome) =>
@@ -727,6 +740,14 @@ export function ProjectDetailPage() {
                   ? `${project.manual_progress}%`
                   : null
               }
+            />
+            <Field
+              label="Calculated Progress"
+              value={calcProgress != null ? `${calcProgress}%` : null}
+            />
+            <Field
+              label="Planned Progress"
+              value={planProgress != null ? `${planProgress}%` : null}
             />
             <Field label="At Risk" value={project.at_risk ? 'Yes' : null} />
             <Field
@@ -1249,6 +1270,26 @@ export function ProjectDetailPage() {
                             />
                           </div>
                           <div className="mt-1 flex flex-wrap gap-x-4 text-xs text-muted-foreground">
+                            {(() => {
+                              const score = riskScore(r.probability, r.impact)
+                              if (score == null) return null
+                              const tone = riskSeverityTone(score)
+                              const dot =
+                                tone === 'red'
+                                  ? 'bg-status-red-fg'
+                                  : tone === 'amber'
+                                    ? 'bg-status-amber-fg'
+                                    : 'bg-status-green-fg'
+                              return (
+                                <span className="flex items-center gap-1.5">
+                                  <span
+                                    aria-hidden
+                                    className={`h-2 w-2 rounded-full ${dot}`}
+                                  />
+                                  Score {score}
+                                </span>
+                              )
+                            })()}
                             {r.probability?.name && (
                               <span>Probability: {r.probability.name}</span>
                             )}
