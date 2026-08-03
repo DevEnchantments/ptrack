@@ -192,12 +192,15 @@ function StatTile({
         onMouseLeave={(e) => {
           e.currentTarget.style.transform = ''
         }}
-        className={`tile-tilt rounded-lg border bg-card p-4 shadow-xs ${
+        className={`tile-tilt flex h-full flex-col rounded-lg border bg-card p-4 shadow-xs ${
           alert ? 'tile-alert' : ''
         }`}
       >
         <p className="text-sm text-muted-foreground">{label}</p>
-        <p className="mt-1 text-3xl font-semibold tabular-nums">
+        {/* mt-auto pins the value + note to the bottom, so a label that wraps
+            to two lines in a narrow column does not shove them out of line
+            with its neighbours. */}
+        <p className="mt-auto pt-1 text-3xl font-semibold tabular-nums">
           <Odometer value={value} run={entered} />
         </p>
         <p className="mt-1 text-xs text-muted-foreground">{note}</p>
@@ -230,7 +233,7 @@ function ChartCard({
         e.currentTarget.style.setProperty('--my', `${e.clientY - r.top}px`)
       }}
       style={{ transitionDelay: `${index * 60}ms` }}
-      className="dash-card chart-card rounded-lg border bg-card p-4 shadow-xs"
+      className="dash-card chart-card flex h-full flex-col rounded-lg border bg-card p-4 shadow-xs"
     >
       {children(entered)}
     </div>
@@ -318,7 +321,9 @@ function ActivityLineChart({ entered }: { entered: boolean }) {
   return (
     <>
       <h2 className="text-sm font-medium">Activity — updates per week</h2>
-      <div className="relative mt-2">
+      {/* flex-1, not a centring wrapper: the tooltip is absolute against this
+          box, so the SVG has to stay pinned to its top edge. */}
+      <div className="relative mt-2 flex-1">
         <svg
           viewBox={`0 0 ${LINE_W} ${LINE_H}`}
           className="w-full"
@@ -480,7 +485,7 @@ function ProjectsBarChart({ entered }: { entered: boolean }) {
   return (
     <>
       <h2 className="text-sm font-medium">Projects by status</h2>
-      <div className="mt-3 flex flex-col gap-2">
+      <div className="mt-3 flex flex-1 flex-col justify-center gap-2">
         {PROJECTS_BY_STATUS.map((d, i) => (
           <div
             key={d.label}
@@ -538,7 +543,7 @@ function ActionItemsBreakdown({ entered }: { entered: boolean }) {
           />
         ))}
       </div>
-      <ul className="mt-4 flex flex-col gap-2">
+      <ul className="mt-4 flex flex-1 flex-col justify-center gap-2">
         {ACTION_ITEM_SEGMENTS.map((d) => (
           <li key={d.label} className="flex items-center gap-2 text-sm">
             <span
@@ -592,7 +597,7 @@ function CategoryDonut({ entered }: { entered: boolean }) {
   return (
     <>
       <h2 className="text-sm font-medium">Projects by category</h2>
-      <div className="mt-2 flex items-center gap-4">
+      <div className="mt-2 flex flex-1 items-center gap-4">
         <svg viewBox="0 0 120 120" className="h-32 w-32 shrink-0" role="img"
           aria-label="Donut chart of projects by category, sample data">
           <g transform="rotate(-90 60 60)">
@@ -666,7 +671,9 @@ function MilestoneColumns({ entered }: { entered: boolean }) {
   return (
     <>
       <h2 className="text-sm font-medium">Milestones completed / month</h2>
-      <div className="mt-3 flex h-36 items-end gap-2">
+      {/* min-h keeps the old floor; flex-1 lets the columns grow to fill a
+          card stretched by a taller sibling in the row. */}
+      <div className="mt-3 flex min-h-36 flex-1 items-end gap-2">
         {MILESTONES_PER_MONTH.map((d, i) => (
           <div
             key={d.label}
@@ -709,7 +716,7 @@ function CompletionRadial({ entered }: { entered: boolean }) {
   return (
     <>
       <h2 className="text-sm font-medium">Overall milestone completion</h2>
-      <div className="mt-2 flex justify-center">
+      <div className="mt-2 flex flex-1 items-center justify-center">
         <svg viewBox="0 0 120 120" className="h-32 w-32" role="img"
           aria-label="Radial gauge showing 68 percent overall completion, sample data">
           <circle cx={60} cy={60} r={R} fill="none" strokeWidth={12}
@@ -776,7 +783,7 @@ function FlowLineChart({ entered }: { entered: boolean }) {
           ))}
         </ul>
       </div>
-      <div className="relative mt-2">
+      <div className="relative mt-2 flex-1">
         <svg viewBox={`0 0 ${LINE_W} ${LINE_H}`} className="w-full" role="img"
           aria-label="Two-series line chart comparing action items created and completed per week, sample data">
           {gridValues.map((v) => {
@@ -926,7 +933,9 @@ function ActivityHeatmap({ entered }: { entered: boolean }) {
           More
         </div>
       </div>
-      <div className="mt-3 flex gap-2">
+      {/* No items-center here: the day labels rely on stretching to the grid's
+          height for justify-between to line them up with the cell rows. */}
+      <div className="mt-3 flex flex-1 gap-2">
         <div className="flex flex-col justify-between py-0.5">
           {HEAT_DAYS.map((d) => (
             <span key={d} className="text-[9px] leading-4 text-muted-foreground">{d}</span>
@@ -992,9 +1001,10 @@ export function DashboardPage() {
         ))}
       </div>
 
-      {/* items-start: cards keep their natural height instead of the tallest
-          column inflating its neighbor with empty card space. */}
-      <div className="dash-grid mt-4 grid grid-cols-1 items-start gap-4 lg:grid-cols-2">
+      {/* Rows stretch (no items-start): cards in a row share the tallest
+          card's height, and each chart body is flex-1 so its content centres
+          in the extra space rather than leaving a gap under it. */}
+      <div className="dash-grid mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
         <ChartCard index={0}>
           {(entered) => <ActivityLineChart entered={entered} />}
         </ChartCard>
@@ -1003,7 +1013,7 @@ export function DashboardPage() {
         </ChartCard>
       </div>
 
-      <div className="dash-grid mt-4 grid grid-cols-1 items-start gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <div className="dash-grid mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
         <ChartCard index={0}>
           {(entered) => <ActionItemsBreakdown entered={entered} />}
         </ChartCard>
