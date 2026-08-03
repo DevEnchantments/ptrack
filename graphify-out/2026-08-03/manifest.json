@@ -610,8 +610,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ProjectDetailPage.tsx": {
-    "mtime": 1785758201.456246,
-    "ast_hash": "fa888141d6b35535398f7f59cd88923c",
+    "mtime": 1785759199.7183,
+    "ast_hash": "8c89805df891a0507a1f349160af1652",
     "semantic_hash": ""
   },
   "frontend/src/pages/StatusReportDetailPage.tsx": {
@@ -1040,13 +1040,13 @@
     "semantic_hash": ""
   },
   "frontend/src/lib/formulas.ts": {
-    "mtime": 1785757001.307917,
-    "ast_hash": "2ca3f41a108d84f7cf60e462cc7ece27",
+    "mtime": 1785759164.3312979,
+    "ast_hash": "a4d7ea3d2ac81c47de68f33ba8300087",
     "semantic_hash": ""
   },
   "docs/FORMULAS.md": {
-    "mtime": 1785754148.145664,
-    "ast_hash": "d4890bd036f07ca5b3c7131e8a589d52",
+    "mtime": 1785759199.720515,
+    "ast_hash": "8b342b64e39c286b168bb073a3d5700d",
     "semantic_hash": ""
   },
   "backend/src/modules/milestones/dto/adjust-weights.dto.ts": {
@@ -1057,6 +1057,11 @@
   "frontend/src/components/AdjustWeightsDialog.tsx": {
     "mtime": 1785758182.1034791,
     "ast_hash": "b0841ab3a63ffa0d6088d02170aba975",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/ProjectOverviewCards.tsx": {
+    "mtime": 1785759363.2778635,
+    "ast_hash": "60cebcf09934e0a8d78d6adde4b9d354",
     "semantic_hash": ""
   }
 }
