@@ -1,4 +1,4 @@
-import { CircleAlert, ShieldAlert, TriangleAlert } from 'lucide-react'
+import { CircleAlert, TriangleAlert } from 'lucide-react'
 import type { Issue, Milestone, ProjectDetail, Risk } from '@/lib/api'
 import { atRiskSuggested } from '@/lib/formulas'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -46,7 +46,7 @@ function Donut({
     acc += frac
   }
   return (
-    <svg viewBox="0 0 72 72" className="h-[72px] w-[72px] shrink-0 -rotate-90">
+    <svg viewBox="0 0 72 72" className="h-12 w-12 shrink-0 -rotate-90">
       <circle
         cx="36"
         cy="36"
@@ -176,50 +176,55 @@ export function ProjectOverviewCards({
             No milestones yet.
           </p>
         ) : (
-          <div className="mt-2 flex items-center gap-4">
-            <Donut
-              segments={[
-                {
-                  value: completed.length,
-                  cls: 'stroke-(--chart-1)',
-                  label: 'Completed',
-                },
-                {
-                  value: onTarget.length,
-                  cls: 'stroke-(--chart-3)',
-                  label: 'On Target',
-                },
-                {
-                  value: overdue.length,
-                  cls: 'stroke-(--chart-2)',
-                  label: 'Overdue',
-                },
-              ]}
-            />
-            <ul className="flex flex-col gap-1 text-xs">
+          <>
+            <div className="mt-1 flex items-center justify-between gap-3">
+              <p className="text-2xl font-semibold">
+                {completed.length}/{active.length}
+              </p>
+              <Donut
+                segments={[
+                  {
+                    value: completed.length,
+                    cls: 'stroke-(--chart-1)',
+                    label: 'Completed',
+                  },
+                  {
+                    value: onTarget.length,
+                    cls: 'stroke-(--chart-3)',
+                    label: 'On Target',
+                  },
+                  {
+                    value: overdue.length,
+                    cls: 'stroke-(--chart-2)',
+                    label: 'Overdue',
+                  },
+                ]}
+              />
+            </div>
+            <ul className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs text-muted-foreground">
               <li className="flex items-center gap-1.5">
-                <span className="h-2 w-2 rounded-full bg-(--chart-1)" />
+                <span className="h-2 w-2 shrink-0 rounded-full bg-(--chart-1)" />
                 Completed
-                <span className="ml-auto pl-3 font-medium">
+                <span className="font-medium text-foreground">
                   {completed.length}
                 </span>
               </li>
               <li className="flex items-center gap-1.5">
-                <span className="h-2 w-2 rounded-full bg-(--chart-3)" />
+                <span className="h-2 w-2 shrink-0 rounded-full bg-(--chart-3)" />
                 On Target
-                <span className="ml-auto pl-3 font-medium">
+                <span className="font-medium text-foreground">
                   {onTarget.length}
                 </span>
               </li>
               <li className="flex items-center gap-1.5">
-                <span className="h-2 w-2 rounded-full bg-(--chart-2)" />
+                <span className="h-2 w-2 shrink-0 rounded-full bg-(--chart-2)" />
                 Overdue
-                <span className="ml-auto pl-3 font-medium">
+                <span className="font-medium text-foreground">
                   {overdue.length}
                 </span>
               </li>
             </ul>
-          </div>
+          </>
         )}
       </div>
 
@@ -276,12 +281,6 @@ export function ProjectOverviewCards({
             </p>
           </div>
         </div>
-        {(openIssues > 0 || openRisks > 0) && (
-          <p className="mt-2 flex items-center gap-1 text-xs text-muted-foreground">
-            <ShieldAlert className="h-3.5 w-3.5" />
-            Tracked in the registers below
-          </p>
-        )}
       </div>
     </div>
   )
