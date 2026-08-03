@@ -74,6 +74,10 @@
 @theme {
     --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
     --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+    /* Back-out overshoot: values pass their target and settle. Dashboard
+       motion pass (experiment/ui-ux-pro-max) — bars, donut segments and the
+       stat-tile odometer all land on this curve. */
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
     /* Navy-tinted elevation scale (depth pass, 2026-07-29): softer and more
        diffuse than Tailwind's neutral-black defaults, tinted with the slate
        ink (#0d1526) so shadows read as the app's own light. Re-themes every
@@ -314,6 +318,115 @@
 ::view-transition-old(root),
 ::view-transition-new(root) {
     animation-duration: 150ms;
+}
+
+/* --- Dashboard motion pass (experiment/ui-ux-pro-max) -------------------- */
+
+/* Cards assemble with a slight forward tilt. The perspective lives on the
+   grid so sibling cards share one vanishing point; 8deg is the ceiling before
+   text edges go soft. */
+.dash-grid {
+    perspective: 1200px;
+}
+.dash-card {
+    opacity: 0;
+    transform: rotateX(8deg) translateY(14px);
+    transition:
+        opacity 420ms var(--ease-out),
+        transform 420ms var(--ease-out);
+}
+.dash-card[data-entered='true'] {
+    opacity: 1;
+    transform: none;
+}
+
+/* Magnetic tilt lives on an inner element so its 120ms curve never fights the
+   420ms entrance transform on .dash-card. */
+.tile-tilt {
+    transition: transform 120ms var(--ease-out);
+}
+
+/* Pointer spotlight. Hover-gated so it never arms on touch; --mx/--my are
+   written by a mousemove handler, which only invalidates paint. */
+.chart-card {
+    position: relative;
+}
+@media (hover: hover) and (pointer: fine) {
+    .chart-card::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 200ms var(--ease-out);
+        background: radial-gradient(
+            280px circle at var(--mx, 50%) var(--my, 50%),
+            color-mix(in oklch, var(--chart-1) 10%, transparent),
+            transparent 65%
+        );
+    }
+    .chart-card:hover::before {
+        opacity: 1;
+    }
+}
+/* Card content sits above the spotlight layer. */
+.chart-card > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Overdue tile: slow urgency pulse. Infinite animations are not covered by a
+   duration collapse, so this one is explicitly opt-in on motion preference. */
+@keyframes tile-breathe {
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 color-mix(in oklch, var(--destructive) 30%, transparent);
+    }
+    50% {
+        box-shadow: 0 0 0 6px color-mix(in oklch, var(--destructive) 0%, transparent);
+    }
+}
+@media (prefers-reduced-motion: no-preference) {
+    .tile-alert {
+        animation: tile-breathe 2.8s var(--ease-in-out) infinite;
+    }
+}
+
+/* The hovered-value pop on the line charts' direct end label. */
+@keyframes value-pop {
+    from {
+        opacity: 0;
+        transform: scale(0.82);
+    }
+}
+.value-pop {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: value-pop 180ms var(--ease-out) both;
+}
+
+/* Scroll-linked line drawing. Native scroll-driven animation where supported
+   (Chromium 115+, Safari 26); elsewhere the mount/in-view transition already
+   on the element remains the behaviour. Animation-tier declarations outrank
+   the inline style, so this takes over cleanly when it applies. */
+@supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+        @keyframes draw-line {
+            from {
+                stroke-dashoffset: 1;
+            }
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+        .chart-draw {
+            animation: draw-line linear both;
+            animation-timeline: view();
+            animation-range: entry 15% cover 45%;
+        }
+    }
 }
 
 /* Accessibility: collapse all motion for users who ask for it. */

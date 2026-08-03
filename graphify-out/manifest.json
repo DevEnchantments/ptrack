@@ -75,8 +75,8 @@
     "semantic_hash": ""
   },
   "backend/src/main.ts": {
-    "mtime": 1784058963.422949,
-    "ast_hash": "303474a458d0bf46bf7b499b24d33aba",
+    "mtime": 1785397686.8832338,
+    "ast_hash": "b09671dc984544eb90d0fcdf80a3904e",
     "semantic_hash": ""
   },
   "backend/src/modules/action-items/action-items.controller.ts": {
@@ -860,8 +860,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/DashboardPage.tsx": {
-    "mtime": 1785336203.7166324,
-    "ast_hash": "21a8c61c8f645441a66ea29c814c9a64",
+    "mtime": 1785399333.3963237,
+    "ast_hash": "f7c345238a86ba134fab82c56149fc41",
     "semantic_hash": ""
   },
   "frontend/src/components/SectionCard.tsx": {

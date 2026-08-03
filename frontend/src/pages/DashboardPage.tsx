@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { usePageTitle } from '@/lib/use-page-title'
 
 /**
@@ -8,6 +8,10 @@ import { usePageTitle } from '@/lib/use-page-title'
  * charting library (that pick is a Phase 2 decision). Chart series colors are
  * validated chart-grade tones (CVD-safe, ≥3:1 on card), distinct from the UI
  * chrome palette.
+ *
+ * Motion pass (experiment/ui-ux-pro-max): entrances are in-view gated rather
+ * than mount-gated, so nothing animates below the fold to an empty room; card
+ * chrome, the pointer spotlight and the shared easing live in index.css.
  */
 
 // Single source of truth: the --chart-* tokens in index.css (validated trio).
@@ -44,20 +48,53 @@ const ACTION_ITEM_SEGMENTS = [
 ]
 
 const STAT_TILES = [
-  { label: 'Active Projects', value: 24, note: '+2 this month' },
-  { label: 'Open Action Items', value: 37, note: '12 due this week' },
-  { label: 'Milestones This Month', value: 9, note: '3 major' },
-  { label: 'Overdue Items', value: 5, note: '2 escalated' },
+  { label: 'Active Projects', value: 24, note: '+2 this month', alert: false },
+  { label: 'Open Action Items', value: 37, note: '12 due this week', alert: false },
+  { label: 'Milestones This Month', value: 9, note: '3 major', alert: false },
+  { label: 'Overdue Items', value: 5, note: '2 escalated', alert: true },
 ]
 
 function prefersReducedMotion(): boolean {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches
 }
 
-/** rAF count-up for the stat tiles (duration 0 on reduced motion — first frame lands on target). */
-function useCountUp(target: number, durationMs = 900): number {
+function canHover(): boolean {
+  return window.matchMedia('(hover: hover) and (pointer: fine)').matches
+}
+
+/**
+ * Entrance flag driven by an IntersectionObserver rather than mount, so a
+ * chart's reveal plays when it is actually on screen. One-shot. Starts already
+ * entered under reduced motion, which also keeps the initial state out of an
+ * effect (the set-state-in-effect rule bans that shape).
+ */
+function useInViewEntrance() {
+  const ref = useRef<HTMLDivElement | null>(null)
+  const [entered, setEntered] = useState(() => prefersReducedMotion())
+  useEffect(() => {
+    if (prefersReducedMotion()) return
+    const el = ref.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setEntered(true)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -10% 0px' },
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+  return { ref, entered }
+}
+
+/** rAF count-up (duration 0 on reduced motion — first frame lands on target). */
+function useCountUp(target: number, run: boolean, durationMs = 900): number {
   const [value, setValue] = useState(0)
   useEffect(() => {
+    if (!run) return
     const duration = prefersReducedMotion() ? 0 : durationMs
     let raf = 0
     const start = performance.now()
@@ -69,37 +106,133 @@ function useCountUp(target: number, durationMs = 900): number {
     }
     raf = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(raf)
-  }, [target, durationMs])
+  }, [target, durationMs, run])
   return value
 }
 
-/** Flips true one frame after mount so CSS transitions run (starts true on reduced motion). */
-function useEntranceFlag(): boolean {
-  const [entered, setEntered] = useState(() => prefersReducedMotion())
+const DIGITS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+/**
+ * Digit wheel. Each column holds 0-9 in a 1em window and translates to its
+ * digit, staggered right-to-left like a fuel pump. The wheels are aria-hidden
+ * behind a plain readout, or a screen reader would announce "0123456789".
+ */
+function Odometer({ value, run }: { value: number; run: boolean }) {
+  const [rolled, setRolled] = useState(() => prefersReducedMotion())
   useEffect(() => {
+    if (!run || prefersReducedMotion()) return
     const raf = requestAnimationFrame(() =>
-      requestAnimationFrame(() => setEntered(true)),
+      requestAnimationFrame(() => setRolled(true)),
     )
     return () => cancelAnimationFrame(raf)
-  }, [])
-  return entered
+  }, [run])
+
+  const digits = String(value).split('')
+  return (
+    <span className="inline-flex">
+      <span className="sr-only">{value}</span>
+      {digits.map((d, i) => (
+        <span
+          key={i}
+          aria-hidden
+          className="inline-block h-[1em] overflow-hidden leading-[1em]"
+        >
+          <span
+            className="flex flex-col"
+            style={{
+              transform: `translateY(-${rolled ? Number(d) : 0}em)`,
+              transition: prefersReducedMotion()
+                ? 'none'
+                : `transform 760ms var(--ease-spring) ${(digits.length - 1 - i) * 70}ms`,
+            }}
+          >
+            {DIGITS.map((n) => (
+              <span key={n} className="h-[1em] leading-[1em]">
+                {n}
+              </span>
+            ))}
+          </span>
+        </span>
+      ))}
+    </span>
+  )
 }
 
 function StatTile({
   label,
   value,
   note,
+  alert,
+  index,
 }: {
   label: string
   value: number
   note: string
+  alert: boolean
+  index: number
 }) {
-  const shown = useCountUp(value)
+  const { ref, entered } = useInViewEntrance()
   return (
-    <div className="rounded-lg border bg-card p-4 shadow-xs">
-      <p className="text-sm text-muted-foreground">{label}</p>
-      <p className="mt-1 text-3xl font-semibold tabular-nums">{shown}</p>
-      <p className="mt-1 text-xs text-muted-foreground">{note}</p>
+    <div
+      ref={ref}
+      data-entered={entered}
+      className="dash-card"
+      style={{ transitionDelay: `${index * 60}ms` }}
+    >
+      <div
+        onMouseMove={(e) => {
+          if (!canHover() || prefersReducedMotion()) return
+          const r = e.currentTarget.getBoundingClientRect()
+          const dx = e.clientX - r.left - r.width / 2
+          const dy = e.clientY - r.top - r.height / 2
+          e.currentTarget.style.transform = `perspective(600px) rotateX(${
+            -(dy / r.height) * 6
+          }deg) rotateY(${(dx / r.width) * 6}deg)`
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = ''
+        }}
+        className={`tile-tilt rounded-lg border bg-card p-4 shadow-xs ${
+          alert ? 'tile-alert' : ''
+        }`}
+      >
+        <p className="text-sm text-muted-foreground">{label}</p>
+        <p className="mt-1 text-3xl font-semibold tabular-nums">
+          <Odometer value={value} run={entered} />
+        </p>
+        <p className="mt-1 text-xs text-muted-foreground">{note}</p>
+      </div>
+    </div>
+  )
+}
+
+/**
+ * Card chrome + choreography for one chart. Owns the in-view flag and hands it
+ * to the chart via a render prop, so a chart's internals only start once its
+ * card is on screen. The mousemove writes --mx/--my for the CSS spotlight.
+ */
+function ChartCard({
+  index,
+  children,
+}: {
+  index: number
+  children: (entered: boolean) => ReactNode
+}) {
+  const { ref, entered } = useInViewEntrance()
+  return (
+    <div
+      ref={ref}
+      data-entered={entered}
+      onMouseMove={(e) => {
+        if (!canHover()) return
+        const r = e.currentTarget.getBoundingClientRect()
+        e.currentTarget.style.setProperty('--mx', `${e.clientX - r.left}px`)
+        e.currentTarget.style.setProperty('--my', `${e.clientY - r.top}px`)
+      }}
+      style={{ transitionDelay: `${index * 60}ms` }}
+      className="dash-card chart-card rounded-lg border bg-card p-4 shadow-xs"
+    >
+      {children(entered)}
     </div>
   )
 }
@@ -126,9 +259,45 @@ const LINE_W = 640
 const LINE_H = 200
 const LINE_PAD = { top: 16, right: 16, bottom: 26, left: 34 }
 
-function ActivityLineChart() {
-  const entered = useEntranceFlag()
+/**
+ * A short bright dash that races the length of the path once as the line
+ * draws, then fades. Both source paths already carry pathLength={1}, so the
+ * dash maths stay in 0-1 space.
+ */
+function CometTracer({
+  d,
+  color,
+  entered,
+  delayMs = 0,
+}: {
+  d: string
+  color: string
+  entered: boolean
+  delayMs?: number
+}) {
+  if (prefersReducedMotion()) return null
+  return (
+    <path
+      d={d}
+      fill="none"
+      stroke={color}
+      strokeWidth={3}
+      strokeLinecap="round"
+      pathLength={1}
+      strokeDasharray="0.05 1"
+      style={{
+        strokeDashoffset: entered ? -1 : 0,
+        opacity: entered ? 0 : 1,
+        filter: `drop-shadow(0 0 4px ${color})`,
+        transition: `stroke-dashoffset 1100ms var(--ease-out) ${delayMs}ms, opacity 300ms linear ${delayMs + 850}ms`,
+      }}
+    />
+  )
+}
+
+function ActivityLineChart({ entered }: { entered: boolean }) {
   const [hover, setHover] = useState<number | null>(null)
+  const reduced = prefersReducedMotion()
 
   const max = 35 // fixed sample-data ceiling → round gridlines at 0/10/20/30
   const innerW = LINE_W - LINE_PAD.left - LINE_PAD.right
@@ -143,8 +312,11 @@ function ActivityLineChart() {
   } L ${pts[0].x} ${LINE_PAD.top + innerH} Z`
   const gridValues = [0, 10, 20, 30]
 
+  // Direct label tracks the scrubbed point, falling back to the latest.
+  const labelIdx = hover ?? pts.length - 1
+
   return (
-    <div className="rounded-lg border bg-card p-4 shadow-xs">
+    <>
       <h2 className="text-sm font-medium">Activity — updates per week</h2>
       <div className="relative mt-2">
         <svg
@@ -153,6 +325,25 @@ function ActivityLineChart() {
           role="img"
           aria-label="Line chart of updates per week over eight weeks, sample data"
         >
+          <defs>
+            {/* Single-series chart, so a drifting gradient costs no colour
+                coding. The two-series chart below keeps flat strokes. */}
+            <linearGradient id="activity-stroke" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor={SERIES.teal} />
+              <stop offset="50%" stopColor={SERIES.blue} />
+              <stop offset="100%" stopColor={SERIES.teal} />
+              {!reduced && (
+                <animateTransform
+                  attributeName="gradientTransform"
+                  type="translate"
+                  values="-1 0; 1 0; -1 0"
+                  dur="7s"
+                  repeatCount="indefinite"
+                />
+              )}
+            </linearGradient>
+          </defs>
+
           {gridValues.map((v) => {
             const y = LINE_PAD.top + innerH - (v / max) * innerH
             return (
@@ -195,18 +386,20 @@ function ActivityLineChart() {
             style={{ opacity: entered ? 0.12 : 0, transitionDelay: '450ms' }}
           />
           <path
+            className="chart-draw"
             d={linePath}
             fill="none"
-            stroke={SERIES.teal}
+            stroke="url(#activity-stroke)"
             strokeWidth={2}
             strokeLinecap="round"
             pathLength={1}
             strokeDasharray={1}
             style={{
               strokeDashoffset: entered ? 0 : 1,
-              transition: 'stroke-dashoffset 900ms ease-out',
+              transition: 'stroke-dashoffset 900ms var(--ease-out)',
             }}
           />
+          <CometTracer d={linePath} color={SERIES.teal} entered={entered} />
 
           {hover !== null && (
             <line
@@ -241,43 +434,51 @@ function ActivityLineChart() {
               />
             </g>
           ))}
-          {/* Selective direct label: latest point only. */}
-          <text
-            x={pts[pts.length - 1].x}
-            y={pts[pts.length - 1].y - 10}
-            textAnchor="middle"
-            className="fill-foreground text-[11px] font-medium"
-          >
-            {WEEKLY_ACTIVITY[WEEKLY_ACTIVITY.length - 1].value}
-          </text>
-        </svg>
-        {hover !== null && (
-          <div
-            className="pointer-events-none absolute rounded-md border bg-popover px-2 py-1 text-xs shadow-sm"
+          {/* Direct label slides to the scrubbed point; the value pops on change. */}
+          <g
             style={{
-              left: `${(pts[hover].x / LINE_W) * 100}%`,
-              top: 0,
-              transform: 'translateX(-50%)',
+              transform: `translate(${pts[labelIdx].x}px, ${pts[labelIdx].y - 10}px)`,
+              transition: 'transform 200ms var(--ease-out)',
             }}
           >
-            <span className="text-muted-foreground">
-              {WEEKLY_ACTIVITY[hover].label}:{' '}
-            </span>
-            <span className="font-medium">{WEEKLY_ACTIVITY[hover].value}</span>
-          </div>
-        )}
+            <text
+              key={labelIdx}
+              textAnchor="middle"
+              className="value-pop fill-foreground text-[11px] font-medium"
+            >
+              {WEEKLY_ACTIVITY[labelIdx].value}
+            </text>
+          </g>
+        </svg>
+        <div
+          className="pointer-events-none absolute rounded-md border bg-popover px-2 py-1 text-xs shadow-sm"
+          style={{
+            left: `${(pts[hover ?? 0].x / LINE_W) * 100}%`,
+            top: 0,
+            transform: 'translateX(-50%)',
+            opacity: hover === null ? 0 : 1,
+            transition:
+              'left 160ms var(--ease-out), opacity 130ms var(--ease-out)',
+          }}
+        >
+          <span className="text-muted-foreground">
+            {WEEKLY_ACTIVITY[hover ?? 0].label}:{' '}
+          </span>
+          <span className="font-medium">
+            {WEEKLY_ACTIVITY[hover ?? 0].value}
+          </span>
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 
-function ProjectsBarChart() {
-  const entered = useEntranceFlag()
+function ProjectsBarChart({ entered }: { entered: boolean }) {
   const [hover, setHover] = useState<number | null>(null)
   const max = Math.max(...PROJECTS_BY_STATUS.map((d) => d.value))
 
   return (
-    <div className="rounded-lg border bg-card p-4 shadow-xs">
+    <>
       <h2 className="text-sm font-medium">Projects by status</h2>
       <div className="mt-3 flex flex-col gap-2">
         {PROJECTS_BY_STATUS.map((d, i) => (
@@ -291,13 +492,16 @@ function ProjectsBarChart() {
               {d.label}
             </span>
             <div className="h-4 flex-1">
+              {/* Width is static and the fill scales into it: transform-only,
+                  so the spring overshoot costs no layout. */}
               <div
-                className="h-full rounded-r"
+                className="h-full origin-left rounded-r"
                 style={{
-                  width: entered ? `${(d.value / max) * 100}%` : '0%',
+                  width: `${(d.value / max) * 100}%`,
                   backgroundColor: SERIES.teal,
+                  transform: entered ? 'scaleX(1)' : 'scaleX(0)',
                   opacity: hover === null || hover === i ? 1 : 0.45,
-                  transition: `width 700ms ease-out ${i * 70}ms, opacity 150ms`,
+                  transition: `transform 620ms var(--ease-spring) ${i * 70}ms, opacity 150ms`,
                 }}
               />
             </div>
@@ -307,27 +511,29 @@ function ProjectsBarChart() {
           </div>
         ))}
       </div>
-    </div>
+    </>
   )
 }
 
-function ActionItemsBreakdown() {
-  const entered = useEntranceFlag()
+function ActionItemsBreakdown({ entered }: { entered: boolean }) {
   const total = ACTION_ITEM_SEGMENTS.reduce((s, d) => s + d.value, 0)
 
   return (
-    <div className="rounded-lg border bg-card p-4 shadow-xs">
+    <>
       <h2 className="text-sm font-medium">Action items</h2>
-      {/* 100% stacked bar with 2px surface gaps between segments. */}
+      {/* 100% stacked bar with 2px surface gaps between segments. Plain ease-out
+          here, not the spring: neighbouring segments would overlap on overshoot. */}
       <div className="mt-4 flex h-4 w-full gap-0.5 overflow-hidden rounded">
         {ACTION_ITEM_SEGMENTS.map((d, i) => (
           <div
             key={d.label}
             title={`${d.label}: ${d.value}`}
+            className="origin-left"
             style={{
-              width: entered ? `${(d.value / total) * 100}%` : '0%',
+              width: `${(d.value / total) * 100}%`,
               backgroundColor: d.color,
-              transition: `width 700ms ease-out ${i * 120}ms`,
+              transform: entered ? 'scaleX(1)' : 'scaleX(0)',
+              transition: `transform 700ms var(--ease-out) ${i * 120}ms`,
             }}
           />
         ))}
@@ -348,7 +554,7 @@ function ActionItemsBreakdown() {
           <span className="font-semibold tabular-nums">{total}</span>
         </li>
       </ul>
-    </div>
+    </>
   )
 }
 
@@ -360,24 +566,31 @@ const CATEGORY_SEGMENTS = [
   { label: 'Security', value: 6, color: SERIES.orange },
 ]
 
-/** Donut with center readout; hovering a segment swaps the center to it. */
-function CategoryDonut() {
-  const entered = useEntranceFlag()
+/** Donut with center readout; hovering a segment pops it out and swaps the center. */
+function CategoryDonut({ entered }: { entered: boolean }) {
   const [hover, setHover] = useState<number | null>(null)
   const total = CATEGORY_SEGMENTS.reduce((s, d) => s + d.value, 0)
   const R = 45
   const C = 2 * Math.PI * R
   const GAP = 3
   const fractions = CATEGORY_SEGMENTS.map((d) => d.value / total)
-  const arcs = CATEGORY_SEGMENTS.map((d, i) => ({
-    ...d,
-    len: Math.max(fractions[i] * C - GAP, 0),
-    offset: fractions.slice(0, i).reduce((s, f) => s + f, 0) * C,
-  }))
+  const arcs = CATEGORY_SEGMENTS.map((d, i) => {
+    const startFrac = fractions.slice(0, i).reduce((s, f) => s + f, 0)
+    // Mid-angle in the same (pre-rotation) space as the dash offsets, so the
+    // parent's rotate(-90) carries the offset around with the segment.
+    const mid = (startFrac + fractions[i] / 2) * 2 * Math.PI
+    return {
+      ...d,
+      len: Math.max(fractions[i] * C - GAP, 0),
+      offset: startFrac * C,
+      dx: Math.cos(mid) * 5,
+      dy: Math.sin(mid) * 5,
+    }
+  })
   const center = hover !== null ? CATEGORY_SEGMENTS[hover] : null
 
   return (
-    <div className="rounded-lg border bg-card p-4 shadow-xs">
+    <>
       <h2 className="text-sm font-medium">Projects by category</h2>
       <div className="mt-2 flex items-center gap-4">
         <svg viewBox="0 0 120 120" className="h-32 w-32 shrink-0" role="img"
@@ -395,21 +608,26 @@ function CategoryDonut() {
                 strokeDasharray={`${entered ? a.len : 0} ${C}`}
                 strokeDashoffset={-a.offset - GAP / 2}
                 style={{
-                  transition: `stroke-dasharray 800ms ease-out ${i * 150}ms, stroke-width 150ms`,
+                  transform:
+                    hover === i ? `translate(${a.dx}px, ${a.dy}px)` : 'none',
+                  transition: `stroke-dasharray 800ms var(--ease-out) ${i * 150}ms, stroke-width 150ms, transform 220ms var(--ease-spring)`,
                 }}
                 onMouseEnter={() => setHover(i)}
                 onMouseLeave={() => setHover(null)}
               />
             ))}
           </g>
-          <text x={60} y={57} textAnchor="middle"
-            className="fill-foreground text-xl font-semibold">
-            {center ? center.value : total}
-          </text>
-          <text x={60} y={72} textAnchor="middle"
-            className="fill-muted-foreground text-[9px]">
-            {center ? center.label : 'projects'}
-          </text>
+          {/* Keyed so the readout pops when it swaps. */}
+          <g key={hover ?? 'total'} className="value-pop">
+            <text x={60} y={57} textAnchor="middle"
+              className="fill-foreground text-xl font-semibold">
+              {center ? center.value : total}
+            </text>
+            <text x={60} y={72} textAnchor="middle"
+              className="fill-muted-foreground text-[9px]">
+              {center ? center.label : 'projects'}
+            </text>
+          </g>
         </svg>
         <ul className="flex flex-1 flex-col gap-2">
           {CATEGORY_SEGMENTS.map((d, i) => (
@@ -427,7 +645,7 @@ function CategoryDonut() {
           ))}
         </ul>
       </div>
-    </div>
+    </>
   )
 }
 
@@ -440,14 +658,13 @@ const MILESTONES_PER_MONTH = [
   { label: 'Jul', value: 8 },
 ]
 
-/** Vertical columns growing from the baseline, staggered. */
-function MilestoneColumns() {
-  const entered = useEntranceFlag()
+/** Vertical columns springing up from the baseline, staggered. */
+function MilestoneColumns({ entered }: { entered: boolean }) {
   const [hover, setHover] = useState<number | null>(null)
   const max = Math.max(...MILESTONES_PER_MONTH.map((d) => d.value))
 
   return (
-    <div className="rounded-lg border bg-card p-4 shadow-xs">
+    <>
       <h2 className="text-sm font-medium">Milestones completed / month</h2>
       <div className="mt-3 flex h-36 items-end gap-2">
         {MILESTONES_PER_MONTH.map((d, i) => (
@@ -463,12 +680,13 @@ function MilestoneColumns() {
               </span>
             )}
             <div
-              className="w-full rounded-t"
+              className="w-full origin-bottom rounded-t"
               style={{
-                height: entered ? `${(d.value / max) * 82}%` : '0%',
+                height: `${(d.value / max) * 82}%`,
                 backgroundColor: SERIES.teal,
+                transform: entered ? 'scaleY(1)' : 'scaleY(0)',
                 opacity: hover === null || hover === i ? 1 : 0.45,
-                transition: `height 650ms ease-out ${i * 80}ms, opacity 150ms`,
+                transition: `transform 620ms var(--ease-spring) ${i * 80}ms, opacity 150ms`,
               }}
             />
             <span className="mt-1 text-center text-[10px] text-muted-foreground">
@@ -477,26 +695,27 @@ function MilestoneColumns() {
           </div>
         ))}
       </div>
-    </div>
+    </>
   )
 }
 
 /** Radial progress — a single hero percentage with an animated sweep. */
-function CompletionRadial() {
-  const entered = useEntranceFlag()
-  const pct = useCountUp(68, 900)
+function CompletionRadial({ entered }: { entered: boolean }) {
+  const pct = useCountUp(68, entered, 900)
   const R = 45
   const C = 2 * Math.PI * R
   const target = 0.68
 
   return (
-    <div className="rounded-lg border bg-card p-4 shadow-xs">
+    <>
       <h2 className="text-sm font-medium">Overall milestone completion</h2>
       <div className="mt-2 flex justify-center">
         <svg viewBox="0 0 120 120" className="h-32 w-32" role="img"
           aria-label="Radial gauge showing 68 percent overall completion, sample data">
           <circle cx={60} cy={60} r={R} fill="none" strokeWidth={12}
             className="stroke-muted" />
+          {/* ease-out, not the spring: an overshoot here drives dashoffset past
+              zero and the arc visibly wraps its own start. */}
           <circle
             cx={60}
             cy={60}
@@ -508,7 +727,7 @@ function CompletionRadial() {
             strokeDasharray={C}
             strokeDashoffset={entered ? C * (1 - target) : C}
             transform="rotate(-90 60 60)"
-            style={{ transition: 'stroke-dashoffset 900ms ease-out 150ms' }}
+            style={{ transition: 'stroke-dashoffset 900ms var(--ease-out) 150ms' }}
           />
           <text x={60} y={64} textAnchor="middle"
             className="fill-foreground text-2xl font-semibold">
@@ -519,7 +738,7 @@ function CompletionRadial() {
       <p className="mt-1 text-center text-xs text-muted-foreground">
         41 of 60 milestones closed
       </p>
-    </div>
+    </>
   )
 }
 
@@ -530,8 +749,7 @@ const FLOW_SERIES = [
 ]
 
 /** Two-series comparison line — legend + direct end labels, shared crosshair. */
-function FlowLineChart() {
-  const entered = useEntranceFlag()
+function FlowLineChart({ entered }: { entered: boolean }) {
   const [hover, setHover] = useState<number | null>(null)
   const max = 20
   const innerW = LINE_W - LINE_PAD.left - LINE_PAD.right
@@ -543,9 +761,10 @@ function FlowLineChart() {
     }))
   const series = FLOW_SERIES.map((s) => ({ ...s, pts: toPts(s.values) }))
   const gridValues = [0, 5, 10, 15, 20]
+  const labelIdx = hover ?? FLOW_WEEKS.length - 1
 
   return (
-    <div className="rounded-lg border bg-card p-4 shadow-xs">
+    <>
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 className="text-sm font-medium">Action items — created vs completed</h2>
         <ul className="flex items-center gap-4">
@@ -590,20 +809,28 @@ function FlowLineChart() {
             />
           )}
           {series.map((s, si) => (
-            <path
-              key={s.label}
-              d={smoothPath(s.pts)}
-              fill="none"
-              stroke={s.color}
-              strokeWidth={2}
-              strokeLinecap="round"
-              pathLength={1}
-              strokeDasharray={1}
-              style={{
-                strokeDashoffset: entered ? 0 : 1,
-                transition: `stroke-dashoffset 900ms ease-out ${si * 200}ms`,
-              }}
-            />
+            <g key={s.label}>
+              <path
+                className="chart-draw"
+                d={smoothPath(s.pts)}
+                fill="none"
+                stroke={s.color}
+                strokeWidth={2}
+                strokeLinecap="round"
+                pathLength={1}
+                strokeDasharray={1}
+                style={{
+                  strokeDashoffset: entered ? 0 : 1,
+                  transition: `stroke-dashoffset 900ms var(--ease-out) ${si * 200}ms`,
+                }}
+              />
+              <CometTracer
+                d={smoothPath(s.pts)}
+                color={s.color}
+                entered={entered}
+                delayMs={si * 200}
+              />
+            </g>
           ))}
           {series.map((s) =>
             hover !== null ? (
@@ -624,39 +851,48 @@ function FlowLineChart() {
               onMouseLeave={() => setHover(null)}
             />
           ))}
-          {/* Direct end labels, in ink beside a colored mark. */}
+          {/* Direct end labels track the scrubbed week. */}
           {series.map((s) => (
-            <text
+            <g
               key={s.label}
-              x={s.pts[s.pts.length - 1].x}
-              y={s.pts[s.pts.length - 1].y - 10}
-              textAnchor="middle"
-              className="fill-foreground text-[11px] font-medium"
+              style={{
+                transform: `translate(${s.pts[labelIdx].x}px, ${s.pts[labelIdx].y - 10}px)`,
+                transition: 'transform 200ms var(--ease-out)',
+              }}
             >
-              {s.values[s.values.length - 1]}
-            </text>
+              <text
+                key={labelIdx}
+                textAnchor="middle"
+                className="value-pop fill-foreground text-[11px] font-medium"
+              >
+                {s.values[labelIdx]}
+              </text>
+            </g>
           ))}
         </svg>
-        {hover !== null && (
-          <div
-            className="pointer-events-none absolute rounded-md border bg-popover px-2 py-1 text-xs shadow-sm"
-            style={{
-              left: `${(series[0].pts[hover].x / LINE_W) * 100}%`,
-              top: 0,
-              transform: 'translateX(-50%)',
-            }}
-          >
-            <p className="font-medium">{FLOW_WEEKS[hover]}</p>
-            {series.map((s) => (
-              <p key={s.label} className="text-muted-foreground">
-                {s.label}:{' '}
-                <span className="font-medium text-foreground">{s.values[hover]}</span>
-              </p>
-            ))}
-          </div>
-        )}
+        <div
+          className="pointer-events-none absolute rounded-md border bg-popover px-2 py-1 text-xs shadow-sm"
+          style={{
+            left: `${(series[0].pts[hover ?? 0].x / LINE_W) * 100}%`,
+            top: 0,
+            transform: 'translateX(-50%)',
+            opacity: hover === null ? 0 : 1,
+            transition:
+              'left 160ms var(--ease-out), opacity 130ms var(--ease-out)',
+          }}
+        >
+          <p className="font-medium">{FLOW_WEEKS[hover ?? 0]}</p>
+          {series.map((s) => (
+            <p key={s.label} className="text-muted-foreground">
+              {s.label}:{' '}
+              <span className="font-medium text-foreground">
+                {s.values[hover ?? 0]}
+              </span>
+            </p>
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 
@@ -674,12 +910,11 @@ const HEAT_CELLS = Array.from({ length: HEAT_WEEKS }, (_, w) =>
 )
 
 /** Activity heatmap — sequential ramp with a Less→More scale legend. */
-function ActivityHeatmap() {
-  const entered = useEntranceFlag()
+function ActivityHeatmap({ entered }: { entered: boolean }) {
   const [hover, setHover] = useState<{ w: number; d: number } | null>(null)
 
   return (
-    <div className="rounded-lg border bg-card p-4 shadow-xs">
+    <>
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 className="text-sm font-medium">Team activity — last 12 weeks</h2>
         <div className="flex items-center gap-1 text-[10px] text-muted-foreground">
@@ -707,11 +942,19 @@ function ActivityHeatmap() {
                 style={{
                   backgroundColor: HEAT_RAMP[level],
                   opacity: entered ? 1 : 0,
+                  transform: entered ? 'scale(1)' : 'scale(0.6)',
                   outline:
                     hover?.w === w && hover?.d === d
                       ? '2px solid var(--ring)'
                       : 'none',
-                  transition: `opacity 400ms ease-out ${(w * HEAT_DAYS.length + d) * 8}ms`,
+                  // Radial delay: the grid blooms outward from the first cell
+                  // instead of wiping left to right. The 1.6 weights the short
+                  // axis so the wavefront reads as a diagonal, not an ellipse.
+                  transition: `opacity 500ms var(--ease-out) ${
+                    Math.hypot(w, d * 1.6) * 26
+                  }ms, transform 500ms var(--ease-spring) ${
+                    Math.hypot(w, d * 1.6) * 26
+                  }ms`,
                 }}
                 onMouseEnter={() => setHover({ w, d })}
                 onMouseLeave={() => setHover(null)}
@@ -723,9 +966,9 @@ function ActivityHeatmap() {
       <p className="mt-2 h-4 text-xs text-muted-foreground">
         {hover
           ? `Week ${hover.w + 1}, ${HEAT_DAYS[hover.d]} — ${HEAT_CELLS[hover.w][hover.d]} updates`
-          : ' '}
+          : ' '}
       </p>
-    </div>
+    </>
   )
 }
 
@@ -743,29 +986,45 @@ export function DashboardPage() {
         </p>
       </header>
 
-      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-        {STAT_TILES.map((t) => (
-          <StatTile key={t.label} {...t} />
+      <div className="dash-grid grid grid-cols-2 gap-4 lg:grid-cols-4">
+        {STAT_TILES.map((t, i) => (
+          <StatTile key={t.label} {...t} index={i} />
         ))}
       </div>
 
       {/* items-start: cards keep their natural height instead of the tallest
           column inflating its neighbor with empty card space. */}
-      <div className="mt-4 grid grid-cols-1 items-start gap-4 lg:grid-cols-2">
-        <ActivityLineChart />
-        <ProjectsBarChart />
+      <div className="dash-grid mt-4 grid grid-cols-1 items-start gap-4 lg:grid-cols-2">
+        <ChartCard index={0}>
+          {(entered) => <ActivityLineChart entered={entered} />}
+        </ChartCard>
+        <ChartCard index={1}>
+          {(entered) => <ProjectsBarChart entered={entered} />}
+        </ChartCard>
       </div>
 
-      <div className="mt-4 grid grid-cols-1 items-start gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <ActionItemsBreakdown />
-        <CategoryDonut />
-        <MilestoneColumns />
-        <CompletionRadial />
+      <div className="dash-grid mt-4 grid grid-cols-1 items-start gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <ChartCard index={0}>
+          {(entered) => <ActionItemsBreakdown entered={entered} />}
+        </ChartCard>
+        <ChartCard index={1}>
+          {(entered) => <CategoryDonut entered={entered} />}
+        </ChartCard>
+        <ChartCard index={2}>
+          {(entered) => <MilestoneColumns entered={entered} />}
+        </ChartCard>
+        <ChartCard index={3}>
+          {(entered) => <CompletionRadial entered={entered} />}
+        </ChartCard>
       </div>
 
-      <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
-        <FlowLineChart />
-        <ActivityHeatmap />
+      <div className="dash-grid mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
+        <ChartCard index={0}>
+          {(entered) => <FlowLineChart entered={entered} />}
+        </ChartCard>
+        <ChartCard index={1}>
+          {(entered) => <ActivityHeatmap entered={entered} />}
+        </ChartCard>
       </div>
     </div>
   )
