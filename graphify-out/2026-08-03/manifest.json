@@ -35,8 +35,8 @@
     "semantic_hash": ""
   },
   "backend/src/app.module.ts": {
-    "mtime": 1785742919.3423376,
-    "ast_hash": "59ef2394ad756975dba52fe65bff2c4a",
+    "mtime": 1785761580.786639,
+    "ast_hash": "8c996238e3b4df8aaba5dfd975283bc4",
     "semantic_hash": ""
   },
   "backend/src/app.service.ts": {
@@ -290,8 +290,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/projects/projects.module.ts": {
-    "mtime": 1785742919.343333,
-    "ast_hash": "48dbb061cbf6655603caf2fb135e7e28",
+    "mtime": 1785761580.8181753,
+    "ast_hash": "02e1dcc3e2e728b2209caffda9122a3f",
     "semantic_hash": ""
   },
   "backend/src/modules/projects/projects.repository.ts": {
@@ -300,8 +300,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/projects/projects.service.ts": {
-    "mtime": 1785760617.683066,
-    "ast_hash": "6893f7bcf0111965c394e438100b08f8",
+    "mtime": 1785761580.8671699,
+    "ast_hash": "3f46fdb2e77e836904a5660c01f22d9f",
     "semantic_hash": ""
   },
   "backend/src/modules/resources/dto/create-resource.dto.ts": {
@@ -555,8 +555,8 @@
     "semantic_hash": ""
   },
   "frontend/src/lib/api.ts": {
-    "mtime": 1785760937.734339,
-    "ast_hash": "0c9b8f37ccea17e233008043a767c19d",
+    "mtime": 1785761944.1621084,
+    "ast_hash": "37a022c074a20432205e85bf1d431403",
     "semantic_hash": ""
   },
   "frontend/src/lib/auth-context.tsx": {
@@ -610,8 +610,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ProjectDetailPage.tsx": {
-    "mtime": 1785760937.8041813,
-    "ast_hash": "ef0a1a35e0b0828f57e4799983345fc1",
+    "mtime": 1785761944.1671212,
+    "ast_hash": "534f9ce89e8ecf8cfb898c196aa2805e",
     "semantic_hash": ""
   },
   "frontend/src/pages/StatusReportDetailPage.tsx": {
@@ -905,8 +905,8 @@
     "semantic_hash": ""
   },
   "docs/FDD-ALIGNMENT.md": {
-    "mtime": 1785761187.9785008,
-    "ast_hash": "4ce7e62e88e55edb54be2fb766e7ea0d",
+    "mtime": 1785762264.5193188,
+    "ast_hash": "bef760448d182156d61290cae992cdfa",
     "semantic_hash": ""
   },
   "backend/db/fdd_project_fields.sql": {
@@ -1062,6 +1062,41 @@
   "frontend/src/components/ProjectOverviewCards.tsx": {
     "mtime": 1785760167.7952197,
     "ast_hash": "08ad413b4007f51acd95f2845132f8ae",
+    "semantic_hash": ""
+  },
+  "backend/db/fdd_workflow.sql": {
+    "mtime": 1785761495.7913804,
+    "ast_hash": "edeea5003d6de81947203745215d794c",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/submissions/dto/submission-action.dto.ts": {
+    "mtime": 1785761525.5811567,
+    "ast_hash": "5c92b6ab37758e1c0c1e4941ae288682",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/submissions/submissions.controller.ts": {
+    "mtime": 1785761555.3043242,
+    "ast_hash": "d01d1ca0510aa84766fb6f9bb728a0ea",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/submissions/submissions.module.ts": {
+    "mtime": 1785761558.4821613,
+    "ast_hash": "3b0589cbfd3a78b074915cc90e82b39b",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/submissions/submissions.repository.ts": {
+    "mtime": 1785761801.8128846,
+    "ast_hash": "7ae7e4abe664346897454aaf984dfe76",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/submissions/submissions.service.ts": {
+    "mtime": 1785761801.8128846,
+    "ast_hash": "a5264d35a259f50c58dc3f1e2ae09193",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/WorkflowPanel.tsx": {
+    "mtime": 1785761927.2128243,
+    "ast_hash": "d63c76db81749244e7d7584ce0fdb3c1",
     "semantic_hash": ""
   }
 }

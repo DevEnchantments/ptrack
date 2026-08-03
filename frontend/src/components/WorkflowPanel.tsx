@@ -208,11 +208,25 @@ export function WorkflowPanel({ projectId, submissions, onChanged }: Props) {
         )}
       </div>
 
-      {error && (
-        <p className="hint-in mt-2 text-xs font-medium text-destructive">
-          {error}
-        </p>
-      )}
+      {error &&
+        (error.startsWith('Submission blocked:') ? (
+          <div className="hint-in mt-2 text-xs text-destructive">
+            <p className="font-medium">Submission blocked:</p>
+            <ul className="mt-1 list-inside list-disc">
+              {error
+                .replace('Submission blocked: ', '')
+                .replace(/\.$/, '')
+                .split('; ')
+                .map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+            </ul>
+          </div>
+        ) : (
+          <p className="hint-in mt-2 text-xs font-medium text-destructive">
+            {error}
+          </p>
+        ))}
 
       {past.length > 0 && (
         <ul className="mt-4 flex flex-col gap-1.5 border-t pt-3">
