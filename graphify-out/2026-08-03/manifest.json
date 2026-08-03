@@ -225,8 +225,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/milestones/milestones.controller.ts": {
-    "mtime": 1784059608.899467,
-    "ast_hash": "5e049c67130c008b19b01798a398ff93",
+    "mtime": 1785757945.9234972,
+    "ast_hash": "cdb41cd27324b1b639f9e0f5644f217d",
     "semantic_hash": ""
   },
   "backend/src/modules/milestones/milestones.module.ts": {
@@ -240,8 +240,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/milestones/milestones.service.ts": {
-    "mtime": 1785392806.7463186,
-    "ast_hash": "603a5f07ee48862946e3fdcbbbe20daf",
+    "mtime": 1785757945.9224975,
+    "ast_hash": "329cc64957513defefebb54b10576bd2",
     "semantic_hash": ""
   },
   "backend/src/modules/people/dto/create-person.dto.ts": {
@@ -555,8 +555,8 @@
     "semantic_hash": ""
   },
   "frontend/src/lib/api.ts": {
-    "mtime": 1785757025.5826635,
-    "ast_hash": "e307a1ed253ae0f89207b2f2dc9b86fa",
+    "mtime": 1785758201.4542463,
+    "ast_hash": "dc3e977da794e79a8f529ee7a2386168",
     "semantic_hash": ""
   },
   "frontend/src/lib/auth-context.tsx": {
@@ -610,8 +610,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ProjectDetailPage.tsx": {
-    "mtime": 1785757025.586661,
-    "ast_hash": "1b84c0c100100dcef64f350b3671cacb",
+    "mtime": 1785758201.456246,
+    "ast_hash": "fa888141d6b35535398f7f59cd88923c",
     "semantic_hash": ""
   },
   "frontend/src/pages/StatusReportDetailPage.tsx": {
@@ -905,8 +905,8 @@
     "semantic_hash": ""
   },
   "docs/FDD-ALIGNMENT.md": {
-    "mtime": 1785757188.6699746,
-    "ast_hash": "c7a6e04700591eefb96cda3e81e9163e",
+    "mtime": 1785758381.3157482,
+    "ast_hash": "847574347a1934154e5ff8cd208078c5",
     "semantic_hash": ""
   },
   "backend/db/fdd_project_fields.sql": {
@@ -1047,6 +1047,16 @@
   "docs/FORMULAS.md": {
     "mtime": 1785754148.145664,
     "ast_hash": "d4890bd036f07ca5b3c7131e8a589d52",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/milestones/dto/adjust-weights.dto.ts": {
+    "mtime": 1785757930.6487563,
+    "ast_hash": "dae7cc26e7c7da4bf51c13d5f0302be5",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/AdjustWeightsDialog.tsx": {
+    "mtime": 1785758182.1034791,
+    "ast_hash": "b0841ab3a63ffa0d6088d02170aba975",
     "semantic_hash": ""
   }
 }
