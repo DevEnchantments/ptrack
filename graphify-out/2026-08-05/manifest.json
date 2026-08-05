@@ -35,8 +35,8 @@
     "semantic_hash": ""
   },
   "backend/src/app.module.ts": {
-    "mtime": 1785908081.9691973,
-    "ast_hash": "ea2561b542402a5081f09af9378cbb1a",
+    "mtime": 1785917813.0835738,
+    "ast_hash": "2fe1830252b55362d12e5c6cda6b6054",
     "semantic_hash": ""
   },
   "backend/src/app.service.ts": {
@@ -555,8 +555,8 @@
     "semantic_hash": ""
   },
   "frontend/src/lib/api.ts": {
-    "mtime": 1785911769.0573452,
-    "ast_hash": "8541b4e363a041912cbf4cc60aa39ede",
+    "mtime": 1785918127.1471827,
+    "ast_hash": "7937a3153082a0114cda1ba811a65773",
     "semantic_hash": ""
   },
   "frontend/src/lib/auth-context.tsx": {
@@ -860,8 +860,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/DashboardPage.tsx": {
-    "mtime": 1785742700.5485635,
-    "ast_hash": "9dd1172cad1b6d3b51a87d0116029590",
+    "mtime": 1785918383.105284,
+    "ast_hash": "9227e9d917ad32d55fae2c66a9e2b737",
     "semantic_hash": ""
   },
   "frontend/src/components/SectionCard.tsx": {
@@ -905,8 +905,8 @@
     "semantic_hash": ""
   },
   "docs/FDD-ALIGNMENT.md": {
-    "mtime": 1785911973.5879304,
-    "ast_hash": "11cb0eb839af934481ed36bccd401c06",
+    "mtime": 1785918426.843256,
+    "ast_hash": "0ed1da7cb2f36440d95925c1e89ee92a",
     "semantic_hash": ""
   },
   "backend/db/fdd_project_fields.sql": {
@@ -1157,6 +1157,21 @@
   "frontend/src/pages/reports/ProjectProgressReportPage.tsx": {
     "mtime": 1785911734.9685194,
     "ast_hash": "7bd20b8f91bfaf519d617473fb3290e2",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/dashboard/dashboard.controller.ts": {
+    "mtime": 1785917795.8524318,
+    "ast_hash": "5821bf6528ab4a18c4d642129d8e9fc3",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/dashboard/dashboard.module.ts": {
+    "mtime": 1785917797.1289625,
+    "ast_hash": "85dca4a5c298eea1492578cfcb173f74",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/dashboard/dashboard.service.ts": {
+    "mtime": 1785917997.2914314,
+    "ast_hash": "bdbce64179bdcc654671eae1542491c6",
     "semantic_hash": ""
   }
 }
