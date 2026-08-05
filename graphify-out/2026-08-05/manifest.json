@@ -35,8 +35,8 @@
     "semantic_hash": ""
   },
   "backend/src/app.module.ts": {
-    "mtime": 1785917813.0835738,
-    "ast_hash": "2fe1830252b55362d12e5c6cda6b6054",
+    "mtime": 1785918890.6494448,
+    "ast_hash": "e4ee20c97a73758a2387d10f880ddfe9",
     "semantic_hash": ""
   },
   "backend/src/app.service.ts": {
@@ -445,8 +445,8 @@
     "semantic_hash": ""
   },
   "frontend/src/App.tsx": {
-    "mtime": 1785911769.169322,
-    "ast_hash": "6ec3b90bbcae1723ebfcefa7fbce6b48",
+    "mtime": 1785924997.0400631,
+    "ast_hash": "de2ae92e361de35eb88ceaa6fe170786",
     "semantic_hash": ""
   },
   "frontend/src/components/AddActionItemDialog.tsx": {
@@ -555,8 +555,8 @@
     "semantic_hash": ""
   },
   "frontend/src/lib/api.ts": {
-    "mtime": 1785918127.1471827,
-    "ast_hash": "7937a3153082a0114cda1ba811a65773",
+    "mtime": 1785925011.8171325,
+    "ast_hash": "5b44eec9965ad94ed684ed3b5eab9b8e",
     "semantic_hash": ""
   },
   "frontend/src/lib/auth-context.tsx": {
@@ -905,8 +905,8 @@
     "semantic_hash": ""
   },
   "docs/FDD-ALIGNMENT.md": {
-    "mtime": 1785918426.843256,
-    "ast_hash": "0ed1da7cb2f36440d95925c1e89ee92a",
+    "mtime": 1785925342.2066667,
+    "ast_hash": "e43dee77a3d8e32816d83d54e97c7d1a",
     "semantic_hash": ""
   },
   "backend/db/fdd_project_fields.sql": {
@@ -1145,8 +1145,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ReportingPage.tsx": {
-    "mtime": 1785911687.2940881,
-    "ast_hash": "271ee4920ecd9044f4c8a9d9622dbd45",
+    "mtime": 1785925131.9237463,
+    "ast_hash": "af1763097af73b02b6f6761fa4135a18",
     "semantic_hash": ""
   },
   "frontend/src/pages/reports/CycleStatusReportPage.tsx": {
@@ -1172,6 +1172,51 @@
   "backend/src/modules/dashboard/dashboard.service.ts": {
     "mtime": 1785917997.2914314,
     "ast_hash": "bdbce64179bdcc654671eae1542491c6",
+    "semantic_hash": ""
+  },
+  "backend/db/fdd_kpis.sql": {
+    "mtime": 1785918809.806126,
+    "ast_hash": "ad15f2b879f53b6938c3a7d5558b5db4",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/kpis/dto/create-kpi.dto.ts": {
+    "mtime": 1785918844.613778,
+    "ast_hash": "70e8d0078268219114548138a53b150d",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/kpis/dto/kpi-children.dto.ts": {
+    "mtime": 1785918851.239422,
+    "ast_hash": "8e090089cabba948fe70f25d242e23e9",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/kpis/kpis.controller.ts": {
+    "mtime": 1785918878.527712,
+    "ast_hash": "155e3e66be74538b96f56795399904a6",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/kpis/kpis.module.ts": {
+    "mtime": 1785918880.6433787,
+    "ast_hash": "e3c99fce76730cae969236e3501971d4",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/kpis/kpis.repository.ts": {
+    "mtime": 1785919105.6413102,
+    "ast_hash": "76e04e35ba72a8f18d9d7762d24d4fdb",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/kpis/kpis.service.ts": {
+    "mtime": 1785919105.6413102,
+    "ast_hash": "5fdc0f08d19bfd73e52071f5174bb6f6",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/AddKpiDialog.tsx": {
+    "mtime": 1785925056.5585122,
+    "ast_hash": "e56c62bfb5a218c6223c45cc9dddda2b",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/KpisPage.tsx": {
+    "mtime": 1785925116.1234956,
+    "ast_hash": "96ace956f91e633a8e889e8a7a1b7463",
     "semantic_hash": ""
   }
 }
