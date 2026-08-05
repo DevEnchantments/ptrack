@@ -123,6 +123,8 @@ notifications on transitions (Wave 6).
 ### 1.7 Attachment → `attachments` (EXTEND for parent scoping — see 1.3)
 
 ### 1.8 Dashboard/KPI → BUILD `kpis` + `kpi_readings` + `kpi_action_plans` (LAST)
+
+**✅ ASSUMED+SHIPPED 2026-08-05** (`backend/db/fdd_kpis.sql`): entity-level KPI registry at `/kpis` (reached from the Reporting hub) — Fig 27 definition dialog (name, description, pillar, entity, tier, strategic objective, unit, polarity, decimal places, data source, calculation method as free text, frequency, rationale, baseline, target, priority flag, owner), Fig 28 readings (date, value, performance analysis) and Fig 29 action plans (description, owner, due date, open/done) inline per KPI. Latest-vs-target and a polarity-aware trend arrow are display only; achievement % and the data-quality index stay unimplemented pending formula sign-off. ASSUMED: KPIs are entity-level (not per project), so the project KPI tab stays a stub until the linkage question is answered.
 KPI definition (Fig 27): name, type/tier, description, priority flag, pillar, entity,
 owner, strategic objective, unit, polarity, decimal precision, data source, calculation
 method (text), reporting frequency, rationale, baseline/target. Readings (Fig 28):
@@ -145,7 +147,7 @@ index (timeliness/completeness/reliability, Figs 30–31) — **formulas = ASK (
 | FR-08 | Identify New Risk modal | MISSING |
 | FR-09 | Adjust Weights modal (milestone dates + weights grid) | MISSING (columns exist) |
 | FR-10 | Portfolio dashboards: initiatives, budget, cycle status, monthly breakdown | ✅ PARTIAL 2026-08-03: My Dashboard now renders LIVE portfolio aggregates via `GET /dashboard` (stat tiles, updates/week, status + category breakdowns, milestones/month, created-vs-completed flow, completion radial, activity heatmap from record_history) — still hand-rolled SVG, no charting dependency |
-| FR-11 | KPI dashboards / scorecards | MISSING |
+| FR-11 | KPI dashboards / scorecards | ✅ PARTIAL 2026-08-05: KPI registry + readings + action plans live at `/kpis` (ASSUMED entity-level). Scorecard visuals (achievement %, data-quality index) await formula sign-off |
 | FR-12 | Report generation + Excel export | MISSING |
 | FR-13 | Download confirmation modal | ✅ SHIPPED 2026-08-03: confirm dialog (record count) before the CSV export |
 | FR-14 | Workflow states: submit/review/return/approve/close | ✅ ASSUMED+SHIPPED 2026-08-03 (see 1.6) — routing/cycle-calendar remain OI-03 questions |

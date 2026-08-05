@@ -796,3 +796,104 @@ export const attachmentsApi = {
       `/projects/${projectId}/attachments/${attachmentId}`,
     ),
 }
+
+export interface KpiReading {
+  id: string
+  kpi_id: string
+  reading_date: string
+  value: number
+  performance_analysis: string | null
+  created_at: string
+}
+
+export interface KpiActionPlan {
+  id: string
+  kpi_id: string
+  description: string
+  owner: string | null
+  due_date: string | null
+  status: string
+  created_at: string
+}
+
+export interface Kpi {
+  id: string
+  name: string
+  description: string | null
+  pillar: string | null
+  entity: string | null
+  unit: string | null
+  polarity: string
+  decimal_places: number
+  data_source: string | null
+  calculation_method: string | null
+  frequency: string
+  rationale: string | null
+  baseline: number | null
+  target: number | null
+  is_priority: boolean
+  tier_id: string | null
+  objective_id: string | null
+  owner_id: string | null
+  created_at: string
+  updated_at: string
+  tier: { name: string } | null
+  objective: { name: string } | null
+  owner: { full_name: string | null; email: string | null } | null
+  readings: KpiReading[]
+  action_plans: KpiActionPlan[]
+}
+
+export interface KpiInput {
+  name: string
+  description?: string | null
+  pillar?: string | null
+  entity?: string | null
+  unit?: string | null
+  polarity?: string
+  decimal_places?: number
+  data_source?: string | null
+  calculation_method?: string | null
+  frequency?: string
+  rationale?: string | null
+  baseline?: number | null
+  target?: number | null
+  is_priority?: boolean
+  tier_id?: string | null
+  objective_id?: string | null
+  owner_id?: string | null
+}
+
+export const kpisApi = {
+  list: () => apiGet<Kpi[]>('/kpis'),
+  add: (body: KpiInput) => apiPost<Kpi>('/kpis', body),
+  update: (kpiId: string, body: Partial<KpiInput>) =>
+    apiPatch<Kpi>(`/kpis/${kpiId}`, body),
+  remove: (kpiId: string) => apiDelete(`/kpis/${kpiId}`),
+  addReading: (
+    kpiId: string,
+    body: {
+      reading_date: string
+      value: number
+      performance_analysis?: string | null
+    },
+  ) => apiPost<KpiReading>(`/kpis/${kpiId}/readings`, body),
+  removeReading: (kpiId: string, readingId: string) =>
+    apiDelete(`/kpis/${kpiId}/readings/${readingId}`),
+  addPlan: (
+    kpiId: string,
+    body: {
+      description: string
+      owner?: string | null
+      due_date?: string | null
+      status?: string
+    },
+  ) => apiPost<KpiActionPlan>(`/kpis/${kpiId}/plans`, body),
+  updatePlan: (
+    kpiId: string,
+    planId: string,
+    body: { description?: string; owner?: string | null; due_date?: string | null; status?: string },
+  ) => apiPatch<{ ok: boolean }>(`/kpis/${kpiId}/plans/${planId}`, body),
+  removePlan: (kpiId: string, planId: string) =>
+    apiDelete(`/kpis/${kpiId}/plans/${planId}`),
+}
