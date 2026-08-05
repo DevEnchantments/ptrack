@@ -184,49 +184,52 @@ export class ProjectsRepository {
    * "Done" mirrors the milestone status enum; "open" excludes resolved/closed.
    */
   async listStats(
-    projectIds: string[],
+    projectIds: string[] | null,
   ): Promise<Record<string, ProjectListStats>> {
     const stats: Record<string, ProjectListStats> = {};
-    for (const id of projectIds) {
-      stats[id] = {
+    const ensure = (id: string) =>
+      (stats[id] ??= {
         milestones_done: 0,
         milestones_total: 0,
         open_issues: 0,
         calculated_progress: null,
-      };
+      });
+    if (projectIds) {
+      if (projectIds.length === 0) return stats;
+      projectIds.forEach(ensure);
     }
-    if (projectIds.length === 0) return stats;
 
-    const [ms, iss] = await Promise.all([
-      this.db.client
-        .from('milestones')
-        .select('project_id, status, weightage, percent_complete')
-        .in('project_id', projectIds),
-      this.db.client
-        .from('issues')
-        .select('project_id, status')
-        .in('project_id', projectIds),
-    ]);
+    // null = stats for every project (unpaginated list): no id filter, so the
+    // query can run concurrently with the project select.
+    let msQuery = this.db.client
+      .from('milestones')
+      .select('project_id, status, weightage, percent_complete');
+    let issQuery = this.db.client.from('issues').select('project_id, status');
+    if (projectIds) {
+      msQuery = msQuery.in('project_id', projectIds);
+      issQuery = issQuery.in('project_id', projectIds);
+    }
+    const [ms, iss] = await Promise.all([msQuery, issQuery]);
     if (ms.error) throw toHttpException(ms.error, 'projects.listStats');
     if (iss.error) throw toHttpException(iss.error, 'projects.listStats');
 
     const progressRows: Record<string, MilestoneProgressRow[]> = {};
     (ms.data ?? []).forEach(
       (r: { project_id: string } & MilestoneProgressRow) => {
-        const s = stats[r.project_id];
+        const s = projectIds ? stats[r.project_id] : ensure(r.project_id);
         if (!s) return;
         s.milestones_total += 1;
         if (r.status === 'closed_completed') s.milestones_done += 1;
         (progressRows[r.project_id] ??= []).push(r);
       },
     );
-    for (const id of projectIds) {
+    for (const id of Object.keys(stats)) {
       stats[id].calculated_progress = calculatedProgress(
         progressRows[id] ?? [],
       );
     }
     (iss.data ?? []).forEach((r: { project_id: string; status: string }) => {
-      const s = stats[r.project_id];
+      const s = projectIds ? stats[r.project_id] : ensure(r.project_id);
       if (!s) return;
       if (r.status !== 'resolved' && r.status !== 'closed') s.open_issues += 1;
     });

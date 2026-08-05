@@ -20,8 +20,8 @@
     "semantic_hash": ""
   },
   "backend/package.json": {
-    "mtime": 1784062954.2973688,
-    "ast_hash": "510297ac19f93c430c198bbb194fc8ab",
+    "mtime": 1785931510.12455,
+    "ast_hash": "a2906bebb97b3b6a4043b037458594b5",
     "semantic_hash": ""
   },
   "backend/src/app.controller.spec.ts": {
@@ -70,8 +70,8 @@
     "semantic_hash": ""
   },
   "backend/src/database/database.service.ts": {
-    "mtime": 1784058962.3661559,
-    "ast_hash": "118e8dfdb80b4f46524a41c66b71c41d",
+    "mtime": 1785931543.6696973,
+    "ast_hash": "30cf978d01a87f19d08cfaf2e8e03a2b",
     "semantic_hash": ""
   },
   "backend/src/main.ts": {
@@ -295,13 +295,13 @@
     "semantic_hash": ""
   },
   "backend/src/modules/projects/projects.repository.ts": {
-    "mtime": 1785763428.3919115,
-    "ast_hash": "5e6a04580a9b01659e82e3ca4a1ccb6c",
+    "mtime": 1785931543.6648543,
+    "ast_hash": "3f6c082499727bf2b5ff1575ca611895",
     "semantic_hash": ""
   },
   "backend/src/modules/projects/projects.service.ts": {
-    "mtime": 1785908081.9751978,
-    "ast_hash": "a98b54bf4e2e74e79998d88bda74c2bd",
+    "mtime": 1785931543.666442,
+    "ast_hash": "cdfb506c86df4dc852314a97d7f4c18c",
     "semantic_hash": ""
   },
   "backend/src/modules/resources/dto/create-resource.dto.ts": {

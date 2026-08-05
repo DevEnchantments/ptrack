@@ -126,11 +126,27 @@ export class ProjectsService {
       ProjectListRow & ProjectListStats & { planned_progress: number | null }
     >
   > {
-    const projects = await this.repo.findAll(page);
-    const stats = await this.repo.listStats(projects.map((p) => p.id));
+    let projects: ProjectListRow[];
+    let stats: Record<string, ProjectListStats>;
+    if (page?.limit) {
+      projects = await this.repo.findAll(page);
+      stats = await this.repo.listStats(projects.map((p) => p.id));
+    } else {
+      // Concurrent: all-projects stats need no id list, and each Supabase
+      // round-trip costs ~0.5s on the corporate network.
+      [projects, stats] = await Promise.all([
+        this.repo.findAll(),
+        this.repo.listStats(null),
+      ]);
+    }
     return projects.map((p) => ({
       ...p,
-      ...stats[p.id],
+      ...(stats[p.id] ?? {
+        milestones_done: 0,
+        milestones_total: 0,
+        open_issues: 0,
+        calculated_progress: null,
+      }),
       // F2, docs/FORMULAS.md (PROVISIONAL).
       planned_progress: plannedProgress(p.start_date, p.target_end_date),
     }));

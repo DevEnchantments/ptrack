@@ -555,8 +555,8 @@
     "semantic_hash": ""
   },
   "frontend/src/lib/api.ts": {
-    "mtime": 1785925011.8171325,
-    "ast_hash": "5b44eec9965ad94ed684ed3b5eab9b8e",
+    "mtime": 1785930160.802574,
+    "ast_hash": "7ec64ed53e698e6b1391fd5c46394d7d",
     "semantic_hash": ""
   },
   "frontend/src/lib/auth-context.tsx": {
@@ -610,8 +610,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ProjectDetailPage.tsx": {
-    "mtime": 1785911769.215515,
-    "ast_hash": "eb99197fe545f5473a0b0f3da63b28cc",
+    "mtime": 1785930160.8525815,
+    "ast_hash": "17ab637cddc98b08ce71c0a1c5fcf53e",
     "semantic_hash": ""
   },
   "frontend/src/pages/StatusReportDetailPage.tsx": {
@@ -765,8 +765,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/ui/toaster.tsx": {
-    "mtime": 1785330423.5500104,
-    "ast_hash": "feb6cf3be51dc7a222a7478da805d84a",
+    "mtime": 1785930628.9243453,
+    "ast_hash": "528c28d7f8d000261f1d3b52cd4e7f08",
     "semantic_hash": ""
   },
   "frontend/src/lib/toast.ts": {
@@ -890,8 +890,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/InitialsAvatar.tsx": {
-    "mtime": 1785742700.5145633,
-    "ast_hash": "b16d072710c1462eb4f83b079976f1e4",
+    "mtime": 1785930401.0187185,
+    "ast_hash": "b5838c2b93247264bafa91140443b749",
     "semantic_hash": ""
   },
   "frontend/src/components/FieldError.tsx": {
@@ -920,8 +920,8 @@
     "semantic_hash": ""
   },
   "docs/UI-AUDIT.md": {
-    "mtime": 1785742700.4801612,
-    "ast_hash": "297517a9eadb9e51cd914764a2765100",
+    "mtime": 1785930752.9614565,
+    "ast_hash": "e683ac1dc919df2f797216bd982eadf5",
     "semantic_hash": ""
   },
   "frontend/src/components/HelpDot.tsx": {
@@ -1217,6 +1217,11 @@
   "frontend/src/pages/KpisPage.tsx": {
     "mtime": 1785925116.1234956,
     "ast_hash": "96ace956f91e633a8e889e8a7a1b7463",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/EditOutcomeDialog.tsx": {
+    "mtime": 1785930142.1901133,
+    "ast_hash": "74b3e34c63608eae9c5328e9e13b4488",
     "semantic_hash": ""
   }
 }
