@@ -47,6 +47,7 @@ import { Button } from '@/components/ui/button'
 import { AddPersonDialog } from '@/components/AddPersonDialog'
 import { AddMilestoneDialog } from '@/components/AddMilestoneDialog'
 import { AdjustWeightsDialog } from '@/components/AdjustWeightsDialog'
+import { EditOutcomeDialog } from '@/components/EditOutcomeDialog'
 import { ProjectOverviewCards } from '@/components/ProjectOverviewCards'
 import { WorkflowPanel } from '@/components/WorkflowPanel'
 import { AddActionItemDialog } from '@/components/AddActionItemDialog'
@@ -287,6 +288,7 @@ export function ProjectDetailPage() {
   const [project, setProject] = useState<ProjectDetail | null>(null)
   const [milestones, setMilestones] = useState<Milestone[]>([])
   const [outcomes, setOutcomes] = useState<ProgramOutcome[]>([])
+  const [editOutcome, setEditOutcome] = useState<ProgramOutcome | null>(null)
   const [actionItems, setActionItems] = useState<ActionItem[]>([])
   const [links, setLinks] = useState<Link[]>([])
   const [resources, setResources] = useState<Resource[]>([])
@@ -652,12 +654,13 @@ export function ProjectDetailPage() {
       key: o.id,
       header: `${o.sort_order != null ? `${o.sort_order}. ` : ''}${o.name}${outcomeRange(o)}`,
       items: milestones.filter((m) => m.outcome_id === o.id),
+      outcome: o as ProgramOutcome | null,
     }))
     .filter((g) => g.items.length > 0)
   const ungroupedMilestones = milestones.filter((m) => !m.outcome_id)
   const milestoneGroups =
     grouped.length === 0
-      ? [{ key: 'all', header: null as string | null, items: milestones }]
+      ? [{ key: 'all', header: null as string | null, items: milestones, outcome: null as ProgramOutcome | null }]
       : [
           ...grouped,
           ...(ungroupedMilestones.length > 0
@@ -666,6 +669,7 @@ export function ProjectDetailPage() {
                   key: 'ungrouped',
                   header: 'No outcome' as string | null,
                   items: ungroupedMilestones,
+                  outcome: null as ProgramOutcome | null,
                 },
               ]
             : []),
@@ -994,8 +998,14 @@ export function ProjectDetailPage() {
               {milestoneGroups.map((g) => (
                 <Fragment key={g.key}>
                   {g.header && (
-                    <li className="bg-muted/40 px-4 py-2 text-xs font-medium text-muted-foreground">
-                      {g.header}
+                    <li className="flex items-center gap-3 bg-muted/40 px-4 py-2 text-xs font-medium text-muted-foreground">
+                      {g.outcome && (
+                        <EditButton
+                          label="Edit outcome"
+                          onClick={() => setEditOutcome(g.outcome)}
+                        />
+                      )}
+                      <span className="flex-1">{g.header}</span>
                     </li>
                   )}
                   {g.items.map((m) => (
@@ -1773,6 +1783,16 @@ export function ProjectDetailPage() {
         open={adjustWeightsOpen}
         onOpenChange={setAdjustWeightsOpen}
         milestones={milestones}
+        onSaved={loadMilestones}
+      />
+
+      <EditOutcomeDialog
+        projectId={project.id}
+        outcome={editOutcome}
+        open={editOutcome !== null}
+        onOpenChange={(o) => {
+          if (!o) setEditOutcome(null)
+        }}
         onSaved={loadMilestones}
       />
 

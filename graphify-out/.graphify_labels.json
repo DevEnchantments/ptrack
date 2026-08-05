@@ -96,17 +96,5 @@
   "94": "ActionItemsModule",
   "95": "RisksModule",
   "96": "@types/node",
-  "97": "IsInt",
-  "98": "IsUUID",
-  "99": "HomePage",
-  "100": "Min",
-  "101": "IsDateString",
-  "102": "ApiBody",
-  "103": "Body",
-  "104": "Controller",
-  "105": "Delete",
-  "106": "Get",
-  "107": "Param",
-  "108": "Patch",
-  "109": "Post"
+  "97": "IsInt"
 }

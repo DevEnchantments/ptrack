@@ -270,6 +270,10 @@ export const outcomesApi = {
     apiGet<ProgramOutcome[]>(`/projects/${projectId}/outcomes`),
   create: (projectId: string, data: Record<string, unknown>) =>
     apiPost<ProgramOutcome>(`/projects/${projectId}/outcomes`, data),
+  update: (projectId: string, outcomeId: string, data: Record<string, unknown>) =>
+    apiPatch<ProgramOutcome>(`/projects/${projectId}/outcomes/${outcomeId}`, data),
+  remove: (projectId: string, outcomeId: string) =>
+    apiDelete<{ deleted: boolean }>(`/projects/${projectId}/outcomes/${outcomeId}`),
 }
 
 export interface Milestone {

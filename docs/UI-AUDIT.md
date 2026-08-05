@@ -210,7 +210,9 @@ StepConfirmation: `gap-4`/`px-4`/`—` where siblings use `gap-6`/`px-1`/`-`.
   (#dc2626 / #ffffff, 4.83 PASS, same both themes); em-dash placeholders → `-`.
   **Known remaining exception:** `InitialsAvatar`'s 8-hue identity-hashing array
   still uses raw `*-100`/`*-700` palette pairs (deliberate variety; tokenizing
-  needs 16 more tokens). Revisit only if asked. AppLayout's brand `text-white`
+  needs 16 more tokens). Revisit only if asked. **Closed 2026-08-05:** the array
+  (6 hues in practice) now reads `--avatar-1..6-bg/fg` tokens from index.css
+  (12 tokens, light + dark pairs, same values as before). AppLayout's brand `text-white`
   lands in Stage 4.
 - [x] **Stage 4 — Shell + Home.** SHIPPED 2026-07-29, visually confirmed by Fares.
   CommandPalette: entrance animation DELETED (keyboard surface), overlay → 
@@ -247,10 +249,11 @@ StepConfirmation: `gap-4`/`px-4`/`—` where siblings use `gap-6`/`px-1`/`-`.
   `role="link"` + `tabIndex={0}` + Enter navigation + the standard
   `focus-visible:outline-2 focus-visible:outline-ring` ring (mirrors
   ProjectDetailPage's own rows). All six stages complete: the audit is DONE.
-  Open leftovers if anyone resumes styling work later: hover motion not gated
-  behind `@media (hover: hover)` app-wide; `InitialsAvatar` raw-palette hue
-  hashing (documented exception, Stage 3 note); toast hover-pause (deferred,
-  section 6 item 7).
+  ~~Open leftovers~~ **All leftovers closed 2026-08-05:** hover gating needed
+  no sweep (Tailwind v4 gates the `hover:` variant behind `(hover: hover)`
+  natively; the only raw `:hover` rules were in the never-imported Vite
+  scaffold `App.css`, now deleted); `InitialsAvatar` tokenized (Stage 3 note);
+  toast hover-pause shipped (section 6 item 7).
 
 **Recommended order rationale:** Stage 1 first because every later stage consumes
 its tokens/recipes; Stages 2-5 then become class-swaps instead of local decisions.
@@ -295,7 +298,7 @@ trusting stale numbers. Highest-value grep targets: `transition-all`, `text-whit
 | 4 | Translucent/blur header: **NOT doing it.** Now purely a taste call, and an opaque header on a navy sidebar is cleaner than a blurred one. Revisit only if asked. | none |
 | 5 | Reduced-motion guard in `useEntranceFlag`: **do it.** | Stage 6 |
 | 6 | Keyboard focus (`tabIndex`/`role`) on Milestone rows: **do it.** | Stage 6 |
-| 7 | Toast hover-pause: **deferred.** Genuine nicety, real logic, no accessibility argument. | none |
+| 7 | Toast hover-pause: **shipped 2026-08-05.** Pointer over the stack pauses auto-dismiss; resume keeps remaining time; tab-hidden also pauses (Sonner edge case). | post-audit polish |
 
 ### Item 1 detail: the two categories must not be collapsed
 

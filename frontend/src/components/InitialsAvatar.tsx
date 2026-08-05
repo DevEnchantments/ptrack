@@ -1,10 +1,14 @@
+// Identity hues live in index.css (--avatar-N-*), light + dark pairs; same
+// values as the old raw *-100/*-700 classes, now theme-editable like the rest
+// of palette C.
+// Literal strings: Tailwind's scanner cannot see composed class names.
 const PALETTE = [
-  'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200',
-  'bg-teal-100 text-teal-700 dark:bg-teal-900 dark:text-teal-200',
-  'bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-200',
-  'bg-amber-100 text-amber-700 dark:bg-amber-900 dark:text-amber-200',
-  'bg-rose-100 text-rose-700 dark:bg-rose-900 dark:text-rose-200',
-  'bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-200',
+  'bg-[var(--avatar-1-bg)] text-[var(--avatar-1-fg)]',
+  'bg-[var(--avatar-2-bg)] text-[var(--avatar-2-fg)]',
+  'bg-[var(--avatar-3-bg)] text-[var(--avatar-3-fg)]',
+  'bg-[var(--avatar-4-bg)] text-[var(--avatar-4-fg)]',
+  'bg-[var(--avatar-5-bg)] text-[var(--avatar-5-fg)]',
+  'bg-[var(--avatar-6-bg)] text-[var(--avatar-6-fg)]',
 ]
 
 function initialsOf(name: string): string {

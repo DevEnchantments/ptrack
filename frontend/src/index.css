@@ -133,6 +133,20 @@
     --status-red-bg: #fef2f2;
     --status-red-fg: #b91c1c;
     --status-red-border: #fecaca;
+    /* InitialsAvatar identity hues (UI-AUDIT Stage 3 leftover closed
+       2026-08-05): deterministic per-name pairs, was raw *-100/*-700. */
+    --avatar-1-bg: #dbeafe;
+    --avatar-1-fg: #1d4ed8;
+    --avatar-2-bg: #ccfbf1;
+    --avatar-2-fg: #0f766e;
+    --avatar-3-bg: #f3e8ff;
+    --avatar-3-fg: #7e22ce;
+    --avatar-4-bg: #fef3c7;
+    --avatar-4-fg: #b45309;
+    --avatar-5-bg: #ffe4e6;
+    --avatar-5-fg: #be123c;
+    --avatar-6-bg: #d1fae5;
+    --avatar-6-fg: #047857;
     --status-blue-bg: #eff6ff;
     --status-blue-fg: #1d4ed8;
     --status-blue-border: #bfdbfe;
@@ -200,6 +214,18 @@
     --status-red-bg: #450a0a;
     --status-red-fg: #fca5a5;
     --status-red-border: #7f1d1d;
+    --avatar-1-bg: #1e3a8a;
+    --avatar-1-fg: #bfdbfe;
+    --avatar-2-bg: #134e4a;
+    --avatar-2-fg: #99f6e4;
+    --avatar-3-bg: #581c87;
+    --avatar-3-fg: #e9d5ff;
+    --avatar-4-bg: #78350f;
+    --avatar-4-fg: #fde68a;
+    --avatar-5-bg: #881337;
+    --avatar-5-fg: #fecdd3;
+    --avatar-6-bg: #064e3b;
+    --avatar-6-fg: #a7f3d0;
     --status-blue-bg: #172554;
     --status-blue-fg: #93c5fd;
     --status-blue-border: #1e3a8a;

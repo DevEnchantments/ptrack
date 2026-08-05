@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { CheckCircle2, CircleAlert } from 'lucide-react'
 import { subscribeToasts, type ToastKind } from '@/lib/toast'
 
@@ -6,6 +6,10 @@ import { subscribeToasts, type ToastKind } from '@/lib/toast'
  * Renders toasts fired via `toast.error()` / `toast.success()` (lib/toast.ts).
  * Mounted once in App. Errors exist because the app's data loaders used to
  * swallow failures silently; successes close the loop on saves.
+ *
+ * Auto-dismiss pauses while the pointer is over the stack (so long errors can
+ * be read) and while the tab is hidden; on resume each toast keeps only the
+ * time it had left, not a fresh full timer.
  */
 interface ToastItem {
   id: number
@@ -14,10 +18,57 @@ interface ToastItem {
   closing?: boolean
 }
 
+interface ToastTimer {
+  remaining: number
+  startedAt: number
+  handle: ReturnType<typeof setTimeout> | null
+}
+
 const TOAST_MS = { error: 6000, success: 3000 }
 // Exit runs the entrance path in reverse; must match .toast-out in index.css.
 const EXIT_MS = 150
+// A resumed toast always gets at least this long before dismissing.
+const MIN_RESUME_MS = 400
 let seq = 0
+
+// Timer bookkeeping lives at module scope (like `seq`): the component is
+// mounted once, and hook callbacks must not mutate ref contents
+// (react-hooks/immutability).
+const timers = new Map<number, ToastTimer>()
+let stackHovered = false
+
+function pauseTimers() {
+  for (const timer of timers.values()) {
+    if (timer.handle === null) continue
+    clearTimeout(timer.handle)
+    timer.handle = null
+    timer.remaining = Math.max(
+      MIN_RESUME_MS,
+      timer.remaining - (Date.now() - timer.startedAt),
+    )
+  }
+}
+
+function resumeTimers(close: (id: number) => void) {
+  if (stackHovered || document.hidden) return
+  for (const [id, timer] of timers) {
+    if (timer.handle !== null) continue
+    timer.startedAt = Date.now()
+    timer.handle = setTimeout(() => close(id), timer.remaining)
+  }
+}
+
+function startTimer(id: number, kind: ToastKind, close: (id: number) => void) {
+  const timer: ToastTimer = {
+    remaining: TOAST_MS[kind],
+    startedAt: Date.now(),
+    handle: null,
+  }
+  timers.set(id, timer)
+  if (!stackHovered && !document.hidden) {
+    timer.handle = setTimeout(() => close(id), timer.remaining)
+  }
+}
 
 const KIND_CLASSES: Record<ToastKind, string> = {
   error: 'border-destructive/30 border-l-destructive text-destructive',
@@ -27,26 +78,54 @@ const KIND_CLASSES: Record<ToastKind, string> = {
 export function Toaster() {
   const [toasts, setToasts] = useState<ToastItem[]>([])
 
+  const beginClose = useCallback((id: number) => {
+    timers.delete(id)
+    setToasts((prev) =>
+      prev.map((t) => (t.id === id ? { ...t, closing: true } : t)),
+    )
+    setTimeout(
+      () => setToasts((prev) => prev.filter((t) => t.id !== id)),
+      EXIT_MS,
+    )
+  }, [])
+
   useEffect(() => {
-    return subscribeToasts((message, kind) => {
+    const unsubscribe = subscribeToasts((message, kind) => {
       const id = ++seq
       setToasts((prev) => [...prev, { id, message, kind }])
-      setTimeout(() => {
-        setToasts((prev) =>
-          prev.map((t) => (t.id === id ? { ...t, closing: true } : t)),
-        )
-        setTimeout(
-          () => setToasts((prev) => prev.filter((t) => t.id !== id)),
-          EXIT_MS,
-        )
-      }, TOAST_MS[kind])
+      startTimer(id, kind, beginClose)
     })
-  }, [])
+    const onVisibility = () => {
+      if (document.hidden) pauseTimers()
+      else resumeTimers(beginClose)
+    }
+    document.addEventListener('visibilitychange', onVisibility)
+    return () => {
+      unsubscribe()
+      document.removeEventListener('visibilitychange', onVisibility)
+    }
+  }, [beginClose])
+
+  // The container unmounts with the last toast, so mouseleave never fires;
+  // without this reset a future toast would start paused and never dismiss.
+  useEffect(() => {
+    if (toasts.length === 0) stackHovered = false
+  }, [toasts.length])
 
   if (toasts.length === 0) return null
 
   return (
-    <div className="fixed bottom-4 right-4 z-50 flex w-80 flex-col gap-2">
+    <div
+      className="fixed bottom-4 right-4 z-50 flex w-80 flex-col gap-2"
+      onMouseEnter={() => {
+        stackHovered = true
+        pauseTimers()
+      }}
+      onMouseLeave={() => {
+        stackHovered = false
+        resumeTimers(beginClose)
+      }}
+    >
       {toasts.map((t) => (
         <div
           key={t.id}
