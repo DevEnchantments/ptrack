@@ -16,6 +16,7 @@ import { IssuesModule } from './modules/issues/issues.module';
 import { RisksModule } from './modules/risks/risks.module';
 import { SubmissionsModule } from './modules/submissions/submissions.module';
 import { NotificationsModule } from './modules/notifications/notifications.module';
+import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { UpdatesModule } from './modules/updates/updates.module';
 import { StatusReportsModule } from './modules/status-reports/status-reports.module';
 import { AttachmentsModule } from './modules/attachments/attachments.module';
@@ -39,6 +40,7 @@ import { AppService } from './app.service';
     RisksModule,
     SubmissionsModule,
     NotificationsModule,
+    DashboardModule,
     UpdatesModule,
     StatusReportsModule,
     AttachmentsModule,

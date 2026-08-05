@@ -144,7 +144,7 @@ index (timeliness/completeness/reliability, Figs 30–31) — **formulas = ASK (
 | FR-07 | Risk & issue register with score/severity/audit | PARTIAL — issues yes, risks no |
 | FR-08 | Identify New Risk modal | MISSING |
 | FR-09 | Adjust Weights modal (milestone dates + weights grid) | MISSING (columns exist) |
-| FR-10 | Portfolio dashboards: initiatives, budget, cycle status, monthly breakdown | MISSING (sample dashboard is placeholder) |
+| FR-10 | Portfolio dashboards: initiatives, budget, cycle status, monthly breakdown | ✅ PARTIAL 2026-08-03: My Dashboard now renders LIVE portfolio aggregates via `GET /dashboard` (stat tiles, updates/week, status + category breakdowns, milestones/month, created-vs-completed flow, completion radial, activity heatmap from record_history) — still hand-rolled SVG, no charting dependency |
 | FR-11 | KPI dashboards / scorecards | MISSING |
 | FR-12 | Report generation + Excel export | MISSING |
 | FR-13 | Download confirmation modal | ✅ SHIPPED 2026-08-03: confirm dialog (record count) before the CSV export |

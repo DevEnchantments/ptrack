@@ -614,6 +614,35 @@ export interface CycleStatusReport {
   rows: CycleStatusRow[]
 }
 
+export interface DashboardChartPoint {
+  label: string
+  value: number
+}
+
+export interface DashboardData {
+  stats: {
+    active_projects: number
+    projects_created_this_month: number
+    open_action_items: number
+    action_items_due_this_week: number
+    milestones_this_month: number
+    major_milestones_this_month: number
+    overdue_items: number
+  }
+  updates_per_week: DashboardChartPoint[]
+  projects_by_status: DashboardChartPoint[]
+  action_items: { open: number; closed: number; overdue: number }
+  projects_by_category: DashboardChartPoint[]
+  milestones_per_month: DashboardChartPoint[]
+  flow: { labels: string[]; created: number[]; completed: number[] }
+  overall_milestones: { done: number; total: number }
+  heat: number[][]
+}
+
+export const dashboardApi = {
+  get: () => apiGet<DashboardData>('/dashboard'),
+}
+
 export const reportsApi = {
   cycleStatus: () => apiGet<CycleStatusReport>('/reports/cycle-status'),
 }

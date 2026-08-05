@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react'
 import { usePageTitle } from '@/lib/use-page-title'
+import { dashboardApi, type DashboardData } from '@/lib/api'
+import { Button } from '@/components/ui/button'
+import { Skeleton } from '@/components/ui/skeleton'
 
 /**
- * My Dashboard — PREVIEW with sample data.
+ * My Dashboard — LIVE portfolio aggregates from GET /dashboard.
  *
- * Dummy charts only: hand-rolled inline SVG + CSS transitions, deliberately no
- * charting library (that pick is a Phase 2 decision). Chart series colors are
- * validated chart-grade tones (CVD-safe, ≥3:1 on card), distinct from the UI
- * chrome palette.
+ * Charts stay hand-rolled inline SVG + CSS transitions (still no charting
+ * library). Chart series colors are validated chart-grade tones (CVD-safe,
+ * >=3:1 on card), distinct from the UI chrome palette.
  */
 
 // Single source of truth: the --chart-* tokens in index.css (validated trio).
@@ -17,38 +19,16 @@ const SERIES = {
   blue: 'var(--chart-3)',
 }
 
-const WEEKLY_ACTIVITY = [
-  { label: 'W1', value: 12 },
-  { label: 'W2', value: 18 },
-  { label: 'W3', value: 9 },
-  { label: 'W4', value: 22 },
-  { label: 'W5', value: 17 },
-  { label: 'W6', value: 28 },
-  { label: 'W7', value: 24 },
-  { label: 'W8', value: 31 },
-]
+interface ChartPoint {
+  label: string
+  value: number
+}
 
-const PROJECTS_BY_STATUS = [
-  { label: 'On Track', value: 11 },
-  { label: 'Elevated', value: 6 },
-  { label: 'Hot', value: 3 },
-  { label: 'Complete', value: 2 },
-  { label: 'Dormant', value: 1 },
-  { label: 'Unknown', value: 1 },
-]
-
-const ACTION_ITEM_SEGMENTS = [
-  { label: 'Open', value: 21, color: SERIES.teal },
-  { label: 'In review', value: 9, color: SERIES.blue },
-  { label: 'Overdue', value: 7, color: SERIES.orange },
-]
-
-const STAT_TILES = [
-  { label: 'Active Projects', value: 24, note: '+2 this month' },
-  { label: 'Open Action Items', value: 37, note: '12 due this week' },
-  { label: 'Milestones This Month', value: 9, note: '3 major' },
-  { label: 'Overdue Items', value: 5, note: '2 escalated' },
-]
+interface ChartSegment {
+  label: string
+  value: number
+  color: string
+}
 
 function prefersReducedMotion(): boolean {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -126,22 +106,22 @@ const LINE_W = 640
 const LINE_H = 200
 const LINE_PAD = { top: 16, right: 16, bottom: 26, left: 34 }
 
-function ActivityLineChart() {
+function ActivityLineChart({ data }: { data: ChartPoint[] }) {
   const entered = useEntranceFlag()
   const [hover, setHover] = useState<number | null>(null)
 
-  const max = 35 // fixed sample-data ceiling → round gridlines at 0/10/20/30
+  const max = Math.max(4, Math.ceil(Math.max(...data.map((d) => d.value)) / 4) * 4)
   const innerW = LINE_W - LINE_PAD.left - LINE_PAD.right
   const innerH = LINE_H - LINE_PAD.top - LINE_PAD.bottom
-  const pts = WEEKLY_ACTIVITY.map((d, i) => ({
-    x: LINE_PAD.left + (i / (WEEKLY_ACTIVITY.length - 1)) * innerW,
+  const pts = data.map((d, i) => ({
+    x: LINE_PAD.left + (i / (data.length - 1)) * innerW,
     y: LINE_PAD.top + innerH - (d.value / max) * innerH,
   }))
   const linePath = smoothPath(pts)
   const areaPath = `${linePath} L ${pts[pts.length - 1].x} ${
     LINE_PAD.top + innerH
   } L ${pts[0].x} ${LINE_PAD.top + innerH} Z`
-  const gridValues = [0, 10, 20, 30]
+  const gridValues = [0, max / 4, max / 2, (max * 3) / 4, max]
 
   return (
     <div className="rounded-lg border bg-card p-4 shadow-xs">
@@ -176,7 +156,7 @@ function ActivityLineChart() {
               </g>
             )
           })}
-          {WEEKLY_ACTIVITY.map((d, i) => (
+          {data.map((d, i) => (
             <text
               key={d.label}
               x={pts[i].x}
@@ -248,7 +228,7 @@ function ActivityLineChart() {
             textAnchor="middle"
             className="fill-foreground text-[11px] font-medium"
           >
-            {WEEKLY_ACTIVITY[WEEKLY_ACTIVITY.length - 1].value}
+            {data[data.length - 1].value}
           </text>
         </svg>
         {hover !== null && (
@@ -261,9 +241,9 @@ function ActivityLineChart() {
             }}
           >
             <span className="text-muted-foreground">
-              {WEEKLY_ACTIVITY[hover].label}:{' '}
+              {data[hover].label}:{' '}
             </span>
-            <span className="font-medium">{WEEKLY_ACTIVITY[hover].value}</span>
+            <span className="font-medium">{data[hover].value}</span>
           </div>
         )}
       </div>
@@ -271,16 +251,16 @@ function ActivityLineChart() {
   )
 }
 
-function ProjectsBarChart() {
+function ProjectsBarChart({ data }: { data: ChartPoint[] }) {
   const entered = useEntranceFlag()
   const [hover, setHover] = useState<number | null>(null)
-  const max = Math.max(...PROJECTS_BY_STATUS.map((d) => d.value))
+  const max = Math.max(1, ...data.map((d) => d.value))
 
   return (
     <div className="rounded-lg border bg-card p-4 shadow-xs">
       <h2 className="text-sm font-medium">Projects by status</h2>
       <div className="mt-3 flex flex-col gap-2">
-        {PROJECTS_BY_STATUS.map((d, i) => (
+        {data.map((d, i) => (
           <div
             key={d.label}
             className="flex items-center gap-3"
@@ -311,16 +291,16 @@ function ProjectsBarChart() {
   )
 }
 
-function ActionItemsBreakdown() {
+function ActionItemsBreakdown({ segments }: { segments: ChartSegment[] }) {
   const entered = useEntranceFlag()
-  const total = ACTION_ITEM_SEGMENTS.reduce((s, d) => s + d.value, 0)
+  const total = segments.reduce((s, d) => s + d.value, 0)
 
   return (
     <div className="rounded-lg border bg-card p-4 shadow-xs">
       <h2 className="text-sm font-medium">Action items</h2>
       {/* 100% stacked bar with 2px surface gaps between segments. */}
       <div className="mt-4 flex h-4 w-full gap-0.5 overflow-hidden rounded">
-        {ACTION_ITEM_SEGMENTS.map((d, i) => (
+        {segments.map((d, i) => (
           <div
             key={d.label}
             title={`${d.label}: ${d.value}`}
@@ -333,7 +313,7 @@ function ActionItemsBreakdown() {
         ))}
       </div>
       <ul className="mt-4 flex flex-col gap-2">
-        {ACTION_ITEM_SEGMENTS.map((d) => (
+        {segments.map((d) => (
           <li key={d.label} className="flex items-center gap-2 text-sm">
             <span
               className="h-2.5 w-2.5 shrink-0 rounded-full"
@@ -354,27 +334,21 @@ function ActionItemsBreakdown() {
 
 // Segment order keeps chart-2 (orange) and chart-1 apart — the CVD-safe
 // adjacency the palette was validated with.
-const CATEGORY_SEGMENTS = [
-  { label: 'Software', value: 10, color: SERIES.teal },
-  { label: 'Infrastructure', value: 8, color: SERIES.blue },
-  { label: 'Security', value: 6, color: SERIES.orange },
-]
-
 /** Donut with center readout; hovering a segment swaps the center to it. */
-function CategoryDonut() {
+function CategoryDonut({ segments }: { segments: ChartSegment[] }) {
   const entered = useEntranceFlag()
   const [hover, setHover] = useState<number | null>(null)
-  const total = CATEGORY_SEGMENTS.reduce((s, d) => s + d.value, 0)
+  const total = segments.reduce((s, d) => s + d.value, 0)
   const R = 45
   const C = 2 * Math.PI * R
   const GAP = 3
-  const fractions = CATEGORY_SEGMENTS.map((d) => d.value / total)
-  const arcs = CATEGORY_SEGMENTS.map((d, i) => ({
+  const fractions = segments.map((d) => d.value / total)
+  const arcs = segments.map((d, i) => ({
     ...d,
     len: Math.max(fractions[i] * C - GAP, 0),
     offset: fractions.slice(0, i).reduce((s, f) => s + f, 0) * C,
   }))
-  const center = hover !== null ? CATEGORY_SEGMENTS[hover] : null
+  const center = hover !== null ? segments[hover] : null
 
   return (
     <div className="rounded-lg border bg-card p-4 shadow-xs">
@@ -412,7 +386,7 @@ function CategoryDonut() {
           </text>
         </svg>
         <ul className="flex flex-1 flex-col gap-2">
-          {CATEGORY_SEGMENTS.map((d, i) => (
+          {segments.map((d, i) => (
             <li
               key={d.label}
               className="flex cursor-default items-center gap-2 text-sm"
@@ -431,26 +405,17 @@ function CategoryDonut() {
   )
 }
 
-const MILESTONES_PER_MONTH = [
-  { label: 'Feb', value: 4 },
-  { label: 'Mar', value: 7 },
-  { label: 'Apr', value: 5 },
-  { label: 'May', value: 9 },
-  { label: 'Jun', value: 6 },
-  { label: 'Jul', value: 8 },
-]
-
 /** Vertical columns growing from the baseline, staggered. */
-function MilestoneColumns() {
+function MilestoneColumns({ data }: { data: ChartPoint[] }) {
   const entered = useEntranceFlag()
   const [hover, setHover] = useState<number | null>(null)
-  const max = Math.max(...MILESTONES_PER_MONTH.map((d) => d.value))
+  const max = Math.max(1, ...data.map((d) => d.value))
 
   return (
     <div className="rounded-lg border bg-card p-4 shadow-xs">
       <h2 className="text-sm font-medium">Milestones completed / month</h2>
       <div className="mt-3 flex h-36 items-end gap-2">
-        {MILESTONES_PER_MONTH.map((d, i) => (
+        {data.map((d, i) => (
           <div
             key={d.label}
             className="relative flex h-full flex-1 flex-col justify-end"
@@ -482,19 +447,20 @@ function MilestoneColumns() {
 }
 
 /** Radial progress — a single hero percentage with an animated sweep. */
-function CompletionRadial() {
+function CompletionRadial({ done, total }: { done: number; total: number }) {
   const entered = useEntranceFlag()
-  const pct = useCountUp(68, 900)
+  const pctTarget = total > 0 ? Math.round((done / total) * 100) : 0
+  const pct = useCountUp(pctTarget, 900)
   const R = 45
   const C = 2 * Math.PI * R
-  const target = 0.68
+  const target = pctTarget / 100
 
   return (
     <div className="rounded-lg border bg-card p-4 shadow-xs">
       <h2 className="text-sm font-medium">Overall milestone completion</h2>
       <div className="mt-2 flex justify-center">
         <svg viewBox="0 0 120 120" className="h-32 w-32" role="img"
-          aria-label="Radial gauge showing 68 percent overall completion, sample data">
+          aria-label={`Radial gauge showing ${pctTarget} percent overall completion`}>
           <circle cx={60} cy={60} r={R} fill="none" strokeWidth={12}
             className="stroke-muted" />
           <circle
@@ -517,23 +483,23 @@ function CompletionRadial() {
         </svg>
       </div>
       <p className="mt-1 text-center text-xs text-muted-foreground">
-        41 of 60 milestones closed
+        {done} of {total} milestones closed
       </p>
     </div>
   )
 }
 
-const FLOW_WEEKS = ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8']
-const FLOW_SERIES = [
-  { label: 'Created', color: SERIES.teal, values: [8, 12, 10, 15, 11, 17, 14, 19] },
-  { label: 'Completed', color: SERIES.blue, values: [5, 7, 9, 10, 12, 12, 15, 16] },
-]
-
 /** Two-series comparison line — legend + direct end labels, shared crosshair. */
-function FlowLineChart() {
+function FlowLineChart({
+  labels,
+  series: input,
+}: {
+  labels: string[]
+  series: Array<{ label: string; color: string; values: number[] }>
+}) {
   const entered = useEntranceFlag()
   const [hover, setHover] = useState<number | null>(null)
-  const max = 20
+  const max = Math.max(4, Math.ceil(Math.max(...input.flatMap((s) => s.values)) / 4) * 4)
   const innerW = LINE_W - LINE_PAD.left - LINE_PAD.right
   const innerH = LINE_H - LINE_PAD.top - LINE_PAD.bottom
   const toPts = (values: number[]) =>
@@ -541,8 +507,8 @@ function FlowLineChart() {
       x: LINE_PAD.left + (i / (values.length - 1)) * innerW,
       y: LINE_PAD.top + innerH - (v / max) * innerH,
     }))
-  const series = FLOW_SERIES.map((s) => ({ ...s, pts: toPts(s.values) }))
-  const gridValues = [0, 5, 10, 15, 20]
+  const series = input.map((s) => ({ ...s, pts: toPts(s.values) }))
+  const gridValues = [0, 1, 2, 3, 4].map((i) => (max / 4) * i)
 
   return (
     <div className="rounded-lg border bg-card p-4 shadow-xs">
@@ -573,7 +539,7 @@ function FlowLineChart() {
               </g>
             )
           })}
-          {FLOW_WEEKS.map((w, i) => (
+          {labels.map((w, i) => (
             <text key={w} x={series[0].pts[i].x} y={LINE_H - 8} textAnchor="middle"
               className="fill-muted-foreground text-[10px]">
               {w}
@@ -615,9 +581,9 @@ function FlowLineChart() {
           {series[0].pts.map((p, i) => (
             <rect
               key={i}
-              x={p.x - innerW / FLOW_WEEKS.length / 2}
+              x={p.x - innerW / labels.length / 2}
               y={LINE_PAD.top}
-              width={innerW / FLOW_WEEKS.length}
+              width={innerW / labels.length}
               height={innerH}
               fill="transparent"
               onMouseEnter={() => setHover(i)}
@@ -646,7 +612,7 @@ function FlowLineChart() {
               transform: 'translateX(-50%)',
             }}
           >
-            <p className="font-medium">{FLOW_WEEKS[hover]}</p>
+            <p className="font-medium">{labels[hover]}</p>
             {series.map((s) => (
               <p key={s.label} className="text-muted-foreground">
                 {s.label}:{' '}
@@ -664,17 +630,9 @@ function FlowLineChart() {
 // with dark mode (both variants monotonic in lightness).
 const HEAT_RAMP = [1, 2, 3, 4, 5].map((i) => `var(--heat-${i})`)
 const HEAT_DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri']
-const HEAT_WEEKS = 12
-// Deterministic pseudo-random sample intensities (0-4).
-const HEAT_CELLS = Array.from({ length: HEAT_WEEKS }, (_, w) =>
-  Array.from({ length: HEAT_DAYS.length }, (_, d) => {
-    const n = Math.sin(w * 12.9898 + d * 78.233) * 43758.5453
-    return Math.abs(Math.floor((n - Math.floor(n)) * 5)) % 5
-  }),
-)
 
 /** Activity heatmap — sequential ramp with a Less→More scale legend. */
-function ActivityHeatmap() {
+function ActivityHeatmap({ cells }: { cells: number[][] }) {
   const entered = useEntranceFlag()
   const [hover, setHover] = useState<{ w: number; d: number } | null>(null)
 
@@ -699,7 +657,7 @@ function ActivityHeatmap() {
         </div>
         <div className="grid flex-1 grid-flow-col gap-1"
           style={{ gridTemplateRows: `repeat(${HEAT_DAYS.length}, 1fr)` }}>
-          {HEAT_CELLS.map((week, w) =>
+          {cells.map((week, w) =>
             week.map((level, d) => (
               <div
                 key={`${w}-${d}`}
@@ -722,7 +680,7 @@ function ActivityHeatmap() {
       </div>
       <p className="mt-2 h-4 text-xs text-muted-foreground">
         {hover
-          ? `Week ${hover.w + 1}, ${HEAT_DAYS[hover.d]} — ${HEAT_CELLS[hover.w][hover.d]} updates`
+          ? `Week ${hover.w + 1}, ${HEAT_DAYS[hover.d]} — ${cells[hover.w][hover.d]} updates`
           : ' '}
       </p>
     </div>
@@ -731,20 +689,100 @@ function ActivityHeatmap() {
 
 export function DashboardPage() {
   usePageTitle('My Dashboard')
+  const [data, setData] = useState<DashboardData | null>(null)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    dashboardApi
+      .get()
+      .then(setData)
+      .catch((e: Error) => setError(e.message))
+  }, [])
+
+  if (error) {
+    return (
+      <div className="p-6">
+        <p className="text-destructive">{error}</p>
+        <Button
+          variant="outline"
+          className="mt-4"
+          onClick={() => window.location.reload()}
+        >
+          Reload
+        </Button>
+      </div>
+    )
+  }
+
+  if (!data) {
+    return (
+      <div className="p-6">
+        <Skeleton className="h-7 w-56" />
+        <div className="mt-5 grid grid-cols-2 gap-4 lg:grid-cols-4">
+          {[0, 1, 2, 3].map((i) => (
+            <Skeleton key={i} className="h-28 w-full rounded-lg" />
+          ))}
+        </div>
+        <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
+          <Skeleton className="h-64 w-full rounded-lg" />
+          <Skeleton className="h-64 w-full rounded-lg" />
+        </div>
+      </div>
+    )
+  }
+
+  const s = data.stats
+  const statTiles = [
+    {
+      label: 'Active Projects',
+      value: s.active_projects,
+      note: `+${s.projects_created_this_month} this month`,
+    },
+    {
+      label: 'Open Action Items',
+      value: s.open_action_items,
+      note: `${s.action_items_due_this_week} due this week`,
+    },
+    {
+      label: 'Milestones This Month',
+      value: s.milestones_this_month,
+      note: `${s.major_milestones_this_month} major`,
+    },
+    {
+      label: 'Overdue Items',
+      value: s.overdue_items,
+      note: 'milestones and action items',
+    },
+  ]
+  const actionSegments = [
+    { label: 'Open', value: data.action_items.open, color: SERIES.teal },
+    { label: 'Closed', value: data.action_items.closed, color: SERIES.blue },
+    { label: 'Overdue', value: data.action_items.overdue, color: SERIES.orange },
+  ]
+  const palette = [SERIES.teal, SERIES.blue, SERIES.orange]
+  const categorySegments = data.projects_by_category
+    .slice(0, 3)
+    .map((c, i) => ({ ...c, color: palette[i] }))
+  const flowSeries = [
+    { label: 'Created', color: SERIES.teal, values: data.flow.created },
+    { label: 'Completed', color: SERIES.blue, values: data.flow.completed },
+  ]
+  const heatMax = Math.max(1, ...data.heat.flat())
+  const heatCells = data.heat.map((week) =>
+    week.map((v) => (v === 0 ? 0 : Math.max(1, Math.round((v / heatMax) * 4)))),
+  )
+
   return (
     <div className="p-6">
       <header className="mb-5 flex flex-wrap items-center gap-3">
         <h1 className="text-lg font-semibold">My Dashboard</h1>
-        <span className="rounded-full border border-(--chart-2)/40 bg-(--chart-2)/10 px-2.5 py-0.5 text-xs font-medium text-(--chart-2)">
-          Preview — sample data
+        <span className="rounded-full border border-status-green-border bg-status-green-bg px-2.5 py-0.5 text-xs font-medium text-status-green-fg">
+          Live data
         </span>
-        <p className="w-full text-sm text-muted-foreground sm:w-auto">
-          Real dashboards arrive in Phase 2; these charts illustrate the layout.
-        </p>
       </header>
 
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-        {STAT_TILES.map((t) => (
+        {statTiles.map((t) => (
           <StatTile key={t.label} {...t} />
         ))}
       </div>
@@ -752,20 +790,23 @@ export function DashboardPage() {
       {/* items-start: cards keep their natural height instead of the tallest
           column inflating its neighbor with empty card space. */}
       <div className="mt-4 grid grid-cols-1 items-start gap-4 lg:grid-cols-2">
-        <ActivityLineChart />
-        <ProjectsBarChart />
+        <ActivityLineChart data={data.updates_per_week} />
+        <ProjectsBarChart data={data.projects_by_status} />
       </div>
 
       <div className="mt-4 grid grid-cols-1 items-start gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <ActionItemsBreakdown />
-        <CategoryDonut />
-        <MilestoneColumns />
-        <CompletionRadial />
+        <ActionItemsBreakdown segments={actionSegments} />
+        <CategoryDonut segments={categorySegments} />
+        <MilestoneColumns data={data.milestones_per_month} />
+        <CompletionRadial
+          done={data.overall_milestones.done}
+          total={data.overall_milestones.total}
+        />
       </div>
 
       <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
-        <FlowLineChart />
-        <ActivityHeatmap />
+        <FlowLineChart labels={data.flow.labels} series={flowSeries} />
+        <ActivityHeatmap cells={heatCells} />
       </div>
     </div>
   )
