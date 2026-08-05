@@ -35,8 +35,8 @@
     "semantic_hash": ""
   },
   "backend/src/app.module.ts": {
-    "mtime": 1785761580.786639,
-    "ast_hash": "8c996238e3b4df8aaba5dfd975283bc4",
+    "mtime": 1785908081.9691973,
+    "ast_hash": "ea2561b542402a5081f09af9378cbb1a",
     "semantic_hash": ""
   },
   "backend/src/app.service.ts": {
@@ -290,8 +290,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/projects/projects.module.ts": {
-    "mtime": 1785761580.8181753,
-    "ast_hash": "02e1dcc3e2e728b2209caffda9122a3f",
+    "mtime": 1785908081.9732,
+    "ast_hash": "c858bd4da0029ca5ea766d443b89d0e6",
     "semantic_hash": ""
   },
   "backend/src/modules/projects/projects.repository.ts": {
@@ -300,8 +300,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/projects/projects.service.ts": {
-    "mtime": 1785763682.370546,
-    "ast_hash": "348fa7dbc98de9936ed2c913c3b185e2",
+    "mtime": 1785908081.9751978,
+    "ast_hash": "a98b54bf4e2e74e79998d88bda74c2bd",
     "semantic_hash": ""
   },
   "backend/src/modules/resources/dto/create-resource.dto.ts": {
@@ -555,8 +555,8 @@
     "semantic_hash": ""
   },
   "frontend/src/lib/api.ts": {
-    "mtime": 1785763812.4356441,
-    "ast_hash": "5833945a4782d3eb1898217d46189f9c",
+    "mtime": 1785908347.727093,
+    "ast_hash": "884133c7632d4c97d8d9e1d51d96d43b",
     "semantic_hash": ""
   },
   "frontend/src/lib/auth-context.tsx": {
@@ -855,8 +855,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/AppLayout.tsx": {
-    "mtime": 1785742700.5135655,
-    "ast_hash": "229a282b6da7af50c8eae0e319e7df3d",
+    "mtime": 1785908347.729093,
+    "ast_hash": "ea1958153b7f58ba8fba56f13e52524c",
     "semantic_hash": ""
   },
   "frontend/src/pages/DashboardPage.tsx": {
@@ -905,8 +905,8 @@
     "semantic_hash": ""
   },
   "docs/FDD-ALIGNMENT.md": {
-    "mtime": 1785764745.946388,
-    "ast_hash": "ba3b31bc93bf2f8468713fe286006af6",
+    "mtime": 1785908538.4913704,
+    "ast_hash": "27cf7b214ee60e51e9d83c8171cbddc9",
     "semantic_hash": ""
   },
   "backend/db/fdd_project_fields.sql": {
@@ -1080,18 +1080,18 @@
     "semantic_hash": ""
   },
   "backend/src/modules/submissions/submissions.module.ts": {
-    "mtime": 1785761558.4821613,
-    "ast_hash": "3b0589cbfd3a78b074915cc90e82b39b",
+    "mtime": 1785908081.971198,
+    "ast_hash": "132453918ba29ee89f8d1acfed286477",
     "semantic_hash": ""
   },
   "backend/src/modules/submissions/submissions.repository.ts": {
-    "mtime": 1785761801.8128846,
-    "ast_hash": "7ae7e4abe664346897454aaf984dfe76",
+    "mtime": 1785908081.9701982,
+    "ast_hash": "9abf85b1c12dc5baa7755c912e0d7188",
     "semantic_hash": ""
   },
   "backend/src/modules/submissions/submissions.service.ts": {
-    "mtime": 1785761801.8128846,
-    "ast_hash": "a5264d35a259f50c58dc3f1e2ae09193",
+    "mtime": 1785908081.9722018,
+    "ast_hash": "cf1abb84aa345964e0905846129eebcd",
     "semantic_hash": ""
   },
   "frontend/src/components/WorkflowPanel.tsx": {
@@ -1112,6 +1112,36 @@
   "frontend/src/lib/project-grid.ts": {
     "mtime": 1785763928.9150357,
     "ast_hash": "fc9d892b1ded91f67f179a71c62531a0",
+    "semantic_hash": ""
+  },
+  "backend/db/fdd_notifications.sql": {
+    "mtime": 1785907948.9925888,
+    "ast_hash": "e48a022206494d73efbb3e6017f06b8e",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/notifications/notifications.controller.ts": {
+    "mtime": 1785907964.0293295,
+    "ast_hash": "9e1eb4afefc7eb9e68641b1b9364fc3f",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/notifications/notifications.module.ts": {
+    "mtime": 1785907965.6938481,
+    "ast_hash": "5afd1fb927503d2a461708ac337cd8b1",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/notifications/notifications.repository.ts": {
+    "mtime": 1785908235.635822,
+    "ast_hash": "8b84b97b387313c295041f9c985d116f",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/notifications/notifications.service.ts": {
+    "mtime": 1785907960.2681642,
+    "ast_hash": "dc180607e0d0ef0927eebd32077cf25e",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/NotificationBell.tsx": {
+    "mtime": 1785908337.1258247,
+    "ast_hash": "6afce02b8e06e5f8cdc910f7d8abb52c",
     "semantic_hash": ""
   }
 }
