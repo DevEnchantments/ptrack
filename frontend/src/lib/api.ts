@@ -568,6 +568,7 @@ export interface Submission {
   status: string
   comment: string | null
   decision_comment: string | null
+  submitted_by: string | null
   submitted_at: string | null
   validated_at: string | null
   approved_at: string | null
@@ -579,6 +580,24 @@ export interface Submission {
   validator: { full_name: string | null; email: string | null } | null
   approver: { full_name: string | null; email: string | null } | null
   returner: { full_name: string | null; email: string | null } | null
+}
+
+export interface AppNotification {
+  id: string
+  user_id: string
+  project_id: string | null
+  type: string
+  title: string
+  body: string | null
+  read_at: string | null
+  created_at: string
+}
+
+export const notificationsApi = {
+  list: () => apiGet<AppNotification[]>('/notifications'),
+  markRead: (id: string) =>
+    apiPost<{ ok: boolean }>(`/notifications/${id}/read`, {}),
+  markAllRead: () => apiPost<{ ok: boolean }>('/notifications/read-all', {}),
 }
 
 export const submissionsApi = {

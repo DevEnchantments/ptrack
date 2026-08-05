@@ -17,6 +17,7 @@ export interface Submission {
   status: string;
   comment: string | null;
   decision_comment: string | null;
+  submitted_by: string | null;
   submitted_at: string | null;
   validated_at: string | null;
   approved_at: string | null;
@@ -34,7 +35,7 @@ export interface SubmissionListItem extends Submission {
 }
 
 const COLUMNS =
-  'id, project_id, cycle_id, status, comment, decision_comment, submitted_at, validated_at, approved_at, returned_at, created_at, updated_at';
+  'id, project_id, cycle_id, status, comment, decision_comment, submitted_by, submitted_at, validated_at, approved_at, returned_at, created_at, updated_at';
 
 const JOINS = `${COLUMNS},
   cycle:cycles ( id, name, period_start, period_end, status ),

@@ -3,6 +3,7 @@ import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from '@/lib/auth-context'
 import { Button } from '@/components/ui/button'
 import { CommandPalette } from '@/components/CommandPalette'
+import { NotificationBell } from '@/components/NotificationBell'
 import {
   ArrowUp,
   BarChart3,
@@ -178,6 +179,7 @@ export function AppLayout() {
               Ctrl K
             </kbd>
           </button>
+          <NotificationBell />
           <button
             type="button"
             onClick={() => setDark((d) => !d)}

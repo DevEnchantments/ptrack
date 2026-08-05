@@ -17,6 +17,7 @@ import { ResourcesService } from '../resources/resources.service';
 import { IssuesService } from '../issues/issues.service';
 import { RisksService } from '../risks/risks.service';
 import { SubmissionsService } from '../submissions/submissions.service';
+import { NotificationsService } from '../notifications/notifications.service';
 import { UpdatesService } from '../updates/updates.service';
 import { StatusReportsService } from '../status-reports/status-reports.service';
 import { AttachmentsService } from '../attachments/attachments.service';
@@ -33,6 +34,7 @@ export class ProjectsService {
     private readonly issues: IssuesService,
     private readonly risks: RisksService,
     private readonly submissions: SubmissionsService,
+    private readonly notifications: NotificationsService,
     private readonly updates: UpdatesService,
     private readonly statusReports: StatusReportsService,
     private readonly attachments: AttachmentsService,
@@ -149,6 +151,12 @@ export class ProjectsService {
     dto: UpdateProjectDto,
     userId: string,
   ): Promise<ProjectDetail> {
+    // FDD 3.9 budget-threshold notification (ASSUMED at 80% — OI question):
+    // capture prior utilization only when a budget field is changing.
+    const budgetTouched =
+      dto.utilized_budget !== undefined || dto.approved_budget !== undefined;
+    const prior = budgetTouched ? await this.repo.findDetail(id) : null;
+
     const patch: Record<string, unknown> = { updated_by: userId };
     if (dto.name !== undefined) patch.name = dto.name.trim();
     if (dto.parent_project_id !== undefined)
@@ -210,7 +218,42 @@ export class ProjectsService {
       patch.target_end_date = dto.target_end_date || null;
 
     await this.repo.update(id, patch);
-    return this.getDetail(id);
+    const updated = await this.getDetail(id);
+
+    if (prior) {
+      const ratio = (p: {
+        approved_budget: number | null;
+        utilized_budget: number | null;
+      }) =>
+        p.approved_budget != null &&
+        p.approved_budget > 0 &&
+        p.utilized_budget != null
+          ? p.utilized_budget / p.approved_budget
+          : null;
+      const before = ratio(prior);
+      const after = ratio(updated);
+      const THRESHOLD = 0.8;
+      if (
+        after != null &&
+        after >= THRESHOLD &&
+        (before == null || before < THRESHOLD)
+      ) {
+        for (const uid of new Set([
+          updated.owner_id,
+          updated.project_manager_id,
+        ])) {
+          await this.notifications.notify({
+            userId: uid,
+            actorId: userId,
+            projectId: id,
+            type: 'budget_threshold',
+            title: `${updated.name} reached ${Math.round(after * 100)}% budget utilization`,
+            body: `AED ${updated.utilized_budget?.toLocaleString()} of AED ${updated.approved_budget?.toLocaleString()} used.`,
+          });
+        }
+      }
+    }
+    return updated;
   }
 
   async remove(id: string): Promise<{ deleted: boolean }> {

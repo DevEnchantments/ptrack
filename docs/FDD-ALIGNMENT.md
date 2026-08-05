@@ -173,9 +173,14 @@ UC-17 PMO hierarchy tree · UC-18 project details report.
 ## 5. Reports & notifications (defer until math lands)
 Reports: Project Progress, Initiative Progress, Monthly Performance, Program Roadmap
 (Gantt), Change vs Plan, Project Details, Cycle Submission Status, KPI/scorecards.
-Notifications (FDD 3.9): progress reminder, returned, approved, risk overdue, budget
-threshold, milestone overdue — channel undecided (OI-07); ties to the long-planned
-notification subsystem.
+Notifications (FDD 3.9) — ✅ PARTIALLY SHIPPED 2026-08-03 (ASSUMED in-app first,
+OI-07): `notifications` table (`db/fdd_notifications.sql`, RLS + index), header
+bell with unread badge / mark-read / mark-all. Event-driven producers live:
+submitted → PMO Partner, validated → Owner, approved/returned/rejected → 
+submitter, budget threshold crossing 80% (threshold ASSUMED) → Owner + PM; all
+best-effort and self-notification-suppressed. Deliberately deferred: time-based
+triggers (milestone overdue, progress reminders, risk overdue) need a scheduler
+(pg_cron or Nest scheduler — infra decision), and email needs SMTP.
 
 ## 6. Open questions for the supervisor (blockers marked ⛔)
 1. (OI-02) Formulas — PROVISIONAL standard set adopted 2026-08-03 on Fares's authority and implemented (docs/FORMULAS.md F1-F4: calculated progress, planned progress, risk score+severity, at-risk suggestion). Sign-off still requested; KPI achievement % and data-quality index deliberately NOT implemented (policy numbers, not standards).

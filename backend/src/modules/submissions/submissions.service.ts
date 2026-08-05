@@ -8,6 +8,7 @@ import { ProjectsRepository } from '../projects/projects.repository';
 import { MilestonesRepository } from '../milestones/milestones.repository';
 import { SubmissionsRepository } from './submissions.repository';
 import { SubmissionActionDto } from './dto/submission-action.dto';
+import { NotificationsService } from '../notifications/notifications.service';
 
 /**
  * FR-14 workflow (routing ASSUMED per Fig 10 — see FDD-ALIGNMENT 1.6):
@@ -21,6 +22,7 @@ export class SubmissionsService {
     private readonly repo: SubmissionsRepository,
     private readonly projects: ProjectsRepository,
     private readonly milestones: MilestonesRepository,
+    private readonly notifications: NotificationsService,
   ) {}
 
   list(projectId: string) {
@@ -64,8 +66,18 @@ export class SubmissionsService {
     }
     const cycle = await this.repo.getOrCreateCycleFor(new Date());
     const existing = await this.repo.findForCycle(projectId, cycle.id);
+    const project = await this.projects.findDetail(projectId);
+    const notifyValidator = () =>
+      this.notifications.notify({
+        userId: project?.pmo_partner_id,
+        actorId: userId,
+        projectId,
+        type: 'submission_review',
+        title: `${project?.name ?? 'A project'} awaits validation`,
+        body: `The ${cycle.name} submission was sent for review.`,
+      });
     if (!existing) {
-      return this.repo.insert({
+      const created = await this.repo.insert({
         project_id: projectId,
         cycle_id: cycle.id,
         status: 'review',
@@ -75,13 +87,15 @@ export class SubmissionsService {
         created_by: userId,
         updated_by: userId,
       });
+      await notifyValidator();
+      return created;
     }
     if (existing.status !== 'draft' && existing.status !== 'returned') {
       throw new BadRequestException(
         `Already submitted for ${cycle.name} (status: ${existing.status}).`,
       );
     }
-    return this.repo.update(existing.id, {
+    const resubmitted = await this.repo.update(existing.id, {
       status: 'review',
       comment: dto.comment?.trim() || null,
       submitted_by: userId,
@@ -89,6 +103,8 @@ export class SubmissionsService {
       updated_by: userId,
       updated_at: new Date().toISOString(),
     });
+    await notifyValidator();
+    return resubmitted;
   }
 
   private async transition(
@@ -112,8 +128,8 @@ export class SubmissionsService {
         `Cannot ${opts.to} a submission in status "${sub.status}".`,
       );
     }
+    const project = await this.projects.findDetail(projectId);
     if (opts.actorField) {
-      const project = await this.projects.findDetail(projectId);
       const requiredActor = project?.[opts.actorField];
       if (requiredActor && requiredActor !== userId) {
         throw new ForbiddenException(
@@ -121,7 +137,7 @@ export class SubmissionsService {
         );
       }
     }
-    return this.repo.update(submissionId, {
+    const updated = await this.repo.update(submissionId, {
       status: opts.to,
       decision_comment: opts.comment?.trim() || null,
       [`${opts.stamp}_by`]: userId,
@@ -129,6 +145,41 @@ export class SubmissionsService {
       updated_by: userId,
       updated_at: new Date().toISOString(),
     });
+
+    // FDD 3.9 event notifications (in-app; best-effort).
+    const name = project?.name ?? 'A project';
+    const cycleName = sub.cycle?.name ?? 'this cycle';
+    if (opts.to === 'validated') {
+      await this.notifications.notify({
+        userId: project?.owner_id,
+        actorId: userId,
+        projectId,
+        type: 'submission_validated',
+        title: `${name} awaits approval`,
+        body: `The ${cycleName} submission was validated.`,
+      });
+    } else if (opts.to === 'approved') {
+      await this.notifications.notify({
+        userId: sub.submitted_by,
+        actorId: userId,
+        projectId,
+        type: 'submission_approved',
+        title: `${name}: submission approved`,
+        body: `Your ${cycleName} submission was approved.`,
+      });
+    } else if (opts.to === 'returned' || opts.to === 'rejected') {
+      await this.notifications.notify({
+        userId: sub.submitted_by,
+        actorId: userId,
+        projectId,
+        type: `submission_${opts.to}`,
+        title: `${name}: submission ${opts.to}`,
+        body:
+          opts.comment?.trim() ||
+          `Your ${cycleName} submission was ${opts.to}.`,
+      });
+    }
+    return updated;
   }
 
   validate(

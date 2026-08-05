@@ -4,8 +4,10 @@ import { SubmissionsService } from './submissions.service';
 import { SubmissionsRepository } from './submissions.repository';
 import { ProjectsRepository } from '../projects/projects.repository';
 import { MilestonesRepository } from '../milestones/milestones.repository';
+import { NotificationsModule } from '../notifications/notifications.module';
 
 @Module({
+  imports: [NotificationsModule],
   controllers: [SubmissionsController],
   providers: [
     SubmissionsService,

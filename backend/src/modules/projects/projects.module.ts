@@ -10,6 +10,7 @@ import { ResourcesModule } from '../resources/resources.module';
 import { IssuesModule } from '../issues/issues.module';
 import { RisksModule } from '../risks/risks.module';
 import { SubmissionsModule } from '../submissions/submissions.module';
+import { NotificationsModule } from '../notifications/notifications.module';
 import { UpdatesModule } from '../updates/updates.module';
 import { StatusReportsModule } from '../status-reports/status-reports.module';
 import { AttachmentsModule } from '../attachments/attachments.module';
@@ -24,6 +25,7 @@ import { AttachmentsModule } from '../attachments/attachments.module';
     IssuesModule,
     RisksModule,
     SubmissionsModule,
+    NotificationsModule,
     UpdatesModule,
     StatusReportsModule,
     AttachmentsModule,
