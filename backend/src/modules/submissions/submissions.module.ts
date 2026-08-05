@@ -1,5 +1,8 @@
 import { Module } from '@nestjs/common';
-import { SubmissionsController } from './submissions.controller';
+import {
+  ReportsController,
+  SubmissionsController,
+} from './submissions.controller';
 import { SubmissionsService } from './submissions.service';
 import { SubmissionsRepository } from './submissions.repository';
 import { ProjectsRepository } from '../projects/projects.repository';
@@ -8,7 +11,7 @@ import { NotificationsModule } from '../notifications/notifications.module';
 
 @Module({
   imports: [NotificationsModule],
-  controllers: [SubmissionsController],
+  controllers: [ReportsController, SubmissionsController],
   providers: [
     SubmissionsService,
     SubmissionsRepository,

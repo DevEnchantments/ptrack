@@ -171,8 +171,13 @@ UC-17 PMO hierarchy tree · UC-18 project details report.
 - Audit: created/updated by+date everywhere (we have this + `record_history`)
 
 ## 5. Reports & notifications (defer until math lands)
-Reports: Project Progress, Initiative Progress, Monthly Performance, Program Roadmap
-(Gantt), Change vs Plan, Project Details, Cycle Submission Status, KPI/scorecards.
+Reports: Project Progress ✅ SHIPPED 2026-08-03 (printable page per project via
+its Report button: register fields, three progress figures, milestone/risk/issue
+tables, cycle status; print-ready via Tailwind print: variants), Cycle Submission
+Status ✅ SHIPPED 2026-08-03 (`GET /reports/cycle-status` + printable portfolio
+table; the sidebar Reporting stub is now a live reports hub). Still pending:
+Initiative Progress, Monthly Performance, Program Roadmap (Gantt), Change vs
+Plan, Project Details, KPI/scorecards.
 Notifications (FDD 3.9) — ✅ PARTIALLY SHIPPED 2026-08-03 (ASSUMED in-app first,
 OI-07): `notifications` table (`db/fdd_notifications.sql`, RLS + index), header
 bell with unread badge / mark-read / mark-all. Event-driven producers live:

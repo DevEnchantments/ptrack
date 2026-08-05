@@ -36,9 +36,13 @@ const STATUS_CHIP: Record<string, { label: string; cls: string }> = {
     label: 'Rejected',
     cls: 'border-status-red-border bg-status-red-bg text-status-red-fg',
   },
+  not_submitted: {
+    label: 'Not Submitted',
+    cls: 'border-transparent bg-muted text-muted-foreground',
+  },
 }
 
-function Chip({ status }: { status: string }) {
+export function Chip({ status }: { status: string }) {
   const chip = STATUS_CHIP[status] ?? STATUS_CHIP.draft
   return (
     <span

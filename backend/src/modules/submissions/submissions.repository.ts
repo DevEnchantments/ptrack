@@ -52,6 +52,30 @@ export class SubmissionsRepository {
     return this.db.client.from('submissions');
   }
 
+  /** The stored cycle for the calendar month containing `date`, if any. */
+  async findCycleFor(date: Date): Promise<Cycle | null> {
+    const start = new Date(
+      Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), 1),
+    );
+    const startIso = start.toISOString().slice(0, 10);
+    const { data, error } = await this.db.client
+      .from('cycles')
+      .select('id, name, period_start, period_end, status')
+      .eq('period_start', startIso)
+      .maybeSingle<Cycle>();
+    if (error) throw toHttpException(error, 'cycles.findFor');
+    return data ?? null;
+  }
+
+  /** All submissions of one cycle (portfolio-wide status report). */
+  async findByCycle(cycleId: string): Promise<Submission[]> {
+    const { data, error } = await this.table
+      .select(COLUMNS)
+      .eq('cycle_id', cycleId);
+    if (error) throw toHttpException(error, 'submissions.findByCycle');
+    return data ?? [];
+  }
+
   /** The calendar-month cycle containing `date`, created on first use. */
   async getOrCreateCycleFor(date: Date): Promise<Cycle> {
     const start = new Date(

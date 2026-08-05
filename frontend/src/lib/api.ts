@@ -600,6 +600,24 @@ export const notificationsApi = {
   markAllRead: () => apiPost<{ ok: boolean }>('/notifications/read-all', {}),
 }
 
+export interface CycleStatusRow {
+  project_id: string
+  name: string
+  owner: string | null
+  project_manager: string | null
+  status: string
+  submitted_at: string | null
+}
+
+export interface CycleStatusReport {
+  cycle: Cycle | null
+  rows: CycleStatusRow[]
+}
+
+export const reportsApi = {
+  cycleStatus: () => apiGet<CycleStatusReport>('/reports/cycle-status'),
+}
+
 export const submissionsApi = {
   list: (projectId: string) =>
     apiGet<Submission[]>(`/projects/${projectId}/submissions`),

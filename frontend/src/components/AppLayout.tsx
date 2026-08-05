@@ -39,7 +39,7 @@ const NAV_ITEMS: Array<{
   { label: 'Action Items', icon: ListChecks },
   { label: 'People', icon: Users },
   { label: 'Timeline', icon: Clock },
-  { label: 'Reporting', icon: BarChart3 },
+  { label: 'Reporting', icon: BarChart3, to: '/reporting' },
   { label: 'AI Assistant', icon: Bot },
   { label: 'Administration', icon: Settings },
 ]
@@ -87,7 +87,7 @@ export function AppLayout() {
   return (
     // h-svh + overflow-hidden: the shell fills the viewport; the sidebar and
     // the content pane each scroll independently.
-    <div className="flex h-svh overflow-hidden">
+    <div className="flex h-svh overflow-hidden print:h-auto print:overflow-visible">
       <a
         href="#main-content"
         className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 focus:rounded-md focus:bg-primary focus:px-3 focus:py-2 focus:text-sm focus:text-primary-foreground"
@@ -95,7 +95,7 @@ export function AppLayout() {
         Skip to content
       </a>
       <aside
-        className={`flex shrink-0 flex-col overflow-y-auto bg-linear-to-b from-sidebar to-sidebar-deep text-sidebar-foreground transition-[width] duration-200 ease-in-out ${
+        className={`print:hidden flex shrink-0 flex-col overflow-y-auto bg-linear-to-b from-sidebar to-sidebar-deep text-sidebar-foreground transition-[width] duration-200 ease-in-out ${
           collapsed ? 'w-14' : 'w-56'
         }`}
       >
@@ -168,7 +168,7 @@ export function AppLayout() {
       </aside>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="flex h-14 shrink-0 items-center justify-end gap-4 border-b bg-background px-6">
+        <header className="flex h-14 shrink-0 items-center justify-end gap-4 border-b bg-background px-6 print:hidden">
           <button
             type="button"
             onClick={() => setPaletteOpen(true)}
@@ -205,7 +205,7 @@ export function AppLayout() {
             id="main-content"
             ref={scrollRef}
             onScroll={(e) => setShowScrollTop(e.currentTarget.scrollTop > 600)}
-            className="h-full overflow-y-auto scroll-smooth"
+            className="h-full overflow-y-auto scroll-smooth print:h-auto print:overflow-visible"
           >
             <Outlet />
           </div>

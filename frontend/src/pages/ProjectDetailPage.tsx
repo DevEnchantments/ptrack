@@ -715,13 +715,22 @@ export function ProjectDetailPage() {
                 {project.name}
               </h1>
             </div>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setEditProjectOpen(true)}
-            >
-              Edit Project
-            </Button>
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => navigate(`/projects/${project.id}/reports/progress`)}
+              >
+                Report
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setEditProjectOpen(true)}
+              >
+                Edit Project
+              </Button>
+            </div>
           </div>
 
           <div className="mb-6 flex gap-6 overflow-x-auto border-b">

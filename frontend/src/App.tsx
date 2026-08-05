@@ -1,5 +1,8 @@
 import { HomePage } from '@/pages/HomePage'
 import { DashboardPage } from '@/pages/DashboardPage'
+import { ReportingPage } from '@/pages/ReportingPage'
+import { CycleStatusReportPage } from '@/pages/reports/CycleStatusReportPage'
+import { ProjectProgressReportPage } from '@/pages/reports/ProjectProgressReportPage'
 import { LoginPage } from '@/pages/LoginPage'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { ProtectedRoute } from '@/components/ProtectedRoute'
@@ -22,6 +25,15 @@ function App() {
         <Route element={<AppLayout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/reporting" element={<ReportingPage />} />
+          <Route
+            path="/reporting/cycle-status"
+            element={<CycleStatusReportPage />}
+          />
+          <Route
+            path="/projects/:projectId/reports/progress"
+            element={<ProjectProgressReportPage />}
+          />
           <Route path="/projects/new" element={<CreateProjectWizard />} />
           <Route path="/projects/:id" element={<ProjectDetailPage />} />
           <Route

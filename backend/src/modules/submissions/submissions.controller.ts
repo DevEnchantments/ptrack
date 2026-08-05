@@ -24,6 +24,16 @@ const ACTION_BODY = {
   },
 };
 
+@Controller('reports')
+export class ReportsController {
+  constructor(private readonly submissions: SubmissionsService) {}
+
+  @Get('cycle-status')
+  cycleStatus() {
+    return this.submissions.cycleStatus();
+  }
+}
+
 @Controller('projects/:projectId/submissions')
 export class SubmissionsController {
   constructor(private readonly submissions: SubmissionsService) {}

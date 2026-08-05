@@ -29,6 +29,36 @@ export class SubmissionsService {
     return this.repo.findByProject(projectId);
   }
 
+  /** UC-15-adjacent: portfolio-wide submission status for the current cycle. */
+  async cycleStatus() {
+    const cycle = await this.repo.findCycleFor(new Date());
+    const projects = await this.projects.findAll();
+    const byProject = new Map<
+      string,
+      { status: string; submitted_at: string | null }
+    >();
+    if (cycle) {
+      for (const s of await this.repo.findByCycle(cycle.id)) {
+        byProject.set(s.project_id, {
+          status: s.status,
+          submitted_at: s.submitted_at,
+        });
+      }
+    }
+    return {
+      cycle,
+      rows: projects.map((p) => ({
+        project_id: p.id,
+        name: p.name,
+        owner: p.owner?.full_name ?? p.owner?.email ?? null,
+        project_manager:
+          p.project_manager?.full_name ?? p.project_manager?.email ?? null,
+        status: byProject.get(p.id)?.status ?? 'not_submitted',
+        submitted_at: byProject.get(p.id)?.submitted_at ?? null,
+      })),
+    };
+  }
+
   /** FDD 3.3.2 submission gate: mandatory fields + weights total 100. */
   private async gateFailures(projectId: string): Promise<string[]> {
     const project = await this.projects.findDetail(projectId);
