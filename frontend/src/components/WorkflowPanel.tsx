@@ -126,7 +126,7 @@ export function WorkflowPanel({ projectId, submissions, onChanged }: Props) {
         Reporting Cycle
       </h2>
 
-      <div className="mt-2 flex items-center justify-between gap-2">
+      <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
         <span className="text-sm font-medium">
           {current?.cycle?.name ?? cycleName}
         </span>
@@ -239,7 +239,7 @@ export function WorkflowPanel({ projectId, submissions, onChanged }: Props) {
               key={s.id}
               className="flex items-center justify-between gap-2 text-xs text-muted-foreground"
             >
-              <span className="truncate">{s.cycle?.name ?? 'Cycle'}</span>
+              <span className="min-w-0 truncate">{s.cycle?.name ?? 'Cycle'}</span>
               <Chip status={s.status} />
             </li>
           ))}

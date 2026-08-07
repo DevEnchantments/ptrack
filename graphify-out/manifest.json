@@ -20,8 +20,8 @@
     "semantic_hash": ""
   },
   "backend/package.json": {
-    "mtime": 1785931510.12455,
-    "ast_hash": "a2906bebb97b3b6a4043b037458594b5",
+    "mtime": 1785934627.3498325,
+    "ast_hash": "21e2bf680b931df4c92ca7ea8af7e7e0",
     "semantic_hash": ""
   },
   "backend/src/app.controller.spec.ts": {
@@ -1222,6 +1222,11 @@
   "frontend/src/components/EditOutcomeDialog.tsx": {
     "mtime": 1785930142.1901133,
     "ast_hash": "74b3e34c63608eae9c5328e9e13b4488",
+    "semantic_hash": ""
+  },
+  "backend/scripts/seed-demo-data.mjs": {
+    "mtime": 1785934660.9539223,
+    "ast_hash": "6cb254fe7af812e20edf5dc8085b2b73",
     "semantic_hash": ""
   }
 }
