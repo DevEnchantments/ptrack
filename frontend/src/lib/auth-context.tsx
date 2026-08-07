@@ -43,7 +43,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   async function signOut() {
-    await supabase.auth.signOut()
+    try {
+      await supabase.auth.signOut()
+    } catch {
+      // Offline: the server revoke failed, and supabase-js only clears the
+      // stored session after a successful revoke. Sign-out must never be
+      // blocked by connectivity, so drop the persisted session ourselves and
+      // update state directly (onAuthStateChange won't fire on this path).
+      for (const key of Object.keys(localStorage)) {
+        if (key.startsWith('sb-') && key.endsWith('-auth-token')) {
+          localStorage.removeItem(key)
+        }
+      }
+      setSession(null)
+    }
   }
 
   return (
