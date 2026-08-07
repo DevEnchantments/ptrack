@@ -560,9 +560,9 @@
     "semantic_hash": ""
   },
   "frontend/src/lib/auth-context.tsx": {
-    "mtime": 1783348309.6754577,
-    "ast_hash": "f1793b134e6c692d1c31bd1662a8c678",
-    "semantic_hash": "f1793b134e6c692d1c31bd1662a8c678"
+    "mtime": 1786111533.804725,
+    "ast_hash": "bdcb5d1fbb7cbc95ec3b7ad3cb92f8a9",
+    "semantic_hash": ""
   },
   "frontend/src/lib/supabase.ts": {
     "mtime": 1783348300.1265035,
