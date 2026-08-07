@@ -185,9 +185,14 @@ OI-07): `notifications` table (`db/fdd_notifications.sql`, RLS + index), header
 bell with unread badge / mark-read / mark-all. Event-driven producers live:
 submitted → PMO Partner, validated → Owner, approved/returned/rejected → 
 submitter, budget threshold crossing 80% (threshold ASSUMED) → Owner + PM; all
-best-effort and self-notification-suppressed. Deliberately deferred: time-based
-triggers (milestone overdue, progress reminders, risk overdue) need a scheduler
-(pg_cron or Nest scheduler — infra decision), and email needs SMTP.
+best-effort and self-notification-suppressed. Time-based triggers SHIPPED
+2026-08-07 via `@nestjs/schedule` (in-process, no infra): a daily 07:00 sweep +
+idempotent catch-up on boot creates due-soon (today/tomorrow) and overdue
+reminders for open action items and milestones — recipients are the record's
+owners, falling back to PM then project owner; the dedup key
+(`reminder:<kind>:<record>:<id>:<due>`) embeds the due date so replans re-arm
+reminders and repeats are no-ops (`notifications/reminders.service.ts`, logic
+unit-tested). Still deferred: email (needs SMTP).
 
 ## 6. Open questions for the supervisor (blockers marked ⛔)
 1. (OI-02) Formulas — PROVISIONAL standard set adopted 2026-08-03 on Fares's authority and implemented (docs/FORMULAS.md F1-F4: calculated progress, planned progress, risk score+severity, at-risk suggestion). Sign-off still requested; KPI achievement % and data-quality index deliberately NOT implemented (policy numbers, not standards).
