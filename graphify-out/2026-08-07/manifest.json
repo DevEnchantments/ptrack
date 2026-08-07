@@ -20,8 +20,8 @@
     "semantic_hash": ""
   },
   "backend/package.json": {
-    "mtime": 1785934627.3498325,
-    "ast_hash": "21e2bf680b931df4c92ca7ea8af7e7e0",
+    "mtime": 1786118201.0096157,
+    "ast_hash": "9444d453408aea1990a67dd9c14f3f8e",
     "semantic_hash": ""
   },
   "backend/src/app.controller.spec.ts": {
@@ -35,8 +35,8 @@
     "semantic_hash": ""
   },
   "backend/src/app.module.ts": {
-    "mtime": 1785918890.6494448,
-    "ast_hash": "e4ee20c97a73758a2387d10f880ddfe9",
+    "mtime": 1786118272.030871,
+    "ast_hash": "c608af6e7a8a055d555aea179d0a2a5d",
     "semantic_hash": ""
   },
   "backend/src/app.service.ts": {
@@ -905,8 +905,8 @@
     "semantic_hash": ""
   },
   "docs/FDD-ALIGNMENT.md": {
-    "mtime": 1785925342.2066667,
-    "ast_hash": "e43dee77a3d8e32816d83d54e97c7d1a",
+    "mtime": 1786118575.5007195,
+    "ast_hash": "ca025f10fb2b537b0eeb3412f3cbf184",
     "semantic_hash": ""
   },
   "backend/db/fdd_project_fields.sql": {
@@ -1125,8 +1125,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/notifications/notifications.module.ts": {
-    "mtime": 1785907965.6938481,
-    "ast_hash": "5afd1fb927503d2a461708ac337cd8b1",
+    "mtime": 1786118272.0268724,
+    "ast_hash": "645094363bbf69ddcd2f4bbb0589f328",
     "semantic_hash": ""
   },
   "backend/src/modules/notifications/notifications.repository.ts": {
@@ -1227,6 +1227,21 @@
   "backend/scripts/seed-demo-data.mjs": {
     "mtime": 1785934660.9539223,
     "ast_hash": "6cb254fe7af812e20edf5dc8085b2b73",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/notifications/reminders.logic.spec.ts": {
+    "mtime": 1786118263.6932893,
+    "ast_hash": "e6cc86ea7d9c67c3f3a3e11bc6aa3405",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/notifications/reminders.logic.ts": {
+    "mtime": 1786118234.0771122,
+    "ast_hash": "0c36d65b9cbd3a1a6cd27e01514a34ba",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/notifications/reminders.service.ts": {
+    "mtime": 1786118462.9095743,
+    "ast_hash": "509fafe74fd53d1c237cbeba8190cd08",
     "semantic_hash": ""
   }
 }
