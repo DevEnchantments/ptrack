@@ -240,7 +240,7 @@ export function MilestoneDetailPage() {
           </div>
         </div>
 
-        <dl className="rounded-md border px-4">
+        <dl className="rounded-md border bg-card px-4">
           <Field label="Project" value={milestone.project?.name ?? null} />
           <Field label="Milestone" value={milestone.name} />
           <Field label="Start Date" value={formatLongDate(milestone.start_date)} />
@@ -330,7 +330,7 @@ export function MilestoneDetailPage() {
                 No action items yet.
               </div>
             ) : (
-              <ul className="divide-y rounded-md border">
+              <ul className="divide-y rounded-md border bg-card">
                 {actionItems.map((a) => (
                   <li
                     key={a.id}

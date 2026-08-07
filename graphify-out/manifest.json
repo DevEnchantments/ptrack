@@ -520,8 +520,8 @@
     "semantic_hash": "59d4b25bb78d19ee1dcb46e7d7f84c63"
   },
   "frontend/src/components/ui/button.tsx": {
-    "mtime": 1785330404.370313,
-    "ast_hash": "13bab161ea50ba6bfffe4476bd4c425b",
+    "mtime": 1786107474.1586082,
+    "ast_hash": "4e1117d09ceea6d46d4c78fabd34e1f7",
     "semantic_hash": ""
   },
   "frontend/src/components/ui/card.tsx": {
@@ -580,13 +580,13 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ActionItemDetailPage.tsx": {
-    "mtime": 1785333572.5946484,
-    "ast_hash": "8e294778dfcdcff0e2f9266e7524ed02",
+    "mtime": 1786107731.70543,
+    "ast_hash": "fff91402270a20e9433445f8ed8efbe2",
     "semantic_hash": ""
   },
   "frontend/src/pages/AttachmentDetailPage.tsx": {
-    "mtime": 1785333612.4005854,
-    "ast_hash": "a16ae1058ac0d2ed2fd7b0fb79fc9a01",
+    "mtime": 1786107474.1546075,
+    "ast_hash": "98c7e08c74a24c59e1aeb4c02bba48d2",
     "semantic_hash": ""
   },
   "frontend/src/pages/CreateProjectWizard.tsx": {
@@ -605,18 +605,18 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/MilestoneDetailPage.tsx": {
-    "mtime": 1785393068.2083154,
-    "ast_hash": "dd78f45f1ed38e93ff0e84723500194d",
+    "mtime": 1786107731.7094305,
+    "ast_hash": "7cc39c43ac5fb5b89128e84b75d31910",
     "semantic_hash": ""
   },
   "frontend/src/pages/ProjectDetailPage.tsx": {
-    "mtime": 1785935587.0198114,
-    "ast_hash": "51561873b1e06ccf01df663e661ffeff",
+    "mtime": 1786107474.1486058,
+    "ast_hash": "8a6e38e1ad1bc405646b4ede1dae7897",
     "semantic_hash": ""
   },
   "frontend/src/pages/StatusReportDetailPage.tsx": {
-    "mtime": 1785333590.8058012,
-    "ast_hash": "b331d8198fa5e2bf779d8e8637c747fc",
+    "mtime": 1786107799.7568338,
+    "ast_hash": "7963ef06e63c14e6c2e61ea36c529a04",
     "semantic_hash": ""
   },
   "frontend/src/pages/create-project/StepAccess.tsx": {
@@ -625,8 +625,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/create-project/StepConfirmation.tsx": {
-    "mtime": 1785748406.3106382,
-    "ast_hash": "9f0d1e94ed42545886dc0cbaf2e2322e",
+    "mtime": 1786107731.7074301,
+    "ast_hash": "e92e1e694ed25dca99fd82d5fbe3ca2b",
     "semantic_hash": ""
   },
   "frontend/src/pages/create-project/StepDetails.tsx": {
@@ -1055,8 +1055,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/AdjustWeightsDialog.tsx": {
-    "mtime": 1785758182.1034791,
-    "ast_hash": "b0841ab3a63ffa0d6088d02170aba975",
+    "mtime": 1786107731.7014284,
+    "ast_hash": "380a9e7d08e33622d328e3ea624a07d4",
     "semantic_hash": ""
   },
   "frontend/src/components/ProjectOverviewCards.tsx": {

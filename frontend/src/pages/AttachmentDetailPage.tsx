@@ -173,7 +173,7 @@ export function AttachmentDetailPage() {
             <Download className="h-12 w-12 text-primary" />
           </div>
 
-          <dl className="rounded-md border px-4">
+          <dl className="rounded-md border bg-card px-4">
             <Row label="File Name" value={att.file_name} />
             <Row label="Size" value={formatSize(att.size_bytes)} />
             <Row label="Description" value={att.description} />

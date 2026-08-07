@@ -489,7 +489,7 @@ export function ProjectDetailPage() {
               <Skeleton className="h-8 w-64" />
               <Skeleton className="h-8 w-24" />
             </div>
-            <div className="flex flex-col gap-3 rounded-md border p-4">
+            <div className="flex flex-col gap-3 rounded-md border bg-card p-4">
               {Array.from({ length: 6 }, (_, i) => (
                 <div key={i} className="flex gap-6">
                   <Skeleton className="h-4 w-32" />
@@ -500,7 +500,7 @@ export function ProjectDetailPage() {
             {Array.from({ length: 3 }, (_, i) => (
               <div key={i} className="mt-8">
                 <Skeleton className="mb-3 h-6 w-40" />
-                <div className="flex flex-col gap-2 rounded-md border p-4">
+                <div className="flex flex-col gap-2 rounded-md border bg-card p-4">
                   <Skeleton className="h-4 w-2/3" />
                   <Skeleton className="h-4 w-1/2" />
                 </div>
@@ -508,7 +508,7 @@ export function ProjectDetailPage() {
             ))}
           </div>
           <aside>
-            <div className="flex flex-col gap-2 rounded-md border p-3">
+            <div className="flex flex-col gap-2 rounded-md border bg-card p-3">
               {Array.from({ length: 9 }, (_, i) => (
                 <Skeleton key={i} className="h-7 w-full" />
               ))}
@@ -737,7 +737,7 @@ export function ProjectDetailPage() {
             </div>
           </div>
 
-          <div className="mb-6 flex gap-6 overflow-x-auto border-b">
+          <div className="scrollbar-none mb-6 flex gap-6 overflow-x-auto border-b">
             {PROJECT_TABS.map((t) => (
               <button
                 key={t}
@@ -775,7 +775,7 @@ export function ProjectDetailPage() {
             loading={sectionsLoading}
           />
 
-          <dl className="rounded-md border px-4">
+          <dl className="rounded-md border bg-card px-4">
             <Field label="Category" value={project.category?.name ?? null} />
             <Field label="Status" value={project.status?.name ?? null} />
             <Field label="Access Control" value={accessLabel} />
@@ -908,7 +908,7 @@ export function ProjectDetailPage() {
             emptyActionLabel="Add person"
             onEmptyAction={() => onAction('Add Person')}
           >
-            <ul className="section-list divide-y rounded-md border">
+            <ul className="section-list divide-y rounded-md border bg-card">
               {project.members.map((m) => (
                 <li
                   key={m.id}
@@ -994,7 +994,7 @@ export function ProjectDetailPage() {
                   Adjust Weights
                 </Button>
               </div>
-              <ul className="section-list divide-y rounded-md border">
+              <ul className="section-list divide-y rounded-md border bg-card">
               {milestoneGroups.map((g) => (
                 <Fragment key={g.key}>
                   {g.header && (
@@ -1102,7 +1102,7 @@ export function ProjectDetailPage() {
             emptyActionLabel="Add action item"
             onEmptyAction={() => onAction('Add Action Item')}
           >
-            <ul className="section-list divide-y rounded-md border">
+            <ul className="section-list divide-y rounded-md border bg-card">
               {actionItems.map((a) => (
                 <li
                   key={a.id}
@@ -1188,7 +1188,7 @@ export function ProjectDetailPage() {
             emptyActionLabel="Add link"
             onEmptyAction={() => onAction('Add Link')}
           >
-            <ul className="section-list divide-y rounded-md border">
+            <ul className="section-list divide-y rounded-md border bg-card">
               {links.map((l) => (
                 <li
                   key={l.id}
@@ -1249,7 +1249,7 @@ export function ProjectDetailPage() {
             emptyActionLabel="Add resource"
             onEmptyAction={() => onAction('Add Resource')}
           >
-            <ul className="section-list divide-y rounded-md border">
+            <ul className="section-list divide-y rounded-md border bg-card">
               {resources.map((r) => (
                 <li
                   key={r.id}
@@ -1315,7 +1315,7 @@ export function ProjectDetailPage() {
                     </div>
                   )
                 return (
-                  <ul className="section-list divide-y rounded-md border">
+                  <ul className="section-list divide-y rounded-md border bg-card">
                     {visible.map((i) => (
                       <li
                         key={i.id}
@@ -1393,7 +1393,7 @@ export function ProjectDetailPage() {
                     </div>
                   )
                 return (
-                  <ul className="section-list divide-y rounded-md border">
+                  <ul className="section-list divide-y rounded-md border bg-card">
                     {visibleRisks.map((r) => (
                       <li
                         key={r.id}
@@ -1532,7 +1532,7 @@ export function ProjectDetailPage() {
             emptyActionLabel="Add status report"
             onEmptyAction={() => onAction('Add Status Report')}
           >
-            <ul className="section-list divide-y rounded-md border">
+            <ul className="section-list divide-y rounded-md border bg-card">
               {statusReports.map((r) => (
                 <li
                   key={r.id}
@@ -1583,7 +1583,7 @@ export function ProjectDetailPage() {
             emptyActionLabel="Attach file"
             onEmptyAction={() => onAction('Attach File')}
           >
-            <ul className="section-list divide-y rounded-md border">
+            <ul className="section-list divide-y rounded-md border bg-card">
               {attachments.map((a) => {
                 const ext = fileExt(a.file_name)
                 const iconCls = EXT_STYLES[ext.toLowerCase()] ?? 'border-border bg-muted text-muted-foreground'
@@ -1676,7 +1676,7 @@ export function ProjectDetailPage() {
             submissions={submissions}
             onChanged={loadSubmissions}
           />
-          <div className="rounded-md border p-2">
+          <div className="rounded-md border bg-card p-2">
             {ACTIONS.map((a, i) => {
               const enabled = enabledActions.has(a)
               return (

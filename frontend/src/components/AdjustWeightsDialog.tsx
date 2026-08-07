@@ -99,7 +99,7 @@ export function AdjustWeightsDialog({
               No active milestones to weight.
             </div>
           ) : (
-            <ul className="divide-y rounded-md border">
+            <ul className="divide-y rounded-md border bg-card">
               {active.map((m) => (
                 <li
                   key={m.id}

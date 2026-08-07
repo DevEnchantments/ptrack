@@ -79,7 +79,7 @@ export function StatusReportDetailPage() {
             <Skeleton className="h-8 w-64" />
           </div>
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_260px]">
-            <div className="overflow-hidden rounded-md border">
+            <div className="overflow-hidden rounded-md border bg-card">
               <Skeleton className="h-12 w-full rounded-none" />
               <div className="flex flex-col gap-3 p-6">
                 <Skeleton className="h-6 w-56" />
@@ -172,7 +172,7 @@ export function StatusReportDetailPage() {
         </div>
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_260px]">
-          <div className="overflow-hidden rounded-md border">
+          <div className="overflow-hidden rounded-md border bg-card">
             <div className="bg-brand px-6 py-4">
               <span className="text-sm font-semibold tracking-wide text-brand-foreground">
                 P-TRACK
@@ -210,7 +210,7 @@ export function StatusReportDetailPage() {
           </div>
 
           <aside className="flex flex-col gap-4">
-            <div className="rounded-md border p-4">
+            <div className="rounded-md border bg-card p-4">
               <h3 className="mb-3 text-sm font-semibold">Visibility</h3>
               <p className="text-sm">
                 <span className="font-medium">Viewable By:</span>{' '}
@@ -222,12 +222,12 @@ export function StatusReportDetailPage() {
               </p>
             </div>
 
-            <div className="rounded-md border p-4">
+            <div className="rounded-md border bg-card p-4">
               <h3 className="mb-3 text-sm font-semibold">Submitted On</h3>
               <MiniCalendar label="" date={report.report_date} />
             </div>
 
-            <div className="rounded-md border p-4">
+            <div className="rounded-md border bg-card p-4">
               <h3 className="mb-3 text-sm font-semibold">Recent Reports</h3>
               {others.length === 0 ? (
                 <div className="rounded-md border border-dashed px-4 py-4 text-sm text-muted-foreground">

@@ -49,7 +49,7 @@ export function StepConfirmation({ form }: { form: CreateProjectForm }) {
       <p className="text-sm text-muted-foreground">
         Review the details below, then create the project.
       </p>
-      <dl className="divide-y rounded-md border">
+      <dl className="divide-y rounded-md border bg-card">
         <Row label="Project" value={form.name || '-'} />
         <Row label="Status" value={statusName} />
         <Row label="Access Control" value={accessLabel} />

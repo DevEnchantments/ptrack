@@ -97,7 +97,7 @@
  * (Trials A — Color Hunt teal — and B — indigo — saved in the session scratchpad.)
  */
 :root {
-    --background: #f6f7f9;
+    --background: #edf0f4;
     --foreground: #1a2333;
     --card: #ffffff;
     --card-foreground: #1a2333;
@@ -283,6 +283,15 @@
         transform: translateY(4px);
     }
 }
+/* Tab rows scroll horizontally when narrow; the scrollbar itself is hidden
+   (wheel/swipe still scroll). */
+.scrollbar-none {
+    scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+    display: none;
+}
+
 .section-list > li {
     animation: row-in 300ms var(--ease-out) both;
 }

@@ -196,7 +196,7 @@ export function ActionItemDetailPage() {
           </Button>
         </div>
 
-        <dl className="rounded-md border px-4">
+        <dl className="rounded-md border bg-card px-4">
           <Field label="Action" value={item.title} />
           <Field label="Milestone" value={item.milestone?.name ?? null} />
           <Field label="Type" value={item.type?.name ?? null} />
@@ -261,7 +261,7 @@ export function ActionItemDetailPage() {
                 No comments yet.
               </div>
             ) : (
-              <ul className="divide-y rounded-md border">
+              <ul className="divide-y rounded-md border bg-card">
                 {comments.map((c) => (
                   <li key={c.id} className="flex gap-3 px-4 py-3">
                     <InitialsAvatar name={commentAuthor(c)} />

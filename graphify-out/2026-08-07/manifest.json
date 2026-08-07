@@ -610,8 +610,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ProjectDetailPage.tsx": {
-    "mtime": 1785930160.8525815,
-    "ast_hash": "17ab637cddc98b08ce71c0a1c5fcf53e",
+    "mtime": 1785935587.0198114,
+    "ast_hash": "51561873b1e06ccf01df663e661ffeff",
     "semantic_hash": ""
   },
   "frontend/src/pages/StatusReportDetailPage.tsx": {
@@ -1095,8 +1095,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/WorkflowPanel.tsx": {
-    "mtime": 1785911769.09535,
-    "ast_hash": "5f16958a8a7fa1be045aa9f1c7c0baf6",
+    "mtime": 1785935587.0168133,
+    "ast_hash": "a2941d1527f2cdbda7c5ebee4335050e",
     "semantic_hash": ""
   },
   "frontend/src/components/ProjectsGrid.tsx": {
