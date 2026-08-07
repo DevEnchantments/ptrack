@@ -86,8 +86,10 @@
   "84": "AddActionItemDialog.tsx",
   "85": "react-dom",
   "86": "undici",
+  "87": "@supabase/supabase-js",
   "88": "tw-animate-css",
   "89": "ProjectsGrid.tsx",
   "90": "Injectable",
+  "91": "@eslint/js",
   "95": "RisksModule"
 }
