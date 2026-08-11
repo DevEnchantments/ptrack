@@ -1,5 +1,6 @@
 import { FieldError } from '@/components/FieldError'
-import { Loader2 } from 'lucide-react'
+import { EMAIL_RE, pocEmail } from '@/lib/provision'
+import { Loader2, Wand2 } from 'lucide-react'
 import { toast } from '@/lib/toast'
 import { useEffect, useState } from 'react'
 import type { ProjectMemberInput } from '@/pages/CreateProjectWizard'
@@ -71,6 +72,7 @@ export function AddPersonDialog({
   const [accessLevel, setAccessLevel] = useState('read_only')
   const [involvementId, setInvolvementId] = useState<string | null>(null)
   const [notes, setNotes] = useState('')
+  const [pendingEmail, setPendingEmail] = useState('')
   const [newRoleName, setNewRoleName] = useState('')
   const [newRoleLevel, setNewRoleLevel] = useState('read_only')
   const [error, setError] = useState<string | null>(null)
@@ -91,6 +93,7 @@ export function AddPersonDialog({
     setAccessLevel('read_only')
     setInvolvementId(null)
     setNotes('')
+    setPendingEmail('')
     setNewRoleName('')
     setNewRoleLevel('read_only')
   }
@@ -107,6 +110,7 @@ export function AddPersonDialog({
         setAccessLevel(existing.access_level || 'read_only')
         setInvolvementId(existing.involvement_level_id)
         setNotes(existing.notes ?? '')
+        setPendingEmail(existing.pending_email ?? '')
       } else {
         resetFields()
       }
@@ -129,6 +133,12 @@ export function AddPersonDialog({
     const errs: Record<string, string> = {}
     if (!isEdit && !person.display_name.trim())
       errs.person = 'A user is required.'
+    const needsEmail =
+      (!isEdit && !person.user_id && person.display_name.trim() !== '') ||
+      (isEdit && existing?.status === 'pending')
+    if (needsEmail && !EMAIL_RE.test(pendingEmail.trim()))
+      errs.pendingEmail =
+        'A valid email is required for pending people — it links their future account.'
     if (!roleId) errs.roleId = 'A project role is required.'
 
     setFieldErrors(errs)
@@ -152,11 +162,17 @@ export function AddPersonDialog({
           access_level: accessLevel,
           involvement_level_id: involvementId ?? undefined,
           notes: notes.trim(),
+          ...(existing.status === 'pending'
+            ? { pending_email: pendingEmail.trim().toLowerCase() }
+            : {}),
         })
       } else {
         await peopleApi.add(projectId, {
           user_id: person.user_id ?? undefined,
           pending_name: person.user_id ? undefined : person.display_name.trim(),
+          pending_email: person.user_id
+            ? undefined
+            : pendingEmail.trim().toLowerCase(),
           role_id: finalRoleId,
           access_level: accessLevel,
           involvement_level_id: involvementId ?? undefined,
@@ -226,6 +242,45 @@ export function AddPersonDialog({
               </>
             )}
           </div>
+
+          {((!isEdit && !person.user_id && person.display_name.trim() !== '') ||
+            (isEdit && existing?.status === 'pending')) && (
+            <div className="flex flex-col gap-2">
+              <Label>
+                Email <span className="text-destructive">*</span>
+              </Label>
+              <div className="flex items-center gap-2">
+                <Input
+                  value={pendingEmail}
+                  onChange={(e) => setPendingEmail(e.target.value)}
+                  placeholder="person@example.com"
+                  aria-invalid={fieldErrors.pendingEmail ? true : undefined}
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  title="Generate a unique fake email — for proof-of-concept people, since emails must be unique"
+                  onClick={() =>
+                    setPendingEmail(
+                      pocEmail(
+                        (isEdit
+                          ? (existing?.pending_name ?? '')
+                          : person.display_name) || 'user',
+                      ),
+                    )
+                  }
+                >
+                  <Wand2 className="h-4 w-4" />
+                  PoC email
+                </Button>
+              </div>
+              <FieldError message={fieldErrors.pendingEmail} />
+              <p className="text-xs text-muted-foreground">
+                Links this person to their account when one is created.
+              </p>
+            </div>
+          )}
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
             <div className="flex flex-col gap-2">

@@ -7,6 +7,7 @@ import {
 } from 'react'
 import type { Session, User } from '@supabase/supabase-js'
 import { supabase } from '@/lib/supabase'
+import { apiPost } from '@/lib/api'
 
 interface AuthContextValue {
   session: Session | null
@@ -39,6 +40,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   async function signIn(email: string, password: string) {
     const { error } = await supabase.auth.signInWithPassword({ email, password })
+    if (!error) {
+      // First-login hook: link any pending memberships matching this email.
+      // Fire-and-forget — sign-in must never fail because of it.
+      void apiPost('/users/claim', {}).catch(() => undefined)
+    }
     return { error: error ? error.message : null }
   }
 

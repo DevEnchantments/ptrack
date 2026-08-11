@@ -1,5 +1,12 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsIn, IsOptional, IsString, IsUUID, MaxLength } from 'class-validator';
+import {
+  IsEmail,
+  IsIn,
+  IsOptional,
+  IsString,
+  IsUUID,
+  MaxLength,
+} from 'class-validator';
 
 export class CreatePersonDto {
   @ApiPropertyOptional({
@@ -19,6 +26,15 @@ export class CreatePersonDto {
   @IsString()
   @MaxLength(255)
   pending_name?: string | null;
+
+  @ApiPropertyOptional({
+    example: 'dana.whitfield@poc.ptrack.local',
+    description:
+      'Required together with pending_name. The linking key: provisioning an account with this email claims the membership.',
+  })
+  @IsOptional()
+  @IsEmail()
+  pending_email?: string | null;
 
   @ApiProperty({
     format: 'uuid',

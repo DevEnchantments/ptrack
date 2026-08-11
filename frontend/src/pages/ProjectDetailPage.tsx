@@ -49,6 +49,7 @@ import { AddMilestoneDialog } from '@/components/AddMilestoneDialog'
 import { AdjustWeightsDialog } from '@/components/AdjustWeightsDialog'
 import { EditOutcomeDialog } from '@/components/EditOutcomeDialog'
 import { SaveTemplateDialog } from '@/components/SaveTemplateDialog'
+import { CreateAccountDialog } from '@/components/CreateAccountDialog'
 import { TagChips } from '@/components/TagChips'
 import { ProjectOverviewCards } from '@/components/ProjectOverviewCards'
 import { WorkflowPanel } from '@/components/WorkflowPanel'
@@ -292,6 +293,7 @@ export function ProjectDetailPage() {
   const [outcomes, setOutcomes] = useState<ProgramOutcome[]>([])
   const [editOutcome, setEditOutcome] = useState<ProgramOutcome | null>(null)
   const [saveTemplateOpen, setSaveTemplateOpen] = useState(false)
+  const [accountMember, setAccountMember] = useState<ProjectMemberDetail | null>(null)
   const [actionItems, setActionItems] = useState<ActionItem[]>([])
   const [links, setLinks] = useState<Link[]>([])
   const [resources, setResources] = useState<Resource[]>([])
@@ -939,7 +941,17 @@ export function ProjectDetailPage() {
                       <InitialsAvatar name={memberName(m)} />
                       <span className="text-sm font-medium">{memberName(m)}</span>
                       {m.status === 'pending' && (
-                        <span className="text-xs text-gold">(pending)</span>
+                        <>
+                          <span className="text-xs text-gold">(pending)</span>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="h-6 px-2 text-xs"
+                            onClick={() => setAccountMember(m)}
+                          >
+                            Create account
+                          </Button>
+                        </>
                       )}
                     </div>
                     <span className="text-sm text-muted-foreground">
@@ -1800,6 +1812,19 @@ export function ProjectDetailPage() {
         onOpenChange={setAdjustWeightsOpen}
         milestones={milestones}
         onSaved={loadMilestones}
+      />
+
+      <CreateAccountDialog
+        open={accountMember !== null}
+        onOpenChange={(o) => {
+          if (!o) setAccountMember(null)
+        }}
+        person={{
+          name: accountMember ? memberName(accountMember) : '',
+          email: accountMember?.pending_email ?? null,
+        }}
+        projectName={project.name}
+        onProvisioned={load}
       />
 
       <SaveTemplateDialog

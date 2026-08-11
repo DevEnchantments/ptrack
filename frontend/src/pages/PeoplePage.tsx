@@ -1,9 +1,11 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ChevronDown, ChevronRight } from 'lucide-react'
 import { registryApi, type DirectoryPerson } from '@/lib/api'
 import { usePageTitle } from '@/lib/use-page-title'
 import { InitialsAvatar } from '@/components/InitialsAvatar'
+import { CreateAccountDialog } from '@/components/CreateAccountDialog'
+import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
 /** People directory: everyone assigned to any project, real or pending. */
@@ -16,14 +18,17 @@ export function PeoplePage() {
   const [error, setError] = useState<string | null>(null)
   const [search, setSearch] = useState('')
   const [expanded, setExpanded] = useState<Set<string>>(new Set())
+  const [accountFor, setAccountFor] = useState<DirectoryPerson | null>(null)
 
-  useEffect(() => {
+  const load = useCallback(() => {
     registryApi
       .people()
       .then(setPeople)
       .catch((e) => setError((e as Error).message))
       .finally(() => setLoading(false))
   }, [])
+
+  useEffect(load, [load])
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase()
@@ -124,6 +129,17 @@ export function PeoplePage() {
                     {p.memberships.length === 1 ? '' : 's'}
                   </span>
                 </button>
+                {isOpen && p.pending && (
+                  <div className="border-t bg-muted/30 px-4 py-2 pl-14">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setAccountFor(p)}
+                    >
+                      Create account
+                    </Button>
+                  </div>
+                )}
                 {isOpen && (
                   <ul className="divide-y border-t bg-muted/30">
                     {p.memberships.map((m) => (
@@ -151,6 +167,18 @@ export function PeoplePage() {
           })}
         </ul>
       )}
+
+      <CreateAccountDialog
+        open={accountFor !== null}
+        onOpenChange={(o) => {
+          if (!o) setAccountFor(null)
+        }}
+        person={{
+          name: accountFor?.name ?? '',
+          email: accountFor?.email ?? null,
+        }}
+        onProvisioned={load}
+      />
     </div>
   )
 }

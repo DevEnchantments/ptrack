@@ -55,6 +55,7 @@ interface MemberRow {
   project_id: string;
   user_id: string | null;
   pending_name: string | null;
+  pending_email: string | null;
   access_level: string;
   status: string;
   role: { name: string } | null;
@@ -106,7 +107,7 @@ export class RegistryService {
 
   async people(): Promise<DirectoryPerson[]> {
     const { data, error } = await this.db.client.from('project_members').select(
-      `project_id, user_id, pending_name, access_level, status,
+      `project_id, user_id, pending_name, pending_email, access_level, status,
          role:project_roles ( name ),
          profile:profiles!user_id ( full_name, email ),
          project:projects ( name )`,
@@ -127,7 +128,7 @@ export class RegistryService {
             m.profile?.email ||
             m.pending_name ||
             'Unknown',
-          email: m.profile?.email ?? null,
+          email: m.profile?.email ?? m.pending_email ?? null,
           pending: !m.user_id,
           memberships: [],
         };

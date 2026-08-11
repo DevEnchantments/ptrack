@@ -3,7 +3,7 @@ import { DatabaseService } from '../../database/database.service';
 import { toHttpException } from '../../common/supabase-error';
 
 const MEMBER_COLUMNS =
-  'id, user_id, pending_name, role_id, status, access_level, involvement_level_id, notes';
+  'id, user_id, pending_name, pending_email, role_id, status, access_level, involvement_level_id, notes';
 
 @Injectable()
 export class PeopleRepository {

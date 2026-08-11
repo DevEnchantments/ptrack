@@ -106,6 +106,7 @@ export interface Project {
 export interface ProjectMemberDetail {
   id: string
   user_id: string | null
+  pending_email: string | null
   pending_name: string | null
   role_id: string | null
   access_level: string
@@ -195,6 +196,14 @@ export interface UserSummary {
 export const usersApi = {
   search: (query: string) =>
     apiGet<UserSummary[]>(`/users?search=${encodeURIComponent(query)}`),
+  provision: (body: { email: string; full_name: string; password: string }) =>
+    apiPost<{
+      user_id: string
+      email: string
+      full_name: string
+      claimed: number
+    }>('/users/provision', body),
+  claim: () => apiPost<{ claimed: number }>('/users/claim', {})
 }
 
 export interface Lookup {

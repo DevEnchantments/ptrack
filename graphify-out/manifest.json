@@ -245,13 +245,13 @@
     "semantic_hash": ""
   },
   "backend/src/modules/people/dto/create-person.dto.ts": {
-    "mtime": 1783942248.549218,
-    "ast_hash": "f5a574e48dcbabba3b3d36e4e382d2c7",
+    "mtime": 1786459079.315987,
+    "ast_hash": "c31320df5658db27f9e1f26d8612ab12",
     "semantic_hash": ""
   },
   "backend/src/modules/people/dto/update-person.dto.ts": {
-    "mtime": 1783942248.549218,
-    "ast_hash": "cc5daadbb04f3bd6c1ffd581a810c3b2",
+    "mtime": 1786459352.4616945,
+    "ast_hash": "26269d85e1ed7c3d06a36f6b4d25d9e8",
     "semantic_hash": ""
   },
   "backend/src/modules/people/people.controller.ts": {
@@ -265,13 +265,13 @@
     "semantic_hash": ""
   },
   "backend/src/modules/people/people.repository.ts": {
-    "mtime": 1783942248.549218,
-    "ast_hash": "bc02207853d0285c5918a4f8088489c9",
+    "mtime": 1786459079.37599,
+    "ast_hash": "2518110f4f20969c228bdbdbbf841e8c",
     "semantic_hash": ""
   },
   "backend/src/modules/people/people.service.ts": {
-    "mtime": 1783942248.549218,
-    "ast_hash": "6e4d44cb73e6b658a0f660ad41ce283f",
+    "mtime": 1786459079.3309877,
+    "ast_hash": "9fc4295490434ee38bac6f5356eedacb",
     "semantic_hash": ""
   },
   "backend/src/modules/projects/dto/create-project.dto.ts": {
@@ -295,8 +295,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/projects/projects.repository.ts": {
-    "mtime": 1786443928.6002038,
-    "ast_hash": "440ef8befb46968a1c1fb4d9a667e142",
+    "mtime": 1786459079.3949943,
+    "ast_hash": "d4800d2e211475c8fc610a477edf65aa",
     "semantic_hash": ""
   },
   "backend/src/modules/projects/projects.service.ts": {
@@ -395,8 +395,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/users/users.controller.ts": {
-    "mtime": 1783942248.5502172,
-    "ast_hash": "195091690780ce47f29efdaf9080fbb3",
+    "mtime": 1786459079.2984786,
+    "ast_hash": "142a357fe49f25cd3a9947a3e03973c7",
     "semantic_hash": ""
   },
   "backend/src/modules/users/users.module.ts": {
@@ -405,8 +405,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/users/users.service.ts": {
-    "mtime": 1783942248.551215,
-    "ast_hash": "01d7a7b38aa81ee573b84d1234189112",
+    "mtime": 1786459079.2824721,
+    "ast_hash": "3abdf8a4add593e678a0eda9a6eeead3",
     "semantic_hash": ""
   },
   "backend/test/app.e2e-spec.ts": {
@@ -475,8 +475,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/AddPersonDialog.tsx": {
-    "mtime": 1785331638.9828455,
-    "ast_hash": "7b980d1e3e30f8eb222eb7469a9cb2e6",
+    "mtime": 1786459561.8220527,
+    "ast_hash": "4e676dccaa543e741cdc71cee51c1be6",
     "semantic_hash": ""
   },
   "frontend/src/components/AddResourceDialog.tsx": {
@@ -555,13 +555,13 @@
     "semantic_hash": ""
   },
   "frontend/src/lib/api.ts": {
-    "mtime": 1786456073.0954347,
-    "ast_hash": "af4e6594e72647978c5191f22f135e8a",
+    "mtime": 1786459928.403542,
+    "ast_hash": "4f8156d1072c849017e8bc463f0bd1c3",
     "semantic_hash": ""
   },
   "frontend/src/lib/auth-context.tsx": {
-    "mtime": 1786111533.804725,
-    "ast_hash": "bdcb5d1fbb7cbc95ec3b7ad3cb92f8a9",
+    "mtime": 1786459561.777863,
+    "ast_hash": "78936153289a62bb183ed01478b5349a",
     "semantic_hash": ""
   },
   "frontend/src/lib/supabase.ts": {
@@ -610,8 +610,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ProjectDetailPage.tsx": {
-    "mtime": 1786456124.5693712,
-    "ast_hash": "7a031c8996149d501dbaa2c0553413b5",
+    "mtime": 1786459561.8800535,
+    "ast_hash": "ae16446e102fe83157d7fb786f4a52e3",
     "semantic_hash": ""
   },
   "frontend/src/pages/StatusReportDetailPage.tsx": {
@@ -905,8 +905,8 @@
     "semantic_hash": ""
   },
   "docs/FDD-ALIGNMENT.md": {
-    "mtime": 1786456331.1669743,
-    "ast_hash": "c76ef2f97aa2ad84045a744bd1c0b52c",
+    "mtime": 1786460025.751762,
+    "ast_hash": "50b7101270b39ee6ccb812bee94d947d",
     "semantic_hash": ""
   },
   "backend/db/fdd_project_fields.sql": {
@@ -1290,8 +1290,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/registry/registry.service.ts": {
-    "mtime": 1786445744.886268,
-    "ast_hash": "69f13fbed13088469964d3797920e970",
+    "mtime": 1786459079.4105034,
+    "ast_hash": "20e3deda1dbbffe310ae5c78526de453",
     "semantic_hash": ""
   },
   "frontend/src/pages/ActionItemsPage.tsx": {
@@ -1310,8 +1310,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/PeoplePage.tsx": {
-    "mtime": 1786440494.5941505,
-    "ast_hash": "8ee6765ccebf9d0bb195dcc2ba3c363c",
+    "mtime": 1786459730.8393457,
+    "ast_hash": "c2b2a76ee2fce7276c319cac8bcc260c",
     "semantic_hash": ""
   },
   "backend/scripts/seed-generic-lookups.mjs": {
@@ -1417,6 +1417,36 @@
   "frontend/src/components/SaveTemplateDialog.tsx": {
     "mtime": 1786456081.7234821,
     "ast_hash": "2bb2d7c02ef1b9c6ea7e60e1908db4cd",
+    "semantic_hash": ""
+  },
+  "backend/db/pending_member_email.sql": {
+    "mtime": 1786458970.873384,
+    "ast_hash": "ad47cc2f19df07f6780d114648cb2dc4",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/users/dto/provision-user.dto.ts": {
+    "mtime": 1786458980.6278868,
+    "ast_hash": "3d4388b7d20d60ba6e7ee92e1b69e9b1",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/users/users.logic.spec.ts": {
+    "mtime": 1786458977.948901,
+    "ast_hash": "fb4fc52ff5b9a83f000adf29b5b0b598",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/users/users.logic.ts": {
+    "mtime": 1786458974.3648,
+    "ast_hash": "d4a3362f32e878645eb6a151fc754ea7",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/CreateAccountDialog.tsx": {
+    "mtime": 1786459730.8812284,
+    "ast_hash": "3c10234acb5d21668b8808c9e68819ee",
+    "semantic_hash": ""
+  },
+  "frontend/src/lib/provision.ts": {
+    "mtime": 1786459478.9947329,
+    "ast_hash": "d7c2b6b0e8cd6359dd7c7eec7fc6678b",
     "semantic_hash": ""
   }
 }

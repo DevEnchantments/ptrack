@@ -166,7 +166,7 @@ export class ProjectsRepository {
         project_manager2:profiles!project_manager2_id ( full_name, email ),
         pmo_partner:profiles!pmo_partner_id ( full_name, email ),
         members:project_members (
-          id, user_id, pending_name, role_id, access_level,
+          id, user_id, pending_name, pending_email, role_id, access_level,
           involvement_level_id, notes, status,
           role:project_roles ( name ),
           profile:profiles!user_id ( full_name, email )

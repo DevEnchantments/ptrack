@@ -284,6 +284,24 @@ shifted to the new start. Not copied by design: people, action items,
 progress, budgets. Offset math unit-tested (41 backend tests). Remaining
 original-app leftovers: Merge + Validations, consciously unplanned.
 
+**Account provisioning for pending people — ✅ SHIPPED 2026-08-11**
+(`backend/db/pending_member_email.sql` — people endpoints 500 until run):
+pending members now REQUIRE a validated email (`pending_email`, the linking
+key; a "PoC email" generator produces unique fake @poc.ptrack.local addresses
+for proof-of-concept people). "Create account" (project People rows + People
+directory) provisions a real login via the Supabase Admin API (pre-confirmed,
+temp password shown once, profile upserted) and auto-claims every pending
+membership with that email — collisions with an existing membership delete
+the pending row (unique constraint; planClaim unit-tested, 44 backend tests).
+Sign-in also fires a claim, so self-registered users link automatically.
+Step 2 drafts an invitation from project context (editable, mailto: opens the
+admin's own mailbox + copy button) — in-app sending stays gated on SMTP, and
+AI generate/refine slots into the same compose box once an LLM key is
+configured (the AI Assistant's first real feature). NOTE: wizard-created
+pending members still lack emails (add later via Edit Person, which now
+requires one); and until the security phase, any provisioned account has full
+access — distribute credentials accordingly.
+
 ## 6. Open questions for the supervisor (blockers marked ⛔)
 
 **Meeting outcomes 2026-08-11** (first supervisor sync since the assumed-FDD
