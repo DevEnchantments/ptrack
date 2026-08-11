@@ -98,5 +98,8 @@
   "96": "RecordHistory.tsx",
   "97": "frappe-gantt",
   "98": "tailwind-merge",
-  "101": "moduleFileExtensions"
+  "99": "LinksModule",
+  "100": "ProgramOutcomesModule",
+  "101": "moduleFileExtensions",
+  "102": "ResourcesModule"
 }
