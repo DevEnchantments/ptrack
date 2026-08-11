@@ -1,11 +1,11 @@
 # Graph Report - ptrack  (2026-08-11)
 
 ## Corpus Check
-- 273 files · ~118,543 words
+- 273 files · ~118,963 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 2173 nodes · 4910 edges · 101 communities (89 shown, 12 thin omitted)
+- 2173 nodes · 4913 edges · 107 communities (95 shown, 12 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 5 edges (avg confidence: 0.68)
 - Token cost: 0 input · 0 output
 
@@ -82,6 +82,7 @@
 - CreateLinkDto
 - RecordHistoryService
 - WorkflowPanel.tsx
+- 2. Core functional modules
 - moduleFileExtensions
 - @nestjs/config
 - .add
@@ -90,11 +91,17 @@
 - .add
 - dev.ps1
 - WorkflowPanel.tsx
+- README.md
 - ApiProperty
+- 2. Findings per surface
+- 🚀 Quick start
 - milestones.repository.ts
+- transform
 - @nestjs/swagger
 - undici
 - @supabase/supabase-js
+- class-validator
+- @nestjs/schedule
 - Get
 - PeoplePage.tsx
 - ActionItemsPage.tsx
@@ -102,7 +109,6 @@
 - tailwind-merge
 - ProjectsGrid.tsx
 - MilestoneDetailPage.tsx
-- moduleFileExtensions
 - nest-cli.json
 - AppModule
 - ProjectProgressReportPage.tsx
@@ -141,11 +147,11 @@
 ## Import Cycles
 - None detected.
 
-## Communities (101 total, 12 thin omitted)
+## Communities (107 total, 12 thin omitted)
 
 ### Community 0 - "Community 0"
-Cohesion: 0.05
-Nodes (41): CLAUDE.md — P-Track, Current state — Phase 1 complete (full CRUD), graphify, Hard architectural rules (do not violate), How I like to work — follow precisely, Known gotchas — carry these forward, Repo & environment, Roadmap — deferred to Phase 2+ (+33 more)
+Cohesion: 0.17
+Nodes (12): 10. PL/SQL package layer, 11. Notable architectural patterns, 12. Summary, 1. Application overview, 3. Dashboards & reporting, 4. Notifications & email automation, 5. Security & access control, 6. Extensibility framework ("Flex Columns") (+4 more)
 
 ### Community 1 - "Community 1"
 Cohesion: 0.09
@@ -156,8 +162,8 @@ Cohesion: 0.06
 Nodes (38): actionItems, AI_TITLES, byName(), daysFromNow(), db, did(), dISO(), env (+30 more)
 
 ### Community 3 - "Community 3"
-Cohesion: 0.11
-Nodes (18): 1.1 Project → `projects` (EXTEND), 1.2 Milestone → `milestones` (mostly HAVE — big head start), 1.3 Task / Work Activity → `action_items` (EXTEND), 1.4 Risk → BUILD `risks` (new module, follows our new-record-type recipe), 1.5 Issue → `issues` (EXTEND), 1.6 Workflow Submission → BUILD `cycles` + `submissions`, 1.7 Attachment → `attachments` (EXTEND for parent scoping — see 1.3), 1.8 Dashboard/KPI → BUILD `kpis` + `kpi_readings` + `kpi_action_plans` (LAST) (+10 more)
+Cohesion: 0.20
+Nodes (9): 2. Functionality inventory (FDD FR-01…15 → status), 3. Use cases UC-01…18 — acceptance checklist, 4. Key validations / business rules (FDD 3.3.2), 5. Reports & notifications (defer until math lands), 6. Open questions for the supervisor (blockers marked ⛔), 7. Execution roadmap, 8. Conventions carried forward, FDD Alignment — P-Track ⇄ Project Tracker FDD (+1 more)
 
 ### Community 4 - "Community 4"
 Cohesion: 0.04
@@ -245,7 +251,7 @@ Nodes (21): @base-ui/react, class-variance-authority, clsx, @fontsource-variable
 
 ### Community 25 - "Community 25"
 Cohesion: 0.10
-Nodes (21): dependencies, class-transformer, class-validator, @nestjs/config, @nestjs/core, @nestjs/schedule, @nestjs/swagger, reflect-metadata (+13 more)
+Nodes (21): dependencies, class-transformer, jose, @nestjs/config, @nestjs/core, @nestjs/platform-express, @nestjs/swagger, reflect-metadata (+13 more)
 
 ### Community 26 - "Community 26"
 Cohesion: 0.08
@@ -260,8 +266,8 @@ Cohesion: 0.14
 Nodes (6): toHttpException(), Cycle, Submission, SubmissionListItem, SubmissionsRepository, Injectable
 
 ### Community 29 - "Community 29"
-Cohesion: 0.17
-Nodes (12): jest, collectCoverageFrom, coverageDirectory, rootDir, testEnvironment, testRegex, transform, transformIgnorePatterns (+4 more)
+Cohesion: 0.15
+Nodes (13): jest, collectCoverageFrom, coverageDirectory, moduleFileExtensions, rootDir, testEnvironment, testRegex, transformIgnorePatterns (+5 more)
 
 ### Community 30 - "Community 30"
 Cohesion: 0.12
@@ -272,8 +278,8 @@ Cohesion: 0.09
 Nodes (14): ProjectsController, ApiBody, Body, Controller, Delete, Get, Param, Patch (+6 more)
 
 ### Community 32 - "CreateActionItemDto"
-Cohesion: 0.11
-Nodes (17): 1. Contrast report (measured 2026-07-29), 2. Findings per surface, 3. Staged plan (one stage = one commit; tick when shipped), 4. House recipes (decide once in Stage 1, reuse forever), 5. Cross-session evidence pointers, 6. RESOLVED 2026-07-29 (Fares ruled on all seven; demo constraint lifted), A. Tokens + `components/ui` primitives — severity HIGH, effort M, B. Dialogs (10 Add*/Edit*) — severity HIGH, effort M (+9 more)
+Cohesion: 0.20
+Nodes (9): 1. Contrast report (measured 2026-07-29), 3. Staged plan (one stage = one commit; tick when shipped), 4. House recipes (decide once in Stage 1, reuse forever), 5. Cross-session evidence pointers, 6. RESOLVED 2026-07-29 (Fares ruled on all seven; demo constraint lifted), Item 1 detail: the two categories must not be collapsed, Items 5-6 scope note, Token changes — SHIPPED in Stage 1 (2026-07-29), re-measured after landing (+1 more)
 
 ### Community 33 - "nest-cli.json"
 Cohesion: 0.35
@@ -359,6 +365,10 @@ Nodes (47): ACCESS_LEVELS, AddPersonDialog(), emptyPerson(), memberName(), Props
 Cohesion: 0.05
 Nodes (47): ApiSecurity, AppController, Controller, Get, AppModule, Module, AppService, Injectable (+39 more)
 
+### Community 57 - ".update"
+Cohesion: 0.20
+Nodes (10): CLAUDE.md — P-Track, Current state — Phase 1 complete (full CRUD), graphify, Hard architectural rules (do not violate), How I like to work — follow precisely, Known gotchas — carry these forward, Repo & environment, Roadmap — deferred to Phase 2+ (+2 more)
+
 ### Community 58 - "@nestjs/swagger"
 Cohesion: 0.08
 Nodes (22): CreateLinkDto, ApiProperty, ApiPropertyOptional, IsArray, IsBoolean, IsOptional, IsString, MaxLength (+14 more)
@@ -387,6 +397,10 @@ Nodes (11): classifyDue(), ReminderKind, reminderType(), resolveRecipients(), Du
 Cohesion: 0.17
 Nodes (12): CreateMilestoneDto, ApiProperty, ApiPropertyOptional, IsArray, IsBoolean, IsDateString, IsIn, IsNumber (+4 more)
 
+### Community 65 - ".add"
+Cohesion: 0.22
+Nodes (9): 1.1 Project → `projects` (EXTEND), 1.2 Milestone → `milestones` (mostly HAVE — big head start), 1.3 Task / Work Activity → `action_items` (EXTEND), 1.4 Risk → BUILD `risks` (new module, follows our new-record-type recipe), 1.5 Issue → `issues` (EXTEND), 1.6 Workflow Submission → BUILD `cycles` + `submissions`, 1.7 Attachment → `attachments` (EXTEND for parent scoping — see 1.3), 1.8 Dashboard/KPI → BUILD `kpis` + `kpi_readings` + `kpi_action_plans` (LAST) (+1 more)
+
 ### Community 66 - "react-dom"
 Cohesion: 0.07
 Nodes (25): RecordHistoryService, Injectable, CreateIssueDto, ApiProperty, ApiPropertyOptional, IsArray, IsDateString, IsIn (+17 more)
@@ -398,6 +412,10 @@ Nodes (13): AvatarCluster(), colorOf(), InitialsAvatar(), initialsOf(), PALETTE,
 ### Community 68 - "RecordHistoryService"
 Cohesion: 0.29
 Nodes (10): CreateTemplateDto, InstantiateTemplateDto, ApiProperty, ApiPropertyOptional, IsDateString, IsOptional, IsString, IsUUID (+2 more)
+
+### Community 70 - "2. Core functional modules"
+Cohesion: 0.22
+Nodes (9): 2.1 Project management (core), 2.2 Milestones, 2.3 Action items (tasks), 2.4 Issues, 2.5 Status reports & status updates, 2.6 Resources & people, 2.7 Attachments, links & tags, 2.8 Search (+1 more)
 
 ### Community 71 - "moduleFileExtensions"
 Cohesion: 0.24
@@ -427,9 +445,25 @@ Nodes (5): ActionItemsController, Controller, Delete, Get, Param
 Cohesion: 0.14
 Nodes (16): SubmissionActionDto, ApiPropertyOptional, IsOptional, IsString, MaxLength, ACTION_BODY, ReportsController, SubmissionsController (+8 more)
 
+### Community 79 - "README.md"
+Cohesion: 0.25
+Nodes (5): 🏗 Architecture, 📚 More docs, 🧪 Quality, 🗺 Roadmap, ✨ What's inside
+
 ### Community 80 - "ApiProperty"
 Cohesion: 0.29
 Nodes (6): Explicitly not implemented (await real sign-off), F1 — Calculated progress (project), F2 — Planned progress (project), F3 — Risk score and severity, F4 — At-risk suggestion (display-only), FORMULAS.md — P-Track calculation registry
+
+### Community 81 - "2. Findings per surface"
+Cohesion: 0.25
+Nodes (8): 2. Findings per surface, A. Tokens + `components/ui` primitives — severity HIGH, effort M, B. Dialogs (10 Add*/Edit*) — severity HIGH, effort M, C. Detail pages — severity HIGH, effort M-L, D. AppLayout + CommandPalette — severity MED, effort S, E. HomePage — severity LOW, effort S, F. Dashboard preview — severity LOW, effort S, G. Login + Wizard — severity LOW, effort S
+
+### Community 82 - "🚀 Quick start"
+Cohesion: 0.40
+Nodes (5): 1 · Database — Supabase SQL editor, 2 · Run both halves, 3 · Optional: demo data, 4 · Explore, 🚀 Quick start
+
+### Community 84 - "transform"
+Cohesion: 0.67
+Nodes (3): transform, ^.+\\.(t|j)s$, ts-jest
 
 ### Community 85 - "@nestjs/swagger"
 Cohesion: 0.14
@@ -462,10 +496,6 @@ Nodes (12): COLUMNS, ProjectsGrid(), ProjectTree(), Props, TreeRow, StatusPill()
 ### Community 100 - "MilestoneDetailPage.tsx"
 Cohesion: 0.18
 Nodes (13): Props, ActionItem, auditLine(), formatLongDate(), MilestoneDetailPage(), MONTHS, ownerLabel(), profileName() (+5 more)
-
-### Community 101 - "moduleFileExtensions"
-Cohesion: 0.50
-Nodes (4): moduleFileExtensions, js, json, ts
 
 ### Community 102 - "nest-cli.json"
 Cohesion: 0.29
@@ -503,9 +533,9 @@ _Questions this graph is uniquely positioned to answer:_
   _High betweenness centrality (0.041) - this node is a cross-community bridge._
 - **What connects `$schema`, `includeCoAuthoredBy`, `defaultMode` to the rest of the system?**
   _446 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `Community 0` be split into smaller, more focused modules?**
-  _Cohesion score 0.045454545454545456 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
   _Cohesion score 0.09274193548387097 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
   _Cohesion score 0.05853658536585366 - nodes in this community are weakly interconnected._
+- **Should `Community 4` be split into smaller, more focused modules?**
+  _Cohesion score 0.0425531914893617 - nodes in this community are weakly interconnected._

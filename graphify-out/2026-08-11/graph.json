@@ -610,7 +610,7 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "backend_package_dependencies_nestjs_platform_express",
-      "community": 65,
+      "community": 25,
       "norm_label": "@nestjs/platform-express"
     },
     {
@@ -620,7 +620,7 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "nestjs_platform_express",
-      "community": 65,
+      "community": 25,
       "norm_label": "@nestjs/platform-express"
     },
     {
@@ -630,7 +630,7 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "backend_package_dependencies_nestjs_schedule",
-      "community": 25,
+      "community": 89,
       "norm_label": "@nestjs/schedule"
     },
     {
@@ -640,7 +640,7 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "nestjs_schedule",
-      "community": 25,
+      "community": 89,
       "norm_label": "@nestjs/schedule"
     },
     {
@@ -710,7 +710,7 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "backend_package_dependencies_class_validator",
-      "community": 25,
+      "community": 88,
       "norm_label": "class-validator"
     },
     {
@@ -720,7 +720,7 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "class_validator",
-      "community": 25,
+      "community": 88,
       "norm_label": "class-validator"
     },
     {
@@ -730,7 +730,7 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "backend_package_dependencies_jose",
-      "community": 57,
+      "community": 25,
       "norm_label": "jose"
     },
     {
@@ -740,7 +740,7 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "jose",
-      "community": 57,
+      "community": 25,
       "norm_label": "jose"
     },
     {
@@ -1290,7 +1290,7 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "backend_package_jest_modulefileextensions",
-      "community": 101,
+      "community": 29,
       "norm_label": "modulefileextensions"
     },
     {
@@ -1300,7 +1300,7 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "ref_js",
-      "community": 101,
+      "community": 29,
       "norm_label": "js"
     },
     {
@@ -1310,7 +1310,7 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "ref_json",
-      "community": 101,
+      "community": 29,
       "norm_label": "json"
     },
     {
@@ -1320,7 +1320,7 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "ref_ts",
-      "community": 101,
+      "community": 29,
       "norm_label": "ts"
     },
     {
@@ -1350,7 +1350,7 @@
       "source_location": "L73",
       "_origin": "ast",
       "id": "backend_package_jest_transform",
-      "community": 29,
+      "community": 84,
       "norm_label": "transform"
     },
     {
@@ -1360,7 +1360,7 @@
       "source_location": "L74",
       "_origin": "ast",
       "id": "backend_package_transform_t_j_s",
-      "community": 29,
+      "community": 84,
       "norm_label": "^.+\\\\.(t|j)s$"
     },
     {
@@ -1370,7 +1370,7 @@
       "source_location": "L74",
       "_origin": "ast",
       "id": "ref_ts_jest",
-      "community": 29,
+      "community": 84,
       "norm_label": "ts-jest"
     },
     {
@@ -20720,7 +20720,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "claude",
-      "community": 0,
+      "community": 79,
       "norm_label": "claude.md"
     },
     {
@@ -20730,7 +20730,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "claude_claude_md_p_track",
-      "community": 0,
+      "community": 57,
       "norm_label": "claude.md \u2014 p-track"
     },
     {
@@ -20740,7 +20740,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "claude_what_this_project_is",
-      "community": 0,
+      "community": 57,
       "norm_label": "what this project is"
     },
     {
@@ -20750,7 +20750,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "claude_tech_stack",
-      "community": 0,
+      "community": 57,
       "norm_label": "tech stack"
     },
     {
@@ -20760,7 +20760,7 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "claude_hard_architectural_rules_do_not_violate",
-      "community": 0,
+      "community": 57,
       "norm_label": "hard architectural rules (do not violate)"
     },
     {
@@ -20770,7 +20770,7 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "claude_repo_environment",
-      "community": 0,
+      "community": 57,
       "norm_label": "repo & environment"
     },
     {
@@ -20780,7 +20780,7 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "claude_current_state_phase_1_complete_full_crud",
-      "community": 0,
+      "community": 57,
       "norm_label": "current state \u2014 phase 1 complete (full crud)"
     },
     {
@@ -20790,7 +20790,7 @@
       "source_location": "L114",
       "_origin": "ast",
       "id": "claude_roadmap_deferred_to_phase_2",
-      "community": 0,
+      "community": 57,
       "norm_label": "roadmap \u2014 deferred to phase 2+"
     },
     {
@@ -20800,7 +20800,7 @@
       "source_location": "L155",
       "_origin": "ast",
       "id": "claude_how_i_like_to_work_follow_precisely",
-      "community": 0,
+      "community": 57,
       "norm_label": "how i like to work \u2014 follow precisely"
     },
     {
@@ -20810,7 +20810,7 @@
       "source_location": "L170",
       "_origin": "ast",
       "id": "claude_known_gotchas_carry_these_forward",
-      "community": 0,
+      "community": 57,
       "norm_label": "known gotchas \u2014 carry these forward"
     },
     {
@@ -20820,7 +20820,7 @@
       "source_location": "L213",
       "_origin": "ast",
       "id": "claude_graphify",
-      "community": 0,
+      "community": 57,
       "norm_label": "graphify"
     },
     {
@@ -20830,107 +20830,107 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "readme",
-      "community": 0,
+      "community": 79,
       "norm_label": "readme.md"
     },
     {
       "label": "\u2728 What's inside",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L22",
+      "source_location": "L23",
       "_origin": "ast",
       "id": "readme_what_s_inside",
-      "community": 0,
+      "community": 79,
       "norm_label": "\u2728 what's inside"
     },
     {
       "label": "\ud83c\udfd7 Architecture",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L43",
+      "source_location": "L51",
       "_origin": "ast",
       "id": "readme_architecture",
-      "community": 0,
+      "community": 79,
       "norm_label": "\ud83c\udfd7 architecture"
     },
     {
       "label": "\ud83d\ude80 Quick start",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L74",
+      "source_location": "L83",
       "_origin": "ast",
       "id": "readme_quick_start",
-      "community": 0,
+      "community": 82,
       "norm_label": "\ud83d\ude80 quick start"
     },
     {
       "label": "1 \u00b7 Database \u2014 Supabase SQL editor",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L78",
+      "source_location": "L87",
       "_origin": "ast",
       "id": "readme_1_database_supabase_sql_editor",
-      "community": 0,
+      "community": 82,
       "norm_label": "1 \u00b7 database \u2014 supabase sql editor"
     },
     {
-      "label": "2 \u00b7 Backend \u2014 `:3000`",
+      "label": "2 \u00b7 Run both halves",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L88",
+      "source_location": "L105",
       "_origin": "ast",
-      "id": "readme_2_backend_3000",
-      "community": 0,
-      "norm_label": "2 \u00b7 backend \u2014 `:3000`"
+      "id": "readme_2_run_both_halves",
+      "community": 82,
+      "norm_label": "2 \u00b7 run both halves"
     },
     {
-      "label": "3 \u00b7 Frontend \u2014 `:5173`",
+      "label": "3 \u00b7 Optional: demo data",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L108",
+      "source_location": "L140",
       "_origin": "ast",
-      "id": "readme_3_frontend_5173",
-      "community": 0,
-      "norm_label": "3 \u00b7 frontend \u2014 `:5173`"
+      "id": "readme_3_optional_demo_data",
+      "community": 82,
+      "norm_label": "3 \u00b7 optional: demo data"
     },
     {
       "label": "4 \u00b7 Explore",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L126",
+      "source_location": "L148",
       "_origin": "ast",
       "id": "readme_4_explore",
-      "community": 0,
+      "community": 82,
       "norm_label": "4 \u00b7 explore"
     },
     {
       "label": "\ud83e\uddea Quality",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L131",
+      "source_location": "L153",
       "_origin": "ast",
       "id": "readme_quality",
-      "community": 0,
+      "community": 79,
       "norm_label": "\ud83e\uddea quality"
     },
     {
       "label": "\ud83d\uddfa Roadmap",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L145",
+      "source_location": "L167",
       "_origin": "ast",
       "id": "readme_roadmap",
-      "community": 0,
+      "community": 79,
       "norm_label": "\ud83d\uddfa roadmap"
     },
     {
       "label": "\ud83d\udcda More docs",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L156",
+      "source_location": "L181",
       "_origin": "ast",
       "id": "readme_more_docs",
-      "community": 0,
+      "community": 79,
       "norm_label": "\ud83d\udcda more docs"
     },
     {
@@ -21060,7 +21060,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "docs_fdd_alignment_1_data_object_mapping_fdd_appendix_a_p_track_schema",
-      "community": 3,
+      "community": 65,
       "norm_label": "1. data-object mapping (fdd appendix a \u2192 p-track schema)"
     },
     {
@@ -21070,7 +21070,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "docs_fdd_alignment_1_1_project_projects_extend",
-      "community": 3,
+      "community": 65,
       "norm_label": "1.1 project \u2192 `projects` (extend)"
     },
     {
@@ -21080,7 +21080,7 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "docs_fdd_alignment_1_2_milestone_milestones_mostly_have_big_head_start",
-      "community": 3,
+      "community": 65,
       "norm_label": "1.2 milestone \u2192 `milestones` (mostly have \u2014 big head start)"
     },
     {
@@ -21090,7 +21090,7 @@
       "source_location": "L69",
       "_origin": "ast",
       "id": "docs_fdd_alignment_1_3_task_work_activity_action_items_extend",
-      "community": 3,
+      "community": 65,
       "norm_label": "1.3 task / work activity \u2192 `action_items` (extend)"
     },
     {
@@ -21100,7 +21100,7 @@
       "source_location": "L82",
       "_origin": "ast",
       "id": "docs_fdd_alignment_1_4_risk_build_risks_new_module_follows_our_new_record_type_recipe",
-      "community": 3,
+      "community": 65,
       "norm_label": "1.4 risk \u2192 build `risks` (new module, follows our new-record-type recipe)"
     },
     {
@@ -21110,7 +21110,7 @@
       "source_location": "L98",
       "_origin": "ast",
       "id": "docs_fdd_alignment_1_5_issue_issues_extend",
-      "community": 3,
+      "community": 65,
       "norm_label": "1.5 issue \u2192 `issues` (extend)"
     },
     {
@@ -21120,7 +21120,7 @@
       "source_location": "L106",
       "_origin": "ast",
       "id": "docs_fdd_alignment_1_6_workflow_submission_build_cycles_submissions",
-      "community": 3,
+      "community": 65,
       "norm_label": "1.6 workflow submission \u2192 build `cycles` + `submissions`"
     },
     {
@@ -21130,7 +21130,7 @@
       "source_location": "L123",
       "_origin": "ast",
       "id": "docs_fdd_alignment_1_7_attachment_attachments_extend_for_parent_scoping_see_1_3",
-      "community": 3,
+      "community": 65,
       "norm_label": "1.7 attachment \u2192 `attachments` (extend for parent scoping \u2014 see 1.3)"
     },
     {
@@ -21140,7 +21140,7 @@
       "source_location": "L125",
       "_origin": "ast",
       "id": "docs_fdd_alignment_1_8_dashboard_kpi_build_kpis_kpi_readings_kpi_action_plans_last",
-      "community": 3,
+      "community": 65,
       "norm_label": "1.8 dashboard/kpi \u2192 build `kpis` + `kpi_readings` + `kpi_action_plans` (last)"
     },
     {
@@ -21340,7 +21340,7 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "docs_ui_audit_2_findings_per_surface",
-      "community": 32,
+      "community": 81,
       "norm_label": "2. findings per surface"
     },
     {
@@ -21350,7 +21350,7 @@
       "source_location": "L69",
       "_origin": "ast",
       "id": "docs_ui_audit_a_tokens_components_ui_primitives_severity_high_effort_m",
-      "community": 32,
+      "community": 81,
       "norm_label": "a. tokens + `components/ui` primitives \u2014 severity high, effort m"
     },
     {
@@ -21360,7 +21360,7 @@
       "source_location": "L88",
       "_origin": "ast",
       "id": "docs_ui_audit_b_dialogs_10_add_edit_severity_high_effort_m",
-      "community": 32,
+      "community": 81,
       "norm_label": "b. dialogs (10 add*/edit*) \u2014 severity high, effort m"
     },
     {
@@ -21370,7 +21370,7 @@
       "source_location": "L122",
       "_origin": "ast",
       "id": "docs_ui_audit_c_detail_pages_severity_high_effort_m_l",
-      "community": 32,
+      "community": 81,
       "norm_label": "c. detail pages \u2014 severity high, effort m-l"
     },
     {
@@ -21380,7 +21380,7 @@
       "source_location": "L146",
       "_origin": "ast",
       "id": "docs_ui_audit_d_applayout_commandpalette_severity_med_effort_s",
-      "community": 32,
+      "community": 81,
       "norm_label": "d. applayout + commandpalette \u2014 severity med, effort s"
     },
     {
@@ -21390,7 +21390,7 @@
       "source_location": "L157",
       "_origin": "ast",
       "id": "docs_ui_audit_e_homepage_severity_low_effort_s",
-      "community": 32,
+      "community": 81,
       "norm_label": "e. homepage \u2014 severity low, effort s"
     },
     {
@@ -21400,7 +21400,7 @@
       "source_location": "L163",
       "_origin": "ast",
       "id": "docs_ui_audit_f_dashboard_preview_severity_low_effort_s",
-      "community": 32,
+      "community": 81,
       "norm_label": "f. dashboard preview \u2014 severity low, effort s"
     },
     {
@@ -21410,7 +21410,7 @@
       "source_location": "L169",
       "_origin": "ast",
       "id": "docs_ui_audit_g_login_wizard_severity_low_effort_s",
-      "community": 32,
+      "community": 81,
       "norm_label": "g. login + wizard \u2014 severity low, effort s"
     },
     {
@@ -21520,7 +21520,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "original_app_features",
-      "community": 0,
+      "community": 79,
       "norm_label": "original-app-features.md"
     },
     {
@@ -21550,7 +21550,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "original_app_features_2_core_functional_modules",
-      "community": 0,
+      "community": 70,
       "norm_label": "2. core functional modules"
     },
     {
@@ -21560,7 +21560,7 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "original_app_features_2_1_project_management_core",
-      "community": 0,
+      "community": 70,
       "norm_label": "2.1 project management (core)"
     },
     {
@@ -21570,7 +21570,7 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "original_app_features_2_2_milestones",
-      "community": 0,
+      "community": 70,
       "norm_label": "2.2 milestones"
     },
     {
@@ -21580,7 +21580,7 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "original_app_features_2_3_action_items_tasks",
-      "community": 0,
+      "community": 70,
       "norm_label": "2.3 action items (tasks)"
     },
     {
@@ -21590,7 +21590,7 @@
       "source_location": "L64",
       "_origin": "ast",
       "id": "original_app_features_2_4_issues",
-      "community": 0,
+      "community": 70,
       "norm_label": "2.4 issues"
     },
     {
@@ -21600,7 +21600,7 @@
       "source_location": "L70",
       "_origin": "ast",
       "id": "original_app_features_2_5_status_reports_status_updates",
-      "community": 0,
+      "community": 70,
       "norm_label": "2.5 status reports & status updates"
     },
     {
@@ -21610,7 +21610,7 @@
       "source_location": "L82",
       "_origin": "ast",
       "id": "original_app_features_2_6_resources_people",
-      "community": 0,
+      "community": 70,
       "norm_label": "2.6 resources & people"
     },
     {
@@ -21620,7 +21620,7 @@
       "source_location": "L90",
       "_origin": "ast",
       "id": "original_app_features_2_7_attachments_links_tags",
-      "community": 0,
+      "community": 70,
       "norm_label": "2.7 attachments, links & tags"
     },
     {
@@ -21630,7 +21630,7 @@
       "source_location": "L98",
       "_origin": "ast",
       "id": "original_app_features_2_8_search",
-      "community": 0,
+      "community": 70,
       "norm_label": "2.8 search"
     },
     {
@@ -73390,7 +73390,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L160",
+      "source_location": "L188",
       "weight": 1.0,
       "source": "readme",
       "target": "claude",
@@ -73490,7 +73490,37 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L161",
+      "source_location": "L185",
+      "weight": 1.0,
+      "source": "readme",
+      "target": "docs_fdd_alignment",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L186",
+      "weight": 1.0,
+      "source": "readme",
+      "target": "docs_formulas",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L187",
+      "weight": 1.0,
+      "source": "readme",
+      "target": "docs_ui_audit",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L189",
       "weight": 1.0,
       "source": "readme",
       "target": "original_app_features",
@@ -73500,7 +73530,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L43",
+      "source_location": "L51",
       "weight": 1.0,
       "source": "readme",
       "target": "readme_architecture",
@@ -73510,7 +73540,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L156",
+      "source_location": "L181",
       "weight": 1.0,
       "source": "readme",
       "target": "readme_more_docs",
@@ -73520,7 +73550,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L131",
+      "source_location": "L153",
       "weight": 1.0,
       "source": "readme",
       "target": "readme_quality",
@@ -73530,7 +73560,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L74",
+      "source_location": "L83",
       "weight": 1.0,
       "source": "readme",
       "target": "readme_quick_start",
@@ -73540,7 +73570,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L145",
+      "source_location": "L167",
       "weight": 1.0,
       "source": "readme",
       "target": "readme_roadmap",
@@ -73550,7 +73580,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L22",
+      "source_location": "L23",
       "weight": 1.0,
       "source": "readme",
       "target": "readme_what_s_inside",
@@ -73560,7 +73590,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L78",
+      "source_location": "L87",
       "weight": 1.0,
       "source": "readme_quick_start",
       "target": "readme_1_database_supabase_sql_editor",
@@ -73570,27 +73600,27 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L88",
+      "source_location": "L105",
       "weight": 1.0,
       "source": "readme_quick_start",
-      "target": "readme_2_backend_3000",
+      "target": "readme_2_run_both_halves",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L108",
+      "source_location": "L140",
       "weight": 1.0,
       "source": "readme_quick_start",
-      "target": "readme_3_frontend_5173",
+      "target": "readme_3_optional_demo_data",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L126",
+      "source_location": "L148",
       "weight": 1.0,
       "source": "readme_quick_start",
       "target": "readme_4_explore",

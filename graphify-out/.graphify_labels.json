@@ -87,8 +87,6 @@
   "85": "@nestjs/swagger",
   "86": "undici",
   "87": "@supabase/supabase-js",
-  "88": "class-validator",
-  "89": "@nestjs/schedule",
   "90": "Get",
   "92": "PeoplePage.tsx",
   "95": "ActionItemsPage.tsx",
