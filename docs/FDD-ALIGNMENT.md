@@ -251,6 +251,19 @@ Gotcha logged: the package's exports map hides its css — imported by direct
 node_modules path. Data = existing `projectsApi.list` + `GET /milestones`
 — zero backend work.
 
+**Bulk data load — ✅ SHIPPED 2026-08-11** (original-app roadmap; also the
+ready tool for OI-06, "migrate his spreadsheet"): `/import` wizard (Import
+button on the register) — Upload (file or paste, hand-rolled CSV parser in
+`lib/csv.ts`, 500-row cap) → Map columns (auto-matched, adjustable, ignored
+columns allowed) → Preview (per-row OK/warning/error; errors skip the row,
+unmatched lookup values warn and import empty, duplicate names warn) →
+Results (created/failed per row). Create-only by design; mass-update stays a
+separate future feature. Server is the authority: `POST /import/projects|
+milestones` re-resolves lookup names case-insensitively, coerces dates
+(yyyy-mm-dd or dd/mm/yyyy) and numbers, and inserts through the normal
+services so audit/history behave like manual creation (logic unit-tested; 36
+backend tests total).
+
 ## 6. Open questions for the supervisor (blockers marked ⛔)
 
 **Meeting outcomes 2026-08-11** (first supervisor sync since the assumed-FDD

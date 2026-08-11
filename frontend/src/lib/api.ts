@@ -998,6 +998,26 @@ export const registryApi = {
   people: () => apiGet<DirectoryPerson[]>('/people'),
 }
 
+export interface ImportRowResult {
+  row: number
+  name: string
+  status: 'created' | 'failed'
+  error?: string
+}
+
+export interface ImportSummary {
+  created: number
+  failed: number
+  results: ImportRowResult[]
+}
+
+export const importApi = {
+  projects: (rows: Array<Record<string, string>>) =>
+    apiPost<ImportSummary>('/import/projects', { rows }),
+  milestones: (rows: Array<Record<string, string>>) =>
+    apiPost<ImportSummary>('/import/milestones', { rows }),
+}
+
 export const kpisApi = {
   list: () => apiGet<Kpi[]>('/kpis'),
   add: (body: KpiInput) => apiPost<Kpi>('/kpis', body),

@@ -27,3 +27,43 @@ export function downloadCsv(filename: string, csv: string): void {
   a.remove()
   URL.revokeObjectURL(url)
 }
+
+/** Minimal CSV parser (quotes, escaped quotes, CRLF). Inverse of buildCsv. */
+export function parseCsv(text: string): string[][] {
+  const clean = text.replace(/^\uFEFF/, '')
+  const rows: string[][] = []
+  let row: string[] = []
+  let cell = ''
+  let inQuotes = false
+  for (let i = 0; i < clean.length; i++) {
+    const ch = clean[i]
+    if (inQuotes) {
+      if (ch === '"') {
+        if (clean[i + 1] === '"') {
+          cell += '"'
+          i++
+        } else {
+          inQuotes = false
+        }
+      } else {
+        cell += ch
+      }
+    } else if (ch === '"') {
+      inQuotes = true
+    } else if (ch === ',') {
+      row.push(cell)
+      cell = ''
+    } else if (ch === '\n' || ch === '\r') {
+      if (ch === '\r' && clean[i + 1] === '\n') i++
+      row.push(cell)
+      if (row.some((c) => c.trim() !== '')) rows.push(row)
+      row = []
+      cell = ''
+    } else {
+      cell += ch
+    }
+  }
+  row.push(cell)
+  if (row.some((c) => c.trim() !== '')) rows.push(row)
+  return rows
+}

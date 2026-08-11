@@ -148,7 +148,7 @@ history insert only when the owner set changed).
 
 **Not yet started (whole modules from the original):** dashboards & reporting (no charting
 library is installed — Gantt, timeline, calendar, heatmap all have no foundation) · email
-& notification subsystem · bulk data-load wizard ·
+& notification subsystem ·
 Project Templates / Merge / Validations / Tags / Tree view · preview-before-commit mass
 updates.
 
@@ -205,6 +205,9 @@ updates.
 - **Every NEW table must `enable row level security` at creation** (or re-run
   `db/enable_rls_lockdown.sql`). A table without RLS is publicly readable/writable through
   PostgREST with the anon key, and Supabase's Security Advisor will email about it.
+- **Bash heredoc scripts on this machine interpret backslash escapes** (`\n`
+  becomes a real newline before python sees it) — write multi-line scripts to a
+  file with the Write tool, or build backslashes with `chr(92)`.
 - **File/export sanity check:** every component's export name should match its filename.
 
 ## graphify

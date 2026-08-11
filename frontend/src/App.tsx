@@ -8,6 +8,7 @@ import { ActionItemsPage } from '@/pages/ActionItemsPage'
 import { PeoplePage } from '@/pages/PeoplePage'
 import { CategoriesPage } from '@/pages/CategoriesPage'
 import { TimelinePage } from '@/pages/TimelinePage'
+import { ImportPage } from '@/pages/ImportPage'
 import { CycleStatusReportPage } from '@/pages/reports/CycleStatusReportPage'
 import { ProjectProgressReportPage } from '@/pages/reports/ProjectProgressReportPage'
 import { LoginPage } from '@/pages/LoginPage'
@@ -40,6 +41,7 @@ function App() {
           <Route path="/people" element={<PeoplePage />} />
           <Route path="/categories" element={<CategoriesPage />} />
           <Route path="/timeline" element={<TimelinePage />} />
+          <Route path="/import" element={<ImportPage />} />
           <Route
             path="/reporting/cycle-status"
             element={<CycleStatusReportPage />}

@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import {
   CircleAlert,
   Download,
+  Upload,
   Flag,
   LayoutGrid,
   Lock,
@@ -497,6 +498,14 @@ export function HomePage() {
 
             <div className="min-w-0 flex-1">
               <div className="mb-4 flex items-center justify-end gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => navigate('/import')}
+                >
+                  <Upload className="h-4 w-4" />
+                  Import
+                </Button>
                 <Button
                   variant="outline"
                   size="sm"
