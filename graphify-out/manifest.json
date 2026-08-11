@@ -210,8 +210,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/lookups/lookups.service.ts": {
-    "mtime": 1786185778.922037,
-    "ast_hash": "4cc82948b3fe17f7d34089ddaf013ece",
+    "mtime": 1786443928.602204,
+    "ast_hash": "13e68ae8928a33adf73ad4b863d009d4",
     "semantic_hash": ""
   },
   "backend/src/modules/milestones/dto/create-milestone.dto.ts": {
@@ -275,13 +275,13 @@
     "semantic_hash": ""
   },
   "backend/src/modules/projects/dto/create-project.dto.ts": {
-    "mtime": 1785748406.2986355,
-    "ast_hash": "c5eb17669d78fce83f096b2aef0c2cf7",
+    "mtime": 1786443928.5951977,
+    "ast_hash": "aba68bbfa6e465a0f59f1700c797880f",
     "semantic_hash": ""
   },
   "backend/src/modules/projects/dto/update-project.dto.ts": {
-    "mtime": 1785748406.2996356,
-    "ast_hash": "37f9dc0f99b703bb3d56ce668f9a3203",
+    "mtime": 1786444776.251124,
+    "ast_hash": "3e9c7cf28d23fe9b5ded24e37701a71a",
     "semantic_hash": ""
   },
   "backend/src/modules/projects/projects.controller.ts": {
@@ -295,13 +295,13 @@
     "semantic_hash": ""
   },
   "backend/src/modules/projects/projects.repository.ts": {
-    "mtime": 1785931543.6648543,
-    "ast_hash": "3f6c082499727bf2b5ff1575ca611895",
+    "mtime": 1786443928.6002038,
+    "ast_hash": "440ef8befb46968a1c1fb4d9a667e142",
     "semantic_hash": ""
   },
   "backend/src/modules/projects/projects.service.ts": {
-    "mtime": 1785931543.666442,
-    "ast_hash": "cdfb506c86df4dc852314a97d7f4c18c",
+    "mtime": 1786443928.5972009,
+    "ast_hash": "e096b5b2fa832bbc2fd2b2871a239ec7",
     "semantic_hash": ""
   },
   "backend/src/modules/resources/dto/create-resource.dto.ts": {
@@ -500,8 +500,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/EditProjectDialog.tsx": {
-    "mtime": 1785748406.304641,
-    "ast_hash": "bc2dbead3a907bb45c866c0eec89b6ac",
+    "mtime": 1786443954.6055782,
+    "ast_hash": "b96dfa0bfa65ac052e96e72363045517",
     "semantic_hash": ""
   },
   "frontend/src/components/MiniCalendar.tsx": {
@@ -555,8 +555,8 @@
     "semantic_hash": ""
   },
   "frontend/src/lib/api.ts": {
-    "mtime": 1786440421.7520926,
-    "ast_hash": "125d0245f2ca9c014435a99498714813",
+    "mtime": 1786443928.6051998,
+    "ast_hash": "4c4ec3590d0d2371f4f8010a5270a064",
     "semantic_hash": ""
   },
   "frontend/src/lib/auth-context.tsx": {
@@ -590,8 +590,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/CreateProjectWizard.tsx": {
-    "mtime": 1785748406.3066356,
-    "ast_hash": "9bf8960fc041d39c603567ef5b76fb9a",
+    "mtime": 1786444224.6935174,
+    "ast_hash": "d1cb6e9134a5b1b70fb94d86f1f57569",
     "semantic_hash": ""
   },
   "frontend/src/pages/HomePage.tsx": {
@@ -610,8 +610,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ProjectDetailPage.tsx": {
-    "mtime": 1786107474.1486058,
-    "ast_hash": "8a6e38e1ad1bc405646b4ede1dae7897",
+    "mtime": 1786444224.8307488,
+    "ast_hash": "b36e28e9604ce8e4bf6317f291c6f466",
     "semantic_hash": ""
   },
   "frontend/src/pages/StatusReportDetailPage.tsx": {
@@ -630,8 +630,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/create-project/StepDetails.tsx": {
-    "mtime": 1785748406.3096354,
-    "ast_hash": "1ba56491f0f929d7abf39f4239fce760",
+    "mtime": 1786444224.7827504,
+    "ast_hash": "6fab0dd9b8b1266d92a1c080b0f531d7",
     "semantic_hash": ""
   },
   "frontend/src/pages/create-project/StepProject.tsx": {
@@ -665,8 +665,8 @@
     "semantic_hash": "2e092757eaa8553feb3c7bb53e6a8a3b"
   },
   "CLAUDE.md": {
-    "mtime": 1786440830.0601335,
-    "ast_hash": "467d6492707c8738ff7a467986c8ccdf",
+    "mtime": 1786444851.416795,
+    "ast_hash": "631b0e88bfbfcd7a0ef504a9391adafa",
     "semantic_hash": ""
   },
   "README.md": {
@@ -905,8 +905,8 @@
     "semantic_hash": ""
   },
   "docs/FDD-ALIGNMENT.md": {
-    "mtime": 1786440830.0125332,
-    "ast_hash": "f068b558de207e751cb938a25873a691",
+    "mtime": 1786444851.374261,
+    "ast_hash": "1e53bb568919a3182b4bd0f3cdb8dcd6",
     "semantic_hash": ""
   },
   "backend/db/fdd_project_fields.sql": {
@@ -1312,6 +1312,11 @@
   "frontend/src/pages/PeoplePage.tsx": {
     "mtime": 1786440494.5941505,
     "ast_hash": "8ee6765ccebf9d0bb195dcc2ba3c363c",
+    "semantic_hash": ""
+  },
+  "backend/scripts/seed-generic-lookups.mjs": {
+    "mtime": 1786444269.8153856,
+    "ast_hash": "e10f39c7f761d01207cf693b051bfd61",
     "semantic_hash": ""
   }
 }

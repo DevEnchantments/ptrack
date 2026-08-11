@@ -227,8 +227,26 @@ links). Filters are client-side at current scale; server params + pagination
 when volume demands.
 
 ## 6. Open questions for the supervisor (blockers marked ⛔)
+
+**Meeting outcomes 2026-08-11** (first supervisor sync since the assumed-FDD
+build): LOV questions ANSWERED — "use generic values, and make every dropdown
+an ID'd, admin-modifiable list" (= exactly the shipped Code Table
+Administration page). Actions taken same day: generic value sets seeded
+(`backend/scripts/seed-generic-lookups.mjs`) for Sectors (+Community Health,
+Communicable Diseases), Type (= `deal_types`, 5 generic values, dropdown now
+surfaced on wizard/edit/overview + `deal-types` in the lookups registry),
+Statuses (standard five stay active; Hot/Elevated/On Track/Complete/Dormant/
+Unknown DEACTIVATED, not deleted), Tiers (1/2/3 confirmed), Objectives (4
+generic) + Programs (2 per objective, cascade confirmed as built). Plan Year =
+fiscal year: dropdown FY24-FY30 (stores full year; legacy 2-digit values
+normalized on edit). External Stakeholders confirmed plain text chips —
+no lookup. Field-behavior questions (utilized budget, person fields, IDs,
+mandatory list, manual progress, at-risk): keep as plain editable fields
+as shipped; supervisor will send a finalized document — the 3.3.2 submission
+gate stays as shipped meanwhile. Flex Columns confirmed OUT (original-app
+only, not in FDD).
 1. (OI-02) Formulas — PROVISIONAL standard set adopted 2026-08-03 on Fares's authority and implemented (docs/FORMULAS.md F1-F4: calculated progress, planned progress, risk score+severity, at-risk suggestion). Sign-off still requested; KPI achievement % and data-quality index deliberately NOT implemented (policy numbers, not standards).
-2. ⛔ Sector vs our category; Tier values; Type vs deal_type; status value mappings (project + milestone buckets).
+2. ~~Sector vs our category; Tier values; Type vs deal_type; status value mappings~~ **ANSWERED 2026-08-11: generic admin-managed values (see meeting outcomes above); Type = deal_types.** Milestone status buckets unchanged (open/closed/NA).
    2b. **Discovery (2026-07-29):** Reference IDs in the FDD look like `1.1.1` — dotted numbering that plausibly encodes the strategy hierarchy (objective.program.project). If confirmed, Reference ID is derivable from the Strategic Program cascade, not free text.
 3. ⛔ (OI-03) Workflow routing: who reviews/validates/approves; return rules; cycle calendar (monthly? Fig 32 shows 12 cycles/yr).
    **Discovery (2026-07-29):** the Fig 10 approval-chain names are the Fig 11 person fields (Project Manager → REVIEW, PMO Partner → VALIDATE, Project Owner → APPROVE). Answering the person-fields question therefore also defines the workflow actors; the two must be designed together.

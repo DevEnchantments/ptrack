@@ -47,6 +47,7 @@ export interface CreateProjectForm {
   tier_id: string | null
   strategic_objective_id: string | null
   sector_id: string | null
+  deal_type_id: string | null
   new_sector: string
 }
 
@@ -98,6 +99,7 @@ export function CreateProjectWizard() {
     tier_id: null,
     strategic_objective_id: null,
     sector_id: null,
+    deal_type_id: null,
     new_sector: '',
   }))
   const [errors, setErrors] = useState<Record<string, string>>({})
@@ -220,6 +222,7 @@ export function CreateProjectWizard() {
         ? Number(form.utilized_budget)
         : undefined,
       tier_id: form.tier_id ?? undefined,
+      deal_type_id: form.deal_type_id ?? undefined,
       sector_id: sectorId ?? undefined,
       sponsor: form.sponsor.trim() || undefined,
       target_end_date: form.target_end_date || undefined,

@@ -156,6 +156,7 @@ export class ProjectsRepository {
         status:project_statuses ( name ),
         size:project_sizes ( name ),
         category:project_categories ( name ),
+        deal_type:deal_types ( name ),
         tier:tiers ( name ),
         strategic_objective:strategic_objectives ( name ),
         sector:sectors ( name ),

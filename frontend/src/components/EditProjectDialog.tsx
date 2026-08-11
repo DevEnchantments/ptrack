@@ -50,6 +50,8 @@ function personFromProfile(
 const NEW_CATEGORY = '__new_category__'
 
 
+const FY_YEARS = [2024, 2025, 2026, 2027, 2028, 2029, 2030]
+
 interface Props {
   project: ProjectDetail
   open: boolean
@@ -104,7 +106,17 @@ export function EditProjectDialog({
   const [objectiveId, setObjectiveId] = useState<string | null>(null)
   const [programId, setProgramId] = useState<string | null>(null)
   const [sectorId, setSectorId] = useState<string | null>(null)
+  const [dealTypeId, setDealTypeId] = useState<string | null>(null)
+  const [dealTypes, setDealTypes] = useState<Lookup[]>([])
   const [newSector, setNewSector] = useState('')
+
+  useEffect(() => {
+    if (!open) return
+    lookupsApi
+      .list('deal-types')
+      .then(setDealTypes)
+      .catch(() => toast.error('Could not load types.'))
+  }, [open])
   const [stakeholders, setStakeholders] = useState<string[]>([])
   const [stakeholderDraft, setStakeholderDraft] = useState('')
   const [manualProgress, setManualProgress] = useState('')
@@ -172,7 +184,16 @@ export function EditProjectDialog({
       setSponsor(project.sponsor ?? '')
       setReferenceId(project.reference_id ?? '')
       setProjectNumber(project.project_number ?? '')
-      setPlanYear(project.plan_year != null ? String(project.plan_year) : '')
+      setPlanYear(
+        project.plan_year != null
+          ? String(
+              project.plan_year < 100
+                ? project.plan_year + 2000
+                : project.plan_year,
+            )
+          : '',
+      )
+      setDealTypeId(project.deal_type_id)
       setFinanceCode(project.finance_code ?? '')
       setTargetGroup(project.target_group ?? '')
       setInternalStakeholder(project.internal_stakeholder ?? '')
@@ -313,6 +334,7 @@ export function EditProjectDialog({
         approved_budget: approvedBudget.trim() ? Number(approvedBudget) : null,
         utilized_budget: utilizedBudget.trim() ? Number(utilizedBudget) : null,
         tier_id: tierId,
+        deal_type_id: dealTypeId,
         strategic_objective_id: objectiveId,
         manual_progress: manualProgress.trim() ? Number(manualProgress) : null,
         at_risk: atRisk,
@@ -395,13 +417,28 @@ export function EditProjectDialog({
               <Label>
                 Plan Year <span className="text-destructive">*</span>
               </Label>
-              <Input
-                type="number"
+              <Select
+                items={FY_YEARS.map((y) => ({
+                  label: `FY${String(y % 100).padStart(2, '0')}`,
+                  value: String(y),
+                }))}
                 value={planYear}
-                placeholder="e.g. 26"
-                onChange={(e) => setPlanYear(e.target.value)}
-                aria-invalid={fieldErrors.planYear ? true : undefined}
-              />
+                onValueChange={(v) => setPlanYear(v ?? '')}
+              >
+                <SelectTrigger
+                  className="w-full"
+                  aria-invalid={fieldErrors.planYear ? true : undefined}
+                >
+                  <SelectValue placeholder="- Select -" />
+                </SelectTrigger>
+                <SelectContent>
+                  {FY_YEARS.map((y) => (
+                    <SelectItem key={y} value={String(y)}>
+                      {`FY${String(y % 100).padStart(2, '0')}`}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
               <FieldError message={fieldErrors.planYear} />
             </div>
           </div>
@@ -500,6 +537,30 @@ export function EditProjectDialog({
                   {objectives.map((o) => (
                     <SelectItem key={o.id} value={o.id}>
                       {o.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <Label>Type</Label>
+              <Select
+                items={[
+                  { label: '- None -', value: NONE },
+                  ...dealTypes.map((t) => ({ label: t.name, value: t.id })),
+                ]}
+                value={dealTypeId ?? NONE}
+                onValueChange={(v) => setDealTypeId(v === NONE ? null : v)}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="- None -" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value={NONE}>- None -</SelectItem>
+                  {dealTypes.map((t) => (
+                    <SelectItem key={t.id} value={t.id}>
+                      {t.name}
                     </SelectItem>
                   ))}
                 </SelectContent>

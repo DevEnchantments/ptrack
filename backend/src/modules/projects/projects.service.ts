@@ -227,6 +227,8 @@ export class ProjectsService {
         ? dto.external_stakeholders
         : null;
     if (dto.sector_id !== undefined) patch.sector_id = dto.sector_id ?? null;
+    if (dto.deal_type_id !== undefined)
+      patch.deal_type_id = dto.deal_type_id ?? null;
     if (dto.strategic_program_id !== undefined)
       patch.strategic_program_id = dto.strategic_program_id ?? null;
     if (dto.sponsor !== undefined) patch.sponsor = dto.sponsor?.trim() || null;

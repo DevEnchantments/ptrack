@@ -11,6 +11,7 @@ const ALLOWED: Record<string, string> = {
   'project-statuses': 'project_statuses',
   'project-sizes': 'project_sizes',
   'project-categories': 'project_categories',
+  'deal-types': 'deal_types',
   'involvement-levels': 'involvement_levels',
   'action-item-types': 'action_item_types',
   'resource-types': 'resource_types',

@@ -229,6 +229,14 @@ export class UpdateProjectDto {
 
   @ApiPropertyOptional({
     format: 'uuid',
+    description: 'Project type. Fetch from `GET /lookups/deal-types`.',
+  })
+  @IsOptional()
+  @IsUUID()
+  deal_type_id?: string | null;
+
+  @ApiPropertyOptional({
+    format: 'uuid',
     description:
       'Cascades under the strategic objective. Fetch from `GET /lookups/strategic-programs`.',
   })

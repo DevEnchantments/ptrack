@@ -789,6 +789,7 @@ export function ProjectDetailPage() {
             />
             <Field label="Sponsor" value={project.sponsor} />
             <Field label="Project Size" value={project.size?.name ?? null} />
+            <Field label="Type" value={project.deal_type?.name ?? null} />
             <Field label="Reference ID" value={project.reference_id} />
             <Field label="Project Number" value={project.project_number} />
             <Field label="Plan Year" value={project.plan_year} />

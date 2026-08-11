@@ -27,6 +27,7 @@ export function StepDetails({ form, errors, update }: Props) {
   const [sizes, setSizes] = useState<Lookup[]>([])
   const [tiers, setTiers] = useState<Lookup[]>([])
   const [sectors, setSectors] = useState<Lookup[]>([])
+  const [dealTypes, setDealTypes] = useState<Lookup[]>([])
   const [objectives, setObjectives] = useState<Lookup[]>([])
 
   useEffect(() => {
@@ -34,10 +35,12 @@ export function StepDetails({ form, errors, update }: Props) {
     lookupsApi.list('project-sizes').then(setSizes).catch(() => toast.error('Could not load project sizes.'))
     lookupsApi.list('tiers').then(setTiers).catch(() => toast.error('Could not load tiers.'))
     lookupsApi.list('sectors').then(setSectors).catch(() => toast.error('Could not load sectors.'))
+    lookupsApi.list('deal-types').then(setDealTypes).catch(() => toast.error('Could not load types.'))
     lookupsApi.list('strategic-objectives').then(setObjectives).catch(() => toast.error('Could not load strategic objectives.'))
   }, [])
 
-  const NONE = '__none__'
+  const FY_YEARS = [2024, 2025, 2026, 2027, 2028, 2029, 2030]
+const NONE = '__none__'
 
   return (
     <div className="flex flex-col gap-6">
@@ -175,14 +178,28 @@ export function StepDetails({ form, errors, update }: Props) {
           <Label htmlFor="plan_year">
             Plan Year <span className="text-destructive">*</span>
           </Label>
-          <Input
-            id="plan_year"
-            type="number"
+          <Select
+            items={FY_YEARS.map((y) => ({
+              label: `FY${String(y % 100).padStart(2, '0')}`,
+              value: String(y),
+            }))}
             value={form.plan_year}
-            placeholder="e.g. 26"
-            onChange={(e) => update({ plan_year: e.target.value })}
-            aria-invalid={errors.plan_year ? true : undefined}
-          />
+            onValueChange={(v) => update({ plan_year: v ?? '' })}
+          >
+            <SelectTrigger
+              className="w-full"
+              aria-invalid={errors.plan_year ? true : undefined}
+            >
+              <SelectValue placeholder="- Select -" />
+            </SelectTrigger>
+            <SelectContent>
+              {FY_YEARS.map((y) => (
+                <SelectItem key={y} value={String(y)}>
+                  {`FY${String(y % 100).padStart(2, '0')}`}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
           {errors.plan_year && (
             <p className="text-sm text-destructive">{errors.plan_year}</p>
           )}
@@ -190,6 +207,29 @@ export function StepDetails({ form, errors, update }: Props) {
       </div>
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+        <div className="flex flex-col gap-2">
+          <Label>Type</Label>
+          <Select
+            items={[
+              { label: '- None -', value: NONE },
+              ...dealTypes.map((t) => ({ label: t.name, value: t.id })),
+            ]}
+            value={form.deal_type_id ?? NONE}
+            onValueChange={(v) => update({ deal_type_id: v === NONE ? null : v })}
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="- None -" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value={NONE}>- None -</SelectItem>
+              {dealTypes.map((t) => (
+                <SelectItem key={t.id} value={t.id}>
+                  {t.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
         <div className="flex flex-col gap-2">
           <Label>Strategic Objective</Label>
           <Select

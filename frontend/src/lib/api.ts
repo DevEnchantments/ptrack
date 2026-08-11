@@ -98,6 +98,7 @@ export interface Project {
   external_stakeholders: string[] | null
   sector_id: string | null
   strategic_program_id: string | null
+  deal_type_id: string | null
 }
 
 export interface ProjectMemberDetail {
@@ -124,6 +125,7 @@ export interface ProjectDetail extends Project {
   status: { name: string } | null
   size: { name: string } | null
   category: { name: string } | null
+  deal_type: { name: string } | null
   tier: { name: string } | null
   strategic_objective: { name: string } | null
   sector: { name: string } | null
