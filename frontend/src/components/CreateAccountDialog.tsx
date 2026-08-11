@@ -4,6 +4,7 @@ import { usersApi } from '@/lib/api'
 import {
   EMAIL_RE,
   inviteDraft,
+  isPocEmail,
   pocEmail,
   tempPassword,
 } from '@/lib/provision'
@@ -88,11 +89,16 @@ export function CreateAccountDialog({
           projectName,
         }),
       )
-      setStep('invite')
       toast.success(
         `Account created; ${result.claimed} pending membership${result.claimed === 1 ? '' : 's'} linked.`,
       )
       onProvisioned()
+      if (isPocEmail(cleanEmail)) {
+        // Placeholder account: nothing to invite, nobody to hand a password.
+        onOpenChange(false)
+      } else {
+        setStep('invite')
+      }
     } catch (e) {
       setError((e as Error).message)
     } finally {
@@ -108,6 +114,8 @@ export function CreateAccountDialog({
       toast.error('Could not copy — select and copy manually.')
     }
   }
+
+  const isPoc = isPocEmail(email)
 
   const mailtoHref = `mailto:${encodeURIComponent(email.trim())}?subject=${encodeURIComponent(
     projectName
@@ -161,6 +169,7 @@ export function CreateAccountDialog({
                 PoC emails use a fake domain that can never receive real mail.
               </p>
             </div>
+            {!isPoc && (
             <div className="flex flex-col gap-2">
               <Label>Temporary Password</Label>
               <div className="flex items-center gap-2">
@@ -188,6 +197,13 @@ export function CreateAccountDialog({
                 Shown once — copy it or use the invitation on the next step.
               </p>
             </div>
+            )}
+            {isPoc && (
+              <p className="text-xs text-muted-foreground">
+                PoC account: a random password is set silently — nobody signs
+                in as a placeholder.
+              </p>
+            )}
             {error && (
               <p className="hint-in text-sm font-medium text-destructive">
                 {error}

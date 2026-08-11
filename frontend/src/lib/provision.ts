@@ -3,6 +3,13 @@
 
 export const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
+export const POC_DOMAIN = '@poc.ptrack.local'
+
+/** PoC placeholder accounts: fake domain, nobody logs in or gets mail. */
+export function isPocEmail(email: string): boolean {
+  return email.trim().toLowerCase().endsWith(POC_DOMAIN)
+}
+
 /** Clearly-fake unique email for proof-of-concept accounts (emails must be
  *  unique in Supabase Auth; the .local TLD can never receive real mail). */
 export function pocEmail(name: string): string {
