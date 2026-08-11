@@ -92,18 +92,7 @@
   "90": "Injectable",
   "91": "@types/node",
   "92": "nest-cli.json",
-  "93": "WeightEntryDto",
   "94": "kpis.repository.ts",
-  "95": "RisksModule",
-  "96": "moduleFileExtensions",
-  "97": "DatabaseModule",
-  "98": "jose",
-  "99": "Delete",
   "100": "@fontsource-variable/inter",
-  "101": "@eslint/js",
-  "102": "Get",
-  "103": "Param",
-  "104": "Post",
-  "105": "Query",
-  "106": "Injectable"
+  "101": "@eslint/js"
 }
