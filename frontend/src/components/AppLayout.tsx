@@ -38,7 +38,7 @@ const NAV_ITEMS: Array<{
   { label: 'Milestones', icon: Flag, to: '/milestones' },
   { label: 'Action Items', icon: ListChecks, to: '/action-items' },
   { label: 'People', icon: Users, to: '/people' },
-  { label: 'Timeline', icon: Clock },
+  { label: 'Timeline', icon: Clock, to: '/timeline' },
   { label: 'Reporting', icon: BarChart3, to: '/reporting' },
   { label: 'AI Assistant', icon: Bot },
   { label: 'Administration', icon: Settings, to: '/admin/code-tables' },

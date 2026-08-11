@@ -236,6 +236,17 @@ chip-click filtering, wired to `?tag=` like `?category=`. Deliberately not
 rendered: links rows (gold flag carries their emphasis) and the Fig-1 grid
 table (register-column parity).
 
+**Portfolio Timeline — ✅ SHIPPED 2026-08-11** (`/timeline`, sidebar stub
+retired; AI Assistant is the last stub): hand-rolled Gantt — the Phase-2
+charting-library decision stays open, nothing new depends on one. Project
+bars (status-token colors, calculated-progress fill, actual-end override for
+finished projects) + milestone diamonds (done green / open outlined / overdue
+red, majors larger) on a month-tick axis with a Today line (quarter ticks
+when the span exceeds ~18 months). Read-only by design: bars and diamonds
+navigate; no drag-rescheduling. Active/Done/All scope + name filter; chart
+scrolls in its own container; undated projects counted, not drawn. Data =
+existing `projectsApi.list` + `GET /milestones` — zero backend work.
+
 ## 6. Open questions for the supervisor (blockers marked ⛔)
 
 **Meeting outcomes 2026-08-11** (first supervisor sync since the assumed-FDD

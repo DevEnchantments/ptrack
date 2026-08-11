@@ -100,6 +100,7 @@ export interface Project {
   strategic_program_id: string | null
   deal_type_id: string | null
   tags: string[] | null
+  actual_end_date: string | null
 }
 
 export interface ProjectMemberDetail {

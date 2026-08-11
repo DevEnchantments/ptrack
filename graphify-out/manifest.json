@@ -445,8 +445,8 @@
     "semantic_hash": ""
   },
   "frontend/src/App.tsx": {
-    "mtime": 1786440421.8079743,
-    "ast_hash": "4fdbf0c8b3685bf729d4f336a12fe1f2",
+    "mtime": 1786447637.7410753,
+    "ast_hash": "d45aaac9605d2f2f80d012c8d3454d21",
     "semantic_hash": ""
   },
   "frontend/src/components/AddActionItemDialog.tsx": {
@@ -555,8 +555,8 @@
     "semantic_hash": ""
   },
   "frontend/src/lib/api.ts": {
-    "mtime": 1786446412.2559922,
-    "ast_hash": "aa12ba1cbb71d8736fe94db2f937808e",
+    "mtime": 1786447637.7390769,
+    "ast_hash": "cc829301c314f7fda71287ac767004b9",
     "semantic_hash": ""
   },
   "frontend/src/lib/auth-context.tsx": {
@@ -855,8 +855,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/AppLayout.tsx": {
-    "mtime": 1786440421.8701484,
-    "ast_hash": "cf09018cd6831b04b89857fa96b4c1e2",
+    "mtime": 1786447637.74341,
+    "ast_hash": "da4ee3ab38dae38a6af0b3a91659ca3a",
     "semantic_hash": ""
   },
   "frontend/src/pages/DashboardPage.tsx": {
@@ -905,8 +905,8 @@
     "semantic_hash": ""
   },
   "docs/FDD-ALIGNMENT.md": {
-    "mtime": 1786446583.395725,
-    "ast_hash": "95d7664bb864063bb56c1b5640a6ae73",
+    "mtime": 1786447996.1795928,
+    "ast_hash": "a27572b69824b18a0d8221e7b7562fe6",
     "semantic_hash": ""
   },
   "backend/db/fdd_project_fields.sql": {
@@ -1322,6 +1322,11 @@
   "frontend/src/components/TagChips.tsx": {
     "mtime": 1786445664.7026067,
     "ast_hash": "3698ae75ff44b51008fd617584093b85",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/TimelinePage.tsx": {
+    "mtime": 1786447675.546949,
+    "ast_hash": "9d8eba2ae735a3e8f2a65e45c17be458",
     "semantic_hash": ""
   }
 }
