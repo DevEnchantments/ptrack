@@ -149,7 +149,7 @@ history insert only when the owner set changed).
 **Not yet started (whole modules from the original):** dashboards & reporting (no charting
 library is installed — Gantt, timeline, calendar, heatmap all have no foundation) · email
 & notification subsystem · Flex Columns (the no-code custom-field engine — decide on this
-early, it is the only one that would retro-shape the schema) · Search + saved searches · bulk data-load wizard ·
+early, it is the only one that would retro-shape the schema) · bulk data-load wizard ·
 Project Templates / Merge / Validations / Tags / Tree view · preview-before-commit mass
 updates.
 

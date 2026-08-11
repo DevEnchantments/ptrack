@@ -17,6 +17,7 @@ import { RisksModule } from './modules/risks/risks.module';
 import { SubmissionsModule } from './modules/submissions/submissions.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { NotificationsModule } from './modules/notifications/notifications.module';
+import { SearchModule } from './modules/search/search.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { KpisModule } from './modules/kpis/kpis.module';
 import { UpdatesModule } from './modules/updates/updates.module';
@@ -43,6 +44,7 @@ import { AppService } from './app.service';
     SubmissionsModule,
     ScheduleModule.forRoot(),
     NotificationsModule,
+    SearchModule,
     DashboardModule,
     KpisModule,
     UpdatesModule,

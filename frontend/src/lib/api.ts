@@ -904,6 +904,41 @@ export const adminLookupsApi = {
   ) => apiPatch<AdminLookupRow>(`/lookups/${name}/values/${id}`, body),
 }
 
+export type SearchKind =
+  | 'project'
+  | 'milestone'
+  | 'action_item'
+  | 'issue'
+  | 'risk'
+  | 'kpi'
+
+export interface SearchHit {
+  kind: SearchKind
+  id: string
+  label: string
+  project_id: string | null
+  project_name: string | null
+}
+
+export interface SavedSearch {
+  id: string
+  name: string
+  query: string
+  created_at: string
+}
+
+export const searchApi = {
+  query: (q: string) =>
+    apiGet<{ query: string; hits: SearchHit[] }>(
+      `/search?q=${encodeURIComponent(q)}`,
+    ),
+  saved: () => apiGet<SavedSearch[]>('/search/saved'),
+  save: (name: string, query: string) =>
+    apiPost<SavedSearch>('/search/saved', { name, query }),
+  removeSaved: (savedSearchId: string) =>
+    apiDelete<{ deleted: boolean }>(`/search/saved/${savedSearchId}`),
+}
+
 export const kpisApi = {
   list: () => apiGet<Kpi[]>('/kpis'),
   add: (body: KpiInput) => apiPost<Kpi>('/kpis', body),

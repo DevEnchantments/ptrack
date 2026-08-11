@@ -205,6 +205,16 @@ drive app behavior: status `color`, issue-level `rank`, role
 `POST/PATCH /lookups/:name/values[...]`, cache-invalidating. ASSUMED: open to
 any signed-in user until the security phase adds role gating (FR-15).
 
+**Global search + saved searches — ✅ SHIPPED 2026-08-11** (original-app
+roadmap, supervisor-independent): the Ctrl+K palette is now server-backed —
+`GET /search?q=` runs parallel case-insensitive substring matches across
+projects (name/description/number/reference), milestones, action items,
+issues, risks, and KPIs (8 hits per kind), each result deep-linking to its
+page. Saved searches are per-user (`saved_searches` table,
+`backend/db/search_saved.sql`, RLS enabled): shown in the empty palette,
+re-run on click, saved via a "Save this search" row. Deliberately NOT
+full-text over update/comment bodies (one-line extension later if wanted).
+
 ## 6. Open questions for the supervisor (blockers marked ⛔)
 1. (OI-02) Formulas — PROVISIONAL standard set adopted 2026-08-03 on Fares's authority and implemented (docs/FORMULAS.md F1-F4: calculated progress, planned progress, risk score+severity, at-risk suggestion). Sign-off still requested; KPI achievement % and data-quality index deliberately NOT implemented (policy numbers, not standards).
 2. ⛔ Sector vs our category; Tier values; Type vs deal_type; status value mappings (project + milestone buckets).
