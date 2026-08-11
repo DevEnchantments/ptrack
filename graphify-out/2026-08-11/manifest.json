@@ -555,8 +555,8 @@
     "semantic_hash": ""
   },
   "frontend/src/lib/api.ts": {
-    "mtime": 1786443928.6051998,
-    "ast_hash": "4c4ec3590d0d2371f4f8010a5270a064",
+    "mtime": 1786446412.2559922,
+    "ast_hash": "aa12ba1cbb71d8736fe94db2f937808e",
     "semantic_hash": ""
   },
   "frontend/src/lib/auth-context.tsx": {
@@ -580,8 +580,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ActionItemDetailPage.tsx": {
-    "mtime": 1786107731.70543,
-    "ast_hash": "fff91402270a20e9433445f8ed8efbe2",
+    "mtime": 1786445744.9002714,
+    "ast_hash": "6866e674f2f102736c6ec937819e6d12",
     "semantic_hash": ""
   },
   "frontend/src/pages/AttachmentDetailPage.tsx": {
@@ -595,8 +595,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/HomePage.tsx": {
-    "mtime": 1786440421.7551026,
-    "ast_hash": "321c6cf245acef67c77d169ae94af60b",
+    "mtime": 1786445744.8912728,
+    "ast_hash": "9bd714a12e451bff98512248454a424a",
     "semantic_hash": ""
   },
   "frontend/src/pages/LoginPage.tsx": {
@@ -605,13 +605,13 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/MilestoneDetailPage.tsx": {
-    "mtime": 1786107731.7094305,
-    "ast_hash": "7cc39c43ac5fb5b89128e84b75d31910",
+    "mtime": 1786445744.8962684,
+    "ast_hash": "a839025867cfc49cbccc3b3760bf892b",
     "semantic_hash": ""
   },
   "frontend/src/pages/ProjectDetailPage.tsx": {
-    "mtime": 1786444224.8307488,
-    "ast_hash": "b36e28e9604ce8e4bf6317f291c6f466",
+    "mtime": 1786445744.8942695,
+    "ast_hash": "a2d38a3cecd14334fc5d91ff734c16c5",
     "semantic_hash": ""
   },
   "frontend/src/pages/StatusReportDetailPage.tsx": {
@@ -905,8 +905,8 @@
     "semantic_hash": ""
   },
   "docs/FDD-ALIGNMENT.md": {
-    "mtime": 1786444851.374261,
-    "ast_hash": "1e53bb568919a3182b4bd0f3cdb8dcd6",
+    "mtime": 1786446583.395725,
+    "ast_hash": "95d7664bb864063bb56c1b5640a6ae73",
     "semantic_hash": ""
   },
   "backend/db/fdd_project_fields.sql": {
@@ -1290,13 +1290,13 @@
     "semantic_hash": ""
   },
   "backend/src/modules/registry/registry.service.ts": {
-    "mtime": 1786440310.644472,
-    "ast_hash": "6fea0c46a5396f19fe94d0bc70ebda10",
+    "mtime": 1786445744.886268,
+    "ast_hash": "69f13fbed13088469964d3797920e970",
     "semantic_hash": ""
   },
   "frontend/src/pages/ActionItemsPage.tsx": {
-    "mtime": 1786440477.8758605,
-    "ast_hash": "087e41f078dac69b0cf7968e21fefafa",
+    "mtime": 1786445744.9042728,
+    "ast_hash": "f25d4235379fc05b82d85e07b3cccd06",
     "semantic_hash": ""
   },
   "frontend/src/pages/CategoriesPage.tsx": {
@@ -1305,8 +1305,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/MilestonesPage.tsx": {
-    "mtime": 1786440451.237878,
-    "ast_hash": "c70a35e9ee5a4320a40eba9bebd82855",
+    "mtime": 1786445744.9022756,
+    "ast_hash": "a19bddb7baf7ee2391ccf4714148add4",
     "semantic_hash": ""
   },
   "frontend/src/pages/PeoplePage.tsx": {
@@ -1317,6 +1317,11 @@
   "backend/scripts/seed-generic-lookups.mjs": {
     "mtime": 1786444269.8153856,
     "ast_hash": "e10f39c7f761d01207cf693b051bfd61",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/TagChips.tsx": {
+    "mtime": 1786445664.7026067,
+    "ast_hash": "3698ae75ff44b51008fd617584093b85",
     "semantic_hash": ""
   }
 }
