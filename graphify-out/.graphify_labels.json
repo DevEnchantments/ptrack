@@ -94,5 +94,18 @@
   "92": "nest-cli.json",
   "93": "@nestjs/platform-express",
   "94": "kpis.repository.ts",
-  "100": "@fontsource-variable/inter"
+  "95": "AddPersonDialog.tsx",
+  "96": "RecordHistory.tsx",
+  "97": "nest-cli.json",
+  "98": ".update",
+  "99": "formulas.ts",
+  "100": "@fontsource-variable/inter",
+  "101": "moduleFileExtensions",
+  "102": "SectionNav.tsx",
+  "103": "jose",
+  "104": "@nestjs/platform-express",
+  "105": "@eslint/js",
+  "106": "ApiProperty",
+  "107": "Type",
+  "108": "ValidateNested"
 }

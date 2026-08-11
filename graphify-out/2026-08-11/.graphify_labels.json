@@ -94,9 +94,5 @@
   "92": "nest-cli.json",
   "93": "@nestjs/platform-express",
   "94": "kpis.repository.ts",
-  "95": "Controller",
-  "96": "Get",
-  "97": "Injectable",
-  "100": "@fontsource-variable/inter",
-  "101": "@eslint/js"
+  "100": "@fontsource-variable/inter"
 }
