@@ -4,6 +4,7 @@ import { registryApi, type GlobalActionItem } from '@/lib/api'
 import { useAuth } from '@/lib/auth-context'
 import { usePageTitle } from '@/lib/use-page-title'
 import { StatusPill } from '@/components/StatusPill'
+import { TagChips } from '@/components/TagChips'
 import { Input } from '@/components/ui/input'
 
 const STATUS_LABELS: Record<string, string> = {
@@ -58,7 +59,8 @@ export function ActionItemsPage() {
         (!mineOnly || a.owners.some((o) => o.user_id === user?.id)) &&
         (q === '' ||
           a.title.toLowerCase().includes(q) ||
-          (a.project?.name ?? '').toLowerCase().includes(q)),
+          (a.project?.name ?? '').toLowerCase().includes(q) ||
+          (a.tags ?? []).some((t) => t.toLowerCase().includes(q))),
     )
   }, [rows, search, status, mineOnly, overdueOnly, user?.id])
 
@@ -167,6 +169,7 @@ export function ActionItemsPage() {
                       <span className="min-w-0 flex-1 truncate text-sm font-medium">
                         {a.title}
                       </span>
+                      <TagChips tags={a.tags} />
                       {a.owners.length > 0 && (
                         <span className="hidden max-w-48 truncate text-xs text-muted-foreground md:inline">
                           {ownerNames(a)}

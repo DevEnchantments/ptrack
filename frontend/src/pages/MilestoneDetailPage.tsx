@@ -1,4 +1,5 @@
 import { usePageTitle } from '@/lib/use-page-title'
+import { TagChips } from '@/components/TagChips'
 import { toast } from '@/lib/toast'
 import { useCallback, useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
@@ -256,7 +257,7 @@ export function MilestoneDetailPage() {
           <Field label="Outcome" value={milestone.outcome?.name ?? null} />
           <Field
             label="Tags"
-            value={milestone.tags?.length ? milestone.tags.join(', ') : null}
+            value={milestone.tags?.length ? <TagChips tags={milestone.tags} /> : null}
           />
           <Field label="Owner" value={ownerLabel(milestone)} />
           <Field label="Major Milestone" value={milestone.is_major ? 'Yes' : 'No'} />

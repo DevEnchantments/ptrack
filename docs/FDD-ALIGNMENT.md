@@ -226,6 +226,16 @@ memberships/roles), `/categories` (count cards drilling into the register via
 links). Filters are client-side at current scale; server params + pagination
 when volume demands.
 
+**Tags — ✅ SHIPPED 2026-08-11** (write side existed since Phase 1; this wave
+added the read side): shared `TagChips` component renders tags on register
+cards, project-page milestone/action-item rows, the updates feed, overview +
+milestone/action-item detail fields (chips instead of joined text), and the
+global Milestones/Action Items registers (tags also match their text
+filters). Register gains a Tag filter (distinct tags of loaded projects) +
+chip-click filtering, wired to `?tag=` like `?category=`. Deliberately not
+rendered: links rows (gold flag carries their emphasis) and the Fig-1 grid
+table (register-column parity).
+
 ## 6. Open questions for the supervisor (blockers marked ⛔)
 
 **Meeting outcomes 2026-08-11** (first supervisor sync since the assumed-FDD

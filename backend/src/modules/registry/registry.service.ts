@@ -12,6 +12,7 @@ export interface GlobalMilestone {
   weightage: number | null;
   percent_complete: number | null;
   completed_date: string | null;
+  tags: string[] | null;
   project: { name: string } | null;
   owner: { full_name: string | null; email: string | null } | null;
   outcome: { name: string } | null;
@@ -23,6 +24,7 @@ export interface GlobalActionItem {
   title: string;
   due_date: string | null;
   status: string;
+  tags: string[] | null;
   project: { name: string } | null;
   type: { name: string } | null;
   owners: Array<{
@@ -75,7 +77,7 @@ export class RegistryService {
       .from('milestones')
       .select(
         `id, project_id, name, due_date, status, is_major, weightage,
-         percent_complete, completed_date,
+         percent_complete, completed_date, tags,
          project:projects ( name ),
          owner:profiles!owner_id ( full_name, email ),
          outcome:program_outcomes ( name )`,
@@ -89,7 +91,7 @@ export class RegistryService {
     const { data, error } = await this.db.client
       .from('action_items')
       .select(
-        `id, project_id, title, due_date, status,
+        `id, project_id, title, due_date, status, tags,
          project:projects ( name ),
          type:action_item_types ( name ),
          owners:action_item_owners (

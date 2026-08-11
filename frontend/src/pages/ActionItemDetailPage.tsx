@@ -1,4 +1,5 @@
 import { usePageTitle } from '@/lib/use-page-title'
+import { TagChips } from '@/components/TagChips'
 import { InitialsAvatar } from '@/components/InitialsAvatar'
 import { toast } from '@/lib/toast'
 import { useCallback, useEffect, useState } from 'react'
@@ -210,7 +211,7 @@ export function ActionItemDetailPage() {
           <Field label="Description" value={item.description} />
           <Field
             label="Tags"
-            value={item.tags?.length ? item.tags.join(', ') : null}
+            value={item.tags?.length ? <TagChips tags={item.tags} /> : null}
           />
         </dl>
 

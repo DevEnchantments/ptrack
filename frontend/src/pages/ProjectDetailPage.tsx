@@ -48,6 +48,7 @@ import { AddPersonDialog } from '@/components/AddPersonDialog'
 import { AddMilestoneDialog } from '@/components/AddMilestoneDialog'
 import { AdjustWeightsDialog } from '@/components/AdjustWeightsDialog'
 import { EditOutcomeDialog } from '@/components/EditOutcomeDialog'
+import { TagChips } from '@/components/TagChips'
 import { ProjectOverviewCards } from '@/components/ProjectOverviewCards'
 import { WorkflowPanel } from '@/components/WorkflowPanel'
 import { AddActionItemDialog } from '@/components/AddActionItemDialog'
@@ -880,7 +881,9 @@ export function ProjectDetailPage() {
             />
             <Field
               label="Tags"
-              value={project.tags?.length ? project.tags.join(', ') : null}
+              value={
+                project.tags?.length ? <TagChips tags={project.tags} /> : null
+              }
             />
             <Field label="Primary URL" value={primaryUrlValue} />
             <Field
@@ -1032,6 +1035,7 @@ export function ProjectDetailPage() {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <span className="text-sm font-medium">{m.name}</span>
+                        <TagChips tags={m.tags} />
                         {m.is_major && (
                           <span className="rounded bg-accent px-1.5 py-0.5 text-xs">
                             Major
@@ -1129,6 +1133,7 @@ export function ProjectDetailPage() {
                   >
                     <div className="flex items-center justify-between">
                       <span className="text-sm font-medium">{a.title}</span>
+                      <TagChips tags={a.tags} />
                       <StatusPill
                         status={a.status}
                         label={STATUS_LABELS[a.status] ?? a.status}
@@ -1494,6 +1499,7 @@ export function ProjectDetailPage() {
                         {updateAuthorName(u)}
                       </span>
                       <span>· {relativeTime(u.created_at)}</span>
+                      <TagChips tags={u.tags} />
                       {u.is_gold && (
                         <span className="inline-flex items-center gap-1 text-gold">
                           <span className="h-2 w-2 rounded-full bg-gold" />

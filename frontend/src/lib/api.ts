@@ -99,6 +99,7 @@ export interface Project {
   sector_id: string | null
   strategic_program_id: string | null
   deal_type_id: string | null
+  tags: string[] | null
 }
 
 export interface ProjectMemberDetail {
@@ -951,6 +952,7 @@ export interface GlobalMilestone {
   weightage: number | null
   percent_complete: number | null
   completed_date: string | null
+  tags: string[] | null
   project: { name: string } | null
   owner: { full_name: string | null; email: string | null } | null
   outcome: { name: string } | null
@@ -962,6 +964,7 @@ export interface GlobalActionItem {
   title: string
   due_date: string | null
   status: string
+  tags: string[] | null
   project: { name: string } | null
   type: { name: string } | null
   owners: Array<{

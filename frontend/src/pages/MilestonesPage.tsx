@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { registryApi, type GlobalMilestone } from '@/lib/api'
 import { usePageTitle } from '@/lib/use-page-title'
 import { StatusPill } from '@/components/StatusPill'
+import { TagChips } from '@/components/TagChips'
 import { Input } from '@/components/ui/input'
 
 const STATUS_LABELS: Record<string, string> = {
@@ -47,7 +48,8 @@ export function MilestonesPage() {
         (!overdueOnly || isOverdue(m)) &&
         (q === '' ||
           m.name.toLowerCase().includes(q) ||
-          (m.project?.name ?? '').toLowerCase().includes(q)),
+          (m.project?.name ?? '').toLowerCase().includes(q) ||
+          (m.tags ?? []).some((t) => t.toLowerCase().includes(q))),
     )
   }, [rows, search, status, overdueOnly])
 
@@ -147,6 +149,7 @@ export function MilestonesPage() {
                       <span className="min-w-0 flex-1 truncate text-sm font-medium">
                         {m.name}
                       </span>
+                      <TagChips tags={m.tags} />
                       {m.is_major && (
                         <span className="rounded bg-accent px-1.5 py-0.5 text-xs">
                           Major

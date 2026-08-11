@@ -21,6 +21,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Skeleton } from '@/components/ui/skeleton'
 import { StatusPill } from '@/components/StatusPill'
+import { TagChips } from '@/components/TagChips'
 import { ProjectsGrid } from '@/components/ProjectsGrid'
 import { type GridSort, type GridSortKey } from '@/lib/project-grid'
 import { buildCsv, downloadCsv } from '@/lib/csv'
@@ -171,6 +172,7 @@ export function HomePage() {
   const [categoryId, setCategoryId] = useState(
     searchParams.get('category') ?? ALL,
   )
+  const [tagFilter, setTagFilter] = useState(searchParams.get('tag') ?? ALL)
   const [sort, setSort] = useState('updated_desc')
   const [rows, setRows] = useState('all')
 
@@ -226,6 +228,8 @@ export function HomePage() {
     })
   }
 
+  const allTags = [...new Set(projects.flatMap((p) => p.tags ?? []))].sort()
+
   const q = search.trim().toLowerCase()
   const filtered = projects
     .filter(
@@ -235,7 +239,8 @@ export function HomePage() {
           p.name.toLowerCase().includes(q) ||
           (p.description ?? '').toLowerCase().includes(q)) &&
         (sizeId === ALL || p.size_id === sizeId) &&
-        (categoryId === ALL || p.category_id === categoryId),
+        (categoryId === ALL || p.category_id === categoryId) &&
+        (tagFilter === ALL || (p.tags ?? []).includes(tagFilter)),
     )
     .sort((a, b) => {
       switch (sort) {
@@ -257,6 +262,7 @@ export function HomePage() {
     uncheckedEff.join(','),
     sizeId,
     categoryId,
+    tagFilter,
     sort,
     rows,
   ].join('|')
@@ -386,6 +392,30 @@ export function HomePage() {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value={ALL}>- All People -</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div>
+                <p className="mb-2 text-sm font-medium">Tag</p>
+                <Select
+                  items={[
+                    { label: '- All Tags -', value: ALL },
+                    ...allTags.map((t) => ({ label: t, value: t })),
+                  ]}
+                  value={tagFilter}
+                  onValueChange={(v) => setTagFilter(v ?? ALL)}
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value={ALL}>- All Tags -</SelectItem>
+                    {allTags.map((t) => (
+                      <SelectItem key={t} value={t}>
+                        {t}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -561,6 +591,11 @@ export function HomePage() {
                         <p className="line-clamp-2 flex-1 text-sm text-muted-foreground">
                           {p.description ?? ''}
                         </p>
+                        <TagChips
+                          tags={p.tags}
+                          onTagClick={(t) => setTagFilter(t)}
+                          className="mt-2"
+                        />
                         <div className="mt-3 mb-1 flex items-center justify-between text-xs text-muted-foreground">
                           <span>Progress</span>
                           <span className="font-medium text-foreground">
