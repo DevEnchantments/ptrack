@@ -341,6 +341,28 @@ only, not in FDD).
 - **Stage 4 — Dashboards/reports made real** (FR-10/12/13; charting-library decision point).
 - **Stage 5 — KPIs/scorecards** (FR-11, UC-16/17) — last; most formula-dependent.
 
+### Recorded requirements from Fares (2026-08-11) — AI-assisted invitations
+
+Captured as REQUIREMENTS (not just deferrals) so they survive into the next
+build phases. Origin: Fares's design for account provisioning, stated before
+the feature was built; the shipped drafter dialog was structured so both land
+in it without rework.
+
+1. **AI-generated invitation emails with project context.** When creating an
+   account for a person (with a real email), the app should offer an
+   AI-generated invitation drawing on project context (project name, role,
+   who added them, dates). The author can: write their own message from
+   scratch, accept the AI suggestion as-is, edit it manually, or **instruct
+   the AI to revise it** ("make it more formal", "shorten it"). UNBLOCKS
+   WHEN: an LLM API key is configured server-side (key stays in backend
+   .env; becomes the AI Assistant's first real feature). Until then the
+   dialog shows the deterministic template draft.
+2. **In-app sending of those invitations.** Today the drafter hands off via
+   mailto:/copy (sent from the admin's own mailbox). The requirement is real
+   sending from P-Track itself — one Send button on the same compose box —
+   which joins the notification-email subsystem. UNBLOCKS WHEN: SMTP (or an
+   email API) is available.
+
 ## 8. Conventions carried forward
 Field-mapping evidence rule now points at **FDD figures** (ask for hi-res PNG when field-level
 detail is unreadable) · one feature at a time, plan → approve → build → verify → user commits ·

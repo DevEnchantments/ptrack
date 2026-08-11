@@ -905,8 +905,8 @@
     "semantic_hash": ""
   },
   "docs/FDD-ALIGNMENT.md": {
-    "mtime": 1786460025.751762,
-    "ast_hash": "50b7101270b39ee6ccb812bee94d947d",
+    "mtime": 1786461636.4177008,
+    "ast_hash": "11116ea93793e028ea4ad1f78b183438",
     "semantic_hash": ""
   },
   "backend/db/fdd_project_fields.sql": {
@@ -1440,13 +1440,13 @@
     "semantic_hash": ""
   },
   "frontend/src/components/CreateAccountDialog.tsx": {
-    "mtime": 1786459730.8812284,
-    "ast_hash": "3c10234acb5d21668b8808c9e68819ee",
+    "mtime": 1786460831.9739857,
+    "ast_hash": "d15b4e3dd5c27078a1bed2948dc66cfa",
     "semantic_hash": ""
   },
   "frontend/src/lib/provision.ts": {
-    "mtime": 1786459478.9947329,
-    "ast_hash": "d7c2b6b0e8cd6359dd7c7eec7fc6678b",
+    "mtime": 1786460831.9719849,
+    "ast_hash": "4e319dfb3c91bc1ccb18a2c31ffba06e",
     "semantic_hash": ""
   }
 }
