@@ -2,6 +2,7 @@ import { HomePage } from '@/pages/HomePage'
 import { DashboardPage } from '@/pages/DashboardPage'
 import { ReportingPage } from '@/pages/ReportingPage'
 import { KpisPage } from '@/pages/KpisPage'
+import { CodeTablesPage } from '@/pages/admin/CodeTablesPage'
 import { CycleStatusReportPage } from '@/pages/reports/CycleStatusReportPage'
 import { ProjectProgressReportPage } from '@/pages/reports/ProjectProgressReportPage'
 import { LoginPage } from '@/pages/LoginPage'
@@ -28,6 +29,7 @@ function App() {
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/reporting" element={<ReportingPage />} />
           <Route path="/kpis" element={<KpisPage />} />
+          <Route path="/admin/code-tables" element={<CodeTablesPage />} />
           <Route
             path="/reporting/cycle-status"
             element={<CycleStatusReportPage />}

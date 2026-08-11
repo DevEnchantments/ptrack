@@ -41,7 +41,7 @@ const NAV_ITEMS: Array<{
   { label: 'Timeline', icon: Clock },
   { label: 'Reporting', icon: BarChart3, to: '/reporting' },
   { label: 'AI Assistant', icon: Bot },
-  { label: 'Administration', icon: Settings },
+  { label: 'Administration', icon: Settings, to: '/admin/code-tables' },
 ]
 
 export function AppLayout() {

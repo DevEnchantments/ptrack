@@ -194,6 +194,17 @@ owners, falling back to PM then project owner; the dedup key
 reminders and repeats are no-ops (`notifications/reminders.service.ts`, logic
 unit-tested). Still deferred: email (needs SMTP).
 
+**Code Table Administration — ✅ SHIPPED 2026-08-08** (from the original-app
+roadmap, supervisor-independent): `/admin/code-tables` (sidebar Administration
+item, stub retired) manages all 20 lookup tables — create, rename, up/down
+reorder (renumbers and heals null/duplicate sort values), activate/deactivate.
+No hard delete (FK-referenced values; deactivation removes them from pickers
+while existing records keep rendering). Per-table extras editable where they
+drive app behavior: status `color`, issue-level `rank`, role
+`default_access_level`. API: `GET /lookups` (admin listing incl. inactive) +
+`POST/PATCH /lookups/:name/values[...]`, cache-invalidating. ASSUMED: open to
+any signed-in user until the security phase adds role gating (FR-15).
+
 ## 6. Open questions for the supervisor (blockers marked ⛔)
 1. (OI-02) Formulas — PROVISIONAL standard set adopted 2026-08-03 on Fares's authority and implemented (docs/FORMULAS.md F1-F4: calculated progress, planned progress, risk score+severity, at-risk suggestion). Sign-off still requested; KPI achievement % and data-quality index deliberately NOT implemented (policy numbers, not standards).
 2. ⛔ Sector vs our category; Tier values; Type vs deal_type; status value mappings (project + milestone buckets).

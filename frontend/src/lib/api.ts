@@ -868,6 +868,42 @@ export interface KpiInput {
   owner_id?: string | null
 }
 
+export interface AdminLookupRow {
+  id: string
+  name: string
+  sort_order: number | null
+  is_active: boolean
+  color?: string | null
+  rank?: number | null
+  default_access_level?: string
+  objective_id?: string | null
+}
+
+export interface AdminLookupTable {
+  rows: AdminLookupRow[]
+  extras: string[]
+}
+
+export const adminLookupsApi = {
+  listAll: () => apiGet<Record<string, AdminLookupTable>>('/lookups'),
+  add: (
+    name: string,
+    body: { name: string; sort_order?: number },
+  ) => apiPost<AdminLookupRow>(`/lookups/${name}/values`, body),
+  update: (
+    name: string,
+    id: string,
+    body: {
+      name?: string
+      sort_order?: number
+      is_active?: boolean
+      color?: string | null
+      rank?: number
+      default_access_level?: string
+    },
+  ) => apiPatch<AdminLookupRow>(`/lookups/${name}/values/${id}`, body),
+}
+
 export const kpisApi = {
   list: () => apiGet<Kpi[]>('/kpis'),
   add: (body: KpiInput) => apiPost<Kpi>('/kpis', body),

@@ -37,6 +37,30 @@ const SELECTS: Record<string, string> = {
 
 const ACCESS_LEVELS = ['read_only', 'read_write', 'read_write_admin'];
 
+// Admin: per-table extra editable columns (everything else gets the common
+// trio name/sort_order/is_active). Whitelist enforced server-side.
+const EXTRA_COLUMNS: Record<string, string[]> = {
+  project_statuses: ['color'],
+  issue_levels: ['rank'],
+  project_roles: ['default_access_level'],
+};
+
+export interface AdminLookupRow {
+  id: string;
+  name: string;
+  sort_order: number | null;
+  is_active: boolean;
+  color?: string | null;
+  rank?: number | null;
+  default_access_level?: string;
+  objective_id?: string | null;
+}
+
+export interface AdminLookupTable {
+  rows: AdminLookupRow[];
+  extras: string[];
+}
+
 // Lookup tables are near-static (they change through admin action, not user
 // traffic), yet every dialog open refetches them. A short TTL keeps the data
 // fresh-enough while making repeat opens free. Writes below invalidate early.
@@ -119,6 +143,122 @@ export class LookupsService {
       .single();
     if (error) throw toHttpException(error, 'lookups.createRole');
     this.cache.delete('project-roles');
+    return data;
+  }
+
+  /** Admin listing: every code table with all rows, inactive included. */
+  async adminList(): Promise<Record<string, AdminLookupTable>> {
+    const entries = await Promise.all(
+      Object.entries(ALLOWED).map(async ([name, table]) => {
+        const extras = EXTRA_COLUMNS[table] ?? [];
+        const select = [
+          'id, name, sort_order, is_active',
+          ...extras,
+          ...(table === 'strategic_programs' ? ['objective_id'] : []),
+        ].join(', ');
+        const { data, error } = await this.db.client
+          .from(table)
+          .select(select)
+          .order('sort_order', { ascending: true, nullsFirst: false })
+          .order('name', { ascending: true });
+        if (error) throw toHttpException(error, `lookups.admin.${name}`);
+        return [
+          name,
+          { rows: (data ?? []) as unknown as AdminLookupRow[], extras },
+        ] as const;
+      }),
+    );
+    return Object.fromEntries(entries);
+  }
+
+  private tableFor(name: string): string {
+    const table = ALLOWED[name];
+    if (!table) throw new NotFoundException(`Unknown lookup: ${name}`);
+    return table;
+  }
+
+  private extrasFor(
+    table: string,
+    dto: {
+      color?: string | null;
+      rank?: number | null;
+      default_access_level?: string;
+    },
+  ): Record<string, unknown> {
+    const allowed = EXTRA_COLUMNS[table] ?? [];
+    const extras: Record<string, unknown> = {};
+    for (const key of ['color', 'rank', 'default_access_level'] as const) {
+      const value = dto[key];
+      if (value === undefined) continue;
+      if (!allowed.includes(key))
+        throw new BadRequestException(
+          `"${key}" does not apply to this code table.`,
+        );
+      extras[key] = value;
+    }
+    return extras;
+  }
+
+  async addValue(
+    name: string,
+    dto: {
+      name: string;
+      sort_order?: number;
+      color?: string | null;
+      rank?: number | null;
+      default_access_level?: string;
+    },
+  ): Promise<AdminLookupRow> {
+    const table = this.tableFor(name);
+    const clean = (dto.name ?? '').trim();
+    if (!clean) throw new BadRequestException('A value name is required.');
+    const row: Record<string, unknown> = {
+      name: clean,
+      ...this.extrasFor(table, dto),
+    };
+    if (dto.sort_order !== undefined) row.sort_order = dto.sort_order;
+    const { data, error } = await this.db.client
+      .from(table)
+      .insert(row)
+      .select('id, name, sort_order, is_active')
+      .single();
+    if (error) throw toHttpException(error, `lookups.admin.add.${name}`);
+    this.cache.delete(name);
+    return data;
+  }
+
+  async updateValue(
+    name: string,
+    id: string,
+    dto: {
+      name?: string;
+      sort_order?: number;
+      is_active?: boolean;
+      color?: string | null;
+      rank?: number | null;
+      default_access_level?: string;
+    },
+  ): Promise<AdminLookupRow> {
+    const table = this.tableFor(name);
+    const patch: Record<string, unknown> = this.extrasFor(table, dto);
+    if (dto.name !== undefined) {
+      const clean = dto.name.trim();
+      if (!clean) throw new BadRequestException('A value name is required.');
+      patch.name = clean;
+    }
+    if (dto.sort_order !== undefined) patch.sort_order = dto.sort_order;
+    if (dto.is_active !== undefined) patch.is_active = dto.is_active;
+    if (Object.keys(patch).length === 0)
+      throw new BadRequestException('Nothing to update.');
+    const { data, error } = await this.db.client
+      .from(table)
+      .update(patch)
+      .eq('id', id)
+      .select('id, name, sort_order, is_active')
+      .maybeSingle();
+    if (error) throw toHttpException(error, `lookups.admin.update.${name}`);
+    if (!data) throw new NotFoundException('Code table value not found.');
+    this.cache.delete(name);
     return data;
   }
 }
