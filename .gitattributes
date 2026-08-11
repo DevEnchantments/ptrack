@@ -1,0 +1,10 @@
+# Repo-defined line endings so behavior doesn't depend on each machine's
+# core.autocrlf. Everything is LF (what the repo already stores); Windows
+# batch files are the one format that genuinely wants CRLF.
+* text=auto eol=lf
+*.cmd text eol=crlf
+*.bat text eol=crlf
+
+# Generated graphify output: leave line endings alone (graphify rewrites
+# these every rebuild; normalizing would warn on every commit).
+graphify-out/** -text
