@@ -595,8 +595,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/HomePage.tsx": {
-    "mtime": 1786453383.9907868,
-    "ast_hash": "bc46823f85ee5c552efdf06bf4d8f196",
+    "mtime": 1786454997.4321797,
+    "ast_hash": "6eb790e98c7d701333fd277f0ebb1830",
     "semantic_hash": ""
   },
   "frontend/src/pages/LoginPage.tsx": {
@@ -665,8 +665,8 @@
     "semantic_hash": "2e092757eaa8553feb3c7bb53e6a8a3b"
   },
   "CLAUDE.md": {
-    "mtime": 1786453979.2559743,
-    "ast_hash": "8631a5a4430491df01dbd3fe9c22fdba",
+    "mtime": 1786455253.2692878,
+    "ast_hash": "60995c6f1ed3c384b9b5845e3eaf4419",
     "semantic_hash": ""
   },
   "README.md": {
@@ -905,8 +905,8 @@
     "semantic_hash": ""
   },
   "docs/FDD-ALIGNMENT.md": {
-    "mtime": 1786453979.2014465,
-    "ast_hash": "3638f807761008bd24455895ab7ba7b3",
+    "mtime": 1786455253.2682827,
+    "ast_hash": "70418c1c04b8405b9a4ad29debe41644",
     "semantic_hash": ""
   },
   "backend/db/fdd_project_fields.sql": {
@@ -1367,6 +1367,11 @@
   "frontend/src/pages/ImportPage.tsx": {
     "mtime": 1786453445.9743886,
     "ast_hash": "7307985fc2d897078f597da6d9e1572c",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/ProjectTree.tsx": {
+    "mtime": 1786454983.4230793,
+    "ast_hash": "287936c2c9bf2a1da32d61329bb951a4",
     "semantic_hash": ""
   }
 }
