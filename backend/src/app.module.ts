@@ -18,6 +18,7 @@ import { SubmissionsModule } from './modules/submissions/submissions.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { NotificationsModule } from './modules/notifications/notifications.module';
 import { SearchModule } from './modules/search/search.module';
+import { RegistryModule } from './modules/registry/registry.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { KpisModule } from './modules/kpis/kpis.module';
 import { UpdatesModule } from './modules/updates/updates.module';
@@ -45,6 +46,7 @@ import { AppService } from './app.service';
     ScheduleModule.forRoot(),
     NotificationsModule,
     SearchModule,
+    RegistryModule,
     DashboardModule,
     KpisModule,
     UpdatesModule,

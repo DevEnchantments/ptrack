@@ -55,9 +55,9 @@ Every record type now has Create, Read, Update **and Delete**.
 - **Record types:** Person, Milestone, Action Item, Link, Resource, Issue, Update,
   Status Report, Attachment
 - **App shell:** collapsible dark sidebar in the demo's layout (`AppLayout`, wraps all
-  protected routes; top bar owns user/sign-out). Projects and My Dashboard are live; the
-  other eight demo nav items are disabled stubs with a "Coming in Phase 2" tooltip — same
-  convention as the email button. No submenus built (demo chevron contents unseen —
+  protected routes; top bar owns user/sign-out). Live nav: Projects, My Dashboard, Categories,
+  Milestones, Action Items, People, Reporting, Administration; Timeline and AI
+  Assistant remain disabled stubs. No submenus built (demo chevron contents unseen —
   field-mapping rule applies to nav too).
 - **UI theme ("palette C", picked after supervisor contrast complaint 2026-07-20):** every
   color flows from the shadcn tokens in `frontend/src/index.css` — soft-gray canvas

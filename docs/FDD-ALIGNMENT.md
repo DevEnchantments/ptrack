@@ -215,6 +215,17 @@ page. Saved searches are per-user (`saved_searches` table,
 re-run on click, saved via a "Save this search" row. Deliberately NOT
 full-text over update/comment bodies (one-line extension later if wanted).
 
+**Cross-project registry pages — ✅ SHIPPED 2026-08-11** (sidebar stubs
+retired, supervisor-independent): read-only `registry` module (dashboard-style
+aggregation precedent) serving `GET /milestones`, `GET /action-items`,
+`GET /people`. Pages: `/milestones` (grouped by project; status/overdue/text
+filters; weight + outcome shown), `/action-items` (same + "Assigned to me"
+toggle), `/people` (directory grouping real + pending members with expandable
+memberships/roles), `/categories` (count cards drilling into the register via
+`?category=`, which HomePage now reads — register filters became shareable
+links). Filters are client-side at current scale; server params + pagination
+when volume demands.
+
 ## 6. Open questions for the supervisor (blockers marked ⛔)
 1. (OI-02) Formulas — PROVISIONAL standard set adopted 2026-08-03 on Fares's authority and implemented (docs/FORMULAS.md F1-F4: calculated progress, planned progress, risk score+severity, at-risk suggestion). Sign-off still requested; KPI achievement % and data-quality index deliberately NOT implemented (policy numbers, not standards).
 2. ⛔ Sector vs our category; Tier values; Type vs deal_type; status value mappings (project + milestone buckets).

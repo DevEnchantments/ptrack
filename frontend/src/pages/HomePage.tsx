@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import {
   CircleAlert,
   Download,
@@ -165,7 +165,12 @@ export function HomePage() {
   const [search, setSearch] = useState('')
   const [unchecked, setUnchecked] = useState<string[] | null>(null)
   const [sizeId, setSizeId] = useState(ALL)
-  const [categoryId, setCategoryId] = useState(ALL)
+  // Seeded from ?category= so the Categories page (and shared links) can
+  // open the register pre-filtered.
+  const [searchParams] = useSearchParams()
+  const [categoryId, setCategoryId] = useState(
+    searchParams.get('category') ?? ALL,
+  )
   const [sort, setSort] = useState('updated_desc')
   const [rows, setRows] = useState('all')
 

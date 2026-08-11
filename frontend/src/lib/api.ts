@@ -939,6 +939,59 @@ export const searchApi = {
     apiDelete<{ deleted: boolean }>(`/search/saved/${savedSearchId}`),
 }
 
+export interface GlobalMilestone {
+  id: string
+  project_id: string
+  name: string
+  due_date: string | null
+  status: string
+  is_major: boolean
+  weightage: number | null
+  percent_complete: number | null
+  completed_date: string | null
+  project: { name: string } | null
+  owner: { full_name: string | null; email: string | null } | null
+  outcome: { name: string } | null
+}
+
+export interface GlobalActionItem {
+  id: string
+  project_id: string
+  title: string
+  due_date: string | null
+  status: string
+  project: { name: string } | null
+  type: { name: string } | null
+  owners: Array<{
+    slot: number
+    user_id: string
+    profile: { full_name: string | null; email: string | null } | null
+  }>
+}
+
+export interface DirectoryMembership {
+  project_id: string
+  project_name: string | null
+  role: string | null
+  access_level: string
+  status: string
+}
+
+export interface DirectoryPerson {
+  key: string
+  user_id: string | null
+  name: string
+  email: string | null
+  pending: boolean
+  memberships: DirectoryMembership[]
+}
+
+export const registryApi = {
+  milestones: () => apiGet<GlobalMilestone[]>('/milestones'),
+  actionItems: () => apiGet<GlobalActionItem[]>('/action-items'),
+  people: () => apiGet<DirectoryPerson[]>('/people'),
+}
+
 export const kpisApi = {
   list: () => apiGet<Kpi[]>('/kpis'),
   add: (body: KpiInput) => apiPost<Kpi>('/kpis', body),
