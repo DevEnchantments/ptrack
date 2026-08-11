@@ -97,49 +97,50 @@ export function PeoplePage() {
                 key={p.key}
                 className="overflow-hidden rounded-lg border bg-card shadow-xs"
               >
-                <button
-                  type="button"
-                  onClick={() => toggle(p.key)}
-                  aria-expanded={isOpen}
-                  className="flex w-full cursor-pointer items-center gap-3 px-4 py-3 text-left hover:bg-accent focus-visible:outline-2 focus-visible:outline-ring"
-                >
-                  {isOpen ? (
-                    <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground" />
-                  ) : (
-                    <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" />
-                  )}
-                  <InitialsAvatar name={p.name} />
-                  <span className="min-w-0 flex-1">
-                    <span className="block truncate text-sm font-medium">
-                      {p.name}
-                      {p.pending && (
-                        <span className="ml-2 text-xs font-normal text-[var(--status-amber-fg)]">
-                          (pending)
+                <div className="flex items-center gap-3 pr-4 hover:bg-accent">
+                  <button
+                    type="button"
+                    onClick={() => toggle(p.key)}
+                    aria-expanded={isOpen}
+                    className="flex min-w-0 flex-1 cursor-pointer items-center gap-3 px-4 py-3 text-left focus-visible:outline-2 focus-visible:outline-ring"
+                  >
+                    {isOpen ? (
+                      <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground" />
+                    ) : (
+                      <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" />
+                    )}
+                    <InitialsAvatar name={p.name} />
+                    <span className="min-w-0 flex-1">
+                      <span className="block truncate text-sm font-medium">
+                        {p.name}
+                        {p.pending && (
+                          <span className="ml-2 text-xs font-normal text-[var(--status-amber-fg)]">
+                            (pending)
+                          </span>
+                        )}
+                      </span>
+                      {p.email && (
+                        <span className="block truncate text-xs text-muted-foreground">
+                          {p.email}
                         </span>
                       )}
                     </span>
-                    {p.email && (
-                      <span className="block truncate text-xs text-muted-foreground">
-                        {p.email}
-                      </span>
-                    )}
-                  </span>
-                  <span className="shrink-0 text-xs text-muted-foreground">
-                    {p.memberships.length} project
-                    {p.memberships.length === 1 ? '' : 's'}
-                  </span>
-                </button>
-                {isOpen && p.pending && (
-                  <div className="border-t bg-muted/30 px-4 py-2 pl-14">
+                    <span className="shrink-0 text-xs text-muted-foreground">
+                      {p.memberships.length} project
+                      {p.memberships.length === 1 ? '' : 's'}
+                    </span>
+                  </button>
+                  {p.pending && (
                     <Button
                       variant="outline"
                       size="sm"
+                      className="shrink-0"
                       onClick={() => setAccountFor(p)}
                     >
                       Create account
                     </Button>
-                  </div>
-                )}
+                  )}
+                </div>
                 {isOpen && (
                   <ul className="divide-y border-t bg-muted/30">
                     {p.memberships.map((m) => (
