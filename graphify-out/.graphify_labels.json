@@ -107,5 +107,16 @@
   "105": "Param",
   "106": "Patch",
   "107": "Post",
-  "108": "Injectable"
+  "108": "Injectable",
+  "109": "NotificationsModule",
+  "110": "ProjectsModule",
+  "111": "ApiProperty",
+  "112": "ApiPropertyOptional",
+  "113": "IsBoolean",
+  "114": "IsIn",
+  "115": "IsInt",
+  "116": "IsOptional",
+  "117": "IsString",
+  "118": "MaxLength",
+  "119": "Min"
 }

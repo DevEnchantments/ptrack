@@ -96,5 +96,16 @@
   "94": "kpis.repository.ts",
   "95": "RisksModule",
   "96": "moduleFileExtensions",
-  "98": "jose"
+  "97": "DatabaseModule",
+  "98": "jose",
+  "99": "KpisModule",
+  "100": "@fontsource-variable/inter",
+  "101": "@eslint/js",
+  "102": "Body",
+  "103": "Controller",
+  "104": "Get",
+  "105": "Param",
+  "106": "Patch",
+  "107": "Post",
+  "108": "Injectable"
 }
