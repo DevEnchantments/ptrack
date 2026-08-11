@@ -65,8 +65,8 @@ Every record type now has Create, Read, Update **and Delete**.
   `#0D1526` with blue active pill. Change colors by editing tokens only; components must
   not hardcode hexes. AA-verified pairs; alternates A/B/D live in the session scratchpad.
 - **My Dashboard preview (`/dashboard`):** sample-data-only page (badged as such) with 9
-  hand-rolled SVG/CSS chart types — deliberately NO charting library, so the Phase 2
-  library decision stays open. Chart series colors are the `--chart-1..3` tokens,
+  hand-rolled SVG/CSS chart types — hand-rolled (no library); the one charting
+  library in the app is frappe-gantt on /timeline (SVAR rejected: React-18-only internals) (see FDD-ALIGNMENT). Chart series colors are the `--chart-1..3` tokens,
   validated (CVD-safe adjacency: green|blue|orange order matters — blue separates the
   colorblind-confusable green/orange pair). Animations respect `prefers-reduced-motion`.
 - **Detail pages:** Milestone, Action Item, Status Report, Attachment. Issues, Links,

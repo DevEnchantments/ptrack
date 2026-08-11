@@ -440,13 +440,13 @@
     "semantic_hash": "0355276bc79439afe3c53e3a2470ca1e"
   },
   "frontend/package.json": {
-    "mtime": 1785742700.4865646,
-    "ast_hash": "44e61d2cec13a6ecc3f9c955e9eb626a",
+    "mtime": 1786449981.5329144,
+    "ast_hash": "fa0ab3e461079734f188d99b4a2835bd",
     "semantic_hash": ""
   },
   "frontend/src/App.tsx": {
-    "mtime": 1786440421.8079743,
-    "ast_hash": "4fdbf0c8b3685bf729d4f336a12fe1f2",
+    "mtime": 1786447637.7410753,
+    "ast_hash": "d45aaac9605d2f2f80d012c8d3454d21",
     "semantic_hash": ""
   },
   "frontend/src/components/AddActionItemDialog.tsx": {
@@ -555,8 +555,8 @@
     "semantic_hash": ""
   },
   "frontend/src/lib/api.ts": {
-    "mtime": 1786446412.2559922,
-    "ast_hash": "aa12ba1cbb71d8736fe94db2f937808e",
+    "mtime": 1786447637.7390769,
+    "ast_hash": "cc829301c314f7fda71287ac767004b9",
     "semantic_hash": ""
   },
   "frontend/src/lib/auth-context.tsx": {
@@ -665,8 +665,8 @@
     "semantic_hash": "2e092757eaa8553feb3c7bb53e6a8a3b"
   },
   "CLAUDE.md": {
-    "mtime": 1786444851.416795,
-    "ast_hash": "631b0e88bfbfcd7a0ef504a9391adafa",
+    "mtime": 1786450412.6065972,
+    "ast_hash": "1aa3978e0a97c613f2c0718d4a0f8ab4",
     "semantic_hash": ""
   },
   "README.md": {
@@ -855,8 +855,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/AppLayout.tsx": {
-    "mtime": 1786440421.8701484,
-    "ast_hash": "cf09018cd6831b04b89857fa96b4c1e2",
+    "mtime": 1786447637.74341,
+    "ast_hash": "da4ee3ab38dae38a6af0b3a91659ca3a",
     "semantic_hash": ""
   },
   "frontend/src/pages/DashboardPage.tsx": {
@@ -905,8 +905,8 @@
     "semantic_hash": ""
   },
   "docs/FDD-ALIGNMENT.md": {
-    "mtime": 1786446583.395725,
-    "ast_hash": "95d7664bb864063bb56c1b5640a6ae73",
+    "mtime": 1786450412.5622573,
+    "ast_hash": "038d5b7d2b12b53d9b26c5c43cd380ea",
     "semantic_hash": ""
   },
   "backend/db/fdd_project_fields.sql": {
@@ -1322,6 +1322,16 @@
   "frontend/src/components/TagChips.tsx": {
     "mtime": 1786445664.7026067,
     "ast_hash": "3698ae75ff44b51008fd617584093b85",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/TimelinePage.tsx": {
+    "mtime": 1786450369.691591,
+    "ast_hash": "0155ff22b8c5eac0db5681eb5de0535a",
+    "semantic_hash": ""
+  },
+  "frontend/src/types/frappe-gantt.d.ts": {
+    "mtime": 1786450033.445379,
+    "ast_hash": "eeefdd31b79b79691ee3dc29a669e651",
     "semantic_hash": ""
   }
 }

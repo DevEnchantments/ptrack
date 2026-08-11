@@ -285,6 +285,24 @@
 }
 /* Tab rows scroll horizontally when narrow; the scrollbar itself is hidden
    (wheel/swipe still scroll). */
+/* frappe-gantt theming: status colors from tokens; readable in dark mode. */
+.pt-gantt .gantt .bar-wrapper.pt-blue .bar { fill: var(--status-blue-bg); }
+.pt-gantt .gantt .bar-wrapper.pt-blue .bar-progress { fill: var(--status-blue-fg); }
+.pt-gantt .gantt .bar-wrapper.pt-green .bar { fill: var(--status-green-bg); }
+.pt-gantt .gantt .bar-wrapper.pt-green .bar-progress { fill: var(--status-green-fg); }
+.pt-gantt .gantt .bar-wrapper.pt-amber .bar { fill: var(--status-amber-bg); }
+.pt-gantt .gantt .bar-wrapper.pt-amber .bar-progress { fill: var(--status-amber-fg); }
+.pt-gantt .gantt .bar-wrapper.pt-gray .bar { fill: var(--muted); }
+.pt-gantt .gantt .bar-wrapper.pt-gray .bar-progress { fill: var(--muted-foreground); }
+.pt-gantt .gantt .bar-wrapper.pt-ms .bar { fill: var(--status-blue-fg); }
+.pt-gantt .gantt .bar-wrapper.pt-ms-done .bar { fill: var(--status-green-fg); }
+.pt-gantt .gantt .bar-wrapper.pt-ms-overdue .bar { fill: var(--destructive); }
+.pt-gantt .gantt .bar-label { fill: var(--foreground); font-size: 12px; }
+.dark .pt-gantt .gantt .grid-background,
+.dark .pt-gantt .gantt .grid-row { fill: transparent; }
+.dark .pt-gantt .gantt .grid-header { fill: var(--card); }
+.dark .pt-gantt .gantt text { fill: var(--muted-foreground); }
+
 .scrollbar-none {
     scrollbar-width: none;
 }

@@ -89,17 +89,17 @@
   "87": "@supabase/supabase-js",
   "88": "tw-animate-css",
   "89": "ProjectsGrid.tsx",
-  "90": "Injectable",
+  "90": "UsersModule",
   "91": "@types/node",
   "92": "PeoplePage.tsx",
   "93": "StatusReportDetailPage.tsx",
   "94": "lookups.service.ts",
   "95": "AddPersonDialog.tsx",
   "96": "RecordHistory.tsx",
-  "97": "supabase.ts",
-  "98": "@eslint/js",
-  "99": "Injectable",
-  "100": "@fontsource-variable/inter",
+  "97": "frappe-gantt",
+  "98": "tailwind-merge",
+  "99": "LinksModule",
+  "100": "ProgramOutcomesModule",
   "101": "moduleFileExtensions",
-  "102": "@types/node"
+  "102": "ResourcesModule"
 }
