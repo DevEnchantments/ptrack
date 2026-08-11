@@ -4,6 +4,7 @@ import {
   CircleAlert,
   Download,
   Upload,
+  ListTree,
   Flag,
   LayoutGrid,
   Lock,
@@ -26,6 +27,7 @@ import { TagChips } from '@/components/TagChips'
 import { ProjectsGrid } from '@/components/ProjectsGrid'
 import { type GridSort, type GridSortKey } from '@/lib/project-grid'
 import { buildCsv, downloadCsv } from '@/lib/csv'
+import { ProjectTree } from '@/components/ProjectTree'
 import {
   Dialog,
   DialogContent,
@@ -103,16 +105,17 @@ export function HomePage() {
   const navigate = useNavigate()
   const [projects, setProjects] = useState<ProjectListItem[]>([])
   const entered = useEntranceFlag()
-  const [view, setView] = useState<'cards' | 'grid'>(
-    () => (localStorage.getItem('ptrack:home-view') === 'grid' ? 'grid' : 'cards'),
-  )
+  const [view, setView] = useState<'cards' | 'grid' | 'tree'>(() => {
+    const saved = localStorage.getItem('ptrack:home-view')
+    return saved === 'grid' || saved === 'tree' ? saved : 'cards'
+  })
   const [gridSort, setGridSort] = useState<GridSort>({
     key: 'name',
     dir: 'asc',
   })
   const [exportOpen, setExportOpen] = useState(false)
 
-  function switchView(v: 'cards' | 'grid') {
+  function switchView(v: 'cards' | 'grid' | 'tree') {
     setView(v)
     try {
       localStorage.setItem('ptrack:home-view', v)
@@ -534,13 +537,26 @@ export function HomePage() {
                     aria-label="Grid view"
                     aria-pressed={view === 'grid'}
                     onClick={() => switchView('grid')}
-                    className={`rounded-r-[7px] p-1.5 transition-colors ${
+                    className={`p-1.5 transition-colors ${
                       view === 'grid'
                         ? 'bg-secondary text-secondary-foreground'
                         : 'text-muted-foreground hover:text-foreground'
                     }`}
                   >
                     <TableIcon className="h-4 w-4" />
+                  </button>
+                  <button
+                    type="button"
+                    aria-label="Tree view"
+                    aria-pressed={view === 'tree'}
+                    onClick={() => switchView('tree')}
+                    className={`rounded-r-[7px] p-1.5 transition-colors ${
+                      view === 'tree'
+                        ? 'bg-secondary text-secondary-foreground'
+                        : 'text-muted-foreground hover:text-foreground'
+                    }`}
+                  >
+                    <ListTree className="h-4 w-4" />
                   </button>
                 </div>
               </div>
@@ -556,6 +572,8 @@ export function HomePage() {
                   onSort={toggleGridSort}
                   onOpen={(pid) => navigate(`/projects/${pid}`)}
                 />
+              ) : view === 'tree' ? (
+                <ProjectTree projects={visible} />
               ) : (
                 <div
                   key={filterKey}

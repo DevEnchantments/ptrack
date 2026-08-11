@@ -264,6 +264,14 @@ milestones` re-resolves lookup names case-insensitively, coerces dates
 services so audit/history behave like manual creation (logic unit-tested; 36
 backend tests total).
 
+**Project Tree view — ✅ SHIPPED 2026-08-11** (original-app roadmap, read side
+of the Phase-1 `parent_project_id` FK): the register's view toggle gains a
+Tree mode — roots with indented, collapsible children (arbitrary depth,
+cycle-guarded), sub-project counts, progress % + status pill per node, click
+through to the project. Register filters apply; a child whose parent is
+filtered out surfaces at root. Zero backend work; demo pair seeded (Outreach
+Vans under Screening Expansion).
+
 ## 6. Open questions for the supervisor (blockers marked ⛔)
 
 **Meeting outcomes 2026-08-11** (first supervisor sync since the assumed-FDD

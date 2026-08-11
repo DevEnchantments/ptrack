@@ -149,7 +149,7 @@ history insert only when the owner set changed).
 **Not yet started (whole modules from the original):** dashboards & reporting (no charting
 library is installed — Gantt, timeline, calendar, heatmap all have no foundation) · email
 & notification subsystem ·
-Project Templates / Merge / Validations / Tags / Tree view · preview-before-commit mass
+Project Templates / Merge / Validations · preview-before-commit mass
 updates.
 
 ## How I like to work — follow precisely
