@@ -1310,8 +1310,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/PeoplePage.tsx": {
-    "mtime": 1786459730.8393457,
-    "ast_hash": "c2b2a76ee2fce7276c319cac8bcc260c",
+    "mtime": 1786460496.6226413,
+    "ast_hash": "bb0e20bea45e05a19e0e0208c30a0b1c",
     "semantic_hash": ""
   },
   "backend/scripts/seed-generic-lookups.mjs": {
