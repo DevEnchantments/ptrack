@@ -1018,6 +1018,35 @@ export const importApi = {
     apiPost<ImportSummary>('/import/milestones', { rows }),
 }
 
+export interface ProjectTemplate {
+  id: string
+  name: string
+  description: string | null
+  created_at: string
+  outcome_count: number
+  milestone_count: number
+}
+
+export const templatesApi = {
+  list: () => apiGet<ProjectTemplate[]>('/templates'),
+  save: (name: string, description: string | null, projectId: string) =>
+    apiPost<ProjectTemplate>('/templates', {
+      name,
+      description,
+      project_id: projectId,
+    }),
+  remove: (templateId: string) =>
+    apiDelete<{ deleted: boolean }>(`/templates/${templateId}`),
+  instantiate: (
+    templateId: string,
+    body: { name: string; start_date?: string; target_end_date?: string },
+  ) =>
+    apiPost<{ project_id: string; name: string }>(
+      `/templates/${templateId}/instantiate`,
+      body,
+    ),
+}
+
 export const kpisApi = {
   list: () => apiGet<Kpi[]>('/kpis'),
   add: (body: KpiInput) => apiPost<Kpi>('/kpis', body),

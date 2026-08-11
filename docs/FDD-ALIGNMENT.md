@@ -272,6 +272,18 @@ through to the project. Register filters apply; a child whose parent is
 filtered out surfaces at root. Zero backend work; demo pair seeded (Outreach
 Vans under Screening Expansion).
 
+**Project Templates — ✅ SHIPPED 2026-08-11** (last supervisor-independent
+module; the buildable board is now CLEAR): `backend/db/project_templates.sql`
+(single jsonb-payload table, RLS) — endpoints 500 until run. "Save as
+Template" on the project header snapshots field defaults + outcomes +
+milestones (weights, major flags; dates stored as day-offsets from project
+start). "From Template" beside Create Project lists templates (counts,
+hover-delete), takes name + start/target dates, and instantiates through the
+normal services (audit/history like manual creation) with the schedule
+shifted to the new start. Not copied by design: people, action items,
+progress, budgets. Offset math unit-tested (41 backend tests). Remaining
+original-app leftovers: Merge + Validations, consciously unplanned.
+
 ## 6. Open questions for the supervisor (blockers marked ⛔)
 
 **Meeting outcomes 2026-08-11** (first supervisor sync since the assumed-FDD

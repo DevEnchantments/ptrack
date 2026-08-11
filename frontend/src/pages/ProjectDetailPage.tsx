@@ -48,6 +48,7 @@ import { AddPersonDialog } from '@/components/AddPersonDialog'
 import { AddMilestoneDialog } from '@/components/AddMilestoneDialog'
 import { AdjustWeightsDialog } from '@/components/AdjustWeightsDialog'
 import { EditOutcomeDialog } from '@/components/EditOutcomeDialog'
+import { SaveTemplateDialog } from '@/components/SaveTemplateDialog'
 import { TagChips } from '@/components/TagChips'
 import { ProjectOverviewCards } from '@/components/ProjectOverviewCards'
 import { WorkflowPanel } from '@/components/WorkflowPanel'
@@ -290,6 +291,7 @@ export function ProjectDetailPage() {
   const [milestones, setMilestones] = useState<Milestone[]>([])
   const [outcomes, setOutcomes] = useState<ProgramOutcome[]>([])
   const [editOutcome, setEditOutcome] = useState<ProgramOutcome | null>(null)
+  const [saveTemplateOpen, setSaveTemplateOpen] = useState(false)
   const [actionItems, setActionItems] = useState<ActionItem[]>([])
   const [links, setLinks] = useState<Link[]>([])
   const [resources, setResources] = useState<Resource[]>([])
@@ -721,6 +723,13 @@ export function ProjectDetailPage() {
               </h1>
             </div>
             <div className="flex gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setSaveTemplateOpen(true)}
+              >
+                Save as Template
+              </Button>
               <Button
                 variant="outline"
                 size="sm"
@@ -1791,6 +1800,13 @@ export function ProjectDetailPage() {
         onOpenChange={setAdjustWeightsOpen}
         milestones={milestones}
         onSaved={loadMilestones}
+      />
+
+      <SaveTemplateDialog
+        projectId={project.id}
+        projectName={project.name}
+        open={saveTemplateOpen}
+        onOpenChange={setSaveTemplateOpen}
       />
 
       <EditOutcomeDialog

@@ -28,6 +28,7 @@ import { ProjectsGrid } from '@/components/ProjectsGrid'
 import { type GridSort, type GridSortKey } from '@/lib/project-grid'
 import { buildCsv, downloadCsv } from '@/lib/csv'
 import { ProjectTree } from '@/components/ProjectTree'
+import { FromTemplateDialog } from '@/components/FromTemplateDialog'
 import {
   Dialog,
   DialogContent,
@@ -114,6 +115,7 @@ export function HomePage() {
     dir: 'asc',
   })
   const [exportOpen, setExportOpen] = useState(false)
+  const [fromTemplateOpen, setFromTemplateOpen] = useState(false)
 
   function switchView(v: 'cards' | 'grid' | 'tree') {
     setView(v)
@@ -281,6 +283,9 @@ export function HomePage() {
           </p>
         </div>
         <div className="flex items-center gap-4">
+          <Button variant="outline" onClick={() => setFromTemplateOpen(true)}>
+            From Template
+          </Button>
           <Button onClick={() => navigate('/projects/new')}>
             Create Project
           </Button>
@@ -687,6 +692,11 @@ export function HomePage() {
           </DialogContent>
         </Dialog>
       </main>
+
+      <FromTemplateDialog
+        open={fromTemplateOpen}
+        onOpenChange={setFromTemplateOpen}
+      />
     </div>
   )
 }

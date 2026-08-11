@@ -20,6 +20,7 @@ import { NotificationsModule } from './modules/notifications/notifications.modul
 import { SearchModule } from './modules/search/search.module';
 import { RegistryModule } from './modules/registry/registry.module';
 import { ImportModule } from './modules/import/import.module';
+import { TemplatesModule } from './modules/templates/templates.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { KpisModule } from './modules/kpis/kpis.module';
 import { UpdatesModule } from './modules/updates/updates.module';
@@ -49,6 +50,7 @@ import { AppService } from './app.service';
     SearchModule,
     RegistryModule,
     ImportModule,
+    TemplatesModule,
     DashboardModule,
     KpisModule,
     UpdatesModule,
