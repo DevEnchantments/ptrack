@@ -555,8 +555,8 @@
     "semantic_hash": ""
   },
   "frontend/src/lib/api.ts": {
-    "mtime": 1786459928.403542,
-    "ast_hash": "4f8156d1072c849017e8bc463f0bd1c3",
+    "mtime": 1786519795.7252955,
+    "ast_hash": "ce7fa1a819403bd5ae7b646ceade72a4",
     "semantic_hash": ""
   },
   "frontend/src/lib/auth-context.tsx": {
@@ -610,8 +610,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ProjectDetailPage.tsx": {
-    "mtime": 1786459561.8800535,
-    "ast_hash": "ae16446e102fe83157d7fb786f4a52e3",
+    "mtime": 1786519795.72879,
+    "ast_hash": "5d82d85871cdc631e079ba87a5e9e808",
     "semantic_hash": ""
   },
   "frontend/src/pages/StatusReportDetailPage.tsx": {
@@ -905,8 +905,8 @@
     "semantic_hash": ""
   },
   "docs/FDD-ALIGNMENT.md": {
-    "mtime": 1786461636.4177008,
-    "ast_hash": "11116ea93793e028ea4ad1f78b183438",
+    "mtime": 1786519898.2856748,
+    "ast_hash": "754aecb0d0770f20b515b2ff39fd40fe",
     "semantic_hash": ""
   },
   "backend/db/fdd_project_fields.sql": {
@@ -1447,6 +1447,11 @@
   "frontend/src/lib/provision.ts": {
     "mtime": 1786460831.9719849,
     "ast_hash": "4e319dfb3c91bc1ccb18a2c31ffba06e",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/ProjectDashboardTab.tsx": {
+    "mtime": 1786519465.6156654,
+    "ast_hash": "fc8fbcb20958c6f7ba4d2aff2a750dd0",
     "semantic_hash": ""
   }
 }
