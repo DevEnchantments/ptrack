@@ -502,7 +502,7 @@ export function ProjectDetailPage() {
         <header className="border-b px-6 py-4">
           <Skeleton className="h-4 w-40" />
         </header>
-        <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 p-6 lg:grid-cols-[minmax(0,1fr)_260px]">
+        <div className="mx-auto grid w-full max-w-[1600px] grid-cols-1 gap-8 p-6 lg:grid-cols-[minmax(0,1fr)_260px]">
           <div>
             <div className="mb-6 flex items-center justify-between">
               <Skeleton className="h-8 w-64" />
@@ -721,7 +721,7 @@ export function ProjectDetailPage() {
         onEdit={() => setEditProjectOpen(true)}
       />
 
-      <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 p-6 lg:grid-cols-[minmax(0,1fr)_260px]">
+      <div className="mx-auto grid w-full max-w-[1600px] grid-cols-1 gap-8 p-6 lg:grid-cols-[minmax(0,1fr)_260px]">
         <div>
           <div className="mb-6 flex items-center justify-between">
             <div>

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { gantt } from 'dhtmlx-gantt'
 import 'dhtmlx-gantt/codebase/dhtmlxgantt.css'
@@ -30,6 +30,7 @@ export function ProjectGantt({ projectId, milestones, outcomes }: Props) {
   const containerRef = useRef<HTMLDivElement | null>(null)
   const todayLineRef = useRef<HTMLDivElement | null>(null)
   const navigate = useNavigate()
+  const [zoom, setZoom] = useState<'Month' | 'Week'>('Month')
 
   useEffect(() => {
     const el = containerRef.current
@@ -54,15 +55,23 @@ export function ProjectGantt({ projectId, milestones, outcomes }: Props) {
       open: boolean
       statusClass: string
       isMilestone: boolean
+      ownerInitials: string
     }
     const rows: Row[] = []
     const today = todayIso()
     const pushMilestone = (m: Milestone, code: string, parent: string | 0) => {
       if (!m.due_date) return
+      const ownerName = m.owner?.full_name || m.owner?.email || ''
       rows.push({
         id: m.id,
         code,
         text: m.name,
+        ownerInitials: ownerName
+          .split(/\s+/)
+          .filter(Boolean)
+          .slice(0, 2)
+          .map((w) => w[0].toUpperCase())
+          .join(''),
         start_date: m.start_date ?? addDays(m.due_date, -14),
         end_date: addDays(m.due_date, 1), // dhtmlx end date is exclusive
         parent,
@@ -93,6 +102,7 @@ export function ProjectGantt({ projectId, milestones, outcomes }: Props) {
         open: true,
         statusClass: 'pt-dhx-outcome',
         isMilestone: false,
+        ownerInitials: '',
       })
       kids.forEach((m, j) => pushMilestone(m, `${counter}.${j + 1}`, `o:${o.id}`))
     }
@@ -115,13 +125,9 @@ export function ProjectGantt({ projectId, milestones, outcomes }: Props) {
     gantt.config.readonly = true
     gantt.config.date_format = '%Y-%m-%d'
     gantt.config.open_tree_initially = true
-    gantt.config.row_height = 34
-    gantt.config.bar_height = 18
+    gantt.config.row_height = 40
+    gantt.config.bar_height = 26
     gantt.config.grid_width = 340
-    gantt.config.scales = [
-      { unit: 'year', step: 1, format: '%Y' },
-      { unit: 'month', step: 1, format: '%M' },
-    ]
     gantt.config.columns = [
       { name: 'code', label: 'ID', width: 56, align: 'left' },
       { name: 'text', label: 'Outcome / Milestone', tree: true, width: 284 },
@@ -129,9 +135,46 @@ export function ProjectGantt({ projectId, milestones, outcomes }: Props) {
     // The whole widget (name grid + timeline) renders at full content width
     // and the card scrolls it as ONE surface — no inner chart-only scroll.
     gantt.config.autosize = 'x'
-    gantt.config.min_column_width = 64
+    if (zoom === 'Week') {
+      gantt.config.min_column_width = 26
+      gantt.config.scales = [
+        { unit: 'month', step: 1, format: '%M %Y' },
+        { unit: 'day', step: 1, format: '%d' },
+      ]
+    } else {
+      gantt.config.min_column_width = 64
+      gantt.config.scales = [
+        { unit: 'year', step: 1, format: '%Y' },
+        { unit: 'month', step: 1, format: '%M' },
+      ]
+    }
+    gantt.templates.timeline_cell_class = (_item, date) =>
+      zoom === 'Week' && (date.getDay() === 0 || date.getDay() === 6)
+        ? 'pt-dhx-weekend'
+        : ''
     gantt.templates.task_class = (_s, _e, task) =>
       (task as unknown as { statusClass?: string }).statusClass ?? ''
+    // GanttPRO-style labels: short bars carry their name OUTSIDE the bar
+    // (no more clipped text); wide bars keep it inside with the owner's
+    // initials trailing to the right.
+    const barWidth = (s: Date, e: Date) =>
+      gantt.posFromDate(e) - gantt.posFromDate(s)
+    gantt.templates.task_text = (s, e, task) => {
+      const t = task as unknown as { text: string; isMilestone?: boolean }
+      if (!t.isMilestone) return t.text
+      return barWidth(s, e) > 110 ? t.text : ''
+    }
+    gantt.templates.rightside_text = (s, e, task) => {
+      const t = task as unknown as {
+        text: string
+        isMilestone?: boolean
+        ownerInitials?: string
+      }
+      if (!t.isMilestone) return ''
+      const owner = t.ownerInitials ? ` \u00b7 ${t.ownerInitials}` : ''
+      if (barWidth(s, e) > 110) return t.ownerInitials ?? ''
+      return `${t.text}${owner}`
+    }
 
     gantt.init(el)
     gantt.parse({ data: rows })
@@ -180,10 +223,29 @@ export function ProjectGantt({ projectId, milestones, outcomes }: Props) {
       gantt.detachEvent(renderHandler)
       gantt.clearAll()
     }
-  }, [projectId, milestones, outcomes, navigate])
+  }, [projectId, milestones, outcomes, navigate, zoom])
 
   return (
-    <div className="pt-dhx overflow-x-auto rounded-md border">
+    <div>
+      <div className="mb-2 flex justify-end">
+        <div className="flex items-center gap-1 rounded-md border bg-card p-0.5">
+          {(['Month', 'Week'] as const).map((mode) => (
+            <button
+              key={mode}
+              type="button"
+              onClick={() => setZoom(mode)}
+              className={`cursor-pointer rounded px-2.5 py-1 text-xs font-medium transition-colors ${
+                zoom === mode
+                  ? 'bg-primary text-primary-foreground'
+                  : 'text-muted-foreground hover:text-foreground'
+              }`}
+            >
+              {mode}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className="pt-dhx overflow-x-auto rounded-md border">
       <div className="relative" style={{ height: 440, width: 'max-content', minWidth: '100%' }}>
         <div ref={containerRef} style={{ height: 440 }} />
         <div
@@ -191,6 +253,7 @@ export function ProjectGantt({ projectId, milestones, outcomes }: Props) {
           className="pointer-events-none absolute bottom-0 top-0 z-10 hidden w-px bg-primary"
           aria-hidden
         />
+      </div>
       </div>
     </div>
   )

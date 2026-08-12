@@ -286,6 +286,35 @@
 /* Tab rows scroll horizontally when narrow; the scrollbar itself is hidden
    (wheel/swipe still scroll). */
 /* DHTMLX gantt (project dashboard): status colors + chrome from tokens. */
+.pt-dhx .gantt_task_line {
+    border: none;
+    border-radius: 13px;
+}
+.pt-dhx .gantt_task_line .gantt_task_progress {
+    border-radius: 13px;
+}
+.pt-dhx .gantt_task_content {
+    font-size: 11px;
+    font-weight: 600;
+}
+.pt-dhx .gantt_side_content.gantt_right {
+    font-size: 11px;
+    color: var(--foreground);
+    padding-left: 8px;
+}
+.pt-dhx .gantt_task_cell,
+.pt-dhx .gantt_task_row {
+    border-right-color: color-mix(in oklab, var(--border) 45%, transparent);
+    border-bottom-color: color-mix(in oklab, var(--border) 45%, transparent);
+}
+.pt-dhx .gantt_row:hover .gantt_cell,
+.pt-dhx .gantt_task_row.gantt_selected,
+.pt-dhx .gantt_task_row:hover {
+    background: color-mix(in oklab, var(--muted) 55%, transparent);
+}
+.pt-dhx .gantt_task_cell.pt-dhx-weekend {
+    background: color-mix(in oklab, var(--muted) 70%, transparent);
+}
 .pt-dhx .gantt_task_line.pt-dhx-blue { background: var(--status-blue-fg); border-color: var(--status-blue-fg); }
 .pt-dhx .gantt_task_line.pt-dhx-green { background: var(--status-green-fg); border-color: var(--status-green-fg); }
 .pt-dhx .gantt_task_line.pt-dhx-red { background: var(--destructive); border-color: var(--destructive); }
