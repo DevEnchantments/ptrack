@@ -55,6 +55,8 @@ export function TimelinePage() {
 
   const containerRef = useRef<HTMLDivElement | null>(null)
   const ganttRef = useRef<Gantt | null>(null)
+  // The chart scrolls inside its own frame — never the page (house rule).
+  const frameHeight = Math.max(420, Math.round(window.innerHeight * 0.65))
 
   useEffect(() => {
     Promise.all([projectsApi.list(), registryApi.milestones()])
@@ -128,6 +130,7 @@ export function TimelinePage() {
       view_mode: viewMode,
       view_mode_select: false,
       readonly_progress: true,
+      container_height: frameHeight,
       on_click: (task: FrappeTask) => {
         const raw = String(task.id)
         if (raw.startsWith('p:')) navigate(`/projects/${raw.slice(2)}`)
@@ -250,7 +253,11 @@ export function TimelinePage() {
         </p>
       ) : (
         <div className="mt-6 overflow-hidden rounded-lg border bg-card shadow-xs">
-          <div ref={containerRef} className="pt-gantt" />
+          <div
+            ref={containerRef}
+            className="pt-gantt overflow-y-auto"
+            style={{ height: frameHeight, maxHeight: frameHeight }}
+          />
         </div>
       )}
 
