@@ -665,8 +665,8 @@
     "semantic_hash": "2e092757eaa8553feb3c7bb53e6a8a3b"
   },
   "CLAUDE.md": {
-    "mtime": 1786456331.2017393,
-    "ast_hash": "40df2c14137960387c3b718de31c8b35",
+    "mtime": 1786523909.7541962,
+    "ast_hash": "0617779d0516d74f32ebc13a3f6fb048",
     "semantic_hash": ""
   },
   "README.md": {
@@ -905,8 +905,8 @@
     "semantic_hash": ""
   },
   "docs/FDD-ALIGNMENT.md": {
-    "mtime": 1786519898.2856748,
-    "ast_hash": "754aecb0d0770f20b515b2ff39fd40fe",
+    "mtime": 1786523909.7521958,
+    "ast_hash": "e2cda53ed31732d53732de407892d152",
     "semantic_hash": ""
   },
   "backend/db/fdd_project_fields.sql": {

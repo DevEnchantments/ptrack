@@ -1,7 +1,7 @@
 # Graph Report - ptrack  (2026-08-12)
 
 ## Corpus Check
-- 275 files · ~120,810 words
+- 275 files · ~120,909 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -166,7 +166,7 @@ Cohesion: 0.17
 Nodes (12): 10. PL/SQL package layer, 11. Notable architectural patterns, 12. Summary, 1. Application overview, 3. Dashboards & reporting, 4. Notifications & email automation, 5. Security & access control, 6. Extensibility framework ("Flex Columns") (+4 more)
 
 ### Community 1 - "Community 1"
-Cohesion: 0.09
+Cohesion: 0.10
 Nodes (19): ProvisionUserDto, ApiProperty, IsEmail, IsString, MaxLength, MinLength, ApiBody, Body (+11 more)
 
 ### Community 2 - "Community 2"
@@ -179,7 +179,7 @@ Nodes (9): 2. Functionality inventory (FDD FR-01…15 → status), 3. Use cases 
 
 ### Community 4 - "Community 4"
 Cohesion: 0.06
-Nodes (35): devDependencies, eslint-config-prettier, @eslint/eslintrc, @eslint/js, globals, jest, @nestjs/cli, @nestjs/schematics (+27 more)
+Nodes (35): devDependencies, eslint-config-prettier, @eslint/eslintrc, @eslint/js, eslint-plugin-prettier, globals, jest, @nestjs/schematics (+27 more)
 
 ### Community 5 - "Community 5"
 Cohesion: 0.29
@@ -259,7 +259,7 @@ Nodes (19): compilerOptions, allowImportingTsExtensions, erasableSyntaxOnly, lib
 
 ### Community 24 - "Community 24"
 Cohesion: 0.10
-Nodes (21): @base-ui/react, class-variance-authority, clsx, dhtmlx-gantt, dependencies, @base-ui/react, class-variance-authority, clsx (+13 more)
+Nodes (21): @base-ui/react, class-variance-authority, clsx, frappe-gantt, dependencies, @base-ui/react, class-variance-authority, clsx (+13 more)
 
 ### Community 25 - "Community 25"
 Cohesion: 0.07
@@ -573,7 +573,7 @@ Nodes (12): logger, Attachment, AttachmentDetail, AttachmentListItem, Resource, 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `toHttpException()` connect `Community 28` to `Community 1`, `Community 5`, `Community 6`, `Community 7`, `Community 9`, `Community 10`, `Community 12`, `Community 13`, `CreateProjectDto`, `Community 26`, `Community 27`, `AddMilestoneDialog.tsx`, `ProjectsRepository`, `status-reports.repository.ts`, `Community 44`, `RecordHistoryService`, `Community 50`, `@nestjs/swagger`, `PeopleRepository`, `auth-context.tsx`, `.add`, `react-dom`, `.add`, `DatabaseService`, `2. Findings per surface`, `milestones.repository.ts`, `transform`, `Get`, `PeoplePage.tsx`, `ApiProperty`, `attachments.repository.ts`?**
+- **Why does `toHttpException()` connect `Community 28` to `Community 1`, `Community 5`, `Community 6`, `Community 7`, `Community 8`, `Community 9`, `Community 10`, `Community 12`, `Community 13`, `CreateProjectDto`, `Community 26`, `Community 27`, `AddMilestoneDialog.tsx`, `ProjectsRepository`, `status-reports.repository.ts`, `Community 44`, `RecordHistoryService`, `Community 50`, `@nestjs/swagger`, `PeopleRepository`, `auth-context.tsx`, `.add`, `react-dom`, `.add`, `DatabaseService`, `2. Findings per surface`, `milestones.repository.ts`, `transform`, `Get`, `PeoplePage.tsx`, `ApiProperty`, `attachments.repository.ts`?**
   _High betweenness centrality (0.100) - this node is a cross-community bridge._
 - **Why does `AuthUser` connect `Community 8` to `Community 1`, `Community 6`, `Community 7`, `Community 9`, `Community 10`, `CreateProjectDto`, `Community 26`, `status-reports.repository.ts`, `CreateProjectDto`, `Community 44`, `nest-cli.json`, `RecordHistoryService`, `@nestjs/swagger`, `@types/node`, `PeopleRepository`, `auth-context.tsx`, `PaginationQueryDto`, `react-dom`, `WorkflowPanel.tsx`, `WorkflowPanel.tsx`, `users.module.ts`, `ApiProperty`?**
   _High betweenness centrality (0.053) - this node is a cross-community bridge._
@@ -582,7 +582,7 @@ _Questions this graph is uniquely positioned to answer:_
 - **What connects `$schema`, `includeCoAuthoredBy`, `defaultMode` to the rest of the system?**
   _449 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 1` be split into smaller, more focused modules?**
-  _Cohesion score 0.0944741532976827 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.0967741935483871 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
   _Cohesion score 0.05853658536585366 - nodes in this community are weakly interconnected._
 - **Should `Community 4` be split into smaller, more focused modules?**

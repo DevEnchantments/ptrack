@@ -860,7 +860,7 @@
       "source_location": "L43",
       "_origin": "ast",
       "id": "backend_package_devdependencies_nestjs_cli",
-      "community": 4,
+      "community": 103,
       "norm_label": "@nestjs/cli"
     },
     {
@@ -870,7 +870,7 @@
       "source_location": "L43",
       "_origin": "ast",
       "id": "nestjs_cli",
-      "community": 4,
+      "community": 103,
       "norm_label": "@nestjs/cli"
     },
     {
@@ -1040,7 +1040,7 @@
       "source_location": "L52",
       "_origin": "ast",
       "id": "backend_package_devdependencies_eslint_plugin_prettier",
-      "community": 103,
+      "community": 4,
       "norm_label": "eslint-plugin-prettier"
     },
     {
@@ -1050,7 +1050,7 @@
       "source_location": "L52",
       "_origin": "ast",
       "id": "eslint_plugin_prettier",
-      "community": 103,
+      "community": 4,
       "norm_label": "eslint-plugin-prettier"
     },
     {
@@ -13700,7 +13700,7 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "backend_src_modules_users_users_controller_userscontroller_claim",
-      "community": 1,
+      "community": 8,
       "norm_label": ".claim()"
     },
     {
@@ -13840,7 +13840,7 @@
       "source_location": "L63",
       "_origin": "ast",
       "id": "backend_src_modules_users_users_service_usersservice_claimforcurrentuser",
-      "community": 1,
+      "community": 8,
       "norm_label": ".claimforcurrentuser()"
     },
     {
@@ -14670,7 +14670,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "frontend_package_dependencies_dhtmlx_gantt",
-      "community": 24,
+      "community": 108,
       "norm_label": "dhtmlx-gantt"
     },
     {
@@ -14680,7 +14680,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "dhtmlx_gantt",
-      "community": 24,
+      "community": 108,
       "norm_label": "dhtmlx-gantt"
     },
     {
@@ -14690,7 +14690,7 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "frontend_package_dependencies_frappe_gantt",
-      "community": 108,
+      "community": 24,
       "norm_label": "frappe-gantt"
     },
     {
@@ -14700,7 +14700,7 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "frappe_gantt",
-      "community": 108,
+      "community": 24,
       "norm_label": "frappe-gantt"
     },
     {
@@ -21327,7 +21327,7 @@
       "label": "6. Open questions for the supervisor (blockers marked \u26d4)",
       "file_type": "document",
       "source_file": "docs/FDD-ALIGNMENT.md",
-      "source_location": "L315",
+      "source_location": "L324",
       "_origin": "ast",
       "id": "docs_fdd_alignment_6_open_questions_for_the_supervisor_blockers_marked",
       "community": 3,
@@ -21337,7 +21337,7 @@
       "label": "7. Execution roadmap",
       "file_type": "document",
       "source_file": "docs/FDD-ALIGNMENT.md",
-      "source_location": "L347",
+      "source_location": "L356",
       "_origin": "ast",
       "id": "docs_fdd_alignment_7_execution_roadmap",
       "community": 3,
@@ -21347,7 +21347,7 @@
       "label": "Recorded requirements from Fares (2026-08-11) \u2014 AI-assisted invitations",
       "file_type": "document",
       "source_file": "docs/FDD-ALIGNMENT.md",
-      "source_location": "L354",
+      "source_location": "L363",
       "_origin": "ast",
       "id": "docs_fdd_alignment_recorded_requirements_from_fares_2026_08_11_ai_assisted_invitations",
       "community": 3,
@@ -21357,7 +21357,7 @@
       "label": "8. Conventions carried forward",
       "file_type": "document",
       "source_file": "docs/FDD-ALIGNMENT.md",
-      "source_location": "L376",
+      "source_location": "L385",
       "_origin": "ast",
       "id": "docs_fdd_alignment_8_conventions_carried_forward",
       "community": 3,
@@ -74250,7 +74250,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/FDD-ALIGNMENT.md",
-      "source_location": "L315",
+      "source_location": "L324",
       "weight": 1.0,
       "source": "docs_fdd_alignment_fdd_alignment_p_track_project_tracker_fdd",
       "target": "docs_fdd_alignment_6_open_questions_for_the_supervisor_blockers_marked",
@@ -74260,7 +74260,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/FDD-ALIGNMENT.md",
-      "source_location": "L347",
+      "source_location": "L356",
       "weight": 1.0,
       "source": "docs_fdd_alignment_fdd_alignment_p_track_project_tracker_fdd",
       "target": "docs_fdd_alignment_7_execution_roadmap",
@@ -74270,7 +74270,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/FDD-ALIGNMENT.md",
-      "source_location": "L376",
+      "source_location": "L385",
       "weight": 1.0,
       "source": "docs_fdd_alignment_fdd_alignment_p_track_project_tracker_fdd",
       "target": "docs_fdd_alignment_8_conventions_carried_forward",
@@ -74360,7 +74360,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/FDD-ALIGNMENT.md",
-      "source_location": "L354",
+      "source_location": "L363",
       "weight": 1.0,
       "source": "docs_fdd_alignment_7_execution_roadmap",
       "target": "docs_fdd_alignment_recorded_requirements_from_fares_2026_08_11_ai_assisted_invitations",
