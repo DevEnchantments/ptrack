@@ -126,22 +126,10 @@ export function ProjectGantt({ projectId, milestones, outcomes }: Props) {
       { name: 'code', label: 'ID', width: 56, align: 'left' },
       { name: 'text', label: 'Outcome / Milestone', tree: true, width: 284 },
     ]
-    // Draggable divider between the name grid and the timeline, so the
-    // grid/chart split is user-adjustable instead of fixed.
-    gantt.config.layout = {
-      css: 'gantt_container',
-      rows: [
-        {
-          cols: [
-            { view: 'grid', scrollX: 'scrollHor', scrollY: 'scrollVer' },
-            { resizer: true, width: 1 },
-            { view: 'timeline', scrollX: 'scrollHor', scrollY: 'scrollVer' },
-            { view: 'scrollbar', id: 'scrollVer' },
-          ],
-        },
-        { view: 'scrollbar', id: 'scrollHor' },
-      ],
-    }
+    // The whole widget (name grid + timeline) renders at full content width
+    // and the card scrolls it as ONE surface — no inner chart-only scroll.
+    gantt.config.autosize = 'x'
+    gantt.config.min_column_width = 64
     gantt.templates.task_class = (_s, _e, task) =>
       (task as unknown as { statusClass?: string }).statusClass ?? ''
 
@@ -166,13 +154,12 @@ export function ProjectGantt({ projectId, milestones, outcomes }: Props) {
           return
         }
         const x = gantt.posFromDate(now)
-        const scroll = gantt.getScrollState() as { x: number }
         const timelinePane = el.querySelector('.gantt_task') as HTMLElement | null
         const gridEdge = timelinePane
           ? timelinePane.getBoundingClientRect().left -
             el.getBoundingClientRect().left
           : gantt.config.grid_width
-        const left = gridEdge + x - scroll.x
+        const left = gridEdge + x
         if (left <= gridEdge) {
           line.style.display = 'none'
           return
@@ -184,32 +171,27 @@ export function ProjectGantt({ projectId, milestones, outcomes }: Props) {
       }
     }
     positionTodayLine()
-    const scrollHandler = gantt.attachEvent('onGanttScroll', positionTodayLine)
     const renderHandler = gantt.attachEvent('onGanttRender', positionTodayLine)
-    const resizeHandler = gantt.attachEvent('onGridResizeEnd', () => {
-      positionTodayLine()
-      return true
-    })
 
     return () => {
       // Singleton hygiene: never destructor() the global instance — it can't
       // be revived, which breaks StrictMode remounts and tab revisits.
       gantt.detachEvent(clickHandler)
-      gantt.detachEvent(scrollHandler)
       gantt.detachEvent(renderHandler)
-      gantt.detachEvent(resizeHandler)
       gantt.clearAll()
     }
   }, [projectId, milestones, outcomes, navigate])
 
   return (
-    <div className="pt-dhx relative overflow-hidden rounded-md border">
-      <div ref={containerRef} style={{ height: 440, width: '100%' }} />
-      <div
-        ref={todayLineRef}
-        className="pointer-events-none absolute bottom-0 top-0 z-10 hidden w-px bg-primary"
-        aria-hidden
-      />
+    <div className="pt-dhx overflow-x-auto rounded-md border">
+      <div className="relative" style={{ height: 440, width: 'max-content', minWidth: '100%' }}>
+        <div ref={containerRef} style={{ height: 440 }} />
+        <div
+          ref={todayLineRef}
+          className="pointer-events-none absolute bottom-0 top-0 z-10 hidden w-px bg-primary"
+          aria-hidden
+        />
+      </div>
     </div>
   )
 }
