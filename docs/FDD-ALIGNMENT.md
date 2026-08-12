@@ -139,7 +139,7 @@ index (timeliness/completeness/reliability, Figs 30–31) — **formulas = ASK (
 |---|---|---|
 | FR-01 | Project register grid: filters, pagination, sort, status indicators | PARTIAL — filter rail + status pills exist; grid view + manual/calculated columns ✅ SHIPPED 2026-08-03 (sortable Fig 1 grid as a card/grid toggle, persisted; CSV export via FR-13 confirm — UC-03, CSV not XLSX to stay dependency-free). 2026-07-30: home cards show a **milestone-completion** bar (done/total, labeled "Milestones") + open-issue counts via `GET /projects` aggregates — deliberately NOT the FDD's calculated progress, which awaits OI-02 formula sign-off (docs/FORMULAS.md rule); swap the bar to official progress when it lands |
 | FR-02 | Navigation: lists / views / reports / dashboards | PARTIAL — shell + stub items exist |
-| FR-03 | Project detail tabs (Overview, Achievement, Risk & Issue, Comment, Dashboard, Documentation, KPI, Change History) | ✅ SHIPPED 2026-08-03 (mapping ASSUMED: Overview=cards+fields+people · Achievement=milestones+action items · Risk & Issue=risks+issues · Comments=updates · Documentation=links+resources+reports+attachments · Change History=NEW project-wide audit feed incl. deletions via `GET /projects/:id/history`; Dashboard + KPI are disabled stubs pending their waves). Sticky SectionNav is tab-aware |
+| FR-03 | Project detail tabs (Overview, Achievement, Risk & Issue, Comment, Dashboard, Documentation, KPI, Change History) | ✅ SHIPPED 2026-08-03 (mapping ASSUMED: Overview=cards+fields+people · Achievement=milestones+action items · Risk & Issue=risks+issues · Comments=updates · Documentation=links+resources+reports+attachments · Change History=NEW project-wide audit feed incl. deletions via `GET /projects/:id/history`; Dashboard tab LIVE 2026-08-12 — Fig 8/9 per-project charts; KPI is the last stub, pending linkage). Sticky SectionNav is tab-aware |
 | FR-04 | Actual/planned progress, milestones done/total, budget cards | ✅ SHIPPED 2026-08-03: overview cards on the project page (progress vs plan with delta + F4 suggestion, milestone donut, budget utilization with over-budget flag, open items) |
 | FR-05 | Milestone status donut (Completed / Not Started / On Target) | ✅ SHIPPED 2026-08-03 (buckets ASSUMED: Completed / On Target / Overdue from status+due date; FDD bucket names remain the milestone-status ASK). CVD-validated chart trio, legend with counts |
 | FR-06 | Task lists: upcoming/completed, drawer, attachments, work notes | PARTIAL — action items + comments exist; drawer/grouping missing |
@@ -248,7 +248,17 @@ toggleable. **Drag/resize writes dates** through the normal PATCH endpoints
 (history trigger records it); click opens the record. Week/Month zoom +
 Active/Done/All + name filter; dark-mode readability overrides included.
 Gotcha logged: the package's exports map hides its css — imported by direct
-node_modules path. Data = existing `projectsApi.list` + `GET /milestones`
+node_modules path.
+
+**Per-project Dashboard tab — ✅ SHIPPED 2026-08-12** (Fig 8/9; FR-03's
+seventh tab, leaving only KPI stubbed): planned-vs-actual line chart
+(hand-rolled SVG; PROVISIONAL reconstruction — no progress history is stored,
+so actual = cumulative milestone weight completed by month-end, planned =
+cumulative weight due, time-elapsed fallback when weights/dates are missing),
+Budget Status donut (utilized vs unutilized of approved, gold token), and a
+read-only project-scoped frappe-gantt milestone roadmap (click-through to
+milestones; rescheduling stays on the portfolio Timeline). Zero backend —
+fed by data the page already loads. Data = existing `projectsApi.list` + `GET /milestones`
 — zero backend work.
 
 **Bulk data load — ✅ SHIPPED 2026-08-11** (original-app roadmap; also the

@@ -50,6 +50,7 @@ import { AdjustWeightsDialog } from '@/components/AdjustWeightsDialog'
 import { EditOutcomeDialog } from '@/components/EditOutcomeDialog'
 import { SaveTemplateDialog } from '@/components/SaveTemplateDialog'
 import { CreateAccountDialog } from '@/components/CreateAccountDialog'
+import { ProjectDashboardTab } from '@/components/ProjectDashboardTab'
 import { TagChips } from '@/components/TagChips'
 import { ProjectOverviewCards } from '@/components/ProjectOverviewCards'
 import { WorkflowPanel } from '@/components/WorkflowPanel'
@@ -231,6 +232,7 @@ const PROJECT_TABS = [
   'Achievement',
   'Risk & Issue',
   'Comments',
+  'Dashboard',
   'Documentation',
   'Change History',
 ] as const
@@ -764,10 +766,10 @@ export function ProjectDetailPage() {
                 {t}
               </button>
             ))}
-            {['Dashboard', 'KPI'].map((t) => (
+            {['KPI'].map((t) => (
               <span
                 key={t}
-                title="Coming with the dashboards & KPI waves"
+                title="Coming once the KPI-to-project linkage is confirmed"
                 className="cursor-not-allowed whitespace-nowrap border-b-2 border-transparent pb-2 text-sm text-muted-foreground/50"
               >
                 {t}
@@ -1678,6 +1680,10 @@ export function ProjectDetailPage() {
               })}
             </ul>
           </SectionCard>
+          )}
+
+          {activeTab === 'Dashboard' && (
+            <ProjectDashboardTab project={project} milestones={milestones} />
           )}
 
           {activeTab === 'Change History' && (

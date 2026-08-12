@@ -297,6 +297,7 @@ export interface Milestone {
   start_date: string | null
   due_date: string | null
   original_due_date: string | null
+  completed_date: string | null
   status: string
   role_id: string | null
   owner_id: string | null
