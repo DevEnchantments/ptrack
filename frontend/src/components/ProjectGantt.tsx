@@ -126,6 +126,22 @@ export function ProjectGantt({ projectId, milestones, outcomes }: Props) {
       { name: 'code', label: 'ID', width: 56, align: 'left' },
       { name: 'text', label: 'Outcome / Milestone', tree: true, width: 284 },
     ]
+    // Draggable divider between the name grid and the timeline, so the
+    // grid/chart split is user-adjustable instead of fixed.
+    gantt.config.layout = {
+      css: 'gantt_container',
+      rows: [
+        {
+          cols: [
+            { view: 'grid', scrollX: 'scrollHor', scrollY: 'scrollVer' },
+            { resizer: true, width: 1 },
+            { view: 'timeline', scrollX: 'scrollHor', scrollY: 'scrollVer' },
+            { view: 'scrollbar', id: 'scrollVer' },
+          ],
+        },
+        { view: 'scrollbar', id: 'scrollHor' },
+      ],
+    }
     gantt.templates.task_class = (_s, _e, task) =>
       (task as unknown as { statusClass?: string }).statusClass ?? ''
 
@@ -151,8 +167,13 @@ export function ProjectGantt({ projectId, milestones, outcomes }: Props) {
         }
         const x = gantt.posFromDate(now)
         const scroll = gantt.getScrollState() as { x: number }
-        const left = gantt.config.grid_width + x - scroll.x
-        if (left <= gantt.config.grid_width) {
+        const timelinePane = el.querySelector('.gantt_task') as HTMLElement | null
+        const gridEdge = timelinePane
+          ? timelinePane.getBoundingClientRect().left -
+            el.getBoundingClientRect().left
+          : gantt.config.grid_width
+        const left = gridEdge + x - scroll.x
+        if (left <= gridEdge) {
           line.style.display = 'none'
           return
         }
@@ -165,6 +186,10 @@ export function ProjectGantt({ projectId, milestones, outcomes }: Props) {
     positionTodayLine()
     const scrollHandler = gantt.attachEvent('onGanttScroll', positionTodayLine)
     const renderHandler = gantt.attachEvent('onGanttRender', positionTodayLine)
+    const resizeHandler = gantt.attachEvent('onGridResizeEnd', () => {
+      positionTodayLine()
+      return true
+    })
 
     return () => {
       // Singleton hygiene: never destructor() the global instance — it can't
@@ -172,6 +197,7 @@ export function ProjectGantt({ projectId, milestones, outcomes }: Props) {
       gantt.detachEvent(clickHandler)
       gantt.detachEvent(scrollHandler)
       gantt.detachEvent(renderHandler)
+      gantt.detachEvent(resizeHandler)
       gantt.clearAll()
     }
   }, [projectId, milestones, outcomes, navigate])
