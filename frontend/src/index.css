@@ -285,6 +285,37 @@
 }
 /* Tab rows scroll horizontally when narrow; the scrollbar itself is hidden
    (wheel/swipe still scroll). */
+/* DHTMLX gantt (project dashboard): status colors + chrome from tokens. */
+.pt-dhx .gantt_task_line.pt-dhx-blue { background: var(--status-blue-fg); border-color: var(--status-blue-fg); }
+.pt-dhx .gantt_task_line.pt-dhx-green { background: var(--status-green-fg); border-color: var(--status-green-fg); }
+.pt-dhx .gantt_task_line.pt-dhx-red { background: var(--destructive); border-color: var(--destructive); }
+.pt-dhx .gantt_task_line .gantt_task_progress { background: rgb(0 0 0 / 0.25); }
+.pt-dhx .gantt_task_line.pt-dhx-outcome { background: var(--muted-foreground); border-color: var(--muted-foreground); }
+.pt-dhx .gantt_grid_scale,
+.pt-dhx .gantt_task_scale,
+.pt-dhx .gantt_grid_scale .gantt_grid_head_cell,
+.pt-dhx .gantt_scale_cell {
+    color: var(--muted-foreground);
+    font-size: 11px;
+}
+.pt-dhx .gantt_container {
+    border: none;
+    font-family: inherit;
+    background: var(--card);
+}
+.pt-dhx .gantt_grid,
+.pt-dhx .gantt_grid_data .gantt_cell {
+    background: var(--card);
+    color: var(--foreground);
+}
+.pt-dhx .gantt_task_row,
+.pt-dhx .gantt_task_bg {
+    background: var(--card);
+}
+.pt-dhx .gantt_row.gantt_row_project .gantt_cell {
+    font-weight: 600;
+}
+
 /* frappe-gantt theming: status colors from tokens; readable in dark mode. */
 .pt-gantt .gantt .bar-wrapper.pt-blue .bar { fill: var(--status-blue-bg); }
 .pt-gantt .gantt .bar-wrapper.pt-blue .bar-progress { fill: var(--status-blue-fg); }

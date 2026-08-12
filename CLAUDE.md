@@ -66,7 +66,7 @@ Every record type now has Create, Read, Update **and Delete**.
   not hardcode hexes. AA-verified pairs; alternates A/B/D live in the session scratchpad.
 - **My Dashboard preview (`/dashboard`):** sample-data-only page (badged as such) with 9
   hand-rolled SVG/CSS chart types — hand-rolled (no library); the one charting
-  library in the app is frappe-gantt on /timeline (SVAR rejected: React-18-only internals) (see FDD-ALIGNMENT). Chart series colors are the `--chart-1..3` tokens,
+  library in the app is frappe-gantt on /timeline + dhtmlx-gantt Community (MIT since v10) on the project Dashboard tab, lazy-loaded (see FDD-ALIGNMENT). Chart series colors are the `--chart-1..3` tokens,
   validated (CVD-safe adjacency: green|blue|orange order matters — blue separates the
   colorblind-confusable green/orange pair). Animations respect `prefers-reduced-motion`.
 - **Detail pages:** Milestone, Action Item, Status Report, Attachment. Issues, Links,

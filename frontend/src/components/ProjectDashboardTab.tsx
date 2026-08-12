@@ -1,24 +1,11 @@
-import { useEffect, useMemo, useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
-import Gantt, { type FrappeTask } from 'frappe-gantt'
-// Direct file path: the package's exports map hides the css subpath.
-import '../../node_modules/frappe-gantt/dist/frappe-gantt.css'
-import type { Milestone, ProjectDetail } from '@/lib/api'
+import { useMemo } from 'react'
+import { ProjectGantt } from '@/components/ProjectGantt'
+import type { Milestone, ProgramOutcome, ProjectDetail } from '@/lib/api'
 
 interface Props {
   project: ProjectDetail
   milestones: Milestone[]
-}
-
-const iso = (d: Date) =>
-  `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(
-    d.getDate(),
-  ).padStart(2, '0')}`
-
-const addDays = (dateIso: string, n: number) => {
-  const d = new Date(`${dateIso}T00:00:00`)
-  d.setDate(d.getDate() + n)
-  return iso(d)
+  outcomes: ProgramOutcome[]
 }
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
@@ -50,10 +37,7 @@ function milestoneShares(milestones: Milestone[]): Array<{ m: Milestone; share: 
  *  project Gantt. Series are RECONSTRUCTED from milestone dates (no progress
  *  history is stored): actual = weight completed by month, planned = weight
  *  due by month, time-elapsed fallback when dates/weights are missing. */
-export function ProjectDashboardTab({ project, milestones }: Props) {
-  const navigate = useNavigate()
-  const ganttRef = useRef<HTMLDivElement | null>(null)
-
+export function ProjectDashboardTab({ project, milestones, outcomes }: Props) {
   const series = useMemo(() => {
     const start = project.start_date
     const end = project.actual_end_date ?? project.target_end_date
@@ -97,39 +81,6 @@ export function ProjectDashboardTab({ project, milestones }: Props) {
     )
     return { points, planned, actual }
   }, [project, milestones])
-
-  useEffect(() => {
-    const el = ganttRef.current
-    if (!el) return
-    const rows: FrappeTask[] = milestones
-      .filter((m) => m.due_date)
-      .map((m) => ({
-        id: m.id,
-        name: m.name,
-        start: m.start_date ?? addDays(m.due_date as string, -14),
-        end: m.due_date as string,
-        progress: Math.min(Math.max(m.percent_complete ?? 0, 0), 100),
-        custom_class:
-          m.status === 'closed_completed'
-            ? 'pt-green'
-            : (m.due_date as string) < iso(new Date())
-              ? 'pt-ms-overdue'
-              : 'pt-blue',
-      }))
-    el.innerHTML = ''
-    if (rows.length === 0) return
-    new Gantt(el, rows, {
-      view_mode: 'Month',
-      view_mode_select: false,
-      readonly: true,
-      container_height: Math.min(rows.length * 38 + 90, 420),
-      on_click: (task: FrappeTask) =>
-        navigate(`/projects/${project.id}/milestones/${task.id}`),
-    })
-    return () => {
-      el.innerHTML = ''
-    }
-  }, [milestones, project.id, navigate])
 
   const approved = project.approved_budget
   const utilized = project.utilized_budget ?? 0
@@ -305,8 +256,12 @@ export function ProjectDashboardTab({ project, milestones }: Props) {
             No milestones with due dates yet.
           </p>
         ) : (
-          <div className="mt-3 overflow-hidden rounded-md border">
-            <div ref={ganttRef} className="pt-gantt overflow-y-auto" />
+          <div className="mt-3">
+            <ProjectGantt
+              projectId={project.id}
+              milestones={milestones}
+              outcomes={outcomes}
+            />
           </div>
         )}
       </div>

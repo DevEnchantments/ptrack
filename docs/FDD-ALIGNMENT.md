@@ -256,8 +256,17 @@ seventh tab, leaving only KPI stubbed): planned-vs-actual line chart
 so actual = cumulative milestone weight completed by month-end, planned =
 cumulative weight due, time-elapsed fallback when weights/dates are missing),
 Budget Status donut (utilized vs unutilized of approved, gold token), and a
-read-only project-scoped frappe-gantt milestone roadmap (click-through to
-milestones; rescheduling stays on the portfolio Timeline). Zero backend —
+the Fig-9 FULL Gantt on **dhtmlx-gantt Community 10.0.1** (MIT since v10,
+June 2026 — verified on npm; framework-agnostic imperative widget, so no
+React-version coupling): outcome parent rows with nested milestones, ID
+column (1.1 numbering), progress-filled status-colored bars, read-only with
+click-through (rescheduling stays on the portfolio Timeline). Today marker is
+PRO — drawn by hand via posFromDate + scroll sync. Singleton hygiene:
+clearAll() on unmount, never destructor(). The tab is lazy-loaded so
+DHTMLX's ~227 kB gzip chunk loads only when opened. Library roster:
+frappe-gantt stays on the Timeline; SVAR's NEW @svar-ui/react-gantt 2.7.1
+(MIT, react>=18) re-vetted as viable fallback — the old wx-react-gantt
+rejection no longer applies. Zero backend —
 fed by data the page already loads. Data = existing `projectsApi.list` + `GET /milestones`
 — zero backend work.
 

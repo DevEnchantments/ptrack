@@ -1,5 +1,13 @@
 import { toast } from '@/lib/toast'
-import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
+import {
+  Fragment,
+  Suspense,
+  lazy,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import { SectionCard } from '@/components/SectionCard'
 import { SectionNav } from '@/components/SectionNav'
 import { RecordHistory } from '@/components/RecordHistory'
@@ -50,7 +58,11 @@ import { AdjustWeightsDialog } from '@/components/AdjustWeightsDialog'
 import { EditOutcomeDialog } from '@/components/EditOutcomeDialog'
 import { SaveTemplateDialog } from '@/components/SaveTemplateDialog'
 import { CreateAccountDialog } from '@/components/CreateAccountDialog'
-import { ProjectDashboardTab } from '@/components/ProjectDashboardTab'
+const ProjectDashboardTab = lazy(() =>
+  import('@/components/ProjectDashboardTab').then((m) => ({
+    default: m.ProjectDashboardTab,
+  })),
+)
 import { TagChips } from '@/components/TagChips'
 import { ProjectOverviewCards } from '@/components/ProjectOverviewCards'
 import { WorkflowPanel } from '@/components/WorkflowPanel'
@@ -1683,7 +1695,17 @@ export function ProjectDetailPage() {
           )}
 
           {activeTab === 'Dashboard' && (
-            <ProjectDashboardTab project={project} milestones={milestones} />
+            <Suspense
+              fallback={
+                <div className="h-96 animate-pulse rounded-lg border bg-card" />
+              }
+            >
+              <ProjectDashboardTab
+                project={project}
+                milestones={milestones}
+                outcomes={outcomes}
+              />
+            </Suspense>
           )}
 
           {activeTab === 'Change History' && (
