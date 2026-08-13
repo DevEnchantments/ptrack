@@ -665,8 +665,8 @@
     "semantic_hash": "2e092757eaa8553feb3c7bb53e6a8a3b"
   },
   "CLAUDE.md": {
-    "mtime": 1786523909.7541962,
-    "ast_hash": "0617779d0516d74f32ebc13a3f6fb048",
+    "mtime": 1786625766.784384,
+    "ast_hash": "c61d2785e818955532999284f3909fb3",
     "semantic_hash": ""
   },
   "README.md": {
@@ -1502,6 +1502,11 @@
   "frontend/src/components/TaskAttachments.tsx": {
     "mtime": 1786622865.7606502,
     "ast_hash": "0aba518e0564ff64c66e39f8db9858dc",
+    "semantic_hash": ""
+  },
+  "docs/REFACTOR-PLAN.md": {
+    "mtime": 1786625747.866405,
+    "ast_hash": "8dd9b8ffcfa9212c47e4a73da3600548",
     "semantic_hash": ""
   }
 }

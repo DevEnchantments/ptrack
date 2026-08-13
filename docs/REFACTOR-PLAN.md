@@ -80,8 +80,8 @@ frontend 91 files / 21,438 lines / **0 tests on main**.
 
 ### Phase 0 — Safety net (prerequisite, no refactoring)
 
-- [ ] **0a.** Frontend test runner on this branch (vitest + Testing Library +
-      jsdom), `test` script, CI step.
+- [x] **0a.** Frontend test runner on this branch (vitest + Testing Library +
+      jsdom), `test` script, CI step. **Done 2026-08-13** — see session log.
 
       **Port it, do not redo it.** It is already proven green on
       `experiment/ui-ux-pro-max` in commit **`5ddef4f`**. Inspect with
@@ -106,6 +106,7 @@ frontend 91 files / 21,438 lines / **0 tests on main**.
       Decision needed from Fares: land the runner alone, or also port
       `lib/format.ts` + its tests as the first real coverage. Recommend the
       latter — a runner with nothing to run rots.
+      **Decided 2026-08-13: runner + `format.ts` + its 15 tests.**
 - [ ] **0b.** Characterization tests for the three pilot modules below, pinning
       current observable behaviour including the ugly parts.
 
@@ -173,4 +174,40 @@ Unit is the page or component family, not the file.
 Append one entry per session: date, module, skill used, what changed, what was
 left, verification result.
 
-_(empty)_
+### 2026-08-13 — Phase 0a, frontend test runner (no skill; a port, not a design pass)
+
+**Changed.** Ported the runner from `5ddef4f` on `experiment/ui-ux-pro-max`:
+`frontend/package.json` (`test` / `test:watch` + 5 devDependencies),
+`frontend/vite.config.ts` (`defineConfig` from `vitest/config` + `test` block:
+jsdom, setupFiles, `include: src/**/*.test.{ts,tsx}`), `frontend/src/test-setup.ts`,
+`frontend/src/lib/format.ts`, `frontend/src/lib/format.test.ts` (15 tests), and a
+frontend `Test` step in `.github/workflows/ci.yml`. `package-lock.json` regenerated
+by `npm install` (+81 packages).
+
+**Plan correction.** `format.ts` is **not** in `5ddef4f` — it predates that commit on
+the experiment branch, so only `format.test.ts` shows in `git show --stat`. Port it
+from the tree instead: `git show 5ddef4f:frontend/src/lib/format.ts`.
+
+**Left deliberately.**
+- The 3 duplicate `relativeTime()` copies (`HomePage`, `RecordHistory`,
+  `AttachmentDetailPage`) and 2 `initials()` copies still stand. `format.ts` lands with
+  zero dependents on purpose; deduping them is Phase 7, and folding it in here would
+  make the runner port unreviewable.
+- **Reported, not fixed** (ground rule 1): `frontend/tsconfig.json:8` carries a
+  deprecated `baseUrl`, so a bare `npx tsc --noEmit` in `frontend/` fails with TS5101.
+  The gate is unaffected — `npm run build` uses `tsc -b`, which passes. `5ddef4f`
+  dropped that line as a separate `chore:`; do the same when convenient.
+
+**Verification.** Baseline before: backend `tsc` / `eslint` / build clean, 47 tests in
+8 suites; frontend lint + build clean, **no test script**. After: identical backend
+result (47/8 — the port cannot touch it), frontend lint clean, build clean,
+**15 tests / 1 file passing**.
+
+**Cold-start trap confirmed, and it is worse than documented.** The first `vitest` run
+after `npm install` did not just look hung — it *failed*, at exactly 60.03s, with
+`[vitest-pool-runner]: Timeout waiting for worker to respond`. That is vitest's default
+worker-startup timeout, most likely corporate AV scanning the freshly written
+`node_modules`. The immediate re-run passed in 14.8s with no changes. **Re-run once
+before debugging anything.** Not `NODE_OPTIONS` (the failing run had
+`--use-system-ca` set, the passing one did not; the flag is only needed for the
+`npm install`). Clean CI runners have not shown it.
