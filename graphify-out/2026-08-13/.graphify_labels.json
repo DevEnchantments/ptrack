@@ -115,11 +115,5 @@
   "113": "RecordHistoryService",
   "114": "ApiProperty",
   "115": "IsDateString",
-  "116": "IsIn",
-  "117": "IsNumber",
-  "118": "IsOptional",
-  "119": "IsString",
-  "120": "IsUUID",
-  "121": "MaxLength",
-  "122": "TimelinePage"
+  "116": "IsIn"
 }

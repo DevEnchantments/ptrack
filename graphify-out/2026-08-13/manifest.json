@@ -555,8 +555,8 @@
     "semantic_hash": ""
   },
   "frontend/src/lib/api.ts": {
-    "mtime": 1786545386.9323108,
-    "ast_hash": "eba63e67ac6445b026252e868f77bc4f",
+    "mtime": 1786616962.2523363,
+    "ast_hash": "1e7187db66cd0c0550333bc55c4f765e",
     "semantic_hash": ""
   },
   "frontend/src/lib/auth-context.tsx": {
@@ -860,8 +860,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/DashboardPage.tsx": {
-    "mtime": 1785918383.105284,
-    "ast_hash": "9227e9d917ad32d55fae2c66a9e2b737",
+    "mtime": 1786616962.2533379,
+    "ast_hash": "4d12ae2794665282837e61de3ba8e500",
     "semantic_hash": ""
   },
   "frontend/src/components/SectionCard.tsx": {
@@ -905,8 +905,8 @@
     "semantic_hash": ""
   },
   "docs/FDD-ALIGNMENT.md": {
-    "mtime": 1786545980.5292678,
-    "ast_hash": "ef974fec21967a1f381e25c80755ced6",
+    "mtime": 1786617127.1414988,
+    "ast_hash": "22102053c68ff7772b51e08a7f2f24a4",
     "semantic_hash": ""
   },
   "backend/db/fdd_project_fields.sql": {
@@ -1045,8 +1045,8 @@
     "semantic_hash": ""
   },
   "docs/FORMULAS.md": {
-    "mtime": 1785759199.720515,
-    "ast_hash": "8b342b64e39c286b168bb073a3d5700d",
+    "mtime": 1786617127.0924964,
+    "ast_hash": "6ba387c9424ff15ada8e95447c623d14",
     "semantic_hash": ""
   },
   "backend/src/modules/milestones/dto/adjust-weights.dto.ts": {
@@ -1170,8 +1170,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/dashboard/dashboard.service.ts": {
-    "mtime": 1785917997.2914314,
-    "ast_hash": "bdbce64179bdcc654671eae1542491c6",
+    "mtime": 1786616795.7870657,
+    "ast_hash": "ae04623b2b866226cab4d9bb1c66f495",
     "semantic_hash": ""
   },
   "backend/db/fdd_kpis.sql": {
