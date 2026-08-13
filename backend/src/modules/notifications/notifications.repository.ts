@@ -34,6 +34,17 @@ export class NotificationsRepository {
     return data ?? [];
   }
 
+  /** Dedup probe for one-shot alerts keyed by their `type` string. */
+  async existsByType(type: string): Promise<boolean> {
+    const { data, error } = await this.table
+      .select('id')
+      .eq('type', type)
+      .limit(1)
+      .maybeSingle<{ id: string }>();
+    if (error) throw toHttpException(error, 'notifications.existsByType');
+    return data !== null;
+  }
+
   async insert(row: Record<string, unknown>): Promise<void> {
     const { error } = await this.table.insert(row);
     if (error) throw toHttpException(error, 'notifications.insert');

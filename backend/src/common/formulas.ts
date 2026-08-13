@@ -30,6 +30,19 @@ export function calculatedProgress(
   return Math.round(acc / weightSum);
 }
 
+/** F3 — probability x impact via lookup sort orders (1-3 scales -> 1-9). */
+export function riskScore(
+  probability?: { sort_order: number | null } | null,
+  impact?: { sort_order: number | null } | null,
+): number | null {
+  if (probability?.sort_order == null || impact?.sort_order == null)
+    return null;
+  return probability.sort_order * impact.sort_order;
+}
+
+/** F3 red band: scores at or above this are "high severity". */
+export const RISK_HIGH_THRESHOLD = 6;
+
 export const INITIATIVE_BUCKETS = [
   'Completed',
   'Over-Achieved',

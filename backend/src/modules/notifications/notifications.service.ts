@@ -24,6 +24,11 @@ export class NotificationsService {
     return this.repo.markAllRead(userId);
   }
 
+  /** True when any notification with this exact `type` was ever created. */
+  hasAnyOfType(type: string): Promise<boolean> {
+    return this.repo.existsByType(type);
+  }
+
   /** Best-effort insert; skips self-notifications and empty recipients. */
   async notify(entry: {
     userId: string | null | undefined;

@@ -201,7 +201,15 @@ reminders for open action items and milestones — recipients are the record's
 owners, falling back to PM then project owner; the dedup key
 (`reminder:<kind>:<record>:<id>:<due>`) embeds the due date so replans re-arm
 reminders and repeats are no-ops (`notifications/reminders.service.ts`, logic
-unit-tested). Still deferred: email (needs SMTP).
+unit-tested). ✅ 2026-08-13, the two remaining 3.9 triggers: (1) pre-cycle
+"progress update pending" — in the last 5 days of the month (window ASSUMED)
+the daily sweep nudges the PM (fallback: owner) of every project whose
+current-cycle submission is missing/draft/returned, once per project per cycle
+(`reminder:submission_pending:project:<id>:<period_start>`), skipped when the
+cycle is closed; (2) high-severity open risk — saving a risk/issue in the F3
+red band (probability x impact >= 6, PROVISIONAL) alerts PM + project owner
+once per risk (`risk_high:<id>` dedup, self-notification suppressed,
+best-effort). Still deferred: email (needs SMTP).
 
 **Code Table Administration — ✅ SHIPPED 2026-08-08** (from the original-app
 roadmap, supervisor-independent): `/admin/code-tables` (sidebar Administration

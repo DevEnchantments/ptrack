@@ -1,22 +1,76 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { RecordHistoryService } from '../../database/record-history.service';
-import { RisksRepository } from './risks.repository';
+import { RisksRepository, RiskListItem } from './risks.repository';
 import { CreateRiskDto } from './dto/create-risk.dto';
 import { UpdateRiskDto } from './dto/update-risk.dto';
+import { NotificationsService } from '../notifications/notifications.service';
+import { ProjectsRepository } from '../projects/projects.repository';
+import { RISK_HIGH_THRESHOLD, riskScore } from '../../common/formulas';
 
 @Injectable()
 export class RisksService {
+  private readonly logger = new Logger(RisksService.name);
+
   constructor(
     private readonly repo: RisksRepository,
     private readonly auditLog: RecordHistoryService,
+    private readonly notifications: NotificationsService,
+    private readonly projects: ProjectsRepository,
   ) {}
 
   list(projectId: string) {
     return this.repo.findByProject(projectId);
   }
 
-  add(projectId: string, dto: CreateRiskDto, userId: string) {
-    return this.repo.insert({
+  /**
+   * FDD 3.9 event alert: an open risk scoring in the F3 red band
+   * (probability x impact >= 6) notifies the PM and project owner, once per
+   * risk (the notification `type` is the dedup key). Best-effort — an alert
+   * failure never fails the save that triggered it.
+   */
+  private async maybeAlertHighSeverity(
+    projectId: string,
+    risk: RiskListItem,
+    actorId: string,
+  ): Promise<void> {
+    try {
+      const score = riskScore(risk.probability, risk.impact);
+      if (risk.status !== 'open' || score === null) return;
+      if (score < RISK_HIGH_THRESHOLD) return;
+      const type = `risk_high:${risk.id}`;
+      if (await this.notifications.hasAnyOfType(type)) return;
+      const project = await this.projects.findDetail(projectId);
+      const label = risk.type === 'issue' ? 'issue' : 'risk';
+      const statement =
+        risk.statement.length > 90
+          ? `${risk.statement.slice(0, 90)}…`
+          : risk.statement;
+      const recipients = new Set(
+        [project?.project_manager_id, project?.owner_id].filter(
+          (r): r is string => Boolean(r),
+        ),
+      );
+      for (const userId of recipients) {
+        await this.notifications.notify({
+          userId,
+          actorId,
+          projectId,
+          type,
+          title: `High-severity ${label} in ${project?.name ?? 'a project'}`,
+          body: `"${statement}" scored ${score}/9 (probability x impact).`,
+        });
+      }
+    } catch (err) {
+      this.logger.warn(
+        `High-severity risk alert failed for ${risk.id}: ${
+          (err as Error).message
+        }`,
+      );
+    }
+  }
+
+  async add(projectId: string, dto: CreateRiskDto, userId: string) {
+    const created = await this.repo.insert({
       project_id: projectId,
       statement: dto.statement.trim(),
       identified_by: dto.identified_by?.trim() || null,
@@ -35,9 +89,11 @@ export class RisksService {
       created_by: userId,
       updated_by: userId,
     });
+    await this.maybeAlertHighSeverity(projectId, created, userId);
+    return created;
   }
 
-  update(
+  async update(
     projectId: string,
     riskId: string,
     dto: UpdateRiskDto,
@@ -69,7 +125,9 @@ export class RisksService {
     if (dto.action !== undefined) patch.action = dto.action?.trim() || null;
     if (dto.status !== undefined) patch.status = dto.status;
     if (dto.type !== undefined) patch.type = dto.type;
-    return this.repo.update(projectId, riskId, patch);
+    const updated = await this.repo.update(projectId, riskId, patch);
+    await this.maybeAlertHighSeverity(projectId, updated, userId);
+    return updated;
   }
 
   async remove(projectId: string, riskId: string, userId: string) {

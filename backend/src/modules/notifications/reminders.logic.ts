@@ -34,6 +34,24 @@ export function reminderType(
 }
 
 /**
+ * Pre-cycle nudge window (ASSUMED): the last `days` calendar days of the
+ * month, i.e. the run-up to the reporting cycle's period_end.
+ */
+export function inSubmissionWindow(todayIso: string, days = 5): boolean {
+  const [y, m, d] = todayIso.split('-').map(Number);
+  const lastDay = new Date(Date.UTC(y, m, 0)).getUTCDate();
+  return lastDay - d < days;
+}
+
+/** Dedup key: one pending-submission nudge per project per cycle. */
+export function submissionPendingType(
+  projectId: string,
+  periodStart: string,
+): string {
+  return `reminder:submission_pending:project:${projectId}:${periodStart}`;
+}
+
+/**
  * Explicit owners win (all of them); otherwise the first available fallback
  * (project manager, then project owner). Empty when nobody is set.
  */

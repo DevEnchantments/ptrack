@@ -4,8 +4,10 @@ import { DatabaseService } from '../../database/database.service';
 import { NotificationsService } from './notifications.service';
 import {
   classifyDue,
+  inSubmissionWindow,
   reminderType,
   resolveRecipients,
+  submissionPendingType,
 } from './reminders.logic';
 
 interface ProjectRef {
@@ -172,7 +174,95 @@ export class RemindersService implements OnApplicationBootstrap {
       );
     }
 
+    sent += await this.submissionPendingSweep(todayIso, already);
+
     this.logger.log(`Reminder sweep: ${sent} notification(s) created.`);
     return { sent };
+  }
+
+  /**
+   * FDD 3.9 pre-cycle reminder: in the run-up to period_end, nudge the PM
+   * (fallback: owner) of every project whose current-cycle submission is
+   * still missing, draft, or returned. Once per project per cycle (the
+   * dedup key embeds period_start); skipped when the cycle is closed.
+   */
+  private async submissionPendingSweep(
+    todayIso: string,
+    already: Set<string>,
+  ): Promise<number> {
+    if (!inSubmissionWindow(todayIso)) return 0;
+
+    const periodStart = `${todayIso.slice(0, 7)}-01`;
+    const [cycle, subs, projects] = await Promise.all([
+      this.db.client
+        .from('cycles')
+        .select('id, name, period_end, status')
+        .eq('period_start', periodStart)
+        .maybeSingle<{
+          id: string;
+          name: string;
+          period_end: string;
+          status: string;
+        }>(),
+      this.db.client
+        .from('submissions')
+        .select('project_id, status, cycle:cycles!inner ( period_start )')
+        .eq('cycles.period_start', periodStart),
+      this.db.client
+        .from('projects')
+        .select('id, name, project_manager_id, owner_id'),
+    ]);
+    const failed = cycle.error ?? subs.error ?? projects.error;
+    if (failed) {
+      this.logger.warn(`Submission-pending sweep failed: ${failed.message}`);
+      return 0;
+    }
+    // A closed cycle takes no more submissions — nudging would be noise.
+    if (cycle.data?.status === 'closed') return 0;
+
+    const submitted = new Set(
+      ((subs.data ?? []) as Array<{ project_id: string; status: string }>)
+        .filter((s) => !['draft', 'returned'].includes(s.status))
+        .map((s) => s.project_id),
+    );
+    const cycleName =
+      cycle.data?.name ??
+      new Date(`${periodStart}T00:00:00Z`).toLocaleDateString('en-US', {
+        month: 'long',
+        year: 'numeric',
+        timeZone: 'UTC',
+      });
+
+    let sent = 0;
+    type ProjectRow = {
+      id: string;
+      name: string;
+      project_manager_id: string | null;
+      owner_id: string | null;
+    };
+    for (const p of (projects.data ?? []) as ProjectRow[]) {
+      if (submitted.has(p.id)) continue;
+      const type = submissionPendingType(p.id, periodStart);
+      for (const userId of resolveRecipients(
+        [p.project_manager_id],
+        [p.owner_id],
+      )) {
+        if (already.has(`${userId}|${type}`)) continue;
+        already.add(`${userId}|${type}`);
+        await this.notifications.notify({
+          userId,
+          projectId: p.id,
+          type,
+          title: `Progress update pending: ${p.name}`,
+          body: `The ${cycleName} submission has not been sent for review${
+            cycle.data?.period_end
+              ? ` — the cycle ends ${cycle.data.period_end}`
+              : ''
+          }.`,
+        });
+        sent += 1;
+      }
+    }
+    return sent;
   }
 }
