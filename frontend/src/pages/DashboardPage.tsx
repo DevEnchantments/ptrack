@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { usePageTitle } from '@/lib/use-page-title'
 import { dashboardApi, type DashboardData } from '@/lib/api'
 import { Button } from '@/components/ui/button'
@@ -335,6 +336,200 @@ function ActionItemsBreakdown({ segments }: { segments: ChartSegment[] }) {
 // Segment order keeps chart-2 (orange) and chart-1 apart — the CVD-safe
 // adjacency the palette was validated with.
 /** Donut with center readout; hovering a segment swaps the center to it. */
+function formatAedShort(n: number): string {
+  if (Math.abs(n) >= 1_000_000) return `AED ${(n / 1_000_000).toFixed(2)}M`
+  return `AED ${Math.round(n).toLocaleString()}`
+}
+
+/** Fig-15 initiative-status donut (buckets per F5, PROVISIONAL). */
+function InitiativesDonut({ segments }: { segments: ChartSegment[] }) {
+  const entered = useEntranceFlag()
+  const total = segments.reduce((sum, d) => sum + d.value, 0)
+  const shown = segments.filter((d) => d.value > 0)
+  const R = 45
+  const C = 2 * Math.PI * R
+  const GAP = shown.length > 1 ? 3 : 0
+  const fractions = shown.map((d) => (total > 0 ? d.value / total : 0))
+  const arcs = shown.map((d, i) => ({
+    ...d,
+    len: Math.max(fractions[i] * C - GAP, 0),
+    offset: fractions.slice(0, i).reduce((sum, f) => sum + f, 0) * C,
+  }))
+  return (
+    <div className="rounded-lg border bg-card p-4 shadow-xs">
+      <h2 className="text-sm font-medium">Initiatives</h2>
+      <div className="mt-2 flex items-center gap-4">
+        <svg
+          viewBox="0 0 120 120"
+          className="h-32 w-32 shrink-0"
+          role="img"
+          aria-label={`Donut of ${total} initiatives by delivery bucket`}
+        >
+          <g transform="rotate(-90 60 60)">
+            {arcs.map((a, i) => (
+              <circle
+                key={a.label}
+                cx={60}
+                cy={60}
+                r={R}
+                fill="none"
+                stroke={a.color}
+                strokeWidth={12}
+                strokeDasharray={`${entered ? a.len : 0} ${C}`}
+                strokeDashoffset={-a.offset - GAP / 2}
+                style={{
+                  transition: `stroke-dasharray 800ms ease-out ${i * 120}ms`,
+                }}
+              />
+            ))}
+          </g>
+          <text
+            x="60"
+            y="66"
+            textAnchor="middle"
+            fontSize="22"
+            fontWeight="700"
+            fill="var(--foreground)"
+          >
+            {total}
+          </text>
+        </svg>
+        <ul className="grid flex-1 grid-cols-1 gap-1 text-xs">
+          {segments.map((d) => (
+            <li key={d.label} className="flex items-center gap-1.5">
+              <span
+                className="h-2.5 w-2.5 shrink-0 rounded-full"
+                style={{ background: d.color }}
+              />
+              <span className="truncate text-muted-foreground">{d.label}</span>
+              <span className="ml-auto font-medium tabular-nums">
+                {d.value}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  )
+}
+
+/** Fig-15 budget widget: utilized vs approved across the portfolio. */
+function BudgetBar({ approved, utilized }: { approved: number; utilized: number }) {
+  const entered = useEntranceFlag()
+  const frac = approved > 0 ? Math.min(utilized / approved, 1) : 0
+  return (
+    <div className="rounded-lg border bg-card p-4 shadow-xs">
+      <h2 className="text-sm font-medium">Budget</h2>
+      {approved <= 0 ? (
+        <p className="mt-3 text-sm text-muted-foreground">
+          No approved budgets recorded.
+        </p>
+      ) : (
+        <>
+          <p className="mt-2 text-2xl font-semibold">
+            {formatAedShort(utilized)}
+            <span className="ml-1 text-sm font-normal text-muted-foreground">
+              utilized
+            </span>
+          </p>
+          <div
+            className="mt-3 h-3 overflow-hidden rounded-full bg-muted"
+            role="img"
+            aria-label={`${Math.round(frac * 100)}% of ${formatAedShort(approved)} approved budget utilized`}
+          >
+            <div
+              className="h-full rounded-full bg-[var(--gold)] transition-[width] duration-700 ease-out"
+              style={{ width: entered ? `${frac * 100}%` : '0%' }}
+            />
+          </div>
+          <div className="mt-2 flex justify-between text-xs text-muted-foreground">
+            <span>of {formatAedShort(approved)} approved</span>
+            <span>{formatAedShort(Math.max(approved - utilized, 0))} unutilized</span>
+          </div>
+        </>
+      )}
+    </div>
+  )
+}
+
+const SUBMISSION_STYLE: Record<string, { label: string; cls: string }> = {
+  review: { label: 'REVIEW', cls: 'bg-[var(--status-blue-bg)] text-[var(--status-blue-fg)]' },
+  validated: { label: 'VALIDATE', cls: 'bg-[var(--status-green-bg)] text-[var(--status-green-fg)]' },
+  approved: { label: 'APPROVE', cls: 'bg-[var(--status-green-bg)] text-[var(--status-green-fg)]' },
+  returned: { label: 'RETURNED', cls: 'bg-[var(--status-amber-bg)] text-[var(--status-amber-fg)]' },
+  rejected: { label: 'REJECTED', cls: 'bg-[var(--status-red-bg)] text-[var(--status-red-fg)]' },
+  draft: { label: 'DRAFT', cls: 'bg-muted text-muted-foreground' },
+}
+
+/** Fig-15 cycle submission status widget; clicks through to the report. */
+function CycleStatusWidget({
+  segments,
+  onOpen,
+}: {
+  segments: ChartSegment[]
+  onOpen: () => void
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onOpen}
+      className="flex w-full cursor-pointer flex-col rounded-lg border bg-card p-4 text-left shadow-xs transition-[translate,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-2 focus-visible:outline-ring"
+    >
+      <h2 className="text-sm font-medium">Cycle Submission Status</h2>
+      <ul className="mt-2 flex flex-col gap-1.5">
+        {segments.map((d) => {
+          const style = SUBMISSION_STYLE[d.label] ?? {
+            label: d.label.toUpperCase(),
+            cls: 'bg-muted text-muted-foreground',
+          }
+          return (
+            <li key={d.label} className="flex items-center gap-2 text-xs">
+              <span
+                className={`inline-flex min-w-8 justify-center rounded px-1.5 py-0.5 font-semibold tabular-nums ${style.cls}`}
+              >
+                {d.value}
+              </span>
+              <span className="text-muted-foreground">{style.label}</span>
+            </li>
+          )
+        })}
+      </ul>
+    </button>
+  )
+}
+
+/** Fig-15 monthly breakdown strip: done/due milestones per month. */
+function MonthlyBreakdown({
+  months,
+}: {
+  months: Array<{ label: string; done: number; total: number }>
+}) {
+  const current = new Date().getMonth()
+  return (
+    <div className="rounded-lg border bg-card p-4 shadow-xs">
+      <h2 className="text-sm font-medium">Monthly Breakdown</h2>
+      <div className="scrollbar-none mt-3 flex gap-2 overflow-x-auto">
+        {months.map((m, i) => (
+          <div
+            key={m.label}
+            className={`flex min-w-16 flex-1 flex-col items-center rounded-md border px-2 py-2 ${
+              i === current ? 'border-primary bg-primary/5' : ''
+            }`}
+          >
+            <span className="text-xs text-muted-foreground">{m.label}</span>
+            <span className="mt-1 text-sm font-semibold tabular-nums">
+              {m.done}/{m.total}
+            </span>
+          </div>
+        ))}
+      </div>
+      <p className="mt-2 text-xs text-muted-foreground">
+        Milestones completed / due per month, current year.
+      </p>
+    </div>
+  )
+}
+
 function CategoryDonut({ segments }: { segments: ChartSegment[] }) {
   const entered = useEntranceFlag()
   const [hover, setHover] = useState<number | null>(null)
@@ -689,6 +884,7 @@ function ActivityHeatmap({ cells }: { cells: number[][] }) {
 
 export function DashboardPage() {
   usePageTitle('My Dashboard')
+  const navigate = useNavigate()
   const [data, setData] = useState<DashboardData | null>(null)
   const [error, setError] = useState<string | null>(null)
 
@@ -730,6 +926,24 @@ export function DashboardPage() {
       </div>
     )
   }
+
+  const BUCKET_COLORS: Record<string, string> = {
+    Completed: 'var(--chart-2)',
+    'Over-Achieved': 'var(--chart-1)',
+    'On Target': 'var(--status-green-fg)',
+    'Needs Attention': 'var(--gold)',
+    'Off Target': 'var(--destructive)',
+    'Severely Off Target': 'var(--status-red-fg)',
+    'Not Started': 'var(--muted-foreground)',
+  }
+  const initiativeSegments = data.executive.initiative_buckets.map((b) => ({
+    ...b,
+    color: BUCKET_COLORS[b.label] ?? 'var(--muted-foreground)',
+  }))
+  const submissionSegments = data.executive.submissions.map((d) => ({
+    ...d,
+    color: '',
+  }))
 
   const s = data.stats
   const statTiles = [
@@ -785,6 +999,22 @@ export function DashboardPage() {
         {statTiles.map((t) => (
           <StatTile key={t.label} {...t} />
         ))}
+      </div>
+
+      {/* Fig-15 executive row */}
+      <div className="mt-4 grid grid-cols-1 items-start gap-4 lg:grid-cols-3">
+        <InitiativesDonut segments={initiativeSegments} />
+        <BudgetBar
+          approved={data.executive.budget.approved}
+          utilized={data.executive.budget.utilized}
+        />
+        <CycleStatusWidget
+          segments={submissionSegments}
+          onOpen={() => navigate('/reporting/cycle-status')}
+        />
+      </div>
+      <div className="mt-4">
+        <MonthlyBreakdown months={data.executive.monthly} />
       </div>
 
       {/* items-start: cards keep their natural height instead of the tallest

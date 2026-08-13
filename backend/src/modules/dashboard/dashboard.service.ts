@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../../database/database.service';
 import { toHttpException } from '../../common/supabase-error';
+import { calculatedProgress, plannedProgress } from '../../common/formulas';
 
 export interface ChartPoint {
   label: string;
@@ -26,6 +27,13 @@ export interface DashboardData {
   overall_milestones: { done: number; total: number };
   /** 12 weeks x Mon-Fri raw activity counts (record_history rows). */
   heat: number[][];
+  /** Fig-15 executive widgets. Buckets follow F5 (PROVISIONAL). */
+  executive: {
+    initiative_buckets: ChartPoint[];
+    budget: { approved: number; utilized: number };
+    submissions: ChartPoint[];
+    monthly: Array<{ label: string; done: number; total: number }>;
+  };
 }
 
 const DONE = 'closed_completed';
@@ -63,16 +71,18 @@ export class DashboardService {
     const heatFrom = new Date(thisWeek);
     heatFrom.setUTCDate(heatFrom.getUTCDate() - 7 * 11);
 
-    const [projects, milestones, actionItems, updates, history] =
+    const [projects, milestones, actionItems, updates, history, submissions] =
       await Promise.all([
         this.db.client
           .from('projects')
           .select(
-            'id, created_at, status:project_statuses ( name ), category:project_categories ( name )',
+            'id, created_at, start_date, target_end_date, approved_budget, utilized_budget, status:project_statuses ( name ), category:project_categories ( name )',
           ),
         this.db.client
           .from('milestones')
-          .select('status, due_date, completed_date, is_major'),
+          .select(
+            'project_id, status, due_date, completed_date, is_major, weightage, percent_complete',
+          ),
         this.db.client
           .from('action_items')
           .select('status, due_date, created_at, updated_at'),
@@ -81,22 +91,41 @@ export class DashboardService {
           .from('record_history')
           .select('changed_at')
           .gte('changed_at', heatFrom.toISOString()),
+        this.db.client
+          .from('submissions')
+          .select('status, cycles!inner ( period_start, period_end )')
+          .lte('cycles.period_start', today)
+          .gte('cycles.period_end', today),
       ]);
-    for (const r of [projects, milestones, actionItems, updates, history]) {
+    for (const r of [
+      projects,
+      milestones,
+      actionItems,
+      updates,
+      history,
+      submissions,
+    ]) {
       if (r.error) throw toHttpException(r.error, 'dashboard.data');
     }
 
     type ProjectRow = {
       id: string;
       created_at: string;
+      start_date: string | null;
+      target_end_date: string | null;
+      approved_budget: number | null;
+      utilized_budget: number | null;
       status: { name: string } | null;
       category: { name: string } | null;
     };
     type MilestoneRow = {
+      project_id: string;
       status: string;
       due_date: string | null;
       completed_date: string | null;
       is_major: boolean;
+      weightage: number | null;
+      percent_complete: number | null;
     };
     type ActionItemRow = {
       status: string;
@@ -112,6 +141,9 @@ export class DashboardService {
     }>;
     const historyRows = (history.data ?? []) as unknown as Array<{
       changed_at: string;
+    }>;
+    const submissionRows = (submissions.data ?? []) as unknown as Array<{
+      status: string;
     }>;
 
     // --- stat tiles
@@ -221,6 +253,120 @@ export class DashboardService {
     }
 
     const activeMs = milestoneRows.filter((m) => m.status !== NA);
+
+    // --- Fig-15 executive widgets ---
+    // Initiative buckets per F5 (PROVISIONAL, docs/FORMULAS.md): delta =
+    // calculated - planned progress; cancelled projects are excluded.
+    const msByProject = new Map<string, MilestoneRow[]>();
+    for (const m of milestoneRows) {
+      (
+        msByProject.get(m.project_id) ??
+        msByProject.set(m.project_id, []).get(m.project_id)
+      )?.push(m);
+    }
+    const BUCKETS = [
+      'Completed',
+      'Over-Achieved',
+      'On Target',
+      'Needs Attention',
+      'Off Target',
+      'Severely Off Target',
+      'Not Started',
+    ] as const;
+    const bucketCounts = new Map<string, number>(BUCKETS.map((b) => [b, 0]));
+    for (const pr of projectRows) {
+      const st = (pr.status?.name ?? '').toLowerCase();
+      if (st.includes('cancel')) continue;
+      let bucket: (typeof BUCKETS)[number];
+      if (st.includes('completed') || st === 'complete' || st === 'closed') {
+        bucket = 'Completed';
+      } else if (st.includes('not started')) {
+        bucket = 'Not Started';
+      } else {
+        const calc = calculatedProgress(msByProject.get(pr.id) ?? []);
+        const planned = plannedProgress(pr.start_date, pr.target_end_date);
+        if (calc === null && planned === null) {
+          bucket = 'Not Started';
+        } else {
+          const delta = (calc ?? 0) - (planned ?? 0);
+          bucket =
+            delta >= 10
+              ? 'Over-Achieved'
+              : delta >= -5
+                ? 'On Target'
+                : delta >= -15
+                  ? 'Needs Attention'
+                  : delta >= -30
+                    ? 'Off Target'
+                    : 'Severely Off Target';
+        }
+      }
+      bucketCounts.set(bucket, (bucketCounts.get(bucket) ?? 0) + 1);
+    }
+
+    const submissionCounts = new Map<string, number>();
+    for (const sub of submissionRows) {
+      submissionCounts.set(
+        sub.status,
+        (submissionCounts.get(sub.status) ?? 0) + 1,
+      );
+    }
+    const SUBMISSION_ORDER = [
+      'review',
+      'validated',
+      'approved',
+      'returned',
+      'rejected',
+      'draft',
+    ];
+
+    const MONTH_LABELS = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
+    const year = String(now.getUTCFullYear());
+    const monthly = MONTH_LABELS.map((label, i) => {
+      const prefix = `${year}-${String(i + 1).padStart(2, '0')}`;
+      const due = activeMs.filter((m) => m.due_date?.startsWith(prefix));
+      return {
+        label,
+        done: due.filter((m) => m.status === DONE).length,
+        total: due.length,
+      };
+    });
+
+    const executive = {
+      initiative_buckets: BUCKETS.map((b) => ({
+        label: b,
+        value: bucketCounts.get(b) ?? 0,
+      })),
+      budget: {
+        approved: projectRows.reduce(
+          (sum, pr) => sum + (pr.approved_budget ?? 0),
+          0,
+        ),
+        utilized: projectRows.reduce(
+          (sum, pr) => sum + (pr.utilized_budget ?? 0),
+          0,
+        ),
+      },
+      submissions: SUBMISSION_ORDER.map((status) => ({
+        label: status,
+        value: submissionCounts.get(status) ?? 0,
+      })),
+      monthly,
+    };
+
     return {
       stats: {
         active_projects: activeProjects,
@@ -264,6 +410,7 @@ export class DashboardService {
         total: activeMs.length,
       },
       heat,
+      executive,
     };
   }
 }

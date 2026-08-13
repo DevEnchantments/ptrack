@@ -71,3 +71,22 @@ flag is off).
 KPI achievement %, data-quality index (timeliness/completeness/reliability),
 budget-threshold trigger values — these are organization-policy numbers, not
 standard defaults, and guessing them has real reporting consequences.
+
+## F5 — Initiative delivery buckets (PROVISIONAL, adopted 2026-08-13)
+
+Buckets the executive dashboard's initiative donut (FDD Fig 15) by
+`delta = calculated progress (F1) - planned progress (F2)`:
+
+| Bucket | Rule |
+|---|---|
+| Completed | project status is Completed/Complete/Closed |
+| Not Started | status Not Started, or no progress data at all |
+| Over-Achieved | delta >= +10 |
+| On Target | +10 > delta >= -5 |
+| Needs Attention | -5 > delta >= -15 |
+| Off Target | -15 > delta >= -30 |
+| Severely Off Target | delta < -30 |
+
+Cancelled projects are excluded from the donut. Thresholds are ASSUMED
+(standard tolerance bands); adjust on supervisor sign-off. Implementation:
+`backend/src/modules/dashboard/dashboard.service.ts`.

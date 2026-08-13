@@ -656,6 +656,12 @@ export interface DashboardData {
   flow: { labels: string[]; created: number[]; completed: number[] }
   overall_milestones: { done: number; total: number }
   heat: number[][]
+  executive: {
+    initiative_buckets: DashboardChartPoint[]
+    budget: { approved: number; utilized: number }
+    submissions: DashboardChartPoint[]
+    monthly: Array<{ label: string; done: number; total: number }>
+  }
 }
 
 export const dashboardApi = {
