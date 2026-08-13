@@ -34,6 +34,27 @@ export class ReportsController {
   }
 }
 
+/** FR-14 closure: lock/unlock the current month's reporting cycle. */
+@Controller('cycles')
+export class CyclesController {
+  constructor(private readonly submissions: SubmissionsService) {}
+
+  @Get('current')
+  current() {
+    return this.submissions.currentCycle();
+  }
+
+  @Post('current/close')
+  close() {
+    return this.submissions.closeCurrentCycle();
+  }
+
+  @Post('current/reopen')
+  reopen() {
+    return this.submissions.reopenCurrentCycle();
+  }
+}
+
 @Controller('projects/:projectId/submissions')
 export class SubmissionsController {
   constructor(private readonly submissions: SubmissionsService) {}

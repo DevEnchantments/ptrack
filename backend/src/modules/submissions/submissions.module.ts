@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import {
+  CyclesController,
   ReportsController,
   SubmissionsController,
 } from './submissions.controller';
@@ -11,7 +12,7 @@ import { NotificationsModule } from '../notifications/notifications.module';
 
 @Module({
   imports: [NotificationsModule],
-  controllers: [ReportsController, SubmissionsController],
+  controllers: [CyclesController, ReportsController, SubmissionsController],
   providers: [
     SubmissionsService,
     SubmissionsRepository,

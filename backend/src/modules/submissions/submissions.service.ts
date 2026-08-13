@@ -59,6 +59,30 @@ export class SubmissionsService {
     };
   }
 
+  /** The stored cycle for the current month, if any (null = implicit open). */
+  async currentCycle() {
+    return { cycle: await this.repo.findCycleFor(new Date()) };
+  }
+
+  /**
+   * FR-14 closure (ASSUMED: close locks ALL transitions — submit, validate,
+   * approve, return, reject — exact rules are OI-03). Idempotent.
+   */
+  async closeCurrentCycle() {
+    const cycle = await this.repo.getOrCreateCycleFor(new Date());
+    if (cycle.status === 'closed') return cycle;
+    return this.repo.setCycleStatus(cycle.id, 'closed');
+  }
+
+  /** Reopen escape hatch (enhancement): unlocks a mistakenly closed cycle. */
+  async reopenCurrentCycle() {
+    const cycle = await this.repo.findCycleFor(new Date());
+    if (!cycle)
+      throw new NotFoundException('No cycle exists for the current month.');
+    if (cycle.status === 'open') return cycle;
+    return this.repo.setCycleStatus(cycle.id, 'open');
+  }
+
   /** FDD 3.3.2 submission gate: mandatory fields + weights total 100. */
   private async gateFailures(projectId: string): Promise<string[]> {
     const project = await this.projects.findDetail(projectId);
@@ -95,6 +119,11 @@ export class SubmissionsService {
       );
     }
     const cycle = await this.repo.getOrCreateCycleFor(new Date());
+    if (cycle.status === 'closed') {
+      throw new BadRequestException(
+        `The ${cycle.name} cycle is closed; submissions are locked.`,
+      );
+    }
     const existing = await this.repo.findForCycle(projectId, cycle.id);
     const project = await this.projects.findDetail(projectId);
     const notifyValidator = () =>
@@ -153,6 +182,11 @@ export class SubmissionsService {
   ) {
     const sub = await this.repo.findOne(projectId, submissionId);
     if (!sub) throw new NotFoundException('Submission not found.');
+    if (sub.cycle?.status === 'closed') {
+      throw new BadRequestException(
+        `The ${sub.cycle.name} cycle is closed; decisions are locked.`,
+      );
+    }
     if (!opts.from.includes(sub.status)) {
       throw new BadRequestException(
         `Cannot ${opts.to} a submission in status "${sub.status}".`,

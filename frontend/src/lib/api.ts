@@ -672,6 +672,12 @@ export const reportsApi = {
   cycleStatus: () => apiGet<CycleStatusReport>('/reports/cycle-status'),
 }
 
+export const cyclesApi = {
+  current: () => apiGet<{ cycle: Cycle | null }>('/cycles/current'),
+  close: () => apiPost<Cycle>('/cycles/current/close', {}),
+  reopen: () => apiPost<Cycle>('/cycles/current/reopen', {}),
+}
+
 export const submissionsApi = {
   list: (projectId: string) =>
     apiGet<Submission[]>(`/projects/${projectId}/submissions`),

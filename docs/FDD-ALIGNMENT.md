@@ -117,8 +117,15 @@ gate = 3.3.2 mandatory fields + weights total 100 (when milestones exist), with
 the failure list in the 400 message. Endpoints under
 `/projects/:id/submissions` (list in the sections aggregate); WorkflowPanel in
 the project rail (chip, actor/date trail, comment box, contextual actions, past
-cycles). Rejected is terminal for its cycle. Not built: cycle lock/close admin,
-notifications on transitions (Wave 6).
+cycles). Rejected is terminal for its cycle.
+✅ Cycle CLOSE shipped 2026-08-13 (ASSUMED: close locks ALL transitions —
+submit, resubmit, validate, approve, return, reject — exact closure rules stay
+OI-03): `POST /cycles/current/close` / `reopen` + `GET /cycles/current`
+(cycles.status already existed, no migration). Close is idempotent and
+get-or-creates the month's cycle; Reopen is an enhancement escape hatch.
+Surfaces: Cycle Submission Status report header (two-step Close Current Cycle /
+Reopen + "Cycle closed" badge) and WorkflowPanel (lock note, actions hidden;
+backend guards reject regardless). Notifications on transitions shipped Wave 6.
 
 ### 1.7 Attachment → `attachments` (EXTEND for parent scoping — see 1.3)
 
@@ -152,7 +159,7 @@ index (timeliness/completeness/reliability, Figs 30–31) — **formulas = ASK (
 | FR-11 | KPI dashboards / scorecards | ✅ PARTIAL 2026-08-05: KPI registry + readings + action plans live at `/kpis` (ASSUMED entity-level). Scorecard visuals (achievement %, data-quality index) await formula sign-off |
 | FR-12 | Report generation + Excel export | MISSING |
 | FR-13 | Download confirmation modal | ✅ SHIPPED 2026-08-03: confirm dialog (record count) before the CSV export |
-| FR-14 | Workflow states: submit/review/return/approve/close | ✅ ASSUMED+SHIPPED 2026-08-03 (see 1.6) — routing/cycle-calendar remain OI-03 questions |
+| FR-14 | Workflow states: submit/review/return/approve/close | ✅ ASSUMED+SHIPPED 2026-08-03; cycle CLOSE (+reopen) 2026-08-13 locks all transitions (see 1.6) — routing/exact closure rules remain OI-03 questions |
 | FR-15 | Role-based restriction of create/update/approve/admin | PARTIAL — access_level data exists; enforcement deferred (security phase) |
 
 ## 3. Use cases UC-01…18 — acceptance checklist

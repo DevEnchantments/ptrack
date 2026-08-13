@@ -112,6 +112,21 @@ export class SubmissionsRepository {
     return created.data;
   }
 
+  /** FR-14 closure: lock (`closed`) or unlock (`open`) a cycle. */
+  async setCycleStatus(
+    cycleId: string,
+    status: 'open' | 'closed',
+  ): Promise<Cycle> {
+    const { data, error } = await this.db.client
+      .from('cycles')
+      .update({ status })
+      .eq('id', cycleId)
+      .select('id, name, period_start, period_end, status')
+      .single<Cycle>();
+    if (error) throw toHttpException(error, 'cycles.setStatus');
+    return data;
+  }
+
   async findByProject(projectId: string): Promise<SubmissionListItem[]> {
     const { data, error } = await this.table
       .select(JOINS)

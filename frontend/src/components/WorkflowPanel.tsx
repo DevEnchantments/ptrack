@@ -1,7 +1,7 @@
-import { Loader2 } from 'lucide-react'
+import { Loader2, Lock } from 'lucide-react'
 import { toast } from '@/lib/toast'
-import { useState } from 'react'
-import { submissionsApi, type Submission } from '@/lib/api'
+import { useEffect, useState } from 'react'
+import { cyclesApi, submissionsApi, type Cycle, type Submission } from '@/lib/api'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 
@@ -68,6 +68,16 @@ export function WorkflowPanel({ projectId, submissions, onChanged }: Props) {
   const [comment, setComment] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [busyAction, setBusyAction] = useState<string | null>(null)
+  const [storedCycle, setStoredCycle] = useState<Cycle | null>(null)
+
+  useEffect(() => {
+    // Cycle rows are created lazily, so with no submission yet the closed
+    // state is only knowable from this lookup (null = implicitly open).
+    cyclesApi
+      .current()
+      .then((r) => setStoredCycle(r.cycle))
+      .catch(() => undefined)
+  }, [])
 
   const today = new Date().toISOString().slice(0, 10)
   const current = submissions.find(
@@ -95,12 +105,16 @@ export function WorkflowPanel({ projectId, submissions, onChanged }: Props) {
     }
   }
 
+  const cycleClosed =
+    storedCycle?.status === 'closed' || current?.cycle?.status === 'closed'
   const canSubmit =
-    !current || current.status === 'draft' || current.status === 'returned'
-  const canValidate = current?.status === 'review'
-  const canApprove = current?.status === 'validated'
+    !cycleClosed &&
+    (!current || current.status === 'draft' || current.status === 'returned')
+  const canValidate = !cycleClosed && current?.status === 'review'
+  const canApprove = !cycleClosed && current?.status === 'validated'
   const canReturn =
-    current?.status === 'review' || current?.status === 'validated'
+    !cycleClosed &&
+    (current?.status === 'review' || current?.status === 'validated')
 
   const actionButton = (
     label: string,
@@ -167,6 +181,14 @@ export function WorkflowPanel({ projectId, submissions, onChanged }: Props) {
             <span className="italic">"{current.decision_comment}"</span>
           )}
         </div>
+      )}
+
+      {cycleClosed && (
+        <p className="mt-3 flex items-center gap-1.5 rounded-md border border-status-amber-border bg-status-amber-bg px-2.5 py-1.5 text-xs text-status-amber-fg">
+          <Lock className="h-3.5 w-3.5 shrink-0" />
+          This reporting cycle is closed. Submissions and decisions are locked
+          until it reopens.
+        </p>
       )}
 
       {(canSubmit || canValidate || canApprove) && (

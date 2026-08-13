@@ -1,7 +1,8 @@
-import { Printer } from 'lucide-react'
+import { Loader2, Lock, LockOpen, Printer } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { reportsApi, type CycleStatusReport } from '@/lib/api'
+import { cyclesApi, reportsApi, type CycleStatusReport } from '@/lib/api'
+import { toast } from '@/lib/toast'
 import { usePageTitle } from '@/lib/use-page-title'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -13,6 +14,8 @@ export function CycleStatusReportPage() {
   const navigate = useNavigate()
   const [report, setReport] = useState<CycleStatusReport | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [armed, setArmed] = useState(false)
+  const [busy, setBusy] = useState(false)
 
   useEffect(() => {
     reportsApi
@@ -20,6 +23,23 @@ export function CycleStatusReportPage() {
       .then(setReport)
       .catch((e: Error) => setError(e.message))
   }, [])
+
+  // Cycle rows are created lazily; a missing row means implicitly open.
+  const closed = report?.cycle?.status === 'closed'
+
+  async function setCycle(action: 'close' | 'reopen') {
+    setBusy(true)
+    try {
+      await (action === 'close' ? cyclesApi.close() : cyclesApi.reopen())
+      toast.success(action === 'close' ? 'Cycle closed.' : 'Cycle reopened.')
+      setArmed(false)
+      setReport(await reportsApi.cycleStatus())
+    } catch (e) {
+      toast.error((e as Error).message)
+    } finally {
+      setBusy(false)
+    }
+  }
 
   if (error) {
     return (
@@ -63,10 +83,46 @@ export function CycleStatusReportPage() {
         >
           Reports
         </button>
-        <Button variant="outline" size="sm" onClick={() => window.print()}>
-          <Printer className="h-4 w-4" />
-          Print
-        </Button>
+        <div className="flex items-center gap-2">
+          {closed ? (
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={busy}
+              onClick={() => void setCycle('reopen')}
+            >
+              {busy ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <LockOpen className="h-4 w-4" />
+              )}
+              Reopen Cycle
+            </Button>
+          ) : armed ? (
+            <Button
+              variant="destructive"
+              size="sm"
+              disabled={busy}
+              onClick={() => void setCycle('close')}
+            >
+              {busy ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Lock className="h-4 w-4" />
+              )}
+              Confirm close
+            </Button>
+          ) : (
+            <Button variant="outline" size="sm" onClick={() => setArmed(true)}>
+              <Lock className="h-4 w-4" />
+              Close Current Cycle
+            </Button>
+          )}
+          <Button variant="outline" size="sm" onClick={() => window.print()}>
+            <Printer className="h-4 w-4" />
+            Print
+          </Button>
+        </div>
       </div>
 
       <div className="overflow-hidden rounded-md border print:rounded-none print:border-0">
@@ -76,7 +132,15 @@ export function CycleStatusReportPage() {
           </span>
         </div>
         <div className="px-6 py-5">
-          <h1 className="text-2xl font-semibold">Cycle Submission Status</h1>
+          <div className="flex flex-wrap items-center gap-2.5">
+            <h1 className="text-2xl font-semibold">Cycle Submission Status</h1>
+            {closed && (
+              <span className="inline-flex items-center gap-1 rounded-full border border-status-amber-border bg-status-amber-bg px-2 py-0.5 text-xs font-medium text-status-amber-fg">
+                <Lock className="h-3 w-3" />
+                Cycle closed
+              </span>
+            )}
+          </div>
           <p className="mt-1 text-sm text-muted-foreground">
             {cycleName} · generated {new Date().toISOString().slice(0, 10)} ·{' '}
             {submitted}/{report.rows.length} projects submitted
