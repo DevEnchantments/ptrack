@@ -74,7 +74,7 @@ is still open); everything stays optional until the mandatory-field list is conf
 | Due date | `due_date` | HAVE |
 | Progress % | — | EXTEND (`percent_complete`)? — ASK (drawer shows progress bar) |
 | Completion flag | `status` | HAVE (mapping) |
-| Attachment reference | attachments are project-scoped | ASK/EXTEND — task-level attachments need `attachments.parent_type/parent_id` generalization |
+| Attachment reference | attachments are project-scoped | ✅ SHIPPED 2026-08-13 — `attachments.parent_type/parent_id` generalization (see 1.7) |
 | Work notes | `action_item_comments` | HAVE (comments ≈ work notes; drawer tab) |
 | Owners/team | `action_item_owners` | HAVE |
 | Activity count / weight / budget shown in drawer | — | ASK |
@@ -128,6 +128,16 @@ Reopen + "Cycle closed" badge) and WorkflowPanel (lock note, actions hidden;
 backend guards reject regardless). Notifications on transitions shipped Wave 6.
 
 ### 1.7 Attachment → `attachments` (EXTEND for parent scoping — see 1.3)
+✅ SHIPPED 2026-08-13 (`backend/db/attachment_parents.sql` — run in the Supabase
+SQL editor; attachment routes 500 on the new columns until then): nullable
+`parent_type`/`parent_id` on attachments (check: both-or-neither, kinds
+`action_item`|`milestone`; milestone allowed by the constraint but has no UI
+yet). Polymorphic, so no FK — the service verifies the parent exists in the
+same project on upload, and deleting an action item removes its scoped
+attachments (rows + Storage objects, audit-logged, best-effort per file).
+Surfaces: Attachments tab on the action-item page (upload/download/two-step
+delete); the project Attachments section still lists everything, task-scoped
+rows badged "Task". List API takes `?parent_type=&parent_id=`.
 
 ### 1.8 Dashboard/KPI → BUILD `kpis` + `kpi_readings` + `kpi_action_plans` (LAST)
 
@@ -149,7 +159,7 @@ index (timeliness/completeness/reliability, Figs 30–31) — **formulas = ASK (
 | FR-03 | Project detail tabs (Overview, Achievement, Risk & Issue, Comment, Dashboard, Documentation, KPI, Change History) | ✅ SHIPPED 2026-08-03 (mapping ASSUMED: Overview=cards+fields+people · Achievement=milestones+action items · Risk & Issue=risks+issues · Comments=updates · Documentation=links+resources+reports+attachments · Change History=NEW project-wide audit feed incl. deletions via `GET /projects/:id/history`; Dashboard tab LIVE 2026-08-12 — Fig 8/9 per-project charts; KPI is the last stub, pending linkage). Sticky SectionNav is tab-aware |
 | FR-04 | Actual/planned progress, milestones done/total, budget cards | ✅ SHIPPED 2026-08-03: overview cards on the project page (progress vs plan with delta + F4 suggestion, milestone donut, budget utilization with over-budget flag, open items) |
 | FR-05 | Milestone status donut (Completed / Not Started / On Target) | ✅ SHIPPED 2026-08-03 (buckets ASSUMED: Completed / On Target / Overdue from status+due date; FDD bucket names remain the milestone-status ASK). CVD-validated chart trio, legend with counts |
-| FR-06 | Task lists with upcoming/completed grouping, detail drawer, attachments/work notes | ✅ 2026-08-13: Fig-2 Tasks card on the project Overview (Upcoming/Completed toggle with counts, overdue reddened, milestone context, click-through + jump to Achievement). Detail lives on pages not drawers (deliberate); task-level attachments still open (Appendix A parent-scoping) |
+| FR-06 | Task lists with upcoming/completed grouping, detail drawer, attachments/work notes | ✅ 2026-08-13: Fig-2 Tasks card on the project Overview (Upcoming/Completed toggle with counts, overdue reddened, milestone context, click-through + jump to Achievement). Detail lives on pages not drawers (deliberate); task-level attachments ✅ 2026-08-13 (Attachments tab on the action-item page, see 1.7) |
 
 | FR-07 | Risk & issue register with score/severity/audit | PARTIAL — issues yes, risks no |
 | FR-08 | Identify New Risk modal | MISSING |

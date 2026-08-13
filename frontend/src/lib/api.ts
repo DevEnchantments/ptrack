@@ -823,6 +823,8 @@ export interface Attachment {
   is_gold: boolean
   description: string | null
   tags: string[] | null
+  parent_type: string | null
+  parent_id: string | null
   uploaded_by: string | null
   created_at: string
   uploaded_by_profile?: { full_name: string | null; email: string | null } | null
@@ -833,8 +835,12 @@ export interface AttachmentDetail extends Attachment {
 }
 
 export const attachmentsApi = {
-  list: (projectId: string) =>
-    apiGet<Attachment[]>(`/projects/${projectId}/attachments`),
+  list: (projectId: string, parent?: { type: string; id: string }) =>
+    apiGet<Attachment[]>(
+      `/projects/${projectId}/attachments${
+        parent ? `?parent_type=${parent.type}&parent_id=${parent.id}` : ''
+      }`,
+    ),
   get: (projectId: string, attachmentId: string) =>
     apiGet<AttachmentDetail>(
       `/projects/${projectId}/attachments/${attachmentId}`,

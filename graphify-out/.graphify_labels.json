@@ -119,5 +119,7 @@
   "117": "dhtmlx-gantt",
   "118": "jose",
   "119": "AddIssueDialog",
-  "120": "Module"
+  "120": "Module",
+  "121": "AddStatusReportDialog",
+  "122": "EditProjectDialog"
 }

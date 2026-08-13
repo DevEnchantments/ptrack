@@ -3,6 +3,7 @@ import { RecordHistoryService } from '../../database/record-history.service';
 import { ActionItemsRepository } from './action-items.repository';
 import { CreateActionItemDto } from './dto/create-action-item.dto';
 import { UpdateActionItemDto } from './dto/update-action-item.dto';
+import { AttachmentsService } from '../attachments/attachments.service';
 
 type Owners = Array<{
   slot: number;
@@ -26,6 +27,7 @@ export class ActionItemsService {
   constructor(
     private readonly repo: ActionItemsRepository,
     private readonly auditLog: RecordHistoryService,
+    private readonly attachments: AttachmentsService,
   ) {}
 
   list(projectId: string) {
@@ -119,6 +121,13 @@ export class ActionItemsService {
 
   async remove(projectId: string, actionItemId: string, userId: string) {
     const item = await this.get(projectId, actionItemId); // 404 if not in this project
+    // Task-scoped attachments have no FK to cascade on — clean them up here
+    // (rows + Storage objects) before the task row goes.
+    await this.attachments.removeByParent(
+      projectId,
+      { type: 'action_item', id: actionItemId },
+      userId,
+    );
     await this.repo.remove(projectId, actionItemId);
     await this.auditLog.logDeleted({
       table: 'action_items',

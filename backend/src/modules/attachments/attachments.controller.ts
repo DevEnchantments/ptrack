@@ -7,6 +7,7 @@ import {
   ParseUUIDPipe,
   Patch,
   Post,
+  Query,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
@@ -27,8 +28,12 @@ export class AttachmentsController {
   constructor(private readonly attachments: AttachmentsService) {}
 
   @Get()
-  list(@Param('projectId', ParseUUIDPipe) projectId: string) {
-    return this.attachments.list(projectId);
+  list(
+    @Param('projectId', ParseUUIDPipe) projectId: string,
+    @Query('parent_type') parentType?: string,
+    @Query('parent_id') parentId?: string,
+  ) {
+    return this.attachments.list(projectId, parentType, parentId);
   }
 
   // The Swagger plugin cannot infer a multipart body from FileInterceptor, so
@@ -56,6 +61,17 @@ export class AttachmentsController {
           description: 'Comma-separated list, e.g. "budget,q3".',
         },
         description: { type: 'string' },
+        parent_type: {
+          type: 'string',
+          enum: ['action_item', 'milestone'],
+          description:
+            'Optional in-project parent; requires parent_id (Appendix A task-level attachments).',
+        },
+        parent_id: {
+          type: 'string',
+          format: 'uuid',
+          description: 'ID of the parent record; requires parent_type.',
+        },
       },
     },
   })

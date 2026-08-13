@@ -15,6 +15,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { AddActionItemDialog } from '@/components/AddActionItemDialog'
 import { MiniCalendar } from '@/components/MiniCalendar'
 import { RecordHistory } from '@/components/RecordHistory'
+import { TaskAttachments } from '@/components/TaskAttachments'
 
 const STATUS_LABELS: Record<string, string> = {
   open: 'Open',
@@ -22,7 +23,7 @@ const STATUS_LABELS: Record<string, string> = {
   not_applicable: 'Not Applicable',
 }
 
-const TABS = ['Show All', 'Comments', 'History'] as const
+const TABS = ['Show All', 'Comments', 'Attachments', 'History'] as const
 type Tab = (typeof TABS)[number]
 
 function Field({ label, value }: { label: string; value: React.ReactNode }) {
@@ -157,6 +158,7 @@ export function ActionItemDetailPage() {
   }
 
   const showComments = tab === 'Show All' || tab === 'Comments'
+  const showAttachments = tab === 'Show All' || tab === 'Attachments'
   const showHistory = tab === 'Show All' || tab === 'History'
 
   return (
@@ -283,6 +285,10 @@ export function ActionItemDetailPage() {
               </ul>
             )}
           </section>
+        )}
+
+        {showAttachments && (
+          <TaskAttachments projectId={projectId!} actionItemId={actionItemId!} />
         )}
 
         {showHistory && (

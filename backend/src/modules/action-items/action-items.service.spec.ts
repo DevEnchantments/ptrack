@@ -1,6 +1,7 @@
 import { ActionItemsService } from './action-items.service';
 import type { ActionItemsRepository } from './action-items.repository';
 import type { RecordHistoryService } from '../../database/record-history.service';
+import type { AttachmentsService } from '../attachments/attachments.service';
 
 /**
  * The owner-diff is the subtlest logic in this service: owners are replaced
@@ -39,7 +40,13 @@ describe('ActionItemsService owner-diff history', () => {
     const auditLog = {
       logDeleted: jest.fn().mockResolvedValue(undefined),
     } as unknown as RecordHistoryService;
-    return { service: new ActionItemsService(repo, auditLog), mocks };
+    const attachments = {
+      removeByParent: jest.fn().mockResolvedValue(undefined),
+    } as unknown as AttachmentsService;
+    return {
+      service: new ActionItemsService(repo, auditLog, attachments),
+      mocks,
+    };
   }
 
   it('logs one Owners entry when the set changes', async () => {

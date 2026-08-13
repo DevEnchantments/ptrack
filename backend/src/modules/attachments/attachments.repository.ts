@@ -15,8 +15,18 @@ export interface Attachment {
   is_gold: boolean;
   description: string | null;
   tags: string[] | null;
+  /** Optional in-project parent (Appendix A task-level attachments). */
+  parent_type: string | null;
+  parent_id: string | null;
   uploaded_by: string | null;
   created_at: string;
+}
+
+export type AttachmentParentType = 'action_item' | 'milestone';
+
+export interface AttachmentParent {
+  type: AttachmentParentType;
+  id: string;
 }
 
 export interface AttachmentListItem extends Attachment {
@@ -31,7 +41,13 @@ export interface AttachmentDetail extends AttachmentListItem {
 }
 
 const COLUMNS =
-  'id, project_id, file_name, bucket, storage_path, mime_type, size_bytes, is_gold, description, tags, uploaded_by, created_at';
+  'id, project_id, file_name, bucket, storage_path, mime_type, size_bytes, is_gold, description, tags, parent_type, parent_id, uploaded_by, created_at';
+
+/** Parent kind -> table that must contain the parent row. */
+const PARENT_TABLES: Record<AttachmentParentType, string> = {
+  action_item: 'action_items',
+  milestone: 'milestones',
+};
 
 const JOINS = `${COLUMNS},
   uploaded_by_profile:profiles!uploaded_by ( full_name, email )`;
@@ -55,14 +71,34 @@ export class AttachmentsRepository {
     return data as unknown as AttachmentListItem;
   }
 
-  async findByProject(projectId: string): Promise<AttachmentListItem[]> {
-    const { data, error } = await this.table
-      .select(JOINS)
-      .eq('project_id', projectId)
+  async findByProject(
+    projectId: string,
+    parent?: AttachmentParent,
+  ): Promise<AttachmentListItem[]> {
+    let query = this.table.select(JOINS).eq('project_id', projectId);
+    if (parent) {
+      query = query.eq('parent_type', parent.type).eq('parent_id', parent.id);
+    }
+    const { data, error } = await query
       .order('is_gold', { ascending: false })
       .order('created_at', { ascending: false });
     if (error) throw toHttpException(error, 'attachments.findByProject');
     return (data ?? []) as unknown as AttachmentListItem[];
+  }
+
+  /** True when the parent record exists inside this project. */
+  async parentExists(
+    projectId: string,
+    parent: AttachmentParent,
+  ): Promise<boolean> {
+    const { data, error } = await this.db.client
+      .from(PARENT_TABLES[parent.type])
+      .select('id')
+      .eq('project_id', projectId)
+      .eq('id', parent.id)
+      .maybeSingle<{ id: string }>();
+    if (error) throw toHttpException(error, 'attachments.parentExists');
+    return data !== null;
   }
 
   async findDetail(
