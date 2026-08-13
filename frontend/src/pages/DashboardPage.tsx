@@ -252,46 +252,6 @@ function ActivityLineChart({ data }: { data: ChartPoint[] }) {
   )
 }
 
-function ProjectsBarChart({ data }: { data: ChartPoint[] }) {
-  const entered = useEntranceFlag()
-  const [hover, setHover] = useState<number | null>(null)
-  const max = Math.max(1, ...data.map((d) => d.value))
-
-  return (
-    <div className="rounded-lg border bg-card p-4 shadow-xs">
-      <h2 className="text-sm font-medium">Projects by status</h2>
-      <div className="mt-3 flex flex-col gap-2">
-        {data.map((d, i) => (
-          <div
-            key={d.label}
-            className="flex items-center gap-3"
-            onMouseEnter={() => setHover(i)}
-            onMouseLeave={() => setHover(null)}
-          >
-            <span className="w-20 shrink-0 text-xs text-muted-foreground">
-              {d.label}
-            </span>
-            <div className="h-4 flex-1">
-              <div
-                className="h-full rounded-r"
-                style={{
-                  width: entered ? `${(d.value / max) * 100}%` : '0%',
-                  backgroundColor: SERIES.teal,
-                  opacity: hover === null || hover === i ? 1 : 0.45,
-                  transition: `width 700ms ease-out ${i * 70}ms, opacity 150ms`,
-                }}
-              />
-            </div>
-            <span className="w-6 shrink-0 text-right text-xs font-medium tabular-nums">
-              {d.value}
-            </span>
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-}
-
 function ActionItemsBreakdown({ segments }: { segments: ChartSegment[] }) {
   const entered = useEntranceFlag()
   const total = segments.reduce((s, d) => s + d.value, 0)
@@ -601,47 +561,6 @@ function CategoryDonut({ segments }: { segments: ChartSegment[] }) {
 }
 
 /** Vertical columns growing from the baseline, staggered. */
-function MilestoneColumns({ data }: { data: ChartPoint[] }) {
-  const entered = useEntranceFlag()
-  const [hover, setHover] = useState<number | null>(null)
-  const max = Math.max(1, ...data.map((d) => d.value))
-
-  return (
-    <div className="rounded-lg border bg-card p-4 shadow-xs">
-      <h2 className="text-sm font-medium">Milestones completed / month</h2>
-      <div className="mt-3 flex h-36 items-end gap-2">
-        {data.map((d, i) => (
-          <div
-            key={d.label}
-            className="relative flex h-full flex-1 flex-col justify-end"
-            onMouseEnter={() => setHover(i)}
-            onMouseLeave={() => setHover(null)}
-          >
-            {hover === i && (
-              <span className="absolute -top-1 left-1/2 -translate-x-1/2 text-xs font-medium">
-                {d.value}
-              </span>
-            )}
-            <div
-              className="w-full rounded-t"
-              style={{
-                height: entered ? `${(d.value / max) * 82}%` : '0%',
-                backgroundColor: SERIES.teal,
-                opacity: hover === null || hover === i ? 1 : 0.45,
-                transition: `height 650ms ease-out ${i * 80}ms, opacity 150ms`,
-              }}
-            />
-            <span className="mt-1 text-center text-[10px] text-muted-foreground">
-              {d.label}
-            </span>
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-}
-
-/** Radial progress — a single hero percentage with an animated sweep. */
 function CompletionRadial({ done, total }: { done: number; total: number }) {
   const entered = useEntranceFlag()
   const pctTarget = total > 0 ? Math.round((done / total) * 100) : 0
@@ -821,66 +740,6 @@ function FlowLineChart({
   )
 }
 
-// Sequential single-hue ramp for the heatmap — theme tokens so the ramp flips
-// with dark mode (both variants monotonic in lightness).
-const HEAT_RAMP = [1, 2, 3, 4, 5].map((i) => `var(--heat-${i})`)
-const HEAT_DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri']
-
-/** Activity heatmap — sequential ramp with a Less→More scale legend. */
-function ActivityHeatmap({ cells }: { cells: number[][] }) {
-  const entered = useEntranceFlag()
-  const [hover, setHover] = useState<{ w: number; d: number } | null>(null)
-
-  return (
-    <div className="rounded-lg border bg-card p-4 shadow-xs">
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <h2 className="text-sm font-medium">Team activity — last 12 weeks</h2>
-        <div className="flex items-center gap-1 text-[10px] text-muted-foreground">
-          Less
-          {HEAT_RAMP.map((c) => (
-            <span key={c} className="h-2.5 w-2.5 rounded-[3px]"
-              style={{ backgroundColor: c }} />
-          ))}
-          More
-        </div>
-      </div>
-      <div className="mt-3 flex gap-2">
-        <div className="flex flex-col justify-between py-0.5">
-          {HEAT_DAYS.map((d) => (
-            <span key={d} className="text-[9px] leading-4 text-muted-foreground">{d}</span>
-          ))}
-        </div>
-        <div className="grid flex-1 grid-flow-col gap-1"
-          style={{ gridTemplateRows: `repeat(${HEAT_DAYS.length}, 1fr)` }}>
-          {cells.map((week, w) =>
-            week.map((level, d) => (
-              <div
-                key={`${w}-${d}`}
-                className="aspect-square w-full rounded-[3px]"
-                style={{
-                  backgroundColor: HEAT_RAMP[level],
-                  opacity: entered ? 1 : 0,
-                  outline:
-                    hover?.w === w && hover?.d === d
-                      ? '2px solid var(--ring)'
-                      : 'none',
-                  transition: `opacity 400ms ease-out ${(w * HEAT_DAYS.length + d) * 8}ms`,
-                }}
-                onMouseEnter={() => setHover({ w, d })}
-                onMouseLeave={() => setHover(null)}
-              />
-            )),
-          )}
-        </div>
-      </div>
-      <p className="mt-2 h-4 text-xs text-muted-foreground">
-        {hover
-          ? `Week ${hover.w + 1}, ${HEAT_DAYS[hover.d]} — ${cells[hover.w][hover.d]} updates`
-          : ' '}
-      </p>
-    </div>
-  )
-}
 
 export function DashboardPage() {
   usePageTitle('My Dashboard')
@@ -981,10 +840,6 @@ export function DashboardPage() {
     { label: 'Created', color: SERIES.teal, values: data.flow.created },
     { label: 'Completed', color: SERIES.blue, values: data.flow.completed },
   ]
-  const heatMax = Math.max(1, ...data.heat.flat())
-  const heatCells = data.heat.map((week) =>
-    week.map((v) => (v === 0 ? 0 : Math.max(1, Math.round((v / heatMax) * 4)))),
-  )
 
   return (
     <div className="p-6">
@@ -1021,22 +876,16 @@ export function DashboardPage() {
           column inflating its neighbor with empty card space. */}
       <div className="mt-4 grid grid-cols-1 items-start gap-4 lg:grid-cols-2">
         <ActivityLineChart data={data.updates_per_week} />
-        <ProjectsBarChart data={data.projects_by_status} />
+        <FlowLineChart labels={data.flow.labels} series={flowSeries} />
       </div>
 
-      <div className="mt-4 grid grid-cols-1 items-start gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <div className="mt-4 grid grid-cols-1 items-start gap-4 md:grid-cols-3">
         <ActionItemsBreakdown segments={actionSegments} />
         <CategoryDonut segments={categorySegments} />
-        <MilestoneColumns data={data.milestones_per_month} />
         <CompletionRadial
           done={data.overall_milestones.done}
           total={data.overall_milestones.total}
         />
-      </div>
-
-      <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
-        <FlowLineChart labels={data.flow.labels} series={flowSeries} />
-        <ActivityHeatmap cells={heatCells} />
       </div>
     </div>
   )
