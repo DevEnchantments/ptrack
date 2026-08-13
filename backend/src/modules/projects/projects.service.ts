@@ -9,82 +9,103 @@ import {
 import { plannedProgress } from '../../common/formulas';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
-import { MilestonesService } from '../milestones/milestones.service';
-import { ProgramOutcomesService } from '../program-outcomes/program-outcomes.service';
-import { ActionItemsService } from '../action-items/action-items.service';
-import { LinksService } from '../links/links.service';
-import { ResourcesService } from '../resources/resources.service';
-import { IssuesService } from '../issues/issues.service';
-import { RisksService } from '../risks/risks.service';
-import { SubmissionsService } from '../submissions/submissions.service';
 import { NotificationsService } from '../notifications/notifications.service';
-import { UpdatesService } from '../updates/updates.service';
-import { StatusReportsService } from '../status-reports/status-reports.service';
-import { AttachmentsService } from '../attachments/attachments.service';
+
+/** Text columns: trimmed, and a blank one clears the column. */
+const TRIMMED_OR_NULL = [
+  'description',
+  'goal',
+  'customer',
+  'primary_url',
+  'reference_id',
+  'project_number',
+  'finance_code',
+  'target_group',
+  'internal_stakeholder',
+  'sponsor',
+] as const;
+
+/**
+ * Ids and numbers where an explicit null clears the column. `?? null`, never
+ * `|| null`: on the numeric ones a zero is a value, not a blank.
+ */
+const NULLABLE = [
+  'parent_project_id',
+  'status_id',
+  'size_id',
+  'category_id',
+  'plan_year',
+  'approved_budget',
+  'utilized_budget',
+  'tier_id',
+  'strategic_objective_id',
+  'manual_progress',
+  'owner_id',
+  'project_manager_id',
+  'project_manager2_id',
+  'pmo_partner_id',
+  'sector_id',
+  'deal_type_id',
+  'strategic_program_id',
+] as const;
+
+/** Dates: an empty string clears the column. */
+const DATE_OR_NULL = ['start_date', 'target_end_date'] as const;
+
+/** Arrays: an empty array clears the column. */
+const ARRAY_OR_NULL = ['tags', 'external_stakeholders'] as const;
+
+/** Written exactly as received. */
+const AS_IS = ['access_control', 'is_priority'] as const;
+
+/**
+ * The single definition of how an update DTO maps onto columns: only keys that
+ * were actually sent appear, each normalized by its category. Adding a field
+ * means naming it in one list above.
+ */
+function columnsFrom(dto: UpdateProjectDto): Record<string, unknown> {
+  const sent = dto as Record<string, unknown>;
+  const cols: Record<string, unknown> = {};
+  const has = (key: string) => sent[key] !== undefined;
+
+  // Two fields have rules of their own: name is trimmed but never nulled, and
+  // at_risk falls back to false rather than null.
+  if (dto.name !== undefined) cols.name = dto.name.trim();
+  if (dto.at_risk !== undefined) cols.at_risk = dto.at_risk ?? false;
+
+  for (const key of TRIMMED_OR_NULL)
+    if (has(key)) cols[key] = (sent[key] as string | null)?.trim() || null;
+  for (const key of NULLABLE) if (has(key)) cols[key] = sent[key] ?? null;
+  for (const key of DATE_OR_NULL) if (has(key)) cols[key] = sent[key] || null;
+  for (const key of ARRAY_OR_NULL)
+    if (has(key))
+      cols[key] = (sent[key] as unknown[] | null)?.length ? sent[key] : null;
+  for (const key of AS_IS) if (has(key)) cols[key] = sent[key];
+
+  return cols;
+}
+
+/** FDD 3.9 budget-threshold notification (ASSUMED at 80% — OI question). */
+const BUDGET_ALERT_THRESHOLD = 0.8;
+
+/** Utilization as a 0-1 ratio, or null when it cannot be computed. */
+function utilizationRatio(project: {
+  approved_budget: number | null;
+  utilized_budget: number | null;
+}): number | null {
+  return project.approved_budget != null &&
+    project.approved_budget > 0 &&
+    project.utilized_budget != null
+    ? project.utilized_budget / project.approved_budget
+    : null;
+}
 
 @Injectable()
 export class ProjectsService {
   constructor(
     private readonly repo: ProjectsRepository,
-    private readonly milestones: MilestonesService,
-    private readonly outcomes: ProgramOutcomesService,
-    private readonly actionItems: ActionItemsService,
-    private readonly links: LinksService,
-    private readonly resources: ResourcesService,
-    private readonly issues: IssuesService,
-    private readonly risks: RisksService,
-    private readonly submissions: SubmissionsService,
     private readonly notifications: NotificationsService,
-    private readonly updates: UpdatesService,
-    private readonly statusReports: StatusReportsService,
-    private readonly attachments: AttachmentsService,
   ) {}
-
-  /**
-   * All eight section lists in one response so the project page costs a single
-   * request instead of eight. The queries run concurrently; each section's own
-   * endpoint still exists for per-section refreshes after a save.
-   */
-  async sections(projectId: string) {
-    const [
-      milestones,
-      outcomes,
-      actionItems,
-      links,
-      resources,
-      issues,
-      risks,
-      submissions,
-      updates,
-      statusReports,
-      attachments,
-    ] = await Promise.all([
-      this.milestones.list(projectId),
-      this.outcomes.list(projectId),
-      this.actionItems.list(projectId),
-      this.links.list(projectId),
-      this.resources.list(projectId),
-      this.issues.list(projectId),
-      this.risks.list(projectId),
-      this.submissions.list(projectId),
-      this.updates.list(projectId),
-      this.statusReports.list(projectId),
-      this.attachments.list(projectId),
-    ]);
-    return {
-      milestones,
-      outcomes,
-      actionItems,
-      links,
-      resources,
-      issues,
-      risks,
-      submissions,
-      updates,
-      statusReports,
-      attachments,
-    };
-  }
 
   async create(dto: CreateProjectDto, userId: string): Promise<Project> {
     const { members, ...projectFields } = dto;
@@ -167,111 +188,42 @@ export class ProjectsService {
     dto: UpdateProjectDto,
     userId: string,
   ): Promise<ProjectDetail> {
-    // FDD 3.9 budget-threshold notification (ASSUMED at 80% — OI question):
-    // capture prior utilization only when a budget field is changing.
+    // The "before" snapshot is only worth a round-trip when a budget field is
+    // changing — it exists solely for the threshold check below.
     const budgetTouched =
       dto.utilized_budget !== undefined || dto.approved_budget !== undefined;
     const prior = budgetTouched ? await this.repo.findDetail(id) : null;
 
-    const patch: Record<string, unknown> = { updated_by: userId };
-    if (dto.name !== undefined) patch.name = dto.name.trim();
-    if (dto.parent_project_id !== undefined)
-      patch.parent_project_id = dto.parent_project_id ?? null;
-    if (dto.status_id !== undefined) patch.status_id = dto.status_id ?? null;
-    if (dto.size_id !== undefined) patch.size_id = dto.size_id ?? null;
-    if (dto.category_id !== undefined)
-      patch.category_id = dto.category_id ?? null;
-    if (dto.access_control !== undefined)
-      patch.access_control = dto.access_control;
-    if (dto.description !== undefined)
-      patch.description = dto.description?.trim() || null;
-    if (dto.goal !== undefined) patch.goal = dto.goal?.trim() || null;
-    if (dto.customer !== undefined)
-      patch.customer = dto.customer?.trim() || null;
-    if (dto.primary_url !== undefined)
-      patch.primary_url = dto.primary_url?.trim() || null;
-    if (dto.tags !== undefined) patch.tags = dto.tags?.length ? dto.tags : null;
-    if (dto.start_date !== undefined) patch.start_date = dto.start_date || null;
-    // FDD Stage-1 fields (docs/FDD-ALIGNMENT.md section 1.1).
-    if (dto.reference_id !== undefined)
-      patch.reference_id = dto.reference_id?.trim() || null;
-    if (dto.project_number !== undefined)
-      patch.project_number = dto.project_number?.trim() || null;
-    if (dto.plan_year !== undefined) patch.plan_year = dto.plan_year ?? null;
-    if (dto.finance_code !== undefined)
-      patch.finance_code = dto.finance_code?.trim() || null;
-    if (dto.target_group !== undefined)
-      patch.target_group = dto.target_group?.trim() || null;
-    if (dto.internal_stakeholder !== undefined)
-      patch.internal_stakeholder = dto.internal_stakeholder?.trim() || null;
-    if (dto.is_priority !== undefined) patch.is_priority = dto.is_priority;
-    if (dto.approved_budget !== undefined)
-      patch.approved_budget = dto.approved_budget ?? null;
-    if (dto.utilized_budget !== undefined)
-      patch.utilized_budget = dto.utilized_budget ?? null;
-    if (dto.tier_id !== undefined) patch.tier_id = dto.tier_id ?? null;
-    if (dto.strategic_objective_id !== undefined)
-      patch.strategic_objective_id = dto.strategic_objective_id ?? null;
-    if (dto.manual_progress !== undefined)
-      patch.manual_progress = dto.manual_progress ?? null;
-    if (dto.at_risk !== undefined) patch.at_risk = dto.at_risk ?? false;
-    if (dto.owner_id !== undefined) patch.owner_id = dto.owner_id ?? null;
-    if (dto.project_manager_id !== undefined)
-      patch.project_manager_id = dto.project_manager_id ?? null;
-    if (dto.project_manager2_id !== undefined)
-      patch.project_manager2_id = dto.project_manager2_id ?? null;
-    if (dto.pmo_partner_id !== undefined)
-      patch.pmo_partner_id = dto.pmo_partner_id ?? null;
-    if (dto.external_stakeholders !== undefined)
-      patch.external_stakeholders = dto.external_stakeholders?.length
-        ? dto.external_stakeholders
-        : null;
-    if (dto.sector_id !== undefined) patch.sector_id = dto.sector_id ?? null;
-    if (dto.deal_type_id !== undefined)
-      patch.deal_type_id = dto.deal_type_id ?? null;
-    if (dto.strategic_program_id !== undefined)
-      patch.strategic_program_id = dto.strategic_program_id ?? null;
-    if (dto.sponsor !== undefined) patch.sponsor = dto.sponsor?.trim() || null;
-    if (dto.target_end_date !== undefined)
-      patch.target_end_date = dto.target_end_date || null;
-
-    await this.repo.update(id, patch);
+    await this.repo.update(id, { updated_by: userId, ...columnsFrom(dto) });
     const updated = await this.getDetail(id);
 
-    if (prior) {
-      const ratio = (p: {
-        approved_budget: number | null;
-        utilized_budget: number | null;
-      }) =>
-        p.approved_budget != null &&
-        p.approved_budget > 0 &&
-        p.utilized_budget != null
-          ? p.utilized_budget / p.approved_budget
-          : null;
-      const before = ratio(prior);
-      const after = ratio(updated);
-      const THRESHOLD = 0.8;
-      if (
-        after != null &&
-        after >= THRESHOLD &&
-        (before == null || before < THRESHOLD)
-      ) {
-        for (const uid of new Set([
-          updated.owner_id,
-          updated.project_manager_id,
-        ])) {
-          await this.notifications.notify({
-            userId: uid,
-            actorId: userId,
-            projectId: id,
-            type: 'budget_threshold',
-            title: `${updated.name} reached ${Math.round(after * 100)}% budget utilization`,
-            body: `AED ${updated.utilized_budget?.toLocaleString()} of AED ${updated.approved_budget?.toLocaleString()} used.`,
-          });
-        }
-      }
-    }
+    if (prior) await this.notifyBudgetThreshold(id, prior, updated, userId);
     return updated;
+  }
+
+  /** Fires once per distinct recipient, only on the crossing itself. */
+  private async notifyBudgetThreshold(
+    projectId: string,
+    prior: ProjectDetail,
+    updated: ProjectDetail,
+    actorId: string,
+  ): Promise<void> {
+    const before = utilizationRatio(prior);
+    const after = utilizationRatio(updated);
+    if (after == null || after < BUDGET_ALERT_THRESHOLD) return;
+    // Already over the line before this edit: not a crossing.
+    if (before != null && before >= BUDGET_ALERT_THRESHOLD) return;
+
+    for (const uid of new Set([updated.owner_id, updated.project_manager_id])) {
+      await this.notifications.notify({
+        userId: uid,
+        actorId,
+        projectId,
+        type: 'budget_threshold',
+        title: `${updated.name} reached ${Math.round(after * 100)}% budget utilization`,
+        body: `AED ${updated.utilized_budget?.toLocaleString()} of AED ${updated.approved_budget?.toLocaleString()} used.`,
+      });
+    }
   }
 
   async remove(id: string): Promise<{ deleted: boolean }> {

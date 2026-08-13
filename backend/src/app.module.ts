@@ -4,6 +4,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { DatabaseModule } from './database/database.module';
 import { SupabaseAuthGuard } from './common/guards/supabase-auth.guard';
 import { ProjectsModule } from './modules/projects/projects.module';
+import { ProjectSectionsModule } from './modules/project-sections/project-sections.module';
 import { UsersModule } from './modules/users/users.module';
 import { LookupsModule } from './modules/lookups/lookups.module';
 import { PeopleModule } from './modules/people/people.module';
@@ -35,6 +36,7 @@ import { AppService } from './app.service';
     ConfigModule.forRoot({ isGlobal: true }),
     DatabaseModule,
     ProjectsModule,
+    ProjectSectionsModule,
     UsersModule,
     LookupsModule,
     PeopleModule,

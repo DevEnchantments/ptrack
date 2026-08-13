@@ -78,11 +78,6 @@ export class ProjectsController {
     return this.projects.history(id);
   }
 
-  @Get(':id/sections')
-  sections(@Param('id', ParseUUIDPipe) id: string) {
-    return this.projects.sections(id);
-  }
-
   @Patch(':id')
   @ApiBody({
     type: UpdateProjectDto,

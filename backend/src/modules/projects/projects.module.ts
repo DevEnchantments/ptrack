@@ -2,34 +2,15 @@ import { Module } from '@nestjs/common';
 import { ProjectsController } from './projects.controller';
 import { ProjectsService } from './projects.service';
 import { ProjectsRepository } from './projects.repository';
-import { MilestonesModule } from '../milestones/milestones.module';
-import { ProgramOutcomesModule } from '../program-outcomes/program-outcomes.module';
-import { ActionItemsModule } from '../action-items/action-items.module';
-import { LinksModule } from '../links/links.module';
-import { ResourcesModule } from '../resources/resources.module';
-import { IssuesModule } from '../issues/issues.module';
-import { RisksModule } from '../risks/risks.module';
-import { SubmissionsModule } from '../submissions/submissions.module';
 import { NotificationsModule } from '../notifications/notifications.module';
-import { UpdatesModule } from '../updates/updates.module';
-import { StatusReportsModule } from '../status-reports/status-reports.module';
-import { AttachmentsModule } from '../attachments/attachments.module';
 
+/**
+ * The eleven domain modules this used to import moved to ProjectSectionsModule
+ * with the section fan-out. What remains is the project record itself, plus
+ * notifications for the budget-threshold alert.
+ */
 @Module({
-  imports: [
-    MilestonesModule,
-    ProgramOutcomesModule,
-    ActionItemsModule,
-    LinksModule,
-    ResourcesModule,
-    IssuesModule,
-    RisksModule,
-    SubmissionsModule,
-    NotificationsModule,
-    UpdatesModule,
-    StatusReportsModule,
-    AttachmentsModule,
-  ],
+  imports: [NotificationsModule],
   controllers: [ProjectsController],
   providers: [ProjectsService, ProjectsRepository],
   exports: [ProjectsService],

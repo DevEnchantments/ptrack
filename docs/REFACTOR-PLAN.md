@@ -120,7 +120,9 @@ Chosen to be representative, not easy.
 
 - [x] **1a.** `backend/src/modules/links/` — simple CRUD, the control case.
       **Done 2026-08-13** — 2 moves, thin yield as expected of a control case.
-- [ ] **1b.** `backend/src/modules/projects/` — the most complex module
+- [x] **1b.** `backend/src/modules/projects/` — the most complex module.
+      **Done 2026-08-13** — service 274 → 214 lines, 13 collaborators → 2, new
+      `project-sections/` module (approved deviation from ground rule 5).
 - [ ] **1c.** `backend/src/modules/action-items/` — known non-trivial logic
       (owner-set diffing, atomic replace RPC)
 
@@ -314,3 +316,66 @@ behaviour.
 **Gate input.** ~213 lines of module yielded one extract-function and one
 extract-constant. Thin, as expected of the control case. Carry to the post-1c gate: if
 projects and action-items yield proportionally as little, stop the plan.
+
+### 2026-08-13 — Phase 1b, `modules/projects/` (the complex case)
+
+**Skill: none** (`book-philosophy-of-software-design` not installed; lens applied from
+first principles). **Ground rule 5 deviation approved by Fares:** M1b created a second
+folder, `modules/project-sections/`.
+
+**Orient — the finding that drove the session.** `ProjectsService` had 4 external
+consumers and **two refused to use it**: `RisksService` and `SubmissionsService` inject
+`ProjectsRepository` directly, with comments saying the full service "would create a
+module cycle". The cycle existed because `ProjectsModule` imported 12 domain modules,
+11 of them solely to feed `sections()` — one method, one route. Design pressure with a
+receipt, not a matter of taste.
+
+**Changed (3 moves).**
+1. *Extract Class + new module* — `modules/project-sections/` (service, controller,
+   module, spec). `GET /projects/:id/sections` keeps its URL, response and status codes;
+   only the class serving it moved. `ProjectsModule` now imports **1** domain module
+   instead of 12; `ProjectsService` went from **13 collaborators to 2**. The stale
+   "eight section lists" comment (logged in 0b) was corrected to eleven in the move.
+2. *Extract Function* — `columnsFrom(dto)` in `projects.service.ts`, replacing ~60 lines
+   of `if (dto.x !== undefined)` with five named category lists (`TRIMMED_OR_NULL`,
+   `NULLABLE`, `DATE_OR_NULL`, `ARRAY_OR_NULL`, `AS_IS`) plus the two fields with rules
+   of their own (`name`, `at_risk`). Adding a field is now one list entry.
+3. *Extract Method* — `notifyBudgetThreshold()` + module-level
+   `BUDGET_ALERT_THRESHOLD = 0.8` and `utilizationRatio()`. `update()` now reads as
+   build patch → write → re-read → notify.
+
+**Safety net: tests first, then extract.** Move 2 was a mechanical re-categorization of
+35 fields sitting behind 3 tests, where a `??` / `||` mix-up silently turns a legitimate
+`0` into `null`. So **7 category-representative tests were added first and shown green
+against the unrefactored code** (including `manual_progress: 0` and `approved_budget: 0`),
+and only then was the extraction applied. Mutation-checked afterwards: flipping `??` to
+`||` failed exactly those 2 tests, then was reverted and re-verified.
+
+**Unit tests cannot see DI wiring or routing**, which is the real risk of move 1 (the
+known gotcha: an unregistered module 404s). Verified by booting the app against the real
+`AppModule`: the DI graph resolved and `GET /projects/:id/sections` answered **401**
+(global auth guard) rather than 404, as did `:id` and `:id/history` — no route shadowing.
+Frontend needs no change: `frontend/src/lib/api.ts:179` already calls that exact URL.
+
+**Swagger surface preserved.** Swagger groups by controller class, so the moved route
+would have appeared under a new "ProjectSections" heading in `/api/docs`. Added
+`@ApiTags('Projects')` to the new controller to keep it where it has always been. It is
+the only `@ApiTags` in the codebase — deliberate, and worth generalizing if more
+controllers are ever split.
+
+**Reported, not fixed** (ground rule 1): `remove()` swallows Storage-cleanup failures in
+a bare `catch {}` with no logging, so orphaned Storage objects leave no trace. Adding a
+logger adds a dependency and emits output that was not there before; its own pass.
+
+**Left deliberately.** `findAll`'s two-branch stats path (the branches differ for a
+documented concurrency reason), `create()`'s compensating delete (explicit, commented,
+tested — hiding it in a helper would bury the one thing a reader needs to see), and
+`ProjectsRepository.listStats` (dense, subtle, and uncovered by tests per the 0b caveat).
+
+**Verification.** 91 → **98 tests / 11 suites** (+7 new, sections test relocated to its
+own suite); `tsc` · `eslint --max-warnings 0` · `build` clean; boot smoke test as above.
+
+**Gate input.** Unlike 1a, this one paid: a class with 13 collaborators became one with 2,
+and a documented cross-module workaround now has a path to removal. The pattern from 1a
+recurred exactly as predicted, which is the third data point for the shared-helper
+decision after 1c.

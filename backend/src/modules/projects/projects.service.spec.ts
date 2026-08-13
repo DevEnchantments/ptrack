@@ -44,75 +44,20 @@ describe('ProjectsService', () => {
       update: jest.fn().mockResolvedValue(undefined),
       deleteAttachmentObjects: jest.fn().mockResolvedValue(undefined),
     };
-    // Each section collaborator is reduced to its list() — that is all the
-    // aggregate endpoint uses. The resolved value doubles as an identity tag so
-    // a mis-wired key shows up as the wrong section name.
-    const section = (name: string) => ({
-      list: jest.fn().mockResolvedValue([name]),
-    });
-    const sections = {
-      milestones: section('milestones'),
-      outcomes: section('outcomes'),
-      actionItems: section('actionItems'),
-      links: section('links'),
-      resources: section('resources'),
-      issues: section('issues'),
-      risks: section('risks'),
-      submissions: section('submissions'),
-      updates: section('updates'),
-      statusReports: section('statusReports'),
-      attachments: section('attachments'),
-    };
     const notifications = { notify: jest.fn().mockResolvedValue(undefined) };
 
-    // Constructor order matters and is easy to get wrong at 13 collaborators;
-    // building the tuple keeps it in one readable place.
-    const deps = [
-      repo,
-      sections.milestones,
-      sections.outcomes,
-      sections.actionItems,
-      sections.links,
-      sections.resources,
-      sections.issues,
-      sections.risks,
-      sections.submissions,
-      notifications,
-      sections.updates,
-      sections.statusReports,
-      sections.attachments,
-    ] as unknown as ConstructorParameters<typeof ProjectsService>;
+    // Two collaborators since the section fan-out moved to
+    // ProjectSectionsService (1b); the tuple keeps the cast in one place.
+    const deps = [repo, notifications] as unknown as ConstructorParameters<
+      typeof ProjectsService
+    >;
 
     return {
       service: new ProjectsService(...deps),
       repo,
-      sections,
       notifications,
     };
   }
-
-  describe('sections', () => {
-    it('maps every response key to its own collaborator', async () => {
-      const { service, sections } = build();
-
-      await expect(service.sections(PROJECT)).resolves.toEqual({
-        milestones: ['milestones'],
-        outcomes: ['outcomes'],
-        actionItems: ['actionItems'],
-        links: ['links'],
-        resources: ['resources'],
-        issues: ['issues'],
-        risks: ['risks'],
-        submissions: ['submissions'],
-        updates: ['updates'],
-        statusReports: ['statusReports'],
-        attachments: ['attachments'],
-      });
-      for (const s of Object.values(sections)) {
-        expect(s.list).toHaveBeenCalledWith(PROJECT);
-      }
-    });
-  });
 
   describe('create', () => {
     const member = (
@@ -306,6 +251,105 @@ describe('ProjectsService', () => {
         updated_by: USER,
         at_risk: false,
         start_date: null,
+      });
+    });
+
+    /**
+     * One test per normalization rule the patch builder implements. `?? null`
+     * and `|| null` are NOT interchangeable here: a legitimate zero must
+     * survive on the numeric fields, while a blank string must clear the
+     * text and date ones.
+     */
+    describe('field normalization', () => {
+      it('trims text fields and collapses blank ones to null', async () => {
+        const { service, repo } = build();
+        await service.update(
+          PROJECT,
+          { description: '  Migrate Apollo.  ', goal: '   ', sponsor: '' },
+          USER,
+        );
+
+        expect(repo.update).toHaveBeenCalledWith(PROJECT, {
+          updated_by: USER,
+          description: 'Migrate Apollo.',
+          goal: null,
+          sponsor: null,
+        });
+      });
+
+      it('keeps a numeric zero instead of nulling it', async () => {
+        const { service, repo } = build();
+        await service.update(PROJECT, { manual_progress: 0 }, USER);
+
+        expect(repo.update).toHaveBeenCalledWith(PROJECT, {
+          updated_by: USER,
+          manual_progress: 0,
+        });
+      });
+
+      it('keeps a zero budget instead of nulling it', async () => {
+        const { service, repo } = build();
+        await service.update(
+          PROJECT,
+          { approved_budget: 0, utilized_budget: 0 },
+          USER,
+        );
+
+        expect(repo.update).toHaveBeenCalledWith(PROJECT, {
+          updated_by: USER,
+          approved_budget: 0,
+          utilized_budget: 0,
+        });
+      });
+
+      it('passes enums and booleans through untouched', async () => {
+        const { service, repo } = build();
+        await service.update(
+          PROJECT,
+          { access_control: 'restricted', is_priority: false },
+          USER,
+        );
+
+        expect(repo.update).toHaveBeenCalledWith(PROJECT, {
+          updated_by: USER,
+          access_control: 'restricted',
+          is_priority: false,
+        });
+      });
+
+      it('clears an empty target_end_date to null', async () => {
+        const { service, repo } = build();
+        await service.update(PROJECT, { target_end_date: '' }, USER);
+
+        expect(repo.update).toHaveBeenCalledWith(PROJECT, {
+          updated_by: USER,
+          target_end_date: null,
+        });
+      });
+
+      it('collapses empty arrays to null and keeps populated ones', async () => {
+        const { service, repo } = build();
+        await service.update(
+          PROJECT,
+          { external_stakeholders: [], tags: ['migration'] },
+          USER,
+        );
+
+        expect(repo.update).toHaveBeenCalledWith(PROJECT, {
+          updated_by: USER,
+          external_stakeholders: null,
+          tags: ['migration'],
+        });
+      });
+
+      it('writes an explicitly nulled lookup id as null', async () => {
+        const { service, repo } = build();
+        await service.update(PROJECT, { status_id: null }, USER);
+
+        expect(repo.update).toHaveBeenCalledWith(PROJECT, {
+          updated_by: USER,
+          status_id: null,
+        });
       });
     });
 
