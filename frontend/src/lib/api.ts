@@ -668,8 +668,40 @@ export const dashboardApi = {
   get: () => apiGet<DashboardData>('/dashboard'),
 }
 
+export interface InitiativeProgressRow {
+  project_id: string
+  name: string
+  reference_id: string | null
+  owner: string | null
+  project_manager: string | null
+  status: string | null
+  start_date: string | null
+  target_end_date: string | null
+  planned: number | null
+  calculated: number | null
+  delta: number | null
+  bucket: string | null
+  milestones_done: number
+  milestones_total: number
+}
+
+export interface MonthlyPerformanceMonth {
+  label: string
+  due: number
+  done: number
+  completed: number
+  submitted: number
+  approved: number
+}
+
 export const reportsApi = {
   cycleStatus: () => apiGet<CycleStatusReport>('/reports/cycle-status'),
+  initiativeProgress: () =>
+    apiGet<{ rows: InitiativeProgressRow[] }>('/reports/initiative-progress'),
+  monthlyPerformance: (year: number) =>
+    apiGet<{ year: number; months: MonthlyPerformanceMonth[] }>(
+      `/reports/monthly-performance?year=${year}`,
+    ),
 }
 
 export const cyclesApi = {

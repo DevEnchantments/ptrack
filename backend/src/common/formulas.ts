@@ -30,6 +30,44 @@ export function calculatedProgress(
   return Math.round(acc / weightSum);
 }
 
+export const INITIATIVE_BUCKETS = [
+  'Completed',
+  'Over-Achieved',
+  'On Target',
+  'Needs Attention',
+  'Off Target',
+  'Severely Off Target',
+  'Not Started',
+] as const;
+export type InitiativeBucket = (typeof INITIATIVE_BUCKETS)[number];
+
+/**
+ * F5 — delivery bucket from project status + progress delta
+ * (calculated - planned). Returns null for cancelled projects (excluded).
+ */
+export function initiativeBucket(
+  statusName: string | null | undefined,
+  calculated: number | null,
+  planned: number | null,
+): InitiativeBucket | null {
+  const st = (statusName ?? '').toLowerCase();
+  if (st.includes('cancel')) return null;
+  if (st.includes('completed') || st === 'complete' || st === 'closed')
+    return 'Completed';
+  if (st.includes('not started')) return 'Not Started';
+  if (calculated === null && planned === null) return 'Not Started';
+  const delta = (calculated ?? 0) - (planned ?? 0);
+  return delta >= 10
+    ? 'Over-Achieved'
+    : delta >= -5
+      ? 'On Target'
+      : delta >= -15
+        ? 'Needs Attention'
+        : delta >= -30
+          ? 'Off Target'
+          : 'Severely Off Target';
+}
+
 /** F2 — straight-line planned progress between start and target end. */
 export function plannedProgress(
   startDate: string | null,

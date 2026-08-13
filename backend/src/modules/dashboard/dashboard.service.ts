@@ -1,7 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../../database/database.service';
 import { toHttpException } from '../../common/supabase-error';
-import { calculatedProgress, plannedProgress } from '../../common/formulas';
+import {
+  calculatedProgress,
+  INITIATIVE_BUCKETS,
+  initiativeBucket,
+  plannedProgress,
+} from '../../common/formulas';
 
 export interface ChartPoint {
   label: string;
@@ -264,44 +269,16 @@ export class DashboardService {
         msByProject.set(m.project_id, []).get(m.project_id)
       )?.push(m);
     }
-    const BUCKETS = [
-      'Completed',
-      'Over-Achieved',
-      'On Target',
-      'Needs Attention',
-      'Off Target',
-      'Severely Off Target',
-      'Not Started',
-    ] as const;
-    const bucketCounts = new Map<string, number>(BUCKETS.map((b) => [b, 0]));
+    const bucketCounts = new Map<string, number>(
+      INITIATIVE_BUCKETS.map((b) => [b, 0]),
+    );
     for (const pr of projectRows) {
-      const st = (pr.status?.name ?? '').toLowerCase();
-      if (st.includes('cancel')) continue;
-      let bucket: (typeof BUCKETS)[number];
-      if (st.includes('completed') || st === 'complete' || st === 'closed') {
-        bucket = 'Completed';
-      } else if (st.includes('not started')) {
-        bucket = 'Not Started';
-      } else {
-        const calc = calculatedProgress(msByProject.get(pr.id) ?? []);
-        const planned = plannedProgress(pr.start_date, pr.target_end_date);
-        if (calc === null && planned === null) {
-          bucket = 'Not Started';
-        } else {
-          const delta = (calc ?? 0) - (planned ?? 0);
-          bucket =
-            delta >= 10
-              ? 'Over-Achieved'
-              : delta >= -5
-                ? 'On Target'
-                : delta >= -15
-                  ? 'Needs Attention'
-                  : delta >= -30
-                    ? 'Off Target'
-                    : 'Severely Off Target';
-        }
-      }
-      bucketCounts.set(bucket, (bucketCounts.get(bucket) ?? 0) + 1);
+      const bucket = initiativeBucket(
+        pr.status?.name,
+        calculatedProgress(msByProject.get(pr.id) ?? []),
+        plannedProgress(pr.start_date, pr.target_end_date),
+      );
+      if (bucket) bucketCounts.set(bucket, (bucketCounts.get(bucket) ?? 0) + 1);
     }
 
     const submissionCounts = new Map<string, number>();
@@ -346,7 +323,7 @@ export class DashboardService {
     });
 
     const executive = {
-      initiative_buckets: BUCKETS.map((b) => ({
+      initiative_buckets: INITIATIVE_BUCKETS.map((b) => ({
         label: b,
         value: bucketCounts.get(b) ?? 0,
       })),

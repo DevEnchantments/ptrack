@@ -157,7 +157,7 @@ index (timeliness/completeness/reliability, Figs 30–31) — **formulas = ASK (
 | FR-10 | Dashboards: initiative counts/status, budget utilization, cycle submission status, monthly breakdowns | ✅ Fig-15 SHAPE SHIPPED 2026-08-13: executive row on My Dashboard (initiative buckets per F5 PROVISIONAL, portfolio budget bar, cycle-submission widget with click-through, monthly done/due strip) above the existing live charts |
 
 | FR-11 | KPI dashboards / scorecards | ✅ PARTIAL 2026-08-05: KPI registry + readings + action plans live at `/kpis` (ASSUMED entity-level). Scorecard visuals (achievement %, data-quality index) await formula sign-off |
-| FR-12 | Report generation + Excel export | MISSING |
+| FR-12 | Report generation + Excel export | ✅ PARTIAL 2026-08-13: named printable reports under /reporting — Initiative Progress (planned vs calculated per F1/F2, delta + F5 bucket, worst first) and Monthly Performance (milestones due/done/completed + submissions/approvals per month, year switcher) — join the existing per-project Progress report and Cycle Submission Status. Export stays CSV (FR-13 confirm modal); native .xlsx not built (ASSUMED CSV sufficient) |
 | FR-13 | Download confirmation modal | ✅ SHIPPED 2026-08-03: confirm dialog (record count) before the CSV export |
 | FR-14 | Workflow states: submit/review/return/approve/close | ✅ ASSUMED+SHIPPED 2026-08-03; cycle CLOSE (+reopen) 2026-08-13 locks all transitions (see 1.6) — routing/exact closure rules remain OI-03 questions |
 | FR-15 | Role-based restriction of create/update/approve/admin | PARTIAL — access_level data exists; enforcement deferred (security phase) |

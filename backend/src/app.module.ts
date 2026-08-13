@@ -22,6 +22,7 @@ import { RegistryModule } from './modules/registry/registry.module';
 import { ImportModule } from './modules/import/import.module';
 import { TemplatesModule } from './modules/templates/templates.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
+import { ReportsModule } from './modules/reports/reports.module';
 import { KpisModule } from './modules/kpis/kpis.module';
 import { UpdatesModule } from './modules/updates/updates.module';
 import { StatusReportsModule } from './modules/status-reports/status-reports.module';
@@ -52,6 +53,7 @@ import { AppService } from './app.service';
     ImportModule,
     TemplatesModule,
     DashboardModule,
+    ReportsModule,
     KpisModule,
     UpdatesModule,
     StatusReportsModule,

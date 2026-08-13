@@ -10,6 +10,8 @@ import { CategoriesPage } from '@/pages/CategoriesPage'
 import { TimelinePage } from '@/pages/TimelinePage'
 import { ImportPage } from '@/pages/ImportPage'
 import { CycleStatusReportPage } from '@/pages/reports/CycleStatusReportPage'
+import { InitiativeProgressReportPage } from '@/pages/reports/InitiativeProgressReportPage'
+import { MonthlyPerformanceReportPage } from '@/pages/reports/MonthlyPerformanceReportPage'
 import { ProjectProgressReportPage } from '@/pages/reports/ProjectProgressReportPage'
 import { LoginPage } from '@/pages/LoginPage'
 import { Routes, Route, Navigate } from 'react-router-dom'
@@ -45,6 +47,14 @@ function App() {
           <Route
             path="/reporting/cycle-status"
             element={<CycleStatusReportPage />}
+          />
+          <Route
+            path="/reporting/initiative-progress"
+            element={<InitiativeProgressReportPage />}
+          />
+          <Route
+            path="/reporting/monthly-performance"
+            element={<MonthlyPerformanceReportPage />}
           />
           <Route
             path="/projects/:projectId/reports/progress"
