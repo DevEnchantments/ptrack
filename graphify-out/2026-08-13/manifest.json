@@ -905,8 +905,8 @@
     "semantic_hash": ""
   },
   "docs/FDD-ALIGNMENT.md": {
-    "mtime": 1786620420.3205929,
-    "ast_hash": "73dc5c8270d4319df536d0e37f18d1f9",
+    "mtime": 1786621259.7054071,
+    "ast_hash": "0a1d628520289d0aecae3b7ed36cd8d6",
     "semantic_hash": ""
   },
   "backend/db/fdd_project_fields.sql": {
@@ -995,8 +995,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/risks/risks.module.ts": {
-    "mtime": 1785742895.9159763,
-    "ast_hash": "20f267f42d97c0ea49b959c134d9ecea",
+    "mtime": 1786621230.6188273,
+    "ast_hash": "e6cb1fb646e6c30635f78305c5ad7a65",
     "semantic_hash": ""
   },
   "backend/src/modules/risks/risks.repository.ts": {
@@ -1005,8 +1005,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/risks/risks.service.ts": {
-    "mtime": 1785743066.6545918,
-    "ast_hash": "dd97f68069bcb7146ed04c3e42340c9b",
+    "mtime": 1786621213.8757627,
+    "ast_hash": "862ec9705b19f26bbc02b77a7348e946",
     "semantic_hash": ""
   },
   "frontend/src/components/AddRiskDialog.tsx": {
@@ -1035,8 +1035,8 @@
     "semantic_hash": ""
   },
   "backend/src/common/formulas.ts": {
-    "mtime": 1786620204.0816152,
-    "ast_hash": "d89aeccbb47a21e36683e942855aae27",
+    "mtime": 1786621100.5428963,
+    "ast_hash": "e4e8b206a18202ac7a0a62ffe99754b0",
     "semantic_hash": ""
   },
   "frontend/src/lib/formulas.ts": {
@@ -1130,13 +1130,13 @@
     "semantic_hash": ""
   },
   "backend/src/modules/notifications/notifications.repository.ts": {
-    "mtime": 1785908235.635822,
-    "ast_hash": "8b84b97b387313c295041f9c985d116f",
+    "mtime": 1786621159.0739741,
+    "ast_hash": "8c953220e03d92af8ec5f2bedaf0175b",
     "semantic_hash": ""
   },
   "backend/src/modules/notifications/notifications.service.ts": {
-    "mtime": 1785907960.2681642,
-    "ast_hash": "dc180607e0d0ef0927eebd32077cf25e",
+    "mtime": 1786621165.8899825,
+    "ast_hash": "f84864efd0a8063340659fa0d18f25f4",
     "semantic_hash": ""
   },
   "frontend/src/components/NotificationBell.tsx": {
@@ -1225,18 +1225,18 @@
     "semantic_hash": ""
   },
   "backend/src/modules/notifications/reminders.logic.spec.ts": {
-    "mtime": 1786118263.6932893,
-    "ast_hash": "e6cc86ea7d9c67c3f3a3e11bc6aa3405",
+    "mtime": 1786621249.9664447,
+    "ast_hash": "aba947b4b8130ffb1dbcac37669010b4",
     "semantic_hash": ""
   },
   "backend/src/modules/notifications/reminders.logic.ts": {
-    "mtime": 1786118234.0771122,
-    "ast_hash": "0c36d65b9cbd3a1a6cd27e01514a34ba",
+    "mtime": 1786621115.123572,
+    "ast_hash": "31663f8c176445f5534af4ae5b5619d6",
     "semantic_hash": ""
   },
   "backend/src/modules/notifications/reminders.service.ts": {
-    "mtime": 1786118462.9095743,
-    "ast_hash": "509fafe74fd53d1c237cbeba8190cd08",
+    "mtime": 1786621139.6795745,
+    "ast_hash": "8075eb2d2b1ab0e8a9f3901aefad238a",
     "semantic_hash": ""
   },
   "backend/src/modules/lookups/dto/lookup-value.dto.ts": {
