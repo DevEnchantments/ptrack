@@ -118,7 +118,8 @@ frontend 91 files / 21,438 lines / **0 tests on main**.
 
 Chosen to be representative, not easy.
 
-- [ ] **1a.** `backend/src/modules/links/` — simple CRUD, the control case
+- [x] **1a.** `backend/src/modules/links/` — simple CRUD, the control case.
+      **Done 2026-08-13** — 2 moves, thin yield as expected of a control case.
 - [ ] **1b.** `backend/src/modules/projects/` — the most complex module
 - [ ] **1c.** `backend/src/modules/action-items/` — known non-trivial logic
       (owner-set diffing, atomic replace RPC)
@@ -256,3 +257,60 @@ warning-level rules (`no-unsafe-argument`, `no-floating-promises`) gate-blocking
 
 **Phase 1 can now start.** The pilot modules have tests that fail if behaviour changes,
 within the repository caveat above.
+
+### 2026-08-13 — Phase 1a, `modules/links/` (the control case)
+
+**Skill: none.** §3 maps this to `book-philosophy-of-software-design`, not installed in
+this environment. Applied its lens from first principles (deep modules, information
+hiding, one definition per rule) rather than substituting another skill.
+
+**Orient.** One cross-module dependent: `ProjectsService` injects `LinksService` and
+calls `list()` in `sections()`. Confirmed in source — the graph misses the runtime
+coupling that makes it work (`links.module.ts` `exports: [LinksService]`). That seam is
+covered by the `sections` test from 0b.
+
+**Changed (2 moves).**
+1. *Extract Function* — `columnsFrom(dto)` in `links.service.ts`. `add` and `update` each
+   independently restated the DTO→column rules (trim url, `label?.trim() || null`,
+   `tags?.length ? tags : null`). Two copies that had to be kept in sync, where drift is
+   silent: trimming added to one path only means the same field stores differently
+   depending on whether you created or edited. Now one definition, spread over
+   `CREATE_DEFAULTS` for insert and onto `updated_by` for patch. `update` went from 8
+   lines of `if` to one expression.
+2. *Extract Constant* — `LIST_SELECT` in `links.repository.ts`, replacing the joined
+   select string inlined in both `update` and `findByProject`. Verified byte-identical to
+   both call sites via the diff before running anything.
+
+**Safety net proven, not assumed.** Beyond green-before/green-after, the net was
+mutation-checked: flipping `is_gold !== undefined` to truthiness turned the suite red on
+exactly the intended test (`links.service.spec.ts:127`), then was reverted and re-verified.
+Worth repeating in 1b/1c — a characterization suite that cannot fail is not a safety net.
+
+**Rejected, with reasons (the more useful half of this session).**
+- Collapsing `LinksService.list`, a pure delegation. PoSD would call the service shallow,
+  but CLAUDE.md rule 3 mandates controller/service/repository per module and that
+  pass-through is the seam `ProjectsService` injects. Consistency across 20 modules beats
+  3 saved lines.
+- Moving the repository's `label ?? url` fallback into the service. It is information
+  hiding done right: `remove()` returns "what to call this row", and the audit-log caller
+  should not need to know a link's label can be blank.
+- Hoisting `columnsFrom` into `common/`. **Deferred on purpose** — one example is not
+  enough to design a shared abstraction, and projects carries ~30 of these blocks with
+  quirks links does not have (`start_date: '' → null` beside `at_risk: null → false`).
+  Revisit after 1c with three examples to design against. Also keeps ground rule 5 honest.
+- Moving the controller's inline `@ApiBody` examples out (~25 of its 79 lines).
+  Documentation-adjacent churn that would set a precedent across 20 modules and put the
+  runnable example further from the route it documents.
+
+**Reported, not fixed** (ground rule 1): `add` returns `Link` (no profile join) while
+`update` returns `LinkListItem` (with `created_by_profile`) — the same resource in two
+shapes depending on the verb. Fixing it changes a response body, so it belongs to an
+API-shape decision, not a behaviour-preserving pass.
+
+**Verification.** 91 tests / 10 suites green before and after; `tsc` · `eslint
+--max-warnings 0` · `build` clean. Test count deliberately unchanged — this phase adds no
+behaviour.
+
+**Gate input.** ~213 lines of module yielded one extract-function and one
+extract-constant. Thin, as expected of the control case. Carry to the post-1c gate: if
+projects and action-items yield proportionally as little, stop the plan.

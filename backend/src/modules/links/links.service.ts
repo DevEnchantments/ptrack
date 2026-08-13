@@ -4,6 +4,33 @@ import { LinksRepository } from './links.repository';
 import { CreateLinkDto } from './dto/create-link.dto';
 import { UpdateLinkDto } from './dto/update-link.dto';
 
+/**
+ * The single definition of how a link DTO maps onto columns. Only keys that
+ * were actually sent appear, so the same function serves create (spread over
+ * CREATE_DEFAULTS) and patch (spread onto updated_by) — create and update
+ * cannot drift apart on trimming or null-collapsing.
+ */
+function columnsFrom(dto: Partial<CreateLinkDto>): Record<string, unknown> {
+  const cols: Record<string, unknown> = {};
+  if (dto.url !== undefined) cols.url = dto.url.trim();
+  if (dto.label !== undefined) cols.label = dto.label?.trim() || null;
+  if (dto.description !== undefined)
+    cols.description = dto.description?.trim() || null;
+  // Guarded on `!== undefined`, not truthiness, so un-starring a link reaches
+  // the database.
+  if (dto.is_gold !== undefined) cols.is_gold = dto.is_gold;
+  if (dto.tags !== undefined) cols.tags = dto.tags?.length ? dto.tags : null;
+  return cols;
+}
+
+/** What a new link gets for the columns the caller omitted. */
+const CREATE_DEFAULTS = {
+  label: null,
+  description: null,
+  is_gold: false,
+  tags: null,
+};
+
 @Injectable()
 export class LinksService {
   constructor(
@@ -18,11 +45,8 @@ export class LinksService {
   add(projectId: string, dto: CreateLinkDto, userId: string) {
     return this.repo.insert({
       project_id: projectId,
-      url: dto.url.trim(),
-      label: dto.label?.trim() || null,
-      description: dto.description?.trim() || null,
-      is_gold: dto.is_gold ?? false,
-      tags: dto.tags?.length ? dto.tags : null,
+      ...CREATE_DEFAULTS,
+      ...columnsFrom(dto),
       created_by: userId,
       updated_by: userId,
     });
@@ -34,14 +58,10 @@ export class LinksService {
     dto: UpdateLinkDto,
     userId: string,
   ) {
-    const patch: Record<string, unknown> = { updated_by: userId };
-    if (dto.url !== undefined) patch.url = dto.url.trim();
-    if (dto.label !== undefined) patch.label = dto.label?.trim() || null;
-    if (dto.description !== undefined)
-      patch.description = dto.description?.trim() || null;
-    if (dto.is_gold !== undefined) patch.is_gold = dto.is_gold;
-    if (dto.tags !== undefined) patch.tags = dto.tags?.length ? dto.tags : null;
-    return this.repo.update(projectId, linkId, patch);
+    return this.repo.update(projectId, linkId, {
+      updated_by: userId,
+      ...columnsFrom(dto),
+    });
   }
 
   async remove(projectId: string, linkId: string, userId: string) {

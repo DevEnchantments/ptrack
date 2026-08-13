@@ -121,5 +121,10 @@
   "119": "@tailwindcss/vite",
   "120": "@eslint/js",
   "121": "@testing-library/react",
-  "122": "typescript-eslint"
+  "122": "typescript-eslint",
+  "123": "jose",
+  "124": "@nestjs/platform-express",
+  "125": "action-items.service.spec.ts",
+  "126": "links.service.spec.ts",
+  "127": "projects.service.spec.ts"
 }

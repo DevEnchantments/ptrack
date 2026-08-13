@@ -24,6 +24,10 @@ export interface LinkListItem extends Link {
 const COLUMNS =
   'id, project_id, label, url, description, is_gold, tags, created_at, updated_at';
 
+/** COLUMNS plus the creator join every list-shaped read returns. */
+const LIST_SELECT = `${COLUMNS},
+         created_by_profile:profiles!created_by ( full_name, email )`;
+
 @Injectable()
 export class LinksRepository {
   constructor(private readonly db: DatabaseService) {}
@@ -50,10 +54,7 @@ export class LinksRepository {
       .update(patch)
       .eq('project_id', projectId)
       .eq('id', linkId)
-      .select(
-        `${COLUMNS},
-         created_by_profile:profiles!created_by ( full_name, email )`,
-      )
+      .select(LIST_SELECT)
       .single();
     if (error) throw toHttpException(error, 'links.update');
     return data as unknown as LinkListItem;
@@ -76,10 +77,7 @@ export class LinksRepository {
 
   async findByProject(projectId: string): Promise<LinkListItem[]> {
     const { data, error } = await this.table
-      .select(
-        `${COLUMNS},
-         created_by_profile:profiles!created_by ( full_name, email )`,
-      )
+      .select(LIST_SELECT)
       .eq('project_id', projectId)
       .order('is_gold', { ascending: false })
       .order('created_at', { ascending: false });
