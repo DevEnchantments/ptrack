@@ -555,8 +555,8 @@
     "semantic_hash": ""
   },
   "frontend/src/lib/api.ts": {
-    "mtime": 1786616962.2523363,
-    "ast_hash": "1e7187db66cd0c0550333bc55c4f765e",
+    "mtime": 1786619252.276788,
+    "ast_hash": "737895bc5a14611c7b9ef0862c1a6023",
     "semantic_hash": ""
   },
   "frontend/src/lib/auth-context.tsx": {
@@ -905,8 +905,8 @@
     "semantic_hash": ""
   },
   "docs/FDD-ALIGNMENT.md": {
-    "mtime": 1786618211.118645,
-    "ast_hash": "826f0a5d0fca7650645e4818c195710e",
+    "mtime": 1786619344.4955847,
+    "ast_hash": "3565a77c24af68686080404c7b3793c6",
     "semantic_hash": ""
   },
   "backend/db/fdd_project_fields.sql": {
@@ -1075,28 +1075,28 @@
     "semantic_hash": ""
   },
   "backend/src/modules/submissions/submissions.controller.ts": {
-    "mtime": 1785911349.267434,
-    "ast_hash": "a3d3b491baf58a1279f32a7a467f383e",
+    "mtime": 1786619052.3190627,
+    "ast_hash": "596509c2a3905167a0a887bd441c810d",
     "semantic_hash": ""
   },
   "backend/src/modules/submissions/submissions.module.ts": {
-    "mtime": 1785911349.2694373,
-    "ast_hash": "98d7e4fbb64d917610b718acf1d99989",
+    "mtime": 1786619245.7674572,
+    "ast_hash": "40779284c170adff21722e880f043780",
     "semantic_hash": ""
   },
   "backend/src/modules/submissions/submissions.repository.ts": {
-    "mtime": 1785911349.264436,
-    "ast_hash": "feae62ddfa950cee8f20b3081c71d551",
+    "mtime": 1786619020.1523235,
+    "ast_hash": "c3506e0eba5d5c06fe8dee4b06b2723d",
     "semantic_hash": ""
   },
   "backend/src/modules/submissions/submissions.service.ts": {
-    "mtime": 1785911604.499722,
-    "ast_hash": "66925af1c532f1a2b1a38a1f319a34d7",
+    "mtime": 1786619044.330619,
+    "ast_hash": "585b35a497b9c46df12bcccfcfe81fc8",
     "semantic_hash": ""
   },
   "frontend/src/components/WorkflowPanel.tsx": {
-    "mtime": 1785935587.0168133,
-    "ast_hash": "a2941d1527f2cdbda7c5ebee4335050e",
+    "mtime": 1786619279.7694306,
+    "ast_hash": "7ae79cbf41f897ad3301c27dbb9a747b",
     "semantic_hash": ""
   },
   "frontend/src/components/ProjectsGrid.tsx": {
@@ -1150,8 +1150,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/reports/CycleStatusReportPage.tsx": {
-    "mtime": 1785911702.5539327,
-    "ast_hash": "8b3834a56eed97d235c274dfa21f696f",
+    "mtime": 1786619313.149558,
+    "ast_hash": "548a13e5e243d8bb0efaf2da25c13550",
     "semantic_hash": ""
   },
   "frontend/src/pages/reports/ProjectProgressReportPage.tsx": {
