@@ -35,8 +35,8 @@
     "semantic_hash": ""
   },
   "backend/src/app.module.ts": {
-    "mtime": 1786455803.1121652,
-    "ast_hash": "91c7598bc5f33ab422f0d7116035612c",
+    "mtime": 1786620298.6486611,
+    "ast_hash": "e86ffdf8697b803dd3487d0e1fce986e",
     "semantic_hash": ""
   },
   "backend/src/app.service.ts": {
@@ -445,8 +445,8 @@
     "semantic_hash": ""
   },
   "frontend/src/App.tsx": {
-    "mtime": 1786453383.9897811,
-    "ast_hash": "4bb1cc21aa22436b0dfbc50554f7d642",
+    "mtime": 1786620387.6801753,
+    "ast_hash": "86f42dcae279c8444a614c01fe76a3ab",
     "semantic_hash": ""
   },
   "frontend/src/components/AddActionItemDialog.tsx": {
@@ -555,8 +555,8 @@
     "semantic_hash": ""
   },
   "frontend/src/lib/api.ts": {
-    "mtime": 1786619252.276788,
-    "ast_hash": "737895bc5a14611c7b9ef0862c1a6023",
+    "mtime": 1786620312.8094554,
+    "ast_hash": "ff6d36e4c013b7c9b227c605f97b6a61",
     "semantic_hash": ""
   },
   "frontend/src/lib/auth-context.tsx": {
@@ -905,8 +905,8 @@
     "semantic_hash": ""
   },
   "docs/FDD-ALIGNMENT.md": {
-    "mtime": 1786619344.4955847,
-    "ast_hash": "3565a77c24af68686080404c7b3793c6",
+    "mtime": 1786620420.3205929,
+    "ast_hash": "73dc5c8270d4319df536d0e37f18d1f9",
     "semantic_hash": ""
   },
   "backend/db/fdd_project_fields.sql": {
@@ -1035,8 +1035,8 @@
     "semantic_hash": ""
   },
   "backend/src/common/formulas.ts": {
-    "mtime": 1785754154.2828274,
-    "ast_hash": "16ac5b8eaf844d4d401c2476e5248801",
+    "mtime": 1786620204.0816152,
+    "ast_hash": "d89aeccbb47a21e36683e942855aae27",
     "semantic_hash": ""
   },
   "frontend/src/lib/formulas.ts": {
@@ -1145,8 +1145,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ReportingPage.tsx": {
-    "mtime": 1785925131.9237463,
-    "ast_hash": "af1763097af73b02b6f6761fa4135a18",
+    "mtime": 1786620408.4490862,
+    "ast_hash": "9d6f689f3c2ee069c601afc6d93bf639",
     "semantic_hash": ""
   },
   "frontend/src/pages/reports/CycleStatusReportPage.tsx": {
@@ -1170,8 +1170,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/dashboard/dashboard.service.ts": {
-    "mtime": 1786616795.7870657,
-    "ast_hash": "ae04623b2b866226cab4d9bb1c66f495",
+    "mtime": 1786620242.2665784,
+    "ast_hash": "0cfb0d3a11fb2eb3f70ba82ed475c870",
     "semantic_hash": ""
   },
   "backend/db/fdd_kpis.sql": {
@@ -1467,6 +1467,31 @@
   "frontend/src/components/TasksCard.tsx": {
     "mtime": 1786618150.9688673,
     "ast_hash": "4981c8bb790c88512b156379609e5d92",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/reports/reports.controller.ts": {
+    "mtime": 1786620272.1077304,
+    "ast_hash": "a8a5d417e8671a3649452bb61ad3af01",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/reports/reports.module.ts": {
+    "mtime": 1786620278.2732086,
+    "ast_hash": "eb06255a4d7cff5cebb0e0efdebceac6",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/reports/reports.service.ts": {
+    "mtime": 1786620613.8896563,
+    "ast_hash": "50271ff63fd264108f88773d9e63d7ae",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/reports/InitiativeProgressReportPage.tsx": {
+    "mtime": 1786620345.673509,
+    "ast_hash": "b714a8deb41560703643bb51682f20d7",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/reports/MonthlyPerformanceReportPage.tsx": {
+    "mtime": 1786620760.2478507,
+    "ast_hash": "49647cd1501db60f7f68112d81f92ec8",
     "semantic_hash": ""
   }
 }
