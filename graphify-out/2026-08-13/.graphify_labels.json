@@ -110,9 +110,8 @@
   "108": "frappe-gantt",
   "109": "eslint-plugin-prettier",
   "110": "react-router-dom",
+  "111": "vitest",
   "112": "moduleFileExtensions",
   "113": "RecordHistoryService",
-  "114": "ApiProperty",
-  "117": "dhtmlx-gantt",
-  "118": "jose"
+  "114": "ApiProperty"
 }

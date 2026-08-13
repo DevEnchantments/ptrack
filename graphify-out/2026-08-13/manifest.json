@@ -440,8 +440,8 @@
     "semantic_hash": "0355276bc79439afe3c53e3a2470ca1e"
   },
   "frontend/package.json": {
-    "mtime": 1786523194.7245197,
-    "ast_hash": "efddd4c8e40ad4170ecf2d8321279d0b",
+    "mtime": 1786626696.992288,
+    "ast_hash": "ecae59410bb30f1897e444a0519e3b8d",
     "semantic_hash": ""
   },
   "frontend/src/App.tsx": {
@@ -655,8 +655,8 @@
     "semantic_hash": "f9cb81ddcea69ffdab672fc8c48dca66"
   },
   "frontend/vite.config.ts": {
-    "mtime": 1785742700.56257,
-    "ast_hash": "a10980984828e6cc8960908a2fa7cfdb",
+    "mtime": 1786626686.7061422,
+    "ast_hash": "d49c42583f0313507baf73415b3aec7a",
     "semantic_hash": ""
   },
   "package.json": {
@@ -775,8 +775,8 @@
     "semantic_hash": ""
   },
   ".github/workflows/ci.yml": {
-    "mtime": 1785742700.4416392,
-    "ast_hash": "7e3e3b001cf23e0d18f89d39d39ce070",
+    "mtime": 1786626689.4951966,
+    "ast_hash": "5fbc9588090a9410905c9799c69072cb",
     "semantic_hash": ""
   },
   ".github/assets/banner.svg": {
@@ -1505,8 +1505,23 @@
     "semantic_hash": ""
   },
   "docs/REFACTOR-PLAN.md": {
-    "mtime": 1786625747.866405,
-    "ast_hash": "8dd9b8ffcfa9212c47e4a73da3600548",
+    "mtime": 1786627234.0979156,
+    "ast_hash": "f5947eebf1441a757a28a4cac333edf0",
+    "semantic_hash": ""
+  },
+  "frontend/src/lib/format.test.ts": {
+    "mtime": 1786626680.481755,
+    "ast_hash": "de6b2ba63bf9fd65227c1987cd5c1c63",
+    "semantic_hash": ""
+  },
+  "frontend/src/lib/format.ts": {
+    "mtime": 1786626667.6031084,
+    "ast_hash": "86709643d260beac4d6a9bd7aacc8181",
+    "semantic_hash": ""
+  },
+  "frontend/src/test-setup.ts": {
+    "mtime": 1786626659.106648,
+    "ast_hash": "2c271435e60d9aeb6cd3a5e1e122a5c0",
     "semantic_hash": ""
   }
 }

@@ -113,5 +113,9 @@
   "111": "vitest",
   "112": "moduleFileExtensions",
   "113": "RecordHistoryService",
-  "114": "ApiProperty"
+  "114": "ApiProperty",
+  "115": "shadcn",
+  "116": "jsdom",
+  "117": "@vitejs/plugin-react",
+  "118": "AddStatusReportDialog"
 }
