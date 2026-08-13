@@ -722,7 +722,11 @@ export function ProjectDetailPage() {
         onEdit={() => setEditProjectOpen(true)}
       />
 
-      <div className="mx-auto grid w-full max-w-[1600px] grid-cols-1 gap-8 p-6 lg:grid-cols-[minmax(0,1fr)_260px]">
+      <div
+        className={`mx-auto grid w-full max-w-[1600px] grid-cols-1 gap-8 p-6 ${
+          activeTab === 'Dashboard' ? '' : 'lg:grid-cols-[minmax(0,1fr)_260px]'
+        }`}
+      >
         <div>
           <div className="mb-6 flex items-center justify-between">
             <div>
@@ -1741,13 +1745,14 @@ export function ProjectDetailPage() {
           )}
         </div>
 
-        <aside className="lg:sticky lg:top-24 lg:self-start">
+        {activeTab !== 'Dashboard' && (
+        <aside className="lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] lg:self-start lg:overflow-y-auto">
           <WorkflowPanel
             projectId={project.id}
             submissions={submissions}
             onChanged={loadSubmissions}
           />
-          <div className="rounded-md border bg-card p-2">
+          <div className="grid grid-cols-2 gap-1 rounded-md border bg-card p-2">
             {ACTIONS.map((a, i) => {
               const enabled = enabledActions.has(a)
               return (
@@ -1758,7 +1763,7 @@ export function ProjectDetailPage() {
                   title={enabled ? '' : 'Coming in a later step'}
                   style={{ animationDelay: `${i * 35}ms` }}
                   className={
-                    'stagger-in w-full rounded px-3 py-2 text-left text-sm transition-colors ' +
+                    'stagger-in w-full rounded px-2 py-1.5 text-left text-[13px] leading-snug transition-colors ' +
                     (enabled
                       ? 'hover:bg-accent'
                       : 'text-muted-foreground disabled:cursor-not-allowed')
@@ -1770,6 +1775,7 @@ export function ProjectDetailPage() {
             })}
           </div>
         </aside>
+        )}
       </div>
 
       <AddPersonDialog
