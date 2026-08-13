@@ -115,5 +115,11 @@
   "113": "RecordHistoryService",
   "114": "ApiProperty",
   "115": "IsDateString",
-  "116": "IsIn"
+  "116": "IsIn",
+  "117": "resources.module.ts",
+  "118": "status-reports.module.ts",
+  "119": "ImportModule",
+  "120": "TemplatesModule",
+  "121": "UpdatesModule",
+  "122": "Injectable"
 }
