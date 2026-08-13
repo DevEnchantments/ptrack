@@ -142,7 +142,8 @@ index (timeliness/completeness/reliability, Figs 30–31) — **formulas = ASK (
 | FR-03 | Project detail tabs (Overview, Achievement, Risk & Issue, Comment, Dashboard, Documentation, KPI, Change History) | ✅ SHIPPED 2026-08-03 (mapping ASSUMED: Overview=cards+fields+people · Achievement=milestones+action items · Risk & Issue=risks+issues · Comments=updates · Documentation=links+resources+reports+attachments · Change History=NEW project-wide audit feed incl. deletions via `GET /projects/:id/history`; Dashboard tab LIVE 2026-08-12 — Fig 8/9 per-project charts; KPI is the last stub, pending linkage). Sticky SectionNav is tab-aware |
 | FR-04 | Actual/planned progress, milestones done/total, budget cards | ✅ SHIPPED 2026-08-03: overview cards on the project page (progress vs plan with delta + F4 suggestion, milestone donut, budget utilization with over-budget flag, open items) |
 | FR-05 | Milestone status donut (Completed / Not Started / On Target) | ✅ SHIPPED 2026-08-03 (buckets ASSUMED: Completed / On Target / Overdue from status+due date; FDD bucket names remain the milestone-status ASK). CVD-validated chart trio, legend with counts |
-| FR-06 | Task lists: upcoming/completed, drawer, attachments, work notes | PARTIAL — action items + comments exist; drawer/grouping missing |
+| FR-06 | Task lists with upcoming/completed grouping, detail drawer, attachments/work notes | ✅ 2026-08-13: Fig-2 Tasks card on the project Overview (Upcoming/Completed toggle with counts, overdue reddened, milestone context, click-through + jump to Achievement). Detail lives on pages not drawers (deliberate); task-level attachments still open (Appendix A parent-scoping) |
+
 | FR-07 | Risk & issue register with score/severity/audit | PARTIAL — issues yes, risks no |
 | FR-08 | Identify New Risk modal | MISSING |
 | FR-09 | Adjust Weights modal (milestone dates + weights grid) | MISSING (columns exist) |

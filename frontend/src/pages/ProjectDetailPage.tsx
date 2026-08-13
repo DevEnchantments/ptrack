@@ -64,6 +64,7 @@ const ProjectDashboardTab = lazy(() =>
   })),
 )
 import { TagChips } from '@/components/TagChips'
+import { TasksCard } from '@/components/TasksCard'
 import { ProjectOverviewCards } from '@/components/ProjectOverviewCards'
 import { WorkflowPanel } from '@/components/WorkflowPanel'
 import { AddActionItemDialog } from '@/components/AddActionItemDialog'
@@ -806,7 +807,13 @@ export function ProjectDetailPage() {
             loading={sectionsLoading}
           />
 
-          <dl className="rounded-md border bg-card px-4">
+          <TasksCard
+            projectId={project.id}
+            actionItems={actionItems}
+            onViewAll={() => setActiveTab('Achievement')}
+          />
+
+          <dl className="mt-6 rounded-md border bg-card px-4">
             <Field label="Category" value={project.category?.name ?? null} />
             <Field label="Status" value={project.status?.name ?? null} />
             <Field label="Access Control" value={accessLabel} />

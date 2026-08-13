@@ -610,8 +610,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ProjectDetailPage.tsx": {
-    "mtime": 1786616149.4730468,
-    "ast_hash": "5869bc00da0538dedc6fd53f45def5a4",
+    "mtime": 1786618174.7654655,
+    "ast_hash": "ba1f9a83d9b98d8f64a0a9195679844f",
     "semantic_hash": ""
   },
   "frontend/src/pages/StatusReportDetailPage.tsx": {
@@ -905,8 +905,8 @@
     "semantic_hash": ""
   },
   "docs/FDD-ALIGNMENT.md": {
-    "mtime": 1786617127.1414988,
-    "ast_hash": "22102053c68ff7772b51e08a7f2f24a4",
+    "mtime": 1786618211.118645,
+    "ast_hash": "826f0a5d0fca7650645e4818c195710e",
     "semantic_hash": ""
   },
   "backend/db/fdd_project_fields.sql": {
@@ -1462,6 +1462,11 @@
   "frontend/src/components/OutcomeDialog.tsx": {
     "mtime": 1786544274.637672,
     "ast_hash": "b3c591471d66904c8d42b9eb0a231b22",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/TasksCard.tsx": {
+    "mtime": 1786618150.9688673,
+    "ast_hash": "4981c8bb790c88512b156379609e5d92",
     "semantic_hash": ""
   }
 }
