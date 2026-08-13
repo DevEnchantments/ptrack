@@ -55,7 +55,7 @@ import { Button } from '@/components/ui/button'
 import { AddPersonDialog } from '@/components/AddPersonDialog'
 import { AddMilestoneDialog } from '@/components/AddMilestoneDialog'
 import { AdjustWeightsDialog } from '@/components/AdjustWeightsDialog'
-import { EditOutcomeDialog } from '@/components/EditOutcomeDialog'
+import { OutcomeDialog } from '@/components/OutcomeDialog'
 import { SaveTemplateDialog } from '@/components/SaveTemplateDialog'
 import { CreateAccountDialog } from '@/components/CreateAccountDialog'
 const ProjectDashboardTab = lazy(() =>
@@ -306,6 +306,7 @@ export function ProjectDetailPage() {
   const [milestones, setMilestones] = useState<Milestone[]>([])
   const [outcomes, setOutcomes] = useState<ProgramOutcome[]>([])
   const [editOutcome, setEditOutcome] = useState<ProgramOutcome | null>(null)
+  const [outcomeDialogOpen, setOutcomeDialogOpen] = useState(false)
   const [saveTemplateOpen, setSaveTemplateOpen] = useState(false)
   const [accountMember, setAccountMember] = useState<ProjectMemberDetail | null>(null)
   const [actionItems, setActionItems] = useState<ActionItem[]>([])
@@ -1028,6 +1029,16 @@ export function ProjectDetailPage() {
                 <Button
                   variant="outline"
                   size="sm"
+                  onClick={() => {
+                    setEditOutcome(null)
+                    setOutcomeDialogOpen(true)
+                  }}
+                >
+                  Add Outcome
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
                   onClick={() => setAdjustWeightsOpen(true)}
                 >
                   Adjust Weights
@@ -1041,7 +1052,10 @@ export function ProjectDetailPage() {
                       {g.outcome && (
                         <EditButton
                           label="Edit outcome"
-                          onClick={() => setEditOutcome(g.outcome)}
+                          onClick={() => {
+                            setEditOutcome(g.outcome)
+                            setOutcomeDialogOpen(true)
+                          }}
                         />
                       )}
                       <span className="flex-1">{g.header}</span>
@@ -1704,6 +1718,7 @@ export function ProjectDetailPage() {
                 project={project}
                 milestones={milestones}
                 outcomes={outcomes}
+                actionItems={actionItems}
               />
             </Suspense>
           )}
@@ -1862,11 +1877,12 @@ export function ProjectDetailPage() {
         onOpenChange={setSaveTemplateOpen}
       />
 
-      <EditOutcomeDialog
+      <OutcomeDialog
         projectId={project.id}
         outcome={editOutcome}
-        open={editOutcome !== null}
+        open={outcomeDialogOpen}
         onOpenChange={(o) => {
+          setOutcomeDialogOpen(o)
           if (!o) setEditOutcome(null)
         }}
         onSaved={loadMilestones}

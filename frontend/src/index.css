@@ -312,6 +312,15 @@
 .pt-dhx .gantt_task_row:hover {
     background: color-mix(in oklab, var(--muted) 55%, transparent);
 }
+.pt-dhx .gantt_task_line.gantt_milestone {
+    border-radius: 3px;
+}
+.pt-dhx .gantt_task_line.pt-dhx-task {
+    background: color-mix(in oklab, var(--status-blue-fg) 45%, var(--muted));
+}
+.pt-dhx .gantt_task_line.pt-dhx-task-done {
+    background: color-mix(in oklab, var(--status-green-fg) 45%, var(--muted));
+}
 .pt-dhx .gantt_task_cell.pt-dhx-weekend {
     background: color-mix(in oklab, var(--muted) 70%, transparent);
 }

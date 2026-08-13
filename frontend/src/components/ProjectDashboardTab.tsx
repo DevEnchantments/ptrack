@@ -1,11 +1,12 @@
 import { useMemo } from 'react'
 import { ProjectGantt } from '@/components/ProjectGantt'
-import type { Milestone, ProgramOutcome, ProjectDetail } from '@/lib/api'
+import type { ActionItem, Milestone, ProgramOutcome, ProjectDetail } from '@/lib/api'
 
 interface Props {
   project: ProjectDetail
   milestones: Milestone[]
   outcomes: ProgramOutcome[]
+  actionItems: ActionItem[]
 }
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
@@ -37,7 +38,7 @@ function milestoneShares(milestones: Milestone[]): Array<{ m: Milestone; share: 
  *  project Gantt. Series are RECONSTRUCTED from milestone dates (no progress
  *  history is stored): actual = weight completed by month, planned = weight
  *  due by month, time-elapsed fallback when dates/weights are missing. */
-export function ProjectDashboardTab({ project, milestones, outcomes }: Props) {
+export function ProjectDashboardTab({ project, milestones, outcomes, actionItems }: Props) {
   const series = useMemo(() => {
     const start = project.start_date
     const end = project.actual_end_date ?? project.target_end_date
@@ -261,6 +262,7 @@ export function ProjectDashboardTab({ project, milestones, outcomes }: Props) {
               projectId={project.id}
               milestones={milestones}
               outcomes={outcomes}
+              actionItems={actionItems}
             />
           </div>
         )}

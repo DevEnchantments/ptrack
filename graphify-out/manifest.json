@@ -215,8 +215,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/milestones/dto/create-milestone.dto.ts": {
-    "mtime": 1785392587.9133308,
-    "ast_hash": "25bf014b4a0018b7c0e290d1095f809b",
+    "mtime": 1786545386.8242052,
+    "ast_hash": "05546bd84bb83ba0e9b209a234d41bb9",
     "semantic_hash": ""
   },
   "backend/src/modules/milestones/dto/update-milestone.dto.ts": {
@@ -235,13 +235,13 @@
     "semantic_hash": ""
   },
   "backend/src/modules/milestones/milestones.repository.ts": {
-    "mtime": 1785392584.6582904,
-    "ast_hash": "f4086c005c665c87086b9005adcea2f1",
+    "mtime": 1786545386.7682061,
+    "ast_hash": "d0c5325cebb74a4d56e966a8047a5df2",
     "semantic_hash": ""
   },
   "backend/src/modules/milestones/milestones.service.ts": {
-    "mtime": 1785757945.9224975,
-    "ast_hash": "329cc64957513defefebb54b10576bd2",
+    "mtime": 1786545386.927772,
+    "ast_hash": "9637698ba94dd04e21858d406d1a36f5",
     "semantic_hash": ""
   },
   "backend/src/modules/people/dto/create-person.dto.ts": {
@@ -470,8 +470,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/AddMilestoneDialog.tsx": {
-    "mtime": 1785393068.162053,
-    "ast_hash": "d142bf71e19d8cfc2ba0a41624f2af15",
+    "mtime": 1786545902.7901418,
+    "ast_hash": "fa2609fd19814d3d31b5bb05e080a172",
     "semantic_hash": ""
   },
   "frontend/src/components/AddPersonDialog.tsx": {
@@ -555,8 +555,8 @@
     "semantic_hash": ""
   },
   "frontend/src/lib/api.ts": {
-    "mtime": 1786519795.7252955,
-    "ast_hash": "ce7fa1a819403bd5ae7b646ceade72a4",
+    "mtime": 1786545386.9323108,
+    "ast_hash": "eba63e67ac6445b026252e868f77bc4f",
     "semantic_hash": ""
   },
   "frontend/src/lib/auth-context.tsx": {
@@ -610,8 +610,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ProjectDetailPage.tsx": {
-    "mtime": 1786527167.101356,
-    "ast_hash": "b56e915e10941718120d510da0e332fd",
+    "mtime": 1786544553.8158631,
+    "ast_hash": "6223226f5d3e11406b35314956b43b90",
     "semantic_hash": ""
   },
   "frontend/src/pages/StatusReportDetailPage.tsx": {
@@ -905,8 +905,8 @@
     "semantic_hash": ""
   },
   "docs/FDD-ALIGNMENT.md": {
-    "mtime": 1786523909.7521958,
-    "ast_hash": "e2cda53ed31732d53732de407892d152",
+    "mtime": 1786545980.5292678,
+    "ast_hash": "ef974fec21967a1f381e25c80755ced6",
     "semantic_hash": ""
   },
   "backend/db/fdd_project_fields.sql": {
@@ -1219,11 +1219,6 @@
     "ast_hash": "96ace956f91e633a8e889e8a7a1b7463",
     "semantic_hash": ""
   },
-  "frontend/src/components/EditOutcomeDialog.tsx": {
-    "mtime": 1785930142.1901133,
-    "ast_hash": "74b3e34c63608eae9c5328e9e13b4488",
-    "semantic_hash": ""
-  },
   "backend/scripts/seed-demo-data.mjs": {
     "mtime": 1785934660.9539223,
     "ast_hash": "6cb254fe7af812e20edf5dc8085b2b73",
@@ -1450,13 +1445,23 @@
     "semantic_hash": ""
   },
   "frontend/src/components/ProjectDashboardTab.tsx": {
-    "mtime": 1786523299.691022,
-    "ast_hash": "7c980be9ce785f31460106ebffb193e8",
+    "mtime": 1786544553.812864,
+    "ast_hash": "9578d81f7734fcf25d44e8c6ca82131c",
     "semantic_hash": ""
   },
   "frontend/src/components/ProjectGantt.tsx": {
-    "mtime": 1786528010.4768286,
-    "ast_hash": "04d58385b1c9aa8b9f7cc523f42c26fa",
+    "mtime": 1786545386.9462955,
+    "ast_hash": "e8703df015a70f9902c631033a49fdf6",
+    "semantic_hash": ""
+  },
+  "backend/db/milestone_dependencies.sql": {
+    "mtime": 1786544729.751865,
+    "ast_hash": "a0491b841c06711d52a184bb27645c4e",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/OutcomeDialog.tsx": {
+    "mtime": 1786544274.637672,
+    "ast_hash": "b3c591471d66904c8d42b9eb0a231b22",
     "semantic_hash": ""
   }
 }

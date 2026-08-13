@@ -610,8 +610,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ProjectDetailPage.tsx": {
-    "mtime": 1786523299.6950216,
-    "ast_hash": "3983b7bed40bb7ee006ae93e0822b052",
+    "mtime": 1786527167.101356,
+    "ast_hash": "b56e915e10941718120d510da0e332fd",
     "semantic_hash": ""
   },
   "frontend/src/pages/StatusReportDetailPage.tsx": {
@@ -1455,8 +1455,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/ProjectGantt.tsx": {
-    "mtime": 1786525016.1995852,
-    "ast_hash": "156c4cdb473a95e216ddeb844f08e285",
+    "mtime": 1786528010.4768286,
+    "ast_hash": "04d58385b1c9aa8b9f7cc523f42c26fa",
     "semantic_hash": ""
   }
 }

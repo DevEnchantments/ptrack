@@ -2,12 +2,13 @@ import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { gantt } from 'dhtmlx-gantt'
 import 'dhtmlx-gantt/codebase/dhtmlxgantt.css'
-import type { Milestone, ProgramOutcome } from '@/lib/api'
+import type { ActionItem, Milestone, ProgramOutcome } from '@/lib/api'
 
 interface Props {
   projectId: string
   milestones: Milestone[]
   outcomes: ProgramOutcome[]
+  actionItems: ActionItem[]
 }
 
 const todayIso = () => {
@@ -26,7 +27,7 @@ const addDays = (dateIso: string, n: number) => {
  *  progress-filled bars, read-only. The today line is drawn by hand — the
  *  built-in marker is a PRO feature. DHTMLX is framework-agnostic (imperative
  *  singleton on a ref), so there is no React-version coupling. */
-export function ProjectGantt({ projectId, milestones, outcomes }: Props) {
+export function ProjectGantt({ projectId, milestones, outcomes, actionItems }: Props) {
   const containerRef = useRef<HTMLDivElement | null>(null)
   const todayLineRef = useRef<HTMLDivElement | null>(null)
   const navigate = useNavigate()
@@ -55,6 +56,7 @@ export function ProjectGantt({ projectId, milestones, outcomes }: Props) {
       open: boolean
       statusClass: string
       isMilestone: boolean
+      isTask?: boolean
       ownerInitials: string
     }
     const rows: Row[] = []
@@ -62,6 +64,14 @@ export function ProjectGantt({ projectId, milestones, outcomes }: Props) {
     const pushMilestone = (m: Milestone, code: string, parent: string | 0) => {
       if (!m.due_date) return
       const ownerName = m.owner?.full_name || m.owner?.email || ''
+      const statusClass =
+        m.status === 'closed_completed'
+          ? 'pt-dhx-green'
+          : m.due_date < today && m.status === 'open'
+            ? 'pt-dhx-red'
+            : 'pt-dhx-blue'
+      // No start date = a point-in-time checkpoint: the classic Gantt diamond.
+      const isDiamond = !m.start_date
       rows.push({
         id: m.id,
         code,
@@ -72,18 +82,40 @@ export function ProjectGantt({ projectId, milestones, outcomes }: Props) {
           .slice(0, 2)
           .map((w) => w[0].toUpperCase())
           .join(''),
-        start_date: m.start_date ?? addDays(m.due_date, -14),
-        end_date: addDays(m.due_date, 1), // dhtmlx end date is exclusive
+        start_date: isDiamond ? m.due_date : (m.start_date as string),
+        end_date: isDiamond ? undefined : addDays(m.due_date, 1), // exclusive
         parent,
         progress: Math.min(Math.max(m.percent_complete ?? 0, 0), 100) / 100,
+        type: isDiamond ? 'milestone' : undefined,
         open: true,
-        statusClass:
-          m.status === 'closed_completed'
-            ? 'pt-dhx-green'
-            : m.due_date < today && m.status === 'open'
-              ? 'pt-dhx-red'
-              : 'pt-dhx-blue',
+        statusClass,
         isMilestone: true,
+      })
+      // Third level: action items (tasks) under their milestone.
+      const items = actionItems
+        .filter((a) => a.milestone_id === m.id && a.due_date)
+        .sort((a, b) => (a.due_date ?? '').localeCompare(b.due_date ?? ''))
+      items.forEach((a, k) => {
+        const due = a.due_date as string
+        rows.push({
+          id: `a:${a.id}`,
+          code: `${code}.${k + 1}`,
+          text: a.title,
+          ownerInitials: '',
+          start_date: addDays(due, -2),
+          end_date: addDays(due, 1),
+          parent: m.id,
+          progress: a.status === 'closed_completed' ? 1 : 0,
+          open: true,
+          statusClass:
+            a.status === 'closed_completed'
+              ? 'pt-dhx-task-done'
+              : due < today && a.status === 'open'
+                ? 'pt-dhx-red'
+                : 'pt-dhx-task',
+          isMilestone: false,
+          isTask: true,
+        })
       })
     }
 
@@ -120,6 +152,20 @@ export function ProjectGantt({ projectId, milestones, outcomes }: Props) {
     })
 
     if (rows.length === 0) return
+
+    // Finish-to-start arrows from milestone_dependencies (informational —
+    // readonly gantt, no auto-scheduling).
+    const rendered = new Set(rows.map((r) => r.id))
+    const links = milestones.flatMap((m) =>
+      (m.depends_on ?? [])
+        .filter((d) => rendered.has(d.source_id) && rendered.has(m.id))
+        .map((d) => ({
+          id: `${d.source_id}->${m.id}`,
+          source: d.source_id,
+          target: m.id,
+          type: '0',
+        })),
+    )
 
     // --- Configure the singleton (Community edition allows one instance) ---
     gantt.config.readonly = true
@@ -160,28 +206,39 @@ export function ProjectGantt({ projectId, milestones, outcomes }: Props) {
     const barWidth = (s: Date, e: Date) =>
       gantt.posFromDate(e) - gantt.posFromDate(s)
     gantt.templates.task_text = (s, e, task) => {
-      const t = task as unknown as { text: string; isMilestone?: boolean }
-      if (!t.isMilestone) return t.text
+      const t = task as unknown as {
+        text: string
+        isMilestone?: boolean
+        isTask?: boolean
+      }
+      if (!t.isMilestone && !t.isTask) return t.text
       return barWidth(s, e) > 110 ? t.text : ''
     }
     gantt.templates.rightside_text = (s, e, task) => {
       const t = task as unknown as {
         text: string
         isMilestone?: boolean
+        isTask?: boolean
         ownerInitials?: string
       }
-      if (!t.isMilestone) return ''
+      if (!t.isMilestone && !t.isTask) return ''
       const owner = t.ownerInitials ? ` \u00b7 ${t.ownerInitials}` : ''
       if (barWidth(s, e) > 110) return t.ownerInitials ?? ''
       return `${t.text}${owner}`
     }
 
     gantt.init(el)
-    gantt.parse({ data: rows })
+    gantt.parse({ data: rows, links })
 
     const clickHandler = gantt.attachEvent('onTaskClick', (id: string) => {
       const task = gantt.getTask(id) as unknown as Row
-      if (task?.isMilestone) navigate(`/projects/${projectId}/milestones/${id}`)
+      if (task?.isMilestone) {
+        navigate(`/projects/${projectId}/milestones/${id}`)
+      } else if (task?.isTask) {
+        navigate(
+          `/projects/${projectId}/action-items/${String(id).slice(2)}`,
+        )
+      }
       return true
     })
 
@@ -223,7 +280,7 @@ export function ProjectGantt({ projectId, milestones, outcomes }: Props) {
       gantt.detachEvent(renderHandler)
       gantt.clearAll()
     }
-  }, [projectId, milestones, outcomes, navigate, zoom])
+  }, [projectId, milestones, outcomes, actionItems, navigate, zoom])
 
   return (
     <div>

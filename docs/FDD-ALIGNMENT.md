@@ -266,7 +266,20 @@ clearAll() on unmount, never destructor(). The tab is lazy-loaded so
 DHTMLX's ~227 kB gzip chunk loads only when opened. Library roster:
 frappe-gantt stays on the Timeline; SVAR's NEW @svar-ui/react-gantt 2.7.1
 (MIT, react>=18) re-vetted as viable fallback — the old wx-react-gantt
-rejection no longer applies. Zero backend —
+rejection no longer applies.
+
+**Gantt hierarchy pass — ✅ SHIPPED 2026-08-12**: the project Gantt now shows
+the full Project → Outcome → Milestone → Action Item tree (action items as
+third-level rows under their milestone, click-through to their pages);
+milestones WITHOUT a start date render as classic point-in-time DIAMONDS.
+Outcome creation got its own form ("Add Outcome" beside Adjust Weights;
+OutcomeDialog is now dual create/edit). **Milestone dependencies —
+ENHANCEMENT beyond the FDD** (Appendix A has no predecessor concept; added on
+Fares's direction): `backend/db/milestone_dependencies.sql` (join table, RLS
+— milestone endpoints 500 until run), "Depends on" multi-select in the
+milestone dialog (wholesale set replace), finish-to-start arrows drawn on the
+Gantt. Informational only — no auto-scheduling (DHTMLX PRO + no business
+mandate). Zero backend —
 fed by data the page already loads. Data = existing `projectsApi.list` + `GET /milestones`
 — zero backend work.
 

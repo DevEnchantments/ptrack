@@ -10,6 +10,7 @@ import {
   outcomesApi,
   type Lookup,
   type MilestoneDetail,
+  type Milestone,
   type ProgramOutcome,
 } from '@/lib/api'
 import { useAuth } from '@/lib/auth-context'
@@ -88,6 +89,8 @@ export function AddMilestoneDialog({
 
   const [roles, setRoles] = useState<Lookup[]>([])
   const [outcomes, setOutcomes] = useState<ProgramOutcome[]>([])
+  const [siblings, setSiblings] = useState<Milestone[]>([])
+  const [dependsOn, setDependsOn] = useState<string[]>([])
   const [outcomeId, setOutcomeId] = useState<string | null>(null)
   const [newOutcome, setNewOutcome] = useState('')
   const [name, setName] = useState('')
@@ -111,6 +114,7 @@ export function AddMilestoneDialog({
     if (!open) return
     lookupsApi.list('project-roles').then(setRoles).catch(() => toast.error('Could not load project roles.'))
     outcomesApi.list(projectId).then(setOutcomes).catch(() => toast.error('Could not load outcomes.'))
+    milestonesApi.list(projectId).then(setSiblings).catch(() => toast.error('Could not load milestones.'))
   }, [open, projectId])
 
   function resetFields() {
@@ -126,6 +130,7 @@ export function AddMilestoneDialog({
     setWeightage('')
     setPercent('')
     setOutcomeId(null)
+    setDependsOn([])
     setNewOutcome('')
   }
 
@@ -142,6 +147,7 @@ export function AddMilestoneDialog({
         setStatus(existing.status)
         setRoleId(existing.role_id)
         setOutcomeId(existing.outcome_id ?? null)
+        setDependsOn((existing.depends_on ?? []).map((d) => d.source_id))
         setNewOutcome('')
         setOwner(ownerFromMilestone(existing))
         setIsMajor(existing.is_major ? 'true' : 'false')
@@ -227,6 +233,7 @@ export function AddMilestoneDialog({
         weightage: weightage.trim() ? Number(weightage) : undefined,
         percent_complete: percent.trim() ? Number(percent) : undefined,
         outcome_id: finalOutcomeId,
+        depends_on: dependsOn,
       }
 
       if (isEdit && existing) {
@@ -506,6 +513,44 @@ export function AddMilestoneDialog({
               </button>
             </div>
           )}
+
+          <div className="flex flex-col gap-2">
+            <Label>Depends on</Label>
+            <p className="text-xs text-muted-foreground">
+              Predecessors — drawn as arrows on the project Gantt. Informational
+              only; dates are not auto-shifted.
+            </p>
+            {siblings.filter((m) => m.id !== existing?.id).length === 0 ? (
+              <p className="text-xs text-muted-foreground">
+                No other milestones yet.
+              </p>
+            ) : (
+              <div className="max-h-36 overflow-y-auto rounded-md border p-2">
+                {siblings
+                  .filter((m) => m.id !== existing?.id)
+                  .map((m) => (
+                    <label
+                      key={m.id}
+                      className="flex cursor-pointer items-center gap-2 rounded px-1.5 py-1 text-sm hover:bg-muted/50"
+                    >
+                      <input
+                        type="checkbox"
+                        className="h-4 w-4 accent-primary"
+                        checked={dependsOn.includes(m.id)}
+                        onChange={(e) =>
+                          setDependsOn((cur) =>
+                            e.target.checked
+                              ? [...cur, m.id]
+                              : cur.filter((id) => id !== m.id),
+                          )
+                        }
+                      />
+                      <span className="truncate">{m.name}</span>
+                    </label>
+                  ))}
+              </div>
+            )}
+          </div>
 
           {error && <p className="hint-in text-sm font-medium text-destructive">{error}</p>}
         </div>

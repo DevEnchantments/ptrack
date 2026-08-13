@@ -17,22 +17,25 @@ import {
 
 interface Props {
   projectId: string
+  /** null = create a new outcome; a record = edit it. */
   outcome: ProgramOutcome | null
   open: boolean
   onOpenChange: (open: boolean) => void
   onSaved: () => void
 }
 
-/** Edit-only dialog for FDD Fig 2 program outcomes (creation stays in the
- *  milestone dialog). Deleting an outcome ungroups its milestones — the DB
+/** Create/edit dialog for FDD Fig 2 program outcomes (the "phase" grouping
+ *  above milestones). Deleting an outcome ungroups its milestones — the DB
  *  FK is `on delete set null`, nothing else is touched. */
-export function EditOutcomeDialog({
+export function OutcomeDialog({
   projectId,
   outcome,
   open,
   onOpenChange,
   onSaved,
 }: Props) {
+  const isEdit = outcome !== null
+
   const [name, setName] = useState('')
   const [sortOrder, setSortOrder] = useState('')
   const [startDate, setStartDate] = useState('')
@@ -54,22 +57,27 @@ export function EditOutcomeDialog({
   }
 
   // Populate on open / record change — render-phase prev-key pattern.
-  const populateKey = open && outcome ? outcome.id : null
+  const populateKey = open ? (outcome?.id ?? '__new__') : null
   const [prevPopulateKey, setPrevPopulateKey] = useState<string | null>(null)
   if (prevPopulateKey !== populateKey) {
     setPrevPopulateKey(populateKey)
-    if (populateKey !== null && outcome) {
-      setName(outcome.name)
-      setSortOrder(outcome.sort_order === null ? '' : String(outcome.sort_order))
-      setStartDate(outcome.start_date ?? '')
-      setEndDate(outcome.end_date ?? '')
+    if (populateKey !== null) {
+      if (outcome) {
+        setName(outcome.name)
+        setSortOrder(
+          outcome.sort_order === null ? '' : String(outcome.sort_order),
+        )
+        setStartDate(outcome.start_date ?? '')
+        setEndDate(outcome.end_date ?? '')
+      } else {
+        reset()
+      }
       setError(null)
       setFieldErrors({})
     }
   }
 
   async function submit() {
-    if (!outcome) return
     setError(null)
     setFieldErrors({})
     const errs: Record<string, string> = {}
@@ -85,15 +93,20 @@ export function EditOutcomeDialog({
 
     setSaving(true)
     try {
-      await outcomesApi.update(projectId, outcome.id, {
+      const payload = {
         name: name.trim(),
         sort_order: order ? Number(order) : null,
         start_date: startDate || null,
         end_date: endDate || null,
-      })
+      }
+      if (isEdit && outcome) {
+        await outcomesApi.update(projectId, outcome.id, payload)
+      } else {
+        await outcomesApi.create(projectId, payload)
+      }
       reset()
       onOpenChange(false)
-      toast.success('Outcome updated.')
+      toast.success(isEdit ? 'Outcome updated.' : 'Outcome added.')
       onSaved()
     } catch (e) {
       setError((e as Error).message)
@@ -141,6 +154,7 @@ export function EditOutcomeDialog({
             <Input
               value={name}
               onChange={(e) => setName(e.target.value)}
+              placeholder="e.g. Regional readiness"
               aria-invalid={fieldErrors.name ? true : undefined}
             />
             <FieldError message={fieldErrors.name} />
@@ -180,10 +194,12 @@ export function EditOutcomeDialog({
             </div>
           </div>
 
-          <p className="text-xs text-muted-foreground">
-            Deleting an outcome keeps its milestones — they move to the "No
-            outcome" group.
-          </p>
+          {isEdit && (
+            <p className="text-xs text-muted-foreground">
+              Deleting an outcome keeps its milestones — they move to the "No
+              outcome" group.
+            </p>
+          )}
 
           {error && (
             <p className="hint-in text-sm font-medium text-destructive">
@@ -194,12 +210,14 @@ export function EditOutcomeDialog({
 
         <DialogFooter className="sm:justify-between">
           <div>
-            <ConfirmDeleteButton
-              onConfirm={remove}
-              deleting={deleting}
-              disabled={saving}
-              resetKey={open}
-            />
+            {isEdit && (
+              <ConfirmDeleteButton
+                onConfirm={remove}
+                deleting={deleting}
+                disabled={saving}
+                resetKey={open}
+              />
+            )}
           </div>
           <div className="flex gap-2">
             <Button
@@ -214,7 +232,13 @@ export function EditOutcomeDialog({
             </Button>
             <Button onClick={submit} disabled={busy}>
               {saving && <Loader2 className="animate-spin" />}
-              {saving ? 'Saving…' : 'Apply Changes'}
+              {saving
+                ? isEdit
+                  ? 'Saving…'
+                  : 'Adding…'
+                : isEdit
+                  ? 'Apply Changes'
+                  : 'Add Outcome'}
             </Button>
           </div>
         </DialogFooter>

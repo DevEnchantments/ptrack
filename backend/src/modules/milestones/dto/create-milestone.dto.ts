@@ -88,4 +88,14 @@ export class CreateMilestoneDto {
   @IsOptional()
   @IsUUID()
   outcome_id?: string | null;
+
+  @ApiPropertyOptional({
+    type: [String],
+    description:
+      'Predecessor milestone ids (finish-to-start arrows on the Gantt). Wholesale-replaces the set.',
+  })
+  @IsOptional()
+  @IsArray()
+  @IsUUID('all', { each: true })
+  depends_on?: string[];
 }

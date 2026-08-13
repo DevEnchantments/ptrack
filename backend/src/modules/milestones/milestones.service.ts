@@ -26,8 +26,8 @@ export class MilestonesService {
     return milestone;
   }
 
-  add(projectId: string, dto: CreateMilestoneDto, userId: string) {
-    return this.repo.insert({
+  async add(projectId: string, dto: CreateMilestoneDto, userId: string) {
+    const created = await this.repo.insert({
       project_id: projectId,
       name: dto.name.trim(),
       description: dto.description?.trim() || null,
@@ -47,6 +47,14 @@ export class MilestonesService {
       created_by: userId,
       updated_by: userId,
     });
+    if (dto.depends_on?.length) {
+      await this.repo.replaceDependencies(
+        projectId,
+        created.id,
+        dto.depends_on,
+      );
+    }
+    return created;
   }
 
   async update(
@@ -73,6 +81,13 @@ export class MilestonesService {
     if (dto.weightage !== undefined) patch.weightage = dto.weightage ?? null;
     if (dto.percent_complete !== undefined)
       patch.percent_complete = dto.percent_complete ?? null;
+    if (dto.depends_on !== undefined) {
+      await this.repo.replaceDependencies(
+        projectId,
+        milestoneId,
+        dto.depends_on ?? [],
+      );
+    }
     if (dto.outcome_id !== undefined) patch.outcome_id = dto.outcome_id ?? null;
 
     await this.repo.update(projectId, milestoneId, patch);

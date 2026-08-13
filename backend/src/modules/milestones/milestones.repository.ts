@@ -99,13 +99,37 @@ export class MilestonesRepository {
     if (error) throw toHttpException(error, 'milestones.remove');
   }
 
+  /** Wholesale-replace the predecessor set of one milestone. */
+  async replaceDependencies(
+    projectId: string,
+    milestoneId: string,
+    sourceIds: string[],
+  ): Promise<void> {
+    const del = await this.db.client
+      .from('milestone_dependencies')
+      .delete()
+      .eq('target_id', milestoneId);
+    if (del.error) throw toHttpException(del.error, 'milestones.deps');
+    const clean = [...new Set(sourceIds)].filter((id) => id !== milestoneId);
+    if (clean.length === 0) return;
+    const ins = await this.db.client.from('milestone_dependencies').insert(
+      clean.map((sourceId) => ({
+        project_id: projectId,
+        source_id: sourceId,
+        target_id: milestoneId,
+      })),
+    );
+    if (ins.error) throw toHttpException(ins.error, 'milestones.deps');
+  }
+
   async findByProject(projectId: string): Promise<MilestoneListItem[]> {
     const { data, error } = await this.table
       .select(
         `${COLUMNS},
          role:project_roles ( name ),
          owner:profiles!owner_id ( full_name, email ),
-         outcome:program_outcomes ( id, name, sort_order )`,
+         outcome:program_outcomes ( id, name, sort_order ),
+         depends_on:milestone_dependencies!target_id ( source_id )`,
       )
       .eq('project_id', projectId)
       .order('due_date', { ascending: true });
@@ -123,6 +147,7 @@ export class MilestonesRepository {
          role:project_roles ( name ),
          owner:profiles!owner_id ( full_name, email ),
          outcome:program_outcomes ( id, name, sort_order ),
+         depends_on:milestone_dependencies!target_id ( source_id ),
          project:projects ( name ),
          created_by_profile:profiles!created_by ( full_name, email ),
          updated_by_profile:profiles!updated_by ( full_name, email )`,

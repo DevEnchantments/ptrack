@@ -298,6 +298,7 @@ export interface Milestone {
   due_date: string | null
   original_due_date: string | null
   completed_date: string | null
+  depends_on?: Array<{ source_id: string }> | null
   status: string
   role_id: string | null
   owner_id: string | null
