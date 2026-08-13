@@ -117,5 +117,9 @@
   "115": "shadcn",
   "116": "jsdom",
   "117": "@vitejs/plugin-react",
-  "118": "AddStatusReportDialog"
+  "118": "AddStatusReportDialog",
+  "119": "@tailwindcss/vite",
+  "120": "@eslint/js",
+  "121": "@testing-library/react",
+  "122": "typescript-eslint"
 }

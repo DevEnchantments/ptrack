@@ -107,8 +107,10 @@ frontend 91 files / 21,438 lines / **0 tests on main**.
       `lib/format.ts` + its tests as the first real coverage. Recommend the
       latter — a runner with nothing to run rots.
       **Decided 2026-08-13: runner + `format.ts` + its 15 tests.**
-- [ ] **0b.** Characterization tests for the three pilot modules below, pinning
-      current observable behaviour including the ugly parts.
+- [x] **0b.** Characterization tests for the three pilot modules below, pinning
+      current observable behaviour including the ugly parts. **Done 2026-08-13**
+      — 44 tests at the service layer; repositories are deliberately uncovered
+      (see session log for what that leaves exposed).
 
 **Success check:** pilot modules have tests that fail if behaviour changes.
 
@@ -211,3 +213,46 @@ worker-startup timeout, most likely corporate AV scanning the freshly written
 before debugging anything.** Not `NODE_OPTIONS` (the failing run had
 `--use-system-ca` set, the passing one did not; the flag is only needed for the
 `npm install`). Clean CI runners have not shown it.
+
+### 2026-08-13 — Phase 0b, characterization tests for the three pilot modules
+
+**Skill: none.** §3 maps this session to `book-legacy-code`, which is not installed in
+this environment. Proceeded without it rather than substituting a different philosophy;
+the work was mechanical and followed the house pattern already in
+`action-items.service.spec.ts`.
+
+**Changed.** 44 new tests, backend 47 → **91** (8 → 10 suites):
+
+| File | Tests | Pins |
+| --- | --- | --- |
+| `links/links.service.spec.ts` (new) | 9 | write-shaping (trim, blank → null, `tags: []` → null, `is_gold: false` survives), 404-without-audit on delete, audit payload |
+| `action-items/action-items.service.spec.ts` (extended) | +18 | owner de-dupe and the silent four-slot cap, `owner_ids: []` vs absent, insert payload, delete **call order**, 404 guards on history/comments, comment trim |
+| `projects/projects.service.spec.ts` (new) | 17 | 11-key `sections` mapping, member filter/pending-vs-active mapping, the compensating delete, paginated vs unpaginated stats paths, zero-stat fallback, F2 pass-through, patch construction, budget-threshold branch (crossing / already-crossed / below / owner==manager), Storage-failure tolerance on delete |
+
+**Design decision, and the hole it leaves.** Tests sit at the **service** layer with
+hand-built mocks. Repositories are untested on purpose: they are thin wrappers over the
+Supabase fluent builder, so a unit test would assert on a mocked chain rather than on
+behaviour. **Consequence: a refactor that rewrites a repository query or `select` string
+has no safety net** — for those, verification is `tsc` plus manual checking. Closing this
+needs a live-Supabase integration suite (slow, credential-dependent CI); considered and
+declined for Phase 0.
+
+**Left deliberately.**
+- Controllers are untested. They are declarative routing plus `ParseUUIDPipe`; the
+  behaviour worth pinning lives in the services.
+- **Reported, not fixed** (ground rule 1): `projects.service.ts` `sections()` has a stale
+  doc comment reading "All eight section lists" — it returns **eleven**. Natural fix
+  during 1b.
+- Checked and dismissed as a non-bug: `new Set([owner_id, project_manager_id])` can pass
+  `null` into `notify`, but `notifications.service.ts` guards `if (!entry.userId) return`
+  (and skips self-notification). The test pins the pass-through as-is.
+
+**Verification.** Before: backend 47 tests / 8 suites, `tsc` · `eslint` · `build` clean.
+After: **91 tests / 10 suites**, `tsc` · `eslint --max-warnings 0` · `build` clean;
+frontend lint clean and its 15 tests still green (no frontend file was touched).
+Two lint fixes were needed on the way (`no-unnecessary-type-assertion`, then a
+`prettier/prettier` reflow) — note that `--max-warnings 0` makes even the
+warning-level rules (`no-unsafe-argument`, `no-floating-promises`) gate-blocking.
+
+**Phase 1 can now start.** The pilot modules have tests that fail if behaviour changes,
+within the repository caveat above.

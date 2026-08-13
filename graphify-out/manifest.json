@@ -760,8 +760,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/action-items/action-items.service.spec.ts": {
-    "mtime": 1786623001.297107,
-    "ast_hash": "a7622350ee5caceb838c746bb3b926d2",
+    "mtime": 1786628082.9553473,
+    "ast_hash": "8ac3b14ceb20ed41aa994b2687af54d7",
     "semantic_hash": ""
   },
   "frontend/src/components/ui/toaster.tsx": {
@@ -1505,8 +1505,8 @@
     "semantic_hash": ""
   },
   "docs/REFACTOR-PLAN.md": {
-    "mtime": 1786627234.0979156,
-    "ast_hash": "f5947eebf1441a757a28a4cac333edf0",
+    "mtime": 1786629365.2969756,
+    "ast_hash": "72c2293fd21a25c6549b845cf98fe005",
     "semantic_hash": ""
   },
   "frontend/src/lib/format.test.ts": {
@@ -1522,6 +1522,16 @@
   "frontend/src/test-setup.ts": {
     "mtime": 1786626659.106648,
     "ast_hash": "2c271435e60d9aeb6cd3a5e1e122a5c0",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/links/links.service.spec.ts": {
+    "mtime": 1786627907.0883977,
+    "ast_hash": "3d35207793c53c5e60e0c7689ba2c109",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/projects/projects.service.spec.ts": {
+    "mtime": 1786629267.4693198,
+    "ast_hash": "755bab8779b49f04d4ec4e5502197b2d",
     "semantic_hash": ""
   }
 }
