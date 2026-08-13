@@ -35,8 +35,8 @@
     "semantic_hash": ""
   },
   "backend/src/app.module.ts": {
-    "mtime": 1786620298.6486611,
-    "ast_hash": "e86ffdf8697b803dd3487d0e1fce986e",
+    "mtime": 1786632676.4765513,
+    "ast_hash": "43b11afaa32db2a1825855266c9a76a7",
     "semantic_hash": ""
   },
   "backend/src/app.service.ts": {
@@ -285,13 +285,13 @@
     "semantic_hash": ""
   },
   "backend/src/modules/projects/projects.controller.ts": {
-    "mtime": 1785760617.7297893,
-    "ast_hash": "a040333344b9f30d764087ad9bd2276b",
+    "mtime": 1786632666.316287,
+    "ast_hash": "d0097a877cd176d44b13feae1d927b99",
     "semantic_hash": ""
   },
   "backend/src/modules/projects/projects.module.ts": {
-    "mtime": 1786453110.2117383,
-    "ast_hash": "c96e8452b26d6142b707bdd41a6d758c",
+    "mtime": 1786632661.6018772,
+    "ast_hash": "169166b728c7d3f8bb04c75e57ebbe06",
     "semantic_hash": ""
   },
   "backend/src/modules/projects/projects.repository.ts": {
@@ -300,8 +300,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/projects/projects.service.ts": {
-    "mtime": 1786443928.5972009,
-    "ast_hash": "e096b5b2fa832bbc2fd2b2871a239ec7",
+    "mtime": 1786633849.1285403,
+    "ast_hash": "32b6f28ecd1f3b65942a9081c57d4d7b",
     "semantic_hash": ""
   },
   "backend/src/modules/resources/dto/create-resource.dto.ts": {
@@ -1505,8 +1505,8 @@
     "semantic_hash": ""
   },
   "docs/REFACTOR-PLAN.md": {
-    "mtime": 1786630315.9677181,
-    "ast_hash": "c3b968a96e1094ad98fcfc716d24d49c",
+    "mtime": 1786634823.2889779,
+    "ast_hash": "695693e72287d855890e3ca323fec87d",
     "semantic_hash": ""
   },
   "frontend/src/lib/format.test.ts": {
@@ -1530,8 +1530,28 @@
     "semantic_hash": ""
   },
   "backend/src/modules/projects/projects.service.spec.ts": {
-    "mtime": 1786629267.4693198,
-    "ast_hash": "755bab8779b49f04d4ec4e5502197b2d",
+    "mtime": 1786632716.5420175,
+    "ast_hash": "155ea0508b220c90bfc016b54226ca41",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/project-sections/project-sections.controller.ts": {
+    "mtime": 1786634386.2180555,
+    "ast_hash": "d7d1e7e75dbf795c32ea018bb6772cda",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/project-sections/project-sections.module.ts": {
+    "mtime": 1786632607.4782953,
+    "ast_hash": "11fa249801b4ae78a61337019a428f62",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/project-sections/project-sections.service.spec.ts": {
+    "mtime": 1786632688.1766613,
+    "ast_hash": "0557ada3594a5895dd8068c6b6e8c863",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/project-sections/project-sections.service.ts": {
+    "mtime": 1786632592.9183145,
+    "ast_hash": "b8c162147a6e5f980b8e2686891ebc2e",
     "semantic_hash": ""
   }
 }
