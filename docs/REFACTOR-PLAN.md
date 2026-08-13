@@ -81,8 +81,31 @@ frontend 91 files / 21,438 lines / **0 tests on main**.
 ### Phase 0 — Safety net (prerequisite, no refactoring)
 
 - [ ] **0a.** Frontend test runner on this branch (vitest + Testing Library +
-      jsdom), `test` script, CI step. *(Already proven on
-      `experiment/ui-ux-pro-max`; port it rather than redo it.)*
+      jsdom), `test` script, CI step.
+
+      **Port it, do not redo it.** It is already proven green on
+      `experiment/ui-ux-pro-max` in commit **`5ddef4f`**. Inspect with
+      `git show --stat 5ddef4f`; the relevant files are:
+
+      | File | What it carries |
+      | --- | --- |
+      | `frontend/package.json` | `test` + `test:watch` scripts, 5 devDependencies |
+      | `frontend/vite.config.ts` | `defineConfig` from `vitest/config` + `test` block (jsdom, setupFiles, include) |
+      | `frontend/src/test-setup.ts` | one line: `@testing-library/jest-dom/vitest` |
+      | `frontend/src/lib/format.ts` | `formatDate` / `relativeTime` / `initials` |
+      | `frontend/src/lib/format.test.ts` | 15 tests over the above |
+      | `.github/workflows/ci.yml` | frontend `Test` step |
+
+      Two known traps, both already solved in that commit:
+      - `vi.stubEnv('TZ', …)` is **not** self-restoring and Node caches the
+        timezone, so every timezone-sensitive test must set its own TZ rather
+        than relying on `unstubAllEnvs`.
+      - The first `vitest` run can take ~60s to spawn its worker and may look
+        hung. It is a one-off cold start, not `NODE_OPTIONS`.
+
+      Decision needed from Fares: land the runner alone, or also port
+      `lib/format.ts` + its tests as the first real coverage. Recommend the
+      latter — a runner with nothing to run rots.
 - [ ] **0b.** Characterization tests for the three pilot modules below, pinning
       current observable behaviour including the ugly parts.
 

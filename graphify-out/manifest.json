@@ -1503,5 +1503,10 @@
     "mtime": 1786622865.7606502,
     "ast_hash": "0aba518e0564ff64c66e39f8db9858dc",
     "semantic_hash": ""
+  },
+  "docs/REFACTOR-PLAN.md": {
+    "mtime": 1786625662.3118567,
+    "ast_hash": "d6d22211ed5452a2422023868bf43682",
+    "semantic_hash": ""
   }
 }
