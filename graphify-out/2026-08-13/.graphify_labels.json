@@ -110,15 +110,6 @@
   "108": "frappe-gantt",
   "109": "lucide-react",
   "110": "react-router-dom",
-  "111": "IsArray",
-  "112": "IsBoolean",
   "113": "RecordHistoryService",
-  "114": "ApiProperty",
-  "115": "IsDateString",
-  "116": "IsIn",
-  "117": "IsNumber",
-  "118": "IsOptional",
-  "119": "IsString",
-  "120": "IsUUID",
-  "121": "MaxLength"
+  "114": "ApiProperty"
 }
