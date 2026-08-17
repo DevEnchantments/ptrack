@@ -78,10 +78,7 @@ export class ProjectsController {
     return this.projects.history(id);
   }
 
-  @Get(':id/sections')
-  sections(@Param('id', ParseUUIDPipe) id: string) {
-    return this.projects.sections(id);
-  }
+  // GET :id/sections moved to ProjectSectionsController (same URL).
 
   @Patch(':id')
   @ApiBody({

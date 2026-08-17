@@ -46,26 +46,11 @@ describe('ProjectsService', () => {
     };
     const notifications = { notify: jest.fn().mockResolvedValue(undefined) };
 
-    // main's constructor still takes the 11 section-list services (the
-    // project-sections extraction is Stage 1); none of these are exercised by
-    // the behaviours pinned here, so inert stubs keep the cast honest. When
-    // Stage 1 lands, this collapses back to [repo, notifications].
-    const sectionStub = () => ({ list: jest.fn().mockResolvedValue([]) });
-    const deps = [
-      repo,
-      sectionStub(), // milestones
-      sectionStub(), // program outcomes
-      sectionStub(), // action items
-      sectionStub(), // links
-      sectionStub(), // resources
-      sectionStub(), // issues
-      sectionStub(), // risks
-      sectionStub(), // submissions
-      notifications,
-      sectionStub(), // updates
-      sectionStub(), // status reports
-      sectionStub(), // attachments
-    ] as unknown as ConstructorParameters<typeof ProjectsService>;
+    // Two collaborators since the section fan-out moved to
+    // ProjectSectionsService; the tuple keeps the cast in one place.
+    const deps = [repo, notifications] as unknown as ConstructorParameters<
+      typeof ProjectsService
+    >;
 
     return {
       service: new ProjectsService(...deps),

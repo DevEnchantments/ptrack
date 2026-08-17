@@ -9,84 +9,19 @@ import {
 import { plannedProgress } from '../../common/formulas';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
-import { MilestonesService } from '../milestones/milestones.service';
-import { ProgramOutcomesService } from '../program-outcomes/program-outcomes.service';
-import { ActionItemsService } from '../action-items/action-items.service';
-import { LinksService } from '../links/links.service';
-import { ResourcesService } from '../resources/resources.service';
-import { IssuesService } from '../issues/issues.service';
-import { RisksService } from '../risks/risks.service';
-import { SubmissionsService } from '../submissions/submissions.service';
 import { NotificationsService } from '../notifications/notifications.service';
-import { UpdatesService } from '../updates/updates.service';
-import { StatusReportsService } from '../status-reports/status-reports.service';
-import { AttachmentsService } from '../attachments/attachments.service';
 
 @Injectable()
 export class ProjectsService {
   private readonly logger = new Logger(ProjectsService.name);
 
+  // The section fan-out lives in ProjectSectionsModule — importing eleven
+  // domain modules here is what used to force the repository-injection cycle
+  // workarounds in RisksModule and SubmissionsModule.
   constructor(
     private readonly repo: ProjectsRepository,
-    private readonly milestones: MilestonesService,
-    private readonly outcomes: ProgramOutcomesService,
-    private readonly actionItems: ActionItemsService,
-    private readonly links: LinksService,
-    private readonly resources: ResourcesService,
-    private readonly issues: IssuesService,
-    private readonly risks: RisksService,
-    private readonly submissions: SubmissionsService,
     private readonly notifications: NotificationsService,
-    private readonly updates: UpdatesService,
-    private readonly statusReports: StatusReportsService,
-    private readonly attachments: AttachmentsService,
   ) {}
-
-  /**
-   * All eight section lists in one response so the project page costs a single
-   * request instead of eight. The queries run concurrently; each section's own
-   * endpoint still exists for per-section refreshes after a save.
-   */
-  async sections(projectId: string) {
-    const [
-      milestones,
-      outcomes,
-      actionItems,
-      links,
-      resources,
-      issues,
-      risks,
-      submissions,
-      updates,
-      statusReports,
-      attachments,
-    ] = await Promise.all([
-      this.milestones.list(projectId),
-      this.outcomes.list(projectId),
-      this.actionItems.list(projectId),
-      this.links.list(projectId),
-      this.resources.list(projectId),
-      this.issues.list(projectId),
-      this.risks.list(projectId),
-      this.submissions.list(projectId),
-      this.updates.list(projectId),
-      this.statusReports.list(projectId),
-      this.attachments.list(projectId),
-    ]);
-    return {
-      milestones,
-      outcomes,
-      actionItems,
-      links,
-      resources,
-      issues,
-      risks,
-      submissions,
-      updates,
-      statusReports,
-      attachments,
-    };
-  }
 
   async create(dto: CreateProjectDto, userId: string): Promise<Project> {
     const { members, ...projectFields } = dto;
