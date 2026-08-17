@@ -3,25 +3,20 @@ import { RecordHistoryService } from '../../database/record-history.service';
 import { LinksRepository } from './links.repository';
 import { CreateLinkDto } from './dto/create-link.dto';
 import { UpdateLinkDto } from './dto/update-link.dto';
+import { columnsFrom, type ColumnSpec } from '../../common/columns';
 
 /**
- * The single definition of how a link DTO maps onto columns. Only keys that
- * were actually sent appear, so the same function serves create (spread over
- * CREATE_DEFAULTS) and patch (spread onto updated_by) — create and update
- * cannot drift apart on trimming or null-collapsing.
+ * How a link DTO maps onto columns — one definition serving both create and
+ * update, so the two cannot drift apart on trimming or null-collapsing.
+ * `is_gold` is `asIs` rather than a boolean default, so un-starring a link
+ * reaches the database.
  */
-function columnsFrom(dto: Partial<CreateLinkDto>): Record<string, unknown> {
-  const cols: Record<string, unknown> = {};
-  if (dto.url !== undefined) cols.url = dto.url.trim();
-  if (dto.label !== undefined) cols.label = dto.label?.trim() || null;
-  if (dto.description !== undefined)
-    cols.description = dto.description?.trim() || null;
-  // Guarded on `!== undefined`, not truthiness, so un-starring a link reaches
-  // the database.
-  if (dto.is_gold !== undefined) cols.is_gold = dto.is_gold;
-  if (dto.tags !== undefined) cols.tags = dto.tags?.length ? dto.tags : null;
-  return cols;
-}
+const COLUMN_SPEC: ColumnSpec = {
+  trimmed: ['url'],
+  trimmedOrNull: ['label', 'description'],
+  arrayOrNull: ['tags'],
+  asIs: ['is_gold'],
+};
 
 /** What a new link gets for the columns the caller omitted. */
 const CREATE_DEFAULTS = {
@@ -46,7 +41,7 @@ export class LinksService {
     return this.repo.insert({
       project_id: projectId,
       ...CREATE_DEFAULTS,
-      ...columnsFrom(dto),
+      ...columnsFrom(dto, COLUMN_SPEC),
       created_by: userId,
       updated_by: userId,
     });
@@ -60,7 +55,7 @@ export class LinksService {
   ) {
     return this.repo.update(projectId, linkId, {
       updated_by: userId,
-      ...columnsFrom(dto),
+      ...columnsFrom(dto, COLUMN_SPEC),
     });
   }
 

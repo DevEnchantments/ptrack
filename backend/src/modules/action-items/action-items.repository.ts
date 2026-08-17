@@ -53,6 +53,16 @@ export interface ActionItemComment {
 const COLUMNS =
   'id, project_id, milestone_id, title, description, type_id, role_id, due_date, status, tags, created_at, updated_at';
 
+/** The list read: joins the display names the section grid shows. */
+const LIST_SELECT = `${COLUMNS},
+         type:action_item_types ( name ),
+         role:project_roles ( name ),
+         milestone:milestones ( name ),
+         owners:action_item_owners (
+           slot, user_id,
+           profile:profiles!user_id ( full_name, email )
+         )`;
+
 // Fully-joined shape used by findOne AND by update, so a save can return the
 // refreshed detail row without a follow-up select.
 const DETAIL_SELECT = `${COLUMNS},
@@ -161,16 +171,7 @@ export class ActionItemsRepository {
 
   async findByProject(projectId: string): Promise<ActionItemListItem[]> {
     const { data, error } = await this.table
-      .select(
-        `${COLUMNS},
-         type:action_item_types ( name ),
-         role:project_roles ( name ),
-         milestone:milestones ( name ),
-         owners:action_item_owners (
-           slot, user_id,
-           profile:profiles!user_id ( full_name, email )
-         )`,
-      )
+      .select(LIST_SELECT)
       .eq('project_id', projectId)
       .order('due_date', { ascending: true });
     if (error) throw toHttpException(error, 'actionItems.findByProject');

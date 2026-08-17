@@ -123,12 +123,17 @@ Chosen to be representative, not easy.
 - [x] **1b.** `backend/src/modules/projects/` — the most complex module.
       **Done 2026-08-13** — service 274 → 214 lines, 13 collaborators → 2, new
       `project-sections/` module (approved deviation from ground rule 5).
-- [ ] **1c.** `backend/src/modules/action-items/` — known non-trivial logic
-      (owner-set diffing, atomic replace RPC)
+- [x] **1c.** `backend/src/modules/action-items/` — known non-trivial logic
+      (owner-set diffing, atomic replace RPC). **Done 2026-08-13** — plus the
+      shared `common/columns.ts` promotion, retrofitted into links + projects.
 
 **Gate:** after 1c, review whether the pass produced real value or mostly
 cosmetic churn. **If cosmetic, stop the whole plan here.** That is a legitimate
 outcome and cheaper than discovering it at module 20.
+
+**Gate verdict (2026-08-13): value is real but front-loaded — do NOT run the
+remaining 20 modules as 20 full sessions.** See section 6 for the reasoning and
+the recommended alternative.
 
 ### Phase 2 — Core project entities
 
@@ -379,3 +384,78 @@ own suite); `tsc` · `eslint --max-warnings 0` · `build` clean; boot smoke test
 and a documented cross-module workaround now has a path to removal. The pattern from 1a
 recurred exactly as predicted, which is the third data point for the shared-helper
 decision after 1c.
+
+### 2026-08-13 — Phase 1c, `modules/action-items/` + the shared-helper promotion
+
+**Skill: none** (as 1a/1b). **Ground rule 5 deviation approved by Fares:** the promotion
+edits `common/`, `links/` and `projects/` alongside `action-items/`.
+
+**Changed.**
+1. *Promotion* — `common/columns.ts`: `columnsFrom(dto, spec)` over a declarative
+   `ColumnSpec` of six named rules (`trimmed`, `trimmedOrNull`, `nullable`, `dateOrNull`,
+   `arrayOrNull`, `asIs`). Deferred at 1a on one example, taken at three. Links, projects
+   and action-items now declare a spec instead of implementing the rules; projects keeps
+   a 3-line local wrapper for `at_risk ?? false`, the one rule that does not generalize.
+   **8 unit tests** pin the helper directly, not just through its callers.
+2. *Extract Function* — `normalizeOwnerIds()` + `MAX_OWNER_SLOTS = 4`, replacing the
+   `[...new Set(...)].slice(0, 4)` written in both `add` and `update`.
+3. *Extract Method* — `logOwnerChange()`, so `update()` reads linearly: read before →
+   replace owners → write columns → log if the set changed.
+4. *Extract Constant* — `LIST_SELECT` in the repository, mirroring 1a. Verified verbatim
+   against the diff before running anything (repository code is test-uncovered).
+
+**Safety net.** 98 → **106 tests / 12 suites**. Mutation-checked where it now matters
+most: flipping the shared helper's `?? null` to `|| null` failed **3 tests across 2
+suites** (the helper's own zero test and both projects zero-preservation tests), then was
+reverted and re-verified. One helper now sits under three modules, so its own suite is
+the thing standing between a one-character slip and silent data corruption in all three.
+
+**Line counts, honestly.** The three services went 466 → 422 lines, but `common/columns.ts`
+(57) and the 1b `project-sections/` service (79) mean the codebase grew overall. Lines were
+never the win: the win is that each normalization rule now has **one** definition instead
+of six, and that the next 17 modules inherit it rather than re-implementing it.
+
+**Rejected.** Collapsing the `await this.get(...)` 404 guard used by four methods into an
+`assertInProject()` — already clear, and `remove()` genuinely uses the returned row for
+its audit label. Unifying `insertOwners` (direct insert) with `replaceOwners` (RPC) —
+that changes which DB call fires, which is behaviour, not shape.
+
+**Reported, not fixed:** `add()` returns the bare inserted row while `update()` returns the
+fully-joined one — the same mismatch reported for links in 1a. **Two of three pilot
+modules**, so it is a codebase-wide API-shape pattern, not a one-off.
+
+**Verification.** 106 tests / 12 suites; `tsc` · `eslint --max-warnings 0` · `build` clean.
+
+---
+
+## 7. Phase 1 gate — verdict (2026-08-13)
+
+**Did the pilot produce real value or cosmetic churn? Real, but front-loaded and unevenly
+distributed.**
+
+| Session | Yield |
+| --- | --- |
+| 1a `links/` | Thin. Two small extracts on a 213-line module. |
+| 1b `projects/` | **Substantial.** 13 collaborators → 2; `ProjectsModule` 12 domain imports → 1; a documented cross-module cycle workaround now has a path to removal. |
+| 1c `action-items/` | Moderate, plus the shared helper that removes a rule-duplication class from the whole backend. |
+
+Safety net across 0b-1c: **47 → 106 tests**, three of them mutation-checked rather than
+merely green.
+
+**The catch.** 1b's payoff came from a structural problem specific to `projects/`. The
+remaining 20 backend modules look like `links/`, not like `projects/` — expect
+`columnsFrom` adoption plus a `LIST_SELECT` extract each, roughly two mechanical moves per
+module. Running those as 20 full propose → approve → characterize → verify sessions costs
+far more than the shape it buys, and Phase 0b showed that writing the characterization
+tests is the expensive part, not the refactor.
+
+**Recommendation: do not continue module-by-module.** In descending order of value:
+1. **Frontend `lib/` (Phase 7 first item).** 21,438 lines, 15 tests, and 5 duplicate
+   `relativeTime()` copies — worse duplication than anything found in the backend, and
+   `format.ts` already landed in 0a with zero dependents waiting to absorb them.
+2. **One batched backend adoption pass**, not 20 sessions: adopt `columnsFrom` across the
+   remaining CRUD modules in a single reviewable commit, adding the per-module
+   characterization test *for the write path only* as each is touched.
+3. **Stop the per-module plan** for everything else. Revisit only where a module shows a
+   `projects/`-shaped problem (a service with many collaborators, or a documented
+   workaround pointing at it).

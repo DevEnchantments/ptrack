@@ -90,13 +90,13 @@
     "semantic_hash": ""
   },
   "backend/src/modules/action-items/action-items.repository.ts": {
-    "mtime": 1786950436.8131409,
-    "ast_hash": "d2879324747ffd6b1566151987a0e12d",
+    "mtime": 1784526709.2504728,
+    "ast_hash": "e1074ad0486ef27361b67357d6a6ba58",
     "semantic_hash": ""
   },
   "backend/src/modules/action-items/action-items.service.ts": {
-    "mtime": 1786950423.0879848,
-    "ast_hash": "5b76a4c0ef1f99ba79afa4d33fc467ad",
+    "mtime": 1786622561.2388394,
+    "ast_hash": "50cb8eecaf9796d31038b4afcc83ff05",
     "semantic_hash": ""
   },
   "backend/src/modules/action-items/dto/create-action-item.dto.ts": {
@@ -195,8 +195,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/links/links.service.ts": {
-    "mtime": 1786950379.4477959,
-    "ast_hash": "1e0ed35139b83471da9dc1d0001b1d8c",
+    "mtime": 1786630252.031513,
+    "ast_hash": "3a646f243a7109d1be13a08b40247c53",
     "semantic_hash": ""
   },
   "backend/src/modules/lookups/lookups.controller.ts": {
@@ -300,8 +300,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/projects/projects.service.ts": {
-    "mtime": 1786950401.0709927,
-    "ast_hash": "ddbde93e211047f7da48410fa8de7748",
+    "mtime": 1786633849.1285403,
+    "ast_hash": "32b6f28ecd1f3b65942a9081c57d4d7b",
     "semantic_hash": ""
   },
   "backend/src/modules/resources/dto/create-resource.dto.ts": {
@@ -1505,8 +1505,8 @@
     "semantic_hash": ""
   },
   "docs/REFACTOR-PLAN.md": {
-    "mtime": 1786950980.0156262,
-    "ast_hash": "e644922f81849a20251e7d90ed765053",
+    "mtime": 1786634823.2889779,
+    "ast_hash": "695693e72287d855890e3ca323fec87d",
     "semantic_hash": ""
   },
   "frontend/src/lib/format.test.ts": {
@@ -1552,16 +1552,6 @@
   "backend/src/modules/project-sections/project-sections.service.ts": {
     "mtime": 1786632592.9183145,
     "ast_hash": "b8c162147a6e5f980b8e2686891ebc2e",
-    "semantic_hash": ""
-  },
-  "backend/src/common/columns.spec.ts": {
-    "mtime": 1786950821.704293,
-    "ast_hash": "115cc01c6f9b3ca0c5914f06394a3cd8",
-    "semantic_hash": ""
-  },
-  "backend/src/common/columns.ts": {
-    "mtime": 1786950888.536598,
-    "ast_hash": "2ede3501600860f80ce3a3465c4f82b2",
     "semantic_hash": ""
   }
 }

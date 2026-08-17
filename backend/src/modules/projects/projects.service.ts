@@ -10,78 +10,54 @@ import { plannedProgress } from '../../common/formulas';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
 import { NotificationsService } from '../notifications/notifications.service';
+import { columnsFrom, type ColumnSpec } from '../../common/columns';
 
-/** Text columns: trimmed, and a blank one clears the column. */
-const TRIMMED_OR_NULL = [
-  'description',
-  'goal',
-  'customer',
-  'primary_url',
-  'reference_id',
-  'project_number',
-  'finance_code',
-  'target_group',
-  'internal_stakeholder',
-  'sponsor',
-] as const;
-
-/**
- * Ids and numbers where an explicit null clears the column. `?? null`, never
- * `|| null`: on the numeric ones a zero is a value, not a blank.
- */
-const NULLABLE = [
-  'parent_project_id',
-  'status_id',
-  'size_id',
-  'category_id',
-  'plan_year',
-  'approved_budget',
-  'utilized_budget',
-  'tier_id',
-  'strategic_objective_id',
-  'manual_progress',
-  'owner_id',
-  'project_manager_id',
-  'project_manager2_id',
-  'pmo_partner_id',
-  'sector_id',
-  'deal_type_id',
-  'strategic_program_id',
-] as const;
-
-/** Dates: an empty string clears the column. */
-const DATE_OR_NULL = ['start_date', 'target_end_date'] as const;
-
-/** Arrays: an empty array clears the column. */
-const ARRAY_OR_NULL = ['tags', 'external_stakeholders'] as const;
-
-/** Written exactly as received. */
-const AS_IS = ['access_control', 'is_priority'] as const;
+/** Which of the 35 updatable columns follows which normalization rule. */
+const COLUMN_SPEC: ColumnSpec = {
+  trimmed: ['name'],
+  trimmedOrNull: [
+    'description',
+    'goal',
+    'customer',
+    'primary_url',
+    'reference_id',
+    'project_number',
+    'finance_code',
+    'target_group',
+    'internal_stakeholder',
+    'sponsor',
+  ],
+  nullable: [
+    'parent_project_id',
+    'status_id',
+    'size_id',
+    'category_id',
+    'plan_year',
+    'approved_budget',
+    'utilized_budget',
+    'tier_id',
+    'strategic_objective_id',
+    'manual_progress',
+    'owner_id',
+    'project_manager_id',
+    'project_manager2_id',
+    'pmo_partner_id',
+    'sector_id',
+    'deal_type_id',
+    'strategic_program_id',
+  ],
+  dateOrNull: ['start_date', 'target_end_date'],
+  arrayOrNull: ['tags', 'external_stakeholders'],
+  asIs: ['access_control', 'is_priority'],
+};
 
 /**
- * The single definition of how an update DTO maps onto columns: only keys that
- * were actually sent appear, each normalized by its category. Adding a field
- * means naming it in one list above.
+ * The shared spec plus the one field with a rule of its own: at_risk falls
+ * back to false rather than null.
  */
-function columnsFrom(dto: UpdateProjectDto): Record<string, unknown> {
-  const sent = dto as Record<string, unknown>;
-  const cols: Record<string, unknown> = {};
-  const has = (key: string) => sent[key] !== undefined;
-
-  // Two fields have rules of their own: name is trimmed but never nulled, and
-  // at_risk falls back to false rather than null.
-  if (dto.name !== undefined) cols.name = dto.name.trim();
+function projectColumns(dto: UpdateProjectDto): Record<string, unknown> {
+  const cols = columnsFrom(dto, COLUMN_SPEC);
   if (dto.at_risk !== undefined) cols.at_risk = dto.at_risk ?? false;
-
-  for (const key of TRIMMED_OR_NULL)
-    if (has(key)) cols[key] = (sent[key] as string | null)?.trim() || null;
-  for (const key of NULLABLE) if (has(key)) cols[key] = sent[key] ?? null;
-  for (const key of DATE_OR_NULL) if (has(key)) cols[key] = sent[key] || null;
-  for (const key of ARRAY_OR_NULL)
-    if (has(key))
-      cols[key] = (sent[key] as unknown[] | null)?.length ? sent[key] : null;
-  for (const key of AS_IS) if (has(key)) cols[key] = sent[key];
-
   return cols;
 }
 
@@ -194,7 +170,7 @@ export class ProjectsService {
       dto.utilized_budget !== undefined || dto.approved_budget !== undefined;
     const prior = budgetTouched ? await this.repo.findDetail(id) : null;
 
-    await this.repo.update(id, { updated_by: userId, ...columnsFrom(dto) });
+    await this.repo.update(id, { updated_by: userId, ...projectColumns(dto) });
     const updated = await this.getDetail(id);
 
     if (prior) await this.notifyBudgetThreshold(id, prior, updated, userId);

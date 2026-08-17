@@ -4,11 +4,38 @@ import { ActionItemsRepository } from './action-items.repository';
 import { CreateActionItemDto } from './dto/create-action-item.dto';
 import { UpdateActionItemDto } from './dto/update-action-item.dto';
 import { AttachmentsService } from '../attachments/attachments.service';
+import { columnsFrom, type ColumnSpec } from '../../common/columns';
 
 type Owners = Array<{
   slot: number;
   profile: { full_name: string | null; email: string | null } | null;
 }>;
+
+/** The action_item_owners join table has four slots; extras are dropped. */
+const MAX_OWNER_SLOTS = 4;
+
+/** How an action-item DTO maps onto columns, for both create and update. */
+const COLUMN_SPEC: ColumnSpec = {
+  trimmed: ['title'],
+  trimmedOrNull: ['description'],
+  nullable: ['milestone_id', 'type_id', 'role_id'],
+  arrayOrNull: ['tags'],
+  asIs: ['due_date', 'status'],
+};
+
+/** What a new item gets for the columns the caller omitted. */
+const CREATE_DEFAULTS = {
+  milestone_id: null,
+  description: null,
+  type_id: null,
+  role_id: null,
+  tags: null,
+};
+
+/** De-duplicated, capped at the number of slots the join table actually has. */
+function normalizeOwnerIds(ownerIds: string[] | undefined): string[] {
+  return [...new Set(ownerIds ?? [])].slice(0, MAX_OWNER_SLOTS);
+}
 
 /**
  * Owners rendered as history text, in slot order — e.g. "Dana Whitfield, Sam Ali".
@@ -37,20 +64,13 @@ export class ActionItemsService {
   async add(projectId: string, dto: CreateActionItemDto, userId: string) {
     const item = await this.repo.insert({
       project_id: projectId,
-      milestone_id: dto.milestone_id ?? null,
-      title: dto.title.trim(),
-      description: dto.description?.trim() || null,
-      type_id: dto.type_id ?? null,
-      role_id: dto.role_id ?? null,
-      due_date: dto.due_date,
-      status: dto.status,
-      tags: dto.tags?.length ? dto.tags : null,
+      ...CREATE_DEFAULTS,
+      ...columnsFrom(dto, COLUMN_SPEC),
       created_by: userId,
       updated_by: userId,
     });
 
-    const ownerIds = [...new Set(dto.owner_ids ?? [])].slice(0, 4);
-    await this.repo.insertOwners(item.id, ownerIds);
+    await this.repo.insertOwners(item.id, normalizeOwnerIds(dto.owner_ids));
 
     return item;
   }
@@ -74,44 +94,48 @@ export class ActionItemsService {
     // Owners first — one atomic RPC — so the joined select on the column
     // update below already returns the new set.
     if (dto.owner_ids !== undefined) {
-      const ownerIds = [...new Set(dto.owner_ids ?? [])].slice(0, 4);
-      await this.repo.replaceOwners(actionItemId, ownerIds);
+      await this.repo.replaceOwners(
+        actionItemId,
+        normalizeOwnerIds(dto.owner_ids),
+      );
     }
-
-    // Build the column patch only from fields that were provided.
-    const patch: Record<string, unknown> = { updated_by: userId };
-    if (dto.title !== undefined) patch.title = dto.title.trim();
-    if (dto.description !== undefined)
-      patch.description = dto.description?.trim() || null;
-    if (dto.due_date !== undefined) patch.due_date = dto.due_date;
-    if (dto.status !== undefined) patch.status = dto.status;
-    if (dto.milestone_id !== undefined)
-      patch.milestone_id = dto.milestone_id ?? null;
-    if (dto.type_id !== undefined) patch.type_id = dto.type_id ?? null;
-    if (dto.role_id !== undefined) patch.role_id = dto.role_id ?? null;
-    if (dto.tags !== undefined) patch.tags = dto.tags?.length ? dto.tags : null;
 
     // The update returns the fully-joined row, so no follow-up get is needed.
-    const after = await this.repo.update(projectId, actionItemId, patch);
+    const after = await this.repo.update(projectId, actionItemId, {
+      updated_by: userId,
+      ...columnsFrom(dto, COLUMN_SPEC),
+    });
 
-    // Owners are replaced wholesale on every save, so the DB trigger cannot tell
-    // a real change from a rewrite of the same set — and it never sees the join
-    // table anyway. Diff the rendered sets and log one entry only if they differ.
-    const oldOwners = ownersLabel(before.owners);
-    const newOwners = ownersLabel(after.owners);
-    if (oldOwners !== newOwners) {
-      await this.repo.insertHistory({
-        table_name: 'action_items',
-        record_id: actionItemId,
-        project_id: projectId,
-        field_label: 'Owners',
-        old_value: oldOwners,
-        new_value: newOwners,
-        changed_by: userId,
-      });
-    }
+    await this.logOwnerChange(projectId, actionItemId, before, after, userId);
 
     return after;
+  }
+
+  /**
+   * Owners are replaced wholesale on every save, so the DB trigger cannot tell a
+   * real change from a rewrite of the same set — and it never sees the join
+   * table anyway. Diff the rendered sets and log one entry only if they differ.
+   */
+  private async logOwnerChange(
+    projectId: string,
+    actionItemId: string,
+    before: { owners?: Owners },
+    after: { owners?: Owners },
+    userId: string,
+  ): Promise<void> {
+    const oldOwners = ownersLabel(before.owners);
+    const newOwners = ownersLabel(after.owners);
+    if (oldOwners === newOwners) return;
+
+    await this.repo.insertHistory({
+      table_name: 'action_items',
+      record_id: actionItemId,
+      project_id: projectId,
+      field_label: 'Owners',
+      old_value: oldOwners,
+      new_value: newOwners,
+      changed_by: userId,
+    });
   }
 
   async history(projectId: string, actionItemId: string) {
