@@ -170,7 +170,7 @@ index (timeliness/completeness/reliability, Figs 30–31) — **formulas = ASK (
 | FR-12 | Report generation + Excel export | ✅ PARTIAL 2026-08-13: named printable reports under /reporting — Initiative Progress (planned vs calculated per F1/F2, delta + F5 bucket, worst first) and Monthly Performance (milestones due/done/completed + submissions/approvals per month, year switcher) — join the existing per-project Progress report and Cycle Submission Status. Export stays CSV (FR-13 confirm modal); native .xlsx not built (ASSUMED CSV sufficient) |
 | FR-13 | Download confirmation modal | ✅ SHIPPED 2026-08-03: confirm dialog (record count) before the CSV export |
 | FR-14 | Workflow states: submit/review/return/approve/close | ✅ ASSUMED+SHIPPED 2026-08-03; cycle CLOSE (+reopen) 2026-08-13 locks all transitions (see 1.6) — routing/exact closure rules remain OI-03 questions |
-| FR-15 | Role-based restriction of create/update/approve/admin | PARTIAL — access_level data exists; enforcement deferred (security phase) |
+| FR-15 | Role-based restriction of create/update/approve/admin | IN PROGRESS — access model drafted from FDD 3.2 (section 8 below), enforcement landing in the security phase |
 
 ## 3. Use cases UC-01…18 — acceptance checklist
 UC-01 list view · UC-02 filters · UC-03 Excel export+confirm · UC-04 detail tabs ·
@@ -422,7 +422,49 @@ in it without rework.
    which joins the notification-email subsystem. UNBLOCKS WHEN: SMTP (or an
    email API) is available.
 
-## 8. Conventions carried forward
+## 8. Security phase — access model (stage 1, ASSUMED 2026-08-17, awaiting Fares sign-off)
+
+FR-15 (Must Have) mandates role-based restriction. FDD 3.2 defines seven roles; this model
+maps them onto data we already store plus ONE new column. FDD scope explicitly excludes
+authentication config/SSO — this is authorization only. RLS policies stay deferred by
+decision: deny-all already blocks the only path they would guard (direct PostgREST), and
+NestJS enforcement is the real gate.
+
+**Global roles — new `profiles.app_role`** (`admin` | `pmo` | `executive` | `user`, default
+`user`; migration `db/app_role.sql`): admin = FDD System Administrator · pmo = PMO
+Administrator · executive = Management/Executive Viewer · user = everyone else. FDD roles
+3/4/5 need no column: Project Owner = `projects.owner_id` / membership `access_level`
+(live data uses all three tiers: read_only < read_write < read_write_admin) · Risk/Issue
+Owner = `risks.owner_id` on that record · Reviewer/Approver = existing
+`pmo_partner_id`/`owner_id` actor rules. Effective permission = max(global role, project
+relationship, record ownership). Project routes fail closed.
+
+| Surface | Required |
+| --- | --- |
+| Code Tables admin (lookup mutations), CSV Import, account provisioning/claim | `admin` |
+| Create project | `pmo`/`admin` (FDD 3.1 step 1: "Project Owner / PMO" — ASSUMED PMO-gated; loosen if Fares vetoes) |
+| Cycle close/reopen | `pmo`/`admin` (FDD 3.1 step 8 assigns closure to PMO) |
+| View open project + its sections | any authenticated |
+| View restricted project | member, `pmo`, `admin` (+`executive` read-only — OPEN, see Q3) |
+| Write inside project (milestones, action items, links, resources, issues, updates, status reports, attachments, outcomes, submit) | membership `read_write`+, or project owner/PM, or `pmo`/`admin` |
+| Manage project (PATCH master, delete, people, adjust weights) | membership `read_write_admin`, project owner, `pmo`, `admin` (weights per FDD 3.1 step 2) |
+| PATCH a risk/issue | project-write rule **or** that risk's `owner_id` (FDD role 4, record-level) |
+| Submission validate/approve | existing Fig-10 actor rules; `pmo` may additionally return ("return/approve where authorized") |
+| Dashboards, search, registries, timeline, reports (GET) | any authenticated; results filtered to visible projects for `user` role |
+| KPI registry mutations | `pmo`/`admin` (governance data); readings/plans viewable by all |
+| Notifications | own rows only (already) |
+
+**Narrowed OI-01 questions for the supervisor:** (1) who besides PMO Partner / Project
+Owner holds Reviewer/Approver "delegated authority"? (2) what exactly is Read-only
+Viewer's "assigned access"? (3) do Executive Viewers see restricted projects
+(assumed: aggregates yes, drill-down no)?
+
+Rollout: stage 2 migration (sets `test@ptrack.local` → `admin` first, so nobody is locked
+out) → stage 3 guards (`@AdminOnly`, `@MinAppRole`, `ProjectAccessGuard` + unit tests) →
+stage 4 read-side filtering → stage 5 frontend affordances/403 toasts → FR-15 flips to
+PARTIAL-shipped (full delegated-authority matrix stays OI-01).
+
+## 9. Conventions carried forward
 Field-mapping evidence rule now points at **FDD figures** (ask for hi-res PNG when field-level
 detail is unreadable) · one feature at a time, plan → approve → build → verify → user commits ·
 formulas recorded in `docs/FORMULAS.md` with supervisor confirmation date · unit tests on all math.
