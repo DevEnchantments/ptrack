@@ -120,7 +120,6 @@
   "118": "SectionNav.tsx",
   "119": "app.controller.ts",
   "120": "supabase.ts",
-  "121": "eslint",
   "122": "eslint-plugin-prettier",
   "123": "ts-jest",
   "124": "ProgramOutcomesService",
@@ -132,6 +131,5 @@
   "130": "Injectable",
   "132": "workflow.ts",
   "133": ".update",
-  "146": "@eslint/js",
-  "147": "Global"
+  "146": "@eslint/js"
 }

@@ -395,8 +395,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/users/users.controller.ts": {
-    "mtime": 1786972310.8090186,
-    "ast_hash": "ab37efba058cecf293cf33693e737265",
+    "mtime": 1786999714.2455413,
+    "ast_hash": "744ed1d1efabd1e0a331ad0cec468cf5",
     "semantic_hash": ""
   },
   "backend/src/modules/users/users.module.ts": {
@@ -605,8 +605,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ProjectDetailPage.tsx": {
-    "mtime": 1786975991.5700068,
-    "ast_hash": "44bbaf8d94e5290b88e9f3d8ffb28e99",
+    "mtime": 1786976873.275213,
+    "ast_hash": "4358d2dcf33c7a7397089aa33cd9810d",
     "semantic_hash": ""
   },
   "frontend/src/pages/StatusReportDetailPage.tsx": {
@@ -1600,8 +1600,8 @@
     "semantic_hash": ""
   },
   "frontend/src/lib/api/directory.ts": {
-    "mtime": 1786969732.280454,
-    "ast_hash": "404e317909c7ebba598e449759ab29c7",
+    "mtime": 1786976857.6785274,
+    "ast_hash": "359d31f0f95acbfc270284c9d342e242",
     "semantic_hash": ""
   },
   "frontend/src/lib/api/index.ts": {
@@ -1685,8 +1685,8 @@
     "semantic_hash": ""
   },
   "frontend/src/lib/use-me.ts": {
-    "mtime": 1786969745.0139208,
-    "ast_hash": "ff92d2dbfffbf5eedaf78b889ec9ac7f",
+    "mtime": 1786976857.6805248,
+    "ast_hash": "a65c632e64a416f953cd82a4e058a224",
     "semantic_hash": ""
   },
   "backend/src/common/access/capability.service.ts": {
