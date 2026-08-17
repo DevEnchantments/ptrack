@@ -12,6 +12,7 @@ export interface Me {
   id: string
   email: string | null
   app_role: AppRole
+  capabilities: string[]
 }
 
 export const usersApi = {

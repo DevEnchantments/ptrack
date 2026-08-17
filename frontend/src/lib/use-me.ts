@@ -46,6 +46,11 @@ export function useMe(): Me | null {
   return me
 }
 
+/** Capability check for grant-gated buttons (null me = not granted yet). */
+export function hasCapability(me: Me | null, capability: string): boolean {
+  return me?.capabilities.includes(capability) ?? false
+}
+
 /** Convenience rank check mirroring the backend's atLeastRole. */
 const RANK: Record<string, number> = { user: 0, executive: 1, pmo: 2, admin: 3 }
 export function atLeastRole(

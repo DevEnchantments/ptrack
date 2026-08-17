@@ -15,7 +15,7 @@ import { StatusPill } from '@/components/StatusPill'
 import { AvatarCluster, InitialsAvatar } from '@/components/InitialsAvatar'
 import { Skeleton } from '@/components/ui/skeleton'
 import { usePageTitle } from '@/lib/use-page-title'
-import { useMe } from '@/lib/use-me'
+import { hasCapability, useMe } from '@/lib/use-me'
 import { AccessLevel, projectAccessLevel } from '@/lib/access'
 import { useParams, useNavigate } from 'react-router-dom'
 import {
@@ -567,6 +567,7 @@ export function ProjectDetailPage() {
   const canWrite = myLevel >= AccessLevel.Write
   const canManage = myLevel >= AccessLevel.Manage
   const writeReason = 'You have view-only access on this project'
+  const canProvision = hasCapability(me, 'users.provision')
   const manageReason = 'Needs manage access on this project'
 
   // Grayed (not hidden) when the viewer lacks the level; the backend
@@ -978,14 +979,27 @@ export function ProjectDetailPage() {
                       {m.status === 'pending' && (
                         <>
                           <span className="text-xs text-gold">(pending)</span>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="h-6 px-2 text-xs"
-                            onClick={() => setAccountMember(m)}
+                          <span
+                            title={
+                              canProvision
+                                ? undefined
+                                : 'Needs the "Provision accounts" permission'
+                            }
                           >
-                            Create account
-                          </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="h-6 px-2 text-xs"
+                              disabled={!canProvision}
+                              onClick={
+                                canProvision
+                                  ? () => setAccountMember(m)
+                                  : undefined
+                              }
+                            >
+                              Create account
+                            </Button>
+                          </span>
                         </>
                       )}
                     </div>
