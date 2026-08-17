@@ -19,6 +19,7 @@ import {
   Menu,
   Moon,
   Settings,
+  ShieldCheck,
   Sun,
   Users,
 } from 'lucide-react'
@@ -32,6 +33,7 @@ const NAV_ITEMS: Array<{
   label: string
   icon: typeof Home
   to?: string
+  adminOnly?: boolean
 }> = [
   { label: 'Projects', icon: Home, to: '/' },
   { label: 'My Dashboard', icon: LayoutDashboard, to: '/dashboard' },
@@ -42,7 +44,18 @@ const NAV_ITEMS: Array<{
   { label: 'Timeline', icon: Clock, to: '/timeline' },
   { label: 'Reporting', icon: BarChart3, to: '/reporting' },
   { label: 'AI Assistant', icon: Bot },
-  { label: 'Administration', icon: Settings, to: '/admin/code-tables' },
+  {
+    label: 'Administration',
+    icon: Settings,
+    to: '/admin/code-tables',
+    adminOnly: true,
+  },
+  {
+    label: 'Users & Roles',
+    icon: ShieldCheck,
+    to: '/admin/users-roles',
+    adminOnly: true,
+  },
 ]
 
 export function AppLayout() {
@@ -122,9 +135,7 @@ export function AppLayout() {
 
         <nav className="flex flex-1 flex-col gap-0.5 px-2 py-2">
           {NAV_ITEMS.filter(
-            (item) =>
-              item.label !== 'Administration' ||
-              atLeastRole(me?.app_role, 'admin'),
+            (item) => !item.adminOnly || atLeastRole(me?.app_role, 'admin'),
           ).map((item) =>
             item.to ? (
               <NavLink
