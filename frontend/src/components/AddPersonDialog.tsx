@@ -1,6 +1,7 @@
 import { FieldError } from '@/components/FieldError'
 import { EMAIL_RE, pocEmail } from '@/lib/provision'
 import { Loader2, Wand2 } from 'lucide-react'
+import { personName } from '@/lib/format'
 import { toast } from '@/lib/toast'
 import { useEffect, useState } from 'react'
 import type { ProjectMemberInput } from '@/pages/CreateProjectWizard'
@@ -52,7 +53,8 @@ function emptyPerson(): ProjectMemberInput {
 }
 
 function memberName(m: ProjectMemberDetail): string {
-  return m.profile?.full_name || m.profile?.email || m.pending_name || 'Unknown'
+  // A member with no account falls back to the name typed when inviting them.
+  return personName(m.profile, m.pending_name || 'Unknown')
 }
 
 export function AddPersonDialog({

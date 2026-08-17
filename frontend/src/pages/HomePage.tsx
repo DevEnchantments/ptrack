@@ -25,6 +25,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { StatusPill } from '@/components/StatusPill'
 import { TagChips } from '@/components/TagChips'
 import { ProjectsGrid } from '@/components/ProjectsGrid'
+import { initials, relativeTime } from '@/lib/format'
 import { type GridSort, type GridSortKey } from '@/lib/project-grid'
 import { buildCsv, downloadCsv } from '@/lib/csv'
 import { ProjectTree } from '@/components/ProjectTree'
@@ -63,21 +64,6 @@ const ROWS_OPTIONS = [
   { label: '48', value: '48' },
 ]
 
-function relativeTime(iso: string): string {
-  const sec = Math.round((Date.now() - new Date(iso).getTime()) / 1000)
-  if (sec < 60) return 'just now'
-  const min = Math.round(sec / 60)
-  if (min < 60) return `${min} minute${min === 1 ? '' : 's'} ago`
-  const hr = Math.round(min / 60)
-  if (hr < 24) return `${hr} hour${hr === 1 ? '' : 's'} ago`
-  const day = Math.round(hr / 24)
-  if (day < 30) return `${day} day${day === 1 ? '' : 's'} ago`
-  const mo = Math.round(day / 30)
-  if (mo < 12) return `${mo} month${mo === 1 ? '' : 's'} ago`
-  const yr = Math.round(mo / 12)
-  return `${yr} year${yr === 1 ? '' : 's'} ago`
-}
-
 function prefersReducedMotion(): boolean {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches
 }
@@ -92,13 +78,6 @@ function useEntranceFlag(): boolean {
     return () => cancelAnimationFrame(raf)
   }, [])
   return entered
-}
-
-function initials(name: string) {
-  const parts = name.trim().split(/\s+/).filter(Boolean)
-  if (parts.length === 0) return '?'
-  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase()
-  return (parts[0][0] + parts[1][0]).toUpperCase()
 }
 
 export function HomePage() {

@@ -7,6 +7,7 @@ import {
   type StatusReportDetail,
   type StatusReport,
 } from '@/lib/api'
+import { personName } from '@/lib/format'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { MiniCalendar } from '@/components/MiniCalendar'
@@ -17,10 +18,6 @@ const ACCESS_LABELS: Record<string, string> = {
   submitter_and_members: 'Submitter and Project Members',
   all: 'All',
   all_contributors: 'All Contributors',
-}
-
-function authorName(a: { full_name: string | null; email: string | null } | null) {
-  return a?.full_name || a?.email || 'Unknown'
 }
 
 function longDate(iso: string): string {
@@ -198,7 +195,7 @@ export function StatusReportDetailPage() {
 
               <p className="mt-4 text-sm text-muted-foreground">
                 <span className="font-semibold text-foreground">Submitted:</span>{' '}
-                {longDate(report.report_date)} by {authorName(report.author)}
+                {longDate(report.report_date)} by {personName(report.author)}
               </p>
 
               <div className="mt-8 border-t pt-4 text-xs text-muted-foreground">

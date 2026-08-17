@@ -1,5 +1,6 @@
 import { FieldError } from '@/components/FieldError'
 import { Loader2 } from 'lucide-react'
+import { personName } from '@/lib/format'
 import { toast } from '@/lib/toast'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -54,16 +55,10 @@ function emptyOwner(): ProjectMemberInput {
 function ownerFromMilestone(m: MilestoneDetail): ProjectMemberInput {
   return {
     user_id: m.owner_id,
-    display_name: m.owner?.full_name || m.owner?.email || '',
+    display_name: personName(m.owner, ''),
     email: m.owner?.email ?? null,
     role_id: null,
   }
-}
-
-function profileName(
-  p?: { full_name: string | null; email: string | null } | null,
-): string {
-  return p?.full_name || p?.email || 'Unknown'
 }
 
 interface Props {
@@ -492,13 +487,13 @@ export function AddMilestoneDialog({
               {existing.created_at && (
                 <div>
                   Created {new Date(existing.created_at).toLocaleString()} by{' '}
-                  {profileName(existing.created_by_profile)}
+                  {personName(existing.created_by_profile)}
                 </div>
               )}
               {existing.updated_at && (
                 <div>
                   Last updated {new Date(existing.updated_at).toLocaleString()}{' '}
-                  by {profileName(existing.updated_by_profile)}
+                  by {personName(existing.updated_by_profile)}
                 </div>
               )}
               <button

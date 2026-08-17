@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach } from 'vitest'
-import { formatDate, initials, relativeTime } from './format'
+import { formatDate, initials, personName, relativeTime } from './format'
 
 /**
  * Node caches the timezone, and `vi.unstubAllEnvs()` does not reliably reset
@@ -85,6 +85,35 @@ describe('initials', () => {
   })
 })
 
+describe('personName', () => {
+  it('prefers the full name', () => {
+    expect(personName({ full_name: 'Ada Lovelace', email: 'ada@x.com' })).toBe(
+      'Ada Lovelace',
+    )
+  })
+
+  it('falls back to the email when there is no name', () => {
+    expect(personName({ full_name: null, email: 'ada@x.com' })).toBe('ada@x.com')
+  })
+
+  it('treats a blank name as missing', () => {
+    // `||` not `??` — this is why the two are not interchangeable here.
+    expect(personName({ full_name: '', email: 'ada@x.com' })).toBe('ada@x.com')
+  })
+
+  it('defaults to Unknown for a missing person', () => {
+    expect(personName(null)).toBe('Unknown')
+    expect(personName(undefined)).toBe('Unknown')
+    expect(personName({ full_name: null, email: null })).toBe('Unknown')
+  })
+
+  it('takes any fallback the caller needs, including null', () => {
+    expect(personName(null, '')).toBe('')
+    expect(personName(null, null)).toBeNull()
+    expect(personName(null, 'Dana Whitfield')).toBe('Dana Whitfield')
+  })
+})
+
 describe('relativeTime', () => {
   afterEach(() => {
     vi.useRealTimers()
@@ -98,12 +127,14 @@ describe('relativeTime', () => {
     return relativeTime(base)
   }
 
-  it('reports seconds', () => {
-    expect(atOffset(5_000)).toBe('5 seconds ago')
+  it('says "just now" for anything under a minute', () => {
+    expect(atOffset(1_000)).toBe('just now')
+    expect(atOffset(5_000)).toBe('just now')
+    expect(atOffset(59_000)).toBe('just now')
   })
 
   it('singularises', () => {
-    expect(atOffset(1_000)).toBe('1 second ago')
+    expect(atOffset(60_000)).toBe('1 minute ago')
   })
 
   it('rolls up to minutes, hours and days', () => {

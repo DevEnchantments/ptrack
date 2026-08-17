@@ -1,3 +1,9 @@
+import {
+  formatDate,
+  initials,
+  personName,
+  relativeTime,
+} from '@/lib/format'
 import { toast } from '@/lib/toast'
 import {
   Fragment,
@@ -107,53 +113,39 @@ function Field({ label, value }: { label: string; value: React.ReactNode }) {
 }
 
 function memberName(m: ProjectMemberDetail) {
-  return m.profile?.full_name || m.profile?.email || m.pending_name || 'Unknown'
+  // A member with no account falls back to the name typed when inviting them.
+  return personName(m.profile, m.pending_name || 'Unknown')
 }
 
 function ownerName(m: Milestone) {
-  return m.owner?.full_name || m.owner?.email || null
+  return personName(m.owner, null)
 }
 
 function linkAuthor(l: Link) {
-  return l.created_by_profile?.full_name || l.created_by_profile?.email || 'Unknown'
+  return personName(l.created_by_profile)
 }
 
 function resourceUpdatedBy(r: Resource) {
-  return r.updated_by_profile?.full_name || r.updated_by_profile?.email || 'Unknown'
+  return personName(r.updated_by_profile)
 }
 
 function riskOwnerDisplay(r: Risk): string | null {
-  return r.owner?.full_name || r.owner?.email || null
+  return personName(r.owner, null)
 }
 
 function issueOwnerDisplay(i: Issue): string | null {
-  const owner = i.owner?.full_name || i.owner?.email || null
+  const owner = personName(i.owner, null)
   const role = i.role?.name || null
   if (role && owner) return `${role}: ${owner}`
   return owner || role || null
 }
 
 function updateAuthorName(u: Update) {
-  return u.author?.full_name || u.author?.email || 'Unknown'
-}
-
-function initials(name: string): string {
-  const parts = name.trim().split(/\s+/).filter(Boolean)
-  if (parts.length === 0) return '?'
-  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase()
-  return (parts[0][0] + parts[1][0]).toUpperCase()
+  return personName(u.author)
 }
 
 function reportAuthor(r: StatusReport) {
-  return r.author?.full_name || r.author?.email || 'Unknown'
-}
-
-function formatReportDate(iso: string): string {
-  const d = new Date(iso + 'T00:00:00')
-  if (isNaN(d.getTime())) return iso
-  const day = String(d.getDate()).padStart(2, '0')
-  const mon = d.toLocaleString('en-US', { month: 'short' }).toUpperCase()
-  return `${day}-${mon}-${d.getFullYear()}`
+  return personName(r.author)
 }
 
 const EXT_STYLES: Record<string, string> = {
@@ -190,27 +182,7 @@ function formatSize(bytes: number | null): string {
 }
 
 function attachmentUploader(a: Attachment) {
-  return (
-    a.uploaded_by_profile?.full_name ||
-    a.uploaded_by_profile?.email ||
-    'Unknown'
-  )
-}
-
-function relativeTime(iso: string): string {
-  const diffMs = Date.now() - new Date(iso).getTime()
-  const sec = Math.round(diffMs / 1000)
-  if (sec < 60) return `${sec} second${sec === 1 ? '' : 's'} ago`
-  const min = Math.round(sec / 60)
-  if (min < 60) return `${min} minute${min === 1 ? '' : 's'} ago`
-  const hr = Math.round(min / 60)
-  if (hr < 24) return `${hr} hour${hr === 1 ? '' : 's'} ago`
-  const day = Math.round(hr / 24)
-  if (day < 30) return `${day} day${day === 1 ? '' : 's'} ago`
-  const mo = Math.round(day / 30)
-  if (mo < 12) return `${mo} month${mo === 1 ? '' : 's'} ago`
-  const yr = Math.round(mo / 12)
-  return `${yr} year${yr === 1 ? '' : 's'} ago`
+  return personName(a.uploaded_by_profile)
 }
 
 function EditButton({ onClick, label }: { onClick: () => void; label: string }) {
@@ -1223,12 +1195,7 @@ export function ProjectDetailPage() {
                             names={a.owners
                               .slice()
                               .sort((x, y) => x.slot - y.slot)
-                              .map(
-                                (o) =>
-                                  o.profile?.full_name ||
-                                  o.profile?.email ||
-                                  '—',
-                              )}
+                              .map((o) => personName(o.profile, '—'))}
                           />
                         </span>
                       )}
@@ -1627,7 +1594,7 @@ export function ProjectDetailPage() {
                     </div>
                     <div className="whitespace-nowrap text-right text-xs text-muted-foreground">
                       <div>{reportAuthor(r)}</div>
-                      <div>{formatReportDate(r.report_date)}</div>
+                      <div>{formatDate(r.report_date)}</div>
                     </div>
                   </div>
                 </li>

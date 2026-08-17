@@ -161,7 +161,9 @@ the recommended alternative.
 Only after the backend pass, and only if Phase 1's gate said the approach works.
 Unit is the page or component family, not the file.
 
-- [ ] `lib/` (shared helpers — the 5 duplicate `relativeTime` copies live here)
+- [x] `lib/` (shared helpers — the 5 duplicate `relativeTime` copies live here).
+      **Done 2026-08-13** — 5 `relativeTime` + 2 `initials` + 1 `formatDate`
+      clone deleted, `personName()` adopted at every `||` call site (21 files).
 - [ ] `components/ui/` primitives
 - [ ] Detail pages · [ ] Dialogs · [ ] Reporting pages
 
@@ -459,3 +461,56 @@ tests is the expensive part, not the refactor.
 3. **Stop the per-module plan** for everything else. Revisit only where a module shows a
    `projects/`-shaped problem (a service with many collaborators, or a documented
    workaround pointing at it).
+
+---
+
+## 8. Post-gate sessions
+
+### 2026-08-13 — Phase 7 first item, frontend `lib/`
+
+**The copies were not identical, which changed the session.** The plan assumed 5
+duplicate `relativeTime()` functions. There were 5, but in **two behaviours**: under a
+minute, `AttachmentDetailPage` and `ProjectDetailPage` said "42 seconds ago" while
+`HomePage`, `MilestoneDetailPage` and `RecordHistory` said "just now". Folding them
+together was therefore a visible-text decision, not a refactor.
+
+**⚠ APPROVED BEHAVIOUR CHANGE (Fares, 2026-08-13): "just now" everywhere.** Under a
+minute now reads "just now" on **the attachment detail page and the project detail page**,
+which previously counted seconds. Worth knowing before the next supervisor demo. Two of
+the 15 tests ported in 0a were rewritten to match.
+
+**Changed (21 files, +137 / -190).**
+- `lib/format.ts`: `relativeTime` unified on "just now"; new `personName(person, fallback)`
+  with overloads so a `null` fallback returns `string | null` and a string fallback
+  returns `string`.
+- Deleted **5** `relativeTime` copies, **2** `initials(name)` copies and one `formatDate`
+  clone (`formatReportDate`), all now imported from `lib/format`.
+- `personName()` adopted at **every** `||` call site — 30+ occurrences across 21 files,
+  including the inline expressions in dialogs, grids and the Gantt. The named wrappers
+  that only re-expressed the rule (`profileName` ×3, `authorName`, `uploaderName`) were
+  deleted outright; the ones that extract a field from an entity (`memberName`,
+  `ownerName`, `reportAuthor`, `linkAuthor`, …) kept their names and now delegate.
+
+**Left deliberately, and why it is not an oversight.** The `??` variants
+(`project-grid.ts`, `HomePage`'s CSV export, `ProjectDetailPage`'s people rows) were
+**not** converted. `??` and `||` differ on empty string: for a profile whose `full_name`
+is `''`, `||` falls through to the email while `??` renders blank. Converting them would
+be a silent behaviour change on data that is unlikely but possible. Same reasoning for the
+`user_metadata?.full_name` sites, which read the Supabase auth user, not a profile row.
+
+**Also left:** the two `longDate()` implementations render genuinely different strings
+(`"Monday, 7 July, 2026"` on attachments vs `"Monday, July 7, 2026"` on status reports) —
+a UI-consistency question for `docs/UI-AUDIT.md`, not a refactor. And `RecordHistory`'s
+`initials(actor)` stays separate from `lib/format`'s: it splits on dots and underscores so
+an email local-part reads "FA", which the shared one does not do. It now takes its source
+string from `personName(actor, '?')` and carries a comment saying why it is not the shared
+helper.
+
+**Safety net.** These pages have no component tests, so the net was: **20 unit tests on the
+shared helpers** (15 → 20, five of them new `personName` cases including the blank-name
+case that pins `||` vs `??`), plus `tsc -b` across the sweep — every wrapper had a distinct
+argument type, so a wrong substitution fails the typecheck rather than review. Full gate
+green: lint · build · 20 tests. Backend untouched at 106.
+
+**Note for the next frontend session:** the cold-start vitest flake recurred exactly as
+documented in 0a (60.07s, "no tests", one error; the immediate re-run passed in 28s).

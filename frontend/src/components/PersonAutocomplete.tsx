@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { UserCheck, UserPlus } from 'lucide-react'
 import type { ProjectMemberInput } from '@/pages/CreateProjectWizard'
 import { usersApi, type UserSummary } from '@/lib/api'
+import { personName } from '@/lib/format'
 import { Input } from '@/components/ui/input'
 
 interface Props {
@@ -61,7 +62,7 @@ export function PersonAutocomplete({
   function pick(u: UserSummary) {
     onChange({
       user_id: u.id,
-      display_name: u.full_name || u.email || '',
+      display_name: personName(u, ''),
       email: u.email,
     })
     setOpen(false)
@@ -108,7 +109,7 @@ export function PersonAutocomplete({
                   i === active ? 'bg-accent' : ''
                 }`}
               >
-                <span>{u.full_name || u.email}</span>
+                <span>{personName(u, '')}</span>
                 {u.email && (
                   <span className="text-xs text-muted-foreground">{u.email}</span>
                 )}

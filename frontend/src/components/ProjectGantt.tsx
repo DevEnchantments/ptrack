@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { gantt } from 'dhtmlx-gantt'
 import 'dhtmlx-gantt/codebase/dhtmlxgantt.css'
 import type { ActionItem, Milestone, ProgramOutcome } from '@/lib/api'
+import { personName } from '@/lib/format'
 
 interface Props {
   projectId: string
@@ -63,7 +64,7 @@ export function ProjectGantt({ projectId, milestones, outcomes, actionItems }: P
     const today = todayIso()
     const pushMilestone = (m: Milestone, code: string, parent: string | 0) => {
       if (!m.due_date) return
-      const ownerName = m.owner?.full_name || m.owner?.email || ''
+      const ownerName = personName(m.owner, '')
       const statusClass =
         m.status === 'closed_completed'
           ? 'pt-dhx-green'

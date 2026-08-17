@@ -1,4 +1,5 @@
 import { Loader2, Lock } from 'lucide-react'
+import { personName } from '@/lib/format'
 import { toast } from '@/lib/toast'
 import { useEffect, useState } from 'react'
 import { cyclesApi, submissionsApi, type Cycle, type Submission } from '@/lib/api'
@@ -51,12 +52,6 @@ export function Chip({ status }: { status: string }) {
       {chip.label}
     </span>
   )
-}
-
-function personName(
-  p: { full_name: string | null; email: string | null } | null,
-): string {
-  return p?.full_name || p?.email || 'Unknown'
 }
 
 /**

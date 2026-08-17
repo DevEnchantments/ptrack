@@ -24,11 +24,17 @@ export function formatDate(iso: string): string {
   return `${day}-${mon}-${d.getFullYear()}`
 }
 
-/** Coarse "3 days ago" phrasing for activity metadata. */
+/**
+ * Coarse "3 days ago" phrasing for activity metadata.
+ *
+ * Under a minute reads "just now". Three of the five copies this replaced
+ * already did that; the other two counted seconds, and Fares' call was to
+ * unify on "just now" everywhere (2026-08-13).
+ */
 export function relativeTime(iso: string): string {
   const diffMs = Date.now() - new Date(iso).getTime()
   const sec = Math.round(diffMs / 1000)
-  if (sec < 60) return `${sec} second${sec === 1 ? '' : 's'} ago`
+  if (sec < 60) return 'just now'
   const min = Math.round(sec / 60)
   if (min < 60) return `${min} minute${min === 1 ? '' : 's'} ago`
   const hr = Math.round(min / 60)
@@ -39,6 +45,35 @@ export function relativeTime(iso: string): string {
   if (mo < 12) return `${mo} month${mo === 1 ? '' : 's'} ago`
   const yr = Math.round(mo / 12)
   return `${yr} year${yr === 1 ? '' : 's'} ago`
+}
+
+/** Anything carrying a person's display fields — profile, author, owner, actor. */
+export interface PersonLike {
+  full_name?: string | null
+  email?: string | null
+}
+
+/**
+ * The house rule for showing a person: full name, else email, else a fallback.
+ * It was open-coded at 30+ call sites with three different fallbacks, so the
+ * fallback is the parameter and the rule lives here.
+ *
+ * Note this is `||`, not `??`: a blank full_name falls through to the email.
+ */
+export function personName(person: PersonLike | null | undefined): string
+export function personName(
+  person: PersonLike | null | undefined,
+  fallback: string,
+): string
+export function personName(
+  person: PersonLike | null | undefined,
+  fallback: null,
+): string | null
+export function personName(
+  person: PersonLike | null | undefined,
+  fallback: string | null = 'Unknown',
+): string | null {
+  return person?.full_name || person?.email || fallback
 }
 
 /** Up to two uppercase letters for avatar glyphs. */

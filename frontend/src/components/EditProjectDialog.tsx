@@ -4,6 +4,7 @@ import type { ProjectMemberInput } from '@/pages/CreateProjectWizard'
 import { useAuth } from '@/lib/auth-context'
 import { NEW_SECTOR } from '@/lib/project-form'
 import { Loader2, Star, TriangleAlert, X } from 'lucide-react'
+import { personName } from '@/lib/format'
 import { toast } from '@/lib/toast'
 import { useEffect, useState } from 'react'
 import {
@@ -42,7 +43,7 @@ function personFromProfile(
 ): ProjectMemberInput {
   return {
     user_id: id,
-    display_name: p?.full_name || p?.email || '',
+    display_name: personName(p, ''),
     email: p?.email ?? null,
     role_id: null,
   }

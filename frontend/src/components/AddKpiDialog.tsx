@@ -1,5 +1,6 @@
 import { FieldError } from '@/components/FieldError'
 import { Loader2 } from 'lucide-react'
+import { personName } from '@/lib/format'
 import { toast } from '@/lib/toast'
 import { useEffect, useState } from 'react'
 import type { ProjectMemberInput } from '@/pages/CreateProjectWizard'
@@ -146,8 +147,7 @@ export function AddKpiDialog({ open, onOpenChange, onSaved, existing }: Props) {
           existing.owner_id
             ? {
                 user_id: existing.owner_id,
-                display_name:
-                  existing.owner?.full_name || existing.owner?.email || '',
+                display_name: personName(existing.owner, ''),
                 email: existing.owner?.email ?? null,
                 role_id: null,
               }

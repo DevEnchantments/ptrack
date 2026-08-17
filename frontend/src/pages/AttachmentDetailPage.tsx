@@ -3,15 +3,10 @@ import { toast } from '@/lib/toast'
 import { useCallback, useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { attachmentsApi, type AttachmentDetail } from '@/lib/api'
+import { personName, relativeTime } from '@/lib/format'
 import { Download } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
-
-function uploaderName(
-  a: { full_name: string | null; email: string | null } | null | undefined,
-) {
-  return a?.full_name || a?.email || 'Unknown'
-}
 
 function formatSize(bytes: number | null): string {
   if (bytes == null) return ''
@@ -22,20 +17,6 @@ function formatSize(bytes: number | null): string {
   const mb = kb / 1024
   if (mb < 1024) return `${Math.round(mb)}MB`
   return `${(mb / 1024).toFixed(1)}GB`
-}
-
-function relativeTime(iso: string): string {
-  const sec = Math.round((Date.now() - new Date(iso).getTime()) / 1000)
-  if (sec < 60) return `${sec} second${sec === 1 ? '' : 's'} ago`
-  const min = Math.round(sec / 60)
-  if (min < 60) return `${min} minute${min === 1 ? '' : 's'} ago`
-  const hr = Math.round(min / 60)
-  if (hr < 24) return `${hr} hour${hr === 1 ? '' : 's'} ago`
-  const day = Math.round(hr / 24)
-  if (day < 30) return `${day} day${day === 1 ? '' : 's'} ago`
-  const mo = Math.round(day / 30)
-  if (mo < 12) return `${mo} month${mo === 1 ? '' : 's'} ago`
-  return `${Math.round(mo / 12)} year${Math.round(mo / 12) === 1 ? '' : 's'} ago`
 }
 
 function longDate(iso: string): string {
@@ -179,7 +160,7 @@ export function AttachmentDetailPage() {
             <Row label="Description" value={att.description} />
             <Row
               label="Created By"
-              value={uploaderName(att.uploaded_by_profile)}
+              value={personName(att.uploaded_by_profile)}
             />
             <Row label="Created" value={relativeTime(att.created_at)} />
             <Row label="Created Date" value={longDate(att.created_at)} />

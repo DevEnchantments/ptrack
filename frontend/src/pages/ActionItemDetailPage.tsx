@@ -1,6 +1,7 @@
 import { usePageTitle } from '@/lib/use-page-title'
 import { TagChips } from '@/components/TagChips'
 import { InitialsAvatar } from '@/components/InitialsAvatar'
+import { personName } from '@/lib/format'
 import { toast } from '@/lib/toast'
 import { useCallback, useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
@@ -41,12 +42,12 @@ function ownersLabel(item: ActionItem): string | null {
   return item.owners
     .slice()
     .sort((a, b) => a.slot - b.slot)
-    .map((o) => o.profile?.full_name || o.profile?.email || 'Unknown')
+    .map((o) => personName(o.profile))
     .join(', ')
 }
 
 function commentAuthor(c: ActionItemComment): string {
-  return c.author?.full_name || c.author?.email || 'Unknown'
+  return personName(c.author)
 }
 
 export function ActionItemDetailPage() {

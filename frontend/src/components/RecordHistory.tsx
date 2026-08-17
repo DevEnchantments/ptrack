@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Skeleton } from '@/components/ui/skeleton'
 import type { HistoryEntry } from '@/lib/api'
+import { personName, relativeTime } from '@/lib/format'
 
 interface Props {
   /** Resolves to the record's history, newest first. */
@@ -9,21 +10,6 @@ interface Props {
   refreshKey?: unknown
   /** Shown on 'created' entries, e.g. "milestone". */
   recordNoun: string
-}
-
-function relativeTime(iso: string): string {
-  const sec = Math.round((Date.now() - new Date(iso).getTime()) / 1000)
-  if (sec < 60) return 'just now'
-  const min = Math.round(sec / 60)
-  if (min < 60) return `${min} minute${min === 1 ? '' : 's'} ago`
-  const hr = Math.round(min / 60)
-  if (hr < 24) return `${hr} hour${hr === 1 ? '' : 's'} ago`
-  const day = Math.round(hr / 24)
-  if (day < 30) return `${day} day${day === 1 ? '' : 's'} ago`
-  const mo = Math.round(day / 30)
-  if (mo < 12) return `${mo} month${mo === 1 ? '' : 's'} ago`
-  const yr = Math.round(mo / 12)
-  return `${yr} year${yr === 1 ? '' : 's'} ago`
 }
 
 const TABLE_NOUNS: Record<string, string> = {
@@ -48,8 +34,12 @@ function username(actor: HistoryEntry['actor']): string {
   return actor.full_name ?? 'Unknown'
 }
 
+/**
+ * Deliberately not lib/format's initials(): this one splits on dots and
+ * underscores too, so an email local-part like "fares.alareefi" reads "FA".
+ */
 function initials(actor: HistoryEntry['actor']): string {
-  const source = actor?.full_name || actor?.email || '?'
+  const source = personName(actor, '?')
   return source
     .replace(/@.*$/, '')
     .split(/[.\s_-]+/)

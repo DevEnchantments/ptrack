@@ -11,6 +11,7 @@ import {
   TrendingUp,
 } from 'lucide-react'
 import { kpisApi, type Kpi, type KpiReading } from '@/lib/api'
+import { personName } from '@/lib/format'
 import { usePageTitle } from '@/lib/use-page-title'
 import { toast } from '@/lib/toast'
 import { AddKpiDialog } from '@/components/AddKpiDialog'
@@ -236,7 +237,7 @@ function KpiDetail({ kpi, onChanged }: { kpi: Kpi; onChanged: () => void }) {
     ['Entity', kpi.entity],
     ['Tier', kpi.tier?.name ?? null],
     ['Strategic Objective', kpi.objective?.name ?? null],
-    ['Owner', kpi.owner?.full_name || kpi.owner?.email || null],
+    ['Owner', personName(kpi.owner, null)],
     ['Data Source', kpi.data_source],
     ['Calculation Method', kpi.calculation_method],
     ['Rationale', kpi.rationale],

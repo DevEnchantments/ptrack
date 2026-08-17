@@ -1,5 +1,6 @@
 import { FieldError } from '@/components/FieldError'
 import { Loader2 } from 'lucide-react'
+import { personName } from '@/lib/format'
 import { toast } from '@/lib/toast'
 import { useEffect, useState } from 'react'
 import type { ProjectMemberInput } from '@/pages/CreateProjectWizard'
@@ -53,7 +54,7 @@ function emptyOwner(): ProjectMemberInput {
 function ownerFromItem(o: ActionItem['owners'][number]): ProjectMemberInput {
   return {
     user_id: o.user_id,
-    display_name: o.profile?.full_name || o.profile?.email || '',
+    display_name: personName(o.profile, ''),
     email: o.profile?.email ?? null,
     role_id: null,
   }
@@ -64,12 +65,6 @@ function ownersFromItem(item: ActionItem): ProjectMemberInput[] {
   const slots = sorted.map(ownerFromItem)
   while (slots.length < 4) slots.push(emptyOwner())
   return slots.slice(0, 4)
-}
-
-function profileName(
-  p?: { full_name: string | null; email: string | null } | null,
-): string {
-  return p?.full_name || p?.email || 'Unknown'
 }
 
 interface Props {
@@ -445,13 +440,13 @@ export function AddActionItemDialog({
               {existing.created_at && (
                 <div>
                   Created {new Date(existing.created_at).toLocaleString()} by{' '}
-                  {profileName(existing.created_by_profile)}
+                  {personName(existing.created_by_profile)}
                 </div>
               )}
               {existing.updated_at && (
                 <div>
                   Last updated {new Date(existing.updated_at).toLocaleString()}{' '}
-                  by {profileName(existing.updated_by_profile)}
+                  by {personName(existing.updated_by_profile)}
                 </div>
               )}
               <button

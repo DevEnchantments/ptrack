@@ -1,5 +1,6 @@
 import { usePageTitle } from '@/lib/use-page-title'
 import { TagChips } from '@/components/TagChips'
+import { personName, relativeTime } from '@/lib/format'
 import { toast } from '@/lib/toast'
 import { useCallback, useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
@@ -48,30 +49,8 @@ function formatLongDate(s: string | null): string | null {
   return `${WEEKDAYS[dt.getDay()]}, ${d} ${MONTHS[m - 1]}, ${y}`
 }
 
-function relativeTime(iso: string): string {
-  const diffMs = Date.now() - new Date(iso).getTime()
-  const sec = Math.round(diffMs / 1000)
-  if (sec < 60) return 'just now'
-  const min = Math.round(sec / 60)
-  if (min < 60) return `${min} minute${min === 1 ? '' : 's'} ago`
-  const hr = Math.round(min / 60)
-  if (hr < 24) return `${hr} hour${hr === 1 ? '' : 's'} ago`
-  const day = Math.round(hr / 24)
-  if (day < 30) return `${day} day${day === 1 ? '' : 's'} ago`
-  const mo = Math.round(day / 30)
-  if (mo < 12) return `${mo} month${mo === 1 ? '' : 's'} ago`
-  const yr = Math.round(mo / 12)
-  return `${yr} year${yr === 1 ? '' : 's'} ago`
-}
-
-function profileName(
-  p?: { full_name: string | null; email: string | null } | null,
-): string {
-  return p?.full_name || p?.email || 'Unknown'
-}
-
 function ownerLabel(m: MilestoneDetail): string | null {
-  const owner = m.owner?.full_name || m.owner?.email || null
+  const owner = personName(m.owner, null)
   const role = m.role?.name || null
   if (owner && role) return `${role}: ${owner}`
   if (owner) return owner
@@ -84,7 +63,7 @@ function auditLine(
   p?: { full_name: string | null; email: string | null } | null,
 ): string | null {
   if (!iso) return null
-  return `${relativeTime(iso)} by ${profileName(p)}`
+  return `${relativeTime(iso)} by ${personName(p)}`
 }
 
 function Field({ label, value }: { label: string; value: React.ReactNode }) {
@@ -362,12 +341,7 @@ export function MilestoneDetailPage() {
                           {a.owners
                             .slice()
                             .sort((x, y) => x.slot - y.slot)
-                            .map(
-                              (o) =>
-                                o.profile?.full_name ||
-                                o.profile?.email ||
-                                'Unknown',
-                            )
+                            .map((o) => personName(o.profile))
                             .join(', ')}
                         </span>
                       )}

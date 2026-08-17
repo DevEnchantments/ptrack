@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { registryApi, type GlobalActionItem } from '@/lib/api'
+import { personName } from '@/lib/format'
 import { useAuth } from '@/lib/auth-context'
 import { usePageTitle } from '@/lib/use-page-title'
 import { StatusPill } from '@/components/StatusPill'
@@ -24,7 +25,7 @@ function isOverdue(a: GlobalActionItem): boolean {
 function ownerNames(a: GlobalActionItem): string {
   return a.owners
     .sort((x, y) => x.slot - y.slot)
-    .map((o) => o.profile?.full_name || o.profile?.email || 'Unknown')
+    .map((o) => personName(o.profile))
     .join(', ')
 }
 
