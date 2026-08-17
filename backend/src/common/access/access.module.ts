@@ -1,5 +1,4 @@
 import { Global, Module } from '@nestjs/common';
-import { APP_GUARD } from '@nestjs/core';
 import { AppRoleService } from './app-role.service';
 import { ProjectAccessService } from './project-access.service';
 import { CapabilityService } from './capability.service';
@@ -14,13 +13,23 @@ import { ProjectAccessGuard } from './project-access.guard';
  */
 @Global()
 @Module({
+  // The guards are NOT registered here. APP_GUARDs from imported modules run
+  // BEFORE the root module's, which would put authorization ahead of
+  // authentication (no request.user yet -> silent bypass). app.module.ts
+  // registers all three in explicit order: auth, then role, then project.
   providers: [
     AppRoleService,
     CapabilityService,
     ProjectAccessService,
-    { provide: APP_GUARD, useClass: AppRoleGuard },
-    { provide: APP_GUARD, useClass: ProjectAccessGuard },
+    AppRoleGuard,
+    ProjectAccessGuard,
   ],
-  exports: [AppRoleService, CapabilityService, ProjectAccessService],
+  exports: [
+    AppRoleService,
+    CapabilityService,
+    ProjectAccessService,
+    AppRoleGuard,
+    ProjectAccessGuard,
+  ],
 })
 export class AccessModule {}

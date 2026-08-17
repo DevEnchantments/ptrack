@@ -16,6 +16,9 @@ interface Props {
   emptyLabel: string
   emptyActionLabel?: string
   onEmptyAction?: () => void
+  /** Grays the empty-state action instead of hiding it (access gating). */
+  actionDisabled?: boolean
+  actionDisabledReason?: string
   /** Optional extra header content (e.g. a progress bar), left of the chevron. */
   headerExtra?: ReactNode
   children: ReactNode
@@ -38,6 +41,8 @@ export function SectionCard({
   emptyLabel,
   emptyActionLabel,
   onEmptyAction,
+  actionDisabled,
+  actionDisabledReason,
   headerExtra,
   children,
 }: Props) {
@@ -87,10 +92,17 @@ export function SectionCard({
               <div className="flex items-center justify-between gap-3 rounded-md border border-dashed px-4 py-5">
                 <p className="text-sm text-muted-foreground">{emptyLabel}</p>
                 {emptyActionLabel && onEmptyAction && (
-                  <Button variant="outline" size="sm" onClick={onEmptyAction}>
-                    <Plus className="h-4 w-4" />
-                    {emptyActionLabel}
-                  </Button>
+                  <span title={actionDisabled ? actionDisabledReason : undefined}>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      disabled={actionDisabled}
+                      onClick={actionDisabled ? undefined : onEmptyAction}
+                    >
+                      <Plus className="h-4 w-4" />
+                      {emptyActionLabel}
+                    </Button>
+                  </span>
                 )}
               </div>
             ) : (

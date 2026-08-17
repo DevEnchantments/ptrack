@@ -5,6 +5,8 @@ import { DatabaseModule } from './database/database.module';
 import { AccessModule } from './common/access/access.module';
 import { AccessAdminModule } from './modules/access-admin/access-admin.module';
 import { SupabaseAuthGuard } from './common/guards/supabase-auth.guard';
+import { AppRoleGuard } from './common/access/app-role.guard';
+import { ProjectAccessGuard } from './common/access/project-access.guard';
 import { ProjectsModule } from './modules/projects/projects.module';
 import { ProjectSectionsModule } from './modules/project-sections/project-sections.module';
 import { UsersModule } from './modules/users/users.module';
@@ -67,6 +69,15 @@ import { AppService } from './app.service';
   ],
   controllers: [AppController],
 
-  providers: [AppService, { provide: APP_GUARD, useClass: SupabaseAuthGuard }],
+  // Guard order is load-bearing: authentication must attach request.user
+  // BEFORE the authorization guards read it. All three registered here, in
+  // this order, for that reason — never move the access guards back into
+  // AccessModule (imported-module guards run first and bypass authorization).
+  providers: [
+    AppService,
+    { provide: APP_GUARD, useClass: SupabaseAuthGuard },
+    { provide: APP_GUARD, useClass: AppRoleGuard },
+    { provide: APP_GUARD, useClass: ProjectAccessGuard },
+  ],
 })
 export class AppModule {}

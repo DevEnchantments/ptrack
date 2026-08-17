@@ -9,6 +9,8 @@ interface Props {
   projectId: string
   submissions: Submission[]
   onChanged: () => void
+  /** View-only members see status but no actions (access gating). */
+  canWrite?: boolean
 }
 
 const STATUS_CHIP: Record<string, { label: string; cls: string }> = {
@@ -64,7 +66,12 @@ function personName(
  * PMO Partner validates -> Project Owner approves; the backend enforces the
  * actor only when the project person field is set.
  */
-export function WorkflowPanel({ projectId, submissions, onChanged }: Props) {
+export function WorkflowPanel({
+  projectId,
+  submissions,
+  onChanged,
+  canWrite = true,
+}: Props) {
   const [comment, setComment] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [busyAction, setBusyAction] = useState<string | null>(null)
@@ -107,13 +114,14 @@ export function WorkflowPanel({ projectId, submissions, onChanged }: Props) {
 
   const cycleClosed =
     storedCycle?.status === 'closed' || current?.cycle?.status === 'closed'
+  const locked = cycleClosed || !canWrite
   const canSubmit =
-    !cycleClosed &&
+    !locked &&
     (!current || current.status === 'draft' || current.status === 'returned')
-  const canValidate = !cycleClosed && current?.status === 'review'
-  const canApprove = !cycleClosed && current?.status === 'validated'
+  const canValidate = !locked && current?.status === 'review'
+  const canApprove = !locked && current?.status === 'validated'
   const canReturn =
-    !cycleClosed &&
+    !locked &&
     (current?.status === 'review' || current?.status === 'validated')
 
   const actionButton = (
@@ -181,6 +189,12 @@ export function WorkflowPanel({ projectId, submissions, onChanged }: Props) {
             <span className="italic">"{current.decision_comment}"</span>
           )}
         </div>
+      )}
+
+      {!canWrite && !cycleClosed && (
+        <p className="mt-3 rounded-md bg-muted px-2.5 py-1.5 text-xs text-muted-foreground">
+          View-only access: submissions are managed by the project team.
+        </p>
       )}
 
       {cycleClosed && (

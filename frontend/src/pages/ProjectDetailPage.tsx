@@ -562,18 +562,18 @@ export function ProjectDetailPage() {
     <a href={project.primary_url} target="_blank" rel="noreferrer" className="text-primary hover:underline">{project.primary_url}</a>
   ) : null
 
-  const enabledActions = new Set([
-    'Add Person',
-    'Add Milestone',
-    'Add Action Item',
-    'Add Link',
-    'Add Resource',
-    'Add Issue',
-    'Add Risk',
-    'Add Update',
-    'Add Status Report',
-    'Attach File',
-  ])
+  // Affordance gating only — the backend enforces regardless (FR-15).
+  const myLevel = projectAccessLevel(me, project)
+  const canWrite = myLevel >= AccessLevel.Write
+  const canManage = myLevel >= AccessLevel.Manage
+  const writeReason = 'You have view-only access on this project'
+  const manageReason = 'Needs manage access on this project'
+
+  // Grayed (not hidden) when the viewer lacks the level; the backend
+  // enforces the same rule, this only explains it up front.
+  const enabledActions = new Set(
+    canWrite ? ACTIONS.filter((a) => a !== 'Add Person' || canManage) : [],
+  )
 
   function onAction(a: string) {
     if (a === 'Add Person') {
@@ -627,8 +627,6 @@ export function ProjectDetailPage() {
       .catch(() => toast.error('Could not open the milestone.'))
   }
 
-  // Affordance gating only — the backend enforces regardless (FR-15).
-  const myLevel = projectAccessLevel(me, project)
 
   const sectionCounts: Record<string, number> = {
     people: project.members.length,
@@ -765,15 +763,16 @@ export function ProjectDetailPage() {
               >
                 Report
               </Button>
-              {myLevel >= AccessLevel.Manage && (
+              <span title={canManage ? undefined : manageReason}>
                 <Button
                   variant="outline"
                   size="sm"
+                  disabled={!canManage}
                   onClick={() => setEditProjectOpen(true)}
                 >
                   Edit Project
                 </Button>
-              )}
+              </span>
             </div>
           </div>
 
@@ -955,6 +954,8 @@ export function ProjectDetailPage() {
             loading={false}
             emptyLabel="No people assigned yet."
             emptyActionLabel="Add person"
+            actionDisabled={!canManage}
+            actionDisabledReason={manageReason}
             onEmptyAction={() => onAction('Add Person')}
           >
             <ul className="section-list divide-y rounded-md border bg-card">
@@ -1010,6 +1011,8 @@ export function ProjectDetailPage() {
             loading={sectionsLoading}
             emptyLabel="No milestones yet."
             emptyActionLabel="Add milestone"
+            actionDisabled={!canWrite}
+            actionDisabledReason={writeReason}
             onEmptyAction={() => onAction('Add Milestone')}
             headerExtra={
               milestones.length > 0 ? (
@@ -1045,10 +1048,11 @@ export function ProjectDetailPage() {
                       }`
                     : 'No weights set — milestones weigh equally'}
                 </span>
-                {myLevel >= AccessLevel.Write && (
+                <span title={canWrite ? undefined : writeReason}>
                   <Button
                     variant="outline"
                     size="sm"
+                    disabled={!canWrite}
                     onClick={() => {
                       setEditOutcome(null)
                       setOutcomeDialogOpen(true)
@@ -1056,16 +1060,17 @@ export function ProjectDetailPage() {
                   >
                     Add Outcome
                   </Button>
-                )}
-                {myLevel >= AccessLevel.Manage && (
+                </span>
+                <span title={canManage ? undefined : manageReason}>
                   <Button
                     variant="outline"
                     size="sm"
+                    disabled={!canManage}
                     onClick={() => setAdjustWeightsOpen(true)}
                   >
                     Adjust Weights
                   </Button>
-                )}
+                </span>
               </div>
               <ul className="section-list divide-y rounded-md border bg-card">
               {milestoneGroups.map((g) => (
@@ -1177,6 +1182,8 @@ export function ProjectDetailPage() {
             loading={sectionsLoading}
             emptyLabel="No action items yet."
             emptyActionLabel="Add action item"
+            actionDisabled={!canWrite}
+            actionDisabledReason={writeReason}
             onEmptyAction={() => onAction('Add Action Item')}
           >
             <ul className="section-list divide-y rounded-md border bg-card">
@@ -1264,6 +1271,8 @@ export function ProjectDetailPage() {
             loading={sectionsLoading}
             emptyLabel="No links yet."
             emptyActionLabel="Add link"
+            actionDisabled={!canWrite}
+            actionDisabledReason={writeReason}
             onEmptyAction={() => onAction('Add Link')}
           >
             <ul className="section-list divide-y rounded-md border bg-card">
@@ -1325,6 +1334,8 @@ export function ProjectDetailPage() {
             loading={sectionsLoading}
             emptyLabel="No resources yet."
             emptyActionLabel="Add resource"
+            actionDisabled={!canWrite}
+            actionDisabledReason={writeReason}
             onEmptyAction={() => onAction('Add Resource')}
           >
             <ul className="section-list divide-y rounded-md border bg-card">
@@ -1370,6 +1381,8 @@ export function ProjectDetailPage() {
             loading={sectionsLoading}
             emptyLabel="No issues yet."
             emptyActionLabel="Add issue"
+            actionDisabled={!canWrite}
+            actionDisabledReason={writeReason}
             onEmptyAction={() => onAction('Add Issue')}
           >
             <>
@@ -1448,6 +1461,8 @@ export function ProjectDetailPage() {
             loading={sectionsLoading}
             emptyLabel="No risks yet."
             emptyActionLabel="Add risk"
+            actionDisabled={!canWrite}
+            actionDisabledReason={writeReason}
             onEmptyAction={() => onAction('Add Risk')}
           >
             <>
@@ -1554,6 +1569,8 @@ export function ProjectDetailPage() {
             loading={sectionsLoading}
             emptyLabel="No updates yet."
             emptyActionLabel="Add update"
+            actionDisabled={!canWrite}
+            actionDisabledReason={writeReason}
             onEmptyAction={() => onAction('Add Update')}
           >
             <ul className="section-list flex flex-col gap-4">
@@ -1609,6 +1626,8 @@ export function ProjectDetailPage() {
             loading={sectionsLoading}
             emptyLabel="No status reports yet."
             emptyActionLabel="Add status report"
+            actionDisabled={!canWrite}
+            actionDisabledReason={writeReason}
             onEmptyAction={() => onAction('Add Status Report')}
           >
             <ul className="section-list divide-y rounded-md border bg-card">
@@ -1660,6 +1679,8 @@ export function ProjectDetailPage() {
             loading={sectionsLoading}
             emptyLabel="No attachments yet."
             emptyActionLabel="Attach file"
+            actionDisabled={!canWrite}
+            actionDisabledReason={writeReason}
             onEmptyAction={() => onAction('Attach File')}
           >
             <ul className="section-list divide-y rounded-md border bg-card">
@@ -1775,6 +1796,7 @@ export function ProjectDetailPage() {
             projectId={project.id}
             submissions={submissions}
             onChanged={loadSubmissions}
+            canWrite={canWrite}
           />
           <div className="rounded-md border bg-card p-2">
             {ACTIONS.map((a, i) => {
@@ -1784,7 +1806,13 @@ export function ProjectDetailPage() {
                   key={a}
                   disabled={!enabled}
                   onClick={enabled ? () => onAction(a) : undefined}
-                  title={enabled ? '' : 'Coming in a later step'}
+                  title={
+                    enabled
+                      ? ''
+                      : a === 'Add Person' && canWrite
+                        ? manageReason
+                        : writeReason
+                  }
                   style={{ animationDelay: `${i * 35}ms` }}
                   className={
                     'stagger-in w-full rounded px-3 py-2 text-left text-sm transition-colors ' +
