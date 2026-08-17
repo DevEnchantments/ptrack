@@ -9,8 +9,8 @@ P-Track is the ground-up rebuild of the Oracle APEX project tracker as an indepe
 web application (React frontend, NestJS middle tier, Supabase database), governed by
 the FDD since 21 July 2026. As of this summary, every functional requirement in the
 FDD that can be built without further input is built. What remains falls into two
-groups: items waiting on decisions listed in section 4, and items waiting on
-infrastructure listed in section 5.
+groups: items waiting on decisions listed in section 5, and items waiting on
+infrastructure listed in section 6.
 
 The codebase carries 158 backend and 35 frontend automated tests, and every commit
 passes type checking, linting, and the full test suite in CI before it lands.
@@ -46,12 +46,12 @@ be revisited.
 
 **KPIs (FR-11).** A KPI registry with readings and action plans exists. Scorecard
 calculations (achievement percentage, data quality index) are stubbed pending the
-formula decisions in section 4.
+formula decisions in section 5.
 
 **Notifications (3.9).** In-app notifications with a bell and unread badge. Live
 triggers: workflow transitions, budget threshold crossings, due-soon and overdue
 reminders, a pre-cycle nudge for projects that have not submitted, and an alert when
-a high-severity risk is saved. Email delivery waits on section 5.
+a high-severity risk is saved. Email delivery waits on section 6.
 
 **Administration.** Code Tables (all lookup lists editable in place), account
 provisioning for pending people, and a Users & Roles page described below.
@@ -63,10 +63,30 @@ access levels, project owner and manager assignments, and per-record risk owners
 Restricted projects are invisible to users with no relationship to them, in lists,
 search, dashboards, and reports as well as on direct access. Which role holds which
 capability is editable live on the Users & Roles page, with every change audited.
-The permission grid means that when the open questions in section 4 are answered,
+The permission grid means that when the open questions in section 5 are answered,
 most answers become configuration rather than development.
 
-## 3. Assumptions that need your confirmation
+## 3. The fifteen functional requirements, one by one
+
+| FR | Requirement | Status |
+| --- | --- | --- |
+| FR-01 | Project register grid with filters, sorting, status | Shipped (card and grid views, CSV export). The progress column shows milestone completion until the formulas in section 5 are confirmed |
+| FR-02 | Application navigation | Shipped, except the AI Assistant entry, which waits on section 6 |
+| FR-03 | Project detail tabs | Shipped. The KPI tab is the one stub, waiting on decision 3 below |
+| FR-04 | Overview cards (progress, milestones, budget) | Shipped |
+| FR-05 | Milestone status donut | Shipped; bucket names were our reading of the figure |
+| FR-06 | Task lists with grouping and attachments | Shipped, including task-level attachments |
+| FR-07 | Risk and issue register with scoring | Shipped; severity scoring uses provisional formula F3 |
+| FR-08 | Identify New Risk form | Shipped with the full field set from the screenshots |
+| FR-09 | Adjust Weights | Shipped; the total must equal 100 and the save is atomic |
+| FR-10 | Executive dashboards | Shipped; initiative buckets use provisional formula F5 |
+| FR-11 | KPI scorecards | Registry, readings, and action plans shipped. Achievement percentage and data quality index wait on decision 1 |
+| FR-12 | Report generation and Excel export | Four printable reports shipped. Export is CSV rather than native Excel (assumption, section 4) |
+| FR-13 | Download confirmation | Shipped |
+| FR-14 | Submission workflow with cycle close | Shipped, including closing and reopening cycles |
+| FR-15 | Role-based access restriction | Shipped and enforced. Three delegated-authority details wait on decision 2 |
+
+## 4. Assumptions that need your confirmation
 
 These are implemented and working, but each one was our judgment call rather than an
 FDD requirement, and each is reversible.
@@ -80,7 +100,7 @@ FDD requirement, and each is reversible.
 | Budget alert threshold at 80 percent utilization | Notifications |
 | CSV export satisfies the Excel export requirement | All list exports |
 
-## 4. Decisions only you can make
+## 5. Decisions only you can make
 
 1. **Formula sign-off.** Confirm or correct F1 to F5, and define the KPI achievement
    percentage and data quality index so scorecards can be finished.
@@ -95,7 +115,7 @@ FDD requirement, and each is reversible.
 5. **Real data.** The import wizard is ready for your project spreadsheet whenever it
    is available.
 
-## 5. Blocked on infrastructure
+## 6. Blocked on infrastructure
 
 - **Email (SMTP or an email service).** Unlocks notification emails and sending
   account invitations from inside the application. The invitation compose screen
@@ -103,7 +123,7 @@ FDD requirement, and each is reversible.
 - **LLM API access.** Unlocks the AI-drafted invitation text and is the entry point
   for the planned AI Assistant.
 
-## 6. Out of scope, on purpose
+## 7. Out of scope, on purpose
 
 Project Merge, bulk validations, and preview-before-commit mass updates from the
 original APEX application were excluded with your agreement and remain so unless
