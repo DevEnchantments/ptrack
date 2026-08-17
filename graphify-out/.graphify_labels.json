@@ -122,5 +122,21 @@
   "120": "moduleFileExtensions",
   "121": "DatabaseModule",
   "122": "@nestjs/common",
-  "124": "ProgramOutcomesService"
+  "123": "SupabaseAuthGuard",
+  "124": "ProgramOutcomesService",
+  "125": "supabase-error.ts",
+  "126": "TimelinePage.tsx",
+  "127": ".instantiate",
+  "128": "status-reports.repository.ts",
+  "129": "SectionNav.tsx",
+  "130": "SectionCard.tsx",
+  "131": "eslint",
+  "132": "eslint-plugin-prettier",
+  "133": "ts-jest",
+  "134": "ts-loader",
+  "135": "ts-node",
+  "136": "@types/supertest",
+  "137": "ProgramOutcomesModule",
+  "138": "RisksModule",
+  "139": "AddStatusReportDialog"
 }
