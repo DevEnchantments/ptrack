@@ -141,7 +141,9 @@ the recommended alternative.
       adoption, `nextSortOrder()`; **plus an approved bug fix in its own
       commit**) · [x] `milestones/` (**2026-08-13** — 19 characterization tests,
       spec adoption, deps write lifted out of the patch chain, weights rule
-      named, LIST/DETAIL selects) · [ ] `status-reports/`
+      named, LIST/DETAIL selects) · [x] `status-reports/` (**2026-08-13** — 10
+      characterization tests, spec adoption, LIST/DETAIL selects; **plus a
+      500-instead-of-404 fix**). **Phase 2 complete.**
 
 ### Phase 3 — Content and attachments
 
@@ -607,3 +609,39 @@ The global ValidationPipe makes several apparent inconsistencies unreachable.
 is a round-trip saving, and performance is out of scope per §5.
 
 **Verification.** 137 tests / 14 suites; `tsc` · `eslint --max-warnings 0` · `build` clean.
+
+### 2026-08-13 — Phase 2c, `modules/status-reports/` (+ a bug fix). Phase 2 complete.
+
+**A real, reachable bug — the first one this pass has found by reading for failure modes
+rather than structure.** `update()` had no ownership pre-check and went straight to a
+repository method ending in `.single()`. When no row matched (report in another project, or
+already deleted) PostgREST returned `PGRST116`, which falls through `toHttpException`'s
+`default` branch to `InternalServerErrorException`. So **PATCH of a non-owned report
+returned 500 where every sibling module returns 404**. `ParseUUIDPipe` is no defence — a
+well-formed UUID belonging to another project is enough.
+
+Fixed by `.maybeSingle()` + a null check in the service (the `program-outcomes` pattern),
+which costs **no extra round-trip**, unlike the `milestones` pre-check. Test-first: the
+404 test was shown failing against the old code, then green.
+
+**⚠ `links/` HAS THE SAME DEFECT AND IS STILL UNFIXED.** Same shape: no pre-check, repo
+`update` ends in `.single()`. It was refactored in 1a without this being noticed, because
+that session read for structure, not failure modes. It needs the identical one-line
+repository change plus one test; its safety net already exists from 1a. **Queued, not done.**
+
+**Changed (behaviour-preserving part).** 10 characterization tests (137 → 147),
+`COLUMN_SPEC` adoption (no `CREATE_DEFAULTS` — every create column is required), and
+`JOINS` renamed to `LIST_SELECT` with `DETAIL_SELECT` composed from it, matching the pair
+now used in links, action-items and milestones.
+
+**Pinned worth noting:** `author_id` is set from the caller alongside `created_by` and
+`updated_by`, but it is a domain field (who wrote the report), not an audit column. A
+create sets all three to the same user, which is exactly why it would be easy to "tidy"
+into one and wrong to.
+
+**Gotcha carried forward:** Jest does not typecheck spec files, so a widened enum literal
+(`viewable_by: 'all'` inferred as `string`) passed 147 green tests and failed only under
+`npx tsc --noEmit`. Same family as the esbuild note in CLAUDE.md: **green tests are not a
+typecheck**. Type the DTO literal explicitly.
+
+**Verification.** 147 tests / 15 suites; `tsc` · `eslint --max-warnings 0` · `build` clean.

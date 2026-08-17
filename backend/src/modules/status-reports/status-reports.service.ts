@@ -3,6 +3,16 @@ import { RecordHistoryService } from '../../database/record-history.service';
 import { StatusReportsRepository } from './status-reports.repository';
 import { CreateStatusReportDto } from './dto/create-status-report.dto';
 import { UpdateStatusReportDto } from './dto/update-status-report.dto';
+import { columnsFrom, type ColumnSpec } from '../../common/columns';
+
+/**
+ * How a status-report DTO maps onto columns, for both create and update.
+ * Every create column is required, so there are no CREATE_DEFAULTS.
+ */
+const COLUMN_SPEC: ColumnSpec = {
+  trimmed: ['title', 'summary'],
+  asIs: ['report_date', 'viewable_by', 'editable_by'],
+};
 
 @Injectable()
 export class StatusReportsService {
@@ -24,30 +34,27 @@ export class StatusReportsService {
   add(projectId: string, dto: CreateStatusReportDto, userId: string) {
     return this.repo.insert({
       project_id: projectId,
-      title: dto.title.trim(),
-      summary: dto.summary.trim(),
-      report_date: dto.report_date,
-      viewable_by: dto.viewable_by,
-      editable_by: dto.editable_by,
+      ...columnsFrom(dto, COLUMN_SPEC),
+      // Who wrote the report — a domain field, not one of the audit columns
+      // below, even though a create sets all three to the same user.
       author_id: userId,
       created_by: userId,
       updated_by: userId,
     });
   }
 
-  update(
+  async update(
     projectId: string,
     statusReportId: string,
     dto: UpdateStatusReportDto,
     userId: string,
   ) {
-    const patch: Record<string, unknown> = { updated_by: userId };
-    if (dto.title !== undefined) patch.title = dto.title.trim();
-    if (dto.summary !== undefined) patch.summary = dto.summary.trim();
-    if (dto.report_date !== undefined) patch.report_date = dto.report_date;
-    if (dto.viewable_by !== undefined) patch.viewable_by = dto.viewable_by;
-    if (dto.editable_by !== undefined) patch.editable_by = dto.editable_by;
-    return this.repo.update(projectId, statusReportId, patch);
+    const updated = await this.repo.update(projectId, statusReportId, {
+      updated_by: userId,
+      ...columnsFrom(dto, COLUMN_SPEC),
+    });
+    if (!updated) throw new NotFoundException('Status report not found.');
+    return updated;
   }
 
   async remove(projectId: string, statusReportId: string, userId: string) {

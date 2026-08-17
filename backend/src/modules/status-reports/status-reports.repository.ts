@@ -26,8 +26,12 @@ export interface StatusReportDetail extends StatusReportListItem {
 const COLUMNS =
   'id, project_id, title, summary, report_date, viewable_by, editable_by, author_id, created_at, updated_at';
 
-const JOINS = `${COLUMNS},
+/** The list read: columns plus the author join every list-shaped row carries. */
+const LIST_SELECT = `${COLUMNS},
   author:profiles!author_id ( full_name, email )`;
+
+/** The detail read: the list shape plus the parent project's name. */
+const DETAIL_SELECT = `${LIST_SELECT}, project:projects ( name )`;
 
 @Injectable()
 export class StatusReportsRepository {
@@ -38,24 +42,32 @@ export class StatusReportsRepository {
   }
 
   async insert(row: Record<string, unknown>): Promise<StatusReportListItem> {
-    const { data, error } = await this.table.insert(row).select(JOINS).single();
+    const { data, error } = await this.table
+      .insert(row)
+      .select(LIST_SELECT)
+      .single();
     if (error) throw toHttpException(error, 'statusReports.insert');
     return data as unknown as StatusReportListItem;
   }
 
+  /**
+   * Null when the report is not in this project. `maybeSingle`, not `single`:
+   * `single` turns "no rows" into a PostgREST error whose code falls through
+   * toHttpException's default and surfaces as a 500 instead of a 404.
+   */
   async update(
     projectId: string,
     statusReportId: string,
     patch: Record<string, unknown>,
-  ): Promise<StatusReportListItem> {
+  ): Promise<StatusReportListItem | null> {
     const { data, error } = await this.table
       .update(patch)
       .eq('project_id', projectId)
       .eq('id', statusReportId)
-      .select(JOINS)
-      .single();
+      .select(LIST_SELECT)
+      .maybeSingle();
     if (error) throw toHttpException(error, 'statusReports.update');
-    return data as unknown as StatusReportListItem;
+    return (data as unknown as StatusReportListItem) ?? null;
   }
 
   async findOne(
@@ -63,7 +75,7 @@ export class StatusReportsRepository {
     statusReportId: string,
   ): Promise<StatusReportDetail | null> {
     const { data, error } = await this.table
-      .select(`${JOINS}, project:projects ( name )`)
+      .select(DETAIL_SELECT)
       .eq('project_id', projectId)
       .eq('id', statusReportId)
       .maybeSingle();
@@ -88,7 +100,7 @@ export class StatusReportsRepository {
 
   async findByProject(projectId: string): Promise<StatusReportListItem[]> {
     const { data, error } = await this.table
-      .select(JOINS)
+      .select(LIST_SELECT)
       .eq('project_id', projectId)
       .order('report_date', { ascending: false })
       .order('created_at', { ascending: false });

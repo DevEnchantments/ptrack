@@ -355,13 +355,13 @@
     "semantic_hash": ""
   },
   "backend/src/modules/status-reports/status-reports.repository.ts": {
-    "mtime": 1784059432.7246213,
-    "ast_hash": "78b548ae46cec9c6b4a604c9c81daccc",
+    "mtime": 1786957224.2937078,
+    "ast_hash": "34b1cf341d3c6c7dd17c4a3e451e82c2",
     "semantic_hash": ""
   },
   "backend/src/modules/status-reports/status-reports.service.ts": {
-    "mtime": 1784059664.5816202,
-    "ast_hash": "338b66560f4fd2bf4e42c727999b70b9",
+    "mtime": 1786957186.9383328,
+    "ast_hash": "98466e991ca35db210581b433546671c",
     "semantic_hash": ""
   },
   "backend/src/modules/updates/dto/create-update.dto.ts": {
@@ -1505,8 +1505,8 @@
     "semantic_hash": ""
   },
   "docs/REFACTOR-PLAN.md": {
-    "mtime": 1786956116.3153615,
-    "ast_hash": "103be770b69c8cedd350faa5f5fcec61",
+    "mtime": 1786957368.006046,
+    "ast_hash": "a5144aee6523cbc9e4e992b1e4e8d4d0",
     "semantic_hash": ""
   },
   "frontend/src/lib/format.test.ts": {
@@ -1572,6 +1572,11 @@
   "backend/src/modules/milestones/milestones.service.spec.ts": {
     "mtime": 1786956682.7998607,
     "ast_hash": "10d4dbd095e055c835150284fba03d7c",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/status-reports/status-reports.service.spec.ts": {
+    "mtime": 1786957303.0515635,
+    "ast_hash": "ec13106fd0e47c13ee5319ee53c7b76b",
     "semantic_hash": ""
   }
 }

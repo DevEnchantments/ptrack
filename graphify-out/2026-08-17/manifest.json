@@ -240,8 +240,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/milestones/milestones.service.ts": {
-    "mtime": 1786956124.547665,
-    "ast_hash": "1918e37f73c1391b5a8597c34148d0c1",
+    "mtime": 1786956675.3231847,
+    "ast_hash": "f97160f0e2f443ae4152521271e757c1",
     "semantic_hash": ""
   },
   "backend/src/modules/people/dto/create-person.dto.ts": {
@@ -1570,8 +1570,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/milestones/milestones.service.spec.ts": {
-    "mtime": 1786954634.9760404,
-    "ast_hash": "f6760aa7df1e399ca738e8a31f903e9b",
+    "mtime": 1786956682.7998607,
+    "ast_hash": "10d4dbd095e055c835150284fba03d7c",
     "semantic_hash": ""
   }
 }
