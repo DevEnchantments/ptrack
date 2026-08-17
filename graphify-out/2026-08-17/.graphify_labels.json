@@ -126,8 +126,5 @@
   "124": "ProgramOutcomesService",
   "125": "kpis.repository.ts",
   "126": "links.service.spec.ts",
-  "127": "milestones.service.spec.ts",
-  "128": "program-outcomes.service.spec.ts",
-  "129": "projects.service.spec.ts",
-  "130": "status-reports.service.spec.ts"
+  "127": "milestones.service.spec.ts"
 }

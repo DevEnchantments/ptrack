@@ -111,20 +111,11 @@
   "109": "eslint-plugin-prettier",
   "110": "ProjectsController",
   "111": "ts-jest",
-  "112": "moduleFileExtensions",
-  "113": "DashboardService",
   "114": "ApiProperty",
   "115": "ts-node",
   "116": "vitest",
   "117": "dhtmlx-gantt",
-  "118": "app.controller.ts",
-  "119": ".add",
   "120": "moduleFileExtensions",
-  "121": "jose",
   "122": "@nestjs/common",
-  "123": "@nestjs/platform-express",
-  "124": "ProgramOutcomesService",
-  "125": "kpis.repository.ts",
-  "126": "links.service.spec.ts",
-  "127": "milestones.service.spec.ts"
+  "124": "ProgramOutcomesService"
 }
