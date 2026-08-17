@@ -171,13 +171,13 @@ export class SubmissionsRepository {
   async update(
     submissionId: string,
     patch: Record<string, unknown>,
-  ): Promise<SubmissionListItem> {
+  ): Promise<SubmissionListItem | null> {
     const { data, error } = await this.table
       .update(patch)
       .eq('id', submissionId)
       .select(JOINS)
-      .single();
+      .maybeSingle();
     if (error) throw toHttpException(error, 'submissions.update');
-    return data as unknown as SubmissionListItem;
+    return (data as unknown as SubmissionListItem) ?? null;
   }
 }

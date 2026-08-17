@@ -35,7 +35,7 @@ export class StatusReportsService {
     });
   }
 
-  update(
+  async update(
     projectId: string,
     statusReportId: string,
     dto: UpdateStatusReportDto,
@@ -47,7 +47,9 @@ export class StatusReportsService {
     if (dto.report_date !== undefined) patch.report_date = dto.report_date;
     if (dto.viewable_by !== undefined) patch.viewable_by = dto.viewable_by;
     if (dto.editable_by !== undefined) patch.editable_by = dto.editable_by;
-    return this.repo.update(projectId, statusReportId, patch);
+    const updated = await this.repo.update(projectId, statusReportId, patch);
+    if (!updated) throw new NotFoundException('Status report not found.');
+    return updated;
   }
 
   async remove(projectId: string, statusReportId: string, userId: string) {

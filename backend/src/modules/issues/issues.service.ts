@@ -37,7 +37,7 @@ export class IssuesService {
     });
   }
 
-  update(
+  async update(
     projectId: string,
     issueId: string,
     dto: UpdateIssueDto,
@@ -65,7 +65,9 @@ export class IssuesService {
       patch.reported_by = dto.reported_by?.trim() || null;
     if (dto.date_closed !== undefined)
       patch.date_closed = dto.date_closed || null;
-    return this.repo.update(projectId, issueId, patch);
+    const updated = await this.repo.update(projectId, issueId, patch);
+    if (!updated) throw new NotFoundException('Issue not found.');
+    return updated;
   }
 
   async remove(projectId: string, issueId: string, userId: string) {

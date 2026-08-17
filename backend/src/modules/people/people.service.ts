@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PeopleRepository } from './people.repository';
 import { CreatePersonDto } from './dto/create-person.dto';
 import { UpdatePersonDto } from './dto/update-person.dto';
@@ -34,7 +38,7 @@ export class PeopleService {
     });
   }
 
-  update(
+  async update(
     projectId: string,
     memberId: string,
     dto: UpdatePersonDto,
@@ -48,7 +52,9 @@ export class PeopleService {
     if (dto.notes !== undefined) patch.notes = dto.notes?.trim() || null;
     if (dto.pending_email !== undefined)
       patch.pending_email = dto.pending_email?.trim().toLowerCase() || null;
-    return this.repo.update(projectId, memberId, patch);
+    const updated = await this.repo.update(projectId, memberId, patch);
+    if (!updated) throw new NotFoundException('Member not found.');
+    return updated;
   }
 
   async remove(projectId: string, memberId: string) {

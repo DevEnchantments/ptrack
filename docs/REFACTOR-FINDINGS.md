@@ -1,5 +1,15 @@
 # Findings for `main` from the exploratory refactor branch
 
+> **Actioned 2026-08-17:** section 1 (500 → 404) fixed across all nine modules ·
+> frontend test runner ported (vitest + Testing Library, `format.test.ts` +
+> new `formulas.test.ts`, CI step) · outcome numbering now max+1 (schema-level
+> uniqueness still open) · Storage-cleanup failures now logged ·
+> `adjustWeights` is atomic via `db/adjust_milestone_weights.sql` (run it in
+> the Supabase SQL editor — the dialog 500s until then).
+> Still open: `add`/`update` response-shape harmonization (parked, additive),
+> characterization tests + `common/columns.ts` + `project-sections/`
+> extraction (sections 4.3-4.5, no decision taken).
+
 **Status:** the code on `refactor/modularity-pass` is **not being merged**. That branch was
 exploratory. This document is the deliverable — everything below describes `main` as it
 stands today, so it can be acted on independently.

@@ -26,7 +26,7 @@ export class ResourcesService {
     });
   }
 
-  update(
+  async update(
     projectId: string,
     resourceId: string,
     dto: UpdateResourceDto,
@@ -37,7 +37,9 @@ export class ResourcesService {
     if (dto.type_id !== undefined) patch.type_id = dto.type_id;
     if (dto.description !== undefined)
       patch.description = dto.description?.trim() || null;
-    return this.repo.update(projectId, resourceId, patch);
+    const updated = await this.repo.update(projectId, resourceId, patch);
+    if (!updated) throw new NotFoundException('Resource not found.');
+    return updated;
   }
 
   async remove(projectId: string, resourceId: string, userId: string) {

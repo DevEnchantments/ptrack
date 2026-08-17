@@ -35,7 +35,7 @@ export class UpdatesService {
     });
   }
 
-  update(
+  async update(
     projectId: string,
     updateId: string,
     dto: UpdateUpdateDto,
@@ -46,7 +46,9 @@ export class UpdatesService {
     if (dto.type_id !== undefined) patch.type_id = dto.type_id ?? null;
     if (dto.is_gold !== undefined) patch.is_gold = dto.is_gold;
     if (dto.tags !== undefined) patch.tags = dto.tags?.length ? dto.tags : null;
-    return this.repo.update(projectId, updateId, patch);
+    const updated = await this.repo.update(projectId, updateId, patch);
+    if (!updated) throw new NotFoundException('Update not found.');
+    return updated;
   }
 
   async remove(projectId: string, updateId: string, userId: string) {

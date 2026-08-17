@@ -44,15 +44,15 @@ export class ResourcesRepository {
     projectId: string,
     resourceId: string,
     patch: Record<string, unknown>,
-  ): Promise<Resource> {
+  ): Promise<Resource | null> {
     const { data, error } = await this.table
       .update(patch)
       .eq('project_id', projectId)
       .eq('id', resourceId)
       .select(COLUMNS)
-      .single();
+      .maybeSingle();
     if (error) throw toHttpException(error, 'resources.update');
-    return data;
+    return data ?? null;
   }
 
   /** Returns the deleted row's id+label, or null when not in this project. */

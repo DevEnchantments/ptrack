@@ -45,15 +45,15 @@ export class UpdatesRepository {
     projectId: string,
     updateId: string,
     patch: Record<string, unknown>,
-  ): Promise<UpdateListItem> {
+  ): Promise<UpdateListItem | null> {
     const { data, error } = await this.table
       .update(patch)
       .eq('project_id', projectId)
       .eq('id', updateId)
       .select(JOINS)
-      .single();
+      .maybeSingle();
     if (error) throw toHttpException(error, 'updates.update');
-    return data as unknown as UpdateListItem;
+    return (data as unknown as UpdateListItem) ?? null;
   }
 
   /** Returns the deleted row's id+label, or null when not in this project. */

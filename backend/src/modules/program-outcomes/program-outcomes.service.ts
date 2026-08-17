@@ -17,10 +17,15 @@ export class ProgramOutcomesService {
 
   async add(projectId: string, dto: CreateProgramOutcomeDto, userId: string) {
     // Fig 2 outcomes are numbered; default to next-in-project when omitted.
+    // Highest number in use + 1 (not count + 1: with 1-2-3, deleting #2
+    // leaves a count of 2 and the next insert would collide with #3).
+    // Simultaneous creates can still collide — fixing that needs a unique
+    // constraint or sequence, i.e. a schema change.
     let sortOrder = dto.sort_order ?? null;
     if (sortOrder === null) {
       const existing = await this.repo.findByProject(projectId);
-      sortOrder = existing.length + 1;
+      sortOrder =
+        existing.reduce((max, o) => Math.max(max, o.sort_order ?? 0), 0) + 1;
     }
     return this.repo.insert({
       project_id: projectId,

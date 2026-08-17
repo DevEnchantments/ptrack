@@ -47,15 +47,15 @@ export class StatusReportsRepository {
     projectId: string,
     statusReportId: string,
     patch: Record<string, unknown>,
-  ): Promise<StatusReportListItem> {
+  ): Promise<StatusReportListItem | null> {
     const { data, error } = await this.table
       .update(patch)
       .eq('project_id', projectId)
       .eq('id', statusReportId)
       .select(JOINS)
-      .single();
+      .maybeSingle();
     if (error) throw toHttpException(error, 'statusReports.update');
-    return data as unknown as StatusReportListItem;
+    return (data as unknown as StatusReportListItem) ?? null;
   }
 
   async findOne(

@@ -126,6 +126,7 @@ export class RisksService {
     if (dto.status !== undefined) patch.status = dto.status;
     if (dto.type !== undefined) patch.type = dto.type;
     const updated = await this.repo.update(projectId, riskId, patch);
+    if (!updated) throw new NotFoundException('Risk not found.');
     await this.maybeAlertHighSeverity(projectId, updated, userId);
     return updated;
   }

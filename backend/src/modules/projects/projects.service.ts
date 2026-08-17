@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import {
   ProjectsRepository,
   Project,
@@ -24,6 +24,8 @@ import { AttachmentsService } from '../attachments/attachments.service';
 
 @Injectable()
 export class ProjectsService {
+  private readonly logger = new Logger(ProjectsService.name);
+
   constructor(
     private readonly repo: ProjectsRepository,
     private readonly milestones: MilestonesService,
@@ -279,8 +281,14 @@ export class ProjectsService {
     // Best-effort: a storage hiccup shouldn't block deleting the project.
     try {
       await this.repo.deleteAttachmentObjects(id);
-    } catch {
-      /* ignore storage cleanup failures */
+    } catch (err) {
+      // Orphaned bucket objects are invisible to the app — the log line is
+      // the only trace they leave, so it must exist.
+      this.logger.warn(
+        `Storage cleanup failed for project ${id}; bucket objects may be orphaned: ${
+          (err as Error).message
+        }`,
+      );
     }
     await this.repo.delete(id);
     return { deleted: true };

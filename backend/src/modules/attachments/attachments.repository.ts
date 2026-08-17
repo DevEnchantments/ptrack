@@ -131,15 +131,15 @@ export class AttachmentsRepository {
     projectId: string,
     attachmentId: string,
     patch: Record<string, unknown>,
-  ): Promise<AttachmentListItem> {
+  ): Promise<AttachmentListItem | null> {
     const { data, error } = await this.table
       .update(patch)
       .eq('project_id', projectId)
       .eq('id', attachmentId)
       .select(JOINS)
-      .single();
+      .maybeSingle();
     if (error) throw toHttpException(error, 'attachments.update');
-    return data as unknown as AttachmentListItem;
+    return (data as unknown as AttachmentListItem) ?? null;
   }
 
   async removeRow(projectId: string, attachmentId: string): Promise<void> {

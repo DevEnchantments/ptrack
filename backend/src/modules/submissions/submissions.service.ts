@@ -162,6 +162,7 @@ export class SubmissionsService {
       updated_by: userId,
       updated_at: new Date().toISOString(),
     });
+    if (!resubmitted) throw new NotFoundException('Submission not found.');
     await notifyValidator();
     return resubmitted;
   }
@@ -209,6 +210,7 @@ export class SubmissionsService {
       updated_by: userId,
       updated_at: new Date().toISOString(),
     });
+    if (!updated) throw new NotFoundException('Submission not found.');
 
     // FDD 3.9 event notifications (in-app; best-effort).
     const name = project?.name ?? 'A project';

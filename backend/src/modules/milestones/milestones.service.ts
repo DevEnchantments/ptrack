@@ -116,13 +116,13 @@ export class MilestonesService {
           `Milestone weights must total exactly 100 (got ${total}).`,
         );
       }
-      await Promise.all(
-        dto.weights.map((w) =>
-          this.repo.update(projectId, w.id, {
-            weightage: w.weightage ?? null,
-            updated_by: userId,
-          }),
-        ),
+      // One atomic RPC (db/adjust_milestone_weights.sql): N independent
+      // updates could partially fail and leave the total broken.
+      await this.repo.adjustWeights(
+        projectId,
+        dto.weights.map((w) => w.id),
+        dto.weights.map((w) => w.weightage ?? null),
+        userId,
       );
     }
     return this.list(projectId);

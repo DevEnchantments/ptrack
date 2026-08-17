@@ -28,7 +28,7 @@ export class LinksService {
     });
   }
 
-  update(
+  async update(
     projectId: string,
     linkId: string,
     dto: UpdateLinkDto,
@@ -41,7 +41,9 @@ export class LinksService {
       patch.description = dto.description?.trim() || null;
     if (dto.is_gold !== undefined) patch.is_gold = dto.is_gold;
     if (dto.tags !== undefined) patch.tags = dto.tags?.length ? dto.tags : null;
-    return this.repo.update(projectId, linkId, patch);
+    const updated = await this.repo.update(projectId, linkId, patch);
+    if (!updated) throw new NotFoundException('Link not found.');
+    return updated;
   }
 
   async remove(projectId: string, linkId: string, userId: string) {

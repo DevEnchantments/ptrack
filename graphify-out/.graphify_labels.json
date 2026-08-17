@@ -112,9 +112,8 @@
   "110": "react-router-dom",
   "111": "ts-jest",
   "112": "moduleFileExtensions",
-  "113": "RecordHistoryService",
   "114": "ApiProperty",
   "115": "ts-node",
-  "117": "dhtmlx-gantt",
-  "118": "jose"
+  "116": "vitest",
+  "117": "dhtmlx-gantt"
 }

@@ -45,7 +45,7 @@ export class LinksRepository {
     projectId: string,
     linkId: string,
     patch: Record<string, unknown>,
-  ): Promise<LinkListItem> {
+  ): Promise<LinkListItem | null> {
     const { data, error } = await this.table
       .update(patch)
       .eq('project_id', projectId)
@@ -54,9 +54,9 @@ export class LinksRepository {
         `${COLUMNS},
          created_by_profile:profiles!created_by ( full_name, email )`,
       )
-      .single();
+      .maybeSingle();
     if (error) throw toHttpException(error, 'links.update');
-    return data as unknown as LinkListItem;
+    return (data as unknown as LinkListItem) ?? null;
   }
 
   /** Returns the deleted row's id+label, or null when not in this project. */

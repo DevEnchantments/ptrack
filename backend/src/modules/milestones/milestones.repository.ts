@@ -61,6 +61,25 @@ export class MilestonesRepository {
     return data;
   }
 
+  /**
+   * Atomic weight replacement via db/adjust_milestone_weights.sql — a partial
+   * failure of N independent updates could break the weights-total-100 rule.
+   */
+  async adjustWeights(
+    projectId: string,
+    ids: string[],
+    weights: Array<number | null>,
+    userId: string,
+  ): Promise<void> {
+    const { error } = await this.db.client.rpc('adjust_milestone_weights', {
+      p_project_id: projectId,
+      p_ids: ids,
+      p_weights: weights,
+      p_user_id: userId,
+    });
+    if (error) throw toHttpException(error, 'milestones.adjustWeights');
+  }
+
   async update(
     projectId: string,
     milestoneId: string,

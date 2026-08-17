@@ -32,9 +32,9 @@ export class PeopleRepository {
       .eq('project_id', projectId)
       .eq('id', memberId)
       .select(MEMBER_COLUMNS)
-      .single();
+      .maybeSingle();
     if (error) throw toHttpException(error, 'people.update');
-    return data;
+    return data ?? null;
   }
 
   async remove(projectId: string, memberId: string) {
