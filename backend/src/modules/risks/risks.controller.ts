@@ -16,7 +16,13 @@ import {
   CurrentUser,
   type AuthUser,
 } from '../../common/decorators/current-user.decorator';
+import {
+  ProjectAccess,
+  ProjectScoped,
+} from '../../common/access/access.decorators';
+import { AccessLevel } from '../../common/access/access.logic';
 
+@ProjectScoped()
 @Controller('projects/:projectId/risks')
 export class RisksController {
   constructor(private readonly risks: RisksService) {}
@@ -68,6 +74,9 @@ export class RisksController {
     return this.risks.add(projectId, dto, user.id);
   }
 
+  // View-level on purpose: the service allows the risk's own owner to
+  // update it (FDD role 4) even without project write access.
+  @ProjectAccess(AccessLevel.View)
   @Patch(':riskId')
   @ApiBody({
     type: UpdateRiskDto,

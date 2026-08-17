@@ -17,7 +17,9 @@ import {
   type AuthUser,
 } from '../../common/decorators/current-user.decorator';
 import { CreateCommentDto } from './dto/create-comment.dto';
+import { ProjectScoped } from '../../common/access/access.decorators';
 
+@ProjectScoped()
 @Controller('projects/:projectId/action-items')
 export class ActionItemsController {
   constructor(private readonly actionItems: ActionItemsService) {}

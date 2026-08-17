@@ -7,6 +7,7 @@ import {
   initiativeBucket,
   plannedProgress,
 } from '../../common/formulas';
+import { ProjectAccessService } from '../../common/access/project-access.service';
 
 export interface ChartPoint {
   label: string;
@@ -66,10 +67,13 @@ function weekStart(d: Date): Date {
 
 @Injectable()
 export class DashboardService {
-  constructor(private readonly db: DatabaseService) {}
+  constructor(
+    private readonly db: DatabaseService,
+    private readonly access: ProjectAccessService,
+  ) {}
 
   /** Live aggregates for My Dashboard — shapes mirror the chart components. */
-  async data(): Promise<DashboardData> {
+  async data(userId: string): Promise<DashboardData> {
     const now = new Date();
     const today = iso(now);
     const thisWeek = weekStart(now);
@@ -90,7 +94,7 @@ export class DashboardService {
           ),
         this.db.client
           .from('action_items')
-          .select('status, due_date, created_at, updated_at'),
+          .select('project_id, status, due_date, created_at, updated_at'),
         this.db.client.from('updates').select('created_at'),
         this.db.client
           .from('record_history')
@@ -98,7 +102,9 @@ export class DashboardService {
           .gte('changed_at', heatFrom.toISOString()),
         this.db.client
           .from('submissions')
-          .select('status, cycles!inner ( period_start, period_end )')
+          .select(
+            'project_id, status, cycles!inner ( period_start, period_end )',
+          )
           .lte('cycles.period_start', today)
           .gte('cycles.period_end', today),
       ]);
@@ -133,23 +139,37 @@ export class DashboardService {
       percent_complete: number | null;
     };
     type ActionItemRow = {
+      project_id: string;
       status: string;
       due_date: string | null;
       created_at: string;
       updated_at: string;
     };
-    const projectRows = (projects.data ?? []) as unknown as ProjectRow[];
-    const milestoneRows = (milestones.data ?? []) as unknown as MilestoneRow[];
-    const aiRows = (actionItems.data ?? []) as unknown as ActionItemRow[];
+    // FR-15: restricted projects with no relationship to the caller stay out
+    // of every project-keyed number. Updates/history remain global activity
+    // counts (no project linkage in their rows; they leak nothing nameable).
+    const hidden = await this.access.hiddenProjectIds(userId);
+    const projectRows = (
+      (projects.data ?? []) as unknown as ProjectRow[]
+    ).filter((p) => !hidden.has(p.id));
+    const milestoneRows = (
+      (milestones.data ?? []) as unknown as MilestoneRow[]
+    ).filter((m) => !hidden.has(m.project_id));
+    const aiRows = (
+      (actionItems.data ?? []) as unknown as ActionItemRow[]
+    ).filter((a) => !hidden.has(a.project_id));
     const updateRows = (updates.data ?? []) as unknown as Array<{
       created_at: string;
     }>;
     const historyRows = (history.data ?? []) as unknown as Array<{
       changed_at: string;
     }>;
-    const submissionRows = (submissions.data ?? []) as unknown as Array<{
-      status: string;
-    }>;
+    const submissionRows = (
+      (submissions.data ?? []) as unknown as Array<{
+        project_id: string;
+        status: string;
+      }>
+    ).filter((sub) => !hidden.has(sub.project_id));
 
     // --- stat tiles
     const monthStart = iso(

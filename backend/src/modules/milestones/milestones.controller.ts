@@ -17,7 +17,13 @@ import {
   CurrentUser,
   type AuthUser,
 } from '../../common/decorators/current-user.decorator';
+import {
+  ProjectAccess,
+  ProjectScoped,
+} from '../../common/access/access.decorators';
+import { AccessLevel } from '../../common/access/access.logic';
 
+@ProjectScoped()
 @Controller('projects/:projectId/milestones')
 export class MilestonesController {
   constructor(private readonly milestones: MilestonesService) {}
@@ -84,6 +90,7 @@ export class MilestonesController {
     return this.milestones.add(projectId, dto, user.id);
   }
 
+  @ProjectAccess(AccessLevel.Manage)
   @Patch('weights')
   @ApiBody({
     type: AdjustWeightsDto,

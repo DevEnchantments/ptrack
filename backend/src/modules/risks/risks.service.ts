@@ -1,4 +1,9 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  Logger,
+  NotFoundException,
+} from '@nestjs/common';
 import { RecordHistoryService } from '../../database/record-history.service';
 import { RisksRepository, RiskListItem } from './risks.repository';
 import { CreateRiskDto } from './dto/create-risk.dto';
@@ -6,6 +11,8 @@ import { UpdateRiskDto } from './dto/update-risk.dto';
 import { NotificationsService } from '../notifications/notifications.service';
 import { ProjectsRepository } from '../projects/projects.repository';
 import { RISK_HIGH_THRESHOLD, riskScore } from '../../common/formulas';
+import { ProjectAccessService } from '../../common/access/project-access.service';
+import { AccessLevel } from '../../common/access/access.logic';
 
 @Injectable()
 export class RisksService {
@@ -16,6 +23,7 @@ export class RisksService {
     private readonly auditLog: RecordHistoryService,
     private readonly notifications: NotificationsService,
     private readonly projects: ProjectsRepository,
+    private readonly access: ProjectAccessService,
   ) {}
 
   list(projectId: string) {
@@ -99,6 +107,18 @@ export class RisksService {
     dto: UpdateRiskDto,
     userId: string,
   ) {
+    // The route admits viewers so the risk's own owner can update it
+    // (FDD role 4); everyone else still needs project write access.
+    const level = await this.access.levelFor(userId, projectId);
+    if (level < AccessLevel.Write) {
+      const existing = await this.repo.findOne(projectId, riskId);
+      if (!existing) throw new NotFoundException('Risk not found.');
+      if (existing.owner_id !== userId) {
+        throw new ForbiddenException(
+          "Only this risk's owner or a project writer can update it.",
+        );
+      }
+    }
     const patch: Record<string, unknown> = {
       updated_by: userId,
       // No moddatetime trigger on this table; keep the audit column honest.

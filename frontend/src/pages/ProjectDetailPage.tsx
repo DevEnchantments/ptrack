@@ -15,6 +15,8 @@ import { StatusPill } from '@/components/StatusPill'
 import { AvatarCluster, InitialsAvatar } from '@/components/InitialsAvatar'
 import { Skeleton } from '@/components/ui/skeleton'
 import { usePageTitle } from '@/lib/use-page-title'
+import { useMe } from '@/lib/use-me'
+import { AccessLevel, projectAccessLevel } from '@/lib/access'
 import { useParams, useNavigate } from 'react-router-dom'
 import {
   projectsApi,
@@ -303,6 +305,7 @@ function useEntranceFlag(): boolean {
 export function ProjectDetailPage() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
+  const me = useMe()
   const [project, setProject] = useState<ProjectDetail | null>(null)
   const [milestones, setMilestones] = useState<Milestone[]>([])
   const [outcomes, setOutcomes] = useState<ProgramOutcome[]>([])
@@ -624,6 +627,9 @@ export function ProjectDetailPage() {
       .catch(() => toast.error('Could not open the milestone.'))
   }
 
+  // Affordance gating only — the backend enforces regardless (FR-15).
+  const myLevel = projectAccessLevel(me, project)
+
   const sectionCounts: Record<string, number> = {
     people: project.members.length,
     milestones: milestones.length,
@@ -759,13 +765,15 @@ export function ProjectDetailPage() {
               >
                 Report
               </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setEditProjectOpen(true)}
-              >
-                Edit Project
-              </Button>
+              {myLevel >= AccessLevel.Manage && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setEditProjectOpen(true)}
+                >
+                  Edit Project
+                </Button>
+              )}
             </div>
           </div>
 
@@ -1037,23 +1045,27 @@ export function ProjectDetailPage() {
                       }`
                     : 'No weights set — milestones weigh equally'}
                 </span>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => {
-                    setEditOutcome(null)
-                    setOutcomeDialogOpen(true)
-                  }}
-                >
-                  Add Outcome
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setAdjustWeightsOpen(true)}
-                >
-                  Adjust Weights
-                </Button>
+                {myLevel >= AccessLevel.Write && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      setEditOutcome(null)
+                      setOutcomeDialogOpen(true)
+                    }}
+                  >
+                    Add Outcome
+                  </Button>
+                )}
+                {myLevel >= AccessLevel.Manage && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setAdjustWeightsOpen(true)}
+                  >
+                    Adjust Weights
+                  </Button>
+                )}
               </div>
               <ul className="section-list divide-y rounded-md border bg-card">
               {milestoneGroups.map((g) => (

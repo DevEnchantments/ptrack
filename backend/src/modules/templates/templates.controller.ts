@@ -14,6 +14,7 @@ import {
   CurrentUser,
   type AuthUser,
 } from '../../common/decorators/current-user.decorator';
+import { MinAppRole } from '../../common/access/access.decorators';
 
 @Controller('templates')
 export class TemplatesController {
@@ -51,6 +52,7 @@ export class TemplatesController {
     return this.templates.remove(templateId);
   }
 
+  @MinAppRole('pmo')
   @Post(':templateId/instantiate')
   @ApiBody({
     type: InstantiateTemplateDto,

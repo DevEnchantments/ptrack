@@ -15,11 +15,18 @@ import {
   CurrentUser,
   type AuthUser,
 } from '../../common/decorators/current-user.decorator';
+import {
+  ProjectAccess,
+  ProjectScoped,
+} from '../../common/access/access.decorators';
+import { AccessLevel } from '../../common/access/access.logic';
 
+@ProjectScoped()
 @Controller('projects/:projectId/people')
 export class PeopleController {
   constructor(private readonly people: PeopleService) {}
 
+  @ProjectAccess(AccessLevel.Manage)
   @Post()
   @ApiBody({
     type: CreatePersonDto,
@@ -56,6 +63,7 @@ export class PeopleController {
     return this.people.add(projectId, dto, user.id);
   }
 
+  @ProjectAccess(AccessLevel.Manage)
   @Patch(':memberId')
   @ApiBody({
     type: UpdatePersonDto,
@@ -75,6 +83,7 @@ export class PeopleController {
     return this.people.update(projectId, memberId, dto, user.id);
   }
 
+  @ProjectAccess(AccessLevel.Manage)
   @Delete(':memberId')
   remove(
     @Param('projectId', ParseUUIDPipe) projectId: string,

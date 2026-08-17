@@ -21,6 +21,7 @@ import {
   CurrentUser,
   type AuthUser,
 } from '../../common/decorators/current-user.decorator';
+import { MinAppRole } from '../../common/access/access.decorators';
 
 @Controller('kpis')
 export class KpisController {
@@ -31,6 +32,7 @@ export class KpisController {
     return this.kpis.list();
   }
 
+  @MinAppRole('pmo')
   @Post()
   @ApiBody({
     type: CreateKpiDto,
@@ -45,6 +47,7 @@ export class KpisController {
     return this.kpis.add(dto, user.id);
   }
 
+  @MinAppRole('pmo')
   @Patch(':kpiId')
   update(
     @Param('kpiId', ParseUUIDPipe) kpiId: string,
@@ -54,11 +57,13 @@ export class KpisController {
     return this.kpis.update(kpiId, dto, user.id);
   }
 
+  @MinAppRole('pmo')
   @Delete(':kpiId')
   remove(@Param('kpiId', ParseUUIDPipe) kpiId: string) {
     return this.kpis.remove(kpiId);
   }
 
+  @MinAppRole('pmo')
   @Post(':kpiId/readings')
   addReading(
     @Param('kpiId', ParseUUIDPipe) kpiId: string,
@@ -68,6 +73,7 @@ export class KpisController {
     return this.kpis.addReading(kpiId, dto, user.id);
   }
 
+  @MinAppRole('pmo')
   @Delete(':kpiId/readings/:readingId')
   removeReading(
     @Param('kpiId', ParseUUIDPipe) kpiId: string,
@@ -76,6 +82,7 @@ export class KpisController {
     return this.kpis.removeReading(kpiId, readingId);
   }
 
+  @MinAppRole('pmo')
   @Post(':kpiId/plans')
   addPlan(
     @Param('kpiId', ParseUUIDPipe) kpiId: string,
@@ -85,6 +92,7 @@ export class KpisController {
     return this.kpis.addPlan(kpiId, dto, user.id);
   }
 
+  @MinAppRole('pmo')
   @Patch(':kpiId/plans/:planId')
   updatePlan(
     @Param('kpiId', ParseUUIDPipe) kpiId: string,
@@ -94,6 +102,7 @@ export class KpisController {
     return this.kpis.updatePlan(kpiId, planId, dto);
   }
 
+  @MinAppRole('pmo')
   @Delete(':kpiId/plans/:planId')
   removePlan(
     @Param('kpiId', ParseUUIDPipe) kpiId: string,

@@ -37,6 +37,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { usePageTitle } from '@/lib/use-page-title'
+import { atLeastRole, useMe } from '@/lib/use-me'
 import {
   Select,
   SelectContent,
@@ -104,6 +105,7 @@ function initials(name: string) {
 export function HomePage() {
   usePageTitle('Projects')
   const navigate = useNavigate()
+  const me = useMe()
   const [projects, setProjects] = useState<ProjectListItem[]>([])
   const entered = useEntranceFlag()
   const [view, setView] = useState<'cards' | 'grid' | 'tree'>(() => {
@@ -283,12 +285,19 @@ export function HomePage() {
           </p>
         </div>
         <div className="flex items-center gap-4">
-          <Button variant="outline" onClick={() => setFromTemplateOpen(true)}>
-            From Template
-          </Button>
-          <Button onClick={() => navigate('/projects/new')}>
-            Create Project
-          </Button>
+          {atLeastRole(me?.app_role, 'pmo') && (
+            <>
+              <Button
+                variant="outline"
+                onClick={() => setFromTemplateOpen(true)}
+              >
+                From Template
+              </Button>
+              <Button onClick={() => navigate('/projects/new')}>
+                Create Project
+              </Button>
+            </>
+          )}
         </div>
       </header>
 
@@ -506,14 +515,16 @@ export function HomePage() {
 
             <div className="min-w-0 flex-1">
               <div className="mb-4 flex items-center justify-end gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => navigate('/import')}
-                >
-                  <Upload className="h-4 w-4" />
-                  Import
-                </Button>
+                {atLeastRole(me?.app_role, 'admin') && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => navigate('/import')}
+                  >
+                    <Upload className="h-4 w-4" />
+                    Import
+                  </Button>
+                )}
                 <Button
                   variant="outline"
                   size="sm"

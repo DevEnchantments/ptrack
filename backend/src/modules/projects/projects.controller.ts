@@ -18,11 +18,20 @@ import {
   CurrentUser,
   type AuthUser,
 } from '../../common/decorators/current-user.decorator';
+import {
+  MinAppRole,
+  ProjectAccess,
+  ProjectScoped,
+} from '../../common/access/access.decorators';
+import { AccessLevel } from '../../common/access/access.logic';
 
+@ProjectScoped('id')
 @Controller('projects')
 export class ProjectsController {
   constructor(private readonly projects: ProjectsService) {}
 
+  // FDD 3.1 step 1 assigns creation to Project Owner / PMO (ASSUMED PMO-gated).
+  @MinAppRole('pmo')
   @Post()
   @ApiBody({
     type: CreateProjectDto,
@@ -64,8 +73,8 @@ export class ProjectsController {
   }
 
   @Get()
-  findAll(@Query() page: PaginationQueryDto) {
-    return this.projects.findAll(page);
+  findAll(@Query() page: PaginationQueryDto, @CurrentUser() user: AuthUser) {
+    return this.projects.findAll(page, user.id);
   }
 
   @Get(':id')
@@ -80,6 +89,7 @@ export class ProjectsController {
 
   // GET :id/sections moved to ProjectSectionsController (same URL).
 
+  @ProjectAccess(AccessLevel.Manage)
   @Patch(':id')
   @ApiBody({
     type: UpdateProjectDto,
@@ -101,6 +111,7 @@ export class ProjectsController {
     return this.projects.update(id, dto, user.id);
   }
 
+  @ProjectAccess(AccessLevel.Manage)
   @Delete(':id')
   remove(@Param('id', ParseUUIDPipe) id: string) {
     return this.projects.remove(id);

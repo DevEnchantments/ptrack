@@ -93,6 +93,16 @@ export class RisksRepository {
     return data ? { id: data.id, label: data.statement } : null;
   }
 
+  async findOne(projectId: string, riskId: string): Promise<Risk | null> {
+    const { data, error } = await this.table
+      .select(COLUMNS)
+      .eq('project_id', projectId)
+      .eq('id', riskId)
+      .maybeSingle<Risk>();
+    if (error) throw toHttpException(error, 'risks.findOne');
+    return data ?? null;
+  }
+
   async findByProject(projectId: string): Promise<RiskListItem[]> {
     const { data, error } = await this.table
       .select(JOINS)

@@ -9,6 +9,7 @@ import { MilestonesRepository } from '../milestones/milestones.repository';
 import { SubmissionsRepository } from './submissions.repository';
 import { SubmissionActionDto } from './dto/submission-action.dto';
 import { NotificationsService } from '../notifications/notifications.service';
+import { ProjectAccessService } from '../../common/access/project-access.service';
 
 /**
  * FR-14 workflow (routing ASSUMED per Fig 10 — see FDD-ALIGNMENT 1.6):
@@ -23,6 +24,7 @@ export class SubmissionsService {
     private readonly projects: ProjectsRepository,
     private readonly milestones: MilestonesRepository,
     private readonly notifications: NotificationsService,
+    private readonly access: ProjectAccessService,
   ) {}
 
   list(projectId: string) {
@@ -30,9 +32,14 @@ export class SubmissionsService {
   }
 
   /** UC-15-adjacent: portfolio-wide submission status for the current cycle. */
-  async cycleStatus() {
+  async cycleStatus(userId: string) {
     const cycle = await this.repo.findCycleFor(new Date());
-    const projects = await this.projects.findAll();
+    // FR-15: the portfolio table hides restricted projects the caller
+    // cannot see.
+    const hidden = await this.access.hiddenProjectIds(userId);
+    const projects = (await this.projects.findAll()).filter(
+      (p) => !hidden.has(p.id),
+    );
     const byProject = new Map<
       string,
       { status: string; submitted_at: string | null }

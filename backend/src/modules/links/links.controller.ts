@@ -16,7 +16,9 @@ import {
   CurrentUser,
   type AuthUser,
 } from '../../common/decorators/current-user.decorator';
+import { ProjectScoped } from '../../common/access/access.decorators';
 
+@ProjectScoped()
 @Controller('projects/:projectId/links')
 export class LinksController {
   constructor(private readonly links: LinksService) {}

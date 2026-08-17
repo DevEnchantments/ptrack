@@ -11,6 +11,7 @@ import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
 import { NotificationsService } from '../notifications/notifications.service';
 import { columnsFrom, type ColumnSpec } from '../../common/columns';
+import { ProjectAccessService } from '../../common/access/project-access.service';
 
 /** Which of the 35 updatable columns follows which normalization rule. */
 const COLUMN_SPEC: ColumnSpec = {
@@ -83,6 +84,7 @@ export class ProjectsService {
   constructor(
     private readonly repo: ProjectsRepository,
     private readonly notifications: NotificationsService,
+    private readonly access: ProjectAccessService,
   ) {}
 
   async create(dto: CreateProjectDto, userId: string): Promise<Project> {
@@ -117,14 +119,23 @@ export class ProjectsService {
     return project;
   }
 
-  async findAll(page?: {
-    limit?: number;
-    offset?: number;
-  }): Promise<
+  async findAll(
+    page?: {
+      limit?: number;
+      offset?: number;
+    },
+    userId?: string,
+  ): Promise<
     Array<
       ProjectListRow & ProjectListStats & { planned_progress: number | null }
     >
   > {
+    // Restricted projects the caller has no relationship with stay out of
+    // the list entirely (FR-15). Filtering happens before stats mapping; a
+    // paginated page may return fewer rows as a result, which is acceptable.
+    const hidden = userId
+      ? await this.access.hiddenProjectIds(userId)
+      : new Set<string>();
     let projects: ProjectListRow[];
     let stats: Record<string, ProjectListStats>;
     if (page?.limit) {
@@ -138,6 +149,7 @@ export class ProjectsService {
         this.repo.listStats(null),
       ]);
     }
+    if (hidden.size > 0) projects = projects.filter((p) => !hidden.has(p.id));
     return projects.map((p) => ({
       ...p,
       ...(stats[p.id] ?? {

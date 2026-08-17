@@ -48,7 +48,7 @@ export class SearchController {
   }
 
   @Get()
-  query(@Query('q') q: string) {
-    return this.search.search(q ?? '');
+  query(@Query('q') q: string, @CurrentUser() user: AuthUser) {
+    return this.search.search(q ?? '', user.id);
   }
 }

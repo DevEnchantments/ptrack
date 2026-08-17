@@ -16,7 +16,9 @@ import {
   CurrentUser,
   type AuthUser,
 } from '../../common/decorators/current-user.decorator';
+import { ProjectScoped } from '../../common/access/access.decorators';
 
+@ProjectScoped()
 @Controller('projects/:projectId/issues')
 export class IssuesController {
   constructor(private readonly issues: IssuesService) {}

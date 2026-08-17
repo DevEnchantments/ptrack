@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { DatabaseService } from '../../database/database.service';
 import { toHttpException } from '../../common/supabase-error';
 import { CreateSavedSearchDto } from './dto/create-saved-search.dto';
+import { ProjectAccessService } from '../../common/access/project-access.service';
 
 export type SearchKind =
   'project' | 'milestone' | 'action_item' | 'issue' | 'risk' | 'kpi';
@@ -38,9 +39,15 @@ const PER_KIND = 8;
  */
 @Injectable()
 export class SearchService {
-  constructor(private readonly db: DatabaseService) {}
+  constructor(
+    private readonly db: DatabaseService,
+    private readonly access: ProjectAccessService,
+  ) {}
 
-  async search(q: string): Promise<{ query: string; hits: SearchHit[] }> {
+  async search(
+    q: string,
+    userId: string,
+  ): Promise<{ query: string; hits: SearchHit[] }> {
     // Strip characters that would break PostgREST's or-filter syntax, and
     // escape ilike wildcards so users match them literally.
     const clean = (q ?? '')
@@ -123,7 +130,18 @@ export class SearchService {
         project_name: null,
       });
     }
-    return { query: clean, hits };
+    // FR-15: drop hits from restricted projects the caller cannot see —
+    // including the project rows themselves.
+    const hidden = await this.access.hiddenProjectIds(userId);
+    const visible =
+      hidden.size === 0
+        ? hits
+        : hits.filter(
+            (h) =>
+              !(h.project_id && hidden.has(h.project_id)) &&
+              !(h.kind === 'project' && hidden.has(h.id)),
+          );
+    return { query: clean, hits: visible };
   }
 
   async listSaved(userId: string): Promise<SavedSearch[]> {

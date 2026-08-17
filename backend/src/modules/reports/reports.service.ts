@@ -6,6 +6,7 @@ import {
   initiativeBucket,
   plannedProgress,
 } from '../../common/formulas';
+import { ProjectAccessService } from '../../common/access/project-access.service';
 
 const MONTH_LABELS = [
   'Jan',
@@ -25,14 +26,17 @@ const MONTH_LABELS = [
 /** FR-12 named portfolio reports (Initiative Progress, Monthly Performance). */
 @Injectable()
 export class ReportsService {
-  constructor(private readonly db: DatabaseService) {}
+  constructor(
+    private readonly db: DatabaseService,
+    private readonly access: ProjectAccessService,
+  ) {}
 
   /**
    * One row per project: planned vs calculated progress (F1/F2), delta and
    * F5 bucket — all PROVISIONAL per docs/FORMULAS.md. Worst delta first;
    * cancelled projects keep a null bucket.
    */
-  async initiativeProgress() {
+  async initiativeProgress(userId: string) {
     const [projects, milestones] = await Promise.all([
       this.db.client.from('projects').select(
         `id, name, reference_id, start_date, target_end_date,
@@ -66,7 +70,10 @@ export class ReportsService {
       weightage: number | null;
       percent_complete: number | null;
     };
-    const projectRows = (projects.data ?? []) as unknown as ProjectRow[];
+    const hidden = await this.access.hiddenProjectIds(userId);
+    const projectRows = (
+      (projects.data ?? []) as unknown as ProjectRow[]
+    ).filter((p) => !hidden.has(p.id));
     const milestoneRows = (milestones.data ?? []) as unknown as MilestoneRow[];
 
     const msByProject = new Map<string, MilestoneRow[]>();
@@ -117,14 +124,14 @@ export class ReportsService {
    * completed-in-month, plus submission and approval counts for that
    * month's cycle.
    */
-  async monthlyPerformance(year: number) {
+  async monthlyPerformance(year: number, userId: string) {
     const [milestones, submissions] = await Promise.all([
       this.db.client
         .from('milestones')
-        .select('status, due_date, completed_date'),
+        .select('project_id, status, due_date, completed_date'),
       this.db.client
         .from('submissions')
-        .select('status, cycle:cycles!inner ( period_start )')
+        .select('project_id, status, cycle:cycles!inner ( period_start )')
         .gte('cycles.period_start', `${year}-01-01`)
         .lte('cycles.period_start', `${year}-12-31`),
     ]);
@@ -133,15 +140,22 @@ export class ReportsService {
     if (submissions.error)
       throw toHttpException(submissions.error, 'reports.monthlyPerformance');
 
-    const milestoneRows = (milestones.data ?? []) as unknown as Array<{
-      status: string;
-      due_date: string | null;
-      completed_date: string | null;
-    }>;
-    const submissionRows = (submissions.data ?? []) as unknown as Array<{
-      status: string;
-      cycle: { period_start: string } | null;
-    }>;
+    const hidden = await this.access.hiddenProjectIds(userId);
+    const milestoneRows = (
+      (milestones.data ?? []) as unknown as Array<{
+        project_id: string;
+        status: string;
+        due_date: string | null;
+        completed_date: string | null;
+      }>
+    ).filter((m) => !hidden.has(m.project_id));
+    const submissionRows = (
+      (submissions.data ?? []) as unknown as Array<{
+        project_id: string;
+        status: string;
+        cycle: { period_start: string } | null;
+      }>
+    ).filter((s) => !hidden.has(s.project_id));
     const activeMs = milestoneRows.filter((m) => m.status !== 'not_applicable');
 
     const months = MONTH_LABELS.map((label, i) => {

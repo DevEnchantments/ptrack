@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../../database/database.service';
 import { toHttpException } from '../../common/supabase-error';
+import { ProjectAccessService } from '../../common/access/project-access.service';
 
 export interface GlobalMilestone {
   id: string;
@@ -71,9 +72,12 @@ interface MemberRow {
  */
 @Injectable()
 export class RegistryService {
-  constructor(private readonly db: DatabaseService) {}
+  constructor(
+    private readonly db: DatabaseService,
+    private readonly access: ProjectAccessService,
+  ) {}
 
-  async milestones(): Promise<GlobalMilestone[]> {
+  async milestones(userId: string): Promise<GlobalMilestone[]> {
     const { data, error } = await this.db.client
       .from('milestones')
       .select(
@@ -85,10 +89,13 @@ export class RegistryService {
       )
       .order('due_date', { ascending: true, nullsFirst: false });
     if (error) throw toHttpException(error, 'registry.milestones');
-    return (data ?? []) as unknown as GlobalMilestone[];
+    const hidden = await this.access.hiddenProjectIds(userId);
+    return ((data ?? []) as unknown as GlobalMilestone[]).filter(
+      (m) => !hidden.has(m.project_id),
+    );
   }
 
-  async actionItems(): Promise<GlobalActionItem[]> {
+  async actionItems(userId: string): Promise<GlobalActionItem[]> {
     const { data, error } = await this.db.client
       .from('action_items')
       .select(
@@ -102,10 +109,13 @@ export class RegistryService {
       )
       .order('due_date', { ascending: true, nullsFirst: false });
     if (error) throw toHttpException(error, 'registry.actionItems');
-    return (data ?? []) as unknown as GlobalActionItem[];
+    const hidden = await this.access.hiddenProjectIds(userId);
+    return ((data ?? []) as unknown as GlobalActionItem[]).filter(
+      (a) => !hidden.has(a.project_id),
+    );
   }
 
-  async people(): Promise<DirectoryPerson[]> {
+  async people(userId: string): Promise<DirectoryPerson[]> {
     const { data, error } = await this.db.client.from('project_members').select(
       `project_id, user_id, pending_name, pending_email, access_level, status,
          role:project_roles ( name ),
@@ -113,9 +123,13 @@ export class RegistryService {
          project:projects ( name )`,
     );
     if (error) throw toHttpException(error, 'registry.people');
+    // FR-15: memberships on hidden restricted projects disappear; a person
+    // whose only membership is hidden disappears with them.
+    const hidden = await this.access.hiddenProjectIds(userId);
 
     const people = new Map<string, DirectoryPerson>();
     for (const m of (data ?? []) as unknown as MemberRow[]) {
+      if (hidden.has(m.project_id)) continue;
       const key =
         m.user_id ?? `pending:${(m.pending_name ?? '').toLowerCase()}`;
       let person = people.get(key);

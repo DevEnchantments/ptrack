@@ -170,7 +170,7 @@ index (timeliness/completeness/reliability, Figs 30–31) — **formulas = ASK (
 | FR-12 | Report generation + Excel export | ✅ PARTIAL 2026-08-13: named printable reports under /reporting — Initiative Progress (planned vs calculated per F1/F2, delta + F5 bucket, worst first) and Monthly Performance (milestones due/done/completed + submissions/approvals per month, year switcher) — join the existing per-project Progress report and Cycle Submission Status. Export stays CSV (FR-13 confirm modal); native .xlsx not built (ASSUMED CSV sufficient) |
 | FR-13 | Download confirmation modal | ✅ SHIPPED 2026-08-03: confirm dialog (record count) before the CSV export |
 | FR-14 | Workflow states: submit/review/return/approve/close | ✅ ASSUMED+SHIPPED 2026-08-03; cycle CLOSE (+reopen) 2026-08-13 locks all transitions (see 1.6) — routing/exact closure rules remain OI-03 questions |
-| FR-15 | Role-based restriction of create/update/approve/admin | IN PROGRESS — access model drafted from FDD 3.2 (section 8 below), enforcement landing in the security phase |
+| FR-15 | Role-based restriction of create/update/approve/admin | ✅ PARTIAL 2026-08-17: full matrix from section 8 ENFORCED (global AppRoleGuard + ProjectAccessGuard, fail-closed on project routes; restricted projects filtered from every list/aggregate; frontend hides ungranted affordances). Requires `db/app_role.sql`. Remaining: the 3 delegated-authority questions (OI-01) |
 
 ## 3. Use cases UC-01…18 — acceptance checklist
 UC-01 list view · UC-02 filters · UC-03 Excel export+confirm · UC-04 detail tabs ·
@@ -422,7 +422,7 @@ in it without rework.
    which joins the notification-email subsystem. UNBLOCKS WHEN: SMTP (or an
    email API) is available.
 
-## 8. Security phase — access model (stage 1, ASSUMED 2026-08-17, awaiting Fares sign-off)
+## 8. Security phase — access model (ASSUMED 2026-08-17; ENFORCED same day, Fares approved "as I see fit")
 
 FR-15 (Must Have) mandates role-based restriction. FDD 3.2 defines seven roles; this model
 maps them onto data we already store plus ONE new column. FDD scope explicitly excludes
@@ -459,10 +459,18 @@ Owner holds Reviewer/Approver "delegated authority"? (2) what exactly is Read-on
 Viewer's "assigned access"? (3) do Executive Viewers see restricted projects
 (assumed: aggregates yes, drill-down no)?
 
-Rollout: stage 2 migration (sets `test@ptrack.local` → `admin` first, so nobody is locked
-out) → stage 3 guards (`@AdminOnly`, `@MinAppRole`, `ProjectAccessGuard` + unit tests) →
-stage 4 read-side filtering → stage 5 frontend affordances/403 toasts → FR-15 flips to
-PARTIAL-shipped (full delegated-authority matrix stays OI-01).
+SHIPPED 2026-08-17, all five stages: `db/app_role.sql` (Fares runs; until then every
+account is plain `user` and admin/PMO surfaces 403 — fail-safe, nothing else breaks) ·
+`common/access/` module (pure `access.logic.ts` + cached AppRole/ProjectAccess services +
+two global guards, 10 unit tests) · full route sweep per the matrix above (risk PATCH
+admits viewers so the service can allow the risk's own owner — FDD role 4) · read-side
+filtering of restricted non-member projects across projects list, search, registries,
+dashboard aggregates, both named reports and cycle-status (updates/history activity
+counts stay global: their rows carry no project linkage and name nothing) ·
+`GET /users/me` + frontend gating (Administration nav + Import admin-only, Create
+Project/From Template pmo+, Edit Project/Adjust Weights manage-level, Add Outcome
+write-level, via `lib/use-me.ts` + `lib/access.ts` mirror). Frontend hiding is UX only;
+guards enforce. Finer per-section button hiding = polish backlog.
 
 ## 9. Conventions carried forward
 Field-mapping evidence rule now points at **FDD figures** (ask for hi-res PNG when field-level

@@ -13,6 +13,10 @@ import {
   CurrentUser,
   type AuthUser,
 } from '../../common/decorators/current-user.decorator';
+import {
+  MinAppRole,
+  ProjectScoped,
+} from '../../common/access/access.decorators';
 
 const ACTION_BODY = {
   type: SubmissionActionDto,
@@ -29,8 +33,8 @@ export class ReportsController {
   constructor(private readonly submissions: SubmissionsService) {}
 
   @Get('cycle-status')
-  cycleStatus() {
-    return this.submissions.cycleStatus();
+  cycleStatus(@CurrentUser() user: AuthUser) {
+    return this.submissions.cycleStatus(user.id);
   }
 }
 
@@ -44,17 +48,20 @@ export class CyclesController {
     return this.submissions.currentCycle();
   }
 
+  @MinAppRole('pmo')
   @Post('current/close')
   close() {
     return this.submissions.closeCurrentCycle();
   }
 
+  @MinAppRole('pmo')
   @Post('current/reopen')
   reopen() {
     return this.submissions.reopenCurrentCycle();
   }
 }
 
+@ProjectScoped()
 @Controller('projects/:projectId/submissions')
 export class SubmissionsController {
   constructor(private readonly submissions: SubmissionsService) {}

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from '@/lib/auth-context'
+import { atLeastRole, useMe } from '@/lib/use-me'
 import { Button } from '@/components/ui/button'
 import { CommandPalette } from '@/components/CommandPalette'
 import { NotificationBell } from '@/components/NotificationBell'
@@ -46,6 +47,7 @@ const NAV_ITEMS: Array<{
 
 export function AppLayout() {
   const { user, signOut } = useAuth()
+  const me = useMe()
   const location = useLocation()
   const [collapsed, setCollapsed] = useState(false)
   const [showScrollTop, setShowScrollTop] = useState(false)
@@ -119,7 +121,11 @@ export function AppLayout() {
         </div>
 
         <nav className="flex flex-1 flex-col gap-0.5 px-2 py-2">
-          {NAV_ITEMS.map((item) =>
+          {NAV_ITEMS.filter(
+            (item) =>
+              item.label !== 'Administration' ||
+              atLeastRole(me?.app_role, 'admin'),
+          ).map((item) =>
             item.to ? (
               <NavLink
                 key={item.label}

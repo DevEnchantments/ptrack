@@ -6,9 +6,18 @@ export interface UserSummary {
   email: string | null
 }
 
+export type AppRole = 'admin' | 'pmo' | 'executive' | 'user'
+
+export interface Me {
+  id: string
+  email: string | null
+  app_role: AppRole
+}
+
 export const usersApi = {
   search: (query: string) =>
     apiGet<UserSummary[]>(`/users?search=${encodeURIComponent(query)}`),
+  me: () => apiGet<Me>('/users/me'),
   provision: (body: { email: string; full_name: string; password: string }) =>
     apiPost<{
       user_id: string

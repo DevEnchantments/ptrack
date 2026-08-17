@@ -1,6 +1,7 @@
 import { Controller, Get, Param, ParseUUIDPipe } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { ProjectSectionsService } from './project-sections.service';
+import { ProjectScoped } from '../../common/access/access.decorators';
 
 /**
  * Same URL as before the extraction — `GET /projects/:id/sections` — only the
@@ -11,6 +12,7 @@ import { ProjectSectionsService } from './project-sections.service';
  * under "Projects" in /api/docs where it has always been.
  */
 @ApiTags('Projects')
+@ProjectScoped('id')
 @Controller('projects')
 export class ProjectSectionsController {
   constructor(private readonly sections: ProjectSectionsService) {}

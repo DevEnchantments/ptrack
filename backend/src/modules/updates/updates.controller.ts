@@ -18,7 +18,9 @@ import {
   CurrentUser,
   type AuthUser,
 } from '../../common/decorators/current-user.decorator';
+import { ProjectScoped } from '../../common/access/access.decorators';
 
+@ProjectScoped()
 @Controller('projects/:projectId/updates')
 export class UpdatesController {
   constructor(private readonly updates: UpdatesService) {}
