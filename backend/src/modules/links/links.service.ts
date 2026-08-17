@@ -3,6 +3,28 @@ import { RecordHistoryService } from '../../database/record-history.service';
 import { LinksRepository } from './links.repository';
 import { CreateLinkDto } from './dto/create-link.dto';
 import { UpdateLinkDto } from './dto/update-link.dto';
+import { columnsFrom, type ColumnSpec } from '../../common/columns';
+
+/**
+ * How a link DTO maps onto columns — one definition serving both create and
+ * update, so the two cannot drift apart on trimming or null-collapsing.
+ * `is_gold` is `asIs` rather than a boolean default, so un-starring a link
+ * reaches the database.
+ */
+const COLUMN_SPEC: ColumnSpec = {
+  trimmed: ['url'],
+  trimmedOrNull: ['label', 'description'],
+  arrayOrNull: ['tags'],
+  asIs: ['is_gold'],
+};
+
+/** What a new link gets for the columns the caller omitted. */
+const CREATE_DEFAULTS = {
+  label: null,
+  description: null,
+  is_gold: false,
+  tags: null,
+};
 
 @Injectable()
 export class LinksService {
@@ -18,11 +40,8 @@ export class LinksService {
   add(projectId: string, dto: CreateLinkDto, userId: string) {
     return this.repo.insert({
       project_id: projectId,
-      url: dto.url.trim(),
-      label: dto.label?.trim() || null,
-      description: dto.description?.trim() || null,
-      is_gold: dto.is_gold ?? false,
-      tags: dto.tags?.length ? dto.tags : null,
+      ...CREATE_DEFAULTS,
+      ...columnsFrom(dto, COLUMN_SPEC),
       created_by: userId,
       updated_by: userId,
     });
@@ -34,14 +53,10 @@ export class LinksService {
     dto: UpdateLinkDto,
     userId: string,
   ) {
-    const patch: Record<string, unknown> = { updated_by: userId };
-    if (dto.url !== undefined) patch.url = dto.url.trim();
-    if (dto.label !== undefined) patch.label = dto.label?.trim() || null;
-    if (dto.description !== undefined)
-      patch.description = dto.description?.trim() || null;
-    if (dto.is_gold !== undefined) patch.is_gold = dto.is_gold;
-    if (dto.tags !== undefined) patch.tags = dto.tags?.length ? dto.tags : null;
-    const updated = await this.repo.update(projectId, linkId, patch);
+    const updated = await this.repo.update(projectId, linkId, {
+      updated_by: userId,
+      ...columnsFrom(dto, COLUMN_SPEC),
+    });
     if (!updated) throw new NotFoundException('Link not found.');
     return updated;
   }
