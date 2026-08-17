@@ -3,14 +3,15 @@ import { RisksController } from './risks.controller';
 import { RisksService } from './risks.service';
 import { RisksRepository } from './risks.repository';
 import { NotificationsModule } from '../notifications/notifications.module';
-import { ProjectsRepository } from '../projects/projects.repository';
+import { ProjectsModule } from '../projects/projects.module';
 
+// The alert's ProjectsRepository comes from ProjectsModule now — the cycle
+// that once forced a direct repository provider went away with the
+// project-sections extraction.
 @Module({
-  imports: [NotificationsModule],
+  imports: [NotificationsModule, ProjectsModule],
   controllers: [RisksController],
-  // ProjectsRepository directly (not the service) — the alert only needs a
-  // project row, and the full ProjectsService would create a module cycle.
-  providers: [RisksService, RisksRepository, ProjectsRepository],
+  providers: [RisksService, RisksRepository],
   exports: [RisksService],
 })
 export class RisksModule {}

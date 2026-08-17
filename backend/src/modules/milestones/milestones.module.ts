@@ -6,6 +6,8 @@ import { MilestonesRepository } from './milestones.repository';
 @Module({
   controllers: [MilestonesController],
   providers: [MilestonesService, MilestonesRepository],
-  exports: [MilestonesService],
+  // The repository is exported for submissions' weight gate, which reads raw
+  // milestone rows without needing the full service.
+  exports: [MilestonesService, MilestonesRepository],
 })
 export class MilestonesModule {}

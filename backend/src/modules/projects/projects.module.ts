@@ -2,36 +2,17 @@ import { Module } from '@nestjs/common';
 import { ProjectsController } from './projects.controller';
 import { ProjectsService } from './projects.service';
 import { ProjectsRepository } from './projects.repository';
-import { MilestonesModule } from '../milestones/milestones.module';
-import { ProgramOutcomesModule } from '../program-outcomes/program-outcomes.module';
-import { ActionItemsModule } from '../action-items/action-items.module';
-import { LinksModule } from '../links/links.module';
-import { ResourcesModule } from '../resources/resources.module';
-import { IssuesModule } from '../issues/issues.module';
-import { RisksModule } from '../risks/risks.module';
-import { SubmissionsModule } from '../submissions/submissions.module';
 import { NotificationsModule } from '../notifications/notifications.module';
-import { UpdatesModule } from '../updates/updates.module';
-import { StatusReportsModule } from '../status-reports/status-reports.module';
-import { AttachmentsModule } from '../attachments/attachments.module';
 
+// The eleven domain-module imports left with the section fan-out — see
+// ProjectSectionsModule. Keeping this module import-light is what lets other
+// domains import ProjectsModule without a cycle.
 @Module({
-  imports: [
-    MilestonesModule,
-    ProgramOutcomesModule,
-    ActionItemsModule,
-    LinksModule,
-    ResourcesModule,
-    IssuesModule,
-    RisksModule,
-    SubmissionsModule,
-    NotificationsModule,
-    UpdatesModule,
-    StatusReportsModule,
-    AttachmentsModule,
-  ],
+  imports: [NotificationsModule],
   controllers: [ProjectsController],
   providers: [ProjectsService, ProjectsRepository],
-  exports: [ProjectsService],
+  // The repository is exported for modules that only need project rows
+  // (risks' alert, submissions' gate) without the full service.
+  exports: [ProjectsService, ProjectsRepository],
 })
 export class ProjectsModule {}

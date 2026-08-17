@@ -6,21 +6,17 @@ import {
 } from './submissions.controller';
 import { SubmissionsService } from './submissions.service';
 import { SubmissionsRepository } from './submissions.repository';
-import { ProjectsRepository } from '../projects/projects.repository';
-import { MilestonesRepository } from '../milestones/milestones.repository';
+import { ProjectsModule } from '../projects/projects.module';
+import { MilestonesModule } from '../milestones/milestones.module';
 import { NotificationsModule } from '../notifications/notifications.module';
 
+// The gate's ProjectsRepository/MilestonesRepository come from the real
+// modules now — the cycle that once forced direct repository providers went
+// away with the project-sections extraction.
 @Module({
-  imports: [NotificationsModule],
+  imports: [NotificationsModule, ProjectsModule, MilestonesModule],
   controllers: [CyclesController, ReportsController, SubmissionsController],
-  providers: [
-    SubmissionsService,
-    SubmissionsRepository,
-    // Direct repository deps (not services) — the gate reads raw rows and
-    // pulling in the full ProjectsService would create a module cycle.
-    ProjectsRepository,
-    MilestonesRepository,
-  ],
+  providers: [SubmissionsService, SubmissionsRepository],
   exports: [SubmissionsService],
 })
 export class SubmissionsModule {}
