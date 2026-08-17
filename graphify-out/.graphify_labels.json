@@ -121,7 +121,5 @@
   "119": "@tailwindcss/vite",
   "120": "@eslint/js",
   "121": "@testing-library/react",
-  "122": "typescript-eslint",
-  "123": "jose",
-  "124": "@nestjs/platform-express"
+  "122": "typescript-eslint"
 }
