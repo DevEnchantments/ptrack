@@ -235,13 +235,13 @@
     "semantic_hash": ""
   },
   "backend/src/modules/milestones/milestones.repository.ts": {
-    "mtime": 1786545386.7682061,
-    "ast_hash": "d0c5325cebb74a4d56e966a8047a5df2",
+    "mtime": 1786955302.127209,
+    "ast_hash": "ea765d5766993e98afb10ff2229bc263",
     "semantic_hash": ""
   },
   "backend/src/modules/milestones/milestones.service.ts": {
-    "mtime": 1786545386.927772,
-    "ast_hash": "9637698ba94dd04e21858d406d1a36f5",
+    "mtime": 1786955620.2271483,
+    "ast_hash": "42361b13aaeb2b62cba753bd27358707",
     "semantic_hash": ""
   },
   "backend/src/modules/people/dto/create-person.dto.ts": {
@@ -1505,8 +1505,8 @@
     "semantic_hash": ""
   },
   "docs/REFACTOR-PLAN.md": {
-    "mtime": 1786954312.5701864,
-    "ast_hash": "d78ec7c8d890df0c41c3d488b12c7b6d",
+    "mtime": 1786955668.3241055,
+    "ast_hash": "f8f63272ed9bbab10e7d9456edf7aee9",
     "semantic_hash": ""
   },
   "frontend/src/lib/format.test.ts": {
@@ -1567,6 +1567,11 @@
   "backend/src/modules/program-outcomes/program-outcomes.service.spec.ts": {
     "mtime": 1786953909.042492,
     "ast_hash": "1228dff9e7e9321d370eb09e174111fc",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/milestones/milestones.service.spec.ts": {
+    "mtime": 1786954634.9760404,
+    "ast_hash": "f6760aa7df1e399ca738e8a31f903e9b",
     "semantic_hash": ""
   }
 }
