@@ -2,6 +2,7 @@ import { Global, Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { AppRoleService } from './app-role.service';
 import { ProjectAccessService } from './project-access.service';
+import { CapabilityService } from './capability.service';
 import { AppRoleGuard } from './app-role.guard';
 import { ProjectAccessGuard } from './project-access.guard';
 
@@ -15,10 +16,11 @@ import { ProjectAccessGuard } from './project-access.guard';
 @Module({
   providers: [
     AppRoleService,
+    CapabilityService,
     ProjectAccessService,
     { provide: APP_GUARD, useClass: AppRoleGuard },
     { provide: APP_GUARD, useClass: ProjectAccessGuard },
   ],
-  exports: [AppRoleService, ProjectAccessService],
+  exports: [AppRoleService, CapabilityService, ProjectAccessService],
 })
 export class AccessModule {}

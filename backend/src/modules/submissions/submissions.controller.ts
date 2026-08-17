@@ -14,8 +14,8 @@ import {
   type AuthUser,
 } from '../../common/decorators/current-user.decorator';
 import {
-  MinAppRole,
   ProjectScoped,
+  RequireCapability,
 } from '../../common/access/access.decorators';
 
 const ACTION_BODY = {
@@ -48,13 +48,13 @@ export class CyclesController {
     return this.submissions.currentCycle();
   }
 
-  @MinAppRole('pmo')
+  @RequireCapability('cycles.close')
   @Post('current/close')
   close() {
     return this.submissions.closeCurrentCycle();
   }
 
-  @MinAppRole('pmo')
+  @RequireCapability('cycles.close')
   @Post('current/reopen')
   reopen() {
     return this.submissions.reopenCurrentCycle();

@@ -12,7 +12,7 @@ import {
   CreateLookupValueDto,
   UpdateLookupValueDto,
 } from './dto/lookup-value.dto';
-import { AdminOnly } from '../../common/access/access.decorators';
+import { RequireCapability } from '../../common/access/access.decorators';
 
 @Controller('lookups')
 export class LookupsController {
@@ -29,13 +29,13 @@ export class LookupsController {
     return this.lookups.list(name);
   }
 
-  @AdminOnly()
+  @RequireCapability('lookups.manage')
   @Post(':name/values')
   addValue(@Param('name') name: string, @Body() dto: CreateLookupValueDto) {
     return this.lookups.addValue(name, dto);
   }
 
-  @AdminOnly()
+  @RequireCapability('lookups.manage')
   @Patch(':name/values/:id')
   updateValue(
     @Param('name') name: string,
@@ -45,19 +45,19 @@ export class LookupsController {
     return this.lookups.updateValue(name, id, dto);
   }
 
-  @AdminOnly()
+  @RequireCapability('lookups.manage')
   @Post('project-categories')
   createCategory(@Body('name') name: string) {
     return this.lookups.createCategory(name);
   }
 
-  @AdminOnly()
+  @RequireCapability('lookups.manage')
   @Post('sectors')
   createSector(@Body('name') name: string) {
     return this.lookups.createSector(name);
   }
 
-  @AdminOnly()
+  @RequireCapability('lookups.manage')
   @Post('project-roles')
   createRole(
     @Body('name') name: string,

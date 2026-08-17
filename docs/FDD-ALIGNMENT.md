@@ -472,6 +472,21 @@ Project/From Template pmo+, Edit Project/Adjust Weights manage-level, Add Outcom
 write-level, via `lib/use-me.ts` + `lib/access.ts` mirror). Frontend hiding is UX only;
 guards enforce. Finer per-section button hiding = polish backlog.
 
+**UI-managed authorization — SHIPPED 2026-08-17** (FDD role 1: "configure ... roles",
+per Fares: the security phase must include this as UI). The capability CATALOG is code
+(8 keys in `access.logic.ts`, each mapped to guarded routes via `@RequireCapability`);
+WHICH ROLE HOLDS WHICH capability is data (`role_capabilities`,
+`db/role_capabilities.sql`, seeded = the previous hard-coded matrix so day-one behavior
+is identical; unreadable table falls back to the code seed). Hard-coded on purpose:
+admin bypasses all capability checks (the system can never be configured into an
+unfixable state) and the per-project view/write/manage ladder stays code (structural,
+not role policy). Administration → **Users & Roles** page: Users tab (global-role
+dropdown per account; demoting the last admin is refused) + Permissions tab (role ×
+capability grid, admin column locked). Every change audited to `access_audit`
+(record_history can't hold these — its project_id is NOT NULL). When OI-01's
+"delegated authority" answers arrive, they become new catalog keys + grid rows, not a
+redesign.
+
 ## 9. Conventions carried forward
 Field-mapping evidence rule now points at **FDD figures** (ask for hi-res PNG when field-level
 detail is unreadable) · one feature at a time, plan → approve → build → verify → user commits ·

@@ -19,9 +19,9 @@ import {
   type AuthUser,
 } from '../../common/decorators/current-user.decorator';
 import {
-  MinAppRole,
   ProjectAccess,
   ProjectScoped,
+  RequireCapability,
 } from '../../common/access/access.decorators';
 import { AccessLevel } from '../../common/access/access.logic';
 
@@ -31,7 +31,7 @@ export class ProjectsController {
   constructor(private readonly projects: ProjectsService) {}
 
   // FDD 3.1 step 1 assigns creation to Project Owner / PMO (ASSUMED PMO-gated).
-  @MinAppRole('pmo')
+  @RequireCapability('projects.create')
   @Post()
   @ApiBody({
     type: CreateProjectDto,

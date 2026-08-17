@@ -1,7 +1,8 @@
 import { SetMetadata } from '@nestjs/common';
-import { AccessLevel, AppRole } from './access.logic';
+import { AccessLevel, AppRole, Capability } from './access.logic';
 
 export const MIN_APP_ROLE_KEY = 'minAppRole';
+export const CAPABILITY_KEY = 'capability';
 export const PROJECT_PARAM_KEY = 'projectParam';
 export const PROJECT_LEVEL_KEY = 'projectLevel';
 
@@ -9,8 +10,15 @@ export const PROJECT_LEVEL_KEY = 'projectLevel';
 export const MinAppRole = (role: AppRole) =>
   SetMetadata(MIN_APP_ROLE_KEY, role);
 
-/** Shorthand for the admin-only surfaces (Code Tables, Import, provisioning). */
+/** Shorthand for surfaces that must stay admin-only regardless of grants. */
 export const AdminOnly = () => MinAppRole('admin');
+
+/**
+ * Route requires a capability from the catalog. admin always passes; other
+ * roles pass when the Users & Roles grid (role_capabilities) grants it.
+ */
+export const RequireCapability = (capability: Capability) =>
+  SetMetadata(CAPABILITY_KEY, capability);
 
 /**
  * Marks a controller (or route) as project-scoped for ProjectAccessGuard:

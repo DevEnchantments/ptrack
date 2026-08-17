@@ -3,6 +3,7 @@ import { DashboardPage } from '@/pages/DashboardPage'
 import { ReportingPage } from '@/pages/ReportingPage'
 import { KpisPage } from '@/pages/KpisPage'
 import { CodeTablesPage } from '@/pages/admin/CodeTablesPage'
+import { UsersRolesPage } from '@/pages/admin/UsersRolesPage'
 import { MilestonesPage } from '@/pages/MilestonesPage'
 import { ActionItemsPage } from '@/pages/ActionItemsPage'
 import { PeoplePage } from '@/pages/PeoplePage'
@@ -38,6 +39,7 @@ function App() {
           <Route path="/reporting" element={<ReportingPage />} />
           <Route path="/kpis" element={<KpisPage />} />
           <Route path="/admin/code-tables" element={<CodeTablesPage />} />
+          <Route path="/admin/users-roles" element={<UsersRolesPage />} />
           <Route path="/milestones" element={<MilestonesPage />} />
           <Route path="/action-items" element={<ActionItemsPage />} />
           <Route path="/people" element={<PeoplePage />} />

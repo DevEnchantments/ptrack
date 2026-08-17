@@ -5,6 +5,81 @@
  */
 
 export const APP_ROLES = ['user', 'executive', 'pmo', 'admin'] as const;
+/** Roles whose capability grants are editable — admin bypasses everything. */
+export const GRANTABLE_ROLES = ['pmo', 'executive', 'user'] as const;
+export type GrantableRole = (typeof GRANTABLE_ROLES)[number];
+
+/**
+ * The capability CATALOG is code: every key maps to guarded routes, so a key
+ * cannot be invented from the UI. Which role HOLDS a key is data
+ * (role_capabilities, db/role_capabilities.sql) edited in Users & Roles.
+ */
+export const CAPABILITIES = [
+  {
+    key: 'projects.create',
+    label: 'Create projects',
+    description: 'New Project wizard and From Template (FDD 3.1 step 1).',
+  },
+  {
+    key: 'cycles.close',
+    label: 'Close / reopen reporting cycles',
+    description: 'Lock or unlock the current cycle (FDD 3.1 step 8).',
+  },
+  {
+    key: 'kpis.manage',
+    label: 'Manage KPIs',
+    description: 'Create/edit/delete KPI definitions, readings, action plans.',
+  },
+  {
+    key: 'templates.instantiate',
+    label: 'Create projects from templates',
+    description: 'Instantiate a saved template into a new project.',
+  },
+  {
+    key: 'lookups.manage',
+    label: 'Manage code tables',
+    description: 'Add, rename, reorder and deactivate lookup values.',
+  },
+  {
+    key: 'import.run',
+    label: 'Run CSV imports',
+    description: 'Bulk-load projects and milestones from CSV.',
+  },
+  {
+    key: 'users.provision',
+    label: 'Provision accounts',
+    description: 'Create login accounts for pending people.',
+  },
+  {
+    key: 'users.manage_roles',
+    label: 'Manage roles & permissions',
+    description: 'Assign global roles and edit this permissions grid.',
+  },
+] as const;
+export type Capability = (typeof CAPABILITIES)[number]['key'];
+
+export const CAPABILITY_KEYS = CAPABILITIES.map((c) => c.key);
+
+export function isCapability(value: unknown): value is Capability {
+  return CAPABILITY_KEYS.includes(value as Capability);
+}
+
+/**
+ * Seed defaults — the enforcement that shipped 2026-08-17, mirrored in
+ * db/role_capabilities.sql. Also the FAIL-SAFE: when the table is unreadable
+ * (migration not run), grants resolve to exactly this.
+ */
+export const DEFAULT_GRANTS: Record<GrantableRole, readonly Capability[]> = {
+  pmo: [
+    'projects.create',
+    'cycles.close',
+    'kpis.manage',
+    'templates.instantiate',
+  ],
+  executive: [],
+  user: [],
+};
+
 export type AppRole = (typeof APP_ROLES)[number];
 
 /** Ordered project access: each level includes everything below it. */

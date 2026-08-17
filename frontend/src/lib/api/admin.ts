@@ -1,4 +1,4 @@
-import { apiDelete, apiGet, apiPatch, apiPost } from './core'
+import { apiDelete, apiGet, apiPatch, apiPost, apiPut } from './core'
 
 export interface KpiReading {
   id: string
@@ -65,6 +65,35 @@ export interface KpiInput {
   tier_id?: string | null
   objective_id?: string | null
   owner_id?: string | null
+}
+
+export interface AdminUser {
+  id: string
+  email: string | null
+  full_name: string | null
+  app_role: 'admin' | 'pmo' | 'executive' | 'user'
+}
+
+export interface CapabilityInfo {
+  key: string
+  label: string
+  description: string
+}
+
+export interface CapabilityGrants {
+  catalog: CapabilityInfo[]
+  grants: Record<'pmo' | 'executive' | 'user', string[]>
+}
+
+export const accessApi = {
+  users: () => apiGet<AdminUser[]>('/access/users'),
+  updateRole: (id: string, app_role: string) =>
+    apiPatch<{ id: string; app_role: string }>(`/access/users/${id}/role`, {
+      app_role,
+    }),
+  capabilities: () => apiGet<CapabilityGrants>('/access/capabilities'),
+  saveGrants: (role: string, capabilities: string[]) =>
+    apiPut<CapabilityGrants>(`/access/capabilities/${role}`, { capabilities }),
 }
 
 export interface AdminLookupRow {

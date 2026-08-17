@@ -52,6 +52,17 @@ export async function apiPatch<T>(path: string, body: unknown): Promise<T> {
   )
 }
 
+export async function apiPut<T>(path: string, body: unknown): Promise<T> {
+  const headers = await authHeader()
+  return handle<T>(
+    await fetch(`${API_URL}${path}`, {
+      method: 'PUT',
+      headers: { ...headers, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    }),
+  )
+}
+
 export async function apiDelete<T>(path: string): Promise<T> {
   const headers = await authHeader()
   return handle<T>(

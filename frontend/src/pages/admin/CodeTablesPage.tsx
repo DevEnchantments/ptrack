@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { ArrowDown, ArrowUp, Check, Loader2, Pencil, Plus, X } from 'lucide-react'
 import {
   adminLookupsApi,
@@ -288,7 +289,15 @@ export function CodeTablesPage() {
       <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
         Administration
       </p>
-      <h1 className="text-2xl font-semibold">Code Tables</h1>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <h1 className="text-2xl font-semibold">Code Tables</h1>
+        <Link
+          to="/admin/users-roles"
+          className="text-sm text-muted-foreground hover:underline"
+        >
+          Users &amp; Roles →
+        </Link>
+      </div>
       <p className="mt-1 text-sm text-muted-foreground">
         The configurable value lists behind every dropdown. Deactivated values
         disappear from pickers; existing records keep showing them.

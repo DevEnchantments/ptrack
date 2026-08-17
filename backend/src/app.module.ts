@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { DatabaseModule } from './database/database.module';
 import { AccessModule } from './common/access/access.module';
+import { AccessAdminModule } from './modules/access-admin/access-admin.module';
 import { SupabaseAuthGuard } from './common/guards/supabase-auth.guard';
 import { ProjectsModule } from './modules/projects/projects.module';
 import { ProjectSectionsModule } from './modules/project-sections/project-sections.module';
@@ -37,6 +38,7 @@ import { AppService } from './app.service';
     ConfigModule.forRoot({ isGlobal: true }),
     DatabaseModule,
     AccessModule,
+    AccessAdminModule,
     ProjectsModule,
     ProjectSectionsModule,
     UsersModule,

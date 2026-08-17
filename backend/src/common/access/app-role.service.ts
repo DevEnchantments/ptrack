@@ -18,6 +18,11 @@ export class AppRoleService {
 
   constructor(private readonly db: DatabaseService) {}
 
+  /** Role edits in Users & Roles must take effect immediately. */
+  clearUser(userId: string): void {
+    this.cache.delete(userId);
+  }
+
   async getRole(userId: string): Promise<AppRole> {
     const hit = this.cache.get(userId);
     if (hit && Date.now() - hit.at < TTL_MS) return hit.role;

@@ -21,7 +21,7 @@ import {
   CurrentUser,
   type AuthUser,
 } from '../../common/decorators/current-user.decorator';
-import { MinAppRole } from '../../common/access/access.decorators';
+import { RequireCapability } from '../../common/access/access.decorators';
 
 @Controller('kpis')
 export class KpisController {
@@ -32,7 +32,7 @@ export class KpisController {
     return this.kpis.list();
   }
 
-  @MinAppRole('pmo')
+  @RequireCapability('kpis.manage')
   @Post()
   @ApiBody({
     type: CreateKpiDto,
@@ -47,7 +47,7 @@ export class KpisController {
     return this.kpis.add(dto, user.id);
   }
 
-  @MinAppRole('pmo')
+  @RequireCapability('kpis.manage')
   @Patch(':kpiId')
   update(
     @Param('kpiId', ParseUUIDPipe) kpiId: string,
@@ -57,13 +57,13 @@ export class KpisController {
     return this.kpis.update(kpiId, dto, user.id);
   }
 
-  @MinAppRole('pmo')
+  @RequireCapability('kpis.manage')
   @Delete(':kpiId')
   remove(@Param('kpiId', ParseUUIDPipe) kpiId: string) {
     return this.kpis.remove(kpiId);
   }
 
-  @MinAppRole('pmo')
+  @RequireCapability('kpis.manage')
   @Post(':kpiId/readings')
   addReading(
     @Param('kpiId', ParseUUIDPipe) kpiId: string,
@@ -73,7 +73,7 @@ export class KpisController {
     return this.kpis.addReading(kpiId, dto, user.id);
   }
 
-  @MinAppRole('pmo')
+  @RequireCapability('kpis.manage')
   @Delete(':kpiId/readings/:readingId')
   removeReading(
     @Param('kpiId', ParseUUIDPipe) kpiId: string,
@@ -82,7 +82,7 @@ export class KpisController {
     return this.kpis.removeReading(kpiId, readingId);
   }
 
-  @MinAppRole('pmo')
+  @RequireCapability('kpis.manage')
   @Post(':kpiId/plans')
   addPlan(
     @Param('kpiId', ParseUUIDPipe) kpiId: string,
@@ -92,7 +92,7 @@ export class KpisController {
     return this.kpis.addPlan(kpiId, dto, user.id);
   }
 
-  @MinAppRole('pmo')
+  @RequireCapability('kpis.manage')
   @Patch(':kpiId/plans/:planId')
   updatePlan(
     @Param('kpiId', ParseUUIDPipe) kpiId: string,
@@ -102,7 +102,7 @@ export class KpisController {
     return this.kpis.updatePlan(kpiId, planId, dto);
   }
 
-  @MinAppRole('pmo')
+  @RequireCapability('kpis.manage')
   @Delete(':kpiId/plans/:planId')
   removePlan(
     @Param('kpiId', ParseUUIDPipe) kpiId: string,

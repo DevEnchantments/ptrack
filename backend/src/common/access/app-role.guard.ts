@@ -6,8 +6,9 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { AppRoleService } from './app-role.service';
-import { atLeastRole, AppRole } from './access.logic';
-import { MIN_APP_ROLE_KEY } from './access.decorators';
+import { CapabilityService } from './capability.service';
+import { atLeastRole, AppRole, Capability, CAPABILITIES } from './access.logic';
+import { CAPABILITY_KEY, MIN_APP_ROLE_KEY } from './access.decorators';
 import type { AuthUser } from '../decorators/current-user.decorator';
 
 /**
@@ -20,6 +21,7 @@ export class AppRoleGuard implements CanActivate {
   constructor(
     private readonly reflector: Reflector,
     private readonly roles: AppRoleService,
+    private readonly capabilities: CapabilityService,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -27,14 +29,28 @@ export class AppRoleGuard implements CanActivate {
       MIN_APP_ROLE_KEY,
       [context.getHandler(), context.getClass()],
     );
-    if (!min) return true;
+    const capability = this.reflector.getAllAndOverride<Capability | undefined>(
+      CAPABILITY_KEY,
+      [context.getHandler(), context.getClass()],
+    );
+    if (!min && !capability) return true;
 
     const request = context.switchToHttp().getRequest<{ user?: AuthUser }>();
     if (!request.user) return true; // @Public route — nothing to enforce.
 
-    const role = await this.roles.getRole(request.user.id);
-    if (!atLeastRole(role, min)) {
-      throw new ForbiddenException(`This action needs the ${min} role.`);
+    if (min) {
+      const role = await this.roles.getRole(request.user.id);
+      if (!atLeastRole(role, min)) {
+        throw new ForbiddenException(`This action needs the ${min} role.`);
+      }
+    }
+    if (capability) {
+      const allowed = await this.capabilities.has(request.user.id, capability);
+      if (!allowed) {
+        const label =
+          CAPABILITIES.find((c) => c.key === capability)?.label ?? capability;
+        throw new ForbiddenException(`Your role is not granted "${label}".`);
+      }
     }
     return true;
   }

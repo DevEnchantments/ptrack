@@ -6,7 +6,7 @@ import {
   CurrentUser,
   type AuthUser,
 } from '../../common/decorators/current-user.decorator';
-import { AdminOnly } from '../../common/access/access.decorators';
+import { RequireCapability } from '../../common/access/access.decorators';
 import { AppRoleService } from '../../common/access/app-role.service';
 
 @Controller('users')
@@ -31,7 +31,7 @@ export class UsersController {
     };
   }
 
-  @AdminOnly()
+  @RequireCapability('users.provision')
   @Post('provision')
   @ApiBody({
     type: ProvisionUserDto,
@@ -50,7 +50,7 @@ export class UsersController {
     return this.users.provision(dto, user.id);
   }
 
-  @AdminOnly()
+  @RequireCapability('users.provision')
   @Post('claim')
   claim(@CurrentUser() user: AuthUser) {
     return this.users.claimForCurrentUser(user);

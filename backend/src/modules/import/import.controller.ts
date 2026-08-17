@@ -6,10 +6,10 @@ import {
   CurrentUser,
   type AuthUser,
 } from '../../common/decorators/current-user.decorator';
-import { AdminOnly } from '../../common/access/access.decorators';
+import { RequireCapability } from '../../common/access/access.decorators';
 
 // CSV import writes across projects wholesale — FDD role 1 territory.
-@AdminOnly()
+@RequireCapability('import.run')
 @Controller('import')
 export class ImportController {
   constructor(private readonly imports: ImportService) {}
