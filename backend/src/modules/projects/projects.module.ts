@@ -11,6 +11,8 @@ import { NotificationsModule } from '../notifications/notifications.module';
   imports: [NotificationsModule],
   controllers: [ProjectsController],
   providers: [ProjectsService, ProjectsRepository],
-  exports: [ProjectsService],
+  // The repository is exported for modules that only need project rows
+  // (risks' alert, submissions' gate) without the full service.
+  exports: [ProjectsService, ProjectsRepository],
 })
 export class ProjectsModule {}
