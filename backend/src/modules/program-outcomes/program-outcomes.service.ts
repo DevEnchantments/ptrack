@@ -3,6 +3,22 @@ import { RecordHistoryService } from '../../database/record-history.service';
 import { ProgramOutcomesRepository } from './program-outcomes.repository';
 import { CreateProgramOutcomeDto } from './dto/create-program-outcome.dto';
 import { UpdateProgramOutcomeDto } from './dto/update-program-outcome.dto';
+import { columnsFrom, type ColumnSpec } from '../../common/columns';
+
+/**
+ * How an outcome DTO maps onto columns, for both create and update.
+ *
+ * The dates are `nullable`, not `dateOrNull` as in projects/: this module uses
+ * `?? null`, so an empty string would be stored rather than clearing the
+ * column. Each module keeps its own rule.
+ */
+const COLUMN_SPEC: ColumnSpec = {
+  trimmed: ['name'],
+  nullable: ['sort_order', 'start_date', 'end_date'],
+};
+
+/** What a new outcome gets for the columns the caller omitted. */
+const CREATE_DEFAULTS = { start_date: null, end_date: null };
 
 @Injectable()
 export class ProgramOutcomesService {
@@ -16,21 +32,34 @@ export class ProgramOutcomesService {
   }
 
   async add(projectId: string, dto: CreateProgramOutcomeDto, userId: string) {
-    // Fig 2 outcomes are numbered; default to next-in-project when omitted.
-    let sortOrder = dto.sort_order ?? null;
-    if (sortOrder === null) {
-      const existing = await this.repo.findByProject(projectId);
-      sortOrder = existing.length + 1;
-    }
     return this.repo.insert({
       project_id: projectId,
-      name: dto.name.trim(),
-      sort_order: sortOrder,
-      start_date: dto.start_date ?? null,
-      end_date: dto.end_date ?? null,
+      ...CREATE_DEFAULTS,
+      ...columnsFrom(dto, COLUMN_SPEC),
+      sort_order: dto.sort_order ?? (await this.nextSortOrder(projectId)),
       created_by: userId,
       updated_by: userId,
     });
+  }
+
+  /**
+   * Fig 2 outcomes are numbered; a create that omits the number takes the next
+   * one in the project. Costs one read, so it only runs when needed.
+   *
+   * Highest-in-use + 1, not count + 1: with outcomes 1-2-3, deleting #2 leaves
+   * a count of 2, which handed the next insert a colliding 3. Unnumbered rows
+   * do not participate.
+   *
+   * Still not safe against two simultaneous creates — that needs a unique
+   * constraint or a sequence, i.e. a schema change.
+   */
+  private async nextSortOrder(projectId: string): Promise<number> {
+    const existing = await this.repo.findByProject(projectId);
+    const highest = existing.reduce(
+      (max, o) => Math.max(max, o.sort_order ?? 0),
+      0,
+    );
+    return highest + 1;
   }
 
   async update(
@@ -39,16 +68,12 @@ export class ProgramOutcomesService {
     dto: UpdateProgramOutcomeDto,
     userId: string,
   ) {
-    const patch: Record<string, unknown> = {
+    const updated = await this.repo.update(projectId, outcomeId, {
       updated_by: userId,
       // No moddatetime trigger on this table; keep the audit column honest.
       updated_at: new Date().toISOString(),
-    };
-    if (dto.name !== undefined) patch.name = dto.name.trim();
-    if (dto.sort_order !== undefined) patch.sort_order = dto.sort_order ?? null;
-    if (dto.start_date !== undefined) patch.start_date = dto.start_date ?? null;
-    if (dto.end_date !== undefined) patch.end_date = dto.end_date ?? null;
-    const updated = await this.repo.update(projectId, outcomeId, patch);
+      ...columnsFrom(dto, COLUMN_SPEC),
+    });
     if (!updated) throw new NotFoundException('Outcome not found.');
     return updated;
   }
