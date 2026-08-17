@@ -44,6 +44,19 @@ export interface MilestoneListItem extends Milestone {
 const COLUMNS =
   'id, project_id, name, description, start_date, due_date, original_due_date, status, role_id, owner_id, is_major, tags, weightage, percent_complete, completed_date, outcome_id, created_at, updated_at';
 
+/** The list read: the joins the section grid and the Gantt need. */
+const LIST_SELECT = `${COLUMNS},
+         role:project_roles ( name ),
+         owner:profiles!owner_id ( full_name, email ),
+         outcome:program_outcomes ( id, name, sort_order ),
+         depends_on:milestone_dependencies!target_id ( source_id )`;
+
+/** The detail read: everything in the list, plus the audit and project joins. */
+const DETAIL_SELECT = `${LIST_SELECT},
+         project:projects ( name ),
+         created_by_profile:profiles!created_by ( full_name, email ),
+         updated_by_profile:profiles!updated_by ( full_name, email )`;
+
 @Injectable()
 export class MilestonesRepository {
   constructor(private readonly db: DatabaseService) {}
@@ -124,13 +137,7 @@ export class MilestonesRepository {
 
   async findByProject(projectId: string): Promise<MilestoneListItem[]> {
     const { data, error } = await this.table
-      .select(
-        `${COLUMNS},
-         role:project_roles ( name ),
-         owner:profiles!owner_id ( full_name, email ),
-         outcome:program_outcomes ( id, name, sort_order ),
-         depends_on:milestone_dependencies!target_id ( source_id )`,
-      )
+      .select(LIST_SELECT)
       .eq('project_id', projectId)
       .order('due_date', { ascending: true });
     if (error) throw toHttpException(error, 'milestones.findByProject');
@@ -142,16 +149,7 @@ export class MilestonesRepository {
     milestoneId: string,
   ): Promise<MilestoneListItem | null> {
     const { data, error } = await this.table
-      .select(
-        `${COLUMNS},
-         role:project_roles ( name ),
-         owner:profiles!owner_id ( full_name, email ),
-         outcome:program_outcomes ( id, name, sort_order ),
-         depends_on:milestone_dependencies!target_id ( source_id ),
-         project:projects ( name ),
-         created_by_profile:profiles!created_by ( full_name, email ),
-         updated_by_profile:profiles!updated_by ( full_name, email )`,
-      )
+      .select(DETAIL_SELECT)
       .eq('project_id', projectId)
       .eq('id', milestoneId)
       .maybeSingle();

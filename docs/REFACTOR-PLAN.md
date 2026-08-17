@@ -139,7 +139,9 @@ the recommended alternative.
 
 - [x] `program-outcomes/` (**2026-08-13** — 10 characterization tests, spec
       adoption, `nextSortOrder()`; **plus an approved bug fix in its own
-      commit**) · [ ] `milestones/` · [ ] `status-reports/`
+      commit**) · [x] `milestones/` (**2026-08-13** — 19 characterization tests,
+      spec adoption, deps write lifted out of the patch chain, weights rule
+      named, LIST/DETAIL selects) · [ ] `status-reports/`
 
 ### Phase 3 — Content and attachments
 
@@ -554,3 +556,43 @@ literal trips `no-unsafe-assignment`, and `as unknown as string` trips
 the supabase-js typed-select gotcha in CLAUDE.md.
 
 **Verification.** 118 tests / 13 suites; `tsc` · `eslint --max-warnings 0` · `build` clean.
+
+### 2026-08-13 — Phase 2b, `modules/milestones/`
+
+**Changed (5 moves), behaviour-preserving.** 19 characterization tests written first and
+shown green against the unrefactored service (118 → 137).
+
+1. `COLUMN_SPEC` adoption. Dates here are `asIs` — see the inconsistency note below.
+2. The `replaceDependencies` call was sitting *inside* the patch-building `if` chain,
+   between `tags` and `outcome_id`, so a reader scanning column assignments hit a database
+   write halfway down. Lifted above the patch build; DB call order is unchanged
+   (deps → column update → re-fetch).
+3. `assertWeightsTotal()` extracted, with `WEIGHT_TOTAL = 100` and
+   `WEIGHT_TOLERANCE = 0.001` carrying the FDD 3.3.2 reference.
+4. Repository `LIST_SELECT` + `DETAIL_SELECT` composed from it (`DETAIL = LIST + 3 joins`),
+   verified byte-identical against the diff before running anything.
+
+**What the tests pin that nothing did before:**
+- **`original_due_date` freezes at creation** — the FDD rule the History tab depends on.
+  Mutation-checked: pointing it at `start_date` failed 2 tests, then reverted.
+- **`depends_on` behaves differently on create and update.** Create guards on `?.length`,
+  so `[]` is a no-op; update treats the same `[]` as "clear the set". Both pinned as-is.
+- `weightage: 0` and `percent_complete: 0` survive (`?? null`, not `|| null`).
+- All-null weights are allowed and clear the set (equal weighting per F1); an empty
+  weights array writes nothing at all.
+
+**Reported, not fixed.**
+1. **Three modules, three date rules.** `projects/` clears a date on `''` (`|| null`),
+   `program-outcomes/` stores it (`?? null`), `milestones/` passes it through (`asIs`).
+   A `due_date: ''` here reaches Postgres as invalid date syntax — a 500 where projects
+   would have cleared the column. Worth one deliberate decision across all three.
+2. **`adjustWeights` has no transaction.** N independent updates via `Promise.all`; a
+   partial failure leaves weights summing to something other than 100 — the very invariant
+   the method just enforced. Needs an RPC like `replace_action_item_owners`.
+3. `add` returns the bare row, `update` the joined one — **third** instance of the
+   add/update shape mismatch (links, action-items, milestones).
+
+**Rejected.** The double `get()` in `update` (one for the 404, one for the return) — that
+is a round-trip saving, and performance is out of scope per §5.
+
+**Verification.** 137 tests / 14 suites; `tsc` · `eslint --max-warnings 0` · `build` clean.
