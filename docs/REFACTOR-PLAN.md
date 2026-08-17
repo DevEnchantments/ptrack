@@ -124,24 +124,24 @@ Chosen to be representative, not easy.
       **Done 2026-08-13** — service 274 → 214 lines, 13 collaborators → 2, new
       `project-sections/` module (approved deviation from ground rule 5).
 - [x] **1c.** `backend/src/modules/action-items/` — known non-trivial logic
-      (owner-set diffing, atomic replace RPC). **Done 2026-08-13** — plus the
+      (owner-set diffing, atomic replace RPC). **Done 2026-08-17** — plus the
       shared `common/columns.ts` promotion, retrofitted into links + projects.
 
 **Gate:** after 1c, review whether the pass produced real value or mostly
 cosmetic churn. **If cosmetic, stop the whole plan here.** That is a legitimate
 outcome and cheaper than discovering it at module 20.
 
-**Gate verdict (2026-08-13): value is real but front-loaded — do NOT run the
+**Gate verdict (2026-08-17): value is real but front-loaded — do NOT run the
 remaining 20 modules as 20 full sessions.** See section 6 for the reasoning and
 the recommended alternative.
 
 ### Phase 2 — Core project entities
 
-- [x] `program-outcomes/` (**2026-08-13** — 10 characterization tests, spec
+- [x] `program-outcomes/` (**2026-08-17** — 10 characterization tests, spec
       adoption, `nextSortOrder()`; **plus an approved bug fix in its own
-      commit**) · [x] `milestones/` (**2026-08-13** — 19 characterization tests,
+      commit**) · [x] `milestones/` (**2026-08-17** — 19 characterization tests,
       spec adoption, deps write lifted out of the patch chain, weights rule
-      named, LIST/DETAIL selects) · [x] `status-reports/` (**2026-08-13** — 10
+      named, LIST/DETAIL selects) · [x] `status-reports/` (**2026-08-17** — 10
       characterization tests, spec adoption, LIST/DETAIL selects; **plus a
       500-instead-of-404 fix**). **Phase 2 complete.**
 
@@ -168,7 +168,7 @@ Only after the backend pass, and only if Phase 1's gate said the approach works.
 Unit is the page or component family, not the file.
 
 - [x] `lib/` (shared helpers — the 5 duplicate `relativeTime` copies live here).
-      **Done 2026-08-13** — 5 `relativeTime` + 2 `initials` + 1 `formatDate`
+      **Done 2026-08-17** — 5 `relativeTime` + 2 `initials` + 1 `formatDate`
       clone deleted, `personName()` adopted at every `||` call site (21 files).
 - [ ] `components/ui/` primitives
 - [ ] Detail pages · [ ] Dialogs · [ ] Reporting pages
@@ -393,7 +393,7 @@ and a documented cross-module workaround now has a path to removal. The pattern 
 recurred exactly as predicted, which is the third data point for the shared-helper
 decision after 1c.
 
-### 2026-08-13 — Phase 1c, `modules/action-items/` + the shared-helper promotion
+### 2026-08-17 — Phase 1c, `modules/action-items/` + the shared-helper promotion
 
 **Skill: none** (as 1a/1b). **Ground rule 5 deviation approved by Fares:** the promotion
 edits `common/`, `links/` and `projects/` alongside `action-items/`.
@@ -436,7 +436,7 @@ modules**, so it is a codebase-wide API-shape pattern, not a one-off.
 
 ---
 
-## 7. Phase 1 gate — verdict (2026-08-13)
+## 7. Phase 1 gate — verdict (2026-08-17)
 
 **Did the pilot produce real value or cosmetic churn? Real, but front-loaded and unevenly
 distributed.**
@@ -472,7 +472,7 @@ tests is the expensive part, not the refactor.
 
 ## 8. Post-gate sessions
 
-### 2026-08-13 — Phase 7 first item, frontend `lib/`
+### 2026-08-17 — Phase 7 first item, frontend `lib/`
 
 **The copies were not identical, which changed the session.** The plan assumed 5
 duplicate `relativeTime()` functions. There were 5, but in **two behaviours**: under a
@@ -480,7 +480,7 @@ minute, `AttachmentDetailPage` and `ProjectDetailPage` said "42 seconds ago" whi
 `HomePage`, `MilestoneDetailPage` and `RecordHistory` said "just now". Folding them
 together was therefore a visible-text decision, not a refactor.
 
-**⚠ APPROVED BEHAVIOUR CHANGE (Fares, 2026-08-13): "just now" everywhere.** Under a
+**⚠ APPROVED BEHAVIOUR CHANGE (Fares, 2026-08-17): "just now" everywhere.** Under a
 minute now reads "just now" on **the attachment detail page and the project detail page**,
 which previously counted seconds. Worth knowing before the next supervisor demo. Two of
 the 15 tests ported in 0a were rewritten to match.
@@ -521,9 +521,9 @@ green: lint · build · 20 tests. Backend untouched at 106.
 **Note for the next frontend session:** the cold-start vitest flake recurred exactly as
 documented in 0a (60.07s, "no tests", one error; the immediate re-run passed in 28s).
 
-### 2026-08-13 — Phase 2a, `modules/program-outcomes/` (+ a bug fix)
+### 2026-08-17 — Phase 2a, `modules/program-outcomes/` (+ a bug fix)
 
-**Full protocol** (Fares' call, 2026-08-13: propose-and-approve on every remaining module
+**Full protocol** (Fares' call, 2026-08-17: propose-and-approve on every remaining module
 rather than batching the mechanical ones).
 
 **Changed — commit 1, behaviour-preserving.** 10 characterization tests written first and
@@ -559,7 +559,7 @@ the supabase-js typed-select gotcha in CLAUDE.md.
 
 **Verification.** 118 tests / 13 suites; `tsc` · `eslint --max-warnings 0` · `build` clean.
 
-### 2026-08-13 — Phase 2b, `modules/milestones/`
+### 2026-08-17 — Phase 2b, `modules/milestones/`
 
 **Changed (5 moves), behaviour-preserving.** 19 characterization tests written first and
 shown green against the unrefactored service (118 → 137).
@@ -583,7 +583,7 @@ shown green against the unrefactored service (118 → 137).
 - All-null weights are allowed and clear the set (equal weighting per F1); an empty
   weights array writes nothing at all.
 
-**Investigated and dismissed — NOT a bug (corrected 2026-08-13, same day).** The three
+**Investigated and dismissed — NOT a bug (corrected 2026-08-17, same day).** The three
 modules do use three different rules for an empty-string date (`projects/` `|| null`,
 `program-outcomes/` `?? null`, `milestones/` `asIs`), and this log first recorded that as a
 latent 500. **It is not reachable.** `main.ts` registers a global `ValidationPipe`, and
@@ -610,7 +610,7 @@ is a round-trip saving, and performance is out of scope per §5.
 
 **Verification.** 137 tests / 14 suites; `tsc` · `eslint --max-warnings 0` · `build` clean.
 
-### 2026-08-13 — Phase 2c, `modules/status-reports/` (+ a bug fix). Phase 2 complete.
+### 2026-08-17 — Phase 2c, `modules/status-reports/` (+ a bug fix). Phase 2 complete.
 
 **A real, reachable bug — the first one this pass has found by reading for failure modes
 rather than structure.** `update()` had no ownership pre-check and went straight to a
