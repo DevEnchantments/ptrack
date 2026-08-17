@@ -35,8 +35,8 @@
     "semantic_hash": ""
   },
   "backend/src/app.module.ts": {
-    "mtime": 1786972373.344682,
-    "ast_hash": "b002da89af58cee3a9736a43927d7680",
+    "mtime": 1786975110.1549215,
+    "ast_hash": "b9f4e1b9ca1016786259d9a913037c3b",
     "semantic_hash": ""
   },
   "backend/src/app.service.ts": {
@@ -605,8 +605,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ProjectDetailPage.tsx": {
-    "mtime": 1786969893.241856,
-    "ast_hash": "891df52331225c4a1855c213f3df06d2",
+    "mtime": 1786975991.5700068,
+    "ast_hash": "44bbaf8d94e5290b88e9f3d8ffb28e99",
     "semantic_hash": ""
   },
   "frontend/src/pages/StatusReportDetailPage.tsx": {
@@ -860,8 +860,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/SectionCard.tsx": {
-    "mtime": 1785742700.5155635,
-    "ast_hash": "f1150df32dd31bbc33c65797a10ac279",
+    "mtime": 1786975353.7965086,
+    "ast_hash": "a894f4396f662ab7ae04c6af6367c7df",
     "semantic_hash": ""
   },
   "frontend/src/components/SectionNav.tsx": {
@@ -1090,8 +1090,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/WorkflowPanel.tsx": {
-    "mtime": 1786958607.5991383,
-    "ast_hash": "7ae79cbf41f897ad3301c27dbb9a747b",
+    "mtime": 1786975387.1110685,
+    "ast_hash": "9d8ef9b05248b09496fcbbe9aa30ce24",
     "semantic_hash": ""
   },
   "frontend/src/components/ProjectsGrid.tsx": {
@@ -1650,8 +1650,8 @@
     "semantic_hash": ""
   },
   "backend/src/common/access/access.module.ts": {
-    "mtime": 1786972288.1419146,
-    "ast_hash": "44be3701e8c18c4ae476232dda4ac0c7",
+    "mtime": 1786975110.1498005,
+    "ast_hash": "19e8b8754d6cddbce48354d65363839e",
     "semantic_hash": ""
   },
   "backend/src/common/access/app-role.guard.ts": {
@@ -1665,8 +1665,8 @@
     "semantic_hash": ""
   },
   "backend/src/common/access/project-access.guard.ts": {
-    "mtime": 1786968815.3654344,
-    "ast_hash": "973684b6f416870966d8eaae9bee7938",
+    "mtime": 1786976303.7318053,
+    "ast_hash": "ec33c7039f1b6b5ddbef616cb9c48895",
     "semantic_hash": ""
   },
   "backend/src/common/access/project-access.service.ts": {
