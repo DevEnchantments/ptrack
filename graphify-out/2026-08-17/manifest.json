@@ -1505,8 +1505,8 @@
     "semantic_hash": ""
   },
   "docs/REFACTOR-PLAN.md": {
-    "mtime": 1786957368.006046,
-    "ast_hash": "a5144aee6523cbc9e4e992b1e4e8d4d0",
+    "mtime": 1786957610.2335653,
+    "ast_hash": "aced3c3e33e0c0dfe4a8c84922d948b9",
     "semantic_hash": ""
   },
   "frontend/src/lib/format.test.ts": {
@@ -1577,6 +1577,11 @@
   "backend/src/modules/status-reports/status-reports.service.spec.ts": {
     "mtime": 1786957303.0515635,
     "ast_hash": "ec13106fd0e47c13ee5319ee53c7b76b",
+    "semantic_hash": ""
+  },
+  "docs/REFACTOR-PASS-REVIEW.md": {
+    "mtime": 1786957687.2760262,
+    "ast_hash": "3302a5b3813a7e2fe6a0548f140ca775",
     "semantic_hash": ""
   }
 }

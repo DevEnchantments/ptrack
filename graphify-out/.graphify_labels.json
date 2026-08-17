@@ -109,6 +109,7 @@
   "107": "eslint-plugin-react-hooks",
   "108": "frappe-gantt",
   "109": "moduleFileExtensions",
+  "110": "SearchModule",
   "111": "vitest",
   "114": "ApiProperty",
   "117": "@vitejs/plugin-react",
