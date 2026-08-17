@@ -554,11 +554,6 @@
     "ast_hash": "ff81092ea93277aa47679adc08c05255",
     "semantic_hash": ""
   },
-  "frontend/src/lib/api.ts": {
-    "mtime": 1786622632.5271533,
-    "ast_hash": "48c201eff01fd6388fb9ac077f0e5630",
-    "semantic_hash": ""
-  },
   "frontend/src/lib/auth-context.tsx": {
     "mtime": 1786459561.777863,
     "ast_hash": "78936153289a62bb183ed01478b5349a",
@@ -1587,6 +1582,56 @@
   "backend/src/common/columns.ts": {
     "mtime": 1786964286.0526345,
     "ast_hash": "2ede3501600860f80ce3a3465c4f82b2",
+    "semantic_hash": ""
+  },
+  "frontend/src/lib/api/admin.ts": {
+    "mtime": 1786964834.8954122,
+    "ast_hash": "676d106284443eff73adebf7fc14f2e9",
+    "semantic_hash": ""
+  },
+  "frontend/src/lib/api/attachments.ts": {
+    "mtime": 1786964962.7825983,
+    "ast_hash": "e03dc2da316f35347bf8733dd4a21815",
+    "semantic_hash": ""
+  },
+  "frontend/src/lib/api/core.ts": {
+    "mtime": 1786964962.7805996,
+    "ast_hash": "9c5e7e0cd7b74f0527fe5bfb03413799",
+    "semantic_hash": ""
+  },
+  "frontend/src/lib/api/directory.ts": {
+    "mtime": 1786964834.8888874,
+    "ast_hash": "eac807bae8b2253c258469cf5e41df87",
+    "semantic_hash": ""
+  },
+  "frontend/src/lib/api/index.ts": {
+    "mtime": 1786964834.896407,
+    "ast_hash": "de63f58b89196c05997260b8b54fd08b",
+    "semantic_hash": ""
+  },
+  "frontend/src/lib/api/planning.ts": {
+    "mtime": 1786964937.0093834,
+    "ast_hash": "277a93fa15caa1a6225d79cc5c5f3af7",
+    "semantic_hash": ""
+  },
+  "frontend/src/lib/api/projects.ts": {
+    "mtime": 1786964962.7845984,
+    "ast_hash": "dd0e1a1213f686738ac5a3091f7f3abd",
+    "semantic_hash": ""
+  },
+  "frontend/src/lib/api/records.ts": {
+    "mtime": 1786964834.8908844,
+    "ast_hash": "791f078f5e59eb3d05dbb4266f6aa8e1",
+    "semantic_hash": ""
+  },
+  "frontend/src/lib/api/updates.ts": {
+    "mtime": 1786964834.8944142,
+    "ast_hash": "39ea45d41a7adab3e6321586f6f15788",
+    "semantic_hash": ""
+  },
+  "frontend/src/lib/api/workflow.ts": {
+    "mtime": 1786964834.89341,
+    "ast_hash": "ddf18484e9ea3fa72c09f828759153e1",
     "semantic_hash": ""
   }
 }
