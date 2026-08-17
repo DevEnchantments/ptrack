@@ -116,9 +116,10 @@ describe('MilestonesService', () => {
       );
     });
 
-    it('ignores an empty depends_on on create, unlike update', async () => {
-      // Create guards on `?.length`, so [] is a no-op here while PATCH treats
-      // the same value as "clear the set".
+    it('skips the dependency write entirely for an empty depends_on', async () => {
+      // Not an inconsistency with update(): a freshly inserted row has no
+      // dependency rows to clear, so calling replaceDependencies([]) would
+      // delete nothing and cost a round-trip. Same end state either way.
       const { service, mocks } = build();
       await service.add(PROJECT, { ...newMilestone, depends_on: [] }, USER);
 

@@ -79,6 +79,9 @@ export class MilestonesService {
       created_by: userId,
       updated_by: userId,
     });
+    // Guarded on `?.length`, not `!== undefined` as in update(): a row inserted
+    // microseconds ago cannot have dependencies yet, so an empty set here would
+    // spend a DELETE round-trip clearing nothing. Not an inconsistency.
     if (dto.depends_on?.length) {
       await this.repo.replaceDependencies(
         projectId,
