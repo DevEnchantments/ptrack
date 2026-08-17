@@ -850,8 +850,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/AppLayout.tsx": {
-    "mtime": 1786969798.1340432,
-    "ast_hash": "02f06388c6fb75a6692c43e88a4982cb",
+    "mtime": 1786973814.631951,
+    "ast_hash": "33ac460d5ab2869f0b03de363c809b95",
     "semantic_hash": ""
   },
   "frontend/src/pages/DashboardPage.tsx": {
