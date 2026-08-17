@@ -900,8 +900,8 @@
     "semantic_hash": ""
   },
   "docs/FDD-ALIGNMENT.md": {
-    "mtime": 1786973353.362903,
-    "ast_hash": "1102b9dd9724fb08d42305c085752e45",
+    "mtime": 1786974727.0362372,
+    "ast_hash": "4333ab49204b162fa322bf9a4b7edbb1",
     "semantic_hash": ""
   },
   "backend/db/fdd_project_fields.sql": {
@@ -1730,8 +1730,8 @@
     "semantic_hash": ""
   },
   "docs/PROGRESS-SUMMARY.md": {
-    "mtime": 1786974344.5671992,
-    "ast_hash": "d0366376bae85206798c120061adf2c4",
+    "mtime": 1786974791.579244,
+    "ast_hash": "7f08d4fc9f9dde6657f01477b79fc2ea",
     "semantic_hash": ""
   }
 }

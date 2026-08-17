@@ -1728,5 +1728,10 @@
     "mtime": 1786972819.7375019,
     "ast_hash": "93287b5adebb7a36cfabe3aa8656e638",
     "semantic_hash": ""
+  },
+  "docs/PROGRESS-SUMMARY.md": {
+    "mtime": 1786974344.5671992,
+    "ast_hash": "d0366376bae85206798c120061adf2c4",
+    "semantic_hash": ""
   }
 }
