@@ -137,7 +137,9 @@ the recommended alternative.
 
 ### Phase 2 — Core project entities
 
-- [ ] `program-outcomes/` · [ ] `milestones/` · [ ] `status-reports/`
+- [x] `program-outcomes/` (**2026-08-13** — 10 characterization tests, spec
+      adoption, `nextSortOrder()`; **plus an approved bug fix in its own
+      commit**) · [ ] `milestones/` · [ ] `status-reports/`
 
 ### Phase 3 — Content and attachments
 
@@ -514,3 +516,41 @@ green: lint · build · 20 tests. Backend untouched at 106.
 
 **Note for the next frontend session:** the cold-start vitest flake recurred exactly as
 documented in 0a (60.07s, "no tests", one error; the immediate re-run passed in 28s).
+
+### 2026-08-13 — Phase 2a, `modules/program-outcomes/` (+ a bug fix)
+
+**Full protocol** (Fares' call, 2026-08-13: propose-and-approve on every remaining module
+rather than batching the mechanical ones).
+
+**Changed — commit 1, behaviour-preserving.** 10 characterization tests written first and
+shown green against the unrefactored service (106 → 116). Then `COLUMN_SPEC` adoption
+(`trimmed: name`, `nullable: sort_order/start_date/end_date`) and `nextSortOrder()`
+extracted out of `add`.
+
+Note the spec proves its worth here: this module's dates are `nullable` (`?? null`), while
+`projects/` uses `dateOrNull` (`|| null`). Same helper, different declared rule — an empty
+string is stored here and clears the column there, exactly as before.
+
+**Changed — commit 2, an APPROVED BEHAVIOUR CHANGE (Fares asked for the fix).** Outcome
+auto-numbering was `count + 1`, so with outcomes 1-2-3, deleting #2 left a count of 2 and
+handed the next insert a **colliding 3**. Now highest-in-use + 1, ignoring unnumbered rows.
+Written test-first: the regression test was shown **failing** against the old code before
+the fix landed, then green (116 → 118).
+
+**Still broken, deliberately:** two simultaneous creates can still collide. A real fix needs
+a unique constraint or a sequence — a schema change, which is out of scope for this branch.
+Documented in the method.
+
+**Kept ground rule 1 intact** by splitting the two: the refactor commit proves nothing
+changed, the fix commit changes exactly one thing with a test that fails without it.
+
+**Observed, not changed:** this table maintains `updated_at` in application code because it
+has no `moddatetime` trigger, unlike every other table. Deliberate and commented, but it
+will bite whoever adds the trigger later — the hand-set value would then race the trigger.
+
+**Lint gotcha worth carrying:** `expect.any(String)` inside a `toHaveBeenCalledWith` object
+literal trips `no-unsafe-assignment`, and `as unknown as string` trips
+`no-unnecessary-type-assertion`. The working form is a single `as string`. Same shape as
+the supabase-js typed-select gotcha in CLAUDE.md.
+
+**Verification.** 118 tests / 13 suites; `tsc` · `eslint --max-warnings 0` · `build` clean.
