@@ -13,9 +13,11 @@ import { columnsFrom, type ColumnSpec } from '../../common/columns';
 /**
  * How a milestone DTO maps onto columns, for both create and update.
  *
- * Dates are `asIs` here — this module passes them straight through, where
- * projects/ clears on '' and program-outcomes/ stores it. Each module keeps
- * its own rule; see the session log for the inconsistency that implies.
+ * Dates are `asIs` here, where projects/ uses `dateOrNull` — a difference that
+ * cannot show up in practice: the DTO validates them with `@IsDateString()`, so
+ * the only input the two categories treat differently (`''`) is rejected with a
+ * 400 before this runs. Kept as-is rather than "harmonised", which would be
+ * churn on an unreachable branch.
  */
 const COLUMN_SPEC: ColumnSpec = {
   trimmed: ['name'],

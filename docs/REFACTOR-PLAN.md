@@ -581,16 +581,27 @@ shown green against the unrefactored service (118 → 137).
 - All-null weights are allowed and clear the set (equal weighting per F1); an empty
   weights array writes nothing at all.
 
+**Investigated and dismissed — NOT a bug (corrected 2026-08-13, same day).** The three
+modules do use three different rules for an empty-string date (`projects/` `|| null`,
+`program-outcomes/` `?? null`, `milestones/` `asIs`), and this log first recorded that as a
+latent 500. **It is not reachable.** `main.ts` registers a global `ValidationPipe`, and
+every date field is `@IsOptional() @IsDateString()`; `@IsOptional()` skips only `null` and
+`undefined`, so `''` fails validation with a 400 before any service runs. `null` — the one
+empty value that does get through — is handled identically by all three. The differing
+branches are all dead code, so **no fix was applied**: changing them would be churn on an
+unreachable path that reads like a correction. Do not re-raise this without first checking
+whether the DTO still validates the field.
+
 **Reported, not fixed.**
-1. **Three modules, three date rules.** `projects/` clears a date on `''` (`|| null`),
-   `program-outcomes/` stores it (`?? null`), `milestones/` passes it through (`asIs`).
-   A `due_date: ''` here reaches Postgres as invalid date syntax — a 500 where projects
-   would have cleared the column. Worth one deliberate decision across all three.
-2. **`adjustWeights` has no transaction.** N independent updates via `Promise.all`; a
+1. **`adjustWeights` has no transaction.** N independent updates via `Promise.all`; a
    partial failure leaves weights summing to something other than 100 — the very invariant
    the method just enforced. Needs an RPC like `replace_action_item_owners`.
-3. `add` returns the bare row, `update` the joined one — **third** instance of the
+2. `add` returns the bare row, `update` the joined one — **third** instance of the
    add/update shape mismatch (links, action-items, milestones).
+
+**Method note.** The dismissal above is worth repeating as a habit: before proposing a fix
+for "these modules disagree", check whether the disagreeing input can reach them at all.
+The global ValidationPipe makes several apparent inconsistencies unreachable.
 
 **Rejected.** The double `get()` in `update` (one for the 404, one for the return) — that
 is a round-trip saving, and performance is out of scope per §5.

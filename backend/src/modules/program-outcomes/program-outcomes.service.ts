@@ -8,9 +8,9 @@ import { columnsFrom, type ColumnSpec } from '../../common/columns';
 /**
  * How an outcome DTO maps onto columns, for both create and update.
  *
- * The dates are `nullable`, not `dateOrNull` as in projects/: this module uses
- * `?? null`, so an empty string would be stored rather than clearing the
- * column. Each module keeps its own rule.
+ * The dates are `nullable`, not `dateOrNull` as in projects/. The difference is
+ * unreachable: `@IsDateString()` on the DTO rejects the only input the two
+ * categories handle differently (`''`) with a 400 before this runs.
  */
 const COLUMN_SPEC: ColumnSpec = {
   trimmed: ['name'],
