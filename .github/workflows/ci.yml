@@ -48,3 +48,5 @@ jobs:
         run: npm run build
       - name: Lint (blocking)
         run: npx eslint src --max-warnings 0
+      - name: Test
+        run: npm test
