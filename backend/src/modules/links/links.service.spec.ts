@@ -130,6 +130,17 @@ describe('LinksService', () => {
       });
     });
 
+    it('404s when the link is not in this project', async () => {
+      // Regression: the repository used `.single()`, so "no rows" arrived as
+      // PostgREST PGRST116 and fell through toHttpException's default to a 500.
+      const { service, mocks } = build();
+      mocks.update.mockResolvedValue(null);
+
+      await expect(
+        service.update(PROJECT, LINK, { label: 'x' }, USER),
+      ).rejects.toBeInstanceOf(NotFoundException);
+    });
+
     it('clears blank text and empty tag arrays to null', async () => {
       const { service, mocks } = build();
       await service.update(

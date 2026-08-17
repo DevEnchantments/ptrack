@@ -47,16 +47,18 @@ export class LinksService {
     });
   }
 
-  update(
+  async update(
     projectId: string,
     linkId: string,
     dto: UpdateLinkDto,
     userId: string,
   ) {
-    return this.repo.update(projectId, linkId, {
+    const updated = await this.repo.update(projectId, linkId, {
       updated_by: userId,
       ...columnsFrom(dto, COLUMN_SPEC),
     });
+    if (!updated) throw new NotFoundException('Link not found.');
+    return updated;
   }
 
   async remove(projectId: string, linkId: string, userId: string) {

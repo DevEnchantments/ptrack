@@ -45,19 +45,24 @@ export class LinksRepository {
     return data;
   }
 
+  /**
+   * Null when the link is not in this project. `maybeSingle`, not `single`:
+   * `single` turns "no rows" into a PostgREST error whose code falls through
+   * toHttpException's default and surfaces as a 500 instead of a 404.
+   */
   async update(
     projectId: string,
     linkId: string,
     patch: Record<string, unknown>,
-  ): Promise<LinkListItem> {
+  ): Promise<LinkListItem | null> {
     const { data, error } = await this.table
       .update(patch)
       .eq('project_id', projectId)
       .eq('id', linkId)
       .select(LIST_SELECT)
-      .single();
+      .maybeSingle();
     if (error) throw toHttpException(error, 'links.update');
-    return data as unknown as LinkListItem;
+    return (data as unknown as LinkListItem) ?? null;
   }
 
   /** Returns the deleted row's id+label, or null when not in this project. */
