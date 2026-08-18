@@ -445,8 +445,8 @@
     "semantic_hash": ""
   },
   "frontend/src/App.tsx": {
-    "mtime": 1787034812.4821398,
-    "ast_hash": "9f8aadcbd79a7379da477a128176f564",
+    "mtime": 1787040090.1194212,
+    "ast_hash": "7cbb184cecb6a8aecc1d456a6c7d78a4",
     "semantic_hash": ""
   },
   "frontend/src/components/AddActionItemDialog.tsx": {
@@ -595,8 +595,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/LoginPage.tsx": {
-    "mtime": 1787035986.3668866,
-    "ast_hash": "050c820f735458db341380a7008efe69",
+    "mtime": 1787040055.3900657,
+    "ast_hash": "3d1bb1e20405d4e0a86ee79cb9fd034e",
     "semantic_hash": ""
   },
   "frontend/src/pages/MilestoneDetailPage.tsx": {
@@ -1752,6 +1752,11 @@
   "frontend/src/pages/ProfilePage.tsx": {
     "mtime": 1787034792.4080186,
     "ast_hash": "cd3d356f080880328f73ecc502d8627d",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/ResetPasswordPage.tsx": {
+    "mtime": 1787040075.7392032,
+    "ast_hash": "601de59a4cd95bd8466773d46a4fc6ff",
     "semantic_hash": ""
   }
 }
