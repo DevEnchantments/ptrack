@@ -215,13 +215,29 @@ function relativeTime(iso: string): string {
   return `${yr} year${yr === 1 ? '' : 's'} ago`
 }
 
-function EditButton({ onClick, label }: { onClick: () => void; label: string }) {
+function EditButton({
+  onClick,
+  label,
+  disabled,
+  disabledReason,
+}: {
+  onClick: () => void
+  label: string
+  disabled?: boolean
+  disabledReason?: string
+}) {
   return (
     <button
       type="button"
-      onClick={onClick}
+      disabled={disabled}
+      onClick={disabled ? undefined : onClick}
       aria-label={label}
-      className="mt-0.5 text-muted-foreground hover:text-foreground"
+      title={disabled ? disabledReason : undefined}
+      className={
+        disabled
+          ? 'mt-0.5 cursor-not-allowed text-muted-foreground opacity-40'
+          : 'mt-0.5 text-muted-foreground hover:text-foreground'
+      }
     >
       <Pencil className="h-4 w-4" />
     </button>
@@ -967,6 +983,8 @@ export function ProjectDetailPage() {
                 >
                   <EditButton
                     label="Edit person"
+                    disabled={!canManage}
+                    disabledReason={manageReason}
                     onClick={() => {
                       setEditingMember(m)
                       setPersonOpen(true)
@@ -1094,6 +1112,8 @@ export function ProjectDetailPage() {
                       {g.outcome && (
                         <EditButton
                           label="Edit outcome"
+                          disabled={!canWrite}
+                          disabledReason={writeReason}
                           onClick={() => {
                             setEditOutcome(g.outcome)
                             setOutcomeDialogOpen(true)
@@ -1110,6 +1130,8 @@ export function ProjectDetailPage() {
                 >
                   <EditButton
                     label="Edit milestone"
+                    disabled={!canWrite}
+                    disabledReason={writeReason}
                     onClick={() => openEditMilestone(m.id)}
                   />
                   <div
@@ -1208,6 +1230,8 @@ export function ProjectDetailPage() {
                 >
                   <EditButton
                     label="Edit action item"
+                    disabled={!canWrite}
+                    disabledReason={writeReason}
                     onClick={() => {
                       setEditingActionItem(a)
                       setActionItemOpen(true)
@@ -1297,6 +1321,8 @@ export function ProjectDetailPage() {
                 >
                   <EditButton
                     label="Edit link"
+                    disabled={!canWrite}
+                    disabledReason={writeReason}
                     onClick={() => {
                       setEditingLink(l)
                       setLinkOpen(true)
@@ -1360,6 +1386,8 @@ export function ProjectDetailPage() {
                 >
                   <EditButton
                     label="Edit resource"
+                    disabled={!canWrite}
+                    disabledReason={writeReason}
                     onClick={() => {
                       setEditingResource(r)
                       setResourceOpen(true)
@@ -1428,6 +1456,8 @@ export function ProjectDetailPage() {
                       >
                         <EditButton
                           label="Edit issue"
+                          disabled={!canWrite}
+                          disabledReason={writeReason}
                           onClick={() => {
                             setEditingIssue(i)
                             setIssueOpen(true)
@@ -1508,6 +1538,8 @@ export function ProjectDetailPage() {
                       >
                         <EditButton
                           label="Edit risk"
+                          disabled={!canWrite}
+                          disabledReason={writeReason}
                           onClick={() => {
                             setEditingRisk(r)
                             setRiskOpen(true)
@@ -1611,12 +1643,22 @@ export function ProjectDetailPage() {
                       )}
                       <button
                         type="button"
-                        onClick={() => {
-                          setEditingUpdate(u)
-                          setUpdateOpen(true)
-                        }}
+                        disabled={!canWrite}
+                        onClick={
+                          canWrite
+                            ? () => {
+                                setEditingUpdate(u)
+                                setUpdateOpen(true)
+                              }
+                            : undefined
+                        }
                         aria-label="Edit update"
-                        className="text-muted-foreground hover:text-foreground"
+                        title={canWrite ? undefined : writeReason}
+                        className={
+                          canWrite
+                            ? 'text-muted-foreground hover:text-foreground'
+                            : 'cursor-not-allowed text-muted-foreground opacity-40'
+                        }
                       >
                         <Pencil className="h-4 w-4" />
                       </button>
@@ -1708,6 +1750,8 @@ export function ProjectDetailPage() {
                   >
                     <EditButton
                       label="Edit attachment"
+                      disabled={!canWrite}
+                      disabledReason={writeReason}
                       onClick={() => {
                         setEditingAttachment(a)
                         setAttachmentOpen(true)
