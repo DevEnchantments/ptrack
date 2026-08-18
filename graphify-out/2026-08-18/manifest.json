@@ -395,8 +395,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/users/users.controller.ts": {
-    "mtime": 1787030466.048349,
-    "ast_hash": "395bf2738f4270e512797b263359677e",
+    "mtime": 1787034630.8626006,
+    "ast_hash": "b5a378a6c1dd338059a8789fd9d27f47",
     "semantic_hash": ""
   },
   "backend/src/modules/users/users.module.ts": {
@@ -405,8 +405,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/users/users.service.ts": {
-    "mtime": 1787030466.048349,
-    "ast_hash": "04862344e5f7b0fd7f356ba7674eeb0e",
+    "mtime": 1787034630.8607838,
+    "ast_hash": "cf77a966b5363b0dcfe12ce5fb4adc2c",
     "semantic_hash": ""
   },
   "backend/test/app.e2e-spec.ts": {
@@ -445,8 +445,8 @@
     "semantic_hash": ""
   },
   "frontend/src/App.tsx": {
-    "mtime": 1786972834.8519576,
-    "ast_hash": "e3f5a33fd5c1babd25e07e674c8e6873",
+    "mtime": 1787034812.4821398,
+    "ast_hash": "9f8aadcbd79a7379da477a128176f564",
     "semantic_hash": ""
   },
   "frontend/src/components/AddActionItemDialog.tsx": {
@@ -850,8 +850,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/AppLayout.tsx": {
-    "mtime": 1787030489.2575712,
-    "ast_hash": "6a5818aa8c35bcd7643086ecd4ed7e24",
+    "mtime": 1787034827.1056087,
+    "ast_hash": "ae8fca29551fd2145cce59408ab8d41d",
     "semantic_hash": ""
   },
   "frontend/src/pages/DashboardPage.tsx": {
@@ -1600,8 +1600,8 @@
     "semantic_hash": ""
   },
   "frontend/src/lib/api/directory.ts": {
-    "mtime": 1787030466.0528157,
-    "ast_hash": "f59ee29fddbbca704d39a9f51944acc8",
+    "mtime": 1787034630.917408,
+    "ast_hash": "0b488989cca1f165da7cfaee10b35577",
     "semantic_hash": ""
   },
   "frontend/src/lib/api/index.ts": {
@@ -1744,14 +1744,14 @@
     "ast_hash": "0c199f76b3ba598879a60c6f4276b19d",
     "semantic_hash": ""
   },
-  "frontend/src/components/ProfileDialog.tsx": {
-    "mtime": 1787030466.0528157,
-    "ast_hash": "318ba6048bcfb23f529b00666ee785cb",
-    "semantic_hash": ""
-  },
   "frontend/src/lib/use-local-storage.ts": {
     "mtime": 1787030511.1073341,
     "ast_hash": "c72025e02ad8b91e8c24e3f502e180a2",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/ProfilePage.tsx": {
+    "mtime": 1787034792.4080186,
+    "ast_hash": "cd3d356f080880328f73ecc502d8627d",
     "semantic_hash": ""
   }
 }
