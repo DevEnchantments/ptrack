@@ -1,18 +1,19 @@
 # P-Track progress summary
 
-Prepared by Fares Al Areefi · 17 August 2026
+Prepared by Fares Al Areefi · 18 August 2026
 For review against the Project Tracker Functional Design Document (FDD)
 
 ## 1. Where the project stands
 
 P-Track is the ground-up rebuild of the Oracle APEX project tracker as an independent
 web application (React frontend, NestJS middle tier, Supabase database), governed by
-the FDD since 21 July 2026. As of this summary, every functional requirement in the
-FDD that can be built without further input is built. What remains falls into two
-groups: items waiting on decisions listed in section 5, and items waiting on
-infrastructure listed in section 6.
+the FDD since 21 July 2026. Following your delegation of the open decisions on
+18 August, every functional requirement in the FDD is now built, and every previously
+open question has a recorded answer. The two remaining items each wait on one thing:
+email sending waits on an SMTP credential, and the AI features wait on our upcoming
+discussion.
 
-The codebase carries 158 backend and 35 frontend automated tests, and every commit
+The codebase carries 158 backend and 47 frontend automated tests, and every commit
 passes type checking, linting, and the full test suite in CI before it lands.
 
 ## 2. What is built, by area
@@ -23,14 +24,15 @@ stakeholders, tags), a four-step creation wizard, project templates, and CSV bul
 import with a preview step. Every record type in the FDD exists with full create,
 read, update, and delete: milestones, program outcomes, tasks (action items), links,
 resources, issues, risks, updates, status reports, people, and attachments, including
-task-level attachments per Appendix A.
+task-level attachments per Appendix A. The register and the three global record
+registries all export CSV behind the FR-13 confirmation.
 
 **Planning and progress.** Outcomes group milestones, milestones carry weights and
-dependencies, and tasks sit under milestones, matching the hierarchy confirmed in our
-review sessions. The project dashboard tab shows planned-versus-actual progress, a
-budget donut, and a full Gantt chart (outcome, milestone, and task levels with
-dependency arrows and milestone diamonds). Weight adjustment is enforced to total
-exactly 100 and is applied atomically in the database.
+dependencies, and tasks sit under milestones. The project dashboard tab shows
+planned-versus-actual progress, a budget donut, and a full Gantt chart (outcome,
+milestone, and task levels with dependency arrows and milestone diamonds). Weight
+adjustment is enforced to total exactly 100 and applied atomically. Progress figures
+across the application use the confirmed formulas (section 4).
 
 **Reporting cycle workflow (FR-14).** Monthly cycles with the submit, validate,
 approve, return, and reject states from Fig 10. The PMO Partner validates and the
@@ -38,92 +40,92 @@ Project Owner approves where those people are set. Cycles can be closed and reop
 a closed cycle locks every transition.
 
 **Dashboards and reports (FR-10, FR-12).** The executive dashboard row from Fig 15
-(initiative buckets, portfolio budget, cycle submission status, monthly breakdown)
-plus the earlier live charts. Printable reports: Cycle Submission Status, Initiative
-Progress, Monthly Performance, and a per-project progress report. Exports are CSV
-with the FR-13 confirmation modal; native Excel format was judged unnecessary and can
-be revisited.
+(initiative buckets, portfolio budget, cycle submission status, monthly breakdown), a
+personal "My work" strip, and the earlier live charts. Printable reports: Cycle
+Submission Status, Initiative Progress, Monthly Performance, and a per-project
+progress report.
 
-**KPIs (FR-11).** A KPI registry with readings and action plans exists. Scorecard
-calculations (achievement percentage, data quality index) are stubbed pending the
-formula decisions in section 5.
+**KPIs (FR-11), now complete.** The registry with readings and action plans carries
+live scorecards: a polarity-aware achievement percentage against target and a
+data-quality index (timeliness, completeness, reliability) on every KPI. KPIs can
+optionally be linked to a project, and linked KPIs appear on that project's KPI tab,
+which was the application's last stub and is now live.
 
-**Notifications (3.9).** In-app notifications with a bell and unread badge. Live
-triggers: workflow transitions, budget threshold crossings, due-soon and overdue
-reminders, a pre-cycle nudge for projects that have not submitted, and an alert when
-a high-severity risk is saved. Email delivery waits on section 6.
+**Notifications (3.9).** In-app notifications with a bell, unread badge, and
+per-type deep links. Live triggers: workflow transitions, budget threshold crossings
+(80%), due-soon and overdue reminders, a pre-cycle nudge for projects that have not
+submitted, and an alert when a high-severity risk is saved. Email delivery waits on
+section 6.
 
-**Administration.** Code Tables (all lookup lists editable in place), account
-provisioning for pending people, and a Users & Roles page described below.
+**Administration and account experience.** Code Tables (every lookup list editable in
+place), account provisioning for pending people, a Users & Roles page (global role
+assignment plus a live role-by-capability permission grid, fully audited), a personal
+profile page (display name, permissions, memberships, open work, password change),
+a redesigned sign-in page with a self-service password-reset flow, and a Ctrl+K
+command palette whose actions respect each user's permissions.
 
-**Security (FR-15).** Role-based access control enforced in the middle tier. The
-FDD's seven roles from section 3.2 map onto four global roles (admin, PMO, executive,
-user) plus per-project relationships that already existed in the data: membership
-access levels, project owner and manager assignments, and per-record risk ownership.
-Restricted projects are invisible to users with no relationship to them, in lists,
-search, dashboards, and reports as well as on direct access. Which role holds which
-capability is editable live on the Users & Roles page, with every change audited.
-The permission grid means that when the open questions in section 5 are answered,
-most answers become configuration rather than development.
+**Security (FR-15).** Role-based access control enforced in the middle tier and
+verified end to end with a live two-account test. Restricted projects are invisible
+to unrelated users everywhere, including search, dashboards, and reports, and answer
+as not-found rather than forbidden so their existence does not leak. The interface
+grays out anything the signed-in user is not permitted to do, with the reason shown
+on hover.
 
 ## 3. The fifteen functional requirements, one by one
 
 | FR | Requirement | Status |
 | --- | --- | --- |
-| FR-01 | Project register grid with filters, sorting, status | Shipped (card and grid views, CSV export). The progress column shows milestone completion until the formulas in section 5 are confirmed |
-| FR-02 | Application navigation | Shipped, except the AI Assistant entry, which waits on section 6 |
-| FR-03 | Project detail tabs | Shipped. The KPI tab is the one stub, waiting on decision 3 below |
+| FR-01 | Project register grid with filters, sorting, status | Shipped; the progress column shows the confirmed F1 calculation |
+| FR-02 | Application navigation | Shipped, except the AI Assistant entry (section 6) |
+| FR-03 | Project detail tabs | Shipped, all eight tabs live including KPI |
 | FR-04 | Overview cards (progress, milestones, budget) | Shipped |
-| FR-05 | Milestone status donut | Shipped; bucket names were our reading of the figure |
+| FR-05 | Milestone status donut | Shipped |
 | FR-06 | Task lists with grouping and attachments | Shipped, including task-level attachments |
-| FR-07 | Risk and issue register with scoring | Shipped; severity scoring uses provisional formula F3 |
-| FR-08 | Identify New Risk form | Shipped with the full field set from the screenshots |
-| FR-09 | Adjust Weights | Shipped; the total must equal 100 and the save is atomic |
-| FR-10 | Executive dashboards | Shipped; initiative buckets use provisional formula F5 |
-| FR-11 | KPI scorecards | Registry, readings, and action plans shipped. Achievement percentage and data quality index wait on decision 1 |
-| FR-12 | Report generation and Excel export | Four printable reports shipped. Export is CSV rather than native Excel (assumption, section 4) |
+| FR-07 | Risk and issue register with scoring | Shipped, F3 scoring confirmed |
+| FR-08 | Identify New Risk form | Shipped with the full field set |
+| FR-09 | Adjust Weights | Shipped; total must equal 100, saved atomically |
+| FR-10 | Executive dashboards | Shipped, F5 buckets confirmed |
+| FR-11 | KPI scorecards | Shipped in full: registry, readings, plans, achievement % (F6), data-quality index (F7), project linkage |
+| FR-12 | Report generation and Excel export | Four printable reports shipped; export is CSV by decision |
 | FR-13 | Download confirmation | Shipped |
-| FR-14 | Submission workflow with cycle close | Shipped, including closing and reopening cycles |
-| FR-15 | Role-based access restriction | Shipped and enforced. Three delegated-authority details wait on decision 2 |
+| FR-14 | Submission workflow with cycle close | Shipped |
+| FR-15 | Role-based access restriction | Shipped and enforced; delegated-authority details resolved by decision |
 
-## 4. Assumptions that need your confirmation
+## 4. Decisions taken under your delegation (18 August)
 
-These are implemented and working, but each one was our judgment call rather than an
-FDD requirement, and each is reversible.
+You delegated the open decisions to the team; here is what each became. All are
+recorded in the project's decision registers and each remains reversible at a single
+implementation site.
 
-| Assumption | Where it shows |
-| --- | --- |
-| Progress formulas F1 to F5 (weighted milestone completion, straight-line plan, risk scoring, at-risk flags, initiative buckets) | All progress figures, risk severity dots, the initiative donut. Recorded in FORMULAS.md |
-| Project creation is limited to PMO and admin roles, per the FDD process table | Create Project button |
-| Closing a cycle locks all transitions | Cycle Submission Status page |
-| Reminder policy: remind when due, once when overdue, nudge in the last five days of a cycle | Notification bell |
-| Budget alert threshold at 80 percent utilization | Notifications |
-| CSV export satisfies the Excel export requirement | All list exports |
+1. **Formulas.** F1 to F5 (progress, planned progress, risk scoring, at-risk flags,
+   initiative buckets) confirmed as documented. Two new definitions: F6, KPI
+   achievement % (polarity-aware ratio to target, capped at 200%), and F7, the
+   data-quality index (mean of timeliness, completeness, and reliability). The 80%
+   budget alert threshold is confirmed.
+2. **Delegated authority.** The shipped workflow is policy: PMO Partner validates,
+   Project Owner approves, the PMO role may return, read-only viewers see open
+   projects only, executives see aggregates but not restricted detail. Future
+   changes are permission-grid edits, not development.
+3. **KPI linkage.** KPIs remain entity-level with an optional link to a project;
+   linked KPIs appear on that project's KPI tab.
+4. **Field behaviors.** All free-text fields (sponsor, customer, target group,
+   stakeholders, and similar) remain free text permanently.
+5. **Data.** Seeded demonstration data remains in place until a real spreadsheet is
+   available; the import wizard is ready for it.
+6. **Value lists and numbering.** The current list values stand and are editable in
+   Code Tables; reference IDs stay free text; milestone chart buckets keep their
+   names; utilized budget stays manual entry; the P-Track-only fields are kept.
 
-## 5. Decisions only you can make
+## 5. The two remaining items
 
-1. **Formula sign-off.** Confirm or correct F1 to F5, and define the KPI achievement
-   percentage and data quality index so scorecards can be finished.
-2. **Delegated authority.** Who besides the PMO Partner and Project Owner may review,
-   return, or approve submissions? What exactly may a read-only viewer see? Do
-   executive viewers see restricted projects? Each answer is now a checkbox in the
-   permission grid rather than a rebuild.
-3. **KPI linkage.** Are KPIs portfolio-level (as built) or attached to individual
-   projects? The project KPI tab is waiting on this.
-4. **Field behavior document.** Several fields are plain text pending your finalized
-   specification.
-5. **Real data.** The import wizard is ready for your project spreadsheet whenever it
-   is available.
+- **Email (SMTP).** Per your direction to use SMTP where possible: the sending layer
+  is designed to activate on a credential (host, user, password) with no further
+  development. Any standard SMTP account works, including free tiers of common email
+  services or a corporate relay. Until then, all notifications remain in-app.
+- **AI features.** The AI Assistant navigation entry and the AI-drafted invitation
+  text await our discussion, per your note.
 
-## 6. Blocked on infrastructure
-
-- **Email (SMTP or an email service).** Unlocks notification emails and sending
-  account invitations from inside the application. The invitation compose screen
-  already exists; only delivery is missing.
-- **LLM API access.** Unlocks the AI-drafted invitation text and is the entry point
-  for the planned AI Assistant.
-
-## 7. Out of scope, on purpose
+## 6. Out of scope, on purpose
 
 Project Merge, bulk validations, and preview-before-commit mass updates from the
 original APEX application were excluded with your agreement and remain so unless
