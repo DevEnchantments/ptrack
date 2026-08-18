@@ -384,6 +384,19 @@
 }
 
 /* Wizard steps sliding in (element remounts per step via key={step}). */
+/* Login brand-panel bars: grow from the left like the real Gantt. Never
+   from scale(0) — a bar has a visible stub even before it grows. */
+@keyframes login-bar {
+    from {
+        transform: scaleX(0.06);
+        opacity: 0;
+    }
+}
+.login-bar {
+    transform-origin: left;
+    animation: login-bar 700ms var(--ease-out) both;
+}
+
 @keyframes step-in {
     from {
         opacity: 0;

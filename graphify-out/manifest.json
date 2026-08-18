@@ -595,8 +595,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/LoginPage.tsx": {
-    "mtime": 1785336203.7209876,
-    "ast_hash": "ba33ddca81a6cb8626e13040c2348d1c",
+    "mtime": 1787035986.3668866,
+    "ast_hash": "050c820f735458db341380a7008efe69",
     "semantic_hash": ""
   },
   "frontend/src/pages/MilestoneDetailPage.tsx": {

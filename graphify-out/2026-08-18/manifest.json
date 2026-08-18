@@ -405,8 +405,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/users/users.service.ts": {
-    "mtime": 1787034630.8607838,
-    "ast_hash": "cf77a966b5363b0dcfe12ce5fb4adc2c",
+    "mtime": 1787035503.2325664,
+    "ast_hash": "6d6d4cfb2ad8ea5756ddf5296c39a9dc",
     "semantic_hash": ""
   },
   "backend/test/app.e2e-spec.ts": {

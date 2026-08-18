@@ -128,6 +128,18 @@
   "126": "TemplatesModule",
   "127": "vite",
   "128": "toaster.tsx",
+  "129": "@eslint/js",
   "130": "Injectable",
-  "133": ".update"
+  "131": "ApiProperty",
+  "132": "IsString",
+  "133": ".update",
+  "134": "MaxLength",
+  "135": "ApiBody",
+  "136": "Body",
+  "137": "Controller",
+  "138": "Get",
+  "139": "Patch",
+  "140": "Post",
+  "141": "Query",
+  "142": "Injectable"
 }
