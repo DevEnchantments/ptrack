@@ -6,6 +6,10 @@ import { dueIn } from '@/lib/format'
 import { StatusPill } from '@/components/StatusPill'
 import { TagChips } from '@/components/TagChips'
 import { Input } from '@/components/ui/input'
+import { buildCsv, downloadCsv } from '@/lib/csv'
+import { ExportCsvDialog } from '@/components/ExportCsvDialog'
+import { Download } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 
 const STATUS_LABELS: Record<string, string> = {
   open: 'Open',
@@ -41,6 +45,7 @@ export function MilestonesPage() {
       .finally(() => setLoading(false))
   }, [])
 
+
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase()
     return rows.filter(
@@ -53,6 +58,26 @@ export function MilestonesPage() {
           (m.tags ?? []).some((t) => t.toLowerCase().includes(q))),
     )
   }, [rows, search, status, overdueOnly])
+
+  const [exportOpen, setExportOpen] = useState(false)
+  const exportCsv = () => {
+    const csv = buildCsv(
+      ['Project', 'Milestone', 'Outcome', 'Owner', 'Due date', 'Status',
+        'Major', 'Weight', 'Percent complete', 'Completed date', 'Tags'],
+      filtered.map((m) => [
+        m.project?.name ?? '', m.name, m.outcome?.name ?? '',
+        m.owner?.full_name ?? m.owner?.email ?? '', m.due_date ?? '',
+        m.status, m.is_major ? 'Yes' : 'No', m.weightage ?? '',
+        m.percent_complete ?? '', m.completed_date ?? '',
+        (m.tags ?? []).join('; '),
+      ]),
+    )
+    downloadCsv(
+      `ptrack-milestones-${new Date().toISOString().slice(0, 10)}.csv`,
+      csv,
+    )
+    setExportOpen(false)
+  }
 
   const grouped = useMemo(() => {
     const map = new Map<string, GlobalMilestone[]>()
@@ -68,7 +93,13 @@ export function MilestonesPage() {
       <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
         Portfolio
       </p>
-      <h1 className="text-2xl font-semibold">Milestones</h1>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <h1 className="text-2xl font-semibold">Milestones</h1>
+        <Button variant="outline" size="sm" onClick={() => setExportOpen(true)}>
+          <Download className="h-4 w-4" />
+          Export CSV
+        </Button>
+      </div>
       <p className="mt-1 text-sm text-muted-foreground">
         Every project's milestones in one register.
       </p>
@@ -189,6 +220,13 @@ export function MilestonesPage() {
           ))}
         </div>
       )}
+      <ExportCsvDialog
+        open={exportOpen}
+        onOpenChange={setExportOpen}
+        noun="milestone"
+        count={filtered.length}
+        onConfirm={exportCsv}
+      />
     </div>
   )
 }

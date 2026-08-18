@@ -1,7 +1,13 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { usePageTitle } from '@/lib/use-page-title'
-import { dashboardApi, type DashboardData } from '@/lib/api'
+import {
+  dashboardApi,
+  usersApi,
+  type DashboardData,
+  type MyWork,
+} from '@/lib/api'
+import { dueIn } from '@/lib/format'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 
@@ -296,6 +302,93 @@ function ActionItemsBreakdown({ segments }: { segments: ChartSegment[] }) {
 // Segment order keeps chart-2 (orange) and chart-1 apart — the CVD-safe
 // adjacency the palette was validated with.
 /** Donut with center readout; hovering a segment swaps the center to it. */
+/**
+ * The signed-in user's open assignments, due-first — the day's starting
+ * point, above the portfolio-wide numbers. Renders nothing while empty so
+ * the dashboard stays clean for people with no assigned work.
+ */
+function MyWorkStrip({
+  work,
+  onOpen,
+  onProfile,
+}: {
+  work: MyWork
+  onOpen: (path: string) => void
+  onProfile: () => void
+}) {
+  const today = new Date().toISOString().slice(0, 10)
+  const rows = [
+    ...work.action_items.map((w) => ({
+      key: `a:${w.id}`,
+      kind: 'Task',
+      text: w.title ?? '',
+      meta: w.project?.name ?? '',
+      due: w.due_date ?? null,
+      path: `/projects/${w.project_id}/action-items/${w.id}`,
+    })),
+    ...work.milestones.map((w) => ({
+      key: `m:${w.id}`,
+      kind: 'Milestone',
+      text: w.name ?? '',
+      meta: w.project?.name ?? '',
+      due: w.due_date ?? null,
+      path: `/projects/${w.project_id}/milestones/${w.id}`,
+    })),
+  ].sort((a, b) => (a.due ?? '9999').localeCompare(b.due ?? '9999'))
+
+  if (rows.length === 0) return null
+
+  return (
+    <div className="mb-4 rounded-lg border bg-card p-4 shadow-xs">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <h2 className="text-sm font-medium">My work</h2>
+        <button
+          type="button"
+          onClick={onProfile}
+          className="cursor-pointer text-xs text-primary hover:underline"
+        >
+          View all in profile
+        </button>
+      </div>
+      <ul className="mt-2 divide-y rounded-md border">
+        {rows.slice(0, 5).map((r) => (
+          <li key={r.key}>
+            <button
+              type="button"
+              onClick={() => onOpen(r.path)}
+              className="flex w-full cursor-pointer items-center gap-2.5 px-3 py-2 text-left hover:bg-accent"
+            >
+              <span className="w-16 shrink-0 rounded-full bg-muted px-2 py-0.5 text-center text-xs text-muted-foreground">
+                {r.kind}
+              </span>
+              <span className="min-w-0 flex-1 truncate text-sm">{r.text}</span>
+              <span className="hidden max-w-40 truncate text-xs text-muted-foreground md:inline">
+                {r.meta}
+              </span>
+              {r.due && (
+                <span
+                  className={`shrink-0 text-xs tabular-nums ${
+                    r.due < today
+                      ? 'font-medium text-destructive'
+                      : 'text-muted-foreground'
+                  }`}
+                >
+                  {dueIn(r.due)}
+                </span>
+              )}
+            </button>
+          </li>
+        ))}
+      </ul>
+      {rows.length > 5 && (
+        <p className="mt-2 text-xs text-muted-foreground">
+          {rows.length - 5} more in your profile.
+        </p>
+      )}
+    </div>
+  )
+}
+
 function formatAedShort(n: number): string {
   if (Math.abs(n) >= 1_000_000) return `AED ${(n / 1_000_000).toFixed(2)}M`
   return `AED ${Math.round(n).toLocaleString()}`
@@ -745,6 +838,7 @@ export function DashboardPage() {
   usePageTitle('My Dashboard')
   const navigate = useNavigate()
   const [data, setData] = useState<DashboardData | null>(null)
+  const [myWork, setMyWork] = useState<MyWork | null>(null)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
@@ -752,6 +846,11 @@ export function DashboardPage() {
       .get()
       .then(setData)
       .catch((e: Error) => setError(e.message))
+    // Personal slice — best-effort; the portfolio view stands without it.
+    usersApi
+      .myWork()
+      .then(setMyWork)
+      .catch(() => undefined)
   }, [])
 
   if (error) {
@@ -849,6 +948,14 @@ export function DashboardPage() {
           Live data
         </span>
       </header>
+
+      {myWork && (
+        <MyWorkStrip
+          work={myWork}
+          onOpen={(path) => navigate(path)}
+          onProfile={() => navigate('/profile')}
+        />
+      )}
 
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         {statTiles.map((t) => (

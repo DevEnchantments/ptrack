@@ -7,6 +7,9 @@ import { InitialsAvatar } from '@/components/InitialsAvatar'
 import { CreateAccountDialog } from '@/components/CreateAccountDialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { buildCsv, downloadCsv } from '@/lib/csv'
+import { ExportCsvDialog } from '@/components/ExportCsvDialog'
+import { Download } from 'lucide-react'
 
 /** People directory: everyone assigned to any project, real or pending. */
 export function PeoplePage() {
@@ -30,6 +33,7 @@ export function PeoplePage() {
 
   useEffect(load, [load])
 
+
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase()
     if (q === '') return people
@@ -42,6 +46,24 @@ export function PeoplePage() {
         ),
     )
   }, [people, search])
+
+  const [exportOpen, setExportOpen] = useState(false)
+  const exportCsv = () => {
+    const csv = buildCsv(
+      ['Name', 'Email', 'Account', 'Projects', 'Roles', 'Access levels'],
+      filtered.map((p) => [
+        p.name, p.email ?? '', p.pending ? 'Pending' : 'Active',
+        p.memberships.map((m) => m.project_name ?? '').filter(Boolean).join('; '),
+        p.memberships.map((m) => m.role ?? '').filter(Boolean).join('; '),
+        p.memberships.map((m) => m.access_level).join('; '),
+      ]),
+    )
+    downloadCsv(
+      `ptrack-people-${new Date().toISOString().slice(0, 10)}.csv`,
+      csv,
+    )
+    setExportOpen(false)
+  }
 
   function toggle(key: string) {
     setExpanded((cur) => {
@@ -57,7 +79,13 @@ export function PeoplePage() {
       <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
         Portfolio
       </p>
-      <h1 className="text-2xl font-semibold">People</h1>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <h1 className="text-2xl font-semibold">People</h1>
+        <Button variant="outline" size="sm" onClick={() => setExportOpen(true)}>
+          <Download className="h-4 w-4" />
+          Export CSV
+        </Button>
+      </div>
       <p className="mt-1 text-sm text-muted-foreground">
         Everyone assigned to a project, with their memberships and roles.
       </p>
@@ -179,6 +207,14 @@ export function PeoplePage() {
           email: accountFor?.email ?? null,
         }}
         onProvisioned={load}
+      />
+      <ExportCsvDialog
+        open={exportOpen}
+        onOpenChange={setExportOpen}
+        noun="person"
+        plural="people"
+        count={filtered.length}
+        onConfirm={exportCsv}
       />
     </div>
   )

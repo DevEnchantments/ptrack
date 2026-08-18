@@ -7,6 +7,10 @@ import { dueIn } from '@/lib/format'
 import { StatusPill } from '@/components/StatusPill'
 import { TagChips } from '@/components/TagChips'
 import { Input } from '@/components/ui/input'
+import { buildCsv, downloadCsv } from '@/lib/csv'
+import { ExportCsvDialog } from '@/components/ExportCsvDialog'
+import { Download } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 
 const STATUS_LABELS: Record<string, string> = {
   open: 'Open',
@@ -51,6 +55,7 @@ export function ActionItemsPage() {
       .finally(() => setLoading(false))
   }, [])
 
+
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase()
     return rows.filter(
@@ -64,6 +69,26 @@ export function ActionItemsPage() {
           (a.tags ?? []).some((t) => t.toLowerCase().includes(q))),
     )
   }, [rows, search, status, mineOnly, overdueOnly, user?.id])
+
+  const [exportOpen, setExportOpen] = useState(false)
+  const exportCsv = () => {
+    const csv = buildCsv(
+      ['Project', 'Action item', 'Type', 'Owners', 'Due date', 'Status', 'Tags'],
+      filtered.map((a) => [
+        a.project?.name ?? '', a.title, a.type?.name ?? '',
+        (a.owners ?? [])
+          .map((o) => o.profile?.full_name ?? o.profile?.email ?? '')
+          .filter(Boolean)
+          .join('; '),
+        a.due_date ?? '', a.status, (a.tags ?? []).join('; '),
+      ]),
+    )
+    downloadCsv(
+      `ptrack-action-items-${new Date().toISOString().slice(0, 10)}.csv`,
+      csv,
+    )
+    setExportOpen(false)
+  }
 
   const grouped = useMemo(() => {
     const map = new Map<string, GlobalActionItem[]>()
@@ -79,7 +104,13 @@ export function ActionItemsPage() {
       <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
         Portfolio
       </p>
-      <h1 className="text-2xl font-semibold">Action Items</h1>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <h1 className="text-2xl font-semibold">Action Items</h1>
+        <Button variant="outline" size="sm" onClick={() => setExportOpen(true)}>
+          <Download className="h-4 w-4" />
+          Export CSV
+        </Button>
+      </div>
       <p className="mt-1 text-sm text-muted-foreground">
         Every project's action items in one register.
       </p>
@@ -199,6 +230,13 @@ export function ActionItemsPage() {
           ))}
         </div>
       )}
+      <ExportCsvDialog
+        open={exportOpen}
+        onOpenChange={setExportOpen}
+        noun="action item"
+        count={filtered.length}
+        onConfirm={exportCsv}
+      />
     </div>
   )
 }

@@ -17,6 +17,25 @@ function timeAgo(iso: string): string {
 }
 
 /** FDD 3.9 in-app notification center (header bell). */
+/**
+ * Deep link per notification type, so a click lands on the record itself
+ * rather than the project page whenever the type encodes one. Reminder
+ * types double as dedup keys: `reminder:<kind>:<record>:<id>:<due>`.
+ */
+function pathFor(n: AppNotification): string {
+  const project = n.project_id ? `/projects/${n.project_id}` : '/'
+  const parts = n.type.split(':')
+  if (parts[0] === 'reminder' && n.project_id) {
+    const record = parts[2]
+    const id = parts[3]
+    if (record === 'action_item' && id) return `${project}/action-items/${id}`
+    if (record === 'milestone' && id) return `${project}/milestones/${id}`
+    return project // submission_pending nudge -> workflow panel in the rail
+  }
+  // submission_* and budget/risk alerts live on the project page.
+  return project
+}
+
 export function NotificationBell() {
   const navigate = useNavigate()
   const [open, setOpen] = useState(false)
@@ -58,7 +77,7 @@ export function NotificationBell() {
       notificationsApi.markRead(n.id).catch(() => refresh())
     }
     setOpen(false)
-    if (n.project_id) navigate(`/projects/${n.project_id}`)
+    navigate(pathFor(n))
   }
 
   function markAll() {
