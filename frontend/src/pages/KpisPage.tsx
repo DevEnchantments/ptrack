@@ -12,6 +12,7 @@ import {
 } from 'lucide-react'
 import { kpisApi, type Kpi, type KpiReading } from '@/lib/api'
 import { usePageTitle } from '@/lib/use-page-title'
+import { kpiAchievement, kpiDataQuality } from '@/lib/formulas'
 import { toast } from '@/lib/toast'
 import { AddKpiDialog } from '@/components/AddKpiDialog'
 import { Button } from '@/components/ui/button'
@@ -426,6 +427,17 @@ export function KpisPage() {
             const openPlans = (kpi.action_plans ?? []).filter(
               (p) => p.status !== 'done',
             ).length
+            // F6/F7 (FORMULAS.md, decided 2026-08-18)
+            const achievement = kpiAchievement(kpi, kpi.readings ?? [])
+            const quality = kpiDataQuality(kpi, kpi.readings ?? [])
+            const achievementTone =
+              achievement === null
+                ? ''
+                : achievement >= 100
+                  ? 'border-[var(--status-green-border)] bg-[var(--status-green-bg)] text-[var(--status-green-fg)]'
+                  : achievement >= 70
+                    ? 'border-[var(--status-amber-border)] bg-[var(--status-amber-bg)] text-[var(--status-amber-fg)]'
+                    : 'border-[var(--status-red-border)] bg-[var(--status-red-bg)] text-[var(--status-red-fg)]'
             return (
               <li
                 key={kpi.id}
@@ -461,6 +473,22 @@ export function KpisPage() {
                       {kpi.frequency}
                     </span>
                   </button>
+                  {achievement !== null && (
+                    <span
+                      title="Achievement vs target (F6)"
+                      className={`hidden shrink-0 rounded-full border px-2 py-0.5 text-xs font-medium tabular-nums md:inline ${achievementTone}`}
+                    >
+                      {achievement}%
+                    </span>
+                  )}
+                  {quality !== null && (
+                    <span
+                      title="Data-quality index: timeliness, completeness, reliability (F7)"
+                      className="hidden shrink-0 rounded-full bg-muted px-2 py-0.5 text-xs tabular-nums text-muted-foreground lg:inline"
+                    >
+                      DQ {quality}
+                    </span>
+                  )}
                   <Trend kpi={kpi} />
                   <div className="w-40 shrink-0 text-right text-sm tabular-nums">
                     <span className="font-semibold">

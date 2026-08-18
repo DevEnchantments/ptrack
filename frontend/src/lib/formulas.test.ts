@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import {
   atRiskSuggested,
+  kpiAchievement,
+  kpiDataQuality,
   calculatedProgress,
   plannedProgress,
   riskScore,
@@ -118,5 +120,77 @@ describe('atRiskSuggested (F4)', () => {
 
   it('never flags when neither signal is computable', () => {
     expect(atRiskSuggested([], null, 50, TODAY)).toBe(false)
+  })
+})
+
+const KPI = {
+  polarity: 'higher_is_better',
+  target: 100,
+  frequency: 'monthly',
+  data_source: 'ERP',
+  calculation_method: 'Sum of closed deals',
+  owner_id: 'u-1',
+}
+const reading = (date: string, value: number, analysis: string | null = 'ok') => ({
+  reading_date: date,
+  value,
+  performance_analysis: analysis,
+})
+
+describe('kpiAchievement (F6)', () => {
+  it('is null without target or readings', () => {
+    expect(kpiAchievement({ polarity: 'higher_is_better', target: null }, [reading('2026-01-01', 5)])).toBeNull()
+    expect(kpiAchievement(KPI, [])).toBeNull()
+  })
+
+  it('uses the latest reading, higher-is-better', () => {
+    expect(
+      kpiAchievement(KPI, [reading('2026-01-01', 50), reading('2026-06-01', 80)]),
+    ).toBe(80)
+  })
+
+  it('inverts for lower-is-better and clamps at 200', () => {
+    expect(
+      kpiAchievement({ polarity: 'lower_is_better', target: 10 }, [reading('2026-01-01', 5)]),
+    ).toBe(200)
+  })
+
+  it('is null on a zero divisor', () => {
+    expect(
+      kpiAchievement({ polarity: 'lower_is_better', target: 10 }, [reading('2026-01-01', 0)]),
+    ).toBeNull()
+  })
+})
+
+describe('kpiDataQuality (F7)', () => {
+  const TODAY = '2026-08-18'
+
+  it('is null with no readings', () => {
+    expect(kpiDataQuality(KPI, [], TODAY)).toBeNull()
+  })
+
+  it('scores 100 across the board when fresh and fully described', () => {
+    expect(kpiDataQuality(KPI, [reading('2026-08-01', 10)], TODAY)).toBe(100)
+  })
+
+  it('penalizes missing analyses (completeness)', () => {
+    const dqi = kpiDataQuality(
+      KPI,
+      [reading('2026-08-01', 10, null), reading('2026-08-10', 11)],
+      TODAY,
+    )
+    // timeliness 100, completeness 50, reliability 100 -> 83
+    expect(dqi).toBe(83)
+  })
+
+  it('penalizes sparse readings against the frequency (timeliness)', () => {
+    const dqi = kpiDataQuality(KPI, [reading('2025-08-18', 10)], TODAY)
+    // one reading where 13 monthly ones were expected -> timeliness 8
+    expect(dqi).toBe(Math.round((8 + 100 + 100) / 3))
+  })
+
+  it('penalizes missing source/method/owner (reliability)', () => {
+    const bare = { ...KPI, data_source: null, calculation_method: null, owner_id: null }
+    expect(kpiDataQuality(bare, [reading('2026-08-01', 10)], TODAY)).toBe(67)
   })
 })

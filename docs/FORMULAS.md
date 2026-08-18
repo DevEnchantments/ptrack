@@ -3,19 +3,20 @@
 Convention (2026-07-21): every formula is recorded here before implementation,
 with supervisor sign-off.
 
-**Status 2026-08-03: PROVISIONAL.** The supervisor has not responded to the
-open questions (OI-02), and Fares directed the build to proceed on standard
-assumptions. The formulas below are industry-standard defaults, adopted on
-Fares's authority, implemented as documented, and flagged for supervisor
-confirmation. If the supervisor specifies different formulas, each has a single
-implementation site to change.
+**Status 2026-08-18: DECIDED.** The supervisor delegated formula decisions to
+the team ("we should decide"). Everything below is now the confirmed
+definition, adopted under that delegation; each formula keeps a single
+implementation site should policy ever change.
 
 | # | Formula | Status |
 |---|---|---|
-| F1 | Calculated progress | PROVISIONAL 2026-08-03 |
-| F2 | Planned progress | PROVISIONAL 2026-08-03 |
-| F3 | Risk score + severity | PROVISIONAL 2026-08-03 |
-| F4 | At-risk suggestion | PROVISIONAL 2026-08-03 (display-only) |
+| F1 | Calculated progress | DECIDED 2026-08-18 (delegated; unchanged from 2026-08-03 draft) |
+| F2 | Planned progress | DECIDED 2026-08-18 (delegated; unchanged) |
+| F3 | Risk score + severity | DECIDED 2026-08-18 (delegated; unchanged) |
+| F4 | At-risk suggestion | DECIDED 2026-08-18 (delegated; display-only) |
+| F5 | Initiative delivery buckets | DECIDED 2026-08-18 (delegated; unchanged from 2026-08-13 draft) |
+| F6 | KPI achievement % | DECIDED 2026-08-18 (new, defined under delegation) |
+| F7 | KPI data-quality index | DECIDED 2026-08-18 (new, defined under delegation) |
 
 ## F1 — Calculated progress (project)
 
@@ -66,13 +67,7 @@ manual; the suggestion never writes it. Surfaced 2026-08-03 on the project
 overview Progress card (amber "Suggested: at risk", shown only when the manual
 flag is off).
 
-## Explicitly not implemented (await real sign-off)
-
-KPI achievement %, data-quality index (timeliness/completeness/reliability),
-budget-threshold trigger values — these are organization-policy numbers, not
-standard defaults, and guessing them has real reporting consequences.
-
-## F5 — Initiative delivery buckets (PROVISIONAL, adopted 2026-08-13)
+## F5 — Initiative delivery buckets (DECIDED 2026-08-18)
 
 Buckets the executive dashboard's initiative donut (FDD Fig 15) by
 `delta = calculated progress (F1) - planned progress (F2)`:
@@ -87,6 +82,38 @@ Buckets the executive dashboard's initiative donut (FDD Fig 15) by
 | Off Target | -15 > delta >= -30 |
 | Severely Off Target | delta < -30 |
 
-Cancelled projects are excluded from the donut. Thresholds are ASSUMED
-(standard tolerance bands); adjust on supervisor sign-off. Implementation:
-`backend/src/modules/dashboard/dashboard.service.ts`.
+Cancelled projects are excluded from the donut. Thresholds confirmed under
+the 2026-08-18 delegation. Implementation: `initiativeBucket` in
+`backend/src/common/formulas.ts` (shared by the dashboard donut and the
+Initiative Progress report).
+
+## F6 — KPI achievement % (DECIDED 2026-08-18)
+
+Polarity-aware ratio of the latest reading to the target:
+
+```
+higher-is-better:  achievement = latest / target × 100
+lower-is-better:   achievement = target / latest × 100
+```
+
+- Null when the KPI has no target, no readings, or a zero divisor.
+- Clamped to 0-200% so a wildly-early reading cannot distort scorecards.
+- Rounded to whole percent. "Latest" = the reading with the newest date.
+
+## F7 — KPI data-quality index (DECIDED 2026-08-18)
+
+Mean of three 0-100 subscores, rounded to a whole number (FDD Figs 30-31
+name the dimensions; the arithmetic is ours under delegation):
+
+| Subscore | Definition |
+|---|---|
+| Timeliness | expected reporting periods since the first reading (from the KPI's frequency) that actually have a reading, as a share. 100 with a single reading; null frequency counts as measured-on-time |
+| Completeness | share of readings carrying both a value and a performance analysis |
+| Reliability | one third each for data source set, calculation method set, and owner set |
+
+Null when the KPI has no readings at all (nothing to grade yet).
+
+## Budget threshold
+
+The 80% utilization notification threshold (FDD 3.9) is confirmed at 80%
+under the same delegation.

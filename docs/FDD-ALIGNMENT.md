@@ -154,7 +154,7 @@ index (timeliness/completeness/reliability, Figs 30–31) — **formulas = ASK (
 
 | FR | Summary | P-Track status |
 |---|---|---|
-| FR-01 | Project register grid: filters, pagination, sort, status indicators | PARTIAL — filter rail + status pills exist; grid view + manual/calculated columns ✅ SHIPPED 2026-08-03 (sortable Fig 1 grid as a card/grid toggle, persisted; CSV export via FR-13 confirm — UC-03, CSV not XLSX to stay dependency-free). 2026-07-30: home cards show a **milestone-completion** bar (done/total, labeled "Milestones") + open-issue counts via `GET /projects` aggregates — deliberately NOT the FDD's calculated progress, which awaits OI-02 formula sign-off (docs/FORMULAS.md rule); swap the bar to official progress when it lands |
+| FR-01 | Project register grid: filters, pagination, sort, status indicators | PARTIAL — filter rail + status pills exist; grid view + manual/calculated columns ✅ SHIPPED 2026-08-03 (sortable Fig 1 grid as a card/grid toggle, persisted; CSV export via FR-13 confirm — UC-03, CSV not XLSX to stay dependency-free). home cards show the official F1 calculated-progress bar (DECIDED 2026-08-18) with milestone done/total + open-issue counts as secondary meta |
 | FR-02 | Navigation: lists / views / reports / dashboards | ✅ MOSTLY SHIPPED — live nav: Projects, My Dashboard, Categories, Milestones, Action Items, People, Timeline, Reporting, Administration + Users & Roles (admin-gated). AI Assistant remains the one stub |
 | FR-03 | Project detail tabs (Overview, Achievement, Risk & Issue, Comment, Dashboard, Documentation, KPI, Change History) | ✅ SHIPPED 2026-08-03 (mapping ASSUMED: Overview=cards+fields+people · Achievement=milestones+action items · Risk & Issue=risks+issues · Comments=updates · Documentation=links+resources+reports+attachments · Change History=NEW project-wide audit feed incl. deletions via `GET /projects/:id/history`; Dashboard tab LIVE 2026-08-12 — Fig 8/9 per-project charts; KPI is the last stub, pending linkage). Sticky SectionNav is tab-aware |
 | FR-04 | Actual/planned progress, milestones done/total, budget cards | ✅ SHIPPED 2026-08-03: overview cards on the project page (progress vs plan with delta + F4 suggestion, milestone donut, budget utilization with over-budget flag, open items) |
@@ -166,7 +166,7 @@ index (timeliness/completeness/reliability, Figs 30–31) — **formulas = ASK (
 | FR-09 | Adjust Weights modal (milestone dates + weights grid) | ✅ SHIPPED 2026-08-03 (weights grid enforcing total=100; dates edited per-milestone — ASSUMED split); atomic via `db/adjust_milestone_weights.sql` since 2026-08-17; manage-level access since FR-15 |
 | FR-10 | Dashboards: initiative counts/status, budget utilization, cycle submission status, monthly breakdowns | ✅ Fig-15 SHAPE SHIPPED 2026-08-13: executive row on My Dashboard (initiative buckets per F5 PROVISIONAL, portfolio budget bar, cycle-submission widget with click-through, monthly done/due strip) above the existing live charts |
 
-| FR-11 | KPI dashboards / scorecards | ✅ PARTIAL 2026-08-05: KPI registry + readings + action plans live at `/kpis` (ASSUMED entity-level). Scorecard visuals (achievement %, data-quality index) await formula sign-off |
+| FR-11 | KPI dashboards / scorecards | ✅ SHIPPED: registry + readings + action plans (2026-08-05) + scorecards 2026-08-18 — F6 achievement % (polarity-aware, toned badge) and F7 data-quality index per KPI row, per the delegated formula decisions. Remaining: optional project linkage (stage c) |
 | FR-12 | Report generation + Excel export | ✅ PARTIAL 2026-08-13: named printable reports under /reporting — Initiative Progress (planned vs calculated per F1/F2, delta + F5 bucket, worst first) and Monthly Performance (milestones due/done/completed + submissions/approvals per month, year switcher) — join the existing per-project Progress report and Cycle Submission Status. Export stays CSV (FR-13 confirm modal); native .xlsx not built (ASSUMED CSV sufficient) |
 | FR-13 | Download confirmation modal | ✅ SHIPPED 2026-08-03: confirm dialog (record count) before the CSV export |
 | FR-14 | Workflow states: submit/review/return/approve/close | ✅ ASSUMED+SHIPPED 2026-08-03; cycle CLOSE (+reopen) 2026-08-13 locks all transitions (see 1.6) — routing/exact closure rules remain OI-03 questions |
@@ -362,6 +362,37 @@ requires one); and until the security phase, any provisioned account has full
 access — distribute credentials accordingly.
 
 ## 6. Open questions for the supervisor (blockers marked ⛔)
+
+**DELEGATION 2026-08-18 — this section is now historical.** The supervisor
+reviewed the progress summary and delegated decisions 1-6 (formulas incl. the
+KPI math, delegated authority, KPI linkage, field behaviors, data, and the
+remaining LOV/numbering questions) to the team: "we should decide." Decisions
+taken same day:
+- **Formulas:** F1-F5 confirmed as documented; F6 (KPI achievement %) and F7
+  (data-quality index) defined — see FORMULAS.md, all now DECIDED. The 80%
+  budget threshold is confirmed.
+- **Delegated authority (was OI-01/OI-03):** the shipped behavior is policy —
+  PMO Partner validates, Project Owner approves, the `pmo` role may return,
+  cycle close locks all transitions, read-only viewers see open projects only,
+  executives get aggregates but no restricted drill-down. Future changes are
+  Permissions-grid edits.
+- **KPI linkage (was the Fig 8 KPI-tab question):** KPIs stay entity-level and
+  gain an OPTIONAL `project_id`; linked KPIs appear in that project's KPI tab,
+  unlinked ones remain portfolio-level.
+- **Field behaviors:** every free-text field (sponsor, customer, target group,
+  stakeholders, identified/reported by, risk priority/action) stays free text
+  permanently.
+- **Data:** seeded demo data until a real spreadsheet arrives; import wizard
+  stands ready.
+- **LOVs & numbering:** current seeds stand (statuses = FDD five + demo
+  values; probability/impact Low/Medium/High 1-3), all admin-editable in Code
+  Tables; reference ID stays free text (no auto-numbering); milestone buckets
+  keep Completed/On Target/Overdue; utilized budget stays manual; the
+  P-Track-only fields (size, access control, goal, tags, primary URL) are
+  KEPT.
+- **Email:** supervisor said "use SMTP if you can" — email subsystem to be
+  built env-driven; sending activates when credentials exist. **AI features:**
+  to be discussed with the supervisor later.
 
 **Meeting outcomes 2026-08-11** (first supervisor sync since the assumed-FDD
 build): LOV questions ANSWERED — "use generic values, and make every dropdown

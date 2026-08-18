@@ -900,8 +900,8 @@
     "semantic_hash": ""
   },
   "docs/FDD-ALIGNMENT.md": {
-    "mtime": 1786974727.0362372,
-    "ast_hash": "4333ab49204b162fa322bf9a4b7edbb1",
+    "mtime": 1787054011.0571907,
+    "ast_hash": "1ff7a2e5abebf261651b6042321c6947",
     "semantic_hash": ""
   },
   "backend/db/fdd_project_fields.sql": {
@@ -1035,13 +1035,13 @@
     "semantic_hash": ""
   },
   "frontend/src/lib/formulas.ts": {
-    "mtime": 1785759164.3312979,
-    "ast_hash": "a4d7ea3d2ac81c47de68f33ba8300087",
+    "mtime": 1787053724.595597,
+    "ast_hash": "d95befefe1f606abca7a6b7bb268c30c",
     "semantic_hash": ""
   },
   "docs/FORMULAS.md": {
-    "mtime": 1786617127.0924964,
-    "ast_hash": "6ba387c9424ff15ada8e95447c623d14",
+    "mtime": 1787053640.7349925,
+    "ast_hash": "4bb46ad145eaca5fd86e30cd85ef438e",
     "semantic_hash": ""
   },
   "backend/src/modules/milestones/dto/adjust-weights.dto.ts": {
@@ -1210,8 +1210,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/KpisPage.tsx": {
-    "mtime": 1786958607.6091483,
-    "ast_hash": "96ace956f91e633a8e889e8a7a1b7463",
+    "mtime": 1787053970.402713,
+    "ast_hash": "8a1185b14cb8e063bb07e526244d6963",
     "semantic_hash": ""
   },
   "backend/scripts/seed-demo-data.mjs": {
@@ -1520,8 +1520,8 @@
     "semantic_hash": ""
   },
   "frontend/src/lib/formulas.test.ts": {
-    "mtime": 1786960145.967834,
-    "ast_hash": "b2b7fafcbf78492fec4fb618abfb13ec",
+    "mtime": 1787053724.5972404,
+    "ast_hash": "d8793185b7b56d39adb39045aafcb6c7",
     "semantic_hash": ""
   },
   "frontend/src/test-setup.ts": {
