@@ -121,4 +121,13 @@ export class CreateKpiDto {
   @IsOptional()
   @IsUUID()
   owner_id?: string | null;
+
+  @ApiPropertyOptional({
+    format: 'uuid',
+    description:
+      "Optional project link — the KPI then appears on that project's KPI tab.",
+  })
+  @IsOptional()
+  @IsUUID()
+  project_id?: string | null;
 }

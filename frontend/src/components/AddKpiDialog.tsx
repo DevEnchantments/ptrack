@@ -3,7 +3,13 @@ import { Loader2 } from 'lucide-react'
 import { toast } from '@/lib/toast'
 import { useEffect, useState } from 'react'
 import type { ProjectMemberInput } from '@/pages/CreateProjectWizard'
-import { kpisApi, lookupsApi, type Kpi, type Lookup } from '@/lib/api'
+import {
+  kpisApi,
+  lookupsApi,
+  projectsApi,
+  type Kpi,
+  type Lookup,
+} from '@/lib/api'
 import { useAuth } from '@/lib/auth-context'
 import { PersonAutocomplete } from '@/components/PersonAutocomplete'
 import { Button } from '@/components/ui/button'
@@ -72,6 +78,8 @@ export function AddKpiDialog({ open, onOpenChange, onSaved, existing }: Props) {
   const [target, setTarget] = useState('')
   const [isPriority, setIsPriority] = useState(false)
   const [tierId, setTierId] = useState<string | null>(null)
+  const [projectId, setProjectId] = useState<string | null>(null)
+  const [projects, setProjects] = useState<Lookup[]>([])
   const [objectiveId, setObjectiveId] = useState<string | null>(null)
   const [owner, setOwner] = useState<ProjectMemberInput>(emptyPerson())
 
@@ -109,6 +117,7 @@ export function AddKpiDialog({ open, onOpenChange, onSaved, existing }: Props) {
     setTarget('')
     setIsPriority(false)
     setTierId(null)
+    setProjectId(null)
     setObjectiveId(null)
     setOwner(emptyPerson())
     setError(null)
@@ -116,6 +125,14 @@ export function AddKpiDialog({ open, onOpenChange, onSaved, existing }: Props) {
   }
 
   // Populate on open / record change — render-phase prev-key pattern.
+  useEffect(() => {
+    if (!open) return
+    projectsApi
+      .list()
+      .then((rows) => setProjects(rows.map((p) => ({ id: p.id, name: p.name }))))
+      .catch(() => setProjects([]))
+  }, [open])
+
   const populateKey = open ? (existing?.id ?? '__new__') : null
   const [prevPopulateKey, setPrevPopulateKey] = useState<string | null>(null)
   if (prevPopulateKey !== populateKey) {
@@ -142,6 +159,7 @@ export function AddKpiDialog({ open, onOpenChange, onSaved, existing }: Props) {
         setIsPriority(existing.is_priority)
         setTierId(existing.tier_id)
         setObjectiveId(existing.objective_id)
+        setProjectId(existing.project_id)
         setOwner(
           existing.owner_id
             ? {
@@ -211,6 +229,7 @@ export function AddKpiDialog({ open, onOpenChange, onSaved, existing }: Props) {
         tier_id: tierId,
         objective_id: objectiveId,
         owner_id: owner.user_id,
+        project_id: projectId,
       }
 
       if (isEdit && existing) {
@@ -340,6 +359,15 @@ export function AddKpiDialog({ open, onOpenChange, onSaved, existing }: Props) {
               objectives,
               objectiveId,
               setObjectiveId,
+            )}
+          </div>
+
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {lookupSelect(
+              'Linked Project (optional)',
+              projects,
+              projectId,
+              setProjectId,
             )}
           </div>
 

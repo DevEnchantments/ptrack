@@ -38,11 +38,13 @@ export interface Kpi {
   tier_id: string | null
   objective_id: string | null
   owner_id: string | null
+  project_id: string | null
   created_at: string
   updated_at: string
   tier: { name: string } | null
   objective: { name: string } | null
   owner: { full_name: string | null; email: string | null } | null
+  project: { id: string; name: string } | null
   readings: KpiReading[]
   action_plans: KpiActionPlan[]
 }
@@ -65,6 +67,7 @@ export interface KpiInput {
   tier_id?: string | null
   objective_id?: string | null
   owner_id?: string | null
+  project_id?: string | null
 }
 
 export interface AdminUser {

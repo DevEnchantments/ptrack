@@ -17,6 +17,8 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { usePageTitle } from '@/lib/use-page-title'
 import { hasCapability, useMe } from '@/lib/use-me'
 import { AccessLevel, projectAccessLevel } from '@/lib/access'
+import { kpiAchievement, kpiDataQuality } from '@/lib/formulas'
+import { kpisApi, type Kpi } from '@/lib/api'
 import { useParams, useNavigate } from 'react-router-dom'
 import {
   projectsApi,
@@ -265,6 +267,7 @@ const PROJECT_TABS = [
   'Comments',
   'Dashboard',
   'Documentation',
+  'KPI',
   'Change History',
 ] as const
 type ProjectTab = (typeof PROJECT_TABS)[number]
@@ -373,6 +376,16 @@ export function ProjectDetailPage() {
   )
   const [activeSection, setActiveSection] = useState<string | null>(null)
   const [activeTab, setActiveTab] = useState<ProjectTab>('Overview')
+  const [allKpis, setAllKpis] = useState<Kpi[] | null>(null)
+
+  useEffect(() => {
+    if (activeTab !== 'KPI' || allKpis !== null) return
+    kpisApi
+      .list()
+      .then(setAllKpis)
+      .catch(() => setAllKpis([]))
+  }, [activeTab, allKpis])
+
   const [titleInView, setTitleInView] = useState(true)
   const titleRef = useRef<HTMLHeadingElement | null>(null)
   const entered = useEntranceFlag()
@@ -807,15 +820,6 @@ export function ProjectDetailPage() {
               >
                 {t}
               </button>
-            ))}
-            {['KPI'].map((t) => (
-              <span
-                key={t}
-                title="Coming once the KPI-to-project linkage is confirmed"
-                className="cursor-not-allowed whitespace-nowrap border-b-2 border-transparent pb-2 text-sm text-muted-foreground/50"
-              >
-                {t}
-              </span>
             ))}
           </div>
 
@@ -1828,6 +1832,96 @@ export function ProjectDetailPage() {
                 actionItems={actionItems}
               />
             </Suspense>
+          )}
+
+          {activeTab === 'KPI' && (
+            <section className="mt-8">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <h2 className="text-lg font-semibold">Linked KPIs</h2>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    KPIs linked to this project in the registry. Achievement is
+                    F6, data quality is F7 (FORMULAS.md).
+                  </p>
+                </div>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => navigate('/kpis')}
+                >
+                  Open KPI registry
+                </Button>
+              </div>
+              {allKpis === null ? (
+                <div className="mt-4 flex flex-col gap-2 rounded-md border p-4">
+                  <Skeleton className="h-4 w-2/3" />
+                  <Skeleton className="h-4 w-1/2" />
+                </div>
+              ) : (
+                (() => {
+                  const linked = allKpis.filter(
+                    (k) => k.project_id === project.id,
+                  )
+                  if (linked.length === 0) {
+                    return (
+                      <div className="mt-4 rounded-md border border-dashed px-4 py-5 text-sm text-muted-foreground">
+                        No KPIs linked to this project yet. Link one from the
+                        KPI registry via its "Linked Project" field.
+                      </div>
+                    )
+                  }
+                  return (
+                    <ul className="mt-4 divide-y rounded-md border bg-card">
+                      {linked.map((k) => {
+                        const readings = k.readings ?? []
+                        const latest =
+                          [...readings].sort((a, b) =>
+                            b.reading_date.localeCompare(a.reading_date),
+                          )[0] ?? null
+                        const achievement = kpiAchievement(k, readings)
+                        const quality = kpiDataQuality(k, readings)
+                        return (
+                          <li
+                            key={k.id}
+                            className="flex flex-wrap items-center gap-3 px-4 py-3"
+                          >
+                            <span className="min-w-0 flex-1 truncate text-sm font-medium">
+                              {k.name}
+                            </span>
+                            <span className="text-sm tabular-nums text-muted-foreground">
+                              {latest ? latest.value : '—'} / {k.target ?? '—'}
+                              {k.unit ? ` ${k.unit}` : ''}
+                            </span>
+                            {achievement !== null && (
+                              <span
+                                title="Achievement vs target (F6)"
+                                className={`rounded-full border px-2 py-0.5 text-xs font-medium tabular-nums ${
+                                  achievement >= 100
+                                    ? 'border-[var(--status-green-border)] bg-[var(--status-green-bg)] text-[var(--status-green-fg)]'
+                                    : achievement >= 70
+                                      ? 'border-[var(--status-amber-border)] bg-[var(--status-amber-bg)] text-[var(--status-amber-fg)]'
+                                      : 'border-[var(--status-red-border)] bg-[var(--status-red-bg)] text-[var(--status-red-fg)]'
+                                }`}
+                              >
+                                {achievement}%
+                              </span>
+                            )}
+                            {quality !== null && (
+                              <span
+                                title="Data-quality index (F7)"
+                                className="rounded-full bg-muted px-2 py-0.5 text-xs tabular-nums text-muted-foreground"
+                              >
+                                DQ {quality}
+                              </span>
+                            )}
+                          </li>
+                        )
+                      })}
+                    </ul>
+                  )
+                })()
+              )}
+            </section>
           )}
 
           {activeTab === 'Change History' && (

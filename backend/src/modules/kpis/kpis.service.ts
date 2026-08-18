@@ -46,6 +46,7 @@ export class KpisService {
       tier_id: dto.tier_id ?? null,
       objective_id: dto.objective_id ?? null,
       owner_id: dto.owner_id ?? null,
+      project_id: dto.project_id ?? null,
       created_by: userId,
       updated_by: userId,
     });
@@ -79,6 +80,7 @@ export class KpisService {
     if (dto.objective_id !== undefined)
       patch.objective_id = dto.objective_id ?? null;
     if (dto.owner_id !== undefined) patch.owner_id = dto.owner_id ?? null;
+    if (dto.project_id !== undefined) patch.project_id = dto.project_id ?? null;
     const updated = await this.repo.update(kpiId, patch);
     if (!updated) throw new NotFoundException('KPI not found.');
     return updated;

@@ -40,6 +40,7 @@ export interface Kpi {
   tier_id: string | null;
   objective_id: string | null;
   owner_id: string | null;
+  project_id: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -48,15 +49,17 @@ export interface KpiListItem extends Kpi {
   tier: { name: string } | null;
   objective: { name: string } | null;
   owner: { full_name: string | null; email: string | null } | null;
+  project: { id: string; name: string } | null;
   readings: KpiReading[];
   action_plans: KpiActionPlan[];
 }
 
 const COLUMNS =
-  'id, name, description, pillar, entity, unit, polarity, decimal_places, data_source, calculation_method, frequency, rationale, baseline, target, is_priority, tier_id, objective_id, owner_id, created_at, updated_at';
+  'id, name, description, pillar, entity, unit, polarity, decimal_places, data_source, calculation_method, frequency, rationale, baseline, target, is_priority, tier_id, objective_id, owner_id, project_id, created_at, updated_at';
 
 const JOINS = `${COLUMNS},
   tier:tiers ( name ),
+  project:projects ( id, name ),
   objective:strategic_objectives ( name ),
   owner:profiles!owner_id ( full_name, email ),
   readings:kpi_readings ( id, kpi_id, reading_date, value, performance_analysis, created_at ),
