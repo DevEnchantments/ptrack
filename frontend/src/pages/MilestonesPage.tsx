@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { registryApi, type GlobalMilestone } from '@/lib/api'
 import { usePageTitle } from '@/lib/use-page-title'
+import { dueIn } from '@/lib/format'
 import { StatusPill } from '@/components/StatusPill'
 import { TagChips } from '@/components/TagChips'
 import { Input } from '@/components/ui/input'
@@ -168,7 +169,7 @@ export function MilestonesPage() {
                               : 'text-muted-foreground'
                           }`}
                         >
-                          Due {m.due_date}
+                          Due {m.due_date} · {dueIn(m.due_date)}
                         </span>
                       )}
                       {m.weightage != null && (

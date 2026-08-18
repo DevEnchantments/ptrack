@@ -1,5 +1,6 @@
 import { HomePage } from '@/pages/HomePage'
 import { DashboardPage } from '@/pages/DashboardPage'
+import { ProfilePage } from '@/pages/ProfilePage'
 import { ReportingPage } from '@/pages/ReportingPage'
 import { KpisPage } from '@/pages/KpisPage'
 import { CodeTablesPage } from '@/pages/admin/CodeTablesPage'
@@ -36,6 +37,7 @@ function App() {
         <Route element={<AppLayout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
           <Route path="/reporting" element={<ReportingPage />} />
           <Route path="/kpis" element={<KpisPage />} />
           <Route path="/admin/code-tables" element={<CodeTablesPage />} />

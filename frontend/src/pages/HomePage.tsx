@@ -38,6 +38,7 @@ import {
 } from '@/components/ui/dialog'
 import { usePageTitle } from '@/lib/use-page-title'
 import { atLeastRole, useMe } from '@/lib/use-me'
+import { useLocalStorage } from '@/lib/use-local-storage'
 import {
   Select,
   SelectContent,
@@ -181,8 +182,11 @@ export function HomePage() {
     searchParams.get('category') ?? ALL,
   )
   const [tagFilter, setTagFilter] = useState(searchParams.get('tag') ?? ALL)
-  const [sort, setSort] = useState('updated_desc')
-  const [rows, setRows] = useState('all')
+  const [sort, setSort] = useLocalStorage<string>(
+    'ptrack:home-sort',
+    'updated_desc',
+  )
+  const [rows, setRows] = useLocalStorage<string>('ptrack:home-rows', 'all')
 
   useEffect(() => {
     Promise.all([

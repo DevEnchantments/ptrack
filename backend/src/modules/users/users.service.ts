@@ -9,6 +9,90 @@ import { toHttpException } from '../../common/supabase-error';
 export class UsersService {
   constructor(private readonly db: DatabaseService) {}
 
+  /** Projects the caller belongs to, with role and access tier. */
+  async myMemberships(userId: string) {
+    const { data, error } = await this.db.client
+      .from('project_members')
+      .select(
+        `access_level, status,
+         role:project_roles ( name ),
+         project:projects ( id, name )`,
+      )
+      .eq('user_id', userId)
+      .eq('status', 'active');
+    if (error) throw toHttpException(error, 'users.myMemberships');
+    return data ?? [];
+  }
+
+  /** Open records assigned to the caller, for the profile page's work list. */
+  async myWork(userId: string) {
+    const owned = await this.db.client
+      .from('action_item_owners')
+      .select('action_item_id')
+      .eq('user_id', userId);
+    if (owned.error) throw toHttpException(owned.error, 'users.myWork');
+    const ids = (owned.data ?? []).map(
+      (r: { action_item_id: string }) => r.action_item_id,
+    );
+
+    const [actionItems, milestones, risks] = await Promise.all([
+      ids.length === 0
+        ? Promise.resolve({ data: [], error: null })
+        : this.db.client
+            .from('action_items')
+            .select(
+              'id, project_id, title, due_date, project:projects ( name )',
+            )
+            .in('id', ids)
+            .eq('status', 'open')
+            .order('due_date', { ascending: true, nullsFirst: false }),
+      this.db.client
+        .from('milestones')
+        .select('id, project_id, name, due_date, project:projects ( name )')
+        .eq('owner_id', userId)
+        .eq('status', 'open')
+        .order('due_date', { ascending: true, nullsFirst: false }),
+      this.db.client
+        .from('risks')
+        .select(
+          'id, project_id, statement, status, type, project:projects ( name )',
+        )
+        .eq('owner_id', userId)
+        .eq('status', 'open'),
+    ]);
+    for (const r of [actionItems, milestones, risks]) {
+      if (r.error) throw toHttpException(r.error, 'users.myWork');
+    }
+    return {
+      action_items: actionItems.data ?? [],
+      milestones: milestones.data ?? [],
+      risks: risks.data ?? [],
+    };
+  }
+
+  /** Own profile row (display name for /users/me). */
+  async myProfile(userId: string) {
+    const { data, error } = await this.db.client
+      .from('profiles')
+      .select('full_name')
+      .eq('id', userId)
+      .maybeSingle<{ full_name: string | null }>();
+    if (error) throw toHttpException(error, 'users.myProfile');
+    return data ?? { full_name: null };
+  }
+
+  /** Own display name; drives attribution in history and notifications. */
+  async updateMe(userId: string, fullName: string) {
+    const { data, error } = await this.db.client
+      .from('profiles')
+      .update({ full_name: fullName.trim() || null })
+      .eq('id', userId)
+      .select('id, email, full_name')
+      .single<{ id: string; email: string | null; full_name: string | null }>();
+    if (error) throw toHttpException(error, 'users.updateMe');
+    return data;
+  }
+
   /** Existing application users (profiles), optionally filtered by search text. */
   async search(query?: string) {
     let q = this.db.client

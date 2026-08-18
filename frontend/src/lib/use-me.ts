@@ -1,45 +1,62 @@
 import { useEffect, useState } from 'react'
 import { usersApi, type Me } from '@/lib/api'
 
-// Module-level promise cache (same convention as lookupsApi): one fetch per
-// session, shared by every component that asks.
-let mePromise: Promise<Me> | null = null
+// Session cache with subscribers, so a profile edit or a role change made in
+// Users & Roles reaches every mounted component without a page reload.
 let cached: Me | null = null
+let cachedAt = 0
+let inflight: Promise<Me> | null = null
+const listeners = new Set<(me: Me) => void>()
+
+const STALE_MS = 60_000
 
 function fetchMe(): Promise<Me> {
-  mePromise ??= usersApi
+  inflight ??= usersApi
     .me()
     .then((me) => {
       cached = me
+      cachedAt = Date.now()
+      for (const notify of listeners) notify(me)
       return me
     })
-    .catch((err: unknown) => {
-      // Allow a retry on the next mount rather than caching the failure.
-      mePromise = null
-      throw err
+    .finally(() => {
+      inflight = null
     })
-  return mePromise
+  return inflight
+}
+
+/** Drop the cache and refetch — call after editing your own profile. */
+export function refreshMe(): Promise<Me> {
+  cached = null
+  cachedAt = 0
+  return fetchMe()
+}
+
+// Roles and grants are edited live in Users & Roles; revalidating on window
+// focus means a promotion shows up on the next tab switch, not the next
+// hard refresh.
+if (typeof window !== 'undefined') {
+  window.addEventListener('focus', () => {
+    if (cached && Date.now() - cachedAt > STALE_MS) void fetchMe()
+  })
 }
 
 /**
- * The signed-in user's identity + global role for gating affordances.
- * `null` while loading — treat as the least-privileged state, so admin
- * surfaces appear only after the role is confirmed (fail closed). The
- * backend enforces everything regardless; this is UX, not security.
+ * The signed-in user's identity, global role, and capability set for gating
+ * affordances. `null` while loading — treat as the least-privileged state,
+ * so gated surfaces appear only after the role is confirmed (fail closed).
+ * The backend enforces everything regardless; this is UX, not security.
  */
 export function useMe(): Me | null {
   const [me, setMe] = useState<Me | null>(cached)
 
   useEffect(() => {
-    if (cached) return
-    let alive = true
-    fetchMe()
-      .then((m) => {
-        if (alive) setMe(m)
-      })
-      .catch(() => undefined)
+    listeners.add(setMe)
+    if (!cached) {
+      fetchMe().catch(() => undefined)
+    }
     return () => {
-      alive = false
+      listeners.delete(setMe)
     }
   }, [])
 

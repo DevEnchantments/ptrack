@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useLocalStorage } from '@/lib/use-local-storage'
 import { gantt } from 'dhtmlx-gantt'
 import 'dhtmlx-gantt/codebase/dhtmlxgantt.css'
 import type { ActionItem, Milestone, ProgramOutcome } from '@/lib/api'
@@ -31,7 +32,10 @@ export function ProjectGantt({ projectId, milestones, outcomes, actionItems }: P
   const containerRef = useRef<HTMLDivElement | null>(null)
   const todayLineRef = useRef<HTMLDivElement | null>(null)
   const navigate = useNavigate()
-  const [zoom, setZoom] = useState<'Month' | 'Week'>('Month')
+  const [zoom, setZoom] = useLocalStorage<'Month' | 'Week'>(
+    'ptrack:gantt-zoom',
+    'Month',
+  )
 
   useEffect(() => {
     const el = containerRef.current

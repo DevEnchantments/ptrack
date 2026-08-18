@@ -1,5 +1,5 @@
 import { Loader2, Lock, LockOpen, Printer } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { cyclesApi, reportsApi, type CycleStatusReport } from '@/lib/api'
 import { toast } from '@/lib/toast'
@@ -17,12 +17,17 @@ export function CycleStatusReportPage() {
   const [armed, setArmed] = useState(false)
   const [busy, setBusy] = useState(false)
 
-  useEffect(() => {
+  const load = useCallback(() => {
     reportsApi
       .cycleStatus()
       .then(setReport)
       .catch((e: Error) => setError(e.message))
   }, [])
+  useEffect(load, [load])
+  const retry = () => {
+    setError(null)
+    load()
+  }
 
   // Cycle rows are created lazily; a missing row means implicitly open.
   const closed = report?.cycle?.status === 'closed'
@@ -45,13 +50,12 @@ export function CycleStatusReportPage() {
     return (
       <div className="p-6">
         <p className="text-destructive">{error}</p>
-        <Button
-          variant="outline"
-          className="mt-4"
-          onClick={() => navigate('/reporting')}
-        >
-          Back to reports
-        </Button>
+        <div className="mt-4 flex gap-2">
+          <Button onClick={retry}>Retry</Button>
+          <Button variant="outline" onClick={() => navigate('/reporting')}>
+            Back to reports
+          </Button>
+        </div>
       </div>
     )
   }

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { NavLink, Outlet, useLocation } from 'react-router-dom'
+import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/lib/auth-context'
 import { atLeastRole, useMe } from '@/lib/use-me'
 import { Button } from '@/components/ui/button'
@@ -62,6 +62,7 @@ export function AppLayout() {
   const { user, signOut } = useAuth()
   const me = useMe()
   const location = useLocation()
+  const navigate = useNavigate()
   const [collapsed, setCollapsed] = useState(false)
   const [showScrollTop, setShowScrollTop] = useState(false)
   const [paletteOpen, setPaletteOpen] = useState(false)
@@ -206,9 +207,14 @@ export function AppLayout() {
           >
             {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </button>
-          <span className="hidden text-sm text-muted-foreground sm:inline">
-            {user?.email}
-          </span>
+          <button
+            type="button"
+            onClick={() => navigate('/profile')}
+            title="My profile"
+            className="hidden cursor-pointer text-sm text-muted-foreground transition-colors hover:text-foreground sm:inline"
+          >
+            {me?.full_name || user?.email}
+          </button>
           <Button variant="outline" size="sm" onClick={() => signOut()}>
             <LogOut className="h-4 w-4" />
             Sign out

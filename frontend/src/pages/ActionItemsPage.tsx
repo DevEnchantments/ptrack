@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { registryApi, type GlobalActionItem } from '@/lib/api'
 import { useAuth } from '@/lib/auth-context'
 import { usePageTitle } from '@/lib/use-page-title'
+import { dueIn } from '@/lib/format'
 import { StatusPill } from '@/components/StatusPill'
 import { TagChips } from '@/components/TagChips'
 import { Input } from '@/components/ui/input'
@@ -183,7 +184,7 @@ export function ActionItemsPage() {
                               : 'text-muted-foreground'
                           }`}
                         >
-                          Due {a.due_date}
+                          Due {a.due_date} · {dueIn(a.due_date)}
                         </span>
                       )}
                       <StatusPill

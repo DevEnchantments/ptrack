@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Check, ChevronRight } from 'lucide-react'
 import type { ActionItem } from '@/lib/api'
+import { dueIn } from '@/lib/format'
 
 interface Props {
   projectId: string
@@ -91,6 +92,7 @@ export function TasksCard({ projectId, actionItems, onViewAll }: Props) {
                     }`}
                   >
                     {a.due_date}
+                    {group === 'upcoming' && ` · ${dueIn(a.due_date)}`}
                   </span>
                 )}
               </button>

@@ -11,14 +11,46 @@ export type AppRole = 'admin' | 'pmo' | 'executive' | 'user'
 export interface Me {
   id: string
   email: string | null
+  full_name: string | null
   app_role: AppRole
   capabilities: string[]
+}
+
+export interface MyMembership {
+  access_level: string
+  status: string
+  role: { name: string } | null
+  project: { id: string; name: string } | null
+}
+
+export interface MyWorkItem {
+  id: string
+  project_id: string
+  title?: string
+  name?: string
+  statement?: string
+  due_date?: string | null
+  type?: string
+  project: { name: string } | null
+}
+
+export interface MyWork {
+  action_items: MyWorkItem[]
+  milestones: MyWorkItem[]
+  risks: MyWorkItem[]
 }
 
 export const usersApi = {
   search: (query: string) =>
     apiGet<UserSummary[]>(`/users?search=${encodeURIComponent(query)}`),
   me: () => apiGet<Me>('/users/me'),
+  myMemberships: () => apiGet<MyMembership[]>('/users/me/memberships'),
+  myWork: () => apiGet<MyWork>('/users/me/work'),
+  updateMe: (full_name: string) =>
+    apiPatch<{ id: string; email: string | null; full_name: string | null }>(
+      '/users/me',
+      { full_name },
+    ),
   provision: (body: { email: string; full_name: string; password: string }) =>
     apiPost<{
       user_id: string

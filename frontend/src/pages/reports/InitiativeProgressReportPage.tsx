@@ -1,5 +1,5 @@
 import { Printer } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { reportsApi, type InitiativeProgressRow } from '@/lib/api'
 import { usePageTitle } from '@/lib/use-page-title'
@@ -43,24 +43,28 @@ export function InitiativeProgressReportPage() {
   const [rows, setRows] = useState<InitiativeProgressRow[] | null>(null)
   const [error, setError] = useState<string | null>(null)
 
-  useEffect(() => {
+  const load = useCallback(() => {
     reportsApi
       .initiativeProgress()
       .then((r) => setRows(r.rows))
       .catch((e: Error) => setError(e.message))
   }, [])
+  useEffect(load, [load])
+  const retry = () => {
+    setError(null)
+    load()
+  }
 
   if (error) {
     return (
       <div className="p-6">
         <p className="text-destructive">{error}</p>
-        <Button
-          variant="outline"
-          className="mt-4"
-          onClick={() => navigate('/reporting')}
-        >
-          Back to reports
-        </Button>
+        <div className="mt-4 flex gap-2">
+          <Button onClick={retry}>Retry</Button>
+          <Button variant="outline" onClick={() => navigate('/reporting')}>
+            Back to reports
+          </Button>
+        </div>
       </div>
     )
   }

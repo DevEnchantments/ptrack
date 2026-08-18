@@ -1,5 +1,5 @@
 import { ChevronLeft, ChevronRight, Printer } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { reportsApi, type MonthlyPerformanceMonth } from '@/lib/api'
 import { usePageTitle } from '@/lib/use-page-title'
@@ -21,12 +21,17 @@ export function MonthlyPerformanceReportPage() {
   } | null>(null)
   const [error, setError] = useState<string | null>(null)
 
-  useEffect(() => {
+  const load = useCallback(() => {
     reportsApi
       .monthlyPerformance(year)
       .then(setData)
       .catch((e: Error) => setError(e.message))
   }, [year])
+  useEffect(load, [load])
+  const retry = () => {
+    setError(null)
+    load()
+  }
 
   // Data from a previous year selection counts as loading, not content.
   const months = data?.year === year ? data.months : null
@@ -35,13 +40,12 @@ export function MonthlyPerformanceReportPage() {
     return (
       <div className="p-6">
         <p className="text-destructive">{error}</p>
-        <Button
-          variant="outline"
-          className="mt-4"
-          onClick={() => navigate('/reporting')}
-        >
-          Back to reports
-        </Button>
+        <div className="mt-4 flex gap-2">
+          <Button onClick={retry}>Retry</Button>
+          <Button variant="outline" onClick={() => navigate('/reporting')}>
+            Back to reports
+          </Button>
+        </div>
       </div>
     )
   }

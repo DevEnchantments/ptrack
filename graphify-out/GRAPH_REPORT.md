@@ -1,16 +1,16 @@
 # Graph Report - ptrack  (2026-08-18)
 
 ## Corpus Check
-- 331 files · ~147,620 words
+- 334 files · ~149,714 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 2492 nodes · 5790 edges · 152 communities (123 shown, 29 thin omitted)
-- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 8 edges (avg confidence: 0.73)
+- 2510 nodes · 6032 edges · 131 communities (109 shown, 22 thin omitted)
+- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 9 edges (avg confidence: 0.73)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `f7f9b6c8`
+- Built from commit: `773bed4c`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -96,7 +96,6 @@
 - lookups.service.ts
 - 🚀 Quick start
 - AddMilestoneDialog.tsx
-- transform
 - @nestjs/swagger
 - AttachmentDetailPage.tsx
 - @supabase/supabase-js
@@ -130,51 +129,30 @@
 - InitialsAvatar.tsx
 - vitest
 - SectionNav.tsx
-- app.controller.ts
+- ts-node
 - supabase.ts
 - Controller
-- SupabaseAuthGuard
+- SubmissionsModule
 - InitialsAvatar.tsx
 - ProgramOutcomesService
 - PaginationQueryDto
-- MiniCalendar.tsx
-- action-items.module.ts
+- TemplatesModule
+- vite
 - toaster.tsx
-- kpis.repository.ts
 - Injectable
-- status-reports.repository.ts
-- DatabaseModule
 - .update
-- AccessModule
-- eslint
-- SubmissionsModule
-- eslint-plugin-prettier
-- ts-jest
-- ts-loader
-- ts-node
-- @types/supertest
-- ApiBody
-- Body
-- Controller
-- Delete
-- @eslint/js
-- Get
-- Param
-- Patch
-- Post
-- Query
 
 ## God Nodes (most connected - your core abstractions)
-1. `toHttpException()` - 152 edges
-2. `AuthUser` - 92 edges
-3. `CurrentUser` - 88 edges
+1. `toHttpException()` - 156 edges
+2. `AuthUser` - 100 edges
+3. `CurrentUser` - 96 edges
 4. `DatabaseService` - 67 edges
-5. `@nestjs/swagger` - 59 edges
-6. `Button()` - 42 edges
-7. `usePageTitle()` - 41 edges
-8. `cn()` - 36 edges
-9. `toast` - 33 edges
-10. `Input()` - 31 edges
+5. `@nestjs/swagger` - 60 edges
+6. `usePageTitle()` - 49 edges
+7. `Button()` - 47 edges
+8. `toast` - 38 edges
+9. `cn()` - 36 edges
+10. `Input()` - 32 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `ProjectGantt()` --indirect_call--> `rows()`  [INFERRED]
@@ -185,21 +163,21 @@
   frontend/src/components/RecordHistory.tsx → backend/scripts/seed-generic-lookups.mjs
 - `bootstrap()` --indirect_call--> `AppModule`  [INFERRED]
   backend/src/main.ts → backend/src/app.module.ts
-- `ProjectGantt()` --indirect_call--> `statusClass()`  [INFERRED]
-  frontend/src/components/ProjectGantt.tsx → frontend/src/pages/TimelinePage.tsx
+- `AccessAdminController` --references--> `RequireCapability()`  [EXTRACTED]
+  backend/src/modules/access-admin/access-admin.controller.ts → backend/src/common/access/access.decorators.ts
 
 ## Import Cycles
 - None detected.
 
-## Communities (152 total, 29 thin omitted)
+## Communities (131 total, 22 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.17
 Nodes (12): 10. PL/SQL package layer, 11. Notable architectural patterns, 12. Summary, 1. Application overview, 3. Dashboards & reporting, 4. Notifications & email automation, 5. Security & access control, 6. Extensibility framework ("Flex Columns") (+4 more)
 
 ### Community 1 - "Community 1"
-Cohesion: 0.11
-Nodes (18): CAPABILITY_KEYS, ProvisionUserDto, ApiProperty, IsEmail, IsString, MaxLength, MinLength, ApiBody (+10 more)
+Cohesion: 0.08
+Nodes (21): CAPABILITY_KEYS, ProvisionUserDto, ApiProperty, IsEmail, IsString, MaxLength, MinLength, ApiProperty (+13 more)
 
 ### Community 2 - "Community 2"
 Cohesion: 0.06
@@ -211,55 +189,55 @@ Nodes (10): 2. Functionality inventory (FDD FR-01…15 → status), 3. Use cases
 
 ### Community 4 - "Community 4"
 Cohesion: 0.06
-Nodes (35): devDependencies, eslint-config-prettier, @eslint/eslintrc, @eslint/js, globals, jest, @nestjs/cli, @nestjs/schematics (+27 more)
+Nodes (35): devDependencies, eslint, eslint-config-prettier, @eslint/eslintrc, @eslint/js, jest, @nestjs/cli, @nestjs/schematics (+27 more)
 
 ### Community 5 - "Community 5"
-Cohesion: 0.17
-Nodes (5): toHttpException(), ActionItemsRepository, Injectable, ActionItemsService, Injectable
+Cohesion: 0.12
+Nodes (6): ActionItemsRepository, Injectable, ActionItemsService, normalizeOwnerIds(), ownersLabel(), Injectable
 
 ### Community 6 - "Community 6"
-Cohesion: 0.11
-Nodes (4): KpisRepository, Injectable, KpisService, Injectable
+Cohesion: 0.05
+Nodes (35): CreateKpiDto, ApiProperty, ApiPropertyOptional, IsBoolean, IsIn, IsInt, IsNumber, IsOptional (+27 more)
 
 ### Community 7 - "Community 7"
-Cohesion: 0.17
-Nodes (3): CyclesController, ReportsController, Controller
+Cohesion: 0.20
+Nodes (10): ACTION_BODY, CyclesController, ReportsController, SubmissionsController, ApiBody, Body, Controller, Get (+2 more)
 
 ### Community 8 - "Community 8"
-Cohesion: 0.13
-Nodes (20): App(), AddActionItemDialog(), emptyOwner(), ownerFromItem(), ownersFromItem(), profileName(), STATUSES, today() (+12 more)
+Cohesion: 0.19
+Nodes (8): StatusReportsController, ApiBody, Body, Controller, Get, Param, Patch, Post
 
 ### Community 9 - "Community 9"
-Cohesion: 0.22
-Nodes (13): Invalid, LookupOption, MILESTONE_STATUS, parseBoolValue(), parseDateValue(), parseMilestoneStatus(), parseNumberValue(), resolveLookup() (+5 more)
+Cohesion: 0.13
+Nodes (13): AccessLevel, AccessLevelValue, MEMBERSHIP_LEVEL, projectAccessLevel(), AppRole, lookupCache, Me, MyMembership (+5 more)
 
 ### Community 10 - "Community 10"
-Cohesion: 0.06
-Nodes (29): ApiTags, ProjectSectionsController, Controller, Get, Param, ProjectSectionsService, Injectable, CreateResourceDto (+21 more)
+Cohesion: 0.08
+Nodes (22): CreateResourceDto, ApiProperty, ApiPropertyOptional, IsOptional, IsString, IsUUID, MaxLength, UpdateResourceDto (+14 more)
 
 ### Community 11 - "Community 11"
-Cohesion: 0.21
-Nodes (15): Card(), CardAction(), CardContent(), CardDescription(), CardFooter(), CardHeader(), CardTitle(), DialogDescription() (+7 more)
+Cohesion: 0.14
+Nodes (21): Props, Button(), buttonVariants, Card(), CardAction(), CardContent(), CardDescription(), CardFooter() (+13 more)
 
 ### Community 12 - "Community 12"
 Cohesion: 0.06
 Nodes (30): CreateLookupValueDto, ApiProperty, ApiPropertyOptional, IsBoolean, IsIn, IsInt, IsOptional, IsString (+22 more)
 
 ### Community 13 - "Community 13"
-Cohesion: 0.19
-Nodes (10): UpdateMilestoneDto, MilestonesController, ApiBody, Body, Controller, Delete, Get, Param (+2 more)
+Cohesion: 0.11
+Nodes (20): AdjustWeightsDto, ApiProperty, ApiPropertyOptional, IsArray, IsNumber, IsOptional, IsUUID, Min (+12 more)
 
 ### Community 14 - "Community 14"
 Cohesion: 0.05
-Nodes (50): AddAttachmentDialog(), AddLinkDialog(), AddResourceDialog(), AddUpdateDialog(), AdjustWeightsDialog(), OutcomeDialog(), SaveTemplateDialog(), NavSection (+42 more)
+Nodes (48): AddAttachmentDialog(), AddLinkDialog(), Props, AddResourceDialog(), AddUpdateDialog(), AdjustWeightsDialog(), OutcomeDialog(), SaveTemplateDialog() (+40 more)
 
 ### Community 15 - "Community 15"
 Cohesion: 0.08
 Nodes (25): compilerOptions, allowArbitraryExtensions, allowImportingTsExtensions, erasableSyntaxOnly, jsx, lib, module, moduleDetection (+17 more)
 
 ### Community 16 - "Community 16"
-Cohesion: 0.22
-Nodes (12): calculatedProgress(), INITIATIVE_BUCKETS, initiativeBucket, MilestoneProgressRow, plannedProgress(), ChartPoint, CLOSED_PROJECT, DashboardData (+4 more)
+Cohesion: 0.11
+Nodes (20): calculatedProgress(), INITIATIVE_BUCKETS, initiativeBucket, plannedProgress(), ChartPoint, CLOSED_PROJECT, DashboardData, DashboardService (+12 more)
 
 ### Community 17 - "CreateProjectDto"
 Cohesion: 0.07
@@ -274,12 +252,12 @@ Cohesion: 0.09
 Nodes (21): aliases, components, hooks, lib, ui, utils, iconLibrary, menuAccent (+13 more)
 
 ### Community 20 - "Community 20"
-Cohesion: 0.11
-Nodes (37): AddMilestoneDialog(), emptyOwner(), ownerFromMilestone(), profileName(), STATUSES, today(), CategorySelect(), Props (+29 more)
+Cohesion: 0.10
+Nodes (31): CategorySelect(), Props, SelectContent(), SelectItem(), SelectTrigger(), SelectValue(), categoriesApi, lookupsApi (+23 more)
 
 ### Community 21 - "Community 21"
 Cohesion: 0.08
-Nodes (25): eslint-plugin-react-hooks, eslint-plugin-react-refresh, devDependencies, eslint, eslint-plugin-react-hooks, eslint-plugin-react-refresh, globals, jsdom (+17 more)
+Nodes (25): eslint-plugin-react-hooks, eslint-plugin-react-refresh, devDependencies, eslint, @eslint/js, eslint-plugin-react-hooks, eslint-plugin-react-refresh, globals (+17 more)
 
 ### Community 22 - "Community 22"
 Cohesion: 0.10
@@ -298,16 +276,16 @@ Cohesion: 0.07
 Nodes (27): dependencies, class-transformer, class-validator, jose, @nestjs/common, @nestjs/config, @nestjs/core, @nestjs/platform-express (+19 more)
 
 ### Community 26 - "Community 26"
-Cohesion: 0.26
-Nodes (8): HistoryEntry, HistoryInsert, logger, ActionItem, ActionItemComment, ActionItemListItem, Milestone, MilestoneListItem
+Cohesion: 0.24
+Nodes (7): HistoryEntry, HistoryInsert, ActionItem, ActionItemComment, ActionItemListItem, Milestone, MilestoneListItem
 
 ### Community 27 - "Community 27"
-Cohesion: 0.08
-Nodes (20): NotificationsController, Controller, AppNotification, NotificationsRepository, Injectable, NotificationsService, Injectable, classifyDue() (+12 more)
+Cohesion: 0.12
+Nodes (5): AppNotification, NotificationsRepository, Injectable, NotificationsService, Injectable
 
 ### Community 28 - "Community 28"
-Cohesion: 0.09
-Nodes (28): formatSize(), Props, TaskAttachments(), cache, fetchLevel(), inflight, useProjectAccess(), ActionItemDetailPage() (+20 more)
+Cohesion: 0.05
+Nodes (51): AddActionItemDialog(), emptyOwner(), ownerFromItem(), ownersFromItem(), profileName(), STATUSES, today(), AddMilestoneDialog() (+43 more)
 
 ### Community 29 - "Community 29"
 Cohesion: 0.12
@@ -326,28 +304,28 @@ Cohesion: 0.20
 Nodes (9): 1. Contrast report (measured 2026-07-29), 3. Staged plan (one stage = one commit; tick when shipped), 4. House recipes (decide once in Stage 1, reuse forever), 5. Cross-session evidence pointers, 6. RESOLVED 2026-07-29 (Fares ruled on all seven; demo constraint lifted), Item 1 detail: the two categories must not be collapsed, Items 5-6 scope note, Token changes — SHIPPED in Stage 1 (2026-07-29), re-measured after landing (+1 more)
 
 ### Community 33 - "nest-cli.json"
-Cohesion: 0.13
-Nodes (24): FromTemplateDialog(), COLUMNS, ProjectsGrid(), ProjectTree(), Props, TreeRow, StatusPill(), TONE_CLASSES (+16 more)
+Cohesion: 0.12
+Nodes (25): FromTemplateDialog(), COLUMNS, ProjectsGrid(), ProjectTree(), Props, TreeRow, StatusPill(), TONE_CLASSES (+17 more)
 
 ### Community 34 - "Community 34"
-Cohesion: 0.14
-Nodes (6): Link, LinkListItem, LinksRepository, Injectable, LinksService, Injectable
+Cohesion: 0.09
+Nodes (18): CreateLinkDto, ApiProperty, ApiPropertyOptional, IsArray, IsBoolean, IsOptional, IsString, MaxLength (+10 more)
 
 ### Community 35 - "Community 35"
 Cohesion: 0.17
 Nodes (11): name, private, scripts, build, dev, lint, preview, test (+3 more)
 
 ### Community 36 - "ProjectsRepository"
-Cohesion: 0.12
-Nodes (17): AdminOnly(), MinAppRole(), ProjectAccess(), ProjectScoped(), AttachmentsController, Controller, CreateRiskDto, ApiProperty (+9 more)
+Cohesion: 0.10
+Nodes (17): AdminOnly(), MinAppRole(), ProjectScoped(), AccessLevel, LEVEL_LABEL, PaginationQueryDto, ApiPropertyOptional, IsInt (+9 more)
 
 ### Community 37 - "Community 37"
 Cohesion: 0.25
 Nodes (7): exclude, extends, dist, node_modules, **/*spec.ts, test, ./tsconfig.json
 
 ### Community 38 - "status-reports.repository.ts"
-Cohesion: 0.24
-Nodes (12): CreateKpiActionPlanDto, CreateKpiReadingDto, ApiProperty, ApiPropertyOptional, IsDateString, IsIn, IsNumber, IsOptional (+4 more)
+Cohesion: 0.15
+Nodes (7): GRANTABLE_ROLES, isCapability(), AccessAdminController, Controller, Get, AccessAdminService, Injectable
 
 ### Community 39 - "Community 39"
 Cohesion: 0.25
@@ -362,48 +340,48 @@ Cohesion: 0.29
 Nodes (6): author, description, license, name, private, version
 
 ### Community 42 - "CreateProjectDto"
-Cohesion: 0.17
-Nodes (4): ProjectsRepository, Injectable, ProjectsService, Injectable
+Cohesion: 0.08
+Nodes (25): MilestoneProgressRow, ApiPropertyOptional, IsArray, IsBoolean, IsDateString, IsIn, IsInt, IsNumber (+17 more)
 
 ### Community 43 - "Community 43"
 Cohesion: 0.20
 Nodes (9): Compile and run the project, Deployment, Description, License, Project setup, Resources, Run tests, Stay in touch (+1 more)
 
 ### Community 44 - "Community 44"
-Cohesion: 0.08
-Nodes (22): CreateSavedSearchDto, ApiProperty, IsString, MaxLength, MinLength, SearchController, ApiBody, Body (+14 more)
+Cohesion: 0.09
+Nodes (18): CreateSavedSearchDto, ApiProperty, IsString, MaxLength, MinLength, SearchController, ApiBody, Body (+10 more)
 
 ### Community 45 - "Community 45"
-Cohesion: 0.10
-Nodes (7): RecordHistoryService, Injectable, AttachmentsRepository, Injectable, AttachmentsService, safeName(), Injectable
+Cohesion: 0.14
+Nodes (4): AttachmentsRepository, Injectable, AttachmentsService, Injectable
 
 ### Community 46 - "nest-cli.json"
-Cohesion: 0.19
-Nodes (8): StatusReportsController, ApiBody, Body, Controller, Get, Param, Patch, Post
+Cohesion: 0.18
+Nodes (13): classifyDue(), inSubmissionWindow(), ReminderKind, reminderType(), resolveRecipients(), submissionPendingType(), DueActionItem, DueMilestone (+5 more)
 
 ### Community 47 - "Community 47"
-Cohesion: 0.11
-Nodes (18): ActionItemsModule, Module, AttachmentsModule, Module, IssuesModule, Module, LinksModule, Module (+10 more)
+Cohesion: 0.13
+Nodes (16): ActionItemsModule, Module, AttachmentsModule, Module, IssuesModule, Module, LinksModule, Module (+8 more)
 
 ### Community 48 - "status-reports.repository.ts"
-Cohesion: 0.21
-Nodes (10): ArrayMinSize, ImportRowsDto, ApiProperty, ArrayMaxSize, IsArray, ImportController, ApiBody, Body (+2 more)
+Cohesion: 0.06
+Nodes (34): App(), AddIssueDialog(), emptyPerson(), AddKpiDialog(), emptyPerson(), AddRiskDialog(), emptyPerson(), AppLayout() (+26 more)
 
 ### Community 49 - "RecordHistoryService"
-Cohesion: 0.13
-Nodes (14): AccessAdminModule, Module, KpisModule, Module, PeopleModule, Module, RegistryModule, Module (+6 more)
+Cohesion: 0.12
+Nodes (16): AppModule, Module, DatabaseModule, Global, Module, bootstrap(), AccessAdminModule, Module (+8 more)
 
 ### Community 50 - "Community 50"
-Cohesion: 0.09
-Nodes (17): ApiConsumes, ApiBody, Body, Get, Param, Patch, Post, Query (+9 more)
+Cohesion: 0.16
+Nodes (12): ApiConsumes, AttachmentsController, ApiBody, Body, Controller, Get, Param, Patch (+4 more)
 
 ### Community 54 - "ProjectsController"
-Cohesion: 0.14
-Nodes (6): AuthedRequest, DatabaseService, Injectable, Cycle, Submission, SubmissionListItem
+Cohesion: 0.10
+Nodes (11): AuthedRequest, SupabaseAuthGuard, Injectable, DatabaseService, Injectable, ChildRow, SavedSearch, SearchHit (+3 more)
 
 ### Community 55 - "action-items.repository.ts"
-Cohesion: 0.18
-Nodes (12): CreateLinkDto, ApiProperty, ApiPropertyOptional, IsArray, IsBoolean, IsOptional, IsString, MaxLength (+4 more)
+Cohesion: 0.29
+Nodes (5): ApiTags, ProjectSectionsController, Controller, Get, Param
 
 ### Community 56 - "@types/node"
 Cohesion: 0.23
@@ -413,13 +391,9 @@ Nodes (7): ApiSecurity, AppController, Controller, Get, AppService, Injectable, 
 Cohesion: 0.20
 Nodes (10): CLAUDE.md — P-Track, Current state — Phase 1 complete (full CRUD), graphify, Hard architectural rules (do not violate), How I like to work — follow precisely, Known gotchas — carry these forward, Repo & environment, Roadmap — deferred to Phase 2+ (+2 more)
 
-### Community 58 - "@nestjs/swagger"
-Cohesion: 0.23
-Nodes (8): LinksController, ApiBody, Body, Controller, Get, Param, Patch, Post
-
 ### Community 59 - "@types/node"
-Cohesion: 0.13
-Nodes (14): ApiPropertyOptional, IsArray, IsBoolean, IsDateString, IsIn, IsInt, IsNumber, IsOptional (+6 more)
+Cohesion: 0.24
+Nodes (10): Attachment, AttachmentDetail, AttachmentListItem, AttachmentParent, AttachmentParentType, PARENT_TABLES, PARENT_TYPES, parseParent() (+2 more)
 
 ### Community 60 - "ActionItemDetailPage.tsx"
 Cohesion: 0.50
@@ -427,67 +401,71 @@ Nodes (3): Expanding the ESLint configuration, React Compiler, React + TypeScrip
 
 ### Community 61 - "PeopleRepository"
 Cohesion: 0.07
-Nodes (28): CreatePersonDto, ApiProperty, ApiPropertyOptional, IsEmail, IsIn, IsOptional, IsString, IsUUID (+20 more)
+Nodes (30): ProjectAccess(), CreatePersonDto, ApiProperty, ApiPropertyOptional, IsEmail, IsIn, IsOptional, IsString (+22 more)
 
 ### Community 62 - "CreateMilestoneDto"
-Cohesion: 0.14
-Nodes (10): TemplatesController, ApiBody, Body, Controller, Delete, Get, Param, Post (+2 more)
+Cohesion: 0.12
+Nodes (18): CreateTemplateDto, InstantiateTemplateDto, ApiProperty, ApiPropertyOptional, IsDateString, IsOptional, IsString, IsUUID (+10 more)
 
 ### Community 63 - "auth-context.tsx"
-Cohesion: 0.10
-Nodes (27): AccessLevel, APP_ROLES, AppRole, atLeastRole(), CAPABILITIES, Capability, DEFAULT_GRANTS, defaultLevelFor() (+19 more)
+Cohesion: 0.15
+Nodes (21): APP_ROLES, AppRole, atLeastRole(), CAPABILITIES, Capability, DEFAULT_GRANTS, defaultLevelFor(), GrantableRole (+13 more)
 
 ### Community 64 - "PaginationQueryDto"
 Cohesion: 0.11
-Nodes (8): AdjustWeightsDto, IsArray, Type, ValidateNested, MilestonesRepository, Injectable, MilestonesService, Injectable
+Nodes (4): MilestonesRepository, Injectable, MilestonesService, Injectable
 
 ### Community 65 - ".add"
 Cohesion: 0.14
 Nodes (14): db, ensure(), env, PROGRAMS, root, rows(), STANDARD, initials() (+6 more)
 
 ### Community 66 - "react-dom"
-Cohesion: 0.18
-Nodes (8): PortfolioReportsController, Controller, Get, Query, ReportsModule, Module, ReportsService, Injectable
+Cohesion: 0.23
+Nodes (8): LinksController, ApiBody, Body, Controller, Get, Param, Patch, Post
 
 ### Community 67 - "CreateLinkDto"
-Cohesion: 0.26
-Nodes (8): ImportModule, Module, MilestonesModule, Module, NotificationsModule, Module, ProjectsModule, Module
+Cohesion: 0.25
+Nodes (8): MilestonesModule, Module, NotificationsModule, Module, ProgramOutcomesModule, Module, ProjectsModule, Module
 
 ### Community 68 - "RecordHistoryService"
-Cohesion: 0.12
-Nodes (21): Props, Props, Props, Props, fmtAed(), ProjectOverviewCards(), Props, Project (+13 more)
+Cohesion: 0.14
+Nodes (19): Props, Props, Props, fmtAed(), ProjectOverviewCards(), Props, Project, ProjectDetail (+11 more)
+
+### Community 69 - "WorkflowPanel.tsx"
+Cohesion: 0.28
+Nodes (6): ApiBody, Body, Get, Param, Patch, Post
 
 ### Community 70 - "2. Core functional modules"
-Cohesion: 0.23
-Nodes (7): Project, ProjectDetail, ProjectListRow, ProjectListStats, COLUMN_SPEC, projectColumns(), utilizationRatio()
+Cohesion: 0.28
+Nodes (6): ApiBody, Body, Get, Param, Patch, Post
 
 ### Community 71 - "moduleFileExtensions"
 Cohesion: 0.22
 Nodes (8): 1. Where the project stands, 2. What is built, by area, 3. The fifteen functional requirements, one by one, 4. Assumptions that need your confirmation, 5. Decisions only you can make, 6. Blocked on infrastructure, 7. Out of scope, on purpose, P-Track progress summary
 
 ### Community 72 - "@nestjs/config"
-Cohesion: 0.22
-Nodes (7): SubmissionActionDto, ApiPropertyOptional, IsOptional, IsString, MaxLength, SubmissionsService, Injectable
+Cohesion: 0.09
+Nodes (12): SubmissionActionDto, ApiPropertyOptional, IsOptional, IsString, MaxLength, Cycle, Submission, SubmissionListItem (+4 more)
 
 ### Community 73 - ".add"
 Cohesion: 0.08
-Nodes (23): AuthUser, CurrentUser, Delete, Get, Delete, Delete, Get, Param (+15 more)
+Nodes (22): AuthUser, CurrentUser, Delete, DashboardController, Controller, Get, Delete, Delete (+14 more)
 
 ### Community 74 - "DatabaseService"
-Cohesion: 0.13
-Nodes (19): CreateProjectDto, ProjectMemberDto, ApiProperty, ApiPropertyOptional, IsArray, IsBoolean, IsDateString, IsIn (+11 more)
+Cohesion: 0.06
+Nodes (42): ArrayMinSize, ImportRowsDto, ApiProperty, ArrayMaxSize, IsArray, ImportController, ApiBody, Body (+34 more)
 
 ### Community 75 - "AddStatusReportDialog.tsx"
-Cohesion: 0.21
-Nodes (25): FREQUENCIES, ACCESS_LEVELS, AddStatusReportDialog(), EDITABLE_OPTIONS, today(), VIEWABLE_OPTIONS, ConfirmDeleteButton(), Props (+17 more)
+Cohesion: 0.20
+Nodes (28): FREQUENCIES, STATUSES, ACCESS_LEVELS, EDITABLE_OPTIONS, VIEWABLE_OPTIONS, ConfirmDeleteButton(), Props, FY_YEARS (+20 more)
 
 ### Community 76 - ".add"
-Cohesion: 0.11
-Nodes (20): NotificationBell(), timeAgo(), Chip(), personName(), Props, STATUS_CHIP, WorkflowPanel(), AppNotification (+12 more)
+Cohesion: 0.14
+Nodes (16): Chip(), personName(), Props, STATUS_CHIP, WorkflowPanel(), Cycle, cyclesApi, CycleStatusReport (+8 more)
 
 ### Community 78 - "WorkflowPanel.tsx"
-Cohesion: 0.21
-Nodes (9): ActionItemsController, ApiBody, Body, Controller, Delete, Get, Param, Patch (+1 more)
+Cohesion: 0.09
+Nodes (25): ActionItemsController, ApiBody, Body, Controller, Delete, Get, Param, Patch (+17 more)
 
 ### Community 79 - "README.md"
 Cohesion: 0.23
@@ -502,44 +480,36 @@ Cohesion: 0.36
 Nodes (6): formatDate(), initials(), PersonLike, personName(), relativeTime(), atOffset()
 
 ### Community 82 - "🚀 Quick start"
-Cohesion: 0.16
-Nodes (19): Props, Props, Props, Props, formatAed(), milestoneShares(), MONTHS, ProjectDashboardTab() (+11 more)
+Cohesion: 0.15
+Nodes (18): Props, Props, Props, formatAed(), milestoneShares(), MONTHS, ProjectDashboardTab(), Props (+10 more)
 
-### Community 84 - "transform"
-Cohesion: 0.22
-Nodes (9): importApi, ImportSummary, FieldDef, ImportPage(), MILESTONE_FIELDS, PROJECT_FIELDS, RowCheck, validDate() (+1 more)
+### Community 83 - "AddMilestoneDialog.tsx"
+Cohesion: 0.25
+Nodes (6): ApiPropertyOptional, IsArray, IsBoolean, IsOptional, IsString, UpdateAttachmentDto
 
 ### Community 85 - "@nestjs/swagger"
-Cohesion: 0.11
-Nodes (15): AccessAdminController, ApiBody, Body, Controller, Get, Param, Patch, ReplaceGrantsDto (+7 more)
+Cohesion: 0.16
+Nodes (12): ApiBody, Body, Param, Patch, ReplaceGrantsDto, ApiProperty, IsArray, IsString (+4 more)
 
 ### Community 87 - "@supabase/supabase-js"
 Cohesion: 0.33
 Nodes (3): frappe-gantt, FrappeTask, Gantt
 
-### Community 88 - "AppModule"
-Cohesion: 0.19
-Nodes (12): CreateProgramOutcomeDto, ApiProperty, ApiPropertyOptional, IsDateString, IsInt, IsOptional, IsString, MaxLength (+4 more)
-
 ### Community 89 - "status-reports.repository.ts"
-Cohesion: 0.29
-Nodes (7): dayOffset(), materializeOffset(), FIELD_KEYS, TemplateListItem, TemplateMilestone, TemplateOutcome, TemplatePayload
+Cohesion: 0.18
+Nodes (9): dayOffset(), materializeOffset(), FIELD_KEYS, TemplateListItem, TemplateMilestone, TemplateOutcome, TemplatePayload, TemplatesService (+1 more)
 
 ### Community 90 - "PeopleController"
-Cohesion: 0.19
-Nodes (10): AddKpiDialog(), emptyPerson(), Props, Kpi, KpiReading, kpisApi, formatValue(), KpiDetail() (+2 more)
+Cohesion: 0.67
+Nodes (3): AccessModule, Global, Module
 
 ### Community 91 - "DatabaseModule"
-Cohesion: 0.07
-Nodes (28): CommandPalette(), Entry, hitPath(), KIND_META, Props, accessApi, AdminLookupRow, adminLookupsApi (+20 more)
+Cohesion: 0.08
+Nodes (26): CommandPalette(), Entry, hitPath(), KIND_META, Props, accessApi, AdminLookupRow, adminLookupsApi (+18 more)
 
 ### Community 92 - "PeoplePage.tsx"
 Cohesion: 0.25
 Nodes (7): 1. The headline finding: 9 modules return 500 where they should return 404, 2. Other bugs found, all still present on `main`, 3. Two things that look like bugs and are not, 4. What `main` might want to take, ranked by value per unit of risk, 5. Notes on working in this codebase, 6. Suggested order if any of this is acted on, Findings for `main` from the exploratory refactor branch
-
-### Community 94 - "AuthUser"
-Cohesion: 0.15
-Nodes (13): CreateKpiDto, ApiProperty, ApiPropertyOptional, IsBoolean, IsIn, IsInt, IsNumber, IsOptional (+5 more)
 
 ### Community 95 - "1. Data-object mapping (FDD Appendix A → P-Track schema)"
 Cohesion: 0.22
@@ -554,8 +524,8 @@ Cohesion: 0.25
 Nodes (5): 🏗 Architecture, 📚 More docs, 🧪 Quality, 🗺 Roadmap, ✨ What's inside
 
 ### Community 98 - "CreateLookupValueDto"
-Cohesion: 0.10
-Nodes (21): COLUMN_SPEC, CREATE_DEFAULTS, normalizeOwnerIds(), Owners, ownersLabel(), CreateActionItemDto, ApiProperty, ApiPropertyOptional (+13 more)
+Cohesion: 0.17
+Nodes (8): columnsFrom(), ColumnSpec, COLUMN_SPEC, CREATE_DEFAULTS, Owners, ProjectSectionsService, Injectable, projectColumns()
 
 ### Community 100 - "2. Findings per surface"
 Cohesion: 0.25
@@ -566,127 +536,75 @@ Cohesion: 0.29
 Nodes (6): collection, compilerOptions, deleteOutDir, plugins, $schema, sourceRoot
 
 ### Community 103 - "LookupsService"
-Cohesion: 0.12
-Nodes (27): Props, Props, Props, apiUpload(), Attachment, AttachmentDetail, apiDelete(), apiGet() (+19 more)
+Cohesion: 0.17
+Nodes (25): Props, Props, Props, Props, Props, Props, apiUpload(), Attachment (+17 more)
 
 ### Community 104 - "🚀 Quick start"
 Cohesion: 0.40
 Nodes (5): 1 · Database — Supabase SQL editor, 2 · Run both halves, 3 · Optional: demo data, 4 · Explore, 🚀 Quick start
 
 ### Community 105 - "CreateRiskDto"
-Cohesion: 0.12
-Nodes (12): CreateStatusReportDto, ApiProperty, IsDateString, IsIn, IsString, MaxLength, UpdateStatusReportDto, StatusReportsRepository (+4 more)
+Cohesion: 0.11
+Nodes (15): CreateStatusReportDto, ApiProperty, IsDateString, IsIn, IsString, MaxLength, UpdateStatusReportDto, StatusReport (+7 more)
 
 ### Community 107 - "eslint-plugin-react-hooks"
-Cohesion: 0.06
-Nodes (31): PaginationQueryDto, ApiPropertyOptional, IsInt, IsOptional, Max, Min, Type, CreateUpdateDto (+23 more)
+Cohesion: 0.08
+Nodes (23): CreateUpdateDto, ApiProperty, ApiPropertyOptional, IsArray, IsBoolean, IsOptional, IsString, IsUUID (+15 more)
 
 ### Community 110 - "ProjectsController"
 Cohesion: 0.14
-Nodes (14): CreateMilestoneDto, ApiProperty, ApiPropertyOptional, IsArray, IsBoolean, IsDateString, IsIn, IsNumber (+6 more)
+Nodes (15): CreateMilestoneDto, ApiProperty, ApiPropertyOptional, IsArray, IsBoolean, IsDateString, IsIn, IsNumber (+7 more)
 
 ### Community 111 - "RisksService"
 Cohesion: 0.09
-Nodes (16): riskScore(), RisksController, ApiBody, Body, Controller, Delete, Get, Param (+8 more)
+Nodes (17): riskScore(), CreateRiskDto, ApiProperty, ApiPropertyOptional, IsDateString, IsIn, IsOptional, IsString (+9 more)
 
 ### Community 112 - "app.module.ts"
-Cohesion: 0.28
-Nodes (8): AddPersonDialog(), emptyPerson(), memberName(), CreateAccountDialog(), inviteDraft(), isPocEmail(), pocEmail(), tempPassword()
-
-### Community 113 - "submissions.module.ts"
-Cohesion: 0.16
-Nodes (7): DirectoryMembership, DirectoryPerson, GlobalActionItem, GlobalMilestone, MemberRow, RegistryService, Injectable
-
-### Community 114 - ".constructor"
-Cohesion: 0.29
-Nodes (7): ApiProperty, ApiPropertyOptional, IsNumber, IsOptional, IsUUID, Min, WeightEntryDto
-
-### Community 115 - "InitialsAvatar.tsx"
-Cohesion: 0.23
-Nodes (8): ProgramOutcomesController, ApiBody, Body, Controller, Get, Param, Patch, Post
-
-### Community 118 - "SectionNav.tsx"
 Cohesion: 0.31
-Nodes (8): Attachment, AttachmentDetail, AttachmentListItem, AttachmentParent, AttachmentParentType, PARENT_TABLES, PARENT_TYPES, parseParent()
-
-### Community 119 - "app.controller.ts"
-Cohesion: 0.31
-Nodes (10): CreateTemplateDto, InstantiateTemplateDto, ApiProperty, ApiPropertyOptional, IsDateString, IsOptional, IsString, IsUUID (+2 more)
-
-### Community 120 - "supabase.ts"
-Cohesion: 0.31
-Nodes (6): DashboardController, Controller, DashboardModule, Module, DashboardService, Injectable
-
-### Community 121 - "Controller"
-Cohesion: 0.22
-Nodes (8): Props, Props, issuesApi, Link, linksApi, Resource, resourcesApi, risksApi
+Nodes (9): AddPersonDialog(), emptyPerson(), memberName(), CreateAccountDialog(), Props, inviteDraft(), isPocEmail(), pocEmail() (+1 more)
 
 ### Community 123 - "InitialsAvatar.tsx"
 Cohesion: 0.47
 Nodes (5): AvatarCluster(), colorOf(), InitialsAvatar(), initialsOf(), PALETTE
 
 ### Community 124 - "ProgramOutcomesService"
-Cohesion: 0.13
-Nodes (5): ProgramOutcome, ProgramOutcomesRepository, Injectable, ProgramOutcomesService, Injectable
+Cohesion: 0.08
+Nodes (17): CreateProgramOutcomeDto, ApiProperty, ApiPropertyOptional, IsDateString, IsInt, IsOptional, IsString, MaxLength (+9 more)
 
 ### Community 125 - "PaginationQueryDto"
-Cohesion: 0.08
-Nodes (40): Props, SectionCard(), Props, TagChips(), Skeleton(), GlobalActionItem, GlobalMilestone, registryApi (+32 more)
-
-### Community 126 - "MiniCalendar.tsx"
-Cohesion: 0.40
-Nodes (5): dateParts(), MiniCalendar(), MONTHS, Props, WEEKDAY_HEADERS
-
-### Community 127 - "action-items.module.ts"
-Cohesion: 0.50
-Nodes (3): AppModule, Module, bootstrap()
+Cohesion: 0.07
+Nodes (44): Props, Props, TagChips(), GlobalMilestone, Kpi, kpisApi, registryApi, milestonesApi (+36 more)
 
 ### Community 128 - "toaster.tsx"
 Cohesion: 0.24
 Nodes (11): KIND_CLASSES, pauseTimers(), resumeTimers(), startTimer(), timers, TOAST_MS, Toaster(), ToastItem (+3 more)
 
-### Community 129 - "kpis.repository.ts"
-Cohesion: 0.50
-Nodes (4): Kpi, KpiActionPlan, KpiListItem, KpiReading
-
 ### Community 130 - "Injectable"
-Cohesion: 0.24
-Nodes (4): ProjectAccessGuard, Injectable, ProjectAccessService, Injectable
-
-### Community 131 - "status-reports.repository.ts"
-Cohesion: 0.83
-Nodes (3): StatusReport, StatusReportDetail, StatusReportListItem
-
-### Community 132 - "DatabaseModule"
-Cohesion: 0.67
-Nodes (3): DatabaseModule, Global, Module
+Cohesion: 0.12
+Nodes (11): ProjectAccessService, Injectable, logger, toHttpException(), DirectoryMembership, DirectoryPerson, GlobalActionItem, GlobalMilestone (+3 more)
 
 ### Community 133 - ".update"
-Cohesion: 0.14
-Nodes (14): ApiBody, ProjectsController, Body, Controller, CurrentUser, Delete, Get, Param (+6 more)
-
-### Community 134 - "AccessModule"
-Cohesion: 0.67
-Nodes (3): AccessModule, Global, Module
+Cohesion: 0.21
+Nodes (9): ProjectsController, ApiBody, Body, Controller, Get, Param, Patch, Post (+1 more)
 
 ## Knowledge Gaps
-- **498 isolated node(s):** `Props`, `cache`, `inflight`, `STATUS_LABELS`, `TABS` (+493 more)
+- **502 isolated node(s):** `$schema`, `includeCoAuthoredBy`, `defaultMode`, `Bash(npm run dev:*)`, `Bash(npm run start:*)` (+497 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **29 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **22 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `ms()` connect `Community 16` to `RecordHistoryService`?**
-  _High betweenness centrality (0.240) - this node is a cross-community bridge._
-- **Why does `toHttpException()` connect `Community 5` to `kpis.repository.ts`, `Injectable`, `status-reports.repository.ts`, `Community 1`, `Community 6`, `Community 7`, `Community 9`, `Community 10`, `Community 12`, `Community 13`, `Community 16`, `CreateProjectDto`, `Community 26`, `Community 27`, `Community 34`, `CreateProjectDto`, `Community 44`, `Community 45`, `nest-cli.json`, `Community 50`, `ProjectsController`, `PeopleRepository`, `CreateMilestoneDto`, `auth-context.tsx`, `PaginationQueryDto`, `react-dom`, `WorkflowPanel.tsx`, `2. Core functional modules`, `@nestjs/swagger`, `status-reports.repository.ts`, `CreateRiskDto`, `eslint-plugin-react-hooks`, `RisksService`, `submissions.module.ts`, `SectionNav.tsx`, `ProgramOutcomesService`?**
-  _High betweenness centrality (0.231) - this node is a cross-community bridge._
-- **Why does `AuthUser` connect `.add` to `Community 1`, `Community 10`, `Community 13`, `CreateProjectDto`, `Community 27`, `ProjectsRepository`, `status-reports.repository.ts`, `Community 44`, `nest-cli.json`, `status-reports.repository.ts`, `Community 50`, `action-items.repository.ts`, `@nestjs/swagger`, `PeopleRepository`, `CreateMilestoneDto`, `auth-context.tsx`, `react-dom`, `WorkflowPanel.tsx`, `README.md`, `@nestjs/swagger`, `AppModule`, `CreateLookupValueDto`, `CreateRiskDto`, `eslint-plugin-react-hooks`, `RisksService`, `InitialsAvatar.tsx`, `supabase.ts`?**
-  _High betweenness centrality (0.076) - this node is a cross-community bridge._
-- **What connects `Props`, `cache`, `inflight` to the rest of the system?**
-  _498 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Why does `fetchMe()` connect `status-reports.repository.ts` to `status-reports.repository.ts`?**
+  _High betweenness centrality (0.239) - this node is a cross-community bridge._
+- **Why does `AuthUser` connect `.add` to `Community 1`, `.update`, `Community 6`, `Community 7`, `Community 8`, `Community 10`, `Community 13`, `Community 16`, `CreateProjectDto`, `Community 34`, `ProjectsRepository`, `status-reports.repository.ts`, `Community 44`, `Community 50`, `PeopleRepository`, `CreateMilestoneDto`, `auth-context.tsx`, `react-dom`, `WorkflowPanel.tsx`, `2. Core functional modules`, `DatabaseService`, `WorkflowPanel.tsx`, `README.md`, `@nestjs/swagger`, `CreateRiskDto`, `eslint-plugin-react-hooks`?**
+  _High betweenness centrality (0.161) - this node is a cross-community bridge._
+- **Why does `CurrentUser` connect `.add` to `Community 1`, `.update`, `Community 6`, `Community 7`, `Community 8`, `Community 10`, `Community 13`, `Community 16`, `CreateProjectDto`, `Community 34`, `ProjectsRepository`, `status-reports.repository.ts`, `Community 44`, `Community 50`, `PeopleRepository`, `CreateMilestoneDto`, `react-dom`, `WorkflowPanel.tsx`, `2. Core functional modules`, `DatabaseService`, `WorkflowPanel.tsx`, `README.md`, `@nestjs/swagger`, `CreateRiskDto`, `eslint-plugin-react-hooks`?**
+  _High betweenness centrality (0.143) - this node is a cross-community bridge._
+- **What connects `$schema`, `includeCoAuthoredBy`, `defaultMode` to the rest of the system?**
+  _502 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 1` be split into smaller, more focused modules?**
-  _Cohesion score 0.1053763440860215 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.07564102564102564 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
   _Cohesion score 0.05853658536585366 - nodes in this community are weakly interconnected._
 - **Should `Community 4` be split into smaller, more focused modules?**

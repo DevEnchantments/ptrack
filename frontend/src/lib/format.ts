@@ -31,6 +31,26 @@ export function formatDate(iso: string): string {
  * already did that; the other two counted seconds, and Fares' call was to
  * unify on "just now" everywhere (2026-08-13).
  */
+/**
+ * A due date as distance from today: "due today", "due tomorrow", "due in
+ * 5 days", "overdue by 3 days". Dates are yyyy-mm-dd; string comparison is
+ * date comparison, and the math ignores time zones on purpose (due dates
+ * are calendar days).
+ */
+export function dueIn(
+  dueDate: string,
+  today: string = new Date().toISOString().slice(0, 10),
+): string {
+  const days = Math.round(
+    (Date.parse(dueDate) - Date.parse(today)) / 86_400_000,
+  )
+  if (days === 0) return 'due today'
+  if (days === 1) return 'due tomorrow'
+  if (days > 1) return `due in ${days} days`
+  if (days === -1) return 'overdue by 1 day'
+  return `overdue by ${-days} days`
+}
+
 export function relativeTime(iso: string): string {
   const diffMs = Date.now() - new Date(iso).getTime()
   const sec = Math.round(diffMs / 1000)

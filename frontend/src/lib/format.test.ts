@@ -16,6 +16,24 @@ afterEach(() => {
   vi.unstubAllEnvs()
 })
 
+import { dueIn } from './format'
+
+describe('dueIn', () => {
+  const TODAY = '2026-08-18'
+  it('names today, tomorrow, and future distances', () => {
+    expect(dueIn('2026-08-18', TODAY)).toBe('due today')
+    expect(dueIn('2026-08-19', TODAY)).toBe('due tomorrow')
+    expect(dueIn('2026-08-25', TODAY)).toBe('due in 7 days')
+  })
+  it('names overdue distances, singular and plural', () => {
+    expect(dueIn('2026-08-17', TODAY)).toBe('overdue by 1 day')
+    expect(dueIn('2026-08-01', TODAY)).toBe('overdue by 17 days')
+  })
+  it('crosses month boundaries correctly', () => {
+    expect(dueIn('2026-09-01', TODAY)).toBe('due in 14 days')
+  })
+})
+
 describe('formatDate', () => {
   it('renders the house DD-MON-YYYY format', () => {
     withTZ('UTC', () => {
