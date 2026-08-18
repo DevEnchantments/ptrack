@@ -31,10 +31,15 @@ export function InitialsAvatar({
   className = '',
 }: {
   name: string
-  size?: 'sm' | 'md'
+  size?: 'sm' | 'md' | 'lg'
   className?: string
 }) {
-  const sizeCls = size === 'sm' ? 'h-6 w-6 text-[10px]' : 'h-8 w-8 text-xs'
+  const sizeCls =
+    size === 'sm'
+      ? 'h-6 w-6 text-[10px]'
+      : size === 'lg'
+        ? 'h-16 w-16 text-xl'
+        : 'h-8 w-8 text-xs'
   return (
     <span
       title={name}
