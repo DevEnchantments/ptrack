@@ -2,6 +2,7 @@ import { useState, type FormEvent } from 'react'
 import { Eye, EyeOff, Loader2 } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/lib/auth-context'
+import { supabase } from '@/lib/supabase'
 import { usePageTitle } from '@/lib/use-page-title'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -106,8 +107,25 @@ export function LoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
+  const [mode, setMode] = useState<'signin' | 'forgot'>('signin')
+  const [resetSent, setResetSent] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [submitting, setSubmitting] = useState(false)
+
+  async function handleForgot(e: FormEvent) {
+    e.preventDefault()
+    setError(null)
+    setSubmitting(true)
+    // Neutral outcome either way — the form must not reveal which emails
+    // have accounts.
+    await supabase.auth
+      .resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/reset-password`,
+      })
+      .catch(() => undefined)
+    setSubmitting(false)
+    setResetSent(true)
+  }
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
@@ -145,15 +163,66 @@ export function LoginPage() {
             className="stagger-in text-2xl font-semibold"
             style={{ animationDelay: '60ms' }}
           >
-            Welcome back
+            {mode === 'forgot' ? 'Reset your password' : 'Welcome back'}
           </h1>
           <p
             className="stagger-in mt-1 text-sm text-muted-foreground"
             style={{ animationDelay: '110ms' }}
           >
-            Sign in to your portfolio
+            {mode === 'forgot'
+              ? 'We will email you a reset link'
+              : 'Sign in to your portfolio'}
           </p>
 
+          {mode === 'forgot' ? (
+            <form onSubmit={handleForgot} className="mt-8 flex flex-col gap-5">
+              {resetSent ? (
+                <div className="hint-in rounded-md border bg-card p-4 text-sm">
+                  <p className="font-medium">Check your email</p>
+                  <p className="mt-1 text-muted-foreground">
+                    If an account exists for {email || 'that address'}, a
+                    password-reset link is on its way. The link opens a page
+                    where you choose a new password.
+                  </p>
+                </div>
+              ) : (
+                <div className="flex flex-col gap-2">
+                  <Label htmlFor="reset-email">Email</Label>
+                  <Input
+                    id="reset-email"
+                    type="email"
+                    autoComplete="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="you@example.com"
+                    autoFocus
+                    required
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    PoC accounts (@poc.ptrack.local) have no inbox — ask your
+                    administrator to reset those.
+                  </p>
+                </div>
+              )}
+              {!resetSent && (
+                <Button
+                  type="submit"
+                  disabled={submitting}
+                  className="w-full transition-transform active:scale-[0.98]"
+                >
+                  {submitting && <Loader2 className="animate-spin" />}
+                  {submitting ? 'Sending…' : 'Send reset link'}
+                </Button>
+              )}
+              <button
+                type="button"
+                onClick={() => setMode('signin')}
+                className="cursor-pointer text-center text-sm text-muted-foreground transition-colors hover:text-foreground"
+              >
+                Back to sign in
+              </button>
+            </form>
+          ) : (
           <form onSubmit={handleSubmit} className="mt-8 flex flex-col gap-5">
             <div
               className="stagger-in flex flex-col gap-2"
@@ -175,7 +244,20 @@ export function LoginPage() {
               className="stagger-in flex flex-col gap-2"
               style={{ animationDelay: '210ms' }}
             >
-              <Label htmlFor="password">Password</Label>
+              <div className="flex items-center justify-between">
+                <Label htmlFor="password">Password</Label>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMode('forgot')
+                    setResetSent(false)
+                    setError(null)
+                  }}
+                  className="cursor-pointer text-xs text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  Forgot password?
+                </button>
+              </div>
               <div className="relative">
                 <Input
                   id="password"
@@ -215,6 +297,7 @@ export function LoginPage() {
               {submitting ? 'Signing in…' : 'Sign in'}
             </Button>
           </form>
+          )}
 
           <p
             className="stagger-in mt-8 text-center text-xs text-muted-foreground"

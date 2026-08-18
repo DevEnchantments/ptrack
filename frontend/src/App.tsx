@@ -1,6 +1,7 @@
 import { HomePage } from '@/pages/HomePage'
 import { DashboardPage } from '@/pages/DashboardPage'
 import { ProfilePage } from '@/pages/ProfilePage'
+import { ResetPasswordPage } from '@/pages/ResetPasswordPage'
 import { ReportingPage } from '@/pages/ReportingPage'
 import { KpisPage } from '@/pages/KpisPage'
 import { CodeTablesPage } from '@/pages/admin/CodeTablesPage'
@@ -33,6 +34,7 @@ function App() {
       <Toaster />
       <Routes>
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/reset-password" element={<ResetPasswordPage />} />
       <Route element={<ProtectedRoute />}>
         <Route element={<AppLayout />}>
           <Route path="/" element={<HomePage />} />
