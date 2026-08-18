@@ -855,8 +855,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/DashboardPage.tsx": {
-    "mtime": 1786617882.3323667,
-    "ast_hash": "b4cd33f7d40ef730db1492ea8064adb3",
+    "mtime": 1787049903.9507303,
+    "ast_hash": "001c839618f7b52256acfc2dedd12668",
     "semantic_hash": ""
   },
   "frontend/src/components/SectionCard.tsx": {
@@ -1135,8 +1135,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/NotificationBell.tsx": {
-    "mtime": 1785908337.1258247,
-    "ast_hash": "6afce02b8e06e5f8cdc910f7d8abb52c",
+    "mtime": 1787050043.655738,
+    "ast_hash": "84368b15097aaee4022ca714eca09e24",
     "semantic_hash": ""
   },
   "frontend/src/pages/ReportingPage.tsx": {
@@ -1285,8 +1285,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ActionItemsPage.tsx": {
-    "mtime": 1787030374.585045,
-    "ast_hash": "e1d703b4e6770bdf220881cbba925132",
+    "mtime": 1787051245.0526423,
+    "ast_hash": "ef271a0bb948470cd5ab10c722bcba20",
     "semantic_hash": ""
   },
   "frontend/src/pages/CategoriesPage.tsx": {
@@ -1295,13 +1295,13 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/MilestonesPage.tsx": {
-    "mtime": 1787030374.5830433,
-    "ast_hash": "a31080bc6c14582a4e1b9b277fa065f8",
+    "mtime": 1787051245.0501733,
+    "ast_hash": "94d2f0235d25ef2a06e09e37eaa6ec92",
     "semantic_hash": ""
   },
   "frontend/src/pages/PeoplePage.tsx": {
-    "mtime": 1786460496.6226413,
-    "ast_hash": "bb0e20bea45e05a19e0e0208c30a0b1c",
+    "mtime": 1787051245.054654,
+    "ast_hash": "ff5b577990d6c488cd40281d0737f9b1",
     "semantic_hash": ""
   },
   "backend/scripts/seed-generic-lookups.mjs": {
@@ -1757,6 +1757,11 @@
   "frontend/src/pages/ResetPasswordPage.tsx": {
     "mtime": 1787040075.7392032,
     "ast_hash": "601de59a4cd95bd8466773d46a4fc6ff",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/ExportCsvDialog.tsx": {
+    "mtime": 1787050197.198741,
+    "ast_hash": "e2254d61fdd87d038fa0865ee4672e3b",
     "semantic_hash": ""
   }
 }
