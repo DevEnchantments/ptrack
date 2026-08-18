@@ -605,8 +605,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ProjectDetailPage.tsx": {
-    "mtime": 1787028784.526155,
-    "ast_hash": "37e95da21ec457f84c75dd5c033c169d",
+    "mtime": 1787054858.7262206,
+    "ast_hash": "3c2c48338816cd4e5450e5a93437ba2e",
     "semantic_hash": ""
   },
   "frontend/src/pages/StatusReportDetailPage.tsx": {
@@ -1175,8 +1175,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/kpis/dto/create-kpi.dto.ts": {
-    "mtime": 1785918844.613778,
-    "ast_hash": "70e8d0078268219114548138a53b150d",
+    "mtime": 1787055168.9692807,
+    "ast_hash": "01ce79799f8fd847425c736d891cc0e0",
     "semantic_hash": ""
   },
   "backend/src/modules/kpis/dto/kpi-children.dto.ts": {
@@ -1195,18 +1195,18 @@
     "semantic_hash": ""
   },
   "backend/src/modules/kpis/kpis.repository.ts": {
-    "mtime": 1785919105.6413102,
-    "ast_hash": "76e04e35ba72a8f18d9d7762d24d4fdb",
+    "mtime": 1787054597.3859055,
+    "ast_hash": "b491b8629226969aff3bb908b40121a5",
     "semantic_hash": ""
   },
   "backend/src/modules/kpis/kpis.service.ts": {
-    "mtime": 1785919105.6413102,
-    "ast_hash": "5fdc0f08d19bfd73e52071f5174bb6f6",
+    "mtime": 1787055168.9692807,
+    "ast_hash": "e3b9433d4c56cef0c4a094da3024e8be",
     "semantic_hash": ""
   },
   "frontend/src/components/AddKpiDialog.tsx": {
-    "mtime": 1786958607.58614,
-    "ast_hash": "e56c62bfb5a218c6223c45cc9dddda2b",
+    "mtime": 1787054688.3503168,
+    "ast_hash": "c580af357b04bcfa738042f22970d8c0",
     "semantic_hash": ""
   },
   "frontend/src/pages/KpisPage.tsx": {
@@ -1585,8 +1585,8 @@
     "semantic_hash": ""
   },
   "frontend/src/lib/api/admin.ts": {
-    "mtime": 1786972789.0193133,
-    "ast_hash": "8791c56df741cdf6e43f02d003d9794d",
+    "mtime": 1787054676.6931193,
+    "ast_hash": "c46f80067632e242be45eb67683435b2",
     "semantic_hash": ""
   },
   "frontend/src/lib/api/attachments.ts": {
@@ -1762,6 +1762,11 @@
   "frontend/src/components/ExportCsvDialog.tsx": {
     "mtime": 1787050197.198741,
     "ast_hash": "e2254d61fdd87d038fa0865ee4672e3b",
+    "semantic_hash": ""
+  },
+  "db/kpi_project_link.sql": {
+    "mtime": 1787054566.3278544,
+    "ast_hash": "c912ae30075918d93639737b9281920b",
     "semantic_hash": ""
   }
 }
