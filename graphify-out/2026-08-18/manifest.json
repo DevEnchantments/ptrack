@@ -885,8 +885,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/InitialsAvatar.tsx": {
-    "mtime": 1785930401.0187185,
-    "ast_hash": "b5838c2b93247264bafa91140443b749",
+    "mtime": 1787055775.7158194,
+    "ast_hash": "15e559ec84e0b5ab9cc1e5e955051e2a",
     "semantic_hash": ""
   },
   "frontend/src/components/FieldError.tsx": {
@@ -1750,8 +1750,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ProfilePage.tsx": {
-    "mtime": 1787034792.4080186,
-    "ast_hash": "cd3d356f080880328f73ecc502d8627d",
+    "mtime": 1787055823.9206774,
+    "ast_hash": "017239840ef39aa6c824268891402cc0",
     "semantic_hash": ""
   },
   "frontend/src/pages/ResetPasswordPage.tsx": {
