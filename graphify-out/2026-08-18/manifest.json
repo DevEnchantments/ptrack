@@ -605,8 +605,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ProjectDetailPage.tsx": {
-    "mtime": 1786976873.275213,
-    "ast_hash": "4358d2dcf33c7a7397089aa33cd9810d",
+    "mtime": 1787028784.526155,
+    "ast_hash": "37e95da21ec457f84c75dd5c033c169d",
     "semantic_hash": ""
   },
   "frontend/src/pages/StatusReportDetailPage.tsx": {
