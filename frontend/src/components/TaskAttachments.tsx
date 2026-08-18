@@ -7,6 +7,8 @@ import { Button } from '@/components/ui/button'
 interface Props {
   projectId: string
   actionItemId: string
+  /** View-only visitors see the files but cannot upload or delete. */
+  canWrite?: boolean
 }
 
 function formatSize(bytes: number | null): string {
@@ -20,7 +22,11 @@ function formatSize(bytes: number | null): string {
  * FR-06 / Appendix A task-level attachments: files scoped to one action item
  * (they also appear in the project's Attachments section with a Task badge).
  */
-export function TaskAttachments({ projectId, actionItemId }: Props) {
+export function TaskAttachments({
+  projectId,
+  actionItemId,
+  canWrite = true,
+}: Props) {
   const [items, setItems] = useState<Attachment[] | null>(null)
   const [uploading, setUploading] = useState(false)
   const [armedId, setArmedId] = useState<string | null>(null)
@@ -86,19 +92,25 @@ export function TaskAttachments({ projectId, actionItemId }: Props) {
             if (f) void upload(f)
           }}
         />
-        <Button
-          variant="outline"
-          size="sm"
-          disabled={uploading}
-          onClick={() => fileInput.current?.click()}
+        <span
+          title={
+            canWrite ? undefined : 'You have view-only access on this project'
+          }
         >
-          {uploading ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
-          ) : (
-            <Upload className="h-4 w-4" />
-          )}
-          {uploading ? 'Uploading…' : 'Upload file'}
-        </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            disabled={!canWrite || uploading}
+            onClick={() => fileInput.current?.click()}
+          >
+            {uploading ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Upload className="h-4 w-4" />
+            )}
+            {uploading ? 'Uploading…' : 'Upload file'}
+          </Button>
+        </span>
       </div>
 
       {!items || items.length === 0 ? (
@@ -136,8 +148,18 @@ export function TaskAttachments({ projectId, actionItemId }: Props) {
                 <button
                   type="button"
                   aria-label={`Delete ${a.file_name}`}
-                  onClick={() => setArmedId(a.id)}
-                  className="cursor-pointer rounded p-1 text-muted-foreground hover:text-destructive focus-visible:outline-2 focus-visible:outline-ring"
+                  disabled={!canWrite}
+                  onClick={canWrite ? () => setArmedId(a.id) : undefined}
+                  title={
+                    canWrite
+                      ? undefined
+                      : 'You have view-only access on this project'
+                  }
+                  className={
+                    canWrite
+                      ? 'cursor-pointer rounded p-1 text-muted-foreground hover:text-destructive focus-visible:outline-2 focus-visible:outline-ring'
+                      : 'cursor-not-allowed rounded p-1 text-muted-foreground opacity-40'
+                  }
                 >
                   <Trash2 className="h-4 w-4" />
                 </button>

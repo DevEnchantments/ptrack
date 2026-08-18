@@ -1,4 +1,5 @@
 import { usePageTitle } from '@/lib/use-page-title'
+import { useProjectAccess } from '@/lib/use-project-access'
 import { TagChips } from '@/components/TagChips'
 import { toast } from '@/lib/toast'
 import { useCallback, useEffect, useState } from 'react'
@@ -109,6 +110,7 @@ export function MilestoneDetailPage() {
   const [error, setError] = useState<string | null>(null)
   const [tab, setTab] = useState<Tab>('Show All')
   const [editOpen, setEditOpen] = useState(false)
+  const canWrite = (useProjectAccess(projectId) ?? 0) >= 2
   const [actionItems, setActionItems] = useState<ActionItem[]>([])
   const [addAiOpen, setAddAiOpen] = useState(false)
 
@@ -231,13 +233,16 @@ export function MilestoneDetailPage() {
             >
               View Project
             </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setEditOpen(true)}
-            >
-              Edit Milestone
-            </Button>
+            <span title={canWrite ? undefined : 'You have view-only access on this project'}>
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={!canWrite}
+                onClick={() => setEditOpen(true)}
+              >
+                Edit Milestone
+              </Button>
+            </span>
           </div>
         </div>
 

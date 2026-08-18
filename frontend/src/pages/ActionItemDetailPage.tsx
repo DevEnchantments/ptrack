@@ -1,4 +1,5 @@
 import { usePageTitle } from '@/lib/use-page-title'
+import { useProjectAccess } from '@/lib/use-project-access'
 import { TagChips } from '@/components/TagChips'
 import { InitialsAvatar } from '@/components/InitialsAvatar'
 import { toast } from '@/lib/toast'
@@ -61,6 +62,7 @@ export function ActionItemDetailPage() {
   const [error, setError] = useState<string | null>(null)
   const [tab, setTab] = useState<Tab>('Show All')
   const [editOpen, setEditOpen] = useState(false)
+  const canWrite = (useProjectAccess(projectId) ?? 0) >= 2
 
   const [comments, setComments] = useState<ActionItemComment[]>([])
   const [newComment, setNewComment] = useState('')
@@ -190,13 +192,16 @@ export function ActionItemDetailPage() {
             </p>
             <h1 className="text-2xl font-semibold">{item.title}</h1>
           </div>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setEditOpen(true)}
-          >
-            Edit Action Item
-          </Button>
+          <span title={canWrite ? undefined : 'You have view-only access on this project'}>
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={!canWrite}
+              onClick={() => setEditOpen(true)}
+            >
+              Edit Action Item
+            </Button>
+          </span>
         </div>
 
         <dl className="rounded-md border bg-card px-4">
@@ -241,7 +246,12 @@ export function ActionItemDetailPage() {
             <div className="mb-4 flex flex-col gap-2 rounded-md border p-4">
               <Textarea
                 rows={3}
-                placeholder="Add a comment…"
+                placeholder={
+                  canWrite
+                    ? 'Add a comment…'
+                    : 'View-only access — commenting is disabled'
+                }
+                disabled={!canWrite}
                 value={newComment}
                 onChange={(e) => setNewComment(e.target.value)}
               />
@@ -252,7 +262,7 @@ export function ActionItemDetailPage() {
                 <Button
                   size="sm"
                   onClick={postComment}
-                  disabled={posting || !newComment.trim()}
+                  disabled={!canWrite || posting || !newComment.trim()}
                 >
                   {posting ? 'Adding…' : 'Add Comment'}
                 </Button>
@@ -288,7 +298,11 @@ export function ActionItemDetailPage() {
         )}
 
         {showAttachments && (
-          <TaskAttachments projectId={projectId!} actionItemId={actionItemId!} />
+          <TaskAttachments
+            projectId={projectId!}
+            actionItemId={actionItemId!}
+            canWrite={canWrite}
+          />
         )}
 
         {showHistory && (

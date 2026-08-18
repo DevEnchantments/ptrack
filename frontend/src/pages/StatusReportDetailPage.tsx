@@ -1,4 +1,5 @@
 import { usePageTitle } from '@/lib/use-page-title'
+import { useProjectAccess } from '@/lib/use-project-access'
 import { toast } from '@/lib/toast'
 import { useCallback, useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
@@ -46,6 +47,7 @@ export function StatusReportDetailPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [editOpen, setEditOpen] = useState(false)
+  const canWrite = (useProjectAccess(projectId) ?? 0) >= 2
 
   const load = useCallback(() => {
     if (!projectId || !statusReportId) return
@@ -154,13 +156,16 @@ export function StatusReportDetailPage() {
             >
               Email
             </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setEditOpen(true)}
-            >
-              Edit Status Report
-            </Button>
+            <span title={canWrite ? undefined : 'You have view-only access on this project'}>
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={!canWrite}
+                onClick={() => setEditOpen(true)}
+              >
+                Edit Status Report
+              </Button>
+            </span>
             <Button
               variant="outline"
               size="sm"

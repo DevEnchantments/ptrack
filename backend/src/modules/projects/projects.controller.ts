@@ -24,11 +24,15 @@ import {
   RequireCapability,
 } from '../../common/access/access.decorators';
 import { AccessLevel } from '../../common/access/access.logic';
+import { ProjectAccessService } from '../../common/access/project-access.service';
 
 @ProjectScoped('id')
 @Controller('projects')
 export class ProjectsController {
-  constructor(private readonly projects: ProjectsService) {}
+  constructor(
+    private readonly projects: ProjectsService,
+    private readonly access: ProjectAccessService,
+  ) {}
 
   // FDD 3.1 step 1 assigns creation to Project Owner / PMO (ASSUMED PMO-gated).
   @RequireCapability('projects.create')
@@ -85,6 +89,15 @@ export class ProjectsController {
   @Get(':id/history')
   history(@Param('id', ParseUUIDPipe) id: string) {
     return this.projects.history(id);
+  }
+
+  /** The caller's effective level here — detail pages gate affordances on it. */
+  @Get(':id/my-access')
+  async myAccess(
+    @Param('id', ParseUUIDPipe) id: string,
+    @CurrentUser() user: AuthUser,
+  ) {
+    return { level: await this.access.levelFor(user.id, id) };
   }
 
   // GET :id/sections moved to ProjectSectionsController (same URL).

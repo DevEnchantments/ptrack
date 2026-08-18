@@ -285,8 +285,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/projects/projects.controller.ts": {
-    "mtime": 1786972310.8956742,
-    "ast_hash": "4f06d5a45c68c0c5512450abfcc4b756",
+    "mtime": 1787029128.7840433,
+    "ast_hash": "bfd999bb4b1a4d95625a658fb354344b",
     "semantic_hash": ""
   },
   "backend/src/modules/projects/projects.module.ts": {
@@ -575,8 +575,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/ActionItemDetailPage.tsx": {
-    "mtime": 1786958607.6001399,
-    "ast_hash": "d98b57120d79498514676dadd5b426b9",
+    "mtime": 1787029171.4130056,
+    "ast_hash": "1e5ca8c2aa3000cb0e6d2423839262a4",
     "semantic_hash": ""
   },
   "frontend/src/pages/AttachmentDetailPage.tsx": {
@@ -600,8 +600,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/MilestoneDetailPage.tsx": {
-    "mtime": 1786958607.6111474,
-    "ast_hash": "a839025867cfc49cbccc3b3760bf892b",
+    "mtime": 1787029171.4115007,
+    "ast_hash": "b5096e426ad21d1cccca86456da5fdef",
     "semantic_hash": ""
   },
   "frontend/src/pages/ProjectDetailPage.tsx": {
@@ -610,8 +610,8 @@
     "semantic_hash": ""
   },
   "frontend/src/pages/StatusReportDetailPage.tsx": {
-    "mtime": 1786958607.615147,
-    "ast_hash": "7963ef06e63c14e6c2e61ea36c529a04",
+    "mtime": 1787029171.414012,
+    "ast_hash": "be0248eebaa76496c2d59862a28d9423",
     "semantic_hash": ""
   },
   "frontend/src/pages/create-project/StepAccess.tsx": {
@@ -1495,8 +1495,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/TaskAttachments.tsx": {
-    "mtime": 1786622865.7606502,
-    "ast_hash": "0aba518e0564ff64c66e39f8db9858dc",
+    "mtime": 1787029201.2997015,
+    "ast_hash": "146341cb390eda7575945174a34a2b3c",
     "semantic_hash": ""
   },
   "docs/REFACTOR-FINDINGS.md": {
@@ -1615,8 +1615,8 @@
     "semantic_hash": ""
   },
   "frontend/src/lib/api/projects.ts": {
-    "mtime": 1786966842.4286697,
-    "ast_hash": "dd0e1a1213f686738ac5a3091f7f3abd",
+    "mtime": 1787029128.7840433,
+    "ast_hash": "9cbecf762010c5a8cb68753bb91ca11d",
     "semantic_hash": ""
   },
   "frontend/src/lib/api/records.ts": {
@@ -1732,6 +1732,11 @@
   "docs/PROGRESS-SUMMARY.md": {
     "mtime": 1786974791.579244,
     "ast_hash": "7f08d4fc9f9dde6657f01477b79fc2ea",
+    "semantic_hash": ""
+  },
+  "frontend/src/lib/use-project-access.ts": {
+    "mtime": 1787029138.668725,
+    "ast_hash": "9f1b3b4b1e9c11e1d3b83bd2df23d53c",
     "semantic_hash": ""
   }
 }

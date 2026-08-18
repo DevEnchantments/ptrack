@@ -124,6 +124,7 @@ export interface ProjectListItem extends Project {
 }
 
 export const projectsApi = {
+  myAccess: (id: string) => apiGet<{ level: number }>(`/projects/${id}/my-access`),
   list: () => apiGet<ProjectListItem[]>('/projects'),
   get: (id: string) => apiGet<ProjectDetail>(`/projects/${id}`),
   sections: (id: string) =>
