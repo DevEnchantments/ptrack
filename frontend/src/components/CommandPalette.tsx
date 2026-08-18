@@ -2,8 +2,12 @@ import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   AlertTriangle,
+  BarChart3,
   Bookmark,
   BookmarkPlus,
+  CalendarCheck,
+  CalendarRange,
+  Clock,
   Flag,
   Folder,
   Gauge,
@@ -11,9 +15,16 @@ import {
   LayoutDashboard,
   ListChecks,
   Loader2,
+  Lock,
   Plus,
   Search,
+  Settings,
   ShieldAlert,
+  ShieldCheck,
+  TrendingUp,
+  Upload,
+  UserRound,
+  Users,
   X,
 } from 'lucide-react'
 import {
@@ -23,6 +34,7 @@ import {
   type SearchKind,
 } from '@/lib/api'
 import { toast } from '@/lib/toast'
+import { hasCapability, useMe } from '@/lib/use-me'
 
 interface Props {
   open: boolean
@@ -36,6 +48,8 @@ interface Entry {
   icon: typeof Home
   run: () => void
   saved?: SavedSearch
+  /** Shown even with an empty query; the rest appear once you type. */
+  primary?: boolean
 }
 
 const KIND_META: Record<SearchKind, { hint: string; icon: typeof Home }> = {
@@ -68,6 +82,7 @@ function hitPath(hit: SearchHit): string {
  *  used constantly, so it must appear instantly (see UI-AUDIT). */
 export function CommandPalette({ open, onOpenChange }: Props) {
   const navigate = useNavigate()
+  const me = useMe()
   const [query, setQuery] = useState('')
   const [active, setActive] = useState(0)
   const [hits, setHits] = useState<SearchHit[]>([])
@@ -163,21 +178,143 @@ export function CommandPalette({ open, onOpenChange }: Props) {
   }
 
   const ql = q.toLowerCase()
+  const can = (capability: string) => hasCapability(me, capability)
+  // Capability-gated: the palette only offers what this user may actually do
+  // (UX only — the backend enforces regardless).
   const actions: Entry[] = [
-    { id: 'nav-projects', label: 'Go to Projects', icon: Home, run: () => go('/') },
+    {
+      id: 'nav-projects',
+      label: 'Go to Projects',
+      icon: Home,
+      primary: true,
+      run: () => go('/'),
+    },
     {
       id: 'nav-dashboard',
+      primary: true,
       label: 'Go to My Dashboard',
       icon: LayoutDashboard,
       run: () => go('/dashboard'),
     },
     {
-      id: 'nav-create',
-      label: 'Create Project',
-      icon: Plus,
-      run: () => go('/projects/new'),
+      id: 'nav-profile',
+      primary: true,
+      label: 'Go to My Profile',
+      icon: UserRound,
+      run: () => go('/profile'),
     },
-  ].filter((a) => ql === '' || a.label.toLowerCase().includes(ql))
+    {
+      id: 'nav-milestones',
+      label: 'Go to Milestones',
+      icon: Flag,
+      run: () => go('/milestones'),
+    },
+    {
+      id: 'nav-action-items',
+      label: 'Go to Action Items',
+      icon: ListChecks,
+      run: () => go('/action-items'),
+    },
+    {
+      id: 'nav-people',
+      label: 'Go to People',
+      icon: Users,
+      run: () => go('/people'),
+    },
+    {
+      id: 'nav-timeline',
+      label: 'Go to Timeline',
+      icon: Clock,
+      run: () => go('/timeline'),
+    },
+    {
+      id: 'nav-reporting',
+      label: 'Go to Reporting',
+      icon: BarChart3,
+      run: () => go('/reporting'),
+    },
+    {
+      id: 'nav-kpis',
+      label: 'Go to KPIs',
+      icon: Gauge,
+      run: () => go('/kpis'),
+    },
+    {
+      id: 'report-cycle',
+      label: 'Open Cycle Submission Status',
+      hint: 'Report',
+      icon: CalendarCheck,
+      run: () => go('/reporting/cycle-status'),
+    },
+    {
+      id: 'report-initiative',
+      label: 'Open Initiative Progress report',
+      hint: 'Report',
+      icon: TrendingUp,
+      run: () => go('/reporting/initiative-progress'),
+    },
+    {
+      id: 'report-monthly',
+      label: 'Open Monthly Performance report',
+      hint: 'Report',
+      icon: CalendarRange,
+      run: () => go('/reporting/monthly-performance'),
+    },
+    ...(can('projects.create')
+      ? [
+          {
+            id: 'act-create',
+            primary: true,
+            label: 'Create Project',
+            icon: Plus,
+            run: () => go('/projects/new'),
+          },
+        ]
+      : []),
+    ...(can('cycles.close')
+      ? [
+          {
+            id: 'act-cycle',
+            label: 'Close or reopen the reporting cycle',
+            hint: 'On the Cycle Status page',
+            icon: Lock,
+            run: () => go('/reporting/cycle-status'),
+          },
+        ]
+      : []),
+    ...(can('import.run')
+      ? [
+          {
+            id: 'act-import',
+            label: 'Import projects from CSV',
+            icon: Upload,
+            run: () => go('/import'),
+          },
+        ]
+      : []),
+    ...(can('lookups.manage')
+      ? [
+          {
+            id: 'nav-code-tables',
+            label: 'Go to Code Tables',
+            icon: Settings,
+            run: () => go('/admin/code-tables'),
+          },
+        ]
+      : []),
+    ...(can('users.manage_roles')
+      ? [
+          {
+            id: 'nav-users-roles',
+            label: 'Go to Users & Roles',
+            icon: ShieldCheck,
+            run: () => go('/admin/users-roles'),
+          },
+        ]
+      : []),
+  ].filter((a) =>
+    ql === '' ? a.primary : a.label.toLowerCase().includes(ql),
+  )
 
   const savedEntries: Entry[] =
     q === ''
