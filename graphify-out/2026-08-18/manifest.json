@@ -1730,8 +1730,8 @@
     "semantic_hash": ""
   },
   "docs/PROGRESS-SUMMARY.md": {
-    "mtime": 1786974791.579244,
-    "ast_hash": "7f08d4fc9f9dde6657f01477b79fc2ea",
+    "mtime": 1787056477.1004624,
+    "ast_hash": "2c791051dadf36d55fed5078a35a8c1a",
     "semantic_hash": ""
   },
   "frontend/src/lib/use-project-access.ts": {
