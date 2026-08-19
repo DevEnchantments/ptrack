@@ -1805,8 +1805,8 @@
     "semantic_hash": ""
   },
   "docs/REFACTOR-PLAN.md": {
-    "mtime": 1787137311.8053708,
-    "ast_hash": "3f73d4f04fcd8e9899a352927874d6e0",
+    "mtime": 1787137624.3540497,
+    "ast_hash": "20d06dc62a3e7b32bff8168854aec5e1",
     "semantic_hash": ""
   },
   "backend/src/modules/action-items/index.ts": {
@@ -1887,6 +1887,11 @@
   "backend/src/common/testing/repository-single.spec.ts": {
     "mtime": 1787137180.3347054,
     "ast_hash": "a190d22cff4048389cfbb225eadd22f7",
+    "semantic_hash": ""
+  },
+  "docs/FOLLOW-UPS.md": {
+    "mtime": 1787137616.0595808,
+    "ast_hash": "c6fe6e0acb48fe5548c3a5570ff657c6",
     "semantic_hash": ""
   }
 }
