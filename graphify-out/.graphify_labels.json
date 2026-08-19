@@ -137,6 +137,5 @@
   "135": "eslint-plugin-prettier",
   "136": "UpdateMeDto",
   "137": "SubmissionsModule",
-  "138": "@supabase/supabase-js",
-  "139": "RisksModule"
+  "138": "@supabase/supabase-js"
 }

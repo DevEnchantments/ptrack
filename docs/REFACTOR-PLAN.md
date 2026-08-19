@@ -6,6 +6,10 @@ exploratory and never merged. Its findings were handed to `main` as
 `docs/REFACTOR-FINDINGS.md` and most were actioned there.
 **Status:** living checklist. Tick items as they ship; append outcomes to section 8.
 
+**Findings live in `docs/FOLLOW-UPS.md`**, not here. This file records what each session
+did; that one records what is still owed — open defects, the limits of the checks we built,
+and findings dismissed after investigation. Add to it the moment something is noticed.
+
 **Goal, in priority order:**
 1. **Enforced boundaries** — modularity the build checks, not modularity we re-achieve
    by hand every pass. New in v2, and first because every later session inherits it.
