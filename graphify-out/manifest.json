@@ -330,8 +330,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/resources/resources.service.ts": {
-    "mtime": 1786959659.9025261,
-    "ast_hash": "b61eece7a9e3953a6821b23d207717aa",
+    "mtime": 1787147866.3137038,
+    "ast_hash": "a7e99d903b4d03e0cf66474ebcd46f87",
     "semantic_hash": ""
   },
   "backend/src/modules/status-reports/dto/create-status-report.dto.ts": {
@@ -1790,8 +1790,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/resources/resources.service.spec.ts": {
-    "mtime": 1787135717.4254003,
-    "ast_hash": "d950d19831a7499d926a0f9dcd75d6cf",
+    "mtime": 1787147819.2093644,
+    "ast_hash": "8f0dd2dd85be7f18be916bd0966457a3",
     "semantic_hash": ""
   },
   "backend/src/modules/risks/risks.service.spec.ts": {
@@ -1805,8 +1805,8 @@
     "semantic_hash": ""
   },
   "docs/REFACTOR-PLAN.md": {
-    "mtime": 1787145304.7362118,
-    "ast_hash": "66c9f2529cecb1b9f46d3219dd1dd9b0",
+    "mtime": 1787148095.2983522,
+    "ast_hash": "7a68e8cca761562a1088793216edc656",
     "semantic_hash": ""
   },
   "backend/src/modules/action-items/index.ts": {

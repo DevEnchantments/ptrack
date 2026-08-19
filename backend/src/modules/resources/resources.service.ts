@@ -3,6 +3,21 @@ import { RecordHistoryService } from '../../database/record-history.service';
 import { ResourcesRepository } from './resources.repository';
 import { CreateResourceDto } from './dto/create-resource.dto';
 import { UpdateResourceDto } from './dto/update-resource.dto';
+import { columnsFrom, type ColumnSpec } from '../../common/columns';
+
+/**
+ * How a resource DTO maps onto columns, for both create and update.
+ * `type_id` is `asIs` rather than `nullable`: it is required on create and the
+ * DTO does not admit null, so there is nothing to coerce.
+ */
+const COLUMN_SPEC: ColumnSpec = {
+  trimmed: ['name'],
+  trimmedOrNull: ['description'],
+  asIs: ['type_id'],
+};
+
+/** What a new resource gets for the column the caller omitted. */
+const CREATE_DEFAULTS = { description: null };
 
 @Injectable()
 export class ResourcesService {
@@ -18,9 +33,8 @@ export class ResourcesService {
   add(projectId: string, dto: CreateResourceDto, userId: string) {
     return this.repo.insert({
       project_id: projectId,
-      name: dto.name.trim(),
-      type_id: dto.type_id,
-      description: dto.description?.trim() || null,
+      ...CREATE_DEFAULTS,
+      ...columnsFrom(dto, COLUMN_SPEC),
       created_by: userId,
       updated_by: userId,
     });
@@ -32,12 +46,10 @@ export class ResourcesService {
     dto: UpdateResourceDto,
     userId: string,
   ) {
-    const patch: Record<string, unknown> = { updated_by: userId };
-    if (dto.name !== undefined) patch.name = dto.name.trim();
-    if (dto.type_id !== undefined) patch.type_id = dto.type_id;
-    if (dto.description !== undefined)
-      patch.description = dto.description?.trim() || null;
-    const updated = await this.repo.update(projectId, resourceId, patch);
+    const updated = await this.repo.update(projectId, resourceId, {
+      updated_by: userId,
+      ...columnsFrom(dto, COLUMN_SPEC),
+    });
     if (!updated) throw new NotFoundException('Resource not found.');
     return updated;
   }

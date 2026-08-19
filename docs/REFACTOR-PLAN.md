@@ -563,6 +563,53 @@ into the service for no gain — a shallower interface, not a deeper one.
 `build` clean; DI graph boots. F8 drops from ten repository-less modules to four
 (`import`, `project-sections`, `templates`, `users`).
 
+### 2026-08-19 — Phase 1 continued: risks, attachments, issues, people, resources, and a no-change session for project-sections
+
+**Skill:** `book-philosophy-of-software-design` throughout.
+
+**Applied.** `COLUMN_SPEC` adoption in `risks`, `attachments`, `issues` and `resources`.
+Three genuine extractions beyond that:
+- `risks.assertMayUpdate()` — the FDD role-4 rule (a viewer may edit a risk *they own*) was
+  the first thirteen lines of an otherwise ordinary update.
+- `attachments.parseUploadBody()` — an upload arrives as multipart, so `is_gold` is the
+  string `"true"` and tags are one comma-separated value. That decoding sat inline beside
+  the domain fields, which is what makes it easy to forget the JSON path receives the same
+  fields already typed. Plus `storagePathFor()`.
+- `people.provisioningFields()` — the shared spec **does not fit** this module: its
+  `pending_name` / `pending_email` / `status` are not independently normalized fields, they
+  are derived from whether `user_id` is set. One function now owns "who is this member",
+  including the two identity guards, because they answer the same question.
+
+**Deliberately not changed.**
+- `people.update`: five fields, one of which lowercases an email. Adopting the spec for four
+  and special-casing the fifth would add indirection without removing anything.
+- **`project-sections`: nothing worth changing.** Eleven injected services, each used once,
+  in a module whose entire purpose is that fan-out; the explicit result object is clearer
+  than any loop over heterogeneous services would be, and the docblock already explains why
+  the module exists. Recorded as a success per the protocol rather than padded with churn.
+
+**Mutation checks found three test gaps and zero bugs.** Dropping a field from a column
+spec broke nothing in `risks` (status), `issues` (tags) or `resources` (description), so
+each got a test and each mutation was then confirmed to fail. The `resources` one is the
+sharpest: its existing test passed a *blank* description and expected null, which the
+create default supplies anyway — only a non-blank value distinguishes "normalized" from
+"not written at all". **A characterization test that only exercises the empty case can be
+satisfied by a default.**
+
+**Two mistakes of mine, both caught, both recorded:**
+1. `git checkout` to undo a mutation reverted the whole `risks` refactor (tracked file), and
+   everything passed because I was testing the original code. I misread that as a coverage
+   gap. Re-applied, corrected the test comment, redid the check with edits. Combined with
+   the earlier untracked-file loss, the rule is: **never use git to undo a mutation during a
+   refactor.**
+2. Rewriting `people`'s pending-email error I typed an ASCII hyphen where the original had
+   an em-dash. No test asserts that message, so it passed — but changing a client-visible
+   API string is not behaviour-preserving. Caught in my own diff, restored, verified
+   byte-identical.
+
+**Verification.** 402 → **406 tests / 31 suites**; `tsc` · `eslint --max-warnings 0` ·
+`build` clean; DI boots.
+
 ### 2026-08-19 — Phase 1, `submissions`. First actual refactor of v2.
 
 **Skill:** `book-philosophy-of-software-design`. All three proposed moves applied.

@@ -54,6 +54,29 @@ describe('ResourcesService', () => {
     });
   });
 
+  it('stores a real description, trimmed, on both paths', async () => {
+    // Found by a mutation check on 2026-08-19: the blank-description test
+    // above passes even when description is dropped from the column spec
+    // entirely, because the create default supplies the same null. Only a
+    // non-blank value distinguishes "normalized" from "not written at all".
+    const { service, mocks } = build();
+    await service.add(
+      PROJECT,
+      { name: 'Marine consultant', type_id: 't-1', description: '  Diver  ' },
+      USER,
+    );
+    expect(mocks.insert).toHaveBeenCalledWith(
+      expect.objectContaining({ description: 'Diver' }),
+    );
+
+    await service.update(PROJECT, RESOURCE, { description: '  Diver  ' }, USER);
+    expect(mocks.update).toHaveBeenCalledWith(
+      PROJECT,
+      RESOURCE,
+      expect.objectContaining({ description: 'Diver' }),
+    );
+  });
+
   it('update patches only sent fields and 404s on foreign ids', async () => {
     const ok = build();
     await ok.service.update(PROJECT, RESOURCE, { name: ' New ' }, USER);
