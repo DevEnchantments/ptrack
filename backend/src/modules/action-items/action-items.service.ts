@@ -105,6 +105,9 @@ export class ActionItemsService {
       updated_by: userId,
       ...columnsFrom(dto, COLUMN_SPEC),
     });
+    // The get() above already 404s for a foreign id; this catches the row
+    // being deleted in between, which used to surface as a 500.
+    if (!after) throw new NotFoundException('Action item not found.');
 
     await this.logOwnerChange(projectId, actionItemId, before, after, userId);
 

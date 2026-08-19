@@ -84,19 +84,26 @@ export class ActionItemsRepository {
     return data;
   }
 
+  /**
+   * Null when no row matched. `maybeSingle`, not `single`: `single` turns "no
+   * rows" into PGRST116, which falls through toHttpException's default branch
+   * as a 500. The service pre-checks, so that only bites when the row is
+   * deleted between the check and this write — a narrow race, but the whole
+   * point of the invariant is that no path can 500 on a missing row.
+   */
   async update(
     projectId: string,
     actionItemId: string,
     patch: Record<string, unknown>,
-  ): Promise<ActionItemListItem> {
+  ): Promise<ActionItemListItem | null> {
     const { data, error } = await this.table
       .update(patch)
       .eq('project_id', projectId)
       .eq('id', actionItemId)
       .select(DETAIL_SELECT)
-      .single();
+      .maybeSingle();
     if (error) throw toHttpException(error, 'actionItems.update');
-    return data as unknown as ActionItemListItem;
+    return (data as unknown as ActionItemListItem) ?? null;
   }
 
   /**

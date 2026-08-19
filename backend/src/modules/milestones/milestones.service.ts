@@ -111,10 +111,13 @@ export class MilestonesService {
       );
     }
 
-    await this.repo.update(projectId, milestoneId, {
+    const written = await this.repo.update(projectId, milestoneId, {
       updated_by: userId,
       ...columnsFrom(dto, COLUMN_SPEC),
     });
+    // The get() above already 404s for a foreign id; this catches the row
+    // being deleted in between, which used to surface as a 500.
+    if (!written) throw new NotFoundException('Milestone not found.');
 
     // Return the fully-joined milestone so the UI can refresh.
     return this.get(projectId, milestoneId);

@@ -208,6 +208,18 @@ describe('ActionItemsService', () => {
       });
     });
 
+    it('404s when the row vanishes between the pre-check and the write', async () => {
+      // The race the pre-check design cannot close on its own: the row passes
+      // get(), is deleted, and the write then matches nothing. Before the
+      // repository moved to maybeSingle this surfaced as a 500.
+      const { service, mocks } = build();
+      mocks.update.mockResolvedValue(null);
+
+      await expect(
+        service.update(PROJECT, ITEM, {}, USER),
+      ).rejects.toBeInstanceOf(NotFoundException);
+    });
+
     it('applies the same de-dupe and four-slot cap as add', async () => {
       const { service, mocks } = build();
       await service.update(

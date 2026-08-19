@@ -80,19 +80,26 @@ export class MilestonesRepository {
     if (error) throw toHttpException(error, 'milestones.adjustWeights');
   }
 
+  /**
+   * Null when no row matched. `maybeSingle`, not `single`: `single` turns "no
+   * rows" into PGRST116, which falls through toHttpException's default branch
+   * as a 500. The service pre-checks, so that only bites when the row is
+   * deleted between the check and this write — a narrow race, but the whole
+   * point of the invariant is that no path can 500 on a missing row.
+   */
   async update(
     projectId: string,
     milestoneId: string,
     patch: Record<string, unknown>,
-  ): Promise<Milestone> {
+  ): Promise<Milestone | null> {
     const { data, error } = await this.table
       .update(patch)
       .eq('project_id', projectId)
       .eq('id', milestoneId)
       .select(COLUMNS)
-      .single();
+      .maybeSingle<Milestone>();
     if (error) throw toHttpException(error, 'milestones.update');
-    return data;
+    return data ?? null;
   }
 
   async findHistory(

@@ -155,8 +155,13 @@ state between two commits.
 
 No characterization suite today, so under ground rule 2 they cannot be refactored yet:
 
-- [ ] `access-admin` · [ ] `dashboard` · [ ] `kpis` · [ ] `lookups` · [ ] `registry` ·
-      [ ] `reports` · [ ] `search` · [ ] `submissions`
+Reordered at the gate (2026-08-19) by value, not alphabetically:
+
+- [ ] `submissions` · [ ] `access-admin` · [ ] `kpis` — write paths and real rules;
+      `access-admin` is security-adjacent
+- Deferred pending a judgement call, not a commitment: `dashboard`, `reports`, `registry`,
+  `search`, `lookups` are read-only or aggregate, where a characterization test mostly
+  asserts query shaping
 
 ### Phase 1 — Modules that already have a safety net
 
@@ -314,3 +319,33 @@ stamp `updated_by`. Both are behaviour changes and need their own commit.
 **Phase B is complete.** Boundaries are enforced by lint, the shared contract is enforced by
 tests, and both enforcement mechanisms have been observed failing. Next per the plan is the
 gate: review what Phase B bought before starting Phase 0's eight untested modules.
+
+### 2026-08-19 — Gate review, then one APPROVED BEHAVIOUR CHANGE
+
+**Gate verdict: Phase B paid, unevenly.** It made the 500 class machine-caught (proven by
+mutation, not assumed), surfaced two findings that only appear when conformance is forced,
+and blocked coupling that had already bitten. Against that: three sessions of infrastructure
+with zero user-visible improvement, barrels whose value is entirely prospective, and a
+static guard that asserts on source text and will rot if methods are renamed.
+
+**Approved by Fares: standardise the invariant.** `action-items` and `milestones` used the
+pre-check design, which still raced — pass `get()`, row gets deleted, the `.single()`
+underneath 500s. Both repositories moved to `maybeSingle()` with a null check in the
+service. The pre-checks stay: they 404 earlier and cheaper, and their existing tests assert
+`update` is never called for a foreign id.
+
+Written test-first: one race test per module, **shown failing** (milestones resolved
+normally, action-items threw a TypeError dereferencing null), then green after the fix.
+264 tests.
+
+**The payoff was simplification.** With one design left, the static guard dropped its
+service-parsing branch and became a flat rule: no `.single()` in a project-scoped `update`.
+Stricter and much less brittle than inferring which design each module chose.
+
+**Plan change agreed at the gate.** Phase 0's eight modules are not comparable.
+`submissions`, `access-admin` and `kpis` have write paths and real rules, and `access-admin`
+is security-adjacent, so pinning it is worth more than most. `dashboard`, `reports`,
+`registry`, `search` and `lookups` are read-only or aggregate, where characterization tests
+mostly assert query shaping — the shallow, mock-heavy kind we have already judged not worth
+its keep. Phase 0 is therefore the first three, and whether the other five are pinned at all
+is a separate judgement rather than a commitment.

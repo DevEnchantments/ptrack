@@ -10,20 +10,19 @@ import { join } from 'node:path';
  * belonging to someone else's project, and it shipped in nine modules before
  * anyone noticed.
  *
- * The invariant is "a foreign id cannot produce a 500", and two designs satisfy
- * it: the repository returns null via `maybeSingle()` and the service raises
- * 404, or the service pre-checks with `get()` before writing. This asserts the
- * invariant, so either is allowed and neither is mandated — a module with
- * *neither* fails.
+ * The invariant is "a foreign id cannot produce a 500". Two designs used to
+ * satisfy it — repository-returns-null, or a service pre-check — so this guard
+ * originally allowed either. On 2026-08-19 the two pre-check modules moved to
+ * `maybeSingle()` as well, because the pre-check design still raced: delete the
+ * row between the check and the write and the `.single()` underneath 500s
+ * anyway. With one design left, the guard is a flat rule again, which is both
+ * stricter and far less brittle than parsing services to find out which design
+ * a module chose.
  *
  * The conformance suite cannot catch this: it mocks the repository, so it
  * verifies the service's half and not this one. Asserting on source text is
- * unusual and a little brittle (rename the methods and this stops looking), but
+ * unusual and a little brittle (rename the method and this stops looking), but
  * it targets the exact shape that caused the defect and needs no database.
- *
- * Known residue: the pre-check design still has a race. If the row is deleted
- * between the check and the write, the `.single()` underneath still 500s.
- * Narrow enough to accept, wide enough to write down.
  */
 describe('repository guard: a foreign id must not be able to 500', () => {
   const modulesDir = join(__dirname, '..', '..', 'modules');
@@ -42,9 +41,8 @@ describe('repository guard: a foreign id must not be able to 500', () => {
     .map((module) => ({
       module,
       repository: read(join(modulesDir, module, `${module}.repository.ts`)),
-      service: read(join(modulesDir, module, `${module}.service.ts`)),
     }))
-    .filter((m) => m.repository !== null && m.service !== null);
+    .filter((m) => m.repository !== null);
 
   /** The body of an `async update(projectId, …)`, or null if there isn't one. */
   const projectScopedUpdate = (source: string): string | null =>
@@ -55,23 +53,16 @@ describe('repository guard: a foreign id must not be able to 500', () => {
     expect(modules.length).toBeGreaterThan(5);
   });
 
-  for (const { module, repository, service } of modules) {
+  for (const { module, repository } of modules) {
     const repoUpdate = projectScopedUpdate(repository!);
     if (!repoUpdate) continue;
 
-    it(`${module}: a missing row cannot reach toHttpException's default branch`, () => {
+    it(`${module}: update() reports a missing row as null, not PGRST116`, () => {
       const usesSingle =
         repoUpdate.includes('.single()') &&
         !repoUpdate.includes('.maybeSingle');
-      if (!usesSingle) return; // repository reports "not found" as null
 
-      // Otherwise the service must have checked before writing.
-      const serviceUpdate = projectScopedUpdate(service!) ?? '';
-      const preChecks =
-        serviceUpdate.includes('this.get(') ||
-        serviceUpdate.includes('findOne(');
-
-      expect(usesSingle && !preChecks).toBe(false);
+      expect(usesSingle).toBe(false);
     });
   }
 });
