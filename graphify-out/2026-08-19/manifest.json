@@ -10,9 +10,9 @@
     "semantic_hash": "ff1190f8b1266ef5c5fe696387b75deb"
   },
   "backend/eslint.config.mjs": {
-    "mtime": 1783334401.340865,
-    "ast_hash": "069d66f3fd2af0b03d917cf51a1f4c42",
-    "semantic_hash": "069d66f3fd2af0b03d917cf51a1f4c42"
+    "mtime": 1787134447.301112,
+    "ast_hash": "c76e439c31aa7f349b8a225ac29650f4",
+    "semantic_hash": ""
   },
   "backend/nest-cli.json": {
     "mtime": 1783940536.8045244,
@@ -125,13 +125,13 @@
     "semantic_hash": ""
   },
   "backend/src/modules/attachments/attachments.repository.ts": {
-    "mtime": 1786959622.1837816,
-    "ast_hash": "3bcaae5e424ba6cb6c8d29b356109009",
+    "mtime": 1787134407.2864091,
+    "ast_hash": "17d9484881c5e8d964ab37f52ac3ccd7",
     "semantic_hash": ""
   },
   "backend/src/modules/attachments/attachments.service.ts": {
-    "mtime": 1786959659.8955243,
-    "ast_hash": "6d0bcf41572377de37c33f8102c0d003",
+    "mtime": 1787134419.3627129,
+    "ast_hash": "de97b26473a73b167a36be0221fcf192",
     "semantic_hash": ""
   },
   "backend/src/modules/attachments/dto/update-attachment.dto.ts": {
@@ -295,8 +295,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/projects/projects.repository.ts": {
-    "mtime": 1786459079.3949943,
-    "ast_hash": "d4800d2e211475c8fc610a477edf65aa",
+    "mtime": 1787134427.1146986,
+    "ast_hash": "c0d265aa6736ddda1b943724cf09bdb6",
     "semantic_hash": ""
   },
   "backend/src/modules/projects/projects.service.ts": {
@@ -1805,8 +1805,8 @@
     "semantic_hash": ""
   },
   "docs/REFACTOR-PLAN.md": {
-    "mtime": 1787134152.2727194,
-    "ast_hash": "ad358555be979a18d53e696e2c9ac576",
+    "mtime": 1787134768.412691,
+    "ast_hash": "20d2d9416090995a741fb3582ad80bf7",
     "semantic_hash": ""
   },
   "backend/src/modules/action-items/index.ts": {
@@ -1815,8 +1815,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/attachments/index.ts": {
-    "mtime": 1787133555.4563248,
-    "ast_hash": "a25b29bb0394070abe05ccc19388a30a",
+    "mtime": 1787134434.758861,
+    "ast_hash": "0e16ee332290496b79192ae7c5a2858d",
     "semantic_hash": ""
   },
   "backend/src/modules/issues/index.ts": {
@@ -1872,6 +1872,11 @@
   "backend/src/modules/updates/index.ts": {
     "mtime": 1787133576.581489,
     "ast_hash": "e78498e31194c8af58a465fcc558ac0c",
+    "semantic_hash": ""
+  },
+  "backend/src/common/storage.ts": {
+    "mtime": 1787134384.9834442,
+    "ast_hash": "a42abed88350c0a103b6c2831135f989",
     "semantic_hash": ""
   }
 }
