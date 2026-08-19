@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { DatabaseService } from '../../database/database.service';
-import { toHttpException } from '../../common/supabase-error';
+import {
+  DashboardRepository,
+  type DashboardMilestoneRow,
+} from './dashboard.repository';
 import {
   calculatedProgress,
   INITIATIVE_BUCKETS,
@@ -68,7 +70,7 @@ function weekStart(d: Date): Date {
 @Injectable()
 export class DashboardService {
   constructor(
-    private readonly db: DatabaseService,
+    private readonly repo: DashboardRepository,
     private readonly access: ProjectAccessService,
   ) {}
 
@@ -80,96 +82,25 @@ export class DashboardService {
     const heatFrom = new Date(thisWeek);
     heatFrom.setUTCDate(heatFrom.getUTCDate() - 7 * 11);
 
-    const [projects, milestones, actionItems, updates, history, submissions] =
-      await Promise.all([
-        this.db.client
-          .from('projects')
-          .select(
-            'id, created_at, start_date, target_end_date, approved_budget, utilized_budget, status:project_statuses ( name ), category:project_categories ( name )',
-          ),
-        this.db.client
-          .from('milestones')
-          .select(
-            'project_id, status, due_date, completed_date, is_major, weightage, percent_complete',
-          ),
-        this.db.client
-          .from('action_items')
-          .select('project_id, status, due_date, created_at, updated_at'),
-        this.db.client.from('updates').select('created_at'),
-        this.db.client
-          .from('record_history')
-          .select('changed_at')
-          .gte('changed_at', heatFrom.toISOString()),
-        this.db.client
-          .from('submissions')
-          .select(
-            'project_id, status, cycles!inner ( period_start, period_end )',
-          )
-          .lte('cycles.period_start', today)
-          .gte('cycles.period_end', today),
-      ]);
-    for (const r of [
-      projects,
-      milestones,
-      actionItems,
-      updates,
-      history,
-      submissions,
-    ]) {
-      if (r.error) throw toHttpException(r.error, 'dashboard.data');
-    }
+    const source = await this.repo.load({
+      historyFrom: heatFrom.toISOString(),
+      today,
+    });
 
-    type ProjectRow = {
-      id: string;
-      created_at: string;
-      start_date: string | null;
-      target_end_date: string | null;
-      approved_budget: number | null;
-      utilized_budget: number | null;
-      status: { name: string } | null;
-      category: { name: string } | null;
-    };
-    type MilestoneRow = {
-      project_id: string;
-      status: string;
-      due_date: string | null;
-      completed_date: string | null;
-      is_major: boolean;
-      weightage: number | null;
-      percent_complete: number | null;
-    };
-    type ActionItemRow = {
-      project_id: string;
-      status: string;
-      due_date: string | null;
-      created_at: string;
-      updated_at: string;
-    };
     // FR-15: restricted projects with no relationship to the caller stay out
     // of every project-keyed number. Updates/history remain global activity
     // counts (no project linkage in their rows; they leak nothing nameable).
     const hidden = await this.access.hiddenProjectIds(userId);
-    const projectRows = (
-      (projects.data ?? []) as unknown as ProjectRow[]
-    ).filter((p) => !hidden.has(p.id));
-    const milestoneRows = (
-      (milestones.data ?? []) as unknown as MilestoneRow[]
-    ).filter((m) => !hidden.has(m.project_id));
-    const aiRows = (
-      (actionItems.data ?? []) as unknown as ActionItemRow[]
-    ).filter((a) => !hidden.has(a.project_id));
-    const updateRows = (updates.data ?? []) as unknown as Array<{
-      created_at: string;
-    }>;
-    const historyRows = (history.data ?? []) as unknown as Array<{
-      changed_at: string;
-    }>;
-    const submissionRows = (
-      (submissions.data ?? []) as unknown as Array<{
-        project_id: string;
-        status: string;
-      }>
-    ).filter((sub) => !hidden.has(sub.project_id));
+    const projectRows = source.projects.filter((p) => !hidden.has(p.id));
+    const milestoneRows = source.milestones.filter(
+      (m) => !hidden.has(m.project_id),
+    );
+    const aiRows = source.actionItems.filter((a) => !hidden.has(a.project_id));
+    const updateRows = source.updates;
+    const historyRows = source.history;
+    const submissionRows = source.submissions.filter(
+      (sub) => !hidden.has(sub.project_id),
+    );
 
     // --- stat tiles
     const monthStart = iso(
@@ -282,7 +213,7 @@ export class DashboardService {
     // --- Fig-15 executive widgets ---
     // Initiative buckets per F5 (PROVISIONAL, docs/FORMULAS.md): delta =
     // calculated - planned progress; cancelled projects are excluded.
-    const msByProject = new Map<string, MilestoneRow[]>();
+    const msByProject = new Map<string, DashboardMilestoneRow[]>();
     for (const m of milestoneRows) {
       (
         msByProject.get(m.project_id) ??

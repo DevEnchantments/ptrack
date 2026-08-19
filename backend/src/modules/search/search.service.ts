@@ -1,8 +1,14 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { DatabaseService } from '../../database/database.service';
-import { toHttpException } from '../../common/supabase-error';
 import { CreateSavedSearchDto } from './dto/create-saved-search.dto';
 import { ProjectAccessService } from '../../common/access/project-access.service';
+import {
+  SearchRepository,
+  type ChildRow,
+  type NamedRow,
+  type SavedSearch,
+} from './search.repository';
+
+export type { SavedSearch } from './search.repository';
 
 export type SearchKind =
   'project' | 'milestone' | 'action_item' | 'issue' | 'risk' | 'kpi';
@@ -15,32 +21,42 @@ export interface SearchHit {
   project_name: string | null;
 }
 
-export interface SavedSearch {
-  id: string;
-  name: string;
-  query: string;
-  created_at: string;
-}
-
-interface ChildRow {
-  id: string;
-  label: string;
-  project_id: string;
-  project: { name: string } | null;
-}
-
 const PER_KIND = 8;
 
+/** Below this many characters a search matches too much to be useful. */
+const MIN_QUERY_LENGTH = 2;
+
+/** Project-scoped tables and the single column each is searched on. */
+const CHILD_KINDS: Array<[SearchKind, string, string]> = [
+  ['milestone', 'milestones', 'name'],
+  ['action_item', 'action_items', 'title'],
+  ['issue', 'issues', 'title'],
+  ['risk', 'risks', 'statement'],
+];
+
 /**
- * Global record search (original-app roadmap). Case-insensitive substring
- * match per kind, capped at PER_KIND hits each, all kinds queried in
- * parallel. Not full-text: update/comment bodies are deliberately out of
- * scope for v1.
+ * Strips characters that would break PostgREST's or-filter syntax, collapses
+ * whitespace, and escapes ilike wildcards so a user searching for "50%" gets
+ * literal matches rather than everything.
+ */
+function toPattern(query: string): { clean: string; pattern: string } {
+  const clean = (query ?? '')
+    .trim()
+    .replace(/[,()"]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  return { clean, pattern: `%${clean.replace(/[%_]/g, (m) => `\\${m}`)}%` };
+}
+
+/**
+ * Global record search (original-app roadmap). Case-insensitive substring match
+ * per kind, capped at PER_KIND hits each, all kinds queried in parallel. Not
+ * full-text: update and comment bodies are deliberately out of scope for v1.
  */
 @Injectable()
 export class SearchService {
   constructor(
-    private readonly db: DatabaseService,
+    private readonly repo: SearchRepository,
     private readonly access: ProjectAccessService,
   ) {}
 
@@ -48,142 +64,78 @@ export class SearchService {
     q: string,
     userId: string,
   ): Promise<{ query: string; hits: SearchHit[] }> {
-    // Strip characters that would break PostgREST's or-filter syntax, and
-    // escape ilike wildcards so users match them literally.
-    const clean = (q ?? '')
-      .trim()
-      .replace(/[,()"]/g, ' ')
-      .replace(/\s+/g, ' ')
-      .trim();
-    if (clean.length < 2) return { query: clean, hits: [] };
-    const pat = `%${clean.replace(/[%_]/g, (m) => `\\${m}`)}%`;
+    const { clean, pattern } = toPattern(q);
+    if (clean.length < MIN_QUERY_LENGTH) return { query: clean, hits: [] };
 
-    const child = (table: string, labelCol: string) =>
-      this.db.client
-        .from(table)
-        .select(`id, label:${labelCol}, project_id, project:projects ( name )`)
-        .ilike(labelCol, pat)
-        .limit(PER_KIND);
+    const [projects, kpis, ...children] = await Promise.all([
+      this.repo.searchProjects(pattern, PER_KIND),
+      this.repo.searchKpis(pattern, PER_KIND),
+      ...CHILD_KINDS.map(([, table, column]) =>
+        this.repo.searchChildren(table, column, pattern, PER_KIND),
+      ),
+    ]);
 
-    const [projects, milestones, actionItems, issues, risks, kpis] =
-      await Promise.all([
-        this.db.client
-          .from('projects')
-          .select('id, name')
-          .or(
-            `name.ilike.${pat},description.ilike.${pat},project_number.ilike.${pat},reference_id.ilike.${pat}`,
-          )
-          .limit(PER_KIND),
-        child('milestones', 'name'),
-        child('action_items', 'title'),
-        child('issues', 'title'),
-        child('risks', 'statement'),
-        this.db.client
-          .from('kpis')
-          .select('id, name')
-          .ilike('name', pat)
-          .limit(PER_KIND),
-      ]);
-    const failed =
-      projects.error ??
-      milestones.error ??
-      actionItems.error ??
-      issues.error ??
-      risks.error ??
-      kpis.error;
-    if (failed) throw toHttpException(failed, 'search');
-
-    const hits: SearchHit[] = [];
-    for (const p of (projects.data ?? []) as Array<{
-      id: string;
-      name: string;
-    }>) {
-      hits.push({
-        kind: 'project',
-        id: p.id,
-        label: p.name,
-        project_id: null,
-        project_name: null,
-      });
-    }
-    const pushChildren = (kind: SearchKind, rows: unknown) => {
-      for (const r of (rows ?? []) as unknown as ChildRow[]) {
-        hits.push({
-          kind,
-          id: r.id,
-          label: r.label,
-          project_id: r.project_id,
-          project_name: r.project?.name ?? null,
-        });
-      }
-    };
-    pushChildren('milestone', milestones.data);
-    pushChildren('action_item', actionItems.data);
-    pushChildren('issue', issues.data);
-    pushChildren('risk', risks.data);
-    for (const k of (kpis.data ?? []) as Array<{ id: string; name: string }>) {
-      hits.push({
-        kind: 'kpi',
-        id: k.id,
-        label: k.name,
-        project_id: null,
-        project_name: null,
-      });
-    }
-    // FR-15: drop hits from restricted projects the caller cannot see —
-    // including the project rows themselves.
-    const hidden = await this.access.hiddenProjectIds(userId);
-    const visible =
-      hidden.size === 0
-        ? hits
-        : hits.filter(
-            (h) =>
-              !(h.project_id && hidden.has(h.project_id)) &&
-              !(h.kind === 'project' && hidden.has(h.id)),
-          );
-    return { query: clean, hits: visible };
+    const hits: SearchHit[] = [
+      ...topLevelHits('project', projects),
+      ...children.flatMap((rows, i) => childHits(CHILD_KINDS[i][0], rows)),
+      ...topLevelHits('kpi', kpis),
+    ];
+    return { query: clean, hits: await this.visibleTo(userId, hits) };
   }
 
-  async listSaved(userId: string): Promise<SavedSearch[]> {
-    const { data, error } = await this.db.client
-      .from('saved_searches')
-      .select('id, name, query, created_at')
-      .eq('user_id', userId)
-      .order('created_at', { ascending: false });
-    if (error) throw toHttpException(error, 'search.saved.list');
-    return data ?? [];
-  }
-
-  async addSaved(
+  /**
+   * FR-15: drop hits from restricted projects the caller cannot see —
+   * including the project rows themselves, which carry their id rather than a
+   * project_id.
+   */
+  private async visibleTo(
     userId: string,
-    dto: CreateSavedSearchDto,
-  ): Promise<SavedSearch> {
-    const { data, error } = await this.db.client
-      .from('saved_searches')
-      .insert({
-        user_id: userId,
-        name: dto.name.trim(),
-        query: dto.query.trim(),
-      })
-      .select('id, name, query, created_at')
-      .single<SavedSearch>();
-    if (error) throw toHttpException(error, 'search.saved.add');
-    return data;
+    hits: SearchHit[],
+  ): Promise<SearchHit[]> {
+    const hidden = await this.access.hiddenProjectIds(userId);
+    if (hidden.size === 0) return hits;
+    return hits.filter(
+      (h) =>
+        !(h.project_id && hidden.has(h.project_id)) &&
+        !(h.kind === 'project' && hidden.has(h.id)),
+    );
+  }
+
+  listSaved(userId: string): Promise<SavedSearch[]> {
+    return this.repo.listSaved(userId);
+  }
+
+  addSaved(userId: string, dto: CreateSavedSearchDto): Promise<SavedSearch> {
+    return this.repo.insertSaved(userId, dto.name.trim(), dto.query.trim());
   }
 
   async removeSaved(
     userId: string,
     savedSearchId: string,
   ): Promise<{ deleted: boolean }> {
-    const { data, error } = await this.db.client
-      .from('saved_searches')
-      .delete()
-      .eq('user_id', userId)
-      .eq('id', savedSearchId)
-      .select('id')
-      .maybeSingle<{ id: string }>();
-    if (error) throw toHttpException(error, 'search.saved.remove');
-    if (!data) throw new NotFoundException('Saved search not found.');
+    const deleted = await this.repo.deleteSaved(userId, savedSearchId);
+    if (!deleted) throw new NotFoundException('Saved search not found.');
     return { deleted: true };
   }
+}
+
+/** Projects and KPIs have no parent, so they carry no project columns. */
+function topLevelHits(kind: SearchKind, rows: NamedRow[]): SearchHit[] {
+  return rows.map((r) => ({
+    kind,
+    id: r.id,
+    label: r.name,
+    project_id: null,
+    project_name: null,
+  }));
+}
+
+function childHits(kind: SearchKind, rows: ChildRow[]): SearchHit[] {
+  return rows.map((r) => ({
+    kind,
+    id: r.id,
+    label: r.label,
+    project_id: r.project_id,
+    project_name: r.project?.name ?? null,
+  }));
 }
