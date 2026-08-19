@@ -2,6 +2,7 @@ import { NotFoundException } from '@nestjs/common';
 import { ProgramOutcomesService } from './program-outcomes.service';
 import type { ProgramOutcomesRepository } from './program-outcomes.repository';
 import type { RecordHistoryService } from '../../database/record-history.service';
+import { describeProjectScopedContract } from '../../common/testing/project-scoped-contract';
 
 /**
  * Characterization tests (REFACTOR-PLAN 2a). These pin what the service does
@@ -189,5 +190,17 @@ describe('ProgramOutcomesService', () => {
         userId: USER,
       });
     });
+  });
+
+  // The contract every project-scoped module shares (REFACTOR-PLAN v2, B4).
+  describeProjectScopedContract('program-outcomes', {
+    build: () => build(),
+    update: (s) => s.update(PROJECT, OUTCOME, {}, USER),
+    remove: (s) => s.remove(PROJECT, OUTCOME, USER),
+    foreignId: (m) => {
+      m.update.mockResolvedValue(null);
+      m.remove.mockResolvedValue(null);
+    },
+    audit: (m) => m.logDeleted,
   });
 });

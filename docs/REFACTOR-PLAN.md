@@ -130,7 +130,7 @@ state between two commits.
         (a constant in the wrong place; move it to shared code)
       - `risks.service` → `projects.repository` (blessed by section 4; route via `index.ts`)
       - `submissions.service` → `projects.repository`, `milestones.repository` (same)
-- [ ] **B4.** **Contract conformance suite (Liskov).** One shared spec run against every
+- [x] **B4.** **Done 2026-08-19. Contract conformance suite (Liskov).** One shared spec run against every
       project-scoped module, asserting what they all implicitly claim: `update` with a
       foreign id 404s and never 500s; `remove` with a foreign id 404s and writes no audit
       row; every write stamps `updated_by`; `add` stamps `created_by` and `updated_by`.
@@ -268,3 +268,49 @@ clean; DI graph boots with every provider resolved.
 **What this buys.** Modularity is now a property the build checks. The remaining phases
 inherit it: any module session that widens a surface has to do so in an `index.ts`, in the
 open, instead of by adding one more deep import nobody notices in review.
+
+### 2026-08-19 — B4, contract conformance. **Phase B complete.**
+
+**Skill:** `book-clean-architecture`.
+
+**Changed.** `common/testing/project-scoped-contract.ts` asserts the contract every
+project-scoped module implicitly claims: `update` and `remove` with a foreign id raise 404,
+a rejected `remove` writes no audit row, a successful one writes exactly one. Wired into 11
+module specs, ~12 lines each. **207 → 262 tests.**
+
+**Opt-outs carry a reason, by design.** `audit` takes either the mock or
+`{ skip: 'why' }`, and the reason lands in the test name, so `people` reads as
+`writes an audit row on remove — EXCEPTION: people.remove writes no audit row…` in the
+output. An exception you can see is a finding; a silently omitted assertion is a hole.
+
+**The static guard, and how it improved by failing.** First version asserted the mechanism:
+no `.single()` in a project-scoped repository `update`. It immediately failed on
+`action-items` and `milestones` — correctly on the letter, wrongly on the substance. Their
+repositories do use `.single()`, but their services pre-check with `get()`, so the 500 is
+unreachable except in a race. The real invariant is "a foreign id cannot 500", and **two**
+designs satisfy it. Rewritten to assert that instead: fail only when a repository uses
+`.single()` *and* its service does not pre-check. Both designs now pass, and a module with
+neither fails.
+
+**Both new checks were mutation-checked.** Reintroducing `.single()` into
+`links.repository` failed the guard on exactly that module. Deleting the null check from
+`links.service.update` failed 2 contract clauses. Then both were reverted and re-verified.
+
+**Known limits, stated so a green run is not over-trusted.**
+- The conformance suite mocks repositories, so it proves the *service* turns "not found"
+  into a 404. It cannot prove the repository reports "not found" rather than throwing.
+  That half is what the static guard covers, imperfectly.
+- The guard asserts on source text. Rename the methods and it silently stops looking.
+- The pre-check design still races: if the row is deleted between the check and the write,
+  the `.single()` underneath still 500s. Narrow enough to accept, real enough to write down.
+
+**Findings, reported not fixed.** `people.remove` writes no audit row, so who removed a
+project member leaves no trace. `attachments.update` takes no `userId` and therefore cannot
+stamp `updated_by`. Both are behaviour changes and need their own commit.
+
+**Verification.** 262 tests / 23 suites (1 documented skip); `tsc` · `eslint
+--max-warnings 0` · `build` clean; DI graph boots.
+
+**Phase B is complete.** Boundaries are enforced by lint, the shared contract is enforced by
+tests, and both enforcement mechanisms have been observed failing. Next per the plan is the
+gate: review what Phase B bought before starting Phase 0's eight untested modules.

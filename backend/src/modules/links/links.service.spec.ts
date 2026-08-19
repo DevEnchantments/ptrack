@@ -2,6 +2,7 @@ import { NotFoundException } from '@nestjs/common';
 import { LinksService } from './links.service';
 import type { LinksRepository } from './links.repository';
 import type { RecordHistoryService } from '../../database/record-history.service';
+import { describeProjectScopedContract } from '../../common/testing/project-scoped-contract';
 
 /**
  * Characterization tests (REFACTOR-PLAN phase 0b). These pin what the service
@@ -183,5 +184,17 @@ describe('LinksService', () => {
         userId: USER,
       });
     });
+  });
+
+  // The contract every project-scoped module shares (REFACTOR-PLAN v2, B4).
+  describeProjectScopedContract('links', {
+    build: () => build(),
+    update: (s) => s.update(PROJECT, LINK, { label: 'x' }, USER),
+    remove: (s) => s.remove(PROJECT, LINK, USER),
+    foreignId: (m) => {
+      m.update.mockResolvedValue(null);
+      m.remove.mockResolvedValue(null);
+    },
+    audit: (m) => m.logDeleted,
   });
 });

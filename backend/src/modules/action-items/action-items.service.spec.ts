@@ -3,6 +3,7 @@ import { ActionItemsService } from './action-items.service';
 import type { ActionItemsRepository } from './action-items.repository';
 import type { RecordHistoryService } from '../../database/record-history.service';
 import type { AttachmentsService } from '../attachments';
+import { describeProjectScopedContract } from '../../common/testing/project-scoped-contract';
 
 /**
  * The owner-diff is the subtlest logic in this service: owners are replaced
@@ -324,5 +325,17 @@ describe('ActionItemsService', () => {
         'u-2',
       );
     });
+  });
+
+  // The contract every project-scoped module shares (REFACTOR-PLAN v2, B4).
+  describeProjectScopedContract('action-items', {
+    build: () => build(),
+    update: (s) => s.update(PROJECT, ITEM, {}, USER),
+    remove: (s) => s.remove(PROJECT, ITEM, USER),
+    foreignId: (m) => {
+      m.findOne.mockResolvedValue(null);
+      m.update.mockResolvedValue(null);
+    },
+    audit: (m) => m.logDeleted,
   });
 });

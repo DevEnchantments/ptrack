@@ -2,6 +2,7 @@ import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { UpdatesService } from './updates.service';
 import type { UpdatesRepository } from './updates.repository';
 import type { RecordHistoryService } from '../../database/record-history.service';
+import { describeProjectScopedContract } from '../../common/testing/project-scoped-contract';
 
 /** Characterization tests: updates are the activity feed, author-stamped. */
 describe('UpdatesService', () => {
@@ -103,5 +104,17 @@ describe('UpdatesService', () => {
       ).rejects.toBeInstanceOf(NotFoundException);
       expect(missing.mocks.logDeleted).not.toHaveBeenCalled();
     });
+  });
+
+  // The contract every project-scoped module shares (REFACTOR-PLAN v2, B4).
+  describeProjectScopedContract('updates', {
+    build: () => build(),
+    update: (s) => s.update(PROJECT, UPDATE, {}, USER),
+    remove: (s) => s.remove(PROJECT, UPDATE, USER),
+    foreignId: (m) => {
+      m.update.mockResolvedValue(null);
+      m.remove.mockResolvedValue(null);
+    },
+    audit: (m) => m.logDeleted,
   });
 });

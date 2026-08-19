@@ -3,6 +3,7 @@ import { StatusReportsService } from './status-reports.service';
 import type { StatusReportsRepository } from './status-reports.repository';
 import type { RecordHistoryService } from '../../database/record-history.service';
 import type { CreateStatusReportDto } from './dto/create-status-report.dto';
+import { describeProjectScopedContract } from '../../common/testing/project-scoped-contract';
 
 /**
  * Characterization tests (REFACTOR-PLAN 2c). These pin what the service does
@@ -166,5 +167,17 @@ describe('StatusReportsService', () => {
       await expect(service.list(PROJECT)).resolves.toEqual([{ id: REPORT }]);
       expect(mocks.findByProject).toHaveBeenCalledWith(PROJECT);
     });
+  });
+
+  // The contract every project-scoped module shares (REFACTOR-PLAN v2, B4).
+  describeProjectScopedContract('status-reports', {
+    build: () => build(),
+    update: (s) => s.update(PROJECT, REPORT, {}, USER),
+    remove: (s) => s.remove(PROJECT, REPORT, USER),
+    foreignId: (m) => {
+      m.update.mockResolvedValue(null);
+      m.remove.mockResolvedValue(null);
+    },
+    audit: (m) => m.logDeleted,
   });
 });

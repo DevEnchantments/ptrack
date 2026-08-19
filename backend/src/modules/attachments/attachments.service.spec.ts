@@ -2,6 +2,7 @@ import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { AttachmentsService } from './attachments.service';
 import type { AttachmentsRepository } from './attachments.repository';
 import type { RecordHistoryService } from '../../database/record-history.service';
+import { describeProjectScopedContract } from '../../common/testing/project-scoped-contract';
 
 /**
  * Characterization tests. The load-bearing behavior here is the storage
@@ -232,5 +233,17 @@ describe('AttachmentsService', () => {
         BadRequestException,
       );
     });
+  });
+
+  // The contract every project-scoped module shares (REFACTOR-PLAN v2, B4).
+  describeProjectScopedContract('attachments', {
+    build: () => build(),
+    update: (s) => s.update(PROJECT, ATT, {}),
+    remove: (s) => s.remove(PROJECT, ATT, USER),
+    foreignId: (m) => {
+      m.findOne.mockResolvedValue(null);
+      m.update.mockResolvedValue(null);
+    },
+    audit: (m) => m.logDeleted,
   });
 });

@@ -1,6 +1,7 @@
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { PeopleService } from './people.service';
 import type { PeopleRepository } from './people.repository';
+import { describeProjectScopedContract } from '../../common/testing/project-scoped-contract';
 
 /**
  * Characterization tests. Membership rows carry the provisioning pipeline:
@@ -129,5 +130,19 @@ describe('PeopleService', () => {
         NotFoundException,
       );
     });
+  });
+
+  // The contract every project-scoped module shares (REFACTOR-PLAN v2, B4).
+  describeProjectScopedContract('people', {
+    build: () => build(),
+    update: (s) => s.update(PROJECT, MEMBER, {}, USER),
+    remove: (s) => s.remove(PROJECT, MEMBER),
+    foreignId: (m) => {
+      m.update.mockResolvedValue(null);
+      m.remove.mockResolvedValue(null);
+    },
+    audit: {
+      skip: 'people.remove writes no audit row - who removed a member leaves no trace (finding 2026-08-19)',
+    },
   });
 });

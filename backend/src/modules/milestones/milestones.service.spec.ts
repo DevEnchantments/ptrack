@@ -2,6 +2,7 @@ import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { MilestonesService } from './milestones.service';
 import type { MilestonesRepository } from './milestones.repository';
 import type { RecordHistoryService } from '../../database/record-history.service';
+import { describeProjectScopedContract } from '../../common/testing/project-scoped-contract';
 
 /**
  * Characterization tests (REFACTOR-PLAN 2b). These pin what the service does
@@ -333,5 +334,17 @@ describe('MilestonesService', () => {
       expect(mocks.remove).not.toHaveBeenCalled();
       expect(mocks.logDeleted).not.toHaveBeenCalled();
     });
+  });
+
+  // The contract every project-scoped module shares (REFACTOR-PLAN v2, B4).
+  describeProjectScopedContract('milestones', {
+    build: () => build(),
+    update: (s) => s.update(PROJECT, MILESTONE, {}, USER),
+    remove: (s) => s.remove(PROJECT, MILESTONE, USER),
+    foreignId: (m) => {
+      m.findOne.mockResolvedValue(null);
+      m.update.mockResolvedValue(null);
+    },
+    audit: (m) => m.logDeleted,
   });
 });

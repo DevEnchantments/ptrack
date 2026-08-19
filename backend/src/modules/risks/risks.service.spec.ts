@@ -5,6 +5,7 @@ import type { RecordHistoryService } from '../../database/record-history.service
 import type { NotificationsService } from '../notifications';
 import type { ProjectsRepository } from '../projects';
 import type { ProjectAccessService } from '../../common/access/project-access.service';
+import { describeProjectScopedContract } from '../../common/testing/project-scoped-contract';
 
 /**
  * Characterization tests: they pin what the service does TODAY. The
@@ -253,5 +254,17 @@ describe('RisksService', () => {
       );
       expect(mocks.logDeleted).not.toHaveBeenCalled();
     });
+  });
+
+  // The contract every project-scoped module shares (REFACTOR-PLAN v2, B4).
+  describeProjectScopedContract('risks', {
+    build: () => build(),
+    update: (s) => s.update(PROJECT, RISK, {}, USER),
+    remove: (s) => s.remove(PROJECT, RISK, USER),
+    foreignId: (m) => {
+      m.update.mockResolvedValue(null);
+      m.remove.mockResolvedValue(null);
+    },
+    audit: (m) => m.logDeleted,
   });
 });

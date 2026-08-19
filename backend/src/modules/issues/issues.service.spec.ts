@@ -2,6 +2,7 @@ import { NotFoundException } from '@nestjs/common';
 import { IssuesService } from './issues.service';
 import type { IssuesRepository } from './issues.repository';
 import type { RecordHistoryService } from '../../database/record-history.service';
+import { describeProjectScopedContract } from '../../common/testing/project-scoped-contract';
 
 /** Characterization tests over the issue register's normalization + audit. */
 describe('IssuesService', () => {
@@ -129,5 +130,17 @@ describe('IssuesService', () => {
       ).rejects.toBeInstanceOf(NotFoundException);
       expect(missing.mocks.logDeleted).not.toHaveBeenCalled();
     });
+  });
+
+  // The contract every project-scoped module shares (REFACTOR-PLAN v2, B4).
+  describeProjectScopedContract('issues', {
+    build: () => build(),
+    update: (s) => s.update(PROJECT, ISSUE, {}, USER),
+    remove: (s) => s.remove(PROJECT, ISSUE, USER),
+    foreignId: (m) => {
+      m.update.mockResolvedValue(null);
+      m.remove.mockResolvedValue(null);
+    },
+    audit: (m) => m.logDeleted,
   });
 });

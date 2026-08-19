@@ -2,6 +2,7 @@ import { NotFoundException } from '@nestjs/common';
 import { ResourcesService } from './resources.service';
 import type { ResourcesRepository } from './resources.repository';
 import type { RecordHistoryService } from '../../database/record-history.service';
+import { describeProjectScopedContract } from '../../common/testing/project-scoped-contract';
 
 /** Characterization tests over the simplest register: trim, null, audit. */
 describe('ResourcesService', () => {
@@ -81,5 +82,17 @@ describe('ResourcesService', () => {
       missing.service.remove(PROJECT, RESOURCE, USER),
     ).rejects.toBeInstanceOf(NotFoundException);
     expect(missing.mocks.logDeleted).not.toHaveBeenCalled();
+  });
+
+  // The contract every project-scoped module shares (REFACTOR-PLAN v2, B4).
+  describeProjectScopedContract('resources', {
+    build: () => build(),
+    update: (s) => s.update(PROJECT, RESOURCE, {}, USER),
+    remove: (s) => s.remove(PROJECT, RESOURCE, USER),
+    foreignId: (m) => {
+      m.update.mockResolvedValue(null);
+      m.remove.mockResolvedValue(null);
+    },
+    audit: (m) => m.logDeleted,
   });
 });
