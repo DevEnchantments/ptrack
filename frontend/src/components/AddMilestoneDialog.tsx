@@ -1,6 +1,11 @@
 import { FieldError } from '@/components/FieldError'
 import { Loader2 } from 'lucide-react'
 import { toast } from '@/lib/toast'
+import {
+  milestoneFormErrors,
+  milestoneFormPayload,
+  type MilestoneFormValues,
+} from '@/lib/milestone-form'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import type { ProjectMemberInput } from '@/pages/CreateProjectWizard'
@@ -189,13 +194,28 @@ export function AddMilestoneDialog({
     })
   }
 
+  /** The form's current state, in the shape the pure helpers expect. */
+  function formValues(): MilestoneFormValues {
+    return {
+      name,
+      startDate,
+      dueDate,
+      status,
+      roleId,
+      ownerId: owner.user_id,
+      isMajor,
+      description,
+      tags,
+      weightage,
+      percent,
+      dependsOn,
+    }
+  }
+
   async function submit() {
     setError(null)
     setFieldErrors({})
-    const errs: Record<string, string> = {}
-    if (!name.trim()) errs.name = 'A milestone name is required.'
-    if (!startDate) errs.startDate = 'A start date is required.'
-    if (!dueDate) errs.dueDate = 'A due date is required.'
+    const errs = milestoneFormErrors(formValues())
 
     setFieldErrors(errs)
     if (Object.keys(errs).length > 0) return
@@ -215,26 +235,7 @@ export function AddMilestoneDialog({
         finalOutcomeId = created.id
       }
 
-      const tagList = tags
-        .split(',')
-        .map((t) => t.trim())
-        .filter(Boolean)
-
-      const payload = {
-        name: name.trim(),
-        start_date: startDate,
-        due_date: dueDate,
-        status,
-        role_id: roleId ?? undefined,
-        owner_id: owner.user_id ?? undefined,
-        is_major: isMajor === 'true',
-        description: description.trim() || undefined,
-        tags: tagList.length ? tagList : undefined,
-        weightage: weightage.trim() ? Number(weightage) : undefined,
-        percent_complete: percent.trim() ? Number(percent) : undefined,
-        outcome_id: finalOutcomeId,
-        depends_on: dependsOn,
-      }
+      const payload = milestoneFormPayload(formValues(), finalOutcomeId)
 
       if (isEdit && existing) {
         await milestonesApi.update(projectId, existing.id, payload)

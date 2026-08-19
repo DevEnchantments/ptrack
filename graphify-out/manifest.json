@@ -470,8 +470,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/AddMilestoneDialog.tsx": {
-    "mtime": 1786958607.5871384,
-    "ast_hash": "fa2609fd19814d3d31b5bb05e080a172",
+    "mtime": 1787178159.9250162,
+    "ast_hash": "7dc9cf09e6f70265e5c11d17beb6fd1b",
     "semantic_hash": ""
   },
   "frontend/src/components/AddPersonDialog.tsx": {
@@ -1525,8 +1525,8 @@
     "semantic_hash": ""
   },
   "frontend/src/test-setup.ts": {
-    "mtime": 1786959964.6891563,
-    "ast_hash": "2c271435e60d9aeb6cd3a5e1e122a5c0",
+    "mtime": 1787178513.038365,
+    "ast_hash": "5fa50a57999bcad1b271f3461946fe49",
     "semantic_hash": ""
   },
   "backend/src/modules/links/links.service.spec.ts": {
@@ -1805,8 +1805,8 @@
     "semantic_hash": ""
   },
   "docs/REFACTOR-PLAN.md": {
-    "mtime": 1787177804.7875984,
-    "ast_hash": "7d6aa3dd977b5408f63a411558e7881c",
+    "mtime": 1787178852.5145564,
+    "ast_hash": "756cccd4afcd7ec11a07a59fcb9aab1f",
     "semantic_hash": ""
   },
   "backend/src/modules/action-items/index.ts": {
@@ -1992,6 +1992,21 @@
   "db/submission_rejection_columns.sql": {
     "mtime": 1787177267.7177408,
     "ast_hash": "cde283dfd1c1e5336b46769bbb225e3d",
+    "semantic_hash": ""
+  },
+  "frontend/src/components/TagChips.test.tsx": {
+    "mtime": 1787178417.2829256,
+    "ast_hash": "38aeaf48a9b5ae5cb33124e1c133e0c7",
+    "semantic_hash": ""
+  },
+  "frontend/src/lib/milestone-form.test.ts": {
+    "mtime": 1787178142.6727505,
+    "ast_hash": "9292c0f80f48847336ee6e5a958d4275",
+    "semantic_hash": ""
+  },
+  "frontend/src/lib/milestone-form.ts": {
+    "mtime": 1787178120.7240317,
+    "ast_hash": "22728984770b00bbe909dd38a2effbb2",
     "semantic_hash": ""
   }
 }

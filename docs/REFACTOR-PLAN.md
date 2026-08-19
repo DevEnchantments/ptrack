@@ -200,7 +200,10 @@ Straight to refactoring; their suites landed on `main` in August:
 
 Unit is the page or component family, not the file. `lib/` was done in v1 and is on `main`.
 
-- [ ] `components/ui/` primitives · [ ] Dialogs · [ ] Detail pages · [ ] Reporting pages
+- [x] **Component-test harness** (**2026-08-20**) — first rendered tests in the repo, plus
+      the `cleanup` fix without which every test after the first sees the previous one's DOM
+- [ ] Dialogs — 1 of 11 done (`AddMilestoneDialog`) · [ ] `components/ui/` primitives ·
+      [ ] Detail pages · [ ] Reporting pages
 
 ---
 
@@ -562,6 +565,40 @@ into the service for no gain — a shallower interface, not a deeper one.
 **Verification.** 354 → **402 tests / 31 suites**; `tsc` · `eslint --max-warnings 0` ·
 `build` clean; DI graph boots. F8 drops from ten repository-less modules to four
 (`import`, `project-sections`, `templates`, `users`).
+
+### 2026-08-20 — Phase 2 opens: the component-test harness, and the first dialog
+
+**The frontend's problem is the same one the backend had**, in a different costume: eleven
+Add/Edit dialogs each hold their validation and payload building inline in a submit
+handler, so none of it can be exercised without driving the UI. `AddMilestoneDialog` was
+taken first as the pattern.
+
+**Extracted to `lib/milestone-form.ts`** (not beside the component: a file exporting a React
+component must export only components, per `react-refresh` — the same constraint that put
+`lib/project-form.ts` where it is): `milestoneFormErrors`, `parseTags` and
+`milestoneFormPayload`, with the dialog rewired to call them. **14 tests.**
+
+The payload builder is the part worth having: a form holds only strings, so `is_major` is
+the text `"true"`, `weightage` is text that becomes a number, and tags are one
+comma-separated field. Every one of those is a decision, and the `is_major === 'true'`
+comparison in particular is the only thing between a boolean column and permanently false.
+
+**Pinned, not endorsed:** the dialog does not check that the due date follows the start
+date, and neither does the server. A milestone can be saved due before it starts.
+
+**The harness, and the bug in it.** `TagChips.test.tsx` is the repo's first rendered test —
+deliberately a small component, so a broken harness fails on the harness rather than on the
+component. It immediately found a real gap: Testing Library auto-cleans between tests only
+under `globals: true`, which this project does not use, so **every render was leaking into
+the next test** and the second one found elements from the first. Fixed once in
+`test-setup.ts` with an `afterEach(cleanup)`, which every future component test inherits.
+
+Worth noting what the rendered tests assert: text, absence, and what a click does —
+including that a tag click does not reach the row behind it, which is what stops filtering
+by a tag from also navigating away. No class names, so restyling cannot break them.
+
+**Verification.** Frontend 47 → **66 tests / 4 files**; `tsc --noEmit`, lint and build all
+clean. Backend untouched at 410.
 
 ### 2026-08-20 — The three schema-blocked findings (F2, F3, F5). APPROVED BEHAVIOUR CHANGES.
 
