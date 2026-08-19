@@ -184,12 +184,14 @@ export class AttachmentsService {
     projectId: string,
     attachmentId: string,
     dto: UpdateAttachmentDto,
+    userId: string,
   ) {
-    const updated = await this.repo.update(
-      projectId,
-      attachmentId,
-      columnsFrom(dto, COLUMN_SPEC),
-    );
+    const updated = await this.repo.update(projectId, attachmentId, {
+      updated_by: userId,
+      // No moddatetime trigger on this table; keep the audit column honest.
+      updated_at: new Date().toISOString(),
+      ...columnsFrom(dto, COLUMN_SPEC),
+    });
     if (!updated) throw new NotFoundException('Attachment not found.');
     return updated;
   }

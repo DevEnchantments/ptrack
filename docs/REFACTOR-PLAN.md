@@ -563,6 +563,42 @@ into the service for no gain — a shallower interface, not a deeper one.
 `build` clean; DI graph boots. F8 drops from ten repository-less modules to four
 (`import`, `project-sections`, `templates`, `users`).
 
+### 2026-08-20 — The three schema-blocked findings (F2, F3, F5). APPROVED BEHAVIOUR CHANGES.
+
+Fares: "do these schemas or whatever needs to be done". Three migrations written to `db/`
+in the house style, each with the standing warning that the feature 500s until it is run in
+the Supabase SQL editor.
+
+**F2 — attachments had no edit trail.** `db/attachment_audit_columns.sql` adds `updated_by`
+and `updated_at`, backfilling `updated_by` from `uploaded_by` (an unedited row's edit trail
+is its upload). The service takes the actor and stamps both, and the controller passes it.
+No `moddatetime` trigger: `program_outcomes` and `kpis` maintain the column in application
+code too, and adding a trigger here would race the value the service already writes.
+
+**F3 — a rejection was indistinguishable from a return.**
+`db/submission_rejection_columns.sql` adds `rejected_by` / `rejected_at`, and the workflow
+table's reject row stamps its own pair instead of borrowing `returned_*`. **Historical rows
+are deliberately not backfilled**: a submission rejected last month genuinely has no
+recorded rejection timestamp, and inventing one would be worse than the gap. Rows with
+status `rejected` and a null `rejected_at` are pre-migration by definition.
+
+**F5 — the numbering race, which application code could not close.** Auto-numbering reads
+the highest number and adds one; two creates landing together read the same value. No
+service-side fix helps, because the read and the write are not atomic. A partial unique
+index on `(project_id, sort_order)` (`db/program_outcome_numbering.sql`) makes the
+collision a conflict the database reports, and the service retries an auto-assigned number
+up to three times, re-reading each attempt.
+
+The design decision worth recording: **a caller-supplied number is never retried.** Moving
+someone's chosen number silently would store something other than what they asked for, so
+their collision surfaces as a 409. Only the number *we* guessed gets a second guess. Three
+tests pin that split, including the give-up case, so the retry cannot become a loop.
+
+**Verification.** 406 → **410 tests / 31 suites**; `tsc` · `eslint --max-warnings 0` ·
+`build` clean; DI boots. The register's open defects drop from six to three, and all three
+that remain are decisions rather than work: F4 (add/update response shapes), F8 (four
+modules still without a repository), L3 (the static guard's shelf life).
+
 ### 2026-08-20 — Phase 1 finished: updates, kpis, access-admin. **Phase 1 complete.**
 
 `COLUMN_SPEC` adoption in `updates` and `kpis` (17 fields in the latter, the largest spec

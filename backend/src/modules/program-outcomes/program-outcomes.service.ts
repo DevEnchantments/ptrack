@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { RecordHistoryService } from '../../database/record-history.service';
 import { ProgramOutcomesRepository } from './program-outcomes.repository';
 import { CreateProgramOutcomeDto } from './dto/create-program-outcome.dto';
@@ -20,6 +24,13 @@ const COLUMN_SPEC: ColumnSpec = {
 /** What a new outcome gets for the columns the caller omitted. */
 const CREATE_DEFAULTS = { start_date: null, end_date: null };
 
+/**
+ * How many times to re-read and retry an auto-assigned number before giving
+ * up. Each retry costs one read plus one insert, and losing three races in a
+ * row means something other than ordinary contention is happening.
+ */
+const NUMBERING_ATTEMPTS = 3;
+
 @Injectable()
 export class ProgramOutcomesService {
   constructor(
@@ -32,14 +43,32 @@ export class ProgramOutcomesService {
   }
 
   async add(projectId: string, dto: CreateProgramOutcomeDto, userId: string) {
-    return this.repo.insert({
+    const row = {
       project_id: projectId,
       ...CREATE_DEFAULTS,
       ...columnsFrom(dto, COLUMN_SPEC),
-      sort_order: dto.sort_order ?? (await this.nextSortOrder(projectId)),
       created_by: userId,
       updated_by: userId,
-    });
+    };
+    // A caller-supplied number is theirs to get right: a collision is a 409
+    // they should see, not something to silently move.
+    if (dto.sort_order != null) return this.repo.insert(row);
+
+    // An auto-assigned number is a guess between a read and a write, so
+    // another create can take it in between. The unique index
+    // (db/program_outcome_numbering.sql) is what makes that a conflict rather
+    // than a duplicate; retrying re-reads and takes the next one.
+    for (let attempt = 1; ; attempt++) {
+      try {
+        return await this.repo.insert({
+          ...row,
+          sort_order: await this.nextSortOrder(projectId),
+        });
+      } catch (err) {
+        const lost = err instanceof ConflictException;
+        if (!lost || attempt >= NUMBERING_ATTEMPTS) throw err;
+      }
+    }
   }
 
   /**

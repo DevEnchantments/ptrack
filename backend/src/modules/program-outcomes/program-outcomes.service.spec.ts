@@ -1,4 +1,4 @@
-import { NotFoundException } from '@nestjs/common';
+import { ConflictException, NotFoundException } from '@nestjs/common';
 import { ProgramOutcomesService } from './program-outcomes.service';
 import type { ProgramOutcomesRepository } from './program-outcomes.repository';
 import type { RecordHistoryService } from '../../database/record-history.service';
@@ -80,6 +80,45 @@ describe('ProgramOutcomesService', () => {
       expect(mocks.insert).toHaveBeenCalledWith(
         expect.objectContaining({ sort_order: 3 }),
       );
+    });
+
+    it('retries with a fresh number when another create takes it first', async () => {
+      // The race F5 could not close in application code: the unique index
+      // (db/program_outcome_numbering.sql) turns the collision into a 409, and
+      // the retry re-reads and takes the next number.
+      const { service, mocks } = build([outcome(1)]);
+      mocks.insert
+        .mockRejectedValueOnce(new ConflictException('duplicate'))
+        .mockResolvedValueOnce({ id: OUTCOME });
+
+      await expect(
+        service.add(PROJECT, { name: 'Outcome 2' }, USER),
+      ).resolves.toEqual({ id: OUTCOME });
+      expect(mocks.insert).toHaveBeenCalledTimes(2);
+      // Re-read before the second attempt, rather than reusing the stale one.
+      expect(mocks.findByProject).toHaveBeenCalledTimes(2);
+    });
+
+    it('gives up after three lost races rather than looping', async () => {
+      const { service, mocks } = build([outcome(1)]);
+      mocks.insert.mockRejectedValue(new ConflictException('duplicate'));
+
+      await expect(
+        service.add(PROJECT, { name: 'Outcome 2' }, USER),
+      ).rejects.toBeInstanceOf(ConflictException);
+      expect(mocks.insert).toHaveBeenCalledTimes(3);
+    });
+
+    it('does not retry a number the caller chose', async () => {
+      // Their collision, their 409: silently moving it would store something
+      // other than what was asked for.
+      const { service, mocks } = build([outcome(1)]);
+      mocks.insert.mockRejectedValue(new ConflictException('duplicate'));
+
+      await expect(
+        service.add(PROJECT, { name: 'Outcome 9', sort_order: 9 }, USER),
+      ).rejects.toBeInstanceOf(ConflictException);
+      expect(mocks.insert).toHaveBeenCalledTimes(1);
     });
 
     it('skips the numbering read entirely when a number is supplied', async () => {

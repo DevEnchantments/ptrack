@@ -110,8 +110,9 @@ export class AttachmentsController {
     @Param('projectId', ParseUUIDPipe) projectId: string,
     @Param('attachmentId', ParseUUIDPipe) attachmentId: string,
     @Body() dto: UpdateAttachmentDto,
+    @CurrentUser() user: AuthUser,
   ) {
-    return this.attachments.update(projectId, attachmentId, dto);
+    return this.attachments.update(projectId, attachmentId, dto, user.id);
   }
 
   @Delete(':attachmentId')

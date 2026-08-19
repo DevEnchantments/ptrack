@@ -238,7 +238,7 @@ describe('AttachmentsService', () => {
   // The contract every project-scoped module shares (REFACTOR-PLAN v2, B4).
   describeProjectScopedContract('attachments', {
     build: () => build(),
-    update: (s) => s.update(PROJECT, ATT, {}),
+    update: (s) => s.update(PROJECT, ATT, {}, USER),
     remove: (s) => s.remove(PROJECT, ATT, USER),
     foreignId: (m) => {
       m.findOne.mockResolvedValue(null);

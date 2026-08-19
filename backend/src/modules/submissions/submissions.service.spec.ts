@@ -322,15 +322,26 @@ describe('SubmissionsService', () => {
       ).resolves.toBeDefined();
     });
 
-    it('stamps the returned columns on a rejection, not rejected ones', async () => {
-      // Pinned because it is surprising: a rejection is indistinguishable from
-      // a return by audit columns alone (FOLLOW-UPS F3).
+    it('stamps its own columns on a rejection', async () => {
+      // Was returned_by until db/submission_rejection_columns.sql gave
+      // rejection its own pair (FOLLOW-UPS F3): a rejection and a return were
+      // indistinguishable in the audit trail.
       const { service, mocks } = build();
       await service.reject(PROJECT, SUB, {}, USER);
 
       expect(mocks.update).toHaveBeenCalledWith(
         SUB,
-        expect.objectContaining({ status: 'rejected', returned_by: USER }),
+        expect.objectContaining({ status: 'rejected', rejected_by: USER }),
+      );
+    });
+
+    it('still stamps returned columns on a return', async () => {
+      const { service, mocks } = build();
+      await service.returnSubmission(PROJECT, SUB, {}, USER);
+
+      expect(mocks.update).toHaveBeenCalledWith(
+        SUB,
+        expect.objectContaining({ status: 'returned', returned_by: USER }),
       );
     });
 

@@ -36,11 +36,12 @@ export interface TransitionSpec {
   /** The status it produces. */
   to: string;
   /**
-   * The `<stamp>_by` / `<stamp>_at` columns it writes. Note `reject` stamps
-   * `returned`: the schema has no `rejected_*` columns (FOLLOW-UPS F3), and
-   * this table is where that becomes visible rather than buried in a caller.
+   * The `<stamp>_by` / `<stamp>_at` columns it writes. Every outcome has its
+   * own pair since db/submission_rejection_columns.sql (FOLLOW-UPS F3); reject
+   * previously borrowed `returned_*`, which made the two indistinguishable in
+   * the audit trail.
    */
-  stamp: 'validated' | 'approved' | 'returned';
+  stamp: 'validated' | 'approved' | 'returned' | 'rejected';
   /**
    * The project column naming the only user allowed to perform it. Enforced
    * only when that column is set: a project with no PMO Partner can be
@@ -89,7 +90,7 @@ export const TRANSITIONS = {
   reject: {
     from: ['review', 'validated'],
     to: 'rejected',
-    stamp: 'returned',
+    stamp: 'rejected',
     notify: (ctx) => ({
       userId: ctx.submittedBy,
       type: 'submission_rejected',
