@@ -265,13 +265,13 @@
     "semantic_hash": ""
   },
   "backend/src/modules/people/people.repository.ts": {
-    "mtime": 1786959622.189779,
-    "ast_hash": "0299b0e6d88fba7a9a43b760063eb00b",
+    "mtime": 1787130259.148117,
+    "ast_hash": "221972aacc681ca5ba0f80a4096ba74e",
     "semantic_hash": ""
   },
   "backend/src/modules/people/people.service.ts": {
-    "mtime": 1786959672.0512607,
-    "ast_hash": "95c8bb5d6095c0c8de8a1e3c768b1bbc",
+    "mtime": 1787130279.6243424,
+    "ast_hash": "a1c340ec8a32aeb96846d8eff3bb20e0",
     "semantic_hash": ""
   },
   "backend/src/modules/projects/dto/create-project.dto.ts": {
@@ -1785,8 +1785,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/people/people.service.spec.ts": {
-    "mtime": 1787129433.8642278,
-    "ast_hash": "9e31a0e8dd0771e276f9be8a2f46a472",
+    "mtime": 1787130279.6743016,
+    "ast_hash": "2d596f9dc027b96c37859f4b63ee1f2c",
     "semantic_hash": ""
   },
   "backend/src/modules/resources/resources.service.spec.ts": {
