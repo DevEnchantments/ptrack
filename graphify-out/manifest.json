@@ -1700,13 +1700,13 @@
     "semantic_hash": ""
   },
   "backend/src/modules/access-admin/access-admin.module.ts": {
-    "mtime": 1786972363.2799108,
-    "ast_hash": "39d36583055c911fff57ea45c481b2ad",
+    "mtime": 1787138964.6534252,
+    "ast_hash": "8fab7e5a6f2f274b9371c7a01fe6cb3f",
     "semantic_hash": ""
   },
   "backend/src/modules/access-admin/access-admin.service.ts": {
-    "mtime": 1786972664.448495,
-    "ast_hash": "1cc428b0b0b12cd7840c6bb4635b40a3",
+    "mtime": 1787138958.6695554,
+    "ast_hash": "c97613e4d4a646cc0960f662c7d869c8",
     "semantic_hash": ""
   },
   "backend/src/modules/access-admin/dto/replace-grants.dto.ts": {
@@ -1805,8 +1805,8 @@
     "semantic_hash": ""
   },
   "docs/REFACTOR-PLAN.md": {
-    "mtime": 1787138401.441638,
-    "ast_hash": "85515e7381799a1c8b3b24ec06926bd9",
+    "mtime": 1787139816.9323647,
+    "ast_hash": "a68615fb89c368e9221d7e8341bec688",
     "semantic_hash": ""
   },
   "backend/src/modules/action-items/index.ts": {
@@ -1890,13 +1890,23 @@
     "semantic_hash": ""
   },
   "docs/FOLLOW-UPS.md": {
-    "mtime": 1787137616.0595808,
-    "ast_hash": "c6fe6e0acb48fe5548c3a5570ff657c6",
+    "mtime": 1787139784.2358098,
+    "ast_hash": "6814eec51c38adfff18f5907c3afd051",
     "semantic_hash": ""
   },
   "backend/src/modules/submissions/submissions.service.spec.ts": {
     "mtime": 1787138098.2876594,
     "ast_hash": "3f7a1df4e0313b62ddfef80535a7c236",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/access-admin/access-admin.repository.ts": {
+    "mtime": 1787138941.6986957,
+    "ast_hash": "586084108528776563213ab82dab4d06",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/access-admin/access-admin.service.spec.ts": {
+    "mtime": 1787139750.7607498,
+    "ast_hash": "74419bcf6224de64f8a21a9bd56c7323",
     "semantic_hash": ""
   }
 }

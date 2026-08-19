@@ -4,13 +4,14 @@ import {
   Logger,
   NotFoundException,
 } from '@nestjs/common';
-import { DatabaseService } from '../../database/database.service';
-import { toHttpException } from '../../common/supabase-error';
 import { AppRoleService } from '../../common/access/app-role.service';
 import { CapabilityService } from '../../common/access/capability.service';
 import {
+  AccessAdminRepository,
+  type ProfileRow,
+} from './access-admin.repository';
+import {
   APP_ROLES,
-  AppRole,
   CAPABILITIES,
   Capability,
   GRANTABLE_ROLES,
@@ -19,12 +20,7 @@ import {
   isCapability,
 } from '../../common/access/access.logic';
 
-export interface ProfileRow {
-  id: string;
-  email: string | null;
-  full_name: string | null;
-  app_role: AppRole;
-}
+export type { ProfileRow };
 
 /**
  * Users & Roles administration (FDD role 1: "configure ... roles").
@@ -36,18 +32,13 @@ export class AccessAdminService {
   private readonly logger = new Logger(AccessAdminService.name);
 
   constructor(
-    private readonly db: DatabaseService,
+    private readonly repo: AccessAdminRepository,
     private readonly roles: AppRoleService,
     private readonly capabilities: CapabilityService,
   ) {}
 
-  async listUsers(): Promise<ProfileRow[]> {
-    const { data, error } = await this.db.client
-      .from('profiles')
-      .select('id, email, full_name, app_role')
-      .order('email');
-    if (error) throw toHttpException(error, 'accessAdmin.listUsers');
-    return data ?? [];
+  listUsers(): Promise<ProfileRow[]> {
+    return this.repo.listProfiles();
   }
 
   async updateRole(targetId: string, role: string, actorId: string) {
@@ -56,46 +47,28 @@ export class AccessAdminService {
         `app_role must be one of: ${APP_ROLES.join(', ')}.`,
       );
     }
-    const { data: target, error } = await this.db.client
-      .from('profiles')
-      .select('id, email, app_role')
-      .eq('id', targetId)
-      .maybeSingle<{ id: string; email: string | null; app_role: string }>();
-    if (error) throw toHttpException(error, 'accessAdmin.updateRole');
+    const target = await this.repo.findProfile(targetId);
     if (!target) throw new NotFoundException('User not found.');
     if (target.app_role === role) return { id: targetId, app_role: role };
 
     // The system must always keep at least one admin who can undo mistakes.
     if (target.app_role === 'admin' && role !== 'admin') {
-      const admins = await this.db.client
-        .from('profiles')
-        .select('id', { count: 'exact', head: true })
-        .eq('app_role', 'admin');
-      if (admins.error)
-        throw toHttpException(admins.error, 'accessAdmin.updateRole');
-      if ((admins.count ?? 0) <= 1) {
+      if ((await this.repo.countAdmins()) <= 1) {
         throw new BadRequestException(
           'Cannot demote the last remaining admin.',
         );
       }
     }
 
-    const updated = await this.db.client
-      .from('profiles')
-      .update({ app_role: role })
-      .eq('id', targetId)
-      .select('id, app_role')
-      .maybeSingle<{ id: string; app_role: AppRole }>();
-    if (updated.error)
-      throw toHttpException(updated.error, 'accessAdmin.updateRole');
-    if (!updated.data) throw new NotFoundException('User not found.');
+    const updated = await this.repo.setAppRole(targetId, role);
+    if (!updated) throw new NotFoundException('User not found.');
 
     this.roles.clearUser(targetId);
     await this.audit(actorId, 'role_changed', target.email ?? targetId, {
       old: target.app_role,
       new: role,
     });
-    return updated.data;
+    return updated;
   }
 
   async getGrants() {
@@ -125,22 +98,7 @@ export class AccessAdminService {
       ...(await this.capabilities.grants())[role as GrantableRole],
     ].sort();
 
-    // Replace wholesale — the grid submits the full set per role. Two steps
-    // (not a transaction): worst interruption case is a role briefly missing
-    // grants, repaired by resubmitting; acceptable for an admin surface.
-    const del = await this.db.client
-      .from('role_capabilities')
-      .delete()
-      .eq('role', role);
-    if (del.error)
-      throw toHttpException(del.error, 'accessAdmin.replaceGrants');
-    if (wanted.length > 0) {
-      const ins = await this.db.client
-        .from('role_capabilities')
-        .insert(wanted.map((capability) => ({ role, capability })));
-      if (ins.error)
-        throw toHttpException(ins.error, 'accessAdmin.replaceGrants');
-    }
+    await this.repo.replaceRoleCapabilities(role, wanted);
 
     this.capabilities.clearCache();
     await this.audit(actorId, 'grants_replaced', role, {
@@ -157,16 +115,16 @@ export class AccessAdminService {
     target: string,
     values: { old: string; new: string },
   ): Promise<void> {
-    const { error } = await this.db.client.from('access_audit').insert({
-      actor_id: actorId,
+    const failure = await this.repo.insertAudit({
+      actorId,
       action,
       target,
-      old_value: values.old,
-      new_value: values.new,
+      oldValue: values.old,
+      newValue: values.new,
     });
-    if (error) {
+    if (failure) {
       this.logger.warn(
-        `access_audit insert failed (db/role_capabilities.sql run?): ${error.message}`,
+        `access_audit insert failed (db/role_capabilities.sql run?): ${failure}`,
       );
     }
   }

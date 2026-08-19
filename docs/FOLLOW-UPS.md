@@ -24,6 +24,7 @@ living with it) · **CLOSED** (see section 3).
 | F5 | OPEN | Program-outcome numbering can still collide on **concurrent** creates | `max + 1` fixed the deletion-gap collision, but two simultaneous creates still race. A real fix needs a unique constraint or sequence, i.e. a schema change. |
 | F6 | OPEN | `frontend/tsconfig.json` has a deprecated `baseUrl` | A bare `npx tsc --noEmit` in `frontend/` fails with TS5101. The build is unaffected because it uses `tsc -b`, which is why it has survived this long. |
 | F7 | ACCEPTED | RLS policies are still deferred | Out of scope for every refactor pass; belongs to the security phase. Recorded so it is never mistaken for an oversight. |
+| F8 | OPEN | **10 of 25 modules have no repository**, running Supabase queries directly inside services: `dashboard`, `import`, `lookups`, `project-sections`, `registry`, `reports`, `search`, `templates`, `users`, and `access-admin` until 2026-08-19 | CLAUDE.md rule 3 describes 60% of the backend, not all of it. This is also **why those modules are untested**: with no seam, the only testable thing is a mocked Supabase chain, which asserts on the fake rather than the code. The missing tests are the symptom; the missing seam is the cause. Extracting a repository is therefore part of Phase 0, not a separate refactor. |
 
 ---
 

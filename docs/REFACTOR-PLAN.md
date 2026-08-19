@@ -155,15 +155,27 @@ state between two commits.
 
 **Gate:** after B plus the first two modules, review what it bought and re-scope.
 
-### Phase 0 — Safety net for the untested modules
+### Phase 0 — Seam, then safety net
+
+**Redefined 2026-08-19 (Fares' call).** Phase 0 is not only "write tests". Ten modules run
+Supabase queries directly inside their services with no repository (FOLLOW-UPS F8), and
+that is *why* they are untested: with no seam, the only testable thing is a mocked query
+chain, which asserts on the fake rather than on the code. So where a module has no
+repository, **extracting one is part of this phase**.
+
+That inverts ground rule 2 — the extraction happens before the net exists. Accepted
+deliberately, because the alternative is either brittle chain-mocking or doing the work
+twice. The extraction is mechanical (queries move, no logic changes) and is covered by
+`tsc`, lint, the DI boot check and a read of the diff. Note it in the session log every
+time it happens.
 
 No characterization suite today, so under ground rule 2 they cannot be refactored yet:
 
 Reordered at the gate (2026-08-19) by value, not alphabetically:
 
 - [x] `submissions` (**2026-08-19** — 29 tests over the FR-14 workflow) ·
-      [ ] `access-admin` · [ ] `kpis` — write paths and real rules;
-      `access-admin` is security-adjacent
+      [x] `access-admin` (**2026-08-19** — repository extracted, then 16 tests) ·
+      [ ] `kpis` — write paths and real rules
 - Deferred pending a judgement call, not a commitment: `dashboard`, `reports`, `registry`,
   `search`, `lookups` are read-only or aggregate, where a characterization test mostly
   asserts query shaping
@@ -384,6 +396,42 @@ message-matching assertions in general.
 **No refactor proposed yet.** Ground rule 2 says the net comes first. With behaviour now
 pinned, the `transition` helper's `opts` object and the notification switch are the
 candidates worth a proposal.
+
+### 2026-08-19 — Phase 0, `access-admin` (seam first, then net)
+
+**The finding that redefined the phase.** This service had no repository: it ran Supabase
+queries inline, so there was nothing to test against except a mocked query chain. Checking
+how widespread that is turned up **10 of 25 modules** in the same shape, and the overlap
+with the untested list is almost total. Those modules are untested *because* they have no
+seam. Recorded as FOLLOW-UPS F8, and Phase 0 was redefined accordingly.
+
+**Changed.** `AccessAdminRepository` extracted (six methods: list profiles, find one, count
+admins, set role, replace role capabilities, insert audit), then **16 characterization
+tests** against it. `AccessAdminModule` gained the provider.
+
+One deliberate shape choice: `insertAudit` **returns a failure message instead of throwing**.
+Audit writes here are best-effort by design, and having it throw would have meant the
+service catching an `HttpException` and logging `'Unexpected database error.'` instead of
+the real PostgREST message. Returning the message keeps the log line identical to before.
+
+**What the tests pin — these are security rules, not formatting:**
+- **The last-admin guard.** Demoting the only remaining admin is refused, so the system
+  cannot be left with nobody able to fix it. The count is only taken when demoting *from*
+  admin, never when promoting to it.
+- A role change to the role already held is a **no-op**: no write, no cache clear, and no
+  audit row for a change that did not happen.
+- **A failed audit write never fails the change it records.**
+- Unknown roles and unknown capabilities are rejected before anything is written, and the
+  submitted capability set is de-duplicated.
+
+**Cost of my own carelessness, recorded because it is instructive:** the first draft
+invented role and capability names (`editor`, `viewer`, `project.edit`). The real domain is
+`user | executive | pmo | admin` with a fixed capability catalogue. Seven tests failed on
+fixtures rather than on behaviour. Read the domain constants before writing fixtures for a
+module you have not worked in.
+
+**Verification.** 293 → **309 tests / 25 suites** (1 documented skip); `tsc` · `eslint
+--max-warnings 0` · `build` clean; DI graph boots (the new provider resolves).
 
 **Plan change agreed at the gate.** Phase 0's eight modules are not comparable.
 `submissions`, `access-admin` and `kpis` have write paths and real rules, and `access-admin`
