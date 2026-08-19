@@ -255,23 +255,23 @@
     "semantic_hash": ""
   },
   "backend/src/modules/people/people.controller.ts": {
-    "mtime": 1786968815.364434,
-    "ast_hash": "6f6eb5b57f252af36f491105f65e291e",
+    "mtime": 1787141411.7033842,
+    "ast_hash": "df3b54d818d93f5857869dd85cb8dcc4",
     "semantic_hash": ""
   },
   "backend/src/modules/people/people.module.ts": {
-    "mtime": 1783942248.549218,
-    "ast_hash": "915a074d7c23396efcda03e3bdfc34dd",
+    "mtime": 1787141823.682383,
+    "ast_hash": "66d105724127182f4806c124b50aaaf6",
     "semantic_hash": ""
   },
   "backend/src/modules/people/people.repository.ts": {
-    "mtime": 1787130259.148117,
-    "ast_hash": "221972aacc681ca5ba0f80a4096ba74e",
+    "mtime": 1787141389.9598522,
+    "ast_hash": "2ef93b0980e0b5c16f51d3010707c2e0",
     "semantic_hash": ""
   },
   "backend/src/modules/people/people.service.ts": {
-    "mtime": 1787130279.6243424,
-    "ast_hash": "a1c340ec8a32aeb96846d8eff3bb20e0",
+    "mtime": 1787141405.114281,
+    "ast_hash": "74863580089df967fe5a94e1b54c4b74",
     "semantic_hash": ""
   },
   "backend/src/modules/projects/dto/create-project.dto.ts": {
@@ -640,8 +640,8 @@
     "semantic_hash": ""
   },
   "frontend/tsconfig.json": {
-    "mtime": 1785742700.5615697,
-    "ast_hash": "6a14b31eadb1d37088bee74a53e093ea",
+    "mtime": 1787141448.4134364,
+    "ast_hash": "7b159da222e42a8a9b1096300cd522b2",
     "semantic_hash": ""
   },
   "frontend/tsconfig.node.json": {
@@ -1195,13 +1195,13 @@
     "semantic_hash": ""
   },
   "backend/src/modules/kpis/kpis.repository.ts": {
-    "mtime": 1787054597.3859055,
-    "ast_hash": "b491b8629226969aff3bb908b40121a5",
+    "mtime": 1787141184.3116543,
+    "ast_hash": "1b4f2337d0f7c39d56f9f358738048e4",
     "semantic_hash": ""
   },
   "backend/src/modules/kpis/kpis.service.ts": {
-    "mtime": 1787055168.9692807,
-    "ast_hash": "e3b9433d4c56cef0c4a094da3024e8be",
+    "mtime": 1787141193.9674387,
+    "ast_hash": "77f5c9b7517117fbf1cb4f1f72315686",
     "semantic_hash": ""
   },
   "frontend/src/components/AddKpiDialog.tsx": {
@@ -1785,8 +1785,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/people/people.service.spec.ts": {
-    "mtime": 1787135775.3641815,
-    "ast_hash": "0696f0e7dab4cda400e3051876df46f8",
+    "mtime": 1787141823.724649,
+    "ast_hash": "dd56115d5472bb88c72cb8a0a409499e",
     "semantic_hash": ""
   },
   "backend/src/modules/resources/resources.service.spec.ts": {
@@ -1805,8 +1805,8 @@
     "semantic_hash": ""
   },
   "docs/REFACTOR-PLAN.md": {
-    "mtime": 1787140913.3019445,
-    "ast_hash": "d421bf81512331a79f6f9d4fc926d412",
+    "mtime": 1787141891.1338224,
+    "ast_hash": "6cce0a2009f7774444a1c13296191417",
     "semantic_hash": ""
   },
   "backend/src/modules/action-items/index.ts": {
@@ -1890,8 +1890,8 @@
     "semantic_hash": ""
   },
   "docs/FOLLOW-UPS.md": {
-    "mtime": 1787140890.6868324,
-    "ast_hash": "7d6fd7f4e8ebd950092f18cf26c830f0",
+    "mtime": 1787141875.8249502,
+    "ast_hash": "c293edb87eacfc3910cac50e2b63b654",
     "semantic_hash": ""
   },
   "backend/src/modules/submissions/submissions.service.spec.ts": {
@@ -1910,8 +1910,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/kpis/kpis.service.spec.ts": {
-    "mtime": 1787140827.9934628,
-    "ast_hash": "9ab682fe388d6d531e58c6afcac2a760",
+    "mtime": 1787141232.631348,
+    "ast_hash": "87b2fa9d6076e7bc346ecc1a527fe05c",
     "semantic_hash": ""
   }
 }
