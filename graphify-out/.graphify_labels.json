@@ -129,10 +129,18 @@
   "127": "CreateAccountDialog.tsx",
   "128": "toaster.tsx",
   "129": "status-reports.repository.ts",
+  "130": "CreateLinkDto",
   "131": "columnsFrom",
+  "132": "kpis.repository.ts",
   "133": ".update",
   "134": "@eslint/js",
+  "135": "InitialsAvatar.tsx",
+  "136": "NotificationBell.tsx",
   "137": "SubmissionsModule",
   "138": "@supabase/supabase-js",
-  "141": "Follow-ups register"
+  "139": "AccessModule",
+  "140": "@nestjs/cli",
+  "141": "Follow-ups register",
+  "142": "SubmissionsModule",
+  "143": "vite"
 }

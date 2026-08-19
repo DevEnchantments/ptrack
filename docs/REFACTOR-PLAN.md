@@ -175,7 +175,11 @@ Reordered at the gate (2026-08-19) by value, not alphabetically:
 
 - [x] `submissions` (**2026-08-19** — 29 tests over the FR-14 workflow) ·
       [x] `access-admin` (**2026-08-19** — repository extracted, then 16 tests) ·
-      [ ] `kpis` — write paths and real rules
+      [x] `kpis` (**2026-08-19** — 19 tests; found F9)
+
+**The three high-value modules are done.** The remaining five (`dashboard`, `reports`,
+`registry`, `search`, `lookups`) are the deferred read-only group; whether they are pinned
+at all is still an open judgement, not a commitment.
 - Deferred pending a judgement call, not a commitment: `dashboard`, `reports`, `registry`,
   `search`, `lookups` are read-only or aggregate, where a characterization test mostly
   asserts query shaping
@@ -432,6 +436,36 @@ module you have not worked in.
 
 **Verification.** 293 → **309 tests / 25 suites** (1 documented skip); `tsc` · `eslint
 --max-warnings 0` · `build` clean; DI graph boots (the new provider resolves).
+
+### 2026-08-19 — Phase 0, `kpis`. **The three high-value modules are done.**
+
+**19 tests**, and the module already had a repository, so this was a straight
+characterization session.
+
+**Found: F9, and it is the most substantive finding of Phase 0.** `removeReading`,
+`updatePlan` and `removePlan` run a filtered query, get `void` back, and return
+`{ deleted: true }` / `{ ok: true }` **regardless of whether anything matched**. Delete a
+plan that does not exist, or one belonging to another KPI, and the API says it worked. No
+data leak (the repository filters on `kpi_id`), but the response is a lie and a UI built on
+it will show a delete that never happened.
+
+This is the same class as `people.remove`'s silent no-op, which was treated as a bug worth
+fixing. KPIs sit outside the B4 contract — portfolio-level, not project-scoped — so nothing
+catches it automatically. Pinned as current behaviour with `FOLLOW-UPS F9` named in the test
+titles, so whoever fixes it knows which tests are supposed to change.
+
+**Also pinned:** every registry default (`higher_is_better`, `monthly`, `decimal_places: 0`,
+`is_priority: false`), a zero baseline/target/reading surviving as a real value, and the
+oddity that a blank plan description stays an **empty string** where every other text field
+in the module collapses to null.
+
+**Dismissed (D3):** the service reads `dto.decimal_places ?? 0`, but the DTO types the field
+`number | undefined` and the guard is `!== undefined`, so null never arrives. Dead branch.
+TypeScript found it by refusing my fixture, which is the tidiest way to learn that a test
+would have asserted on an unreachable input.
+
+**Verification.** 309 → **328 tests / 26 suites** (1 documented skip); `tsc` · `eslint
+--max-warnings 0` · `build` clean; DI graph boots.
 
 **Plan change agreed at the gate.** Phase 0's eight modules are not comparable.
 `submissions`, `access-admin` and `kpis` have write paths and real rules, and `access-admin`
