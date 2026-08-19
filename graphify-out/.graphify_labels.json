@@ -129,13 +129,10 @@
   "127": "CreateAccountDialog.tsx",
   "128": "toaster.tsx",
   "129": "status-reports.repository.ts",
-  "130": "Injectable",
   "131": "columnsFrom",
   "133": ".update",
   "134": "@eslint/js",
-  "136": "UpdateMeDto",
   "137": "SubmissionsModule",
   "138": "@supabase/supabase-js",
-  "141": "Follow-ups register",
-  "145": "AccessModule"
+  "141": "Follow-ups register"
 }
