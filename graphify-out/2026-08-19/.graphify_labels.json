@@ -131,15 +131,11 @@
   "129": "status-reports.repository.ts",
   "130": "CreateLinkDto",
   "131": "columnsFrom",
-  "132": "kpis.repository.ts",
   "133": ".update",
-  "134": "@eslint/js",
-  "135": "InitialsAvatar.tsx",
   "136": "NotificationBell.tsx",
   "137": "SubmissionsModule",
   "138": "@supabase/supabase-js",
   "139": "AccessModule",
   "141": "Follow-ups register",
-  "142": "CreateActionItemDto",
-  "143": "dashboard.controller.ts"
+  "142": "CreateActionItemDto"
 }
