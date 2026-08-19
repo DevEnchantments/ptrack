@@ -9,7 +9,7 @@ import {
   PROJECT_HISTORY_SELECT,
   type HistoryEntry,
 } from '../../common/record-history';
-import { ATTACHMENTS_BUCKET } from '../attachments/attachments.repository';
+import { ATTACHMENTS_BUCKET } from '../../common/storage';
 
 export interface Project {
   id: string;

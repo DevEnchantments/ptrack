@@ -1,8 +1,7 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { DatabaseService } from '../../database/database.service';
 import { toHttpException } from '../../common/supabase-error';
-
-export const ATTACHMENTS_BUCKET = 'project-attachments';
+import { ATTACHMENTS_BUCKET } from '../../common/storage';
 
 export interface Attachment {
   id: string;

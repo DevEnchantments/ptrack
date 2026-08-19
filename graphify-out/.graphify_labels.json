@@ -113,8 +113,6 @@
   "111": "@nestjs/swagger",
   "112": "app.module.ts",
   "113": "ts-loader",
-  "114": "ts-node",
-  "115": "DatabaseModule",
   "116": "vitest",
   "117": "dhtmlx-gantt",
   "119": "project-sections.service.ts",

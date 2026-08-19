@@ -32,4 +32,38 @@ export default tseslint.config(
       "prettier/prettier": ["error", { endOfLine: "auto" }],
     },
   },
+  {
+    // Module boundaries (REFACTOR-PLAN v2, B2). A module may only be reached
+    // through its index.ts, so its internals stay free to change. Without this
+    // the boundary is a convention, and conventions rot silently.
+    //
+    // Deliberately still allowed:
+    //   ../x/x.module      composition wiring, imported by other module files
+    //   ../x               the public surface itself
+    //   ./x.service        same-module imports
+    //   ../../common/*     shared infrastructure, owned by nobody
+    files: ['src/modules/**/*.ts'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: [
+                '../*/*.service',
+                '../*/*.repository',
+                '../*/*.controller',
+                '../*/dto/*',
+                '**/modules/*/*.service',
+                '**/modules/*/*.repository',
+                '**/modules/*/dto/*',
+              ],
+              message:
+                "Import another module through its public surface ('../that-module'), not one of its files. If what you need is not exported there, widen the surface deliberately in that module's index.ts.",
+            },
+          ],
+        },
+      ],
+    },
+  },
 );

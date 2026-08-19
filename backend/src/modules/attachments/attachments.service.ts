@@ -7,10 +7,10 @@ import { randomUUID } from 'node:crypto';
 import { RecordHistoryService } from '../../database/record-history.service';
 import {
   AttachmentsRepository,
-  ATTACHMENTS_BUCKET,
   type AttachmentParent,
   type AttachmentParentType,
 } from './attachments.repository';
+import { ATTACHMENTS_BUCKET } from '../../common/storage';
 import { UpdateAttachmentDto } from './dto/update-attachment.dto';
 
 const MAX_BYTES = 100 * 1024 * 1024; // 100 MB

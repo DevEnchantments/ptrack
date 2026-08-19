@@ -121,11 +121,11 @@ removed on 2026-08-18, so they load normally now.
 would otherwise go red on the one known violation left by B1, putting the gate in a failing
 state between two commits.
 
-- [ ] **B2.** Enforcement: an eslint `no-restricted-imports` pattern rule scoped to
+- [x] **B2.** **Done 2026-08-19.** Enforcement: an eslint `no-restricted-imports` pattern rule scoped to
       `src/modules/**`, forbidding `../*/*.service`, `../*/*.repository`, `../*/dto/*`.
       No new dependency. Same-module (`./x.service`) and shared infrastructure
       (`../../common`, `../../database`) are unaffected.
-- [ ] **B3.** Fix what the rule surfaces. Known today:
+- [x] **B3.** **Done 2026-08-19**, same commit as B2. Fix what the rule surfaces. Known today:
       - `projects.repository` imports `ATTACHMENTS_BUCKET` from `attachments.repository`
         (a constant in the wrong place; move it to shared code)
       - `risks.service` → `projects.repository` (blessed by section 4; route via `index.ts`)
@@ -237,3 +237,34 @@ the barrel makes it louder rather than quieter.
 
 **Behaviour preserved:** nothing but import specifiers changed. DI resolves by class
 identity and the classes were untouched.
+
+### 2026-08-19 — B2 + B3, the rule and the last reach-in
+
+**Skill:** `book-clean-architecture`. Landed as one commit, per the ordering correction
+above: the rule would have gone red on B1's leftover otherwise.
+
+**B3 first.** `ATTACHMENTS_BUCKET` moved from `attachments.repository` to
+`common/storage.ts`. The reasoning is the point: **two** modules write to that bucket.
+`attachments` owns the lifecycle of an individual file, and `projects` clears the whole
+prefix when a project is deleted. A name both depend on is shared infrastructure, not
+either module's policy, so neither should import the other to learn it. Blessing it into
+the attachments barrel would have encoded a dependency that does not really exist.
+
+**B2, the rule.** `no-restricted-imports` scoped to `src/modules/**/*.ts`, forbidding
+`../*/*.service`, `../*/*.repository`, `../*/*.controller`, `../*/dto/*` and their
+`**/modules/...` equivalents, with a message that tells the reader what to do instead.
+Still allowed on purpose: `../x` (the surface), `../x/x.module` (composition wiring),
+`./x.service` (same module), `../../common/*` (shared infrastructure).
+
+**The rule was mutation-checked, not just run.** A green rule proves nothing; a temporary
+probe file imported one of each kind and lint reported **exactly 3 errors on exactly the 3
+forbidden lines**, staying silent on the barrel, the module file, the shared constant and
+the same-module import. The probe was then deleted. Treat a boundary rule like a test: if
+it has never been seen to fail, it is decoration.
+
+**Verification.** 207 tests / 22 suites green; `tsc` · `eslint --max-warnings 0` · `build`
+clean; DI graph boots with every provider resolved.
+
+**What this buys.** Modularity is now a property the build checks. The remaining phases
+inherit it: any module session that widens a surface has to do so in an `index.ts`, in the
+open, instead of by adding one more deep import nobody notices in review.
