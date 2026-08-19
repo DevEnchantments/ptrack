@@ -161,7 +161,8 @@ No characterization suite today, so under ground rule 2 they cannot be refactore
 
 Reordered at the gate (2026-08-19) by value, not alphabetically:
 
-- [ ] `submissions` · [ ] `access-admin` · [ ] `kpis` — write paths and real rules;
+- [x] `submissions` (**2026-08-19** — 29 tests over the FR-14 workflow) ·
+      [ ] `access-admin` · [ ] `kpis` — write paths and real rules;
       `access-admin` is security-adjacent
 - Deferred pending a judgement call, not a commitment: `dashboard`, `reports`, `registry`,
   `search`, `lookups` are read-only or aggregate, where a characterization test mostly
@@ -345,6 +346,44 @@ normally, action-items threw a TypeError dereferencing null), then green after t
 **The payoff was simplification.** With one design left, the static guard dropped its
 service-parsing branch and became a flat rule: no `.single()` in a project-scoped `update`.
 Stricter and much less brittle than inferring which design each module chose.
+
+### 2026-08-19 — Phase 0, `submissions` (safety net only, no refactor)
+
+**Skill:** `book-legacy-code` territory, though the session was mechanical enough not to
+need it loaded: pin behaviour, change nothing.
+
+**29 tests** over the most rule-dense service in the backend, which had none. What they
+pin, beyond the obvious paths:
+
+- **The gate's `value == null || value === ''` check**, which means a **zero approved
+  budget passes** while a blank sponsor fails. Easy to "tidy" into `!value` and silently
+  start blocking legitimate zero-budget projects.
+- **No milestones means no weight failure at all** (`active.length > 0`), so an unplanned
+  project is not blocked for having nothing to weigh.
+- **`not_applicable` milestones are excluded** from the weight total.
+- **The actor gate is skipped when the project's person field is null**, so anyone may
+  validate a project with no PMO Partner. Deliberate per the module docblock, and exactly
+  the kind of rule that looks like a security hole to someone reading it cold.
+- **The gate runs before the closed-cycle check**, so a project failing both hears about
+  its fields. Ordering quirk, pinned as-is.
+- **`reject` writes the `returned_*` columns** (FOLLOW-UPS F3).
+
+**Deliberately not wired into the B4 conformance suite.** No `remove`, and the repository
+`update(id, patch)` is not project-scoped — scoping happens earlier via `findOne`. Its
+verbs are validate/approve/return/reject, a different contract. Bending the helper to fit
+one module would be the shallow abstraction this whole pass exists to remove
+(FOLLOW-UPS L5).
+
+**One test failure was mine, not the code's:** a regex expected a space before `status:`
+where the message has `(status:`. Worth noting only because it is the failure mode of
+message-matching assertions in general.
+
+**Verification.** 264 → **293 tests / 24 suites** (1 documented skip); `tsc` · `eslint
+--max-warnings 0` · `build` clean.
+
+**No refactor proposed yet.** Ground rule 2 says the net comes first. With behaviour now
+pinned, the `transition` helper's `opts` object and the notification switch are the
+candidates worth a proposal.
 
 **Plan change agreed at the gate.** Phase 0's eight modules are not comparable.
 `submissions`, `access-admin` and `kpis` have write paths and real rules, and `access-admin`

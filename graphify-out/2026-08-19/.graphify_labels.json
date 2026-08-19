@@ -137,5 +137,12 @@
   "135": "eslint-plugin-prettier",
   "136": "UpdateMeDto",
   "137": "SubmissionsModule",
-  "138": "@supabase/supabase-js"
+  "138": "@supabase/supabase-js",
+  "139": "UpdateAttachmentDto",
+  "140": ".update",
+  "141": "Follow-ups register",
+  "142": "kpis.repository.ts",
+  "143": "columnsFrom",
+  "144": "CreateCommentDto",
+  "145": "AccessModule"
 }
