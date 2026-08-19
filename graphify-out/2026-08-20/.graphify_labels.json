@@ -148,15 +148,5 @@
   "146": "SubmissionsModule",
   "147": "submissions.service.spec.ts",
   "148": "KpisModule",
-  "149": "@eslint/js",
-  "150": "ApiBody",
-  "151": "UsersModule",
-  "152": "Body",
-  "153": "Controller",
-  "154": "Delete",
-  "155": "Get",
-  "156": "Param",
-  "157": "Patch",
-  "158": "Post",
-  "159": "Query"
+  "151": "UsersModule"
 }
