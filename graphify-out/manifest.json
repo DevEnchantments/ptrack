@@ -1085,8 +1085,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/submissions/submissions.service.ts": {
-    "mtime": 1787133593.2385037,
-    "ast_hash": "492d56c0262d7d5e35962b3dcd477be2",
+    "mtime": 1787144908.071166,
+    "ast_hash": "bc4a03725dd1f766ba7e24b4cf30483b",
     "semantic_hash": ""
   },
   "frontend/src/components/WorkflowPanel.tsx": {
@@ -1805,8 +1805,8 @@
     "semantic_hash": ""
   },
   "docs/REFACTOR-PLAN.md": {
-    "mtime": 1787143517.4924462,
-    "ast_hash": "b3b115b8668ae19b4e4d0b2c9e82b5d2",
+    "mtime": 1787145304.7362118,
+    "ast_hash": "66c9f2529cecb1b9f46d3219dd1dd9b0",
     "semantic_hash": ""
   },
   "backend/src/modules/action-items/index.ts": {
@@ -1890,8 +1890,8 @@
     "semantic_hash": ""
   },
   "docs/FOLLOW-UPS.md": {
-    "mtime": 1787141875.8249502,
-    "ast_hash": "c293edb87eacfc3910cac50e2b63b654",
+    "mtime": 1787144834.2772741,
+    "ast_hash": "9d0a19d9a94ea5c86d8990216d4494b9",
     "semantic_hash": ""
   },
   "backend/src/modules/submissions/submissions.service.spec.ts": {
@@ -1967,6 +1967,16 @@
   "backend/src/modules/search/search.service.spec.ts": {
     "mtime": 1787143961.413979,
     "ast_hash": "e57d06a7f44bd19269fed5ca97e52576",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/submissions/submissions.gate.ts": {
+    "mtime": 1787144877.9254034,
+    "ast_hash": "184d7742443d0fb51951699f08e90f20",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/submissions/submissions.workflow.ts": {
+    "mtime": 1787145119.394883,
+    "ast_hash": "21ed4c9889e2b149e30b86356c836e70",
     "semantic_hash": ""
   }
 }

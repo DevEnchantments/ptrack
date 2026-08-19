@@ -180,10 +180,13 @@ Reordered at the gate (2026-08-19) by value, not alphabetically:
 **The three high-value modules are done.** The remaining five (`dashboard`, `reports`,
 `registry`, `search`, `lookups`) are the deferred read-only group; whether they are pinned
 at all is still an open judgement, not a commitment.
-- The deferred five, now being worked after all (Fares: "do the leftovers"):
-  [x] `lookups` (**2026-08-19** — repository extracted, then 21 tests; the "low value"
-  call was wrong, see log) · [ ] `registry` · [ ] `search` · [ ] `reports` ·
-  [ ] `dashboard`
+- The deferred five, done after all (Fares: "do the leftovers"), each repository-first:
+  [x] `lookups` (21 tests) · [x] `registry` (10) · [x] `search` (13) ·
+  [x] `reports` (14) · [x] `dashboard` (11). All **2026-08-19**; the "low value" call
+  at the gate was wrong on every one of them, see log.
+
+**Phase 0 is complete.** Every backend module now has a repository seam and a
+characterization suite.
 
 ### Phase 1 — Modules that already have a safety net
 
@@ -530,7 +533,71 @@ the service.
 **Verification.** 333 → **354 tests / 27 suites**; `tsc` · `eslint --max-warnings 0` ·
 `build` clean; DI graph boots.
 
-**Plan change agreed at the gate.** Phase 0's eight modules are not comparable.
+### 2026-08-19 — Phase 0 leftovers: `registry`, `search`, `reports`, `dashboard`.
+### **Phase 0 complete.**
+
+Four more repository extractions and 48 more tests, same shape as `lookups`. The pattern
+held: **every one of the five "low value" modules carried rules worth pinning**, and the
+gate call that deferred them was made from their HTTP verbs rather than their contents.
+
+What was actually in them:
+- **`search`** sanitises the query before it reaches PostgREST — stripping `,()"` that would
+  break the or-filter syntax, escaping `%` and `_` so a search for "50%" matches literally.
+  Its FR-15 filter has a special case: a project hit is identified by its own id, not a
+  `project_id`, so hiding restricted projects takes two conditions.
+- **`registry`** decides how an invited person with no account is identified across projects
+  (lower-cased pending name), which is what makes one invitee on two projects a single
+  directory entry.
+- **`reports`** distinguishes "done" (completed among those *due* this month) from
+  "completed" (completed *in* this month). Two different numbers that read as synonyms.
+- **`dashboard`** deliberately keeps updates and history global while filtering everything
+  project-keyed, on the grounds that those rows leak nothing nameable. A judgement someone
+  made once that nothing recorded until now.
+
+**One design decision worth noting:** `DashboardRepository` exposes a single `load()`
+returning all six result sets rather than six methods. The dashboard always needs the whole
+set, the queries must run concurrently, and six methods would push that orchestration back
+into the service for no gain — a shallower interface, not a deeper one.
+
+**Verification.** 354 → **402 tests / 31 suites**; `tsc` · `eslint --max-warnings 0` ·
+`build` clean; DI graph boots. F8 drops from ten repository-less modules to four
+(`import`, `project-sections`, `templates`, `users`).
+
+### 2026-08-19 — Phase 1, `submissions`. First actual refactor of v2.
+
+**Skill:** `book-philosophy-of-software-design`. All three proposed moves applied.
+
+**M1 — the gate became a pure function.** `submissions.gate.ts` holds
+`submissionGateFailures(project, milestones)`: no I/O, no service, just the rule. It is the
+code most likely to change (FDD 3.3.2 is spec-driven and the mandatory list is exactly what
+a supervisor revises), and it now reads as a list of fields rather than as async plumbing.
+The `value == null || value === ''` check is commented where it lives, because "deliberately
+not falsy, so a zero budget counts as answered" is the kind of thing someone tidies into
+`!value` without the note.
+
+**M2 + M3 — the workflow became data.** `submissions.workflow.ts` declares the four verbs in
+one table: accepted statuses, produced status, stamped columns, required actor, and the
+notification. Previously that machine was spread across four call sites each passing five
+options, so learning it meant reading four methods and assembling it mentally. The four
+public methods stayed as the API and are now one-liners over a single `apply()`.
+
+Two things the table makes visible that were previously buried:
+- **`reject` stamps the `returned_*` columns** (FOLLOW-UPS F3) — now a line you read rather
+  than a call-site argument you have to notice.
+- **The actor gate is optional per verb**: `return` and `reject` simply have no `actor` key,
+  where before their absence was four lines apart from validate's presence.
+
+**Verification.** All 29 existing tests green, unchanged — the point of the exercise.
+402 tests / 31 suites overall; `tsc` · `eslint --max-warnings 0` · `build` clean; DI boots.
+Mutation-checked: flipping `validate.from` to `['draft']` failed 5 tests, including the
+actor-gate ones, confirming the table is load-bearing rather than decorative.
+
+**Gotcha, cost me a file:** reverting that mutation with
+`Get-Content -Raw | Set-Content -Encoding utf8` mangled every non-ASCII character in the
+file into mojibake, and `git checkout` could not restore it because the file was new and
+untracked. Rewritten in ASCII. **Two lessons: PowerShell round-tripping is not
+encoding-safe on non-ASCII, and an untracked file has no undo.** Mutation-test only files
+that are already committed, or use the Write tool to restore.
 `submissions`, `access-admin` and `kpis` have write paths and real rules, and `access-admin`
 is security-adjacent, so pinning it is worth more than most. `dashboard`, `reports`,
 `registry`, `search` and `lookups` are read-only or aggregate, where characterization tests

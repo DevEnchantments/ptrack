@@ -1160,13 +1160,13 @@
     "semantic_hash": ""
   },
   "backend/src/modules/dashboard/dashboard.module.ts": {
-    "mtime": 1785917797.1289625,
-    "ast_hash": "85dca4a5c298eea1492578cfcb173f74",
+    "mtime": 1787144239.9849048,
+    "ast_hash": "a9d0c3a38ee105b4e3e2110d37038bdb",
     "semantic_hash": ""
   },
   "backend/src/modules/dashboard/dashboard.service.ts": {
-    "mtime": 1786969433.3848476,
-    "ast_hash": "02c4bf9d2a06d35b85092c4ce5ed2079",
+    "mtime": 1787144508.2073061,
+    "ast_hash": "40aa38f2276de81018f32f982e0e43af",
     "semantic_hash": ""
   },
   "backend/db/fdd_kpis.sql": {
@@ -1260,13 +1260,13 @@
     "semantic_hash": ""
   },
   "backend/src/modules/search/search.module.ts": {
-    "mtime": 1786438453.2983935,
-    "ast_hash": "5c8044503c045ba6359caa0b9fa34625",
+    "mtime": 1787143908.6500218,
+    "ast_hash": "cd28cf48db60bdee4495fe759da1b7c6",
     "semantic_hash": ""
   },
   "backend/src/modules/search/search.service.ts": {
-    "mtime": 1786968985.4097047,
-    "ast_hash": "5b5ba40a8c875dd085a5a7f91cfa698a",
+    "mtime": 1787143961.4353046,
+    "ast_hash": "eac005cda064e600f1bb3ec3eaec2d4c",
     "semantic_hash": ""
   },
   "backend/src/modules/registry/registry.controller.ts": {
@@ -1275,13 +1275,13 @@
     "semantic_hash": ""
   },
   "backend/src/modules/registry/registry.module.ts": {
-    "mtime": 1786440093.0690727,
-    "ast_hash": "3f2076052f22bb19eea17240527d8f7c",
+    "mtime": 1787143797.3555107,
+    "ast_hash": "af25ff482e8cd05702bfdf3bf351a619",
     "semantic_hash": ""
   },
   "backend/src/modules/registry/registry.service.ts": {
-    "mtime": 1786969008.3874402,
-    "ast_hash": "a146a4c53bbca93b22f789e58606fcc7",
+    "mtime": 1787143798.8818214,
+    "ast_hash": "186e3ec179d7ffed4fddbba0b9228dde",
     "semantic_hash": ""
   },
   "frontend/src/pages/ActionItemsPage.tsx": {
@@ -1470,13 +1470,13 @@
     "semantic_hash": ""
   },
   "backend/src/modules/reports/reports.module.ts": {
-    "mtime": 1786620278.2732086,
-    "ast_hash": "eb06255a4d7cff5cebb0e0efdebceac6",
+    "mtime": 1787144156.4051275,
+    "ast_hash": "c01f8df48c073cdae47d7e0cae16b1e5",
     "semantic_hash": ""
   },
   "backend/src/modules/reports/reports.service.ts": {
-    "mtime": 1786969288.8809705,
-    "ast_hash": "b147e81a6c8dfb223b481673443c7691",
+    "mtime": 1787144103.4052308,
+    "ast_hash": "d5ec62343a3669490c0d15a1e54732cc",
     "semantic_hash": ""
   },
   "frontend/src/pages/reports/InitiativeProgressReportPage.tsx": {
@@ -1922,6 +1922,51 @@
   "backend/src/modules/lookups/lookups.service.spec.ts": {
     "mtime": 1787143298.4278731,
     "ast_hash": "bfdef0ad539c646522e74706d669f56f",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/dashboard/dashboard.repository.ts": {
+    "mtime": 1787144241.4766543,
+    "ast_hash": "cee2f33f2ee1654a6f83fcfe97138c33",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/dashboard/dashboard.service.spec.ts": {
+    "mtime": 1787144508.2093039,
+    "ast_hash": "336da410361f6d301f18210b8051861e",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/registry/registry.repository.ts": {
+    "mtime": 1787143730.5574672,
+    "ast_hash": "7d58e89f570e430935516c3ea46d76d1",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/registry/registry.service.spec.ts": {
+    "mtime": 1787143798.8608797,
+    "ast_hash": "e5c3062bdcd64d44b9c73ae4a8f02cf9",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/registry/registry.types.ts": {
+    "mtime": 1787143740.9909787,
+    "ast_hash": "5aab33417f1ebf74ca29bb590a217795",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/reports/reports.repository.ts": {
+    "mtime": 1787144508.210304,
+    "ast_hash": "a506313f2da70c51a4b57005c6cb8115",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/reports/reports.service.spec.ts": {
+    "mtime": 1787144157.9398694,
+    "ast_hash": "81b8463cf7fe77dad7b26630dbd53631",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/search/search.repository.ts": {
+    "mtime": 1787144508.2120824,
+    "ast_hash": "86b2c56961ba423519ffdeef5a089368",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/search/search.service.spec.ts": {
+    "mtime": 1787143961.413979,
+    "ast_hash": "e57d06a7f44bd19269fed5ca97e52576",
     "semantic_hash": ""
   }
 }

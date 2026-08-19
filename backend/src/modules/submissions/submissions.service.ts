@@ -10,12 +10,18 @@ import { SubmissionsRepository } from './submissions.repository';
 import { SubmissionActionDto } from './dto/submission-action.dto';
 import { NotificationsService } from '../notifications';
 import { ProjectAccessService } from '../../common/access/project-access.service';
+import { submissionGateFailures } from './submissions.gate';
+import {
+  TRANSITIONS,
+  type TransitionName,
+  type TransitionSpec,
+} from './submissions.workflow';
 
 /**
- * FR-14 workflow (routing ASSUMED per Fig 10 — see FDD-ALIGNMENT 1.6):
- * draft/returned -> review -> validated -> approved, with returned/rejected
- * branches. PMO Partner validates and Project Owner approves, enforced only
- * when the project's person field is set.
+ * FR-14 workflow: draft/returned -> review -> validated -> approved, with
+ * returned and rejected branches. The machine itself lives in
+ * `submissions.workflow.ts`; this service is the part that touches the
+ * database, checks the cycle, and enforces who may act.
  */
 @Injectable()
 export class SubmissionsService {
@@ -90,58 +96,37 @@ export class SubmissionsService {
     return this.repo.setCycleStatus(cycle.id, 'open');
   }
 
-  /** FDD 3.3.2 submission gate: mandatory fields + weights total 100. */
-  private async gateFailures(projectId: string): Promise<string[]> {
+  async submit(projectId: string, dto: SubmissionActionDto, userId: string) {
     const project = await this.projects.findDetail(projectId);
     if (!project) throw new NotFoundException('Project not found.');
-    const failures: string[] = [];
-    const mandatory: Array<[unknown, string]> = [
-      [project.name, 'name'],
-      [project.reference_id, 'reference ID'],
-      [project.plan_year, 'plan year'],
-      [project.owner_id, 'project owner'],
-      [project.sponsor, 'sponsor'],
-      [project.sector_id, 'sector'],
-      [project.target_end_date, 'target end date'],
-      [project.approved_budget, 'approved budget'],
-    ];
-    for (const [value, label] of mandatory) {
-      if (value == null || value === '') failures.push(`missing ${label}`);
-    }
-    const ms = await this.milestones.findByProject(projectId);
-    const active = ms.filter((m) => m.status !== 'not_applicable');
-    if (active.length > 0) {
-      const total = active.reduce((sum, m) => sum + (m.weightage ?? 0), 0);
-      if (Math.abs(total - 100) > 0.001)
-        failures.push(`milestone weights total ${total}, not 100`);
-    }
-    return failures;
-  }
-
-  async submit(projectId: string, dto: SubmissionActionDto, userId: string) {
-    const failures = await this.gateFailures(projectId);
+    const failures = submissionGateFailures(
+      project,
+      await this.milestones.findByProject(projectId),
+    );
     if (failures.length > 0) {
       throw new BadRequestException(
         `Submission blocked: ${failures.join('; ')}.`,
       );
     }
+
     const cycle = await this.repo.getOrCreateCycleFor(new Date());
     if (cycle.status === 'closed') {
       throw new BadRequestException(
         `The ${cycle.name} cycle is closed; submissions are locked.`,
       );
     }
+
     const existing = await this.repo.findForCycle(projectId, cycle.id);
-    const project = await this.projects.findDetail(projectId);
     const notifyValidator = () =>
       this.notifications.notify({
-        userId: project?.pmo_partner_id,
+        userId: project.pmo_partner_id,
         actorId: userId,
         projectId,
         type: 'submission_review',
-        title: `${project?.name ?? 'A project'} awaits validation`,
+        title: `${project.name} awaits validation`,
         body: `The ${cycle.name} submission was sent for review.`,
       });
+
     if (!existing) {
       const created = await this.repo.insert({
         project_id: projectId,
@@ -156,6 +141,7 @@ export class SubmissionsService {
       await notifyValidator();
       return created;
     }
+
     if (existing.status !== 'draft' && existing.status !== 'returned') {
       throw new BadRequestException(
         `Already submitted for ${cycle.name} (status: ${existing.status}).`,
@@ -174,101 +160,13 @@ export class SubmissionsService {
     return resubmitted;
   }
 
-  private async transition(
-    projectId: string,
-    submissionId: string,
-    userId: string,
-    opts: {
-      from: string[];
-      to: string;
-      /** projects column that names the only allowed actor (when set). */
-      actorField?: 'pmo_partner_id' | 'owner_id';
-      actorLabel?: string;
-      stamp: 'validated' | 'approved' | 'returned';
-      comment?: string | null;
-    },
-  ) {
-    const sub = await this.repo.findOne(projectId, submissionId);
-    if (!sub) throw new NotFoundException('Submission not found.');
-    if (sub.cycle?.status === 'closed') {
-      throw new BadRequestException(
-        `The ${sub.cycle.name} cycle is closed; decisions are locked.`,
-      );
-    }
-    if (!opts.from.includes(sub.status)) {
-      throw new BadRequestException(
-        `Cannot ${opts.to} a submission in status "${sub.status}".`,
-      );
-    }
-    const project = await this.projects.findDetail(projectId);
-    if (opts.actorField) {
-      const requiredActor = project?.[opts.actorField];
-      if (requiredActor && requiredActor !== userId) {
-        throw new ForbiddenException(
-          `Only the ${opts.actorLabel} can do this for this project.`,
-        );
-      }
-    }
-    const updated = await this.repo.update(submissionId, {
-      status: opts.to,
-      decision_comment: opts.comment?.trim() || null,
-      [`${opts.stamp}_by`]: userId,
-      [`${opts.stamp}_at`]: new Date().toISOString(),
-      updated_by: userId,
-      updated_at: new Date().toISOString(),
-    });
-    if (!updated) throw new NotFoundException('Submission not found.');
-
-    // FDD 3.9 event notifications (in-app; best-effort).
-    const name = project?.name ?? 'A project';
-    const cycleName = sub.cycle?.name ?? 'this cycle';
-    if (opts.to === 'validated') {
-      await this.notifications.notify({
-        userId: project?.owner_id,
-        actorId: userId,
-        projectId,
-        type: 'submission_validated',
-        title: `${name} awaits approval`,
-        body: `The ${cycleName} submission was validated.`,
-      });
-    } else if (opts.to === 'approved') {
-      await this.notifications.notify({
-        userId: sub.submitted_by,
-        actorId: userId,
-        projectId,
-        type: 'submission_approved',
-        title: `${name}: submission approved`,
-        body: `Your ${cycleName} submission was approved.`,
-      });
-    } else if (opts.to === 'returned' || opts.to === 'rejected') {
-      await this.notifications.notify({
-        userId: sub.submitted_by,
-        actorId: userId,
-        projectId,
-        type: `submission_${opts.to}`,
-        title: `${name}: submission ${opts.to}`,
-        body:
-          opts.comment?.trim() ||
-          `Your ${cycleName} submission was ${opts.to}.`,
-      });
-    }
-    return updated;
-  }
-
   validate(
     projectId: string,
     id: string,
     dto: SubmissionActionDto,
     userId: string,
   ) {
-    return this.transition(projectId, id, userId, {
-      from: ['review'],
-      to: 'validated',
-      actorField: 'pmo_partner_id',
-      actorLabel: 'PMO Partner',
-      stamp: 'validated',
-      comment: dto.comment,
-    });
+    return this.apply('validate', projectId, id, dto, userId);
   }
 
   approve(
@@ -277,14 +175,7 @@ export class SubmissionsService {
     dto: SubmissionActionDto,
     userId: string,
   ) {
-    return this.transition(projectId, id, userId, {
-      from: ['validated'],
-      to: 'approved',
-      actorField: 'owner_id',
-      actorLabel: 'Project Owner',
-      stamp: 'approved',
-      comment: dto.comment,
-    });
+    return this.apply('approve', projectId, id, dto, userId);
   }
 
   returnSubmission(
@@ -293,12 +184,7 @@ export class SubmissionsService {
     dto: SubmissionActionDto,
     userId: string,
   ) {
-    return this.transition(projectId, id, userId, {
-      from: ['review', 'validated'],
-      to: 'returned',
-      stamp: 'returned',
-      comment: dto.comment,
-    });
+    return this.apply('return', projectId, id, dto, userId);
   }
 
   reject(
@@ -307,11 +193,69 @@ export class SubmissionsService {
     dto: SubmissionActionDto,
     userId: string,
   ) {
-    return this.transition(projectId, id, userId, {
-      from: ['review', 'validated'],
-      to: 'rejected',
-      stamp: 'returned',
-      comment: dto.comment,
+    return this.apply('reject', projectId, id, dto, userId);
+  }
+
+  /**
+   * One path for every verb: find it, check the cycle and the status, check
+   * who is asking, write the stamps, tell whoever the workflow says to tell.
+   */
+  private async apply(
+    name: TransitionName,
+    projectId: string,
+    submissionId: string,
+    dto: SubmissionActionDto,
+    userId: string,
+  ) {
+    const spec: TransitionSpec = TRANSITIONS[name];
+    const sub = await this.repo.findOne(projectId, submissionId);
+    if (!sub) throw new NotFoundException('Submission not found.');
+    if (sub.cycle?.status === 'closed') {
+      throw new BadRequestException(
+        `The ${sub.cycle.name} cycle is closed; decisions are locked.`,
+      );
+    }
+    if (!spec.from.includes(sub.status)) {
+      throw new BadRequestException(
+        `Cannot ${spec.to} a submission in status "${sub.status}".`,
+      );
+    }
+
+    const project = await this.projects.findDetail(projectId);
+    if (spec.actor) {
+      const required = project?.[spec.actor.field];
+      // Enforced only when the project names someone: an unset field means
+      // the step is open to anyone.
+      if (required && required !== userId) {
+        throw new ForbiddenException(
+          `Only the ${spec.actor.label} can do this for this project.`,
+        );
+      }
+    }
+
+    const comment = dto.comment?.trim() || null;
+    const updated = await this.repo.update(submissionId, {
+      status: spec.to,
+      decision_comment: comment,
+      [`${spec.stamp}_by`]: userId,
+      [`${spec.stamp}_at`]: new Date().toISOString(),
+      updated_by: userId,
+      updated_at: new Date().toISOString(),
     });
+    if (!updated) throw new NotFoundException('Submission not found.');
+
+    // FDD 3.9 event notifications (in-app; best-effort).
+    await this.notifications.notify({
+      ...spec.notify({
+        projectName: project?.name ?? 'A project',
+        cycleName: sub.cycle?.name ?? 'this cycle',
+        submittedBy: sub.submitted_by,
+        ownerId: project?.owner_id,
+        comment,
+      }),
+      actorId: userId,
+      projectId,
+    });
+    return updated;
   }
 }
