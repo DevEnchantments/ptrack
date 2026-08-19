@@ -563,6 +563,32 @@ into the service for no gain — a shallower interface, not a deeper one.
 `build` clean; DI graph boots. F8 drops from ten repository-less modules to four
 (`import`, `project-sections`, `templates`, `users`).
 
+### 2026-08-20 — Phase 1 finished: updates, kpis, access-admin. **Phase 1 complete.**
+
+`COLUMN_SPEC` adoption in `updates` and `kpis` (17 fields in the latter, the largest spec
+after projects), and `assertAdminsRemain()` extracted in `access-admin` so `updateRole`
+reads as validate, load, no-op check, guard, write, clear cache, audit.
+
+**The `kpis` edit went wrong first and is worth recording:** the script that rewrote it
+sliced from `insert({` to `async get(`, but `get` appears *before* `add` in that file, so
+the slice matched the earlier occurrence and duplicated two methods. TypeScript caught it
+immediately. **Index-based source surgery needs an anchor that is unique, not merely
+present** — the same class of mistake as a regex that matches the first thing rather than
+the right thing.
+
+**Mutation checks: two caught, one revealed a dead branch (D4).** Removing `tags` from
+`updates` and `decimal_places` from `kpis` both failed tests, as they should. The third —
+deleting `newRole === 'admin'` from the last-admin guard — changed nothing, because
+`updateRole` returns early when the role is unchanged, so a current role of `admin` implies
+the new role is not `admin`. **Kept the condition anyway** and commented why: the guard is
+its own function now and should hold on its own terms rather than depend on the order of
+checks in today's only caller. Not every dead branch is worth deleting.
+
+**Verification.** 406 tests / 31 suites, unchanged by the refactors as intended; `tsc` ·
+`eslint --max-warnings 0` · `build` clean; DI boots.
+
+**Phase 1 is complete.** All sixteen modules with safety nets have been through the pass.
+
 ### 2026-08-19 — Phase 1 continued: risks, attachments, issues, people, resources, and a no-change session for project-sections
 
 **Skill:** `book-philosophy-of-software-design` throughout.

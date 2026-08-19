@@ -7,6 +7,54 @@ import {
   UpdateKpiActionPlanDto,
   UpdateKpiDto,
 } from './dto/kpi-children.dto';
+import { columnsFrom, type ColumnSpec } from '../../common/columns';
+
+/** How a KPI DTO maps onto columns, for both create and update. */
+const COLUMN_SPEC: ColumnSpec = {
+  trimmed: ['name'],
+  trimmedOrNull: [
+    'description',
+    'pillar',
+    'entity',
+    'unit',
+    'data_source',
+    'calculation_method',
+    'rationale',
+  ],
+  nullable: [
+    'baseline',
+    'target',
+    'tier_id',
+    'objective_id',
+    'owner_id',
+    'project_id',
+  ],
+  asIs: ['polarity', 'decimal_places', 'frequency', 'is_priority'],
+};
+
+/**
+ * Registry defaults. `decimal_places: 0` is a real value rather than a blank,
+ * which is why it is a default here and `asIs` above.
+ */
+const CREATE_DEFAULTS = {
+  description: null,
+  pillar: null,
+  entity: null,
+  unit: null,
+  polarity: 'higher_is_better',
+  decimal_places: 0,
+  data_source: null,
+  calculation_method: null,
+  frequency: 'monthly',
+  rationale: null,
+  baseline: null,
+  target: null,
+  is_priority: false,
+  tier_id: null,
+  objective_id: null,
+  owner_id: null,
+  project_id: null,
+};
 
 /**
  * FDD 1.8 KPI registry (Figs 27-29). Achievement % and the data-quality index
@@ -29,59 +77,20 @@ export class KpisService {
 
   add(dto: CreateKpiDto, userId: string) {
     return this.repo.insert({
-      name: dto.name.trim(),
-      description: dto.description?.trim() || null,
-      pillar: dto.pillar?.trim() || null,
-      entity: dto.entity?.trim() || null,
-      unit: dto.unit?.trim() || null,
-      polarity: dto.polarity ?? 'higher_is_better',
-      decimal_places: dto.decimal_places ?? 0,
-      data_source: dto.data_source?.trim() || null,
-      calculation_method: dto.calculation_method?.trim() || null,
-      frequency: dto.frequency ?? 'monthly',
-      rationale: dto.rationale?.trim() || null,
-      baseline: dto.baseline ?? null,
-      target: dto.target ?? null,
-      is_priority: dto.is_priority ?? false,
-      tier_id: dto.tier_id ?? null,
-      objective_id: dto.objective_id ?? null,
-      owner_id: dto.owner_id ?? null,
-      project_id: dto.project_id ?? null,
+      ...CREATE_DEFAULTS,
+      ...columnsFrom(dto, COLUMN_SPEC),
       created_by: userId,
       updated_by: userId,
     });
   }
 
   async update(kpiId: string, dto: UpdateKpiDto, userId: string) {
-    const patch: Record<string, unknown> = {
+    const updated = await this.repo.update(kpiId, {
       updated_by: userId,
+      // No moddatetime trigger on this table; keep the audit column honest.
       updated_at: new Date().toISOString(),
-    };
-    if (dto.name !== undefined) patch.name = dto.name.trim();
-    if (dto.description !== undefined)
-      patch.description = dto.description?.trim() || null;
-    if (dto.pillar !== undefined) patch.pillar = dto.pillar?.trim() || null;
-    if (dto.entity !== undefined) patch.entity = dto.entity?.trim() || null;
-    if (dto.unit !== undefined) patch.unit = dto.unit?.trim() || null;
-    if (dto.polarity !== undefined) patch.polarity = dto.polarity;
-    if (dto.decimal_places !== undefined)
-      patch.decimal_places = dto.decimal_places ?? 0;
-    if (dto.data_source !== undefined)
-      patch.data_source = dto.data_source?.trim() || null;
-    if (dto.calculation_method !== undefined)
-      patch.calculation_method = dto.calculation_method?.trim() || null;
-    if (dto.frequency !== undefined) patch.frequency = dto.frequency;
-    if (dto.rationale !== undefined)
-      patch.rationale = dto.rationale?.trim() || null;
-    if (dto.baseline !== undefined) patch.baseline = dto.baseline ?? null;
-    if (dto.target !== undefined) patch.target = dto.target ?? null;
-    if (dto.is_priority !== undefined) patch.is_priority = dto.is_priority;
-    if (dto.tier_id !== undefined) patch.tier_id = dto.tier_id ?? null;
-    if (dto.objective_id !== undefined)
-      patch.objective_id = dto.objective_id ?? null;
-    if (dto.owner_id !== undefined) patch.owner_id = dto.owner_id ?? null;
-    if (dto.project_id !== undefined) patch.project_id = dto.project_id ?? null;
-    const updated = await this.repo.update(kpiId, patch);
+      ...columnsFrom(dto, COLUMN_SPEC),
+    });
     if (!updated) throw new NotFoundException('KPI not found.');
     return updated;
   }

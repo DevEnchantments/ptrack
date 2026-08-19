@@ -7,6 +7,18 @@ import { RecordHistoryService } from '../../database/record-history.service';
 import { UpdatesRepository } from './updates.repository';
 import { CreateUpdateDto } from './dto/create-update.dto';
 import { UpdateUpdateDto } from './dto/update-update.dto';
+import { columnsFrom, type ColumnSpec } from '../../common/columns';
+
+/** How an update DTO maps onto columns, for both create and edit. */
+const COLUMN_SPEC: ColumnSpec = {
+  trimmed: ['body'],
+  nullable: ['type_id'],
+  arrayOrNull: ['tags'],
+  asIs: ['is_gold'],
+};
+
+/** What a new update gets for the columns the caller omitted. */
+const CREATE_DEFAULTS = { type_id: null, is_gold: false, tags: null };
 
 @Injectable()
 export class UpdatesService {
@@ -25,10 +37,9 @@ export class UpdatesService {
     }
     return this.repo.insert({
       project_id: projectId,
-      body: dto.body.trim(),
-      type_id: dto.type_id ?? null,
-      is_gold: dto.is_gold ?? false,
-      tags: dto.tags?.length ? dto.tags : null,
+      ...CREATE_DEFAULTS,
+      ...columnsFrom(dto, COLUMN_SPEC),
+      // Who wrote it: a domain field, not one of the audit columns below.
       author_id: userId,
       created_by: userId,
       updated_by: userId,
@@ -41,12 +52,10 @@ export class UpdatesService {
     dto: UpdateUpdateDto,
     userId: string,
   ) {
-    const patch: Record<string, unknown> = { updated_by: userId };
-    if (dto.body !== undefined) patch.body = dto.body.trim();
-    if (dto.type_id !== undefined) patch.type_id = dto.type_id ?? null;
-    if (dto.is_gold !== undefined) patch.is_gold = dto.is_gold;
-    if (dto.tags !== undefined) patch.tags = dto.tags?.length ? dto.tags : null;
-    const updated = await this.repo.update(projectId, updateId, patch);
+    const updated = await this.repo.update(projectId, updateId, {
+      updated_by: userId,
+      ...columnsFrom(dto, COLUMN_SPEC),
+    });
     if (!updated) throw new NotFoundException('Update not found.');
     return updated;
   }

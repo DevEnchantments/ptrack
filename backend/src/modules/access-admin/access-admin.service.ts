@@ -51,14 +51,7 @@ export class AccessAdminService {
     if (!target) throw new NotFoundException('User not found.');
     if (target.app_role === role) return { id: targetId, app_role: role };
 
-    // The system must always keep at least one admin who can undo mistakes.
-    if (target.app_role === 'admin' && role !== 'admin') {
-      if ((await this.repo.countAdmins()) <= 1) {
-        throw new BadRequestException(
-          'Cannot demote the last remaining admin.',
-        );
-      }
-    }
+    await this.assertAdminsRemain(target.app_role, role);
 
     const updated = await this.repo.setAppRole(targetId, role);
     if (!updated) throw new NotFoundException('User not found.');
@@ -106,6 +99,26 @@ export class AccessAdminService {
       new: [...wanted].sort().join(','),
     });
     return this.getGrants();
+  }
+
+  /**
+   * The system must always keep at least one admin who can undo mistakes, so
+   * the last one cannot demote themselves out of the role. Only a demotion
+   * *from* admin costs a count; promotions never do.
+   *
+   * `newRole === 'admin'` is unreachable from `updateRole`, which returns
+   * early when the role is unchanged — a mutation check proved removing it
+   * changes nothing. It stays because this guard should hold on its own terms
+   * rather than depend on the order of checks in its only caller today.
+   */
+  private async assertAdminsRemain(
+    currentRole: string,
+    newRole: string,
+  ): Promise<void> {
+    if (currentRole !== 'admin' || newRole === 'admin') return;
+    if ((await this.repo.countAdmins()) <= 1) {
+      throw new BadRequestException('Cannot demote the last remaining admin.');
+    }
   }
 
   /** Best-effort: a failed audit insert never fails the change it records. */
