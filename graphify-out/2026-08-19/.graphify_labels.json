@@ -153,12 +153,7 @@
   "151": "@nestjs/swagger",
   "152": "ImportPage.tsx",
   "153": "reports.repository.ts",
-  "154": "AdjustWeightsDto",
-  "155": "reports.controller.ts",
-  "156": "InitialsAvatar.tsx",
-  "157": "kpis.repository.ts",
   "158": "status-reports.repository.ts",
   "159": "index.ts",
-  "160": "program-outcomes.module.ts",
-  "161": "SubmissionsModule"
+  "160": "program-outcomes.module.ts"
 }
