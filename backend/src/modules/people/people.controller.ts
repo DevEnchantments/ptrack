@@ -88,7 +88,8 @@ export class PeopleController {
   remove(
     @Param('projectId', ParseUUIDPipe) projectId: string,
     @Param('memberId', ParseUUIDPipe) memberId: string,
+    @CurrentUser() user: AuthUser,
   ) {
-    return this.people.remove(projectId, memberId);
+    return this.people.remove(projectId, memberId, user.id);
   }
 }

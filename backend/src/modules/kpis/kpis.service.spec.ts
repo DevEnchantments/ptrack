@@ -27,10 +27,10 @@ describe('KpisService', () => {
       update: jest.fn().mockResolvedValue({ id: KPI }),
       remove: jest.fn().mockResolvedValue({ id: KPI }),
       insertReading: jest.fn().mockResolvedValue({ id: READING }),
-      removeReading: jest.fn().mockResolvedValue(undefined),
+      removeReading: jest.fn().mockResolvedValue({ id: READING }),
       insertPlan: jest.fn().mockResolvedValue({ id: PLAN }),
-      updatePlan: jest.fn().mockResolvedValue(undefined),
-      removePlan: jest.fn().mockResolvedValue(undefined),
+      updatePlan: jest.fn().mockResolvedValue({ id: PLAN }),
+      removePlan: jest.fn().mockResolvedValue({ id: PLAN }),
     };
     const service = new KpisService(mocks as unknown as KpisRepository);
     return { service, mocks };
@@ -199,16 +199,22 @@ describe('KpisService', () => {
       });
     });
 
-    it('deletes a reading without checking it exists (FOLLOW-UPS F9)', async () => {
-      // Pinned as the current behaviour, not endorsed: the repository filters
-      // on kpi_id so nothing foreign is touched, but a caller deleting a
-      // reading that does not exist is told it worked.
+    it('404s when the reading is not on this KPI', async () => {
+      // Was a silent success until F9 was fixed: the delete matched nothing
+      // and the caller was told it worked.
       const { service, mocks } = build();
+      mocks.removeReading.mockResolvedValue(null);
 
       await expect(
         service.removeReading(KPI, 'no-such-reading'),
-      ).resolves.toBeUndefined();
-      expect(mocks.findOne).not.toHaveBeenCalled();
+      ).rejects.toBeInstanceOf(NotFoundException);
+    });
+
+    it('reports the delete when the reading was on this KPI', async () => {
+      const { service } = build();
+      await expect(service.removeReading(KPI, READING)).resolves.toEqual({
+        deleted: true,
+      });
     });
   });
 
@@ -240,15 +246,20 @@ describe('KpisService', () => {
       });
     });
 
-    it('reports ok for a plan update whether or not the plan exists (FOLLOW-UPS F9)', async () => {
-      // Same class as removeReading: no existence check, no 404, and the
-      // repository returns void, so a typo'd plan id is silently a success.
+    it('404s when the plan is not on this KPI', async () => {
       const { service, mocks } = build();
+      mocks.updatePlan.mockResolvedValue(null);
 
       await expect(
         service.updatePlan(KPI, 'no-such-plan', { status: 'done' }),
-      ).resolves.toEqual({ ok: true });
-      expect(mocks.updatePlan).toHaveBeenCalledWith(KPI, 'no-such-plan', {
+      ).rejects.toBeInstanceOf(NotFoundException);
+    });
+
+    it('patches only the fields that were sent', async () => {
+      const { service, mocks } = build();
+      await service.updatePlan(KPI, PLAN, { status: 'done' });
+
+      expect(mocks.updatePlan).toHaveBeenCalledWith(KPI, PLAN, {
         status: 'done',
       });
     });
@@ -263,10 +274,18 @@ describe('KpisService', () => {
       });
     });
 
-    it('reports deleted for a plan removal that matched nothing (FOLLOW-UPS F9)', async () => {
-      const { service } = build();
+    it('404s when removing a plan that is not on this KPI', async () => {
+      const { service, mocks } = build();
+      mocks.removePlan.mockResolvedValue(null);
 
-      await expect(service.removePlan(KPI, 'no-such-plan')).resolves.toEqual({
+      await expect(
+        service.removePlan(KPI, 'no-such-plan'),
+      ).rejects.toBeInstanceOf(NotFoundException);
+    });
+
+    it('reports the delete when the plan was on this KPI', async () => {
+      const { service } = build();
+      await expect(service.removePlan(KPI, PLAN)).resolves.toEqual({
         deleted: true,
       });
     });

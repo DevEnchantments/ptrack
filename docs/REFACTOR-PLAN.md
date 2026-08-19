@@ -467,6 +467,42 @@ would have asserted on an unreachable input.
 **Verification.** 309 → **328 tests / 26 suites** (1 documented skip); `tsc` · `eslint
 --max-warnings 0` · `build` clean; DI graph boots.
 
+### 2026-08-19 — Clearing the register before Phase 1 (APPROVED BEHAVIOUR CHANGES)
+
+Fares: "fix any issues before phase 1". Three fixed, three cannot be fixed in code.
+
+**Fixed — F9, KPI child resources.** `removeReading`, `updatePlan` and `removePlan` now
+`select('id').maybeSingle()`, so the repository reports whether anything matched, and the
+service raises 404 instead of reporting success for nothing. The three tests that pinned the
+old behaviour were **flipped, not deleted**, so the diff shows exactly which promises
+changed.
+
+**Fixed — F1, `people.remove` audit.** The repository returns a display label (linked
+account name, else the pending name or email) and the service writes a `project_members`
+deletion row. `PeopleService` gained `RecordHistoryService`, which needed no module change
+because `DatabaseModule` is `@Global`. The B4 adapter dropped its documented skip, so
+`people` now asserts the whole contract like every sibling — **the suite has no skips left**.
+
+**Fixed — F6, deprecated `baseUrl`.** Removed from `frontend/tsconfig.json`; `paths`
+resolves relative to the config file without it. A bare `npx tsc --noEmit` in `frontend/`
+passes now, so the typecheck is usable outside `tsc -b`.
+
+**Not fixable in code, and one of them was mis-diagnosed:**
+- **F2 was wrong as filed.** It said `attachments.update` forgets to stamp `updated_by`.
+  Checking before fixing showed the table has **no `updated_by` or `updated_at` column at
+  all** — it records who uploaded a file and never who edited it. Schema gap needing a
+  migration, plus a decision about whether attachment edits deserve auditing. Re-filed as
+  BLOCKED rather than quietly closed.
+- **F3** (`reject` writes `returned_*`) needs `rejected_by`/`rejected_at` columns.
+- **F5** (concurrent outcome numbering) needs a unique constraint or sequence.
+
+Checking each before fixing is what kept F2 from becoming a wrong "fix", and it is the third
+time on this branch that has paid (see D1-D3).
+
+**Verification.** 328 → **333 tests / 26 suites, no skips**; backend `tsc` · `eslint
+--max-warnings 0` · `build` clean; DI graph boots; frontend lint, build, 47 tests, and now a
+clean bare `tsc --noEmit`.
+
 **Plan change agreed at the gate.** Phase 0's eight modules are not comparable.
 `submissions`, `access-admin` and `kpis` have write paths and real rules, and `access-admin`
 is security-adjacent, so pinning it is worth more than most. `dashboard`, `reports`,

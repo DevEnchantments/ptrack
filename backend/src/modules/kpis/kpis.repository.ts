@@ -131,13 +131,20 @@ export class KpisRepository {
     return data;
   }
 
-  async removeReading(kpiId: string, readingId: string): Promise<void> {
-    const { error } = await this.db.client
+  /** Null when the reading is not on this KPI, so the caller can 404. */
+  async removeReading(
+    kpiId: string,
+    readingId: string,
+  ): Promise<{ id: string } | null> {
+    const { data, error } = await this.db.client
       .from('kpi_readings')
       .delete()
       .eq('kpi_id', kpiId)
-      .eq('id', readingId);
+      .eq('id', readingId)
+      .select('id')
+      .maybeSingle<{ id: string }>();
     if (error) throw toHttpException(error, 'kpis.removeReading');
+    return data ?? null;
   }
 
   async insertPlan(row: Record<string, unknown>): Promise<KpiActionPlan> {
@@ -150,25 +157,36 @@ export class KpisRepository {
     return data;
   }
 
+  /** Null when the plan is not on this KPI, so the caller can 404. */
   async updatePlan(
     kpiId: string,
     planId: string,
     patch: Record<string, unknown>,
-  ): Promise<void> {
-    const { error } = await this.db.client
+  ): Promise<{ id: string } | null> {
+    const { data, error } = await this.db.client
       .from('kpi_action_plans')
       .update(patch)
       .eq('kpi_id', kpiId)
-      .eq('id', planId);
+      .eq('id', planId)
+      .select('id')
+      .maybeSingle<{ id: string }>();
     if (error) throw toHttpException(error, 'kpis.updatePlan');
+    return data ?? null;
   }
 
-  async removePlan(kpiId: string, planId: string): Promise<void> {
-    const { error } = await this.db.client
+  /** Null when the plan is not on this KPI, so the caller can 404. */
+  async removePlan(
+    kpiId: string,
+    planId: string,
+  ): Promise<{ id: string } | null> {
+    const { data, error } = await this.db.client
       .from('kpi_action_plans')
       .delete()
       .eq('kpi_id', kpiId)
-      .eq('id', planId);
+      .eq('id', planId)
+      .select('id')
+      .maybeSingle<{ id: string }>();
     if (error) throw toHttpException(error, 'kpis.removePlan');
+    return data ?? null;
   }
 }

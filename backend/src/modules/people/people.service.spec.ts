@@ -1,6 +1,7 @@
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { PeopleService } from './people.service';
 import type { PeopleRepository } from './people.repository';
+import type { RecordHistoryService } from '../../database/record-history.service';
 import { describeProjectScopedContract } from '../../common/testing/project-scoped-contract';
 
 /**
@@ -19,9 +20,15 @@ describe('PeopleService', () => {
       update: jest
         .fn()
         .mockResolvedValue('updated' in over ? over.updated : { id: MEMBER }),
-      remove: jest.fn().mockResolvedValue(undefined),
+      remove: jest
+        .fn()
+        .mockResolvedValue({ id: MEMBER, label: 'Dana Whitfield' }),
+      logDeleted: jest.fn().mockResolvedValue(undefined),
     };
-    const service = new PeopleService(mocks as unknown as PeopleRepository);
+    const service = new PeopleService(
+      mocks as unknown as PeopleRepository,
+      { logDeleted: mocks.logDeleted } as unknown as RecordHistoryService,
+    );
     return { service, mocks };
   }
 
@@ -121,14 +128,29 @@ describe('PeopleService', () => {
     it('reports deleted when a row was removed, 404s on foreign ids', async () => {
       const { service, mocks } = build();
       mocks.remove.mockResolvedValueOnce({ id: MEMBER });
-      await expect(service.remove(PROJECT, MEMBER)).resolves.toEqual({
+      await expect(service.remove(PROJECT, MEMBER, USER)).resolves.toEqual({
         deleted: true,
       });
 
       mocks.remove.mockResolvedValueOnce(null);
-      await expect(service.remove(PROJECT, 'not-there')).rejects.toBeInstanceOf(
-        NotFoundException,
-      );
+      await expect(
+        service.remove(PROJECT, 'not-there', USER),
+      ).rejects.toBeInstanceOf(NotFoundException);
+    });
+
+    it('audits who removed the member, and by what name', async () => {
+      // Added with FOLLOW-UPS F1: this was the one delete in the backend that
+      // left no trace of who did it.
+      const { service, mocks } = build();
+      await service.remove(PROJECT, MEMBER, USER);
+
+      expect(mocks.logDeleted).toHaveBeenCalledWith({
+        table: 'project_members',
+        recordId: MEMBER,
+        projectId: PROJECT,
+        label: 'Dana Whitfield',
+        userId: USER,
+      });
     });
   });
 
@@ -136,13 +158,11 @@ describe('PeopleService', () => {
   describeProjectScopedContract('people', {
     build: () => build(),
     update: (s) => s.update(PROJECT, MEMBER, {}, USER),
-    remove: (s) => s.remove(PROJECT, MEMBER),
+    remove: (s) => s.remove(PROJECT, MEMBER, USER),
     foreignId: (m) => {
       m.update.mockResolvedValue(null);
       m.remove.mockResolvedValue(null);
     },
-    audit: {
-      skip: 'people.remove writes no audit row - who removed a member leaves no trace (finding 2026-08-19)',
-    },
+    audit: (m) => m.logDeleted,
   });
 });

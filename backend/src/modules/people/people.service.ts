@@ -3,13 +3,17 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { RecordHistoryService } from '../../database/record-history.service';
 import { PeopleRepository } from './people.repository';
 import { CreatePersonDto } from './dto/create-person.dto';
 import { UpdatePersonDto } from './dto/update-person.dto';
 
 @Injectable()
 export class PeopleService {
-  constructor(private readonly repo: PeopleRepository) {}
+  constructor(
+    private readonly repo: PeopleRepository,
+    private readonly auditLog: RecordHistoryService,
+  ) {}
 
   async add(projectId: string, dto: CreatePersonDto, userId: string) {
     if (!dto.user_id && !dto.pending_name?.trim()) {
@@ -57,9 +61,18 @@ export class PeopleService {
     return updated;
   }
 
-  async remove(projectId: string, memberId: string) {
+  async remove(projectId: string, memberId: string, userId: string) {
     const deleted = await this.repo.remove(projectId, memberId);
     if (!deleted) throw new NotFoundException('Member not found.');
+    // Every other module audits its deletes; this one did not, so removing
+    // someone from a project left no trace of who did it (FOLLOW-UPS F1).
+    await this.auditLog.logDeleted({
+      table: 'project_members',
+      recordId: deleted.id,
+      projectId,
+      label: deleted.label,
+      userId,
+    });
     return { deleted: true };
   }
 }

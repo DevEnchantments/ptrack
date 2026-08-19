@@ -38,14 +38,37 @@ export class PeopleRepository {
   }
 
   /** Returns the deleted row's id, or null when not in this project. */
-  async remove(projectId: string, memberId: string) {
+  /**
+   * Returns the deleted row's id and a display label, or null when the member
+   * is not in this project. The label is what the audit entry records: a
+   * linked account's name, else the pending name or email it was invited with.
+   */
+  async remove(
+    projectId: string,
+    memberId: string,
+  ): Promise<{ id: string; label: string | null } | null> {
     const { data, error } = await this.table
       .delete()
       .eq('project_id', projectId)
       .eq('id', memberId)
-      .select('id')
-      .maybeSingle<{ id: string }>();
+      .select(
+        'id, pending_name, pending_email, profile:profiles!user_id ( full_name, email )',
+      )
+      .maybeSingle<{
+        id: string;
+        pending_name: string | null;
+        pending_email: string | null;
+        profile: { full_name: string | null; email: string | null } | null;
+      }>();
     if (error) throw toHttpException(error, 'people.remove');
-    return data ?? null;
+    if (!data) return null;
+    return {
+      id: data.id,
+      label:
+        data.profile?.full_name ||
+        data.profile?.email ||
+        data.pending_name ||
+        data.pending_email,
+    };
   }
 }

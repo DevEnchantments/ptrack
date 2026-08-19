@@ -139,8 +139,5 @@
   "137": "SubmissionsModule",
   "138": "@supabase/supabase-js",
   "139": "AccessModule",
-  "140": "@nestjs/cli",
-  "141": "Follow-ups register",
-  "142": "SubmissionsModule",
-  "143": "vite"
+  "141": "Follow-ups register"
 }

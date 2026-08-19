@@ -103,8 +103,10 @@ export class KpisService {
     });
   }
 
-  removeReading(kpiId: string, readingId: string) {
-    return this.repo.removeReading(kpiId, readingId);
+  async removeReading(kpiId: string, readingId: string) {
+    const deleted = await this.repo.removeReading(kpiId, readingId);
+    if (!deleted) throw new NotFoundException('Reading not found.');
+    return { deleted: true };
   }
 
   async addPlan(kpiId: string, dto: CreateKpiActionPlanDto, userId: string) {
@@ -126,12 +128,14 @@ export class KpisService {
     if (dto.owner !== undefined) patch.owner = dto.owner?.trim() || null;
     if (dto.due_date !== undefined) patch.due_date = dto.due_date ?? null;
     if (dto.status !== undefined) patch.status = dto.status;
-    await this.repo.updatePlan(kpiId, planId, patch);
+    const updated = await this.repo.updatePlan(kpiId, planId, patch);
+    if (!updated) throw new NotFoundException('Action plan not found.');
     return { ok: true };
   }
 
   async removePlan(kpiId: string, planId: string) {
-    await this.repo.removePlan(kpiId, planId);
+    const deleted = await this.repo.removePlan(kpiId, planId);
+    if (!deleted) throw new NotFoundException('Action plan not found.');
     return { deleted: true };
   }
 }
