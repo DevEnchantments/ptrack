@@ -165,8 +165,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/issues/issues.service.ts": {
-    "mtime": 1786959659.898524,
-    "ast_hash": "24956ff2e636315e16ec112343696f68",
+    "mtime": 1787146906.669625,
+    "ast_hash": "4242922315b26bf80cc1e7deb7ebbbe5",
     "semantic_hash": ""
   },
   "backend/src/modules/links/dto/create-link.dto.ts": {
@@ -270,8 +270,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/people/people.service.ts": {
-    "mtime": 1787141405.114281,
-    "ast_hash": "74863580089df967fe5a94e1b54c4b74",
+    "mtime": 1787146843.6173742,
+    "ast_hash": "365faf67cdd90fbb27bbdc5edbe03ffe",
     "semantic_hash": ""
   },
   "backend/src/modules/projects/dto/create-project.dto.ts": {
@@ -1780,8 +1780,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/issues/issues.service.spec.ts": {
-    "mtime": 1787135717.3284564,
-    "ast_hash": "66ad637e8f0bf5c648e72c5c0d73f11b",
+    "mtime": 1787146859.650241,
+    "ast_hash": "1a02af184b330b867e5b32155c48c224",
     "semantic_hash": ""
   },
   "backend/src/modules/people/people.service.spec.ts": {

@@ -130,8 +130,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/attachments/attachments.service.ts": {
-    "mtime": 1787134419.3627129,
-    "ast_hash": "de97b26473a73b167a36be0221fcf192",
+    "mtime": 1787145827.4958973,
+    "ast_hash": "1f80318b9151b1f102d3edab2067196a",
     "semantic_hash": ""
   },
   "backend/src/modules/attachments/dto/update-attachment.dto.ts": {
@@ -1000,8 +1000,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/risks/risks.service.ts": {
-    "mtime": 1787133592.7752526,
-    "ast_hash": "f910090dd314da9969e013758dce182f",
+    "mtime": 1787146294.5525937,
+    "ast_hash": "efea4f8543a360a92fa50d142b5cc665",
     "semantic_hash": ""
   },
   "frontend/src/components/AddRiskDialog.tsx": {
@@ -1795,8 +1795,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/risks/risks.service.spec.ts": {
-    "mtime": 1787135717.6884303,
-    "ast_hash": "ef4a4376864d9b4cb089e73719af1993",
+    "mtime": 1787146236.3604784,
+    "ast_hash": "4aa3c47879f8ffd3336606b15640b125",
     "semantic_hash": ""
   },
   "backend/src/modules/updates/updates.service.spec.ts": {
