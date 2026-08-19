@@ -390,8 +390,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/updates/updates.service.ts": {
-    "mtime": 1786959659.904526,
-    "ast_hash": "b11902a2bf622541013ecf5916599ce2",
+    "mtime": 1787176352.1545146,
+    "ast_hash": "9d099d2bbc058d30b898a24f779f0134",
     "semantic_hash": ""
   },
   "backend/src/modules/users/users.controller.ts": {
@@ -1200,8 +1200,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/kpis/kpis.service.ts": {
-    "mtime": 1787141193.9674387,
-    "ast_hash": "77f5c9b7517117fbf1cb4f1f72315686",
+    "mtime": 1787176353.4192379,
+    "ast_hash": "55a064e37ef2bd442232b7b060a219f4",
     "semantic_hash": ""
   },
   "frontend/src/components/AddKpiDialog.tsx": {
@@ -1705,8 +1705,8 @@
     "semantic_hash": ""
   },
   "backend/src/modules/access-admin/access-admin.service.ts": {
-    "mtime": 1787138958.6695554,
-    "ast_hash": "c97613e4d4a646cc0960f662c7d869c8",
+    "mtime": 1787176362.076409,
+    "ast_hash": "4052712708f17d5c5ff6a3180b0351f7",
     "semantic_hash": ""
   },
   "backend/src/modules/access-admin/dto/replace-grants.dto.ts": {
@@ -1805,8 +1805,8 @@
     "semantic_hash": ""
   },
   "docs/REFACTOR-PLAN.md": {
-    "mtime": 1787148095.2983522,
-    "ast_hash": "7a68e8cca761562a1088793216edc656",
+    "mtime": 1787176990.5825243,
+    "ast_hash": "ac4c9891232b2baaae9b5ec78dbe2201",
     "semantic_hash": ""
   },
   "backend/src/modules/action-items/index.ts": {
@@ -1890,8 +1890,8 @@
     "semantic_hash": ""
   },
   "docs/FOLLOW-UPS.md": {
-    "mtime": 1787144834.2772741,
-    "ast_hash": "9d0a19d9a94ea5c86d8990216d4494b9",
+    "mtime": 1787176370.3301864,
+    "ast_hash": "8b039ce4ccdf0f7bfdac403082c43706",
     "semantic_hash": ""
   },
   "backend/src/modules/submissions/submissions.service.spec.ts": {
