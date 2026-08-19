@@ -22,6 +22,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import {
+  resourceFormErrors,
+  resourceFormPayload,
+  type ResourceFormValues,
+} from '@/lib/resource-form'
 
 interface Props {
   projectId: string
@@ -99,23 +104,21 @@ export function AddResourceDialog({
     }
   }
 
+  function formValues(): ResourceFormValues {
+    return { name, typeId, notes }
+  }
+
   async function submit() {
     setError(null)
     setFieldErrors({})
-    const errs: Record<string, string> = {}
-    if (!name.trim()) errs.name = 'A resource name is required.'
-    if (!typeId) errs.typeId = 'A type is required.'
+    const errs = resourceFormErrors(formValues())
 
     setFieldErrors(errs)
     if (Object.keys(errs).length > 0) return
 
     setSaving(true)
     try {
-      const payload = {
-        name: name.trim(),
-        type_id: typeId,
-        description: notes.trim() || undefined,
-      }
+      const payload = resourceFormPayload(formValues())
       if (isEdit && existing) {
         await resourcesApi.update(projectId, existing.id, payload)
       } else {

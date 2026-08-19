@@ -24,6 +24,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import {
+  updateFormErrors,
+  updateFormPayload,
+  type UpdateFormValues,
+} from '@/lib/update-form'
 
 interface Props {
   projectId: string
@@ -116,28 +121,21 @@ export function AddUpdateDialog({
     }
   }
 
+  function formValues(): UpdateFormValues {
+    return { body, typeId, isGold, tags }
+  }
+
   async function submit() {
     setError(null)
     setFieldErrors({})
-    const errs: Record<string, string> = {}
-    if (!body.trim()) errs.body = 'An update is required.'
+    const errs = updateFormErrors(formValues())
 
     setFieldErrors(errs)
     if (Object.keys(errs).length > 0) return
 
     setSaving(true)
     try {
-      const tagList = tags
-        .split(',')
-        .map((t) => t.trim())
-        .filter(Boolean)
-
-      const payload = {
-        body: body.trim(),
-        type_id: typeId,
-        is_gold: isGold,
-        tags: tagList.length ? tagList : null,
-      }
+      const payload = updateFormPayload(formValues())
 
       if (isEdit && existing) {
         await updatesApi.update(projectId, existing.id, payload)

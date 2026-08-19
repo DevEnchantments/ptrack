@@ -26,6 +26,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import {
+  issueFormErrors,
+  issueFormPayload,
+  type IssueFormValues,
+} from '@/lib/issue-form'
 
 const NO_ROLE = '__no_role__'
 
@@ -178,40 +183,36 @@ export function AddIssueDialog({
     })
   }
 
+  function formValues(): IssueFormValues {
+    return {
+      title,
+      roleId,
+      ownerId: owner.user_id,
+      status,
+      levelId,
+      categoryId,
+      description,
+      url,
+      referenceId,
+      tags,
+      resolution,
+      recommendation,
+      reportedBy,
+      dateClosed,
+    }
+  }
+
   async function submit() {
     setError(null)
     setFieldErrors({})
-    const errs: Record<string, string> = {}
-    if (!title.trim()) errs.title = 'An issue title is required.'
-    if (status === 'closed' && !resolution.trim())
-      errs.resolution = 'Resolution / Mitigation is required when the issue is closed.'
+    const errs = issueFormErrors(formValues())
 
     setFieldErrors(errs)
     if (Object.keys(errs).length > 0) return
 
     setSaving(true)
     try {
-      const tagList = tags
-        .split(',')
-        .map((t) => t.trim())
-        .filter(Boolean)
-
-      const payload = {
-        title: title.trim(),
-        role_id: roleId,
-        owner_id: owner.user_id,
-        status,
-        level_id: levelId,
-        category_id: categoryId,
-        description: description.trim() || null,
-        url: url.trim() || null,
-        reference_identifier: referenceId.trim() || null,
-        tags: tagList.length ? tagList : null,
-        resolution: status === 'closed' ? resolution.trim() : null,
-        recommendation: recommendation.trim() || null,
-        reported_by: reportedBy.trim() || null,
-        date_closed: dateClosed || null,
-      }
+      const payload = issueFormPayload(formValues())
 
       if (isEdit && existing) {
         await issuesApi.update(projectId, existing.id, payload)

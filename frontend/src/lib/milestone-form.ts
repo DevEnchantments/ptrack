@@ -12,6 +12,8 @@
  * reason lib/project-form.ts exists.
  */
 
+import { parseTags, type FieldErrors } from './forms';
+
 export interface MilestoneFormValues {
   name: string;
   startDate: string;
@@ -28,9 +30,6 @@ export interface MilestoneFormValues {
   dependsOn: string[];
 }
 
-/** Field name -> message, for the inline errors under each input. */
-export type FieldErrors = Record<string, string>;
-
 /**
  * What must be filled in before the dialog will submit. Everything else the
  * server validates; these three are checked here so the user is told without
@@ -42,14 +41,6 @@ export function milestoneFormErrors(values: MilestoneFormValues): FieldErrors {
   if (!values.startDate) errors.startDate = 'A start date is required.';
   if (!values.dueDate) errors.dueDate = 'A due date is required.';
   return errors;
-}
-
-/** A comma-separated field as a list, ignoring blanks and stray spaces. */
-export function parseTags(raw: string): string[] {
-  return raw
-    .split(',')
-    .map((t) => t.trim())
-    .filter(Boolean);
 }
 
 /**

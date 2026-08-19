@@ -17,6 +17,11 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
+import {
+  linkFormErrors,
+  linkFormPayload,
+  type LinkFormValues,
+} from '@/lib/link-form'
 
 const URL_PATTERN = /^https?:\/\//
 
@@ -84,32 +89,21 @@ export function AddLinkDialog({
       ? 'URL must start with http:// or https://'
       : null
 
+  function formValues(): LinkFormValues {
+    return { url, label, description, isGold, tags }
+  }
+
   async function submit() {
     setError(null)
     setFieldErrors({})
-    const errs: Record<string, string> = {}
-    const trimmedUrl = url.trim()
-    if (!trimmedUrl) errs.url = 'A URL is required.'
-    if (!URL_PATTERN.test(trimmedUrl))
-      errs.url = 'URL must start with http:// or https://'
+    const errs = linkFormErrors(formValues())
 
     setFieldErrors(errs)
     if (Object.keys(errs).length > 0) return
 
     setSaving(true)
     try {
-      const tagList = tags
-        .split(',')
-        .map((t) => t.trim())
-        .filter(Boolean)
-
-      const payload = {
-        url: trimmedUrl,
-        label: label.trim() || undefined,
-        description: description.trim() || undefined,
-        is_gold: isGold,
-        tags: tagList.length ? tagList : undefined,
-      }
+      const payload = linkFormPayload(formValues())
 
       if (isEdit && existing) {
         await linksApi.update(projectId, existing.id, payload)

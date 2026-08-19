@@ -1,11 +1,6 @@
 import { FieldError } from '@/components/FieldError'
 import { Loader2 } from 'lucide-react'
 import { toast } from '@/lib/toast'
-import {
-  milestoneFormErrors,
-  milestoneFormPayload,
-  type MilestoneFormValues,
-} from '@/lib/milestone-form'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import type { ProjectMemberInput } from '@/pages/CreateProjectWizard'
@@ -38,6 +33,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import {
+  milestoneFormErrors,
+  milestoneFormPayload,
+  type MilestoneFormValues,
+} from '@/lib/milestone-form'
 
 const NO_ROLE = '__no_role__'
 const NO_OUTCOME = '__no_outcome__'

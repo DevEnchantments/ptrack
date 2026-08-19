@@ -2,9 +2,9 @@ import { describe, it, expect } from 'vitest'
 import {
   milestoneFormErrors,
   milestoneFormPayload,
-  parseTags,
   type MilestoneFormValues,
 } from './milestone-form'
+import { parseTags } from './forms'
 
 /**
  * Characterization tests (REFACTOR-PLAN v2, Phase 2). These pin what the
