@@ -117,11 +117,17 @@ describe('PeopleService', () => {
   });
 
   describe('remove', () => {
-    it('reports deleted without checking existence — a silent no-op on foreign ids (characterized, not endorsed)', async () => {
-      const { service } = build();
-      await expect(service.remove(PROJECT, 'not-there')).resolves.toEqual({
+    it('reports deleted when a row was removed, 404s on foreign ids', async () => {
+      const { service, mocks } = build();
+      mocks.remove.mockResolvedValueOnce({ id: MEMBER });
+      await expect(service.remove(PROJECT, MEMBER)).resolves.toEqual({
         deleted: true,
       });
+
+      mocks.remove.mockResolvedValueOnce(null);
+      await expect(service.remove(PROJECT, 'not-there')).rejects.toBeInstanceOf(
+        NotFoundException,
+      );
     });
   });
 });

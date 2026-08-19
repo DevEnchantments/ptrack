@@ -58,7 +58,8 @@ export class PeopleService {
   }
 
   async remove(projectId: string, memberId: string) {
-    await this.repo.remove(projectId, memberId);
+    const deleted = await this.repo.remove(projectId, memberId);
+    if (!deleted) throw new NotFoundException('Member not found.');
     return { deleted: true };
   }
 }

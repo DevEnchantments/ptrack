@@ -37,11 +37,15 @@ export class PeopleRepository {
     return data ?? null;
   }
 
+  /** Returns the deleted row's id, or null when not in this project. */
   async remove(projectId: string, memberId: string) {
-    const { error } = await this.table
+    const { data, error } = await this.table
       .delete()
       .eq('project_id', projectId)
-      .eq('id', memberId);
+      .eq('id', memberId)
+      .select('id')
+      .maybeSingle<{ id: string }>();
     if (error) throw toHttpException(error, 'people.remove');
+    return data ?? null;
   }
 }
