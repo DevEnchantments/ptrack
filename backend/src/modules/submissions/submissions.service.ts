@@ -4,11 +4,11 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { ProjectsRepository } from '../projects/projects.repository';
-import { MilestonesRepository } from '../milestones/milestones.repository';
+import { ProjectsRepository } from '../projects';
+import { MilestonesRepository } from '../milestones';
 import { SubmissionsRepository } from './submissions.repository';
 import { SubmissionActionDto } from './dto/submission-action.dto';
-import { NotificationsService } from '../notifications/notifications.service';
+import { NotificationsService } from '../notifications';
 import { ProjectAccessService } from '../../common/access/project-access.service';
 
 /**

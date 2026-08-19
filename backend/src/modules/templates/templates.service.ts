@@ -5,10 +5,10 @@ import {
 } from '@nestjs/common';
 import { DatabaseService } from '../../database/database.service';
 import { toHttpException } from '../../common/supabase-error';
-import { ProjectsService } from '../projects/projects.service';
-import { MilestonesService } from '../milestones/milestones.service';
-import { ProgramOutcomesService } from '../program-outcomes/program-outcomes.service';
-import { CreateMilestoneDto } from '../milestones/dto/create-milestone.dto';
+import { ProjectsService } from '../projects';
+import { MilestonesService } from '../milestones';
+import { ProgramOutcomesService } from '../program-outcomes';
+import { CreateMilestoneDto } from '../milestones';
 import { dayOffset, materializeOffset } from './templates.logic';
 
 interface TemplateOutcome {

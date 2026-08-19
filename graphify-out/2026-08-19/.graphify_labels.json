@@ -110,7 +110,6 @@
   "108": "frappe-gantt",
   "109": "eslint-plugin-prettier",
   "110": "ProjectsController",
-  "111": "ts-jest",
   "112": "app.module.ts",
   "113": "ts-loader",
   "114": "ts-node",
@@ -124,7 +123,6 @@
   "122": "LinksController",
   "123": "ProgramOutcomesController",
   "124": "ProgramOutcomesService",
-  "125": "ResourcesController",
   "126": "KpisPage.tsx",
   "127": "CreateAccountDialog.tsx",
   "128": "toaster.tsx",
@@ -133,8 +131,6 @@
   "132": "RequireCapability",
   "133": ".update",
   "134": "@eslint/js",
-  "135": "SubmissionsModule",
   "136": "UpdateMeDto",
-  "137": "columnsFrom",
   "139": "eslint"
 }

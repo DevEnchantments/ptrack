@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { MilestonesService } from '../milestones/milestones.service';
-import { ProgramOutcomesService } from '../program-outcomes/program-outcomes.service';
-import { ActionItemsService } from '../action-items/action-items.service';
-import { LinksService } from '../links/links.service';
-import { ResourcesService } from '../resources/resources.service';
-import { IssuesService } from '../issues/issues.service';
-import { RisksService } from '../risks/risks.service';
-import { SubmissionsService } from '../submissions/submissions.service';
-import { UpdatesService } from '../updates/updates.service';
-import { StatusReportsService } from '../status-reports/status-reports.service';
-import { AttachmentsService } from '../attachments/attachments.service';
+import { MilestonesService } from '../milestones';
+import { ProgramOutcomesService } from '../program-outcomes';
+import { ActionItemsService } from '../action-items';
+import { LinksService } from '../links';
+import { ResourcesService } from '../resources';
+import { IssuesService } from '../issues';
+import { RisksService } from '../risks';
+import { SubmissionsService } from '../submissions';
+import { UpdatesService } from '../updates';
+import { StatusReportsService } from '../status-reports';
+import { AttachmentsService } from '../attachments';
 
 /**
  * The project page's single read: all eleven section lists in one response, so

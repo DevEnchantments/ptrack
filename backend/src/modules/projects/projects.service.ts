@@ -9,7 +9,7 @@ import {
 import { plannedProgress } from '../../common/formulas';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
-import { NotificationsService } from '../notifications/notifications.service';
+import { NotificationsService } from '../notifications';
 import { columnsFrom, type ColumnSpec } from '../../common/columns';
 import { ProjectAccessService } from '../../common/access/project-access.service';
 

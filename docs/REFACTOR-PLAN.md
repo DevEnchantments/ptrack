@@ -114,9 +114,13 @@ removed on 2026-08-18, so they load normally now.
 
 ### Phase B — Enforced boundaries (first, so everything after inherits it)
 
-- [ ] **B1.** Public surface per module: `index.ts` exporting only what outsiders may use
+- [x] **B1.** **Done 2026-08-19.** Public surface per module: `index.ts` exporting only what outsiders may use
       (normally the service, its public types, and for `projects` the repository per
       section 4). Consumers import `../risks`, never `../risks/risks.service`.
+**Ordering correction (2026-08-19):** B2 and B3 must land in the **same** commit. The rule
+would otherwise go red on the one known violation left by B1, putting the gate in a failing
+state between two commits.
+
 - [ ] **B2.** Enforcement: an eslint `no-restricted-imports` pattern rule scoped to
       `src/modules/**`, forbidding `../*/*.service`, `../*/*.repository`, `../*/dto/*`.
       No new dependency. Same-module (`./x.service`) and shared infrastructure
@@ -189,4 +193,47 @@ Unit is the page or component family, not the file. `lib/` was done in v1 and is
 Append one entry per session: date, module, skill used, what changed, what was left,
 verification result.
 
-_(empty)_
+### 2026-08-19 — B1, public surface per module
+
+**Skill:** `book-clean-architecture`.
+
+**Orient.** Two disagreeing surfaces existed. The NestJS one was already declared (15 of 25
+modules export something from `@Module({ exports })`); the TypeScript one was wide open, with
+~30 cross-module deep imports. Those fell into four kinds: `.service` (~20, legitimate),
+`.module` (~20, composition wiring), `.repository` (4, the reach-ins), and `dto/*` (3).
+
+**The DTO insight.** `import` and `templates` build a `CreateProjectDto` / `CreateMilestoneDto`
+to call `create(dto)`. If a service's public signature takes a DTO, the DTO **is** public
+surface whether declared or not. Clean Architecture says plain request models cross
+boundaries; these are those models. So they got declared rather than forbidden.
+
+**Changed.**
+- 13 `index.ts` barrels, one per module that actually has a cross-module consumer.
+- 29 import lines rewritten to the barrels (all but one, see below).
+- `KpisModule` stopped exporting `KpisService`: nothing injects it, so it was surface for
+  free. Verified no consumer before removing.
+
+**Design decisions.**
+- **The module file stays out of the barrel.** Consumers still import
+  `../risks/risks.module` explicitly. `*.module.ts` is framework wiring, a detail rather
+  than policy, and keeping it out means a type-only import cannot drag the DI graph behind
+  it. The B2 rule will therefore allow `../*/*.module` while forbidding the rest.
+- **Barrels only where there is a consumer (13 of 25).** Clean Architecture says use the
+  lightest enforceable boundary; 25 barrels for 13 consumers is ceremony. The other 12 are
+  still protected by the rule: a future consumer hits it and must add the barrel, which is
+  exactly the moment a surface should widen on purpose.
+
+**Left deliberately.** `projects.repository` still deep-imports `ATTACHMENTS_BUCKET` from
+`attachments.repository`. It is B3's job: a storage bucket name is shared infrastructure,
+not the attachments module's policy, so it moves to common code rather than being blessed
+into the barrel.
+
+**Verification.** 207 tests / 22 suites green before and after; `tsc` · `eslint
+--max-warnings 0` · `build` clean. Plus the check that mattered here: **barrels are a
+classic source of circular imports in NestJS**, and no unit test covers DI wiring, so the
+real `AppModule` graph was booted via `NestFactory.createApplicationContext`. Every provider
+resolved. No cycles exist today (no two modules import each other), and if one ever appears
+the barrel makes it louder rather than quieter.
+
+**Behaviour preserved:** nothing but import specifiers changed. DI resolves by class
+identity and the classes were untouched.

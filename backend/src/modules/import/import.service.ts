@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../../database/database.service';
 import { toHttpException } from '../../common/supabase-error';
-import { ProjectsService } from '../projects/projects.service';
-import { MilestonesService } from '../milestones/milestones.service';
-import { CreateProjectDto } from '../projects/dto/create-project.dto';
-import { CreateMilestoneDto } from '../milestones/dto/create-milestone.dto';
+import { ProjectsService } from '../projects';
+import { MilestonesService } from '../milestones';
+import { CreateProjectDto } from '../projects';
+import { CreateMilestoneDto } from '../milestones';
 import {
   INVALID,
   parseBoolValue,

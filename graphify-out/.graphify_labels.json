@@ -110,6 +110,7 @@
   "108": "frappe-gantt",
   "109": "eslint-plugin-prettier",
   "110": "ProjectsController",
+  "111": "@nestjs/swagger",
   "112": "app.module.ts",
   "113": "ts-loader",
   "114": "ts-node",
@@ -123,14 +124,12 @@
   "122": "LinksController",
   "123": "ProgramOutcomesController",
   "124": "ProgramOutcomesService",
-  "126": "KpisPage.tsx",
+  "125": "globals",
   "127": "CreateAccountDialog.tsx",
   "128": "toaster.tsx",
-  "129": "AccessModule",
   "130": "Injectable",
   "132": "RequireCapability",
   "133": ".update",
   "134": "@eslint/js",
-  "136": "UpdateMeDto",
-  "139": "eslint"
+  "136": "UpdateMeDto"
 }

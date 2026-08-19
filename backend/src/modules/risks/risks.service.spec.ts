@@ -2,8 +2,8 @@ import { ForbiddenException, NotFoundException } from '@nestjs/common';
 import { RisksService } from './risks.service';
 import type { RisksRepository } from './risks.repository';
 import type { RecordHistoryService } from '../../database/record-history.service';
-import type { NotificationsService } from '../notifications/notifications.service';
-import type { ProjectsRepository } from '../projects/projects.repository';
+import type { NotificationsService } from '../notifications';
+import type { ProjectsRepository } from '../projects';
 import type { ProjectAccessService } from '../../common/access/project-access.service';
 
 /**

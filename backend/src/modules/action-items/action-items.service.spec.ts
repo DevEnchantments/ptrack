@@ -2,7 +2,7 @@ import { NotFoundException } from '@nestjs/common';
 import { ActionItemsService } from './action-items.service';
 import type { ActionItemsRepository } from './action-items.repository';
 import type { RecordHistoryService } from '../../database/record-history.service';
-import type { AttachmentsService } from '../attachments/attachments.service';
+import type { AttachmentsService } from '../attachments';
 
 /**
  * The owner-diff is the subtlest logic in this service: owners are replaced

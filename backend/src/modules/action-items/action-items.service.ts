@@ -3,7 +3,7 @@ import { RecordHistoryService } from '../../database/record-history.service';
 import { ActionItemsRepository } from './action-items.repository';
 import { CreateActionItemDto } from './dto/create-action-item.dto';
 import { UpdateActionItemDto } from './dto/update-action-item.dto';
-import { AttachmentsService } from '../attachments/attachments.service';
+import { AttachmentsService } from '../attachments';
 import { columnsFrom, type ColumnSpec } from '../../common/columns';
 
 type Owners = Array<{
