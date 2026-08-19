@@ -79,6 +79,25 @@ describe('IssuesService', () => {
   });
 
   describe('update', () => {
+    it('clears an empty tag array but keeps a populated one', async () => {
+      // Found by a mutation check on 2026-08-19: dropping tags from the
+      // column spec broke nothing, so nothing pinned how they normalize.
+      const { service, mocks } = build();
+      await service.update(PROJECT, ISSUE, { tags: [] }, USER);
+      expect(mocks.update).toHaveBeenCalledWith(
+        PROJECT,
+        ISSUE,
+        expect.objectContaining({ tags: null }),
+      );
+
+      await service.update(PROJECT, ISSUE, { tags: ['risk'] }, USER);
+      expect(mocks.update).toHaveBeenLastCalledWith(
+        PROJECT,
+        ISSUE,
+        expect.objectContaining({ tags: ['risk'] }),
+      );
+    });
+
     it('patches only the fields that were sent', async () => {
       const { service, mocks } = build();
       await service.update(

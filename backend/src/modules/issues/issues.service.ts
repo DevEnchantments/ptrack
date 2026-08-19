@@ -3,6 +3,41 @@ import { RecordHistoryService } from '../../database/record-history.service';
 import { IssuesRepository } from './issues.repository';
 import { CreateIssueDto } from './dto/create-issue.dto';
 import { UpdateIssueDto } from './dto/update-issue.dto';
+import { columnsFrom, type ColumnSpec } from '../../common/columns';
+
+/** How an issue DTO maps onto columns, for both create and update. */
+const COLUMN_SPEC: ColumnSpec = {
+  trimmed: ['title'],
+  trimmedOrNull: [
+    'description',
+    'url',
+    'reference_identifier',
+    'resolution',
+    'recommendation',
+    'reported_by',
+  ],
+  nullable: ['role_id', 'owner_id', 'level_id', 'category_id'],
+  dateOrNull: ['date_closed'],
+  arrayOrNull: ['tags'],
+  asIs: ['status'],
+};
+
+/** What a new issue gets for the columns the caller omitted. */
+const CREATE_DEFAULTS = {
+  role_id: null,
+  owner_id: null,
+  status: 'open',
+  level_id: null,
+  category_id: null,
+  description: null,
+  url: null,
+  reference_identifier: null,
+  tags: null,
+  resolution: null,
+  recommendation: null,
+  reported_by: null,
+  date_closed: null,
+};
 
 @Injectable()
 export class IssuesService {
@@ -18,20 +53,8 @@ export class IssuesService {
   add(projectId: string, dto: CreateIssueDto, userId: string) {
     return this.repo.insert({
       project_id: projectId,
-      title: dto.title.trim(),
-      role_id: dto.role_id ?? null,
-      owner_id: dto.owner_id ?? null,
-      status: dto.status ?? 'open',
-      level_id: dto.level_id ?? null,
-      category_id: dto.category_id ?? null,
-      description: dto.description?.trim() || null,
-      url: dto.url?.trim() || null,
-      reference_identifier: dto.reference_identifier?.trim() || null,
-      tags: dto.tags?.length ? dto.tags : null,
-      resolution: dto.resolution?.trim() || null,
-      recommendation: dto.recommendation?.trim() || null,
-      reported_by: dto.reported_by?.trim() || null,
-      date_closed: dto.date_closed || null,
+      ...CREATE_DEFAULTS,
+      ...columnsFrom(dto, COLUMN_SPEC),
       created_by: userId,
       updated_by: userId,
     });
@@ -43,29 +66,10 @@ export class IssuesService {
     dto: UpdateIssueDto,
     userId: string,
   ) {
-    const patch: Record<string, unknown> = { updated_by: userId };
-    if (dto.title !== undefined) patch.title = dto.title.trim();
-    if (dto.role_id !== undefined) patch.role_id = dto.role_id ?? null;
-    if (dto.owner_id !== undefined) patch.owner_id = dto.owner_id ?? null;
-    if (dto.status !== undefined) patch.status = dto.status;
-    if (dto.level_id !== undefined) patch.level_id = dto.level_id ?? null;
-    if (dto.category_id !== undefined)
-      patch.category_id = dto.category_id ?? null;
-    if (dto.description !== undefined)
-      patch.description = dto.description?.trim() || null;
-    if (dto.url !== undefined) patch.url = dto.url?.trim() || null;
-    if (dto.reference_identifier !== undefined)
-      patch.reference_identifier = dto.reference_identifier?.trim() || null;
-    if (dto.tags !== undefined) patch.tags = dto.tags?.length ? dto.tags : null;
-    if (dto.resolution !== undefined)
-      patch.resolution = dto.resolution?.trim() || null;
-    if (dto.recommendation !== undefined)
-      patch.recommendation = dto.recommendation?.trim() || null;
-    if (dto.reported_by !== undefined)
-      patch.reported_by = dto.reported_by?.trim() || null;
-    if (dto.date_closed !== undefined)
-      patch.date_closed = dto.date_closed || null;
-    const updated = await this.repo.update(projectId, issueId, patch);
+    const updated = await this.repo.update(projectId, issueId, {
+      updated_by: userId,
+      ...columnsFrom(dto, COLUMN_SPEC),
+    });
     if (!updated) throw new NotFoundException('Issue not found.');
     return updated;
   }

@@ -8,6 +8,46 @@ import { PeopleRepository } from './people.repository';
 import { CreatePersonDto } from './dto/create-person.dto';
 import { UpdatePersonDto } from './dto/update-person.dto';
 
+/**
+ * A project member is either a linked account or a pending invite, and four
+ * columns follow from which one it is: a linked member carries no pending
+ * fields and starts active, an invite carries them and starts pending.
+ *
+ * Those four move together, so they are decided in one place. The identity
+ * check lives here too, because "who is this member" is the same question:
+ * an invite needs a name to show and an email, since the email is what links
+ * the account when they later claim it.
+ */
+function provisioningFields(dto: CreatePersonDto): {
+  user_id: string | null;
+  pending_name: string | null;
+  pending_email: string | null;
+  status: 'active' | 'pending';
+} {
+  if (dto.user_id) {
+    return {
+      user_id: dto.user_id,
+      pending_name: null,
+      pending_email: null,
+      status: 'active',
+    };
+  }
+  if (!dto.pending_name?.trim()) {
+    throw new BadRequestException('A user or a name is required.');
+  }
+  if (!dto.pending_email?.trim()) {
+    throw new BadRequestException(
+      'Pending people need an email — it is how their account gets linked later.',
+    );
+  }
+  return {
+    user_id: null,
+    pending_name: dto.pending_name.trim(),
+    pending_email: dto.pending_email.trim().toLowerCase(),
+    status: 'pending',
+  };
+}
+
 @Injectable()
 export class PeopleService {
   constructor(
@@ -16,27 +56,14 @@ export class PeopleService {
   ) {}
 
   async add(projectId: string, dto: CreatePersonDto, userId: string) {
-    if (!dto.user_id && !dto.pending_name?.trim()) {
-      throw new BadRequestException('A user or a name is required.');
-    }
-    if (!dto.user_id && !dto.pending_email?.trim()) {
-      throw new BadRequestException(
-        'Pending people need an email — it is how their account gets linked later.',
-      );
-    }
     return this.repo.insert({
       project_id: projectId,
-      user_id: dto.user_id ?? null,
-      pending_name: dto.user_id ? null : (dto.pending_name?.trim() ?? null),
-      pending_email: dto.user_id
-        ? null
-        : (dto.pending_email?.trim().toLowerCase() ?? null),
+      ...provisioningFields(dto),
       role_id: dto.role_id,
       access_level: dto.access_level,
       involvement_level_id: dto.involvement_level_id ?? null,
       notes: dto.notes?.trim() || null,
       access_type: 'assigned',
-      status: dto.user_id ? 'active' : 'pending',
       created_by: userId,
       updated_by: userId,
     });
