@@ -13,6 +13,43 @@ import { ProjectsRepository } from '../projects';
 import { RISK_HIGH_THRESHOLD, riskScore } from '../../common/formulas';
 import { ProjectAccessService } from '../../common/access/project-access.service';
 import { AccessLevel } from '../../common/access/access.logic';
+import { columnsFrom, type ColumnSpec } from '../../common/columns';
+
+/** How a risk DTO maps onto columns, for both create and update. */
+const COLUMN_SPEC: ColumnSpec = {
+  trimmed: ['statement'],
+  trimmedOrNull: ['identified_by', 'response_plan', 'priority', 'action'],
+  dateOrNull: ['date_identified'],
+  nullable: [
+    'source_id',
+    'category_id',
+    'owner_id',
+    'probability_id',
+    'impact_id',
+    'response_id',
+  ],
+  asIs: ['status', 'type'],
+};
+
+/**
+ * What a new risk gets for the columns the caller omitted. A risk starts open
+ * and is a risk rather than an issue until told otherwise.
+ */
+const CREATE_DEFAULTS = {
+  identified_by: null,
+  date_identified: null,
+  source_id: null,
+  category_id: null,
+  owner_id: null,
+  probability_id: null,
+  impact_id: null,
+  response_id: null,
+  response_plan: null,
+  priority: null,
+  action: null,
+  status: 'open',
+  type: 'risk',
+};
 
 @Injectable()
 export class RisksService {
@@ -80,20 +117,8 @@ export class RisksService {
   async add(projectId: string, dto: CreateRiskDto, userId: string) {
     const created = await this.repo.insert({
       project_id: projectId,
-      statement: dto.statement.trim(),
-      identified_by: dto.identified_by?.trim() || null,
-      date_identified: dto.date_identified || null,
-      source_id: dto.source_id ?? null,
-      category_id: dto.category_id ?? null,
-      owner_id: dto.owner_id ?? null,
-      probability_id: dto.probability_id ?? null,
-      impact_id: dto.impact_id ?? null,
-      response_id: dto.response_id ?? null,
-      response_plan: dto.response_plan?.trim() || null,
-      priority: dto.priority?.trim() || null,
-      action: dto.action?.trim() || null,
-      status: dto.status ?? 'open',
-      type: dto.type ?? 'risk',
+      ...CREATE_DEFAULTS,
+      ...columnsFrom(dto, COLUMN_SPEC),
       created_by: userId,
       updated_by: userId,
     });
@@ -107,48 +132,37 @@ export class RisksService {
     dto: UpdateRiskDto,
     userId: string,
   ) {
-    // The route admits viewers so the risk's own owner can update it
-    // (FDD role 4); everyone else still needs project write access.
-    const level = await this.access.levelFor(userId, projectId);
-    if (level < AccessLevel.Write) {
-      const existing = await this.repo.findOne(projectId, riskId);
-      if (!existing) throw new NotFoundException('Risk not found.');
-      if (existing.owner_id !== userId) {
-        throw new ForbiddenException(
-          "Only this risk's owner or a project writer can update it.",
-        );
-      }
-    }
-    const patch: Record<string, unknown> = {
+    await this.assertMayUpdate(projectId, riskId, userId);
+    const updated = await this.repo.update(projectId, riskId, {
       updated_by: userId,
       // No moddatetime trigger on this table; keep the audit column honest.
       updated_at: new Date().toISOString(),
-    };
-    if (dto.statement !== undefined) patch.statement = dto.statement.trim();
-    if (dto.identified_by !== undefined)
-      patch.identified_by = dto.identified_by?.trim() || null;
-    if (dto.date_identified !== undefined)
-      patch.date_identified = dto.date_identified || null;
-    if (dto.source_id !== undefined) patch.source_id = dto.source_id ?? null;
-    if (dto.category_id !== undefined)
-      patch.category_id = dto.category_id ?? null;
-    if (dto.owner_id !== undefined) patch.owner_id = dto.owner_id ?? null;
-    if (dto.probability_id !== undefined)
-      patch.probability_id = dto.probability_id ?? null;
-    if (dto.impact_id !== undefined) patch.impact_id = dto.impact_id ?? null;
-    if (dto.response_id !== undefined)
-      patch.response_id = dto.response_id ?? null;
-    if (dto.response_plan !== undefined)
-      patch.response_plan = dto.response_plan?.trim() || null;
-    if (dto.priority !== undefined)
-      patch.priority = dto.priority?.trim() || null;
-    if (dto.action !== undefined) patch.action = dto.action?.trim() || null;
-    if (dto.status !== undefined) patch.status = dto.status;
-    if (dto.type !== undefined) patch.type = dto.type;
-    const updated = await this.repo.update(projectId, riskId, patch);
+      ...columnsFrom(dto, COLUMN_SPEC),
+    });
     if (!updated) throw new NotFoundException('Risk not found.');
     await this.maybeAlertHighSeverity(projectId, updated, userId);
     return updated;
+  }
+
+  /**
+   * FDD role 4: the route admits viewers so a risk's own owner can update it.
+   * Everyone else needs project write access.
+   */
+  private async assertMayUpdate(
+    projectId: string,
+    riskId: string,
+    userId: string,
+  ): Promise<void> {
+    const level = await this.access.levelFor(userId, projectId);
+    if (level >= AccessLevel.Write) return;
+
+    const existing = await this.repo.findOne(projectId, riskId);
+    if (!existing) throw new NotFoundException('Risk not found.');
+    if (existing.owner_id !== userId) {
+      throw new ForbiddenException(
+        "Only this risk's owner or a project writer can update it.",
+      );
+    }
   }
 
   async remove(projectId: string, riskId: string, userId: string) {

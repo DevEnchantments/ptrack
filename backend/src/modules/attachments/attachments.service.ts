@@ -11,6 +11,43 @@ import {
   type AttachmentParentType,
 } from './attachments.repository';
 import { ATTACHMENTS_BUCKET } from '../../common/storage';
+import { columnsFrom, type ColumnSpec } from '../../common/columns';
+
+/** The three columns an attachment's metadata edit may touch. */
+const COLUMN_SPEC: ColumnSpec = {
+  trimmedOrNull: ['description'],
+  arrayOrNull: ['tags'],
+  asIs: ['is_gold'],
+};
+
+/**
+ * An upload arrives as multipart, so every field is a string: `is_gold` is the
+ * text "true" or "1", and tags are one comma-separated value. Decoding that is
+ * a transport detail, kept apart from the rest of create() and away from the
+ * JSON path, where the same fields arrive already typed.
+ */
+function parseUploadBody(body: Record<string, string>): {
+  is_gold: boolean;
+  description: string | null;
+  tags: string[] | null;
+} {
+  const tags = body.tags
+    ? body.tags
+        .split(',')
+        .map((t) => t.trim())
+        .filter(Boolean)
+    : null;
+  return {
+    is_gold: body.is_gold === 'true' || body.is_gold === '1',
+    description: body.description?.trim() || null,
+    tags: tags && tags.length ? tags : null,
+  };
+}
+
+/** Object key for a new upload: project-scoped, collision-proof, safe-named. */
+function storagePathFor(projectId: string, originalName: string): string {
+  return `${projectId}/${randomUUID()}-${safeName(originalName)}`;
+}
 import { UpdateAttachmentDto } from './dto/update-attachment.dto';
 
 const MAX_BYTES = 100 * 1024 * 1024; // 100 MB
@@ -86,22 +123,12 @@ export class AttachmentsService {
       );
     }
 
-    const storagePath = `${projectId}/${randomUUID()}-${safeName(
-      file.originalname,
-    )}`;
+    const storagePath = storagePathFor(projectId, file.originalname);
     await this.repo.uploadObject(
       storagePath,
       file.buffer,
       file.mimetype || 'application/octet-stream',
     );
-
-    const isGold = body.is_gold === 'true' || body.is_gold === '1';
-    const tags = body.tags
-      ? body.tags
-          .split(',')
-          .map((t) => t.trim())
-          .filter(Boolean)
-      : null;
 
     return this.repo.insert({
       project_id: projectId,
@@ -110,9 +137,7 @@ export class AttachmentsService {
       storage_path: storagePath,
       mime_type: file.mimetype || null,
       size_bytes: file.size,
-      is_gold: isGold,
-      description: body.description?.trim() || null,
-      tags: tags && tags.length ? tags : null,
+      ...parseUploadBody(body),
       parent_type: parent?.type ?? null,
       parent_id: parent?.id ?? null,
       uploaded_by: userId,
@@ -160,12 +185,11 @@ export class AttachmentsService {
     attachmentId: string,
     dto: UpdateAttachmentDto,
   ) {
-    const patch: Record<string, unknown> = {};
-    if (dto.is_gold !== undefined) patch.is_gold = dto.is_gold;
-    if (dto.description !== undefined)
-      patch.description = dto.description?.trim() || null;
-    if (dto.tags !== undefined) patch.tags = dto.tags?.length ? dto.tags : null;
-    const updated = await this.repo.update(projectId, attachmentId, patch);
+    const updated = await this.repo.update(
+      projectId,
+      attachmentId,
+      columnsFrom(dto, COLUMN_SPEC),
+    );
     if (!updated) throw new NotFoundException('Attachment not found.');
     return updated;
   }

@@ -107,6 +107,19 @@ describe('RisksService', () => {
       );
     });
 
+    it('keeps a supplied status and type instead of the defaults', async () => {
+      const { service, mocks } = build();
+      await service.add(
+        PROJECT,
+        { ...newRisk, status: 'closed', type: 'issue' },
+        USER,
+      );
+
+      expect(mocks.insert).toHaveBeenCalledWith(
+        expect.objectContaining({ status: 'closed', type: 'issue' }),
+      );
+    });
+
     it('collapses blank optional text to null', async () => {
       const { service, mocks } = build();
       await service.add(
@@ -176,6 +189,25 @@ describe('RisksService', () => {
   });
 
   describe('update', () => {
+    it('passes status and type through to the write', async () => {
+      // Status decides whether the high-severity alert fires, so a column spec
+      // that quietly dropped it would be consequential. Nothing pinned that
+      // before.
+      const { service, mocks } = build();
+      await service.update(
+        PROJECT,
+        RISK,
+        { status: 'closed', type: 'issue' },
+        USER,
+      );
+
+      expect(mocks.update).toHaveBeenCalledWith(
+        PROJECT,
+        RISK,
+        expect.objectContaining({ status: 'closed', type: 'issue' }),
+      );
+    });
+
     it('patches only the fields that were sent, stamping updated_by and updated_at', async () => {
       const { service, mocks } = build();
       await service.update(PROJECT, RISK, { statement: ' New ' }, USER);
