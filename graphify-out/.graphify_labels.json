@@ -130,8 +130,6 @@
   "128": "toaster.tsx",
   "129": "DatabaseModule",
   "130": "Injectable",
-  "131": "eslint",
-  "132": "RequireCapability",
   "133": ".update",
   "134": "@eslint/js",
   "135": "eslint-plugin-prettier",
