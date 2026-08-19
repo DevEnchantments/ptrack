@@ -180,9 +180,10 @@ Reordered at the gate (2026-08-19) by value, not alphabetically:
 **The three high-value modules are done.** The remaining five (`dashboard`, `reports`,
 `registry`, `search`, `lookups`) are the deferred read-only group; whether they are pinned
 at all is still an open judgement, not a commitment.
-- Deferred pending a judgement call, not a commitment: `dashboard`, `reports`, `registry`,
-  `search`, `lookups` are read-only or aggregate, where a characterization test mostly
-  asserts query shaping
+- The deferred five, now being worked after all (Fares: "do the leftovers"):
+  [x] `lookups` (**2026-08-19** — repository extracted, then 21 tests; the "low value"
+  call was wrong, see log) · [ ] `registry` · [ ] `search` · [ ] `reports` ·
+  [ ] `dashboard`
 
 ### Phase 1 — Modules that already have a safety net
 
@@ -502,6 +503,32 @@ time on this branch that has paid (see D1-D3).
 **Verification.** 328 → **333 tests / 26 suites, no skips**; backend `tsc` · `eslint
 --max-warnings 0` · `build` clean; DI graph boots; frontend lint, build, 47 tests, and now a
 clean bare `tsc --noEmit`.
+
+### 2026-08-19 — Phase 0 leftovers, `lookups`. **My "low value" call was wrong.**
+
+At the gate I put `lookups` in the deferred group with `dashboard`, `reports`, `registry`
+and `search`, on the grounds that they are "read-only or aggregate, where a characterization
+test mostly asserts query shaping". Fares said do them anyway. Reading `lookups` properly
+shows that judgement was wrong on the facts:
+
+- a **table whitelist** (`ALLOWED`) that is a real security boundary — the URL segment names
+  a physical table, so anything not whitelisted must 404 before a query is built
+- a **60-second cache with targeted invalidation** — each write clears only its own key
+- a **per-table column whitelist** that rejects an extra column on a table that does not
+  own it (`color` belongs to `project_statuses`, not `tiers`)
+- an **access-level fallback**: an unknown level becomes `read_only` rather than an error
+
+None of that was pinned. I had classified the module by its HTTP verbs rather than by
+reading it. **Lesson: "read-only" describes the traffic, not the rules.** The remaining four
+deferred modules get read before being judged, not after.
+
+**Changed.** `LookupsRepository` extracted (`listActive`, `listAll`, `insert`, `update`,
+each taking the physical table name), then **21 tests**. The repository is deliberately
+generic over table names and owns no policy: the whitelist, cache and column rules stay in
+the service.
+
+**Verification.** 333 → **354 tests / 27 suites**; `tsc` · `eslint --max-warnings 0` ·
+`build` clean; DI graph boots.
 
 **Plan change agreed at the gate.** Phase 0's eight modules are not comparable.
 `submissions`, `access-admin` and `kpis` have write paths and real rules, and `access-admin`

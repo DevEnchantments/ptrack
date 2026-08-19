@@ -3,8 +3,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { DatabaseService } from '../../database/database.service';
-import { toHttpException } from '../../common/supabase-error';
+import { LookupsRepository } from './lookups.repository';
 
 const ALLOWED: Record<string, string> = {
   'project-roles': 'project_roles',
@@ -37,6 +36,9 @@ const SELECTS: Record<string, string> = {
 };
 
 const ACCESS_LEVELS = ['read_only', 'read_write', 'read_write_admin'];
+
+/** The shape the admin grid edits, whatever the code table. */
+const ADMIN_SELECT = 'id, name, sort_order, is_active';
 
 // Admin: per-table extra editable columns (everything else gets the common
 // trio name/sort_order/is_active). Whitelist enforced server-side.
@@ -83,7 +85,7 @@ interface CacheSlot {
 export class LookupsService {
   private readonly cache = new Map<string, CacheSlot>();
 
-  constructor(private readonly db: DatabaseService) {}
+  constructor(private readonly repo: LookupsRepository) {}
 
   async list(name: string) {
     const table = ALLOWED[name];
@@ -92,15 +94,10 @@ export class LookupsService {
     const hit = this.cache.get(name);
     if (hit && hit.expires > Date.now()) return hit.data;
 
-    const { data, error } = await this.db.client
-      .from(table)
-      .select(SELECTS[table] ?? 'id, name')
-      .eq('is_active', true)
-      .order('sort_order', { ascending: true });
-    if (error) throw toHttpException(error, `lookups.${name}`);
-
-    // The dynamic select string defeats supabase-js's literal-type inference.
-    const rows = (data ?? []) as unknown as LookupRow[];
+    const rows = await this.repo.listActive<LookupRow>(
+      table,
+      SELECTS[table] ?? 'id, name',
+    );
     this.cache.set(name, { data: rows, expires: Date.now() + CACHE_TTL_MS });
     return rows;
   }
@@ -108,27 +105,25 @@ export class LookupsService {
   async createCategory(name: string) {
     const clean = (name ?? '').trim();
     if (!clean) throw new BadRequestException('Category name is required.');
-    const { data, error } = await this.db.client
-      .from('project_categories')
-      .insert({ name: clean })
-      .select('id, name')
-      .single();
-    if (error) throw toHttpException(error, 'lookups.createCategory');
+    const created = await this.repo.insert<{ id: string; name: string }>(
+      'project_categories',
+      { name: clean },
+      'id, name',
+    );
     this.cache.delete('project-categories');
-    return data;
+    return created;
   }
 
   async createSector(name: string) {
     const clean = (name ?? '').trim();
     if (!clean) throw new BadRequestException('Sector name is required.');
-    const { data, error } = await this.db.client
-      .from('sectors')
-      .insert({ name: clean })
-      .select('id, name')
-      .single();
-    if (error) throw toHttpException(error, 'lookups.createSector');
+    const created = await this.repo.insert<{ id: string; name: string }>(
+      'sectors',
+      { name: clean },
+      'id, name',
+    );
     this.cache.delete('sectors');
-    return data;
+    return created;
   }
 
   async createRole(name: string, defaultAccessLevel: string) {
@@ -137,14 +132,13 @@ export class LookupsService {
     const level = ACCESS_LEVELS.includes(defaultAccessLevel)
       ? defaultAccessLevel
       : 'read_only';
-    const { data, error } = await this.db.client
-      .from('project_roles')
-      .insert({ name: clean, default_access_level: level })
-      .select('id, name')
-      .single();
-    if (error) throw toHttpException(error, 'lookups.createRole');
+    const created = await this.repo.insert<{ id: string; name: string }>(
+      'project_roles',
+      { name: clean, default_access_level: level },
+      'id, name',
+    );
     this.cache.delete('project-roles');
-    return data;
+    return created;
   }
 
   /** Admin listing: every code table with all rows, inactive included. */
@@ -157,16 +151,8 @@ export class LookupsService {
           ...extras,
           ...(table === 'strategic_programs' ? ['objective_id'] : []),
         ].join(', ');
-        const { data, error } = await this.db.client
-          .from(table)
-          .select(select)
-          .order('sort_order', { ascending: true, nullsFirst: false })
-          .order('name', { ascending: true });
-        if (error) throw toHttpException(error, `lookups.admin.${name}`);
-        return [
-          name,
-          { rows: (data ?? []) as unknown as AdminLookupRow[], extras },
-        ] as const;
+        const rows = await this.repo.listAll<AdminLookupRow>(table, select);
+        return [name, { rows, extras }] as const;
       }),
     );
     return Object.fromEntries(entries);
@@ -218,14 +204,13 @@ export class LookupsService {
       ...this.extrasFor(table, dto),
     };
     if (dto.sort_order !== undefined) row.sort_order = dto.sort_order;
-    const { data, error } = await this.db.client
-      .from(table)
-      .insert(row)
-      .select('id, name, sort_order, is_active')
-      .single();
-    if (error) throw toHttpException(error, `lookups.admin.add.${name}`);
+    const created = await this.repo.insert<AdminLookupRow>(
+      table,
+      row,
+      ADMIN_SELECT,
+    );
     this.cache.delete(name);
-    return data;
+    return created;
   }
 
   async updateValue(
@@ -251,15 +236,14 @@ export class LookupsService {
     if (dto.is_active !== undefined) patch.is_active = dto.is_active;
     if (Object.keys(patch).length === 0)
       throw new BadRequestException('Nothing to update.');
-    const { data, error } = await this.db.client
-      .from(table)
-      .update(patch)
-      .eq('id', id)
-      .select('id, name, sort_order, is_active')
-      .maybeSingle();
-    if (error) throw toHttpException(error, `lookups.admin.update.${name}`);
-    if (!data) throw new NotFoundException('Code table value not found.');
+    const updated = await this.repo.update<AdminLookupRow>(
+      table,
+      id,
+      patch,
+      ADMIN_SELECT,
+    );
+    if (!updated) throw new NotFoundException('Code table value not found.');
     this.cache.delete(name);
-    return data;
+    return updated;
   }
 }

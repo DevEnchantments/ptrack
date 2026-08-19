@@ -205,13 +205,13 @@
     "semantic_hash": ""
   },
   "backend/src/modules/lookups/lookups.module.ts": {
-    "mtime": 1783942248.549218,
-    "ast_hash": "d58226820330487754f6f8fc911c9208",
+    "mtime": 1787143298.3779075,
+    "ast_hash": "f05bd33196566a78809368dd22d143d1",
     "semantic_hash": ""
   },
   "backend/src/modules/lookups/lookups.service.ts": {
-    "mtime": 1786443928.602204,
-    "ast_hash": "13e68ae8928a33adf73ad4b863d009d4",
+    "mtime": 1787143125.4521675,
+    "ast_hash": "265eb5ba83442380b53fb0be06f73435",
     "semantic_hash": ""
   },
   "backend/src/modules/milestones/dto/create-milestone.dto.ts": {
@@ -1805,8 +1805,8 @@
     "semantic_hash": ""
   },
   "docs/REFACTOR-PLAN.md": {
-    "mtime": 1787141891.1338224,
-    "ast_hash": "6cce0a2009f7774444a1c13296191417",
+    "mtime": 1787143517.4924462,
+    "ast_hash": "b3b115b8668ae19b4e4d0b2c9e82b5d2",
     "semantic_hash": ""
   },
   "backend/src/modules/action-items/index.ts": {
@@ -1912,6 +1912,16 @@
   "backend/src/modules/kpis/kpis.service.spec.ts": {
     "mtime": 1787141232.631348,
     "ast_hash": "87b2fa9d6076e7bc346ecc1a527fe05c",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/lookups/lookups.repository.ts": {
+    "mtime": 1787143088.5007029,
+    "ast_hash": "af2b5e65901034e2f4c910418a5a11d6",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/lookups/lookups.service.spec.ts": {
+    "mtime": 1787143298.4278731,
+    "ast_hash": "bfdef0ad539c646522e74706d669f56f",
     "semantic_hash": ""
   }
 }
