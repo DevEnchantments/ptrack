@@ -117,6 +117,11 @@ Every record type now has Create, Read, Update **and Delete**.
 
 ## Roadmap — deferred to Phase 2+
 
+**Post-migration backlog:** `docs/NEW-LAPTOP-UNLOCKS.md` (2026-08-20) lists what the
+corporate laptop was blocking and is now possible — headline: email stage d via local
+Mailpit, local Supabase for repo-layer tests, Playwright e2e. Consult it before
+starting new work.
+
 **Unfinished Phase 1 loose ends:** RLS enforcement (deliberately deferred to the security
 phase).
 
