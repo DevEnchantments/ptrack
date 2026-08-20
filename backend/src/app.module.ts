@@ -32,6 +32,7 @@ import { KpisModule } from './modules/kpis/kpis.module';
 import { UpdatesModule } from './modules/updates/updates.module';
 import { StatusReportsModule } from './modules/status-reports/status-reports.module';
 import { AttachmentsModule } from './modules/attachments/attachments.module';
+import { AssistantModule } from './modules/assistant/assistant.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
@@ -66,6 +67,7 @@ import { AppService } from './app.service';
     UpdatesModule,
     StatusReportsModule,
     AttachmentsModule,
+    AssistantModule,
   ],
   controllers: [AppController],
 

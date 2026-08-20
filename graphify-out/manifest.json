@@ -20,8 +20,8 @@
     "semantic_hash": ""
   },
   "backend/package.json": {
-    "mtime": 1786118201.0096157,
-    "ast_hash": "9444d453408aea1990a67dd9c14f3f8e",
+    "mtime": 1787211557.7832184,
+    "ast_hash": "c21d1749cba73f04d8be0e913c5dbc25",
     "semantic_hash": ""
   },
   "backend/src/app.controller.spec.ts": {
@@ -35,8 +35,8 @@
     "semantic_hash": ""
   },
   "backend/src/app.module.ts": {
-    "mtime": 1786975110.1549215,
-    "ast_hash": "b9f4e1b9ca1016786259d9a913037c3b",
+    "mtime": 1787211669.546902,
+    "ast_hash": "e827a8332dab70f08a42b4678aafee84",
     "semantic_hash": ""
   },
   "backend/src/app.service.ts": {
@@ -445,8 +445,8 @@
     "semantic_hash": ""
   },
   "frontend/src/App.tsx": {
-    "mtime": 1787040090.1194212,
-    "ast_hash": "7cbb184cecb6a8aecc1d456a6c7d78a4",
+    "mtime": 1787211990.850801,
+    "ast_hash": "e948a955164975e34b6ab7a0da4b81e6",
     "semantic_hash": ""
   },
   "frontend/src/components/AddActionItemDialog.tsx": {
@@ -640,8 +640,8 @@
     "semantic_hash": ""
   },
   "frontend/tsconfig.json": {
-    "mtime": 1787210550.7094903,
-    "ast_hash": "7d1c71264559a32360f85033e7bff034",
+    "mtime": 1787212448.3436615,
+    "ast_hash": "597111e0871da06310089fd23d923ad7",
     "semantic_hash": ""
   },
   "frontend/tsconfig.node.json": {
@@ -850,8 +850,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/AppLayout.tsx": {
-    "mtime": 1787034827.1056087,
-    "ast_hash": "ae8fca29551fd2145cce59408ab8d41d",
+    "mtime": 1787211872.736637,
+    "ast_hash": "26494dd54672059e98f05936e91042f3",
     "semantic_hash": ""
   },
   "frontend/src/pages/DashboardPage.tsx": {
@@ -1605,8 +1605,8 @@
     "semantic_hash": ""
   },
   "frontend/src/lib/api/index.ts": {
-    "mtime": 1786966842.3806655,
-    "ast_hash": "de63f58b89196c05997260b8b54fd08b",
+    "mtime": 1787211915.2598784,
+    "ast_hash": "2b0581e6cfe50ced5b594e37230150af",
     "semantic_hash": ""
   },
   "frontend/src/lib/api/planning.ts": {
@@ -1802,6 +1802,41 @@
   "backend/src/modules/updates/updates.service.spec.ts": {
     "mtime": 1787210550.6885893,
     "ast_hash": "ec0a3d3b07359e8dabbe6433c17faf18",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/assistant/assistant.controller.ts": {
+    "mtime": 1787211613.136821,
+    "ast_hash": "ca47f73b4f7e3333084bb34f4b100252",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/assistant/assistant.module.ts": {
+    "mtime": 1787211623.9629345,
+    "ast_hash": "4c3e1d7dfab2fc8f666e436467f928b9",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/assistant/assistant.service.ts": {
+    "mtime": 1787212154.6689873,
+    "ast_hash": "895a4865bfc0931b8d7cf217ac769a8e",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/assistant/assistant.tools.ts": {
+    "mtime": 1787211525.7301455,
+    "ast_hash": "dca81aee1cae3135f382faee68179763",
+    "semantic_hash": ""
+  },
+  "backend/src/modules/assistant/dto/chat-request.dto.ts": {
+    "mtime": 1787211595.9155953,
+    "ast_hash": "7aa15db4dc2557a278763b50aacd79d3",
+    "semantic_hash": ""
+  },
+  "frontend/src/lib/api/assistant.ts": {
+    "mtime": 1787211892.6240997,
+    "ast_hash": "0f364ed4cf10181b3e170224bbcd820d",
+    "semantic_hash": ""
+  },
+  "frontend/src/pages/AssistantPage.tsx": {
+    "mtime": 1787211977.0037994,
+    "ast_hash": "efe080835464424804685b719f5a8222",
     "semantic_hash": ""
   }
 }

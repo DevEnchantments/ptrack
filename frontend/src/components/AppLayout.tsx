@@ -43,7 +43,7 @@ const NAV_ITEMS: Array<{
   { label: 'People', icon: Users, to: '/people' },
   { label: 'Timeline', icon: Clock, to: '/timeline' },
   { label: 'Reporting', icon: BarChart3, to: '/reporting' },
-  { label: 'AI Assistant', icon: Bot },
+  { label: 'AI Assistant', icon: Bot, to: '/assistant' },
   {
     label: 'Administration',
     icon: Settings,
