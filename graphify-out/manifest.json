@@ -792,9 +792,9 @@
     "semantic_hash": "2e092757eaa8553feb3c7bb53e6a8a3b"
   },
   "CLAUDE.md": {
-    "mtime": 1787234077.8157964,
-    "seen": 1787234270.5620089,
-    "ast_hash": "4c101fbe4e1eb6d6b2508988a08db3fb",
+    "mtime": 1787236106.943113,
+    "seen": 1787236172.805203,
+    "ast_hash": "8583b8b5ad55a6c1521baaea43d0a6fc",
     "semantic_hash": ""
   },
   "README.md": {
@@ -2205,6 +2205,12 @@
     "mtime": 1787222365.6712694,
     "seen": 1787234007.4547944,
     "ast_hash": "efe080835464424804685b719f5a8222",
+    "semantic_hash": ""
+  },
+  "docs/NEW-LAPTOP-UNLOCKS.md": {
+    "mtime": 1787236093.6084187,
+    "seen": 1787236172.8052235,
+    "ast_hash": "010e7c3f1eca4a3d222bc7184e59247c",
     "semantic_hash": ""
   }
 }
