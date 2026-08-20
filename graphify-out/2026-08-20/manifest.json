@@ -460,18 +460,18 @@
     "semantic_hash": ""
   },
   "frontend/src/components/AddIssueDialog.tsx": {
-    "mtime": 1786958607.584139,
-    "ast_hash": "89d7d21a95096c2bc7b4b0084e071005",
+    "mtime": 1787179809.8845294,
+    "ast_hash": "7cb77efd618739d72630dca7faf3710c",
     "semantic_hash": ""
   },
   "frontend/src/components/AddLinkDialog.tsx": {
-    "mtime": 1785331589.6758928,
-    "ast_hash": "62ebd3bb0eae7cce332809fd5b58b2dc",
+    "mtime": 1787179809.8845294,
+    "ast_hash": "b6f2318ae13ba3beba92b23b7fa798bd",
     "semantic_hash": ""
   },
   "frontend/src/components/AddMilestoneDialog.tsx": {
-    "mtime": 1787178159.9250162,
-    "ast_hash": "7dc9cf09e6f70265e5c11d17beb6fd1b",
+    "mtime": 1787179809.896943,
+    "ast_hash": "dcd2f2f69884462e13c9df34832f7f06",
     "semantic_hash": ""
   },
   "frontend/src/components/AddPersonDialog.tsx": {
@@ -480,8 +480,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/AddResourceDialog.tsx": {
-    "mtime": 1785331589.6330607,
-    "ast_hash": "c233d4e97e5a3caa7206947f0d1afc1d",
+    "mtime": 1787179809.8845294,
+    "ast_hash": "8e38df380c4137cf3a77d44eae577666",
     "semantic_hash": ""
   },
   "frontend/src/components/AddStatusReportDialog.tsx": {
@@ -490,8 +490,8 @@
     "semantic_hash": ""
   },
   "frontend/src/components/AddUpdateDialog.tsx": {
-    "mtime": 1785331589.6300604,
-    "ast_hash": "29402a3106be43651bda3ec6976a33ab",
+    "mtime": 1787179809.8845294,
+    "ast_hash": "0db95b02c1bc46c91ee0ac6ded36d63a",
     "semantic_hash": ""
   },
   "frontend/src/components/CategorySelect.tsx": {
@@ -2000,13 +2000,43 @@
     "semantic_hash": ""
   },
   "frontend/src/lib/milestone-form.test.ts": {
-    "mtime": 1787178142.6727505,
-    "ast_hash": "9292c0f80f48847336ee6e5a958d4275",
+    "mtime": 1787179444.6299272,
+    "ast_hash": "2582dfa8fbfbad0cc2c8977d8e747a55",
     "semantic_hash": ""
   },
   "frontend/src/lib/milestone-form.ts": {
-    "mtime": 1787178120.7240317,
-    "ast_hash": "22728984770b00bbe909dd38a2effbb2",
+    "mtime": 1787179444.6299272,
+    "ast_hash": "97d4e17b607fa9d28880a22b4ab8d576",
+    "semantic_hash": ""
+  },
+  "frontend/src/lib/dialog-forms.test.ts": {
+    "mtime": 1787179414.2309544,
+    "ast_hash": "8168e99e43f64eeb48b6568ceba7b09f",
+    "semantic_hash": ""
+  },
+  "frontend/src/lib/forms.ts": {
+    "mtime": 1787179343.3469138,
+    "ast_hash": "4abcae1d3011c599cace7d621fab0908",
+    "semantic_hash": ""
+  },
+  "frontend/src/lib/issue-form.ts": {
+    "mtime": 1787179387.486182,
+    "ast_hash": "e3264f0a5edc3e78936310d9bba459f7",
+    "semantic_hash": ""
+  },
+  "frontend/src/lib/link-form.ts": {
+    "mtime": 1787179354.563632,
+    "ast_hash": "4adf0d063015001e60b1aa6717965bf7",
+    "semantic_hash": ""
+  },
+  "frontend/src/lib/resource-form.ts": {
+    "mtime": 1787179362.9497676,
+    "ast_hash": "c3822f66acc7ed76abb3126db06f8907",
+    "semantic_hash": ""
+  },
+  "frontend/src/lib/update-form.ts": {
+    "mtime": 1787179373.164033,
+    "ast_hash": "0fa06f732d395c312e18ac426cfa0598",
     "semantic_hash": ""
   }
 }

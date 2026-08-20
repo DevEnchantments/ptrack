@@ -1805,8 +1805,8 @@
     "semantic_hash": ""
   },
   "docs/REFACTOR-PLAN.md": {
-    "mtime": 1787178852.5145564,
-    "ast_hash": "756cccd4afcd7ec11a07a59fcb9aab1f",
+    "mtime": 1787210437.4709203,
+    "ast_hash": "571f4d05445ad565fca30d2688477421",
     "semantic_hash": ""
   },
   "backend/src/modules/action-items/index.ts": {
@@ -1890,8 +1890,8 @@
     "semantic_hash": ""
   },
   "docs/FOLLOW-UPS.md": {
-    "mtime": 1787177786.4627678,
-    "ast_hash": "97c28c894745ce5186879440391776dc",
+    "mtime": 1787210437.4640071,
+    "ast_hash": "a34344fb4740a82e67ddcda95e6ad83b",
     "semantic_hash": ""
   },
   "backend/src/modules/submissions/submissions.service.spec.ts": {
