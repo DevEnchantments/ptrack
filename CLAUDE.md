@@ -42,9 +42,13 @@ reference only. `docs/UI-AUDIT.md` is the staged visual-restyling checklist
 - Repo: https://github.com/DevEnchantments/ptrack
 - Backend dev server: `:3000` (`npm run dev`)
 - Frontend dev server: `:5173` (`npm run dev`)
-- **Environment:** corporate Windows laptop, PowerShell, no admin rights.
-  - Corporate TLS interception requires `$env:NODE_OPTIONS="--use-system-ca"` set in the
-    session before any Node/npm network call.
+- **Environment (since 2026-08-20):** personal Windows laptop, PowerShell. Repo path
+  contains a space ("Internship Work") — always quote paths in shell commands.
+  - Avast Web Shield intercepts TLS: Node/npm need `$env:NODE_OPTIONS="--use-system-ca"`
+    before network calls; git uses `http.sslBackend=schannel` (set globally); curl fails
+    revocation checks on Avast-signed certs — pass `--ssl-no-revoke` when a script needs it.
+  - Machine-local Claude hooks live in `.claude/settings.local.json` (gitignored) so this
+    tracked repo stays interpreter-path-free; Python is `C:\Python313\python.exe`.
   - PATH / env changes sometimes need a full VS Code restart to take effect.
 - **Label every command** as `backend` / `frontend` / `Supabase dashboard`.
 

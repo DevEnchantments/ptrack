@@ -146,3 +146,7 @@ graphifyignore
 
 # Machine-local interpreter pin for the graphify post-commit hook (absolute path)
 graphify-out/.graphify_python
+
+# graphify rebuild cache: derived data, machine-local, version-keyed (ast/v<ver>/)
+# and mtime bookkeeping (stat-index.json) that otherwise churns every commit.
+graphify-out/cache/
