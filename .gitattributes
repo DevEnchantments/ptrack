@@ -8,3 +8,4 @@
 # Generated graphify output: leave line endings alone (graphify rewrites
 # these every rebuild; normalizing would warn on every commit).
 graphify-out/** -text
+graphify-out/graph.json merge=graphify
