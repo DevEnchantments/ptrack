@@ -566,6 +566,36 @@ into the service for no gain — a shallower interface, not a deeper one.
 `build` clean; DI graph boots. F8 drops from ten repository-less modules to four
 (`import`, `project-sections`, `templates`, `users`).
 
+### 2026-08-20 — Phase 2 continued: four more dialogs, and a gate that was not one
+
+`link`, `resource`, `update` and `issue` extracted to `lib/<entity>-form.ts`, plus a shared
+`lib/forms.ts` for `FieldErrors` and `parseTags` - four dialogs had each reimplemented the
+tag splitting. **17 tests.** Frontend 66 -> 83.
+
+**Three things the extraction surfaced, all pinned rather than fixed:**
+- **`AddLinkDialog` reports the wrong error.** A blank URL fails both checks and the
+  pattern message overwrites the required one, so an empty URL reads "URL must start with
+  http://" instead of "A URL is required."
+- **`AddUpdateDialog` sends `tags: null` where link and milestone send `undefined`.** Same
+  backend, different meaning: absent leaves tags alone, null clears them. Editing an update
+  therefore clears its tags where editing a link does not. F4 at the frontend layer.
+- **`AddIssueDialog` drops a resolution unless the issue is closed** - deliberate, and now
+  tested: a resolution typed and then reopened would otherwise linger, describing an ending
+  that never happened.
+
+**Mistake 1: scripted import insertion.** The script anchored on "the last line starting
+with `import `", which in these files is the *opening* line of a multi-line import, so the
+new statement landed inside another import and broke two files. Fixed by anchoring on the
+last line that *ends* an import. Third time on this branch that a script matched the first
+plausible thing rather than the right one.
+
+**Mistake 2, and it invalidates an earlier claim: `npx tsc --noEmit` in `frontend/` is not
+a typecheck.** The root tsconfig has `"files": []` with project references, so the command
+exits 0 having checked nothing - it printed TSC OK on genuinely broken syntax, and only
+`npm run build` (which runs `tsc -b`) caught it. The F6 entry claiming the bare command was
+"usable" after removing `baseUrl` was wrong; recorded as FOLLOW-UPS L6. **The frontend gate
+is lint + build + test, and build is the typecheck.**
+
 ### 2026-08-20 — Phase 2 opens: the component-test harness, and the first dialog
 
 **The frontend's problem is the same one the backend had**, in a different costume: eleven
