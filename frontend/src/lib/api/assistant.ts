@@ -1,18 +1,32 @@
-import { API_URL, apiGet, authHeader } from './core'
+import { API_URL, apiGet, apiPost, authHeader } from './core'
 
 export interface ChatMessage {
   role: 'user' | 'assistant'
   content: string
 }
 
+export interface AssistantAction {
+  tool: string
+  summary: string
+  input: Record<string, string>
+}
+
 export type AssistantEvent =
   | { type: 'text'; delta: string }
   | { type: 'tool'; name: string }
+  | { type: 'confirm'; action: AssistantAction }
   | { type: 'done' }
   | { type: 'error'; message: string }
 
 export const assistantApi = {
   status: () => apiGet<{ configured: boolean }>('/assistant/status'),
+
+  /** Executes a write action the user confirmed on its card. */
+  execute: (action: AssistantAction) =>
+    apiPost<{ ok: boolean; status: number; result: unknown }>(
+      '/assistant/execute',
+      { tool: action.tool, input: action.input },
+    ),
 
   /**
    * One chat turn. The backend streams SSE frames; `onEvent` fires per frame.

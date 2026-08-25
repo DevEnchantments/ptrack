@@ -2,12 +2,13 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
   assistantApi,
+  type AssistantAction,
   type AssistantEvent,
   type ChatMessage,
 } from '@/lib/api'
 import { useMe } from '@/lib/use-me'
 import { Button } from '@/components/ui/button'
-import { Bot, Loader2, Search, Send, Sparkles } from 'lucide-react'
+import { Bot, Check, Loader2, Search, Send, Sparkles, X } from 'lucide-react'
 
 /** Friendly labels for the activity chips shown while the assistant works. */
 const TOOL_LABELS: Record<string, string> = {
@@ -30,11 +31,21 @@ const SUGGESTIONS = [
   'What is on my plate this week?',
 ]
 
+type ActionState = 'pending' | 'running' | 'done' | 'failed' | 'cancelled'
+
+interface TurnAction {
+  action: AssistantAction
+  state: ActionState
+  note?: string
+}
+
 interface Turn {
   role: 'user' | 'assistant'
   content: string
   /** Tool activity that produced this assistant turn, in call order. */
   tools: string[]
+  /** Write actions proposed in this turn, awaiting/after confirmation. */
+  actions: TurnAction[]
   error?: boolean
 }
 
@@ -74,16 +85,34 @@ export function AssistantPage() {
       setInput('')
       setBusy(true)
 
-      const history: ChatMessage[] = [
-        ...turns
-          .filter((t) => !t.error)
-          .map((t) => ({ role: t.role, content: t.content })),
-        { role: 'user', content: question },
-      ]
+      const history: ChatMessage[] = []
+      for (const t of turns) {
+        if (t.error) continue
+        history.push({ role: t.role, content: t.content })
+        for (const a of t.actions) {
+          if (a.state === 'done') {
+            history.push({
+              role: 'user',
+              content: `[I confirmed "${a.action.summary}" and it was executed successfully.]`,
+            })
+          } else if (a.state === 'failed') {
+            history.push({
+              role: 'user',
+              content: `[I confirmed "${a.action.summary}" but it failed: ${a.note ?? 'unknown error'}]`,
+            })
+          } else if (a.state === 'cancelled') {
+            history.push({
+              role: 'user',
+              content: `[I cancelled the proposed action "${a.action.summary}".]`,
+            })
+          }
+        }
+      }
+      history.push({ role: 'user', content: question })
       setTurns((prev) => [
         ...prev,
-        { role: 'user', content: question, tools: [] },
-        { role: 'assistant', content: '', tools: [] },
+        { role: 'user', content: question, tools: [], actions: [] },
+        { role: 'assistant', content: '', tools: [], actions: [] },
       ])
 
       const patchReply = (fn: (t: Turn) => Turn) =>
@@ -103,6 +132,14 @@ export function AssistantPage() {
               patchReply((t) => ({ ...t, content: t.content + event.delta }))
             } else if (event.type === 'tool') {
               patchReply((t) => ({ ...t, tools: [...t.tools, event.name] }))
+            } else if (event.type === 'confirm') {
+              patchReply((t) => ({
+                ...t,
+                actions: [
+                  ...t.actions,
+                  { action: event.action, state: 'pending' },
+                ],
+              }))
             } else if (event.type === 'error') {
               patchReply((t) => ({
                 ...t,
@@ -128,6 +165,48 @@ export function AssistantPage() {
       }
     },
     [busy, turns],
+  )
+
+  const resolveAction = useCallback(
+    async (turnIndex: number, actionIndex: number, confirm: boolean) => {
+      const patch = (fn: (a: TurnAction) => TurnAction) =>
+        setTurns((prev) => {
+          const next = [...prev]
+          const turn = next[turnIndex]
+          if (!turn) return prev
+          const actions = [...turn.actions]
+          actions[actionIndex] = fn(actions[actionIndex])
+          next[turnIndex] = { ...turn, actions }
+          return next
+        })
+
+      if (!confirm) {
+        patch((a) => ({ ...a, state: 'cancelled' }))
+        return
+      }
+      patch((a) => ({ ...a, state: 'running' }))
+      try {
+        const target = turns[turnIndex]?.actions[actionIndex]
+        if (!target) return
+        const res = await assistantApi.execute(target.action)
+        if (res.ok) {
+          patch((a) => ({ ...a, state: 'done', note: 'Done' }))
+        } else {
+          const body = res.result as { message?: string | string[] } | null
+          const message = Array.isArray(body?.message)
+            ? body.message.join(', ')
+            : (body?.message ?? `HTTP ${res.status}`)
+          patch((a) => ({ ...a, state: 'failed', note: message }))
+        }
+      } catch (err) {
+        patch((a) => ({
+          ...a,
+          state: 'failed',
+          note: err instanceof Error ? err.message : 'Request failed',
+        }))
+      }
+    },
+    [turns],
   )
 
   if (configured === false) {
@@ -214,6 +293,51 @@ export function AssistantPage() {
                     ))}
                   </div>
                 )}
+                {turn.actions.map((a, j) => (
+                  <div
+                    key={j}
+                    className="mb-2 rounded-lg border border-primary/30 bg-primary/5 px-3 py-2"
+                  >
+                    <div className="text-sm font-medium text-foreground">
+                      {a.action.summary}
+                    </div>
+                    {a.state === 'pending' ? (
+                      <div className="mt-2 flex gap-2">
+                        <Button
+                          size="sm"
+                          onClick={() => void resolveAction(i, j, true)}
+                        >
+                          <Check className="mr-1 h-3.5 w-3.5" /> Confirm
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => void resolveAction(i, j, false)}
+                        >
+                          <X className="mr-1 h-3.5 w-3.5" /> Cancel
+                        </Button>
+                      </div>
+                    ) : (
+                      <div
+                        className={`mt-1 text-xs ${
+                          a.state === 'done'
+                            ? 'text-emerald-600 dark:text-emerald-400'
+                            : a.state === 'failed'
+                              ? 'text-destructive'
+                              : 'text-muted-foreground'
+                        }`}
+                      >
+                        {a.state === 'running'
+                          ? 'Executing…'
+                          : a.state === 'done'
+                            ? '✓ Executed'
+                            : a.state === 'failed'
+                              ? `Failed: ${a.note ?? ''}`
+                              : 'Cancelled'}
+                      </div>
+                    )}
+                  </div>
+                ))}
                 {turn.content ? (
                   <div
                     className={`whitespace-pre-wrap text-sm leading-relaxed ${

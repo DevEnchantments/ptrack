@@ -11,6 +11,7 @@ import { ApiOperation, ApiProduces } from '@nestjs/swagger';
 import type { Request, Response } from 'express';
 import { AssistantService, AssistantEvent } from './assistant.service';
 import { ChatRequestDto } from './dto/chat-request.dto';
+import { ExecuteActionDto } from './dto/execute-action.dto';
 
 @Controller('assistant')
 export class AssistantController {
@@ -58,5 +59,19 @@ export class AssistantController {
     } finally {
       res.end();
     }
+  }
+
+  /**
+   * Executes one write action the user confirmed in the chat UI. The action
+   * is rebuilt from the write-tool catalog (arbitrary calls are impossible)
+   * and runs under the caller's own JWT, so the guard chain authorizes it
+   * exactly like a hand-made request.
+   */
+  @Post('execute')
+  @ApiOperation({ summary: 'Execute a user-confirmed assistant action' })
+  execute(@Body() dto: ExecuteActionDto, @Req() req: Request) {
+    const authorization = req.headers.authorization;
+    if (!authorization) throw new UnauthorizedException();
+    return this.assistant.execute(dto.tool, dto.input, authorization);
   }
 }
