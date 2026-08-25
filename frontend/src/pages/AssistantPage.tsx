@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { AssistantMarkdown } from '@/components/AssistantMarkdown'
 import { Link } from 'react-router-dom'
 import {
   assistantApi,
@@ -131,7 +132,15 @@ export function AssistantPage() {
             if (event.type === 'text') {
               patchReply((t) => ({ ...t, content: t.content + event.delta }))
             } else if (event.type === 'tool') {
-              patchReply((t) => ({ ...t, tools: [...t.tools, event.name] }))
+              // Prose before and after a tool call are separate paragraphs.
+              patchReply((t) => ({
+                ...t,
+                tools: [...t.tools, event.name],
+                content:
+                  t.content && !t.content.endsWith('\n')
+                    ? `${t.content}\n\n`
+                    : t.content,
+              }))
             } else if (event.type === 'confirm') {
               patchReply((t) => ({
                 ...t,
@@ -339,13 +348,13 @@ export function AssistantPage() {
                   </div>
                 ))}
                 {turn.content ? (
-                  <div
-                    className={`whitespace-pre-wrap text-sm leading-relaxed ${
-                      turn.error ? 'text-destructive' : 'text-foreground'
-                    }`}
-                  >
-                    {turn.content}
-                  </div>
+                  turn.error ? (
+                    <div className="whitespace-pre-wrap text-sm leading-relaxed text-destructive">
+                      {turn.content}
+                    </div>
+                  ) : (
+                    <AssistantMarkdown content={turn.content} />
+                  )
                 ) : (
                   busy &&
                   i === turns.length - 1 && (
