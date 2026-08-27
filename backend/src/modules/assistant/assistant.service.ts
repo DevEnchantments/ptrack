@@ -7,6 +7,7 @@ import {
 import Anthropic from '@anthropic-ai/sdk';
 import { betaTool } from '@anthropic-ai/sdk/helpers/beta/json-schema';
 import { READ_TOOLS, WRITE_TOOLS } from './assistant.tools';
+import { CHART_TOOL, ChartSpec, validateChartSpec } from './assistant.chart';
 import { ChatMessageDto } from './dto/chat-request.dto';
 
 /** One SSE frame sent to the chat UI. */
@@ -17,6 +18,7 @@ export type AssistantEvent =
       type: 'confirm';
       action: { tool: string; summary: string; input: Record<string, string> };
     }
+  | { type: 'chart'; chart: ChartSpec }
   | { type: 'done' }
   | { type: 'error'; message: string };
 
@@ -32,6 +34,7 @@ Ground rules:
 - You can prepare changes (action items, issues, risks, updates, cycle submission) with the write tools, but a write tool NEVER executes anything: it shows the user a confirmation card, and only their explicit Confirm click runs the action. After calling a write tool, tell the user briefly what you prepared and that it awaits their confirmation. Never state or imply that a change was already made. One write tool call per requested change.
 - Lead with the answer and keep it concise. Use the record names the user used. Format money with thousands separators and the currency (AED unless stated otherwise).
 - Formatting: the chat renders GitHub-flavoured Markdown. When listing three or more records with several attributes, use a table (reference or name first). Use bold only for the key figure or status in a sentence, headings no deeper than ### and only when an answer has distinct parts, and prose for everything else.
+- Charts: when the user compares quantities across projects or over time, or asks for a chart, dashboard or timeline, gather the figures with the read tools and call render_chart once with raw values (bar for comparisons, stacked_bar for parts of a whole per category, line for months, donut for shares, timeline for dated items), then give the key finding in one or two sentences. Never chart numbers the tools did not return.
 - Progress figures: "planned" is schedule-elapsed progress, "calculated" is milestone-weighted actual progress; the delta (calculated minus planned) drives the health bucket.
 - If a question needs data you have no tool for, say so rather than guessing.`;
 
@@ -121,7 +124,26 @@ export class AssistantService {
         },
       }),
     );
-    const tools = [...readTools, ...writeTools];
+    // The chart tool touches no data: it validates a spec built from figures
+    // the read tools already returned and forwards it to the UI to draw.
+    const chartTool = betaTool({
+      name: CHART_TOOL.name,
+      description: CHART_TOOL.description,
+      inputSchema: CHART_TOOL.input_schema as never,
+      run: (input: unknown) => {
+        try {
+          const chart = validateChartSpec(input);
+          emit({ type: 'chart', chart });
+          return Promise.resolve(
+            'Chart displayed to the user. Now summarize the key finding briefly.',
+          );
+        } catch (err) {
+          const message = err instanceof Error ? err.message : String(err);
+          return Promise.resolve(`INVALID CHART, not displayed: ${message}`);
+        }
+      },
+    });
+    const tools = [...readTools, ...writeTools, chartTool];
 
     const runner = this.client.beta.messages.toolRunner({
       model: 'claude-opus-5',

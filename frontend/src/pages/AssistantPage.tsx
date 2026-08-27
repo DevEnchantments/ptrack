@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { AssistantMarkdown } from '@/components/AssistantMarkdown'
+import { AssistantChart } from '@/components/AssistantChart'
 import { Link } from 'react-router-dom'
 import {
   assistantApi,
   type AssistantAction,
   type AssistantEvent,
+  type ChartSpec,
   type ChatMessage,
 } from '@/lib/api'
 import { useMe } from '@/lib/use-me'
@@ -23,6 +25,7 @@ const TOOL_LABELS: Record<string, string> = {
   report_initiative_progress: 'Running Initiative Progress',
   report_monthly_performance: 'Running Monthly Performance',
   list_kpis: 'Reading KPIs',
+  render_chart: 'Drawing a chart',
 }
 
 const SUGGESTIONS = [
@@ -47,6 +50,8 @@ interface Turn {
   tools: string[]
   /** Write actions proposed in this turn, awaiting/after confirmation. */
   actions: TurnAction[]
+  /** Charts the assistant drew in this turn. */
+  charts: ChartSpec[]
   error?: boolean
 }
 
@@ -112,8 +117,8 @@ export function AssistantPage() {
       history.push({ role: 'user', content: question })
       setTurns((prev) => [
         ...prev,
-        { role: 'user', content: question, tools: [], actions: [] },
-        { role: 'assistant', content: '', tools: [], actions: [] },
+        { role: 'user', content: question, tools: [], actions: [], charts: [] },
+        { role: 'assistant', content: '', tools: [], actions: [], charts: [] },
       ])
 
       const patchReply = (fn: (t: Turn) => Turn) =>
@@ -141,6 +146,8 @@ export function AssistantPage() {
                     ? `${t.content}\n\n`
                     : t.content,
               }))
+            } else if (event.type === 'chart') {
+              patchReply((t) => ({ ...t, charts: [...t.charts, event.chart] }))
             } else if (event.type === 'confirm') {
               patchReply((t) => ({
                 ...t,
@@ -346,6 +353,9 @@ export function AssistantPage() {
                       </div>
                     )}
                   </div>
+                ))}
+                {turn.charts.map((chart, ci) => (
+                  <AssistantChart key={ci} spec={chart} />
                 ))}
                 {turn.content ? (
                   turn.error ? (

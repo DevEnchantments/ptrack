@@ -19,6 +19,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "dhtmlx-gantt": "^10.0.1",
+    "echarts": "^6.1.0",
     "frappe-gantt": "^1.2.2",
     "lucide-react": "^1.23.0",
     "react": "^19.2.7",

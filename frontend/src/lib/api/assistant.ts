@@ -11,10 +11,32 @@ export interface AssistantAction {
   input: Record<string, string>
 }
 
+/** Chart spec produced by the assistant's render_chart tool (validated server-side). */
+export type ChartSpec =
+  | {
+      type: 'bar' | 'stacked_bar' | 'line'
+      title: string
+      unit?: string
+      categories: string[]
+      series: { name: string; values: number[] }[]
+    }
+  | {
+      type: 'donut'
+      title: string
+      unit?: string
+      slices: { label: string; value: number }[]
+    }
+  | {
+      type: 'timeline'
+      title: string
+      items: { label: string; start: string; end: string; progress?: number }[]
+    }
+
 export type AssistantEvent =
   | { type: 'text'; delta: string }
   | { type: 'tool'; name: string }
   | { type: 'confirm'; action: AssistantAction }
+  | { type: 'chart'; chart: ChartSpec }
   | { type: 'done' }
   | { type: 'error'; message: string }
 
