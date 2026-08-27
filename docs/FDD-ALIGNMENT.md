@@ -264,8 +264,9 @@ rendered: links rows (gold flag carries their emphasis) and the Fig-1 grid
 table (register-column parity).
 
 **Portfolio Timeline — ✅ SHIPPED 2026-08-11 on frappe-gantt** (1.2.2, MIT —
-the app's only charting library, per Fares's direction; dashboard charts stay
-hand-rolled). SVAR React Gantt was tried first and REJECTED the same day: its
+at the time the app's only charting library; since 2026-08-28 dashboard and
+assistant charts run on Apache ECharts via the shared `EChart` host, Gantts
+excluded — see "Charts" in CLAUDE.md). SVAR React Gantt was tried first and REJECTED the same day: its
 wrapper reads React-18-only internals (`ReactCurrentDispatcher`, removed in
 React 19) and crashes at runtime. frappe-gantt is framework-agnostic SVG — no
 React coupling, no peer-version risk. Projects are bars (status-token colors
@@ -522,3 +523,12 @@ redesign.
 Field-mapping evidence rule now points at **FDD figures** (ask for hi-res PNG when field-level
 detail is unreadable) · one feature at a time, plan → approve → build → verify → user commits ·
 formulas recorded in `docs/FORMULAS.md` with supervisor confirmation date · unit tests on all math.
+
+**Charts on Apache ECharts — ✅ 2026-08-28.** Dashboard donuts, lines and the
+action-items breakdown migrated from hand-rolled SVG to ECharts through one lazy
+host themed from the design tokens (sr-only data list per chart; reduced motion
+honoured). New: 12-week × weekday activity heatmap (the FDD/analysis "heatmap
+view" gap) from the already-computed `DashboardData.heat`. The AI Assistant gained
+`render_chart` (validated spec → `chart` SSE event → same host); live e2e proves
+chart values equal `GET /projects` budgets. Gantts unchanged. Report §3.3.3's
+"hand-rolled SVG" sentence is superseded; Fares resubmits with the final state.

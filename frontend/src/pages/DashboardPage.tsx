@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { usePageTitle } from '@/lib/use-page-title'
 import {
@@ -10,13 +10,23 @@ import {
 import { dueIn } from '@/lib/format'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
+import { EChart } from '@/components/charts/EChart'
+import {
+  breakdownOption,
+  donutOption,
+  heatmapOption,
+  lineOption,
+} from '@/lib/charts/dashboard-options'
+import type { ChartTheme } from '@/lib/charts/theme'
 
 /**
  * My Dashboard — LIVE portfolio aggregates from GET /dashboard.
  *
- * Charts stay hand-rolled inline SVG + CSS transitions (still no charting
- * library). Chart series colors are validated chart-grade tones (CVD-safe,
- * >=3:1 on card), distinct from the UI chrome palette.
+ * Charts are Apache ECharts via the shared `EChart` host (lazy-loaded, themed
+ * from the design tokens, with a screen-reader data list). Stat tiles, budget
+ * bar, cycle status, monthly tiles and the completion ring stay plain DOM.
+ * Chart series colors are validated chart-grade tones (CVD-safe, >=3:1 on
+ * card), distinct from the UI chrome palette.
  */
 
 // Single source of truth: the --chart-* tokens in index.css (validated trio).
@@ -92,192 +102,43 @@ function StatTile({
 }
 
 /** Catmull-Rom → cubic bezier, for a smooth single-series line. */
-function smoothPath(pts: Array<{ x: number; y: number }>): string {
-  if (pts.length < 2) return ''
-  let d = `M ${pts[0].x} ${pts[0].y}`
-  for (let i = 0; i < pts.length - 1; i++) {
-    const p0 = pts[Math.max(0, i - 1)]
-    const p1 = pts[i]
-    const p2 = pts[i + 1]
-    const p3 = pts[Math.min(pts.length - 1, i + 2)]
-    const c1x = p1.x + (p2.x - p0.x) / 6
-    const c1y = p1.y + (p2.y - p0.y) / 6
-    const c2x = p2.x - (p3.x - p1.x) / 6
-    const c2y = p2.y - (p3.y - p1.y) / 6
-    d += ` C ${c1x} ${c1y}, ${c2x} ${c2y}, ${p2.x} ${p2.y}`
-  }
-  return d
-}
-
-const LINE_W = 640
-const LINE_H = 200
-const LINE_PAD = { top: 16, right: 16, bottom: 26, left: 34 }
-
 function ActivityLineChart({ data }: { data: ChartPoint[] }) {
-  const entered = useEntranceFlag()
-  const [hover, setHover] = useState<number | null>(null)
-
-  const max = Math.max(4, Math.ceil(Math.max(...data.map((d) => d.value)) / 4) * 4)
-  const innerW = LINE_W - LINE_PAD.left - LINE_PAD.right
-  const innerH = LINE_H - LINE_PAD.top - LINE_PAD.bottom
-  const pts = data.map((d, i) => ({
-    x: LINE_PAD.left + (i / (data.length - 1)) * innerW,
-    y: LINE_PAD.top + innerH - (d.value / max) * innerH,
-  }))
-  const linePath = smoothPath(pts)
-  const areaPath = `${linePath} L ${pts[pts.length - 1].x} ${
-    LINE_PAD.top + innerH
-  } L ${pts[0].x} ${LINE_PAD.top + innerH} Z`
-  const gridValues = [0, max / 4, max / 2, (max * 3) / 4, max]
-
+  const build = useCallback(
+    (t: ChartTheme, a: boolean) =>
+      lineOption(
+        data.map((d) => d.label),
+        [{ label: 'Updates', color: SERIES.teal, values: data.map((d) => d.value), area: true }],
+        t,
+        a,
+      ),
+    [data],
+  )
   return (
     <div className="rounded-lg border bg-card p-4 shadow-xs">
       <h2 className="text-sm font-medium">Activity — updates per week</h2>
-      <div className="relative mt-2">
-        <svg
-          viewBox={`0 0 ${LINE_W} ${LINE_H}`}
-          className="w-full"
-          role="img"
-          aria-label="Line chart of updates per week over eight weeks, sample data"
-        >
-          {gridValues.map((v) => {
-            const y = LINE_PAD.top + innerH - (v / max) * innerH
-            return (
-              <g key={v}>
-                <line
-                  x1={LINE_PAD.left}
-                  x2={LINE_W - LINE_PAD.right}
-                  y1={y}
-                  y2={y}
-                  className="stroke-border"
-                  strokeWidth={1}
-                />
-                <text
-                  x={LINE_PAD.left - 8}
-                  y={y + 3}
-                  textAnchor="end"
-                  className="fill-muted-foreground text-[10px]"
-                >
-                  {v}
-                </text>
-              </g>
-            )
-          })}
-          {data.map((d, i) => (
-            <text
-              key={d.label}
-              x={pts[i].x}
-              y={LINE_H - 8}
-              textAnchor="middle"
-              className="fill-muted-foreground text-[10px]"
-            >
-              {d.label}
-            </text>
-          ))}
-
-          <path
-            d={areaPath}
-            fill={SERIES.teal}
-            className="transition-opacity duration-700"
-            style={{ opacity: entered ? 0.12 : 0, transitionDelay: '450ms' }}
-          />
-          <path
-            d={linePath}
-            fill="none"
-            stroke={SERIES.teal}
-            strokeWidth={2}
-            strokeLinecap="round"
-            pathLength={1}
-            strokeDasharray={1}
-            style={{
-              strokeDashoffset: entered ? 0 : 1,
-              transition: 'stroke-dashoffset 900ms ease-out',
-            }}
-          />
-
-          {hover !== null && (
-            <line
-              x1={pts[hover].x}
-              x2={pts[hover].x}
-              y1={LINE_PAD.top}
-              y2={LINE_PAD.top + innerH}
-              className="stroke-muted-foreground/40"
-              strokeWidth={1}
-            />
-          )}
-          {pts.map((p, i) => (
-            <g key={i}>
-              {(hover === i || i === pts.length - 1) && (
-                <circle
-                  cx={p.x}
-                  cy={p.y}
-                  r={4}
-                  fill={SERIES.teal}
-                  stroke="var(--card)"
-                  strokeWidth={2}
-                />
-              )}
-              {/* Oversized invisible hit target per point. */}
-              <circle
-                cx={p.x}
-                cy={p.y}
-                r={14}
-                fill="transparent"
-                onMouseEnter={() => setHover(i)}
-                onMouseLeave={() => setHover(null)}
-              />
-            </g>
-          ))}
-          {/* Selective direct label: latest point only. */}
-          <text
-            x={pts[pts.length - 1].x}
-            y={pts[pts.length - 1].y - 10}
-            textAnchor="middle"
-            className="fill-foreground text-[11px] font-medium"
-          >
-            {data[data.length - 1].value}
-          </text>
-        </svg>
-        {hover !== null && (
-          <div
-            className="pointer-events-none absolute rounded-md border bg-popover px-2 py-1 text-xs shadow-sm"
-            style={{
-              left: `${(pts[hover].x / LINE_W) * 100}%`,
-              top: 0,
-              transform: 'translateX(-50%)',
-            }}
-          >
-            <span className="text-muted-foreground">
-              {data[hover].label}:{' '}
-            </span>
-            <span className="font-medium">{data[hover].value}</span>
-          </div>
-        )}
+      <div className="mt-2">
+        <EChart
+          build={build}
+          height={200}
+          summary={data.map((d) => ({ label: d.label, value: d.value }))}
+          summaryTitle="Updates per week"
+        />
       </div>
     </div>
   )
 }
 
 function ActionItemsBreakdown({ segments }: { segments: ChartSegment[] }) {
-  const entered = useEntranceFlag()
   const total = segments.reduce((s, d) => s + d.value, 0)
-
+  const build = useCallback(
+    (t: ChartTheme, a: boolean) => breakdownOption(segments, t, a),
+    [segments],
+  )
   return (
     <div className="rounded-lg border bg-card p-4 shadow-xs">
       <h2 className="text-sm font-medium">Action items</h2>
-      {/* 100% stacked bar with 2px surface gaps between segments. */}
-      <div className="mt-4 flex h-4 w-full gap-0.5 overflow-hidden rounded">
-        {segments.map((d, i) => (
-          <div
-            key={d.label}
-            title={`${d.label}: ${d.value}`}
-            style={{
-              width: entered ? `${(d.value / total) * 100}%` : '0%',
-              backgroundColor: d.color,
-              transition: `width 700ms ease-out ${i * 120}ms`,
-            }}
-          />
-        ))}
+      <div className="mt-4">
+        <EChart build={build} height={24} summary={segments} summaryTitle="Action items" />
       </div>
       <ul className="mt-4 flex flex-col gap-2">
         {segments.map((d) => (
@@ -396,57 +257,17 @@ function formatAedShort(n: number): string {
 
 /** Fig-15 initiative-status donut (buckets per F5, PROVISIONAL). */
 function InitiativesDonut({ segments }: { segments: ChartSegment[] }) {
-  const entered = useEntranceFlag()
-  const total = segments.reduce((sum, d) => sum + d.value, 0)
-  const shown = segments.filter((d) => d.value > 0)
-  const R = 45
-  const C = 2 * Math.PI * R
-  const GAP = shown.length > 1 ? 3 : 0
-  const fractions = shown.map((d) => (total > 0 ? d.value / total : 0))
-  const arcs = shown.map((d, i) => ({
-    ...d,
-    len: Math.max(fractions[i] * C - GAP, 0),
-    offset: fractions.slice(0, i).reduce((sum, f) => sum + f, 0) * C,
-  }))
+  const build = useCallback(
+    (t: ChartTheme, a: boolean) => donutOption(segments, 'initiatives', t, a),
+    [segments],
+  )
   return (
     <div className="rounded-lg border bg-card p-4 shadow-xs">
       <h2 className="text-sm font-medium">Initiatives</h2>
       <div className="mt-2 flex items-center gap-4">
-        <svg
-          viewBox="0 0 120 120"
-          className="h-32 w-32 shrink-0"
-          role="img"
-          aria-label={`Donut of ${total} initiatives by delivery bucket`}
-        >
-          <g transform="rotate(-90 60 60)">
-            {arcs.map((a, i) => (
-              <circle
-                key={a.label}
-                cx={60}
-                cy={60}
-                r={R}
-                fill="none"
-                stroke={a.color}
-                strokeWidth={12}
-                strokeDasharray={`${entered ? a.len : 0} ${C}`}
-                strokeDashoffset={-a.offset - GAP / 2}
-                style={{
-                  transition: `stroke-dasharray 800ms ease-out ${i * 120}ms`,
-                }}
-              />
-            ))}
-          </g>
-          <text
-            x="60"
-            y="66"
-            textAnchor="middle"
-            fontSize="22"
-            fontWeight="700"
-            fill="var(--foreground)"
-          >
-            {total}
-          </text>
-        </svg>
+        <div className="h-32 w-32 shrink-0">
+          <EChart build={build} height={128} summary={segments} summaryTitle="Initiatives by bucket" />
+        </div>
         <ul className="grid flex-1 grid-cols-1 gap-1 text-xs">
           {segments.map((d) => (
             <li key={d.label} className="flex items-center gap-1.5">
@@ -584,65 +405,24 @@ function MonthlyBreakdown({
 }
 
 function CategoryDonut({ segments }: { segments: ChartSegment[] }) {
-  const entered = useEntranceFlag()
-  const [hover, setHover] = useState<number | null>(null)
-  const total = segments.reduce((s, d) => s + d.value, 0)
-  const R = 45
-  const C = 2 * Math.PI * R
-  const GAP = 3
-  const fractions = segments.map((d) => d.value / total)
-  const arcs = segments.map((d, i) => ({
-    ...d,
-    len: Math.max(fractions[i] * C - GAP, 0),
-    offset: fractions.slice(0, i).reduce((s, f) => s + f, 0) * C,
-  }))
-  const center = hover !== null ? segments[hover] : null
-
+  const build = useCallback(
+    (t: ChartTheme, a: boolean) => donutOption(segments, 'projects', t, a),
+    [segments],
+  )
   return (
     <div className="rounded-lg border bg-card p-4 shadow-xs">
       <h2 className="text-sm font-medium">Projects by category</h2>
       <div className="mt-2 flex items-center gap-4">
-        <svg viewBox="0 0 120 120" className="h-32 w-32 shrink-0" role="img"
-          aria-label="Donut chart of projects by category, sample data">
-          <g transform="rotate(-90 60 60)">
-            {arcs.map((a, i) => (
-              <circle
-                key={a.label}
-                cx={60}
-                cy={60}
-                r={R}
-                fill="none"
-                stroke={a.color}
-                strokeWidth={hover === i ? 14 : 12}
-                strokeDasharray={`${entered ? a.len : 0} ${C}`}
-                strokeDashoffset={-a.offset - GAP / 2}
-                style={{
-                  transition: `stroke-dasharray 800ms ease-out ${i * 150}ms, stroke-width 150ms`,
-                }}
-                onMouseEnter={() => setHover(i)}
-                onMouseLeave={() => setHover(null)}
-              />
-            ))}
-          </g>
-          <text x={60} y={57} textAnchor="middle"
-            className="fill-foreground text-xl font-semibold">
-            {center ? center.value : total}
-          </text>
-          <text x={60} y={72} textAnchor="middle"
-            className="fill-muted-foreground text-[9px]">
-            {center ? center.label : 'projects'}
-          </text>
-        </svg>
+        <div className="h-32 w-32 shrink-0">
+          <EChart build={build} height={128} summary={segments} summaryTitle="Projects by category" />
+        </div>
         <ul className="flex flex-1 flex-col gap-2">
-          {segments.map((d, i) => (
-            <li
-              key={d.label}
-              className="flex cursor-default items-center gap-2 text-sm"
-              onMouseEnter={() => setHover(i)}
-              onMouseLeave={() => setHover(null)}
-            >
-              <span className="h-2.5 w-2.5 shrink-0 rounded-full"
-                style={{ backgroundColor: d.color }} />
+          {segments.map((d) => (
+            <li key={d.label} className="flex items-center gap-2 text-sm">
+              <span
+                className="h-2.5 w-2.5 shrink-0 rounded-full"
+                style={{ backgroundColor: d.color }}
+              />
               <span className="flex-1 text-muted-foreground">{d.label}</span>
               <span className="font-medium tabular-nums">{d.value}</span>
             </li>
@@ -699,24 +479,15 @@ function CompletionRadial({ done, total }: { done: number; total: number }) {
 /** Two-series comparison line — legend + direct end labels, shared crosshair. */
 function FlowLineChart({
   labels,
-  series: input,
+  series,
 }: {
   labels: string[]
   series: Array<{ label: string; color: string; values: number[] }>
 }) {
-  const entered = useEntranceFlag()
-  const [hover, setHover] = useState<number | null>(null)
-  const max = Math.max(4, Math.ceil(Math.max(...input.flatMap((s) => s.values)) / 4) * 4)
-  const innerW = LINE_W - LINE_PAD.left - LINE_PAD.right
-  const innerH = LINE_H - LINE_PAD.top - LINE_PAD.bottom
-  const toPts = (values: number[]) =>
-    values.map((v, i) => ({
-      x: LINE_PAD.left + (i / (values.length - 1)) * innerW,
-      y: LINE_PAD.top + innerH - (v / max) * innerH,
-    }))
-  const series = input.map((s) => ({ ...s, pts: toPts(s.values) }))
-  const gridValues = [0, 1, 2, 3, 4].map((i) => (max / 4) * i)
-
+  const build = useCallback(
+    (t: ChartTheme, a: boolean) => lineOption(labels, series, t, a),
+    [labels, series],
+  )
   return (
     <div className="rounded-lg border bg-card p-4 shadow-xs">
       <div className="flex flex-wrap items-center justify-between gap-2">
@@ -730,104 +501,57 @@ function FlowLineChart({
           ))}
         </ul>
       </div>
-      <div className="relative mt-2">
-        <svg viewBox={`0 0 ${LINE_W} ${LINE_H}`} className="w-full" role="img"
-          aria-label="Two-series line chart comparing action items created and completed per week, sample data">
-          {gridValues.map((v) => {
-            const y = LINE_PAD.top + innerH - (v / max) * innerH
-            return (
-              <g key={v}>
-                <line x1={LINE_PAD.left} x2={LINE_W - LINE_PAD.right} y1={y} y2={y}
-                  className="stroke-border" strokeWidth={1} />
-                <text x={LINE_PAD.left - 8} y={y + 3} textAnchor="end"
-                  className="fill-muted-foreground text-[10px]">
-                  {v}
-                </text>
-              </g>
-            )
-          })}
-          {labels.map((w, i) => (
-            <text key={w} x={series[0].pts[i].x} y={LINE_H - 8} textAnchor="middle"
-              className="fill-muted-foreground text-[10px]">
-              {w}
-            </text>
-          ))}
-          {hover !== null && (
-            <line
-              x1={series[0].pts[hover].x}
-              x2={series[0].pts[hover].x}
-              y1={LINE_PAD.top}
-              y2={LINE_PAD.top + innerH}
-              className="stroke-muted-foreground/40"
-              strokeWidth={1}
-            />
-          )}
-          {series.map((s, si) => (
-            <path
-              key={s.label}
-              d={smoothPath(s.pts)}
-              fill="none"
-              stroke={s.color}
-              strokeWidth={2}
-              strokeLinecap="round"
-              pathLength={1}
-              strokeDasharray={1}
-              style={{
-                strokeDashoffset: entered ? 0 : 1,
-                transition: `stroke-dashoffset 900ms ease-out ${si * 200}ms`,
-              }}
-            />
-          ))}
-          {series.map((s) =>
-            hover !== null ? (
-              <circle key={s.label} cx={s.pts[hover].x} cy={s.pts[hover].y} r={4}
-                fill={s.color} stroke="var(--card)" strokeWidth={2} />
-            ) : null,
-          )}
-          {/* Shared oversized hit targets, one per week. */}
-          {series[0].pts.map((p, i) => (
-            <rect
-              key={i}
-              x={p.x - innerW / labels.length / 2}
-              y={LINE_PAD.top}
-              width={innerW / labels.length}
-              height={innerH}
-              fill="transparent"
-              onMouseEnter={() => setHover(i)}
-              onMouseLeave={() => setHover(null)}
-            />
-          ))}
-          {/* Direct end labels, in ink beside a colored mark. */}
-          {series.map((s) => (
-            <text
-              key={s.label}
-              x={s.pts[s.pts.length - 1].x}
-              y={s.pts[s.pts.length - 1].y - 10}
-              textAnchor="middle"
-              className="fill-foreground text-[11px] font-medium"
-            >
-              {s.values[s.values.length - 1]}
-            </text>
-          ))}
-        </svg>
-        {hover !== null && (
-          <div
-            className="pointer-events-none absolute rounded-md border bg-popover px-2 py-1 text-xs shadow-sm"
-            style={{
-              left: `${(series[0].pts[hover].x / LINE_W) * 100}%`,
-              top: 0,
-              transform: 'translateX(-50%)',
-            }}
-          >
-            <p className="font-medium">{labels[hover]}</p>
-            {series.map((s) => (
-              <p key={s.label} className="text-muted-foreground">
-                {s.label}:{' '}
-                <span className="font-medium text-foreground">{s.values[hover]}</span>
-              </p>
-            ))}
-          </div>
-        )}
+      <div className="mt-2">
+        <EChart
+          build={build}
+          height={200}
+          summary={labels.map((l, i) => ({
+            label: l,
+            value: series.map((s) => `${s.label} ${s.values[i]}`).join(', '),
+          }))}
+          summaryTitle="Action items created vs completed per week"
+        />
+      </div>
+    </div>
+  )
+}
+
+/** Monday (UTC) of the week containing `d`, matching the backend's bucketing. */
+function mondayOf(d: Date): Date {
+  const m = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()))
+  m.setUTCDate(m.getUTCDate() - ((m.getUTCDay() + 6) % 7))
+  return m
+}
+
+/** Change-history heatmap: 12 weeks x Mon-Fri, on the single-hue ramp. */
+function ActivityHeatmap({ heat }: { heat: number[][] }) {
+  const thisMonday = mondayOf(new Date())
+  const weekLabels = heat.map((_, i) => {
+    const d = new Date(thisMonday)
+    d.setUTCDate(d.getUTCDate() - 7 * (heat.length - 1 - i))
+    return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' })
+  })
+  const total = heat.flat().reduce((s, v) => s + v, 0)
+  const labelsKey = weekLabels.join('|')
+  const build = useCallback(
+    (t: ChartTheme, a: boolean) => heatmapOption(heat, labelsKey.split('|'), t, a),
+    [heat, labelsKey],
+  )
+  return (
+    <div className="rounded-lg border bg-card p-4 shadow-xs">
+      <div className="flex flex-wrap items-baseline justify-between gap-2">
+        <h2 className="text-sm font-medium">Activity heatmap — changes per weekday</h2>
+        <span className="text-xs text-muted-foreground">
+          {total.toLocaleString()} changes in the last 12 weeks
+        </span>
+      </div>
+      <div className="mt-2">
+        <EChart
+          build={build}
+          height={180}
+          summary={heat.map((w, i) => ({ label: `Week of ${weekLabels[i]}`, value: w.join(', ') }))}
+          summaryTitle="Changes per weekday, Monday to Friday"
+        />
       </div>
     </div>
   )
@@ -984,6 +708,10 @@ export function DashboardPage() {
       <div className="mt-4 grid grid-cols-1 items-start gap-4 lg:grid-cols-2">
         <ActivityLineChart data={data.updates_per_week} />
         <FlowLineChart labels={data.flow.labels} series={flowSeries} />
+      </div>
+
+      <div className="mt-4">
+        <ActivityHeatmap heat={data.heat} />
       </div>
 
       <div className="mt-4 grid grid-cols-1 items-start gap-4 md:grid-cols-3">

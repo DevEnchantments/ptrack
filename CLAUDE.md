@@ -68,11 +68,16 @@ Every record type now has Create, Read, Update **and Delete**.
   `#F6F7F9`, white cards, slate ink `#1A2333`, primary blue `#2563EB`, navy sidebar
   `#0D1526` with blue active pill. Change colors by editing tokens only; components must
   not hardcode hexes. AA-verified pairs; alternates A/B/D live in the session scratchpad.
-- **My Dashboard preview (`/dashboard`):** sample-data-only page (badged as such) with 9
-  hand-rolled SVG/CSS chart types — hand-rolled (no library); the one charting
-  library in the app is frappe-gantt on /timeline + dhtmlx-gantt Community (MIT since v10) on the project Dashboard tab, lazy-loaded (see FDD-ALIGNMENT). Chart series colors are the `--chart-1..3` tokens,
-  validated (CVD-safe adjacency: green|blue|orange order matters — blue separates the
-  colorblind-confusable green/orange pair). Animations respect `prefers-reduced-motion`.
+- **Charts (since 2026-08-28): Apache ECharts** through ONE shared host,
+  `components/charts/EChart.tsx` (lazy chunk, theme read from the design tokens at render
+  time via `lib/charts/theme.ts`, re-themed on `.dark` toggle, `aria` on, reduced-motion
+  respected, sr-only data list per chart). Option builders live in `lib/charts/*` (never
+  build options inside components). Used by /dashboard (2 donuts, 2 lines, breakdown bar,
+  12-week activity heatmap on the `--heat-*` ramp) and by the AI Assistant's `render_chart`.
+  Gantts stay on frappe-gantt (/timeline) + dhtmlx-gantt (project Dashboard tab). Stat
+  tiles, budget bar, cycle status, monthly tiles, completion ring are plain DOM on purpose.
+  Series colors are the `--chart-1..3` tokens, validated (CVD-safe adjacency:
+  green|blue|orange order matters — blue separates the colorblind-confusable green/orange pair).
 - **Detail pages:** Milestone, Action Item, Status Report, Attachment. Issues, Links,
   Updates and Resources are **dialog-only in the demo** — they need no detail page.
 - **Delete:** one convention everywhere — a red `Delete` in the edit-dialog footer
