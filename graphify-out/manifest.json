@@ -2178,9 +2178,9 @@
     "semantic_hash": ""
   },
   "backend/src/modules/assistant/assistant.service.ts": {
-    "mtime": 1787871771.835678,
-    "seen": 1787872334.9289505,
-    "ast_hash": "cd3a747cb58a0adc253de133b3ed6dc9",
+    "mtime": 1787874519.2908633,
+    "seen": 1787917691.7139764,
+    "ast_hash": "ec3699b4b4e9e54bc17f837280f92fa0",
     "semantic_hash": ""
   },
   "backend/src/modules/assistant/assistant.tools.ts": {
