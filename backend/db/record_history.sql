@@ -92,11 +92,11 @@ create or replace function hist_ai_type(p_id uuid) returns text
   select coalesce((select name from action_item_types where id = p_id), '');
 $$;
 
--- ---------------------------------------------------------------------------
+-- -----------------------------------------------------------------------------
 -- Writes one row per field, and ONLY when the value actually changed. (The
 -- original app logs no-op edits such as "07-JUL-2026" -> "07-JUL-2026"; that is
 -- noise, not history, so it is deliberately not reproduced.)
--- ---------------------------------------------------------------------------
+-- -----------------------------------------------------------------------------
 
 create or replace function hist_change(
   p_table   text,
