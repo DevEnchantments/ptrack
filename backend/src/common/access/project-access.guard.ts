@@ -57,6 +57,8 @@ export class ProjectAccessGuard implements CanActivate {
 
     const level = await this.access.levelFor(request.user.id, projectId);
     if (level < required) {
+      // No relationship at all -> the project must not leak its existence:
+      // answer exactly like a project that isn't there.
       if (level === AccessLevel.None) {
         throw new NotFoundException('Project not found.');
       }

@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="120" viewBox="0 0 900 120" role="img" aria-label="Request flow: React to NestJS to Supabase and back">
+  <rect width="900" height="120" rx="10" fill="#0b1220"/>
+
+  <!-- wire -->
+  <line x1="215" y1="60" x2="405" y2="60" stroke="#334155" stroke-width="2"/>
+  <line x1="555" y1="60" x2="720" y2="60" stroke="#334155" stroke-width="2"/>
+
+  <!-- React node -->
+  <rect x="85" y="35" width="130" height="50" rx="10" fill="#0e2233" stroke="#61dafb" stroke-opacity="0.55"/>
+  <text x="150" y="66" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="600" fill="#61dafb">React</text>
+
+  <!-- NestJS node (pulses when the JWT is verified locally) -->
+  <rect x="405" y="35" width="150" height="50" rx="10" fill="#2a0e17" stroke="#e0234e" stroke-opacity="0.55">
+    <animate attributeName="stroke-opacity" values="0.55;1;0.55" keyTimes="0;0.3;1" dur="4s" repeatCount="indefinite"/>
+  </rect>
+  <text x="468" y="66" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="600" fill="#f87181">NestJS</text>
+  <!-- lock: flashes as the request passes (local JWT verify) -->
+  <g opacity="0.35">
+    <animate attributeName="opacity" values="0.35;1;0.35" keyTimes="0;0.3;1" dur="4s" repeatCount="indefinite"/>
+    <rect x="524" y="55" width="14" height="11" rx="2" fill="#facc15"/>
+    <path d="M527 55 v-4 a4 4 0 0 1 8 0 v4" fill="none" stroke="#facc15" stroke-width="2"/>
+  </g>
+
+  <!-- Supabase node -->
+  <rect x="720" y="35" width="130" height="50" rx="10" fill="#0d2620" stroke="#3ecf8e" stroke-opacity="0.55"/>
+  <text x="785" y="66" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="600" fill="#3ecf8e">Supabase</text>
+
+  <!-- request pulse: React -> NestJS -> Supabase -->
+  <circle r="5" fill="#61dafb">
+    <animateMotion path="M 215 60 L 405 60" dur="4s" keyPoints="0;1;1" keyTimes="0;0.28;1" calcMode="linear" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.28;0.3;1" dur="4s" repeatCount="indefinite"/>
+  </circle>
+  <circle r="5" fill="#f87181" opacity="0">
+    <animateMotion path="M 555 60 L 720 60" dur="4s" keyPoints="0;0;1;1" keyTimes="0;0.34;0.55;1" calcMode="linear" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.34;0.36;0.55;0.57;1" dur="4s" repeatCount="indefinite"/>
+  </circle>
+  <!-- response pulse: back the whole way -->
+  <circle r="4" fill="#3ecf8e" opacity="0">
+    <animateMotion path="M 720 60 L 215 60" dur="4s" keyPoints="0;0;1;1" keyTimes="0;0.6;0.95;1" calcMode="linear" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;0;0.9;0.9;0;0" keyTimes="0;0.6;0.62;0.93;0.96;1" dur="4s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- captions -->
+  <text x="310" y="48" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#64748b">REST · Bearer JWT</text>
+  <text x="637" y="48" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#64748b">service-role key</text>
+  <text x="468" y="102" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#475569">JWT verified in-process — no auth round-trip</text>
+</svg>

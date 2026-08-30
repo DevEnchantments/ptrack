@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="120" viewBox="0 0 900 120" role="img" aria-label="A commit travels the CI pipeline: typecheck, lint, test, merged">
+  <rect width="900" height="120" rx="10" fill="#0b1220"/>
+
+  <g font-family="Consolas, Menlo, monospace" font-size="12" fill="#64748b" text-anchor="middle">
+    <text x="205" y="30">typecheck</text>
+    <text x="405" y="30">lint</text>
+    <text x="605" y="30">test</text>
+    <text x="805" y="30">merged</text>
+  </g>
+
+  <!-- lane -->
+  <line x1="60" y1="70" x2="840" y2="70" stroke="#1e293b" stroke-width="2"/>
+  <g stroke="#334155">
+    <line x1="205" y1="60" x2="205" y2="80"/>
+    <line x1="405" y1="60" x2="405" y2="80"/>
+    <line x1="605" y1="60" x2="605" y2="80"/>
+  </g>
+
+  <!-- the commit card -->
+  <g>
+    <animateTransform attributeName="transform" type="translate" calcMode="spline"
+      values="0 0;140 0;140 0;340 0;340 0;540 0;540 0;690 0;690 0;0 0"
+      keyTimes="0;0.14;0.24;0.38;0.48;0.62;0.72;0.86;0.97;1"
+      keySplines="0.4 0 0.2 1;0 0 1 1;0.4 0 0.2 1;0 0 1 1;0.4 0 0.2 1;0 0 1 1;0.4 0 0.2 1;0 0 1 1;0 0 1 1"
+      dur="14s" repeatCount="indefinite"/>
+    <rect x="30" y="54" width="110" height="32" rx="7" fill="#111c30" stroke="#475569"/>
+    <text x="85" y="74" text-anchor="middle" font-family="Consolas, Menlo, monospace" font-size="12" fill="#e2e8f0">a1b2c3f</text>
+  </g>
+
+  <!-- gates flash green as the commit clears them -->
+  <g font-family="Consolas, Menlo, monospace" font-size="14" text-anchor="middle" fill="#22c55e" font-weight="700">
+    <text x="205" y="104">✓<animate attributeName="opacity" calcMode="discrete" values="0;1;1;0" keyTimes="0;0.24;0.97;1" dur="14s" repeatCount="indefinite"/></text>
+    <text x="405" y="104">✓<animate attributeName="opacity" calcMode="discrete" values="0;1;1;0" keyTimes="0;0.48;0.97;1" dur="14s" repeatCount="indefinite"/></text>
+    <text x="605" y="104">12/12<animate attributeName="opacity" calcMode="discrete" values="0;1;1;0" keyTimes="0;0.72;0.97;1" dur="14s" repeatCount="indefinite"/></text>
+    <text x="805" y="104">main ✓<animate attributeName="opacity" calcMode="discrete" values="0;1;1;0" keyTimes="0;0.97;0.99;1" dur="14s" repeatCount="indefinite"/></text>
+  </g>
+</svg>
