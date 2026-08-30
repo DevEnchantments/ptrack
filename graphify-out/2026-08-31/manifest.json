@@ -1926,9 +1926,9 @@
     "semantic_hash": ""
   },
   "backend/src/common/access/project-access.guard.ts": {
-    "mtime": 1788127023.3795238,
-    "seen": 1788127058.9584942,
-    "ast_hash": "ec33c7039f1b6b5ddbef616cb9c48895",
+    "mtime": 1788117729.8118029,
+    "seen": 1788126916.0685308,
+    "ast_hash": "8aac2720e17bc0bce9ef5f31dfaab225",
     "semantic_hash": ""
   },
   "backend/src/common/access/project-access.service.ts": {
@@ -2229,78 +2229,6 @@
     "mtime": 1787873682.86361,
     "seen": 1787874257.7861507,
     "ast_hash": "2bd36644819e6554b872094e75488266",
-    "semantic_hash": ""
-  },
-  ".claude/settings.json": {
-    "mtime": 1788127023.3735008,
-    "seen": 1788127058.953689,
-    "ast_hash": "2e0e04b222a6e207375b130c852f9da6",
-    "semantic_hash": ""
-  },
-  ".github/workflows/ci.yml": {
-    "mtime": 1788127023.3785222,
-    "seen": 1788127058.9946365,
-    "ast_hash": "21ee5573880842ecdad27ff755d181d7",
-    "semantic_hash": ""
-  },
-  ".github/assets/audit-trail.svg": {
-    "mtime": 1788127023.3750043,
-    "seen": 1788127058.9961536,
-    "ast_hash": "02704d3574e12d3a57a99f144224dc74",
-    "semantic_hash": ""
-  },
-  ".github/assets/banner.svg": {
-    "mtime": 1788127023.3750043,
-    "seen": 1788127058.9961557,
-    "ast_hash": "ba8a742d11d594cc23f42ea7ce56c31b",
-    "semantic_hash": ""
-  },
-  ".github/assets/dataflow.svg": {
-    "mtime": 1788127023.3750043,
-    "seen": 1788127058.996157,
-    "ast_hash": "fe6a6bb8bf5f1f0e6c21fc6230ad6f1f",
-    "semantic_hash": ""
-  },
-  ".github/assets/orbit.svg": {
-    "mtime": 1788127023.3750043,
-    "seen": 1788127058.9961581,
-    "ast_hash": "3696d788a1fa1ce4d6a4eb61fb9a2f71",
-    "semantic_hash": ""
-  },
-  ".github/assets/pipeline.svg": {
-    "mtime": 1788127023.3750043,
-    "seen": 1788127058.9961596,
-    "ast_hash": "1f8b2040e03da08ccaba3c4f29c7af54",
-    "semantic_hash": ""
-  },
-  ".github/assets/progress.svg": {
-    "mtime": 1788127023.3765166,
-    "seen": 1788127058.996161,
-    "ast_hash": "677a4d5304856d7d609d176d81a88609",
-    "semantic_hash": ""
-  },
-  ".github/assets/stack.svg": {
-    "mtime": 1788127023.3765166,
-    "seen": 1788127058.996163,
-    "ast_hash": "e5cea5ccc753cc9d26ecf0c8aa603489",
-    "semantic_hash": ""
-  },
-  ".github/assets/terminal.svg": {
-    "mtime": 1788127023.377521,
-    "seen": 1788127058.9961636,
-    "ast_hash": "d61a26b629cd8c35fed8c25007ac30a4",
-    "semantic_hash": ""
-  },
-  ".github/assets/typing.svg": {
-    "mtime": 1788127023.377521,
-    "seen": 1788127058.9961646,
-    "ast_hash": "a9efc3319be304cfeba988b1bf93c2d8",
-    "semantic_hash": ""
-  },
-  ".github/assets/wave.svg": {
-    "mtime": 1788127023.377521,
-    "seen": 1788127058.9961653,
-    "ast_hash": "fe436b804a12981ae4f637960dc5d965",
     "semantic_hash": ""
   }
 }
