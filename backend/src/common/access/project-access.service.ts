@@ -36,6 +36,31 @@ export class ProjectAccessService {
     private readonly roles: AppRoleService,
   ) {}
 
+  /**
+   * Called by the write paths (project edit/delete) the moment a project's
+   * access_control or people columns change, so a permission change is
+   * enforced immediately; the TTL stays only as a backstop.
+   */
+  invalidateProject(projectId: string): void {
+    this.projectCache.delete(projectId);
+    this.invalidateMemberships(projectId);
+  }
+
+  /**
+   * Membership rows changed: for one project (people add/edit/remove), or
+   * everywhere (account provisioning can claim memberships across projects).
+   */
+  invalidateMemberships(projectId?: string): void {
+    if (projectId === undefined) {
+      this.memberCache.clear();
+      return;
+    }
+    const prefix = `${projectId}|`;
+    for (const key of this.memberCache.keys()) {
+      if (key.startsWith(prefix)) this.memberCache.delete(key);
+    }
+  }
+
   /** A restricted project a user cannot see 404s — it must not leak existence. */
   async levelFor(userId: string, projectId: string): Promise<AccessLevel> {
     const [row, appRole] = await Promise.all([

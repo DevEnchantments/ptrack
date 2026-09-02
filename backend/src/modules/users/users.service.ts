@@ -3,11 +3,15 @@ import { planClaim, type PendingMembershipRow } from './users.logic';
 import type { AuthUser } from '../../common/decorators/current-user.decorator';
 import { ProvisionUserDto } from './dto/provision-user.dto';
 import { DatabaseService } from '../../database/database.service';
+import { ProjectAccessService } from '../../common/access/project-access.service';
 import { toHttpException } from '../../common/supabase-error';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly db: DatabaseService) {}
+  constructor(
+    private readonly db: DatabaseService,
+    private readonly access: ProjectAccessService,
+  ) {}
 
   /** Projects the caller belongs to, with role and access tier. */
   async myMemberships(userId: string) {
@@ -200,6 +204,10 @@ export class UsersService {
         .delete()
         .in('id', toDelete);
       if (error) throw toHttpException(error, 'users.claim');
+    }
+    // Claims may touch memberships across many projects at once.
+    if (toUpdate.length > 0 || toDelete.length > 0) {
+      this.access.invalidateMemberships();
     }
     return toUpdate.length;
   }

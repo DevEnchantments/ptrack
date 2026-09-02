@@ -185,6 +185,8 @@ export class ProjectsService {
     const prior = budgetTouched ? await this.repo.findDetail(id) : null;
 
     await this.repo.update(id, { updated_by: userId, ...projectColumns(dto) });
+    // access_control / owner / PM / PMO columns feed the access ladder.
+    this.access.invalidateProject(id);
     const updated = await this.getDetail(id);
 
     if (prior) await this.notifyBudgetThreshold(id, prior, updated, userId);
@@ -231,6 +233,7 @@ export class ProjectsService {
       );
     }
     await this.repo.delete(id);
+    this.access.invalidateProject(id);
     return { deleted: true };
   }
 }

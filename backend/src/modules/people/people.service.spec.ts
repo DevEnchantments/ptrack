@@ -1,6 +1,7 @@
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { PeopleService } from './people.service';
 import type { PeopleRepository } from './people.repository';
+import type { ProjectAccessService } from '../../common/access/project-access.service';
 
 /**
  * Characterization tests. Membership rows carry the provisioning pipeline:
@@ -20,8 +21,12 @@ describe('PeopleService', () => {
         .mockResolvedValue('updated' in over ? over.updated : { id: MEMBER }),
       remove: jest.fn().mockResolvedValue(undefined),
     };
-    const service = new PeopleService(mocks as unknown as PeopleRepository);
-    return { service, mocks };
+    const access = { invalidateMemberships: jest.fn() };
+    const service = new PeopleService(
+      mocks as unknown as PeopleRepository,
+      access as unknown as ProjectAccessService,
+    );
+    return { service, mocks, access };
   }
 
   describe('add', () => {
@@ -128,6 +133,32 @@ describe('PeopleService', () => {
       await expect(service.remove(PROJECT, 'not-there')).rejects.toBeInstanceOf(
         NotFoundException,
       );
+    });
+  });
+
+  describe('access-cache invalidation', () => {
+    it('busts the membership cache for the project on add and remove', async () => {
+      const { service, mocks, access } = build();
+      await service.add(
+        PROJECT,
+        { user_id: USER, role_id: 'r', access_level: 'read_only' } as never,
+        USER,
+      );
+      expect(access.invalidateMemberships).toHaveBeenCalledWith(PROJECT);
+
+      access.invalidateMemberships.mockClear();
+      mocks.remove.mockResolvedValueOnce({ id: MEMBER });
+      await service.remove(PROJECT, MEMBER);
+      expect(access.invalidateMemberships).toHaveBeenCalledWith(PROJECT);
+    });
+
+    it('does not bust the cache when the write did not happen', async () => {
+      const { service, mocks, access } = build();
+      mocks.remove.mockResolvedValueOnce(null);
+      await expect(service.remove(PROJECT, 'not-there')).rejects.toBeInstanceOf(
+        NotFoundException,
+      );
+      expect(access.invalidateMemberships).not.toHaveBeenCalled();
     });
   });
 });

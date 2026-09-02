@@ -3,13 +3,17 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { ProjectAccessService } from '../../common/access/project-access.service';
 import { PeopleRepository } from './people.repository';
 import { CreatePersonDto } from './dto/create-person.dto';
 import { UpdatePersonDto } from './dto/update-person.dto';
 
 @Injectable()
 export class PeopleService {
-  constructor(private readonly repo: PeopleRepository) {}
+  constructor(
+    private readonly repo: PeopleRepository,
+    private readonly access: ProjectAccessService,
+  ) {}
 
   async add(projectId: string, dto: CreatePersonDto, userId: string) {
     if (!dto.user_id && !dto.pending_name?.trim()) {
@@ -20,7 +24,7 @@ export class PeopleService {
         'Pending people need an email — it is how their account gets linked later.',
       );
     }
-    return this.repo.insert({
+    const row = await this.repo.insert({
       project_id: projectId,
       user_id: dto.user_id ?? null,
       pending_name: dto.user_id ? null : (dto.pending_name?.trim() ?? null),
@@ -36,6 +40,8 @@ export class PeopleService {
       created_by: userId,
       updated_by: userId,
     });
+    this.access.invalidateMemberships(projectId);
+    return row;
   }
 
   async update(
@@ -54,12 +60,14 @@ export class PeopleService {
       patch.pending_email = dto.pending_email?.trim().toLowerCase() || null;
     const updated = await this.repo.update(projectId, memberId, patch);
     if (!updated) throw new NotFoundException('Member not found.');
+    this.access.invalidateMemberships(projectId);
     return updated;
   }
 
   async remove(projectId: string, memberId: string) {
     const deleted = await this.repo.remove(projectId, memberId);
     if (!deleted) throw new NotFoundException('Member not found.');
+    this.access.invalidateMemberships(projectId);
     return { deleted: true };
   }
 }

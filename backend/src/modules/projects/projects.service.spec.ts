@@ -45,10 +45,10 @@ describe('ProjectsService', () => {
       deleteAttachmentObjects: jest.fn().mockResolvedValue(undefined),
     };
     const notifications = { notify: jest.fn().mockResolvedValue(undefined) };
+    const access = { invalidateProject: jest.fn() };
 
-    // Two collaborators since the section fan-out moved to
-    // ProjectSectionsService; the tuple keeps the cast in one place.
-    const deps = [repo, notifications] as unknown as ConstructorParameters<
+    // Three collaborators; the tuple keeps the cast in one place.
+    const deps = [repo, notifications, access] as unknown as ConstructorParameters<
       typeof ProjectsService
     >;
 
@@ -56,6 +56,7 @@ describe('ProjectsService', () => {
       service: new ProjectsService(...deps),
       repo,
       notifications,
+      access,
     };
   }
 

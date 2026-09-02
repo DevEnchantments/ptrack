@@ -103,7 +103,11 @@ Every record type now has Create, Read, Update **and Delete**.
   Legacy-HS256 tokens fall back to `auth.getUser()` with a one-time warning; setting
   `SUPABASE_JWT_SECRET` in `.env` restores local verification in that case.
 - **Perf conventions:** lookups are cached ~60s on both sides (backend `LookupsService`
-  map + frontend `lookupsApi` promise cache, invalidated by the create routes). List
+  map + frontend `lookupsApi` promise cache, invalidated by the create routes). Access
+  caches (`common/access/`: app-role 60s, capabilities 60s, project-access 30s) are
+  invalidated on their write paths since 2026-08-31 — people add/edit/remove and project
+  update/delete call `ProjectAccessService.invalidateProject/invalidateMemberships`,
+  account-claiming clears all memberships; TTLs remain only a backstop. List
   pagination is **opt-in** via `?limit=&offset=` (shared `PaginationQueryDto`; omit =
   return all rows) — wired on `GET /projects` and `GET .../updates` so far.
 - **Quality baseline:** GitHub Actions CI (`.github/workflows/ci.yml`) — typecheck, lint,
