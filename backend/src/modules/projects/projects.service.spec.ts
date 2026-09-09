@@ -48,9 +48,11 @@ describe('ProjectsService', () => {
     const access = { invalidateProject: jest.fn() };
 
     // Three collaborators; the tuple keeps the cast in one place.
-    const deps = [repo, notifications, access] as unknown as ConstructorParameters<
-      typeof ProjectsService
-    >;
+    const deps = [
+      repo,
+      notifications,
+      access,
+    ] as unknown as ConstructorParameters<typeof ProjectsService>;
 
     return {
       service: new ProjectsService(...deps),
