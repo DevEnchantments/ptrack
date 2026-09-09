@@ -84,11 +84,17 @@ export class AssistantService {
   /**
    * Runs one chat turn as an agentic loop, emitting SSE frames via `emit`.
    * The transcript is client-held (text only) and re-sent each turn.
+   *
+   * `signal` is aborted when the browser drops the SSE connection. Without
+   * it the loop kept running after the user navigated away — up to
+   * MAX_LOOP_ITERATIONS more model calls whose output nobody would ever
+   * see, billed in full.
    */
   async chat(
     messages: ChatMessageDto[],
     authorization: string,
     emit: (event: AssistantEvent) => void,
+    signal?: AbortSignal,
   ): Promise<void> {
     if (!this.client) {
       throw new ServiceUnavailableException(
@@ -147,32 +153,62 @@ export class AssistantService {
     });
     const tools = [...readTools, ...writeTools, chartTool];
 
-    const runner = this.client.beta.messages.toolRunner({
-      model: 'claude-opus-5',
-      max_tokens: 16000,
-      system: SYSTEM_PROMPT,
-      tools,
-      messages: messages.map((m) => ({ role: m.role, content: m.content })),
-      stream: true,
-      max_iterations: MAX_LOOP_ITERATIONS,
-    });
+    const runner = this.client.beta.messages.toolRunner(
+      {
+        model: 'claude-opus-5',
+        max_tokens: 16000,
+        system: SYSTEM_PROMPT,
+        tools,
+        messages: messages.map((m) => ({ role: m.role, content: m.content })),
+        stream: true,
+        max_iterations: MAX_LOOP_ITERATIONS,
+      },
+      signal ? { signal } : undefined,
+    );
 
-    for await (const stream of runner) {
-      for await (const event of stream) {
-        if (
-          event.type === 'content_block_delta' &&
-          event.delta.type === 'text_delta'
-        ) {
-          emit({ type: 'text', delta: event.delta.text });
-        } else if (
-          event.type === 'content_block_start' &&
-          event.content_block.type === 'tool_use'
-        ) {
-          emit({ type: 'tool', name: event.content_block.name });
+    let iterations = 0;
+    let inputTokens = 0;
+    let outputTokens = 0;
+
+    try {
+      for await (const stream of runner) {
+        for await (const event of stream) {
+          if (
+            event.type === 'content_block_delta' &&
+            event.delta.type === 'text_delta'
+          ) {
+            emit({ type: 'text', delta: event.delta.text });
+          } else if (
+            event.type === 'content_block_start' &&
+            event.content_block.type === 'tool_use'
+          ) {
+            emit({ type: 'tool', name: event.content_block.name });
+          }
         }
+        // Resolve the iteration so the runner can execute tools and continue.
+        const final = await stream.finalMessage();
+        iterations += 1;
+        inputTokens += final.usage.input_tokens;
+        outputTokens += final.usage.output_tokens;
       }
-      // Resolve the iteration so the runner can execute tools and continue.
-      await stream.finalMessage();
+    } catch (err) {
+      // An aborted run throws out of the stream; that is the expected path
+      // when the user navigates away, not an error worth surfacing.
+      if (signal?.aborted) {
+        this.logger.log(
+          `chat aborted by client after ${iterations} iteration(s), ` +
+            `${inputTokens} in / ${outputTokens} out`,
+        );
+        return;
+      }
+      throw err;
+    } finally {
+      if (!signal?.aborted) {
+        this.logger.log(
+          `chat turn complete: ${iterations} iteration(s), ` +
+            `${inputTokens} in / ${outputTokens} out`,
+        );
+      }
     }
     emit({ type: 'done' });
   }

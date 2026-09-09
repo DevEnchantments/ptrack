@@ -6,9 +6,11 @@ import {
   Req,
   Res,
   UnauthorizedException,
+  UseGuards,
 } from '@nestjs/common';
-import { ApiOperation, ApiProduces } from '@nestjs/swagger';
+import { ApiOperation, ApiProduces, ApiResponse } from '@nestjs/swagger';
 import type { Request, Response } from 'express';
+import { UserThrottlerGuard } from '../../common/guards/user-throttler.guard';
 import { AssistantService, AssistantEvent } from './assistant.service';
 import { ChatRequestDto } from './dto/chat-request.dto';
 import { ExecuteActionDto } from './dto/execute-action.dto';
@@ -29,8 +31,10 @@ export class AssistantController {
    * access — it can neither see nor do more than the user could in the UI.
    */
   @Post('chat')
+  @UseGuards(UserThrottlerGuard)
   @ApiOperation({ summary: 'Chat with the assistant (SSE stream)' })
   @ApiProduces('text/event-stream')
+  @ApiResponse({ status: 429, description: 'Per-user chat rate limit reached' })
   async chat(
     @Body() dto: ChatRequestDto,
     @Req() req: Request,
@@ -48,8 +52,21 @@ export class AssistantController {
       if (!res.writableEnded) res.write(`data: ${JSON.stringify(event)}\n\n`);
     };
 
+    // The browser dropping the SSE connection must stop the agentic loop.
+    // Guarded on writableEnded because 'close' also fires on the normal
+    // res.end() below, which must NOT count as an abort.
+    const aborter = new AbortController();
+    req.on('close', () => {
+      if (!res.writableEnded) aborter.abort();
+    });
+
     try {
-      await this.assistant.chat(dto.messages, authorization, emit);
+      await this.assistant.chat(
+        dto.messages,
+        authorization,
+        emit,
+        aborter.signal,
+      );
     } catch (err) {
       emit({
         type: 'error',
@@ -68,7 +85,12 @@ export class AssistantController {
    * exactly like a hand-made request.
    */
   @Post('execute')
+  @UseGuards(UserThrottlerGuard)
   @ApiOperation({ summary: 'Execute a user-confirmed assistant action' })
+  @ApiResponse({
+    status: 429,
+    description: 'Per-user action rate limit reached',
+  })
   execute(@Body() dto: ExecuteActionDto, @Req() req: Request) {
     const authorization = req.headers.authorization;
     if (!authorization) throw new UnauthorizedException();

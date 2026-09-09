@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
+import { ThrottlerModule } from '@nestjs/throttler';
 import { DatabaseModule } from './database/database.module';
 import { AccessModule } from './common/access/access.module';
 import { AccessAdminModule } from './modules/access-admin/access-admin.module';
@@ -68,6 +69,17 @@ import { AppService } from './app.service';
     StatusReportsModule,
     AttachmentsModule,
     AssistantModule,
+
+    // Rate limiting. Registered globally so the storage is shared, but NOT
+    // applied globally: only routes that opt in via UserThrottlerGuard are
+    // limited (today, the assistant's two write-side routes). Every other
+    // endpoint is unaffected.
+    ThrottlerModule.forRoot([
+      {
+        ttl: Number(process.env.ASSISTANT_RATE_TTL_MS ?? 3_600_000),
+        limit: Number(process.env.ASSISTANT_RATE_LIMIT ?? 20),
+      },
+    ]),
   ],
   controllers: [AppController],
 
